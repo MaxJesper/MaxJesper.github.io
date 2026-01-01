@@ -1,21 +1,26 @@
-/* ==========================
-   Grundinställningar
-========================== */
-body {
-  font-family: Arial, sans-serif;
+/* =========================
+   RESET & GRUND
+========================= */
+* {
+  box-sizing: border-box;
   margin: 0;
-  background-color: #f4f4f4;
-  color: #222;
-  text-align: center;
+  padding: 0;
 }
 
-/* ==========================
-   Header / banner
-========================== */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #222;
+}
+
+/* =========================
+   HEADER / BANNER
+========================= */
 header {
-  background-color: #111;
+  background-color: #000;      /* SVART BANNER */
   color: white;
   padding: 40px 20px;
+  text-align: center;
 
   position: relative;
   z-index: 1;
@@ -23,25 +28,25 @@ header {
 }
 
 header h1 {
-  margin: 0;
   font-size: 2em;
+  margin-bottom: 6px;
 }
 
 header .subheader {
   font-style: italic;
-  margin-top: 6px;
   color: #ccc;
+  font-size: 1em;
 }
 
-/* ==========================
-   Hamburger-knapp (ALLTID SYNLIG)
-========================== */
+/* =========================
+   HAMBURGER-KNAPP
+========================= */
 .menu-toggle {
   position: fixed;
   top: 15px;
   right: 20px;
 
-  font-size: 32px;
+  font-size: 30px;
   cursor: pointer;
 
   color: white;
@@ -50,33 +55,33 @@ header .subheader {
   border-radius: 4px;
 
   z-index: 9999;
+  user-select: none;
 }
 
-
-/* ==========================
-   Flytande hamburgermeny
-========================== */
+/* =========================
+   HAMBURGER-MENY
+========================= */
 .floating-menu {
   position: fixed;
   top: 0;
-  right: -260px;              /* gömd från start */
+  right: -260px;
+
   width: 260px;
   height: 100%;
-  background-color: #ffffff; /* VIT bakgrund */
+
+  background-color: #ffffff;   /* VIT MENY */
   color: #000;
 
-  box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+  box-shadow: -3px 0 12px rgba(0,0,0,0.25);
   transition: right 0.3s ease;
-  z-index: 2000;
 
   padding-top: 70px;
+  z-index: 5000;
 }
 
-/* Ta bort punkter HELT */
+/* Ta bort punkter */
 .floating-menu ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
 /* Huvudposter */
@@ -89,23 +94,23 @@ header .subheader {
 .floating-menu .expandable {
   display: block;
   padding: 15px 20px;
-  text-align: left;
 
-  color: #000;              /* SVART TEXT */
+  text-align: left;
   text-decoration: none;
+
+  color: #000;
   cursor: pointer;
-  font-weight: normal;
 }
 
-/* Hover-effekt */
+/* Hover */
 .floating-menu a:hover,
 .floating-menu .expandable:hover {
   background-color: #f0f0f0;
 }
 
-/* ==========================
-   Undermenyer
-========================== */
+/* =========================
+   UNDERMENY
+========================= */
 .sub-menu {
   display: none;
   background-color: #f7f7f7;
@@ -114,26 +119,27 @@ header .subheader {
 .sub-menu a {
   padding-left: 35px;
   font-size: 0.95em;
-  color: #000;              /* INGEN BLÅ TEXT */
+  color: #000;
 }
 
-/* ==========================
-   Main
-========================== */
+/* =========================
+   MAIN
+========================= */
 main {
-  margin-top: 40px;
+  padding: 40px;
+  text-align: center;
   font-size: 1.1em;
 }
 
-/* ==========================
-   Mobilanpassning
-========================== */
+/* =========================
+   MOBIL
+========================= */
 @media (max-width: 600px) {
   header h1 {
     font-size: 1.5em;
   }
 
   .menu-toggle {
-    font-size: 28px;
+    font-size: 26px;
   }
 }
