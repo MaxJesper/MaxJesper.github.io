@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Flashcards – Genetik, Genteknik & Evolution</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+  .category-btns { text-align: center; margin: 15px; }
+  .category-btns button { margin: 0 10px; padding: 10px 20px; font-size: 16px; }
+
+  #flashcard-container { max-width: 900px; margin: 20px auto; text-align: center; }
+  #flashcard { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+  #question { font-size: 22px; margin-bottom: 12px; }
+  #answer { font-size: 18px; margin-top: 12px; color: #0056b3; display: none; }
+  #depth { font-size: 16px; margin-top: 10px; color: #333; display: none; text-align: left; }
+
+  .controls button { padding: 10px 15px; margin: 5px; font-size: 16px; }
+</style>
+</head>
+
+<body>
+
+<div class="category-btns">
+  <button onclick="startCategory('Genetik')">Genetik</button>
+  <button onclick="startCategory('Genteknik')">Genteknik</button>
+  <button onclick="startCategory('Evolution')">Evolution</button>
+</div>
+
+<div id="flashcard-container">
+  <div id="flashcard">
+    <p id="question">Välj en kategori ovan för att börja.</p>
+    <p id="answer"></p>
+  </div>
+
+  <div class="controls">
+    <button onclick="prevCard()">⬅️ Föregående</button>
+    <button onclick="showAnswer()">Visa svar</button>
+    <button onclick="nextCard()">➡️ Nästa</button>
+  </div>
+
+  <div id="depth"></div>
+</div>
+
+<script>
+const flashcards = {
+  "Genetik": [
+    {q:"1. Vad är genetik?", a:"Genetik är läran om ärftlighet och de egenskaper som ärvs från föräldrar till avkommor genom gener.",
+     depth:"Fördjupning: Genetik studerar hur DNA, gener och kromosomer styr egenskaper. Exempel: Två ärtplantor kan få olika fröfärg beroende på deras alleler."},
+    {q:"2. Vad är DNA?", a:"DNA (deoxiribonukleinsyra) är den molekyl som bär den genetiska informationen i alla levande organismer.",
+     depth:"Fördjupning: DNA består av nukleotider A, T, C och G som kodar för tillverkning av proteiner. Varje, triplett, tre nukleotider i följd, kodar för en specifik aminosyra av 20 olika aminosyror. När aminosyrorna fogas samman efter varandra bygger de upp proteinet. Vilket protein det blir beror på antalet och ordningen av aminosyrorna. Exempel: En mutation i ett DNA-segment kan ge upphov till en annan aminosyra just där eller att alla aminosyrorna därefter blir fel eller helt saknas i proteinet. Ett exempel på en sådan sjukdom som orsakas av en enda förändrad nukleotid är cystisk fibros."},
+    {q:"3. Vad betyder begreppet allel?", a:"En allel är en variant av en gen som kan förekomma i olika former i en population.",
+     depth:"Fördjupning: Olika alleler kan ge olika egenskaper. Exempel: Gula (G) och gröna (g) ärtfrön – G är dominant över g. Det betyder att både allelkombinationen GG och Gg blir gula, medan gg ger gröna ärtfrön"},
+    {q:"4. Vad är skillnaden mellan dominant och recessiv allel?", a:"En dominant allel uttrycks alltid om den är närvarande, medan en recessiv allel endast uttrycks när två recessiva alleler är närvarande.",
+     depth:"Fördjupning: Exempel: Växt med Gg får gula frön, medan gg får gröna frön."},
+    {q:"5. Hur ärver vi våra gener?", a:"Vi ärver hälften av våra gener från varje förälder.",
+     depth:"Fördjupning: Varje kromosom i ett par kommer från antingen mamma eller pappa (kromosompar med samma gener kallas homologa kromosomer). Eftersom homologa kromosomer har olika alleler för generna, skapar det genetisk variation mellan syskon. Syskonen ärver ju inte samma kromosom från varje par av de homologa kromosomerna. För en del av av de homologa kromosomerna ärver de dock samma, vilket är anledningen till att de är mer lika varandra än barn till andra föräldrar."},
+    {q:"6. Vad är en kromosom?", a:"En kromosom är en struktur av DNA och proteiner som bär på de genetiska instruktionerna.",
+     depth:"Fördjupning: Människor har 46 kromosomer (23 homologa par). Varje kromosom innehåller hundratals till tusentals gener, men varje kromosompar innehåller unika gener, dvs. kromosompar 1 har inte samma gener som kromosompar 2 osv. Totalt fördelas ca 20 000 gener över de 23 paren av kromosomer."},
+    {q:"7. Vad är klyvningstal i genetik?", a:"Klyvningstal beskriver förhållandet mellan olika genetiska egenskaper hos avkommor i ett korsningsförsök.",
+     depth:"Fördjupning: Exempel: Mendel korsade gula GG och gröna gg ärtor. Alla ärtor (F1 generationen) blev då gula med genotypen Gg. När han sedan parade avkomman fick fick han 3:1-förhållande mellan gul och grön fröfärg i F2 generationen, dvs. det fanns 3 gånger så många gula ärtor som gröna. Detta blir fallet vid alla korsningar där då båda föräldrarna är heterozygota, i det här fallet med korsningen Gg x Gg"},
+    {q:"8. Vad är Mendels första lag?", a:"Lagen om segregation säger att varje individ har två alleler för varje gen, som separeras vid gametbildning.",
+     depth:"Fördjupning: Exempel: Växt med Gg bildar gameter med G eller g, vilket avgör avkommornas fröfärg (hos däggdjur är en gamet en spermie eller ett ägg)."},
+    {q:"9. Vad är genetisk variation?", a:"Skillnader i gener mellan individer i en population, vilket gör varje individ unik.",
+     depth:"Fördjupning: Exempel: I en fjärilspopulation kan olika vingfärger påverka överlevnad och fortplantning."},
+    {q:"10. Vad innebär begreppet genetik och miljö?", a:"Genetik och miljö samverkar för att forma en individs egenskaper.",
+     depth:"Fördjupning: Två ärtplantor med samma gen kan växa olika beroende på ljus, vatten och näring."},
+    {q:"11. Vad är en genetisk karta?", a:"Diagram över var olika gener är belägna på kromosomer.",
+     depth:"Fördjupning: Används för att lokalisera sjukdomsframkallande gener. Exempel: Kartläggning kan visa vilken gen som orsakar cystisk fibros. Genen som orsakar cystisk fibros heter CFTR (cystic fibrosis transmembrane conductance regulator). Genen sitter på den långa armen (q-armen) av kromosom 7, specifikt vid regionen 7q31.2. Denna gen kodar för ett protein som fungerar som en kloridkanal, och mutationer i den leder till den sega slembildning som är typisk för sjukdomen."},
+    {q:"12. Vad är en X-kromosom?", a:"En av de två könskromosomerna hos människor.",
+     depth:"Fördjupning: Kvinnor har XX och män XY. X-kopplade sjukdomar kan därför påverka män och kvinnor olika. Om män har en mutaterad allel av en gen på X som leder till ett ickefungerande protein finns ju inte en homolog X-kromosom med en frisk normal allel för genen som kan rädda upp situationen. För att kvinnor ska få sjukdomen krävs att båda X-kromosomerna bär på den sjukdomsalstrande varianten av genen."},
+    {q:"13. Vad betyder begreppet autosom?", a:"Alla kromosomer som inte är könskromosomer.",
+     depth:"Fördjupning: Människor har 22 par autosomer som styr de flesta kroppsegenskaper. Par 23 är könskromosomerna, dvs. paret XY hos män och XX hos kvinnor."},
+    {q:"14. Vad är en karyotyp?", a:"Uppsättning av en individs kromosomer, ordnade i par och efter storlek.",
+     depth:"Fördjupning: Kan användas för att upptäcka kromosomavvikelser som Downs syndrom som orsakas av tre stycken kromosom 21 i varje cell (det ska bara vara 2 stycken kromosom 21, precis som för alla övriga par)."},
+    {q:"15. Vad är en genetisk markör?", a:"Ett specifikt DNA-segment som används för att identifiera en gen eller egenskap.",
+     depth:"Fördjupning: Exempel: Markörer används vid sjukdomsforskning för att spåra genens nedärvning."},
+    {q:"16. Hur sker meios?", a:"Processen där könsceller bildas och får hälften av förälderns kromosomer.",
+     depth:"Fördjupning: Exempel: En Gg-växt bildar gameter med G eller g, vilket skapar genetisk variation."},
+    {q:"17. Vad innebär begreppet 'allelisk dominans'?", a:"En allel maskerar uttrycket av en annan allel.",
+     depth:"Fördjupning: Exempel: Dominant G maskerar recessiv g i heterozygot Gg."},
+    {q:"18. Vad är 'homozygot och heterozygot'?", a:"Homozygot: har två identiska alleler. Heterozygot: har två olika alleler.",
+     depth:"Fördjupning: Exempel: GG är homozygot dominant, Gg är heterozygot, gg är homozygot recessiv."},
+    {q:"19. Vad innebär 'recessiv och dominant allel'?", a:"Recessiv uttrycks endast i homozygot form, dominant även i heterozygot form.",
+     depth:"Fördjupning: Exempel: Gg blir gul, gg blir grön."},
+    {q:"20. Vad är allelvariation?", a:"Variation av en gen i en population.",
+     depth:"Fördjupning: Skapar mångfald. Exempel: Färgvariation i fjärilar ger överlevnadsfördelar."},
+    {q:"21. Vad betyder 'genetisk mångfald'?", a:"Variation i gener inom en population eller art.",
+     depth:"Fördjupning: Hög mångfald ökar artens förmåga att anpassa sig till miljöförändringar."},
+    {q:"22. Vad innebär 'inavel'?", a:"När nära släktingar får avkomma tillsammans.",
+     depth:"Fördjupning: Ökar risken att recessiva sjukdomsgener uttrycks."},
+    {q:"23. Vad är en kromosomavvikelse?", a:"Förändringar i antalet eller strukturen hos kromosomer.",
+     depth:"Fördjupning: Exempel: Downs syndrom orsakas av extra kromosom 21."},
+    {q:"24. Vad innebär 'genetisk kartläggning'?", a:"Identifiera och kartlägga geners placering på kromosomer.",
+     depth:"Fördjupning: Viktigt för forskning om sjukdomar och ärftlighet."},
+    {q:"25. Hur påverkar miljöfaktorer genetik?", a:"Kost, livsstil och miljö kan påverka genuttryck.",
+     depth:"Fördjupning: Exempel: En individ med gen för hög längd kan bli kort om näringen är dålig."},
+    {q:"26. Vad är 'genetiska sjukdomar'?", a:"Sjukdomar orsakat av mutationer eller förändringar i DNA.",
+     depth:"Fördjupning: Exempel: Cystisk fibros, sicklecellanemi."},
+    {q:"27. Vad är en 'monogen sjukdom'?", a:"Orsakas av mutation i en enstaka gen.",
+     depth:"Fördjupning: Exempel: Cystisk fibros följer Mendels lagar för ärftlighet."},
+    {q:"28. Vad innebär 'genetisk imprinting'?", a:"Vissa gener uttrycks olika beroende på om de ärvs från modern eller fadern.",
+     depth:"Fördjupning: Kan påverka sjukdomar som Prader-Willis syndrom."},
+    {q:"29. Vad innebär 'nukleinsyror'?", a:"DNA och RNA som bär genetisk information.",
+     depth:"Fördjupning: DNA lagrar information, RNA transporterar och hjälper vid proteinsyntes."},
+    {q:"30. Vad är 'genomiska markörer'?", a:"DNA-sekvenser som identifierar specifika gener.",
+     depth:"Fördjupning: Används för att spåra genetiska sjukdomar eller egenskaper."},
+    {q:"31. Vad är 'PCR'?", a:"Teknik för att kopiera och amplificera DNA.",
+     depth:"Fördjupning: Exempel: PCR används för att analysera DNA från brottsplatser eller sjukdomsdiagnos."}
+    // Lägg till resterande mindre centrala frågor för Genetik på samma sätt
+  ],
+
+  "Genteknik": [
+    {q:"1. Vad var den största upptäckten av Watson och Crick?", a:"DNA:s dubbelhelixstruktur.",
+     depth:"Fördjupning: Förklarade hur genetisk information kopieras. Exempel: Utan denna kunskap vore genteknik och DNA-tester omöjliga."},
+    {q:"2. Vad innebär CRISPR-tekniken?", a:"En genredigeringsteknik som kan exakt ändra DNA.",
+     depth:"Fördjupning: CRISPR-Cas9 kan klippa DNA på specifika ställen. Exempel: Ta bort sjukdomsframkallande gener i laboratorieorganismer."},
+    {q:"3. Vad är en genbank?", a:"Anläggning där genetiskt material lagras för bevarande.",
+     depth:"Fördjupning: Frön eller DNA från hotade arter bevaras för framtida forskning och biologisk mångfald."},
+    {q:"4. Vad innebär begreppet epigenetik?", a:"Förändringar i genuttryck utan förändring av DNA-sekvensen.",
+     depth:"Fördjupning: Exempel: Stress kan påverka geners aktivitet utan att DNA-sekvensen ändras."},
+    {q:"5. Vad innebär begreppet kloning?", a:"Skapa en genetisk kopia av en organism eller cell.",
+     depth:"Fördjupning: Exempel: Dolly, får klonad från en vuxen cells kärna."},
+    {q:"6. Vad är en stamcell?", a:"Celler som kan utvecklas till olika typer av celler.",
+     depth:"Fördjupning: Exempel: Stamceller kan bli hudceller, blodceller eller nervceller vid forskning och behandling."},
+    {q:"7. Vad är transgena organismer?", a:"Organismer som fått gener från en annan art.",
+     depth:"Fördjupning: Exempel: Genmodifierad fisk med gener från annan art för snabbare tillväxt."},
+    {q:"8. Vad är GMO?", a:"Genmodifierade organismer som kan ha ändrat DNA, men inte alltid transgena.",
+     depth:"Fördjupning: Exempel: En majsplanta med torktåliga egenskaper genom att ändra egna gener."},
+    {q:"9. Vad är genotyp-fenotyp-kopplingen?", a:"Genotyp = genetisk uppsättning, Fenotyp = observerbara egenskaper.",
+     depth:"Fördjupning: Exempel: Gg-genotyp ger gul fröfärg, medan fenotypen är just gula frön."},
+    {q:"10. Vad är genterapi?", a:"Behandling där defekta gener ändras för att behandla sjukdomar.",
+     depth:"Fördjupning: Exempel: Genterapi kan sätta in fungerande gen i celler hos patienter med genetiska sjukdomar."}
+    // Lägg till alla övriga Genteknik-frågor med fördjupning på samma sätt
+  ],
+
+  "Evolution": [
+    {q:"1. Vad betyder 'genetikens' betydelse för evolution?", a:"Förklarar hur egenskaper ärvs och förändras över tid.",
+     depth:"Fördjupning: Mutationer skapar variation. Exempel: Fjärilar med olika vingfärger påverkas olika av rovdjur, vilket driver evolution."},
+    {q:"2. Vad var den största genetikupptäckten om Neandertalarnas DNA?", a:"Människor har ca 1-2 % DNA från Neandertalare.",
+     depth:"Fördjupning: Visar att korsning mellan arter skedde för ca 40 000 år sedan, vilket påverkar vissa genetiska egenskaper idag."},
+    {q:"3. Vad är genetisk drift?", a:"Slumpmässig förändring av genfrekvenser i en population.",
+     depth:"Fördjupning: Exempel: I en liten population kan en allel försvinna bara genom slumpen."},
+    {q:"4. Vad innebär 'förvärvad resistens'?", a:"Organismer utvecklar motståndskraft mot läkemedel eller gifter.",
+     depth:"Fördjupning: Exempel: Bakterier kan bli resistenta mot antibiotika över generationer."},
+    {q:"5. Vad är 'sexuell selektion'?", a:"Naturligt urval där egenskaper förbättrar chanser att få partner.",
+     depth:"Fördjupning: Exempel: Påfågelfjädrar utvecklas för att locka partners."},
+    {q:"6. Vad är genetisk variation i en population?", a:"Olika genetiska uppsättningar bidrar till anpassning.",
+     depth:"Fördjupning: Variation gör att vissa individer överlever miljöförändringar bättre."},
+    {q:"7. Vad innebär 'selektion'?", a:"Individer med fördelaktiga egenskaper överlever och reproducerar.",
+     depth:"Fördjupning: Exempel: Mörkfärgade fjärilar överlever bättre i sotiga skogar, vilket förändrar populationen över tid."},
+    {q:"8. Vad är en 'fossil gen'?", a:"En gen som en gång var funktionell men nu inaktiv.",
+     depth:"Fördjupning: Exempel: Vissa fiskar har gener för lungor som inte längre används."},
+    {q:"9. Vad innebär 'evolutionär biologi'?", a:"Studiet av hur organismer förändras över tid genom urval, mutationer m.m.",
+     depth:"Fördjupning: Exempel: Hur olika arter utvecklats från gemensamma förfäder och anpassats till miljön."}
+  ]
+};
+
+let currentCategory = null;
+let index = 0;
+
+function startCategory(cat) {
+  currentCategory = flashcards[cat];
+  index = 0;
+  showCard();
+}
+
+function showCard() {
+  if (!currentCategory) return;
+  document.getElementById("question").innerText = currentCategory[index].q;
+  document.getElementById("answer").style.display = "none";
+  document.getElementById("answer").innerText = "";
+  document.getElementById("depth").style.display = "none";
+  document.getElementById("depth").innerText = "";
+}
+
+function showAnswer() {
+  if (!currentCategory) return;
+  document.getElementById("answer").innerText = currentCategory[index].a;
+  document.getElementById("answer").style.display = "block";
+  document.getElementById("depth").innerText = currentCategory[index].depth || "";
+  document.getElementById("depth").style.display = currentCategory[index].depth ? "block" : "none";
+}
+
+function nextCard() {
+  if (!currentCategory) return;
+  index = (index + 1) % currentCategory.length;
+  showCard();
+}
+
+function prevCard() {
+  if (!currentCategory) return;
+  index = (index - 1 + currentCategory.length) % currentCategory.length;
+  showCard();
+}
+</script>
+
+</body>
+</html>
