@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Biologi, Kemi, Fysik</title>
+  <title>Startsida</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -10,25 +10,25 @@
   <!-- Hamburger-knapp -->
   <div class="menu-toggle">☰</div>
 
-  <!-- Flytande ämnesväljare -->
+  <!-- Flytande dropdown-meny -->
   <nav class="floating-menu">
-    <ul>
+    <ul class="main-menu">
       <li>
-        <a href="biologi/index.html">Biologi +</a>
+        <span class="expandable">Biologi +</span>
         <ul class="sub-menu">
           <li><a href="biologi/flashcards.html">Flash cards</a></li>
           <li><a href="biologi/ovningar.html">Övningar</a></li>
         </ul>
       </li>
       <li>
-        <a href="kemi/index.html">Kemi +</a>
+        <span class="expandable">Kemi +</span>
         <ul class="sub-menu">
           <li><a href="kemi/flashcards.html">Flash cards</a></li>
           <li><a href="kemi/ovningar.html">Övningar</a></li>
         </ul>
       </li>
       <li>
-        <a href="fysik/index.html">Fysik +</a>
+        <span class="expandable">Fysik +</span>
         <ul class="sub-menu">
           <li><a href="fysik/flashcards.html">Flash cards</a></li>
           <li><a href="fysik/ovningar.html">Övningar</a></li>
@@ -37,26 +37,21 @@
     </ul>
   </nav>
 
-  <!-- ---------- Banner ---------- -->
+  <!-- Banner -->
   <header>
-    <h1>Biologi, Kemi och Fysik</h1>
+    <h1>Startsida</h1>
   </header>
 
-  <!-- ---------- Startsida innehåll ---------- -->
   <main>
-    <p>Välj ämne direkt:</p>
-    <div class="buttons">
-      <a href="biologi/index.html" class="subject-btn">Biologi</a>
-      <a href="kemi/index.html" class="subject-btn">Kemi</a>
-      <a href="fysik/index.html" class="subject-btn">Fysik</a>
-    </div>
+    <p>Välj ämne via hamburgermeny uppe till höger.</p>
   </main>
 
-  <!-- ---------- JavaScript för flytande meny + expand ---------- -->
+  <!-- Script för dropdown och expandering -->
   <script>
     const toggle = document.querySelector('.menu-toggle');
     const menu = document.querySelector('.floating-menu');
 
+    // Visa/gömmen hela menyn
     toggle.addEventListener('click', () => {
       if(menu.style.right === '0px'){
         menu.style.right = '-250px';
@@ -66,17 +61,15 @@
     });
 
     // Expandera undermenyer
-    document.querySelectorAll('.floating-menu > ul > li > a').forEach(el => {
+    document.querySelectorAll('.expandable').forEach(el => {
       el.addEventListener('click', e => {
         const submenu = el.nextElementSibling;
         if(submenu){
-          e.preventDefault();
           submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
-        } else {
-          window.location.href = el.href;
         }
       });
     });
   </script>
+
 </body>
 </html>
