@@ -124,3 +124,54 @@ main ul li a {
 main ul li a:hover {
   color: #0b7dda;
 }
+
+/* ---------- Ämnesväljare med expand ---------- */
+.subject-selector {
+  background-color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+.subject-selector ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.subject-selector ul li {
+  position: relative;
+}
+
+.subject-selector ul li a {
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.subject-selector ul li a:hover {
+  background-color: #444;
+}
+
+/* Undermeny (initialt dold) */
+.sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #555;
+  min-width: 200px;
+  z-index: 100;
+}
+
+.sub-menu li a {
+  padding: 10px 20px;
+  color: white;
+}
+
+.sub-menu li a:hover {
+  background-color: #666;
+}
+
