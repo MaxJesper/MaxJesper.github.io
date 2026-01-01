@@ -13,10 +13,10 @@ body {
    Header / banner
 ========================== */
 header {
-  background-color: #111;
-  color: white;
-  padding: 40px 20px;
+  position: relative;
+  z-index: 1;   /* lägre än hamburger */
 }
+
 
 header h1 {
   margin: 0;
