@@ -2,29 +2,33 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Jesper Tordssons NO-material</title>
+  <title>Biologi, Kemi, Fysik</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- ---------- Ämnesväljare med expand + ---------- -->
-  <nav class="subject-selector">
+
+  <!-- Hamburger-knapp -->
+  <div class="menu-toggle">☰</div>
+
+  <!-- Flytande ämnesväljare -->
+  <nav class="floating-menu">
     <ul>
       <li>
-        <a href="biologi/index.html" class="expandable">Biologi +</a>
+        <a href="biologi/index.html">Biologi +</a>
         <ul class="sub-menu">
           <li><a href="biologi/flashcards.html">Flash cards</a></li>
           <li><a href="biologi/ovningar.html">Övningar</a></li>
         </ul>
       </li>
       <li>
-        <a href="kemi/index.html" class="expandable">Kemi +</a>
+        <a href="kemi/index.html">Kemi +</a>
         <ul class="sub-menu">
           <li><a href="kemi/flashcards.html">Flash cards</a></li>
           <li><a href="kemi/ovningar.html">Övningar</a></li>
         </ul>
       </li>
       <li>
-        <a href="fysik/index.html" class="expandable">Fysik +</a>
+        <a href="fysik/index.html">Fysik +</a>
         <ul class="sub-menu">
           <li><a href="fysik/flashcards.html">Flash cards</a></li>
           <li><a href="fysik/ovningar.html">Övningar</a></li>
@@ -35,7 +39,7 @@
 
   <!-- ---------- Banner ---------- -->
   <header>
-    <h1>Jesper Tordssons undervisning för högstadiets Biologi, Kemi och Fysik</h1>
+    <h1>Biologi, Kemi och Fysik</h1>
   </header>
 
   <!-- ---------- Startsida innehåll ---------- -->
@@ -48,13 +52,29 @@
     </div>
   </main>
 
-  <!-- ---------- JavaScript för + expand ---------- -->
+  <!-- ---------- JavaScript för flytande meny + expand ---------- -->
   <script>
-    document.querySelectorAll('.expandable').forEach(el => {
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.floating-menu');
+
+    toggle.addEventListener('click', () => {
+      if(menu.style.right === '0px'){
+        menu.style.right = '-250px';
+      } else {
+        menu.style.right = '0px';
+      }
+    });
+
+    // Expandera undermenyer
+    document.querySelectorAll('.floating-menu > ul > li > a').forEach(el => {
       el.addEventListener('click', e => {
-        e.preventDefault(); // hindrar direkt navigering
         const submenu = el.nextElementSibling;
-        submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+        if(submenu){
+          e.preventDefault();
+          submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+        } else {
+          window.location.href = el.href;
+        }
       });
     });
   </script>
