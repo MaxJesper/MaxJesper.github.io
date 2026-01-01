@@ -1,26 +1,126 @@
-header {
-  background-color: #4CAF50;
-  color: white;
-  padding: 20px;
+/* --------------------------
+   Grundinställningar
+---------------------------*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f4f8; /* ljus bakgrund */
+  color: #333;
   text-align: center;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  gap: 20px;
+/* --------------------------
+   Header / banner
+---------------------------*/
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 30px 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+/* --------------------------
+   Ämnesknappar (startsidan)
+---------------------------*/
 .subject-btn {
+  display: inline-block;
   background-color: #2196F3;
   color: white;
-  padding: 20px 40px;
+  padding: 25px 50px;
+  margin: 10px;
   text-decoration: none;
   font-size: 1.2em;
-  border-radius: 8px;
+  border-radius: 10px;
+  transition: transform 0.2s, background-color 0.2s;
 }
 
 .subject-btn:hover {
   background-color: #0b7dda;
+  transform: scale(1.05);
+}
+
+/* --------------------------
+   Kategori-knappar på flash cards
+---------------------------*/
+.category-btns button {
+  background-color: #FF9800;
+  color: white;
+  padding: 15px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.category-btns button:hover {
+  background-color: #e68a00;
+  transform: scale(1.05);
+}
+
+/* --------------------------
+   Flash card-container
+---------------------------*/
+#flashcard-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#flashcard p {
+  font-size: 1.2em;
+  margin: 15px 0;
+}
+
+/* --------------------------
+   Kontroll-knappar
+---------------------------*/
+.controls button {
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.controls button:hover {
+  background-color: #0b7dda;
+  transform: scale(1.05);
+}
+
+/* --------------------------
+   Lista med material på ämnessidor
+---------------------------*/
+main ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+main ul li {
+  margin: 10px 0;
+}
+
+main ul li a {
+  color: #2196F3;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+main ul li a:hover {
+  color: #0b7dda;
 }
