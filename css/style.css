@@ -32,9 +32,7 @@ header .subheader {
   color: #ccc; /* lite ljusare för kontrast */
 }
 
-/* --------------------------
-   Hamburger-knapp
----------------------------*/
+/* Hamburger-knapp – alltid vit */
 .menu-toggle {
   position: fixed;
   top: 15px;
@@ -42,8 +40,12 @@ header .subheader {
   font-size: 30px;
   cursor: pointer;
   z-index: 2000;
-  color: #fff; /* vit färg för att synas mot svart bakgrund */
+  color: #fff !important;  /* tvingar vit färg */
+  background: none;
+  border: none;
+  user-select: none;
 }
+
 
 /* --------------------------
    Flytande dropdown-meny
