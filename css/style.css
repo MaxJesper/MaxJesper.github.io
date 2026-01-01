@@ -1,6 +1,16 @@
 /* --------------------------
    Grundinställningar
 ---------------------------*/
+<script>
+document.querySelectorAll('.expandable').forEach(el => {
+  el.addEventListener('click', e => {
+    e.preventDefault(); // hindrar direkt navigering
+    const submenu = el.nextElementSibling;
+    submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
+  });
+});
+</script>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
