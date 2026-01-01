@@ -1,130 +1,132 @@
 /* --------------------------
-  Grundinställningar
+   Grundinställningar
 ---------------------------*/
 body {
-font-family: Arial, sans-serif;
-margin: 0;
-padding: 0;
-background-color: #f5f5f5; /* ljusgrå bakgrund */
-color: #333;
-text-align: center;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5; /* ljusgrå bakgrund */
+  color: #333;
+  text-align: center;
 }
 
 /* --------------------------
-  Header / banner
+   Header / banner
 ---------------------------*/
 header {
-background-color: #222; /* mörkgrå */
-color: #fff;
-padding: 30px 20px;
-box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  background-color: #222; /* mörkgrå */
+  color: #fff;
+  padding: 40px 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 header h1 {
-margin: 0;
-font-size: 1.8em;
+  margin: 0;
+  font-size: 2em; /* större text */
+}
+
+header .subheader {
+  font-size: 1em;
+  font-style: italic;
+  margin-top: 5px;
+  color: #ccc; /* lite ljusare för kontrast */
 }
 
 /* --------------------------
-   Ämnesknappar på startsidan
----------------------------*/
-.subject-btn {
-  display: inline-block;
-  background-color: #555; /* mörkgrå */
-  color: white;
-  padding: 25px 50px;
-  margin: 10px;
-  text-decoration: none;
-  font-size: 1.2em;
-  border-radius: 8px;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-.subject-btn:hover {
-  background-color: #333;
-  transform: scale(1.05);
-}
-
-/* --------------------------
-  Hamburger-knapp
+   Hamburger-knapp
 ---------------------------*/
 .menu-toggle {
-position: fixed;
-top: 15px;
-right: 20px;
-font-size: 30px;
-cursor: pointer;
-z-index: 2000;
-color: #222;
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 2000;
+  color: #fff; /* vit färg för att synas mot svart bakgrund */
 }
 
 /* --------------------------
-   Flytande meny
    Flytande dropdown-meny
 ---------------------------*/
 .floating-menu {
-position: fixed;
-top: 0;
-right: -250px; /* gömd initialt */
-width: 250px;
-height: 100%;
-background-color: #333; /* mörk bakgrund */
-color: white;
-overflow-y: auto;
-transition: right 0.3s ease;
-z-index: 1500;
-padding-top: 60px;
+  position: fixed;
+  top: 0;
+  right: -250px; /* gömd initialt */
+  width: 250px;
+  height: 100%;
+  background-color: #333; /* mörk bakgrund */
+  color: white;
+  overflow-y: auto;
+  transition: right 0.3s ease;
+  z-index: 1500;
+  padding-top: 60px;
 }
 
 /* Ta bort punkter */
 .floating-menu ul {
-list-style: none;
-padding: 0;
-margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.floating-menu li a {
 .floating-menu li {
   border-bottom: 1px solid #444; /* subtil linje mellan ämnen */
 }
 
+/* Huvudmeny länkar */
 .floating-menu li a,
 .floating-menu li span.expandable {
-display: block;
-padding: 15px 20px;
-color: white;
-text-decoration: none;
-cursor: pointer;
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.floating-menu li a:hover {
 /* Hover-effekt */
 .floating-menu li a:hover,
 .floating-menu li span.expandable:hover {
-background-color: #555;
+  background-color: #555;
 }
 
-/* Undermeny initialt dold */
 /* Undermeny (initialt dold) */
 .floating-menu .sub-menu {
-display: none;
-background-color: #444;
+  display: none;
+  background-color: #444;
 }
 
 .floating-menu .sub-menu li a {
-padding-left: 35px;
+  padding-left: 35px;
   font-size: 0.95em;
 }
 
 /* --------------------------
-  Startsida innehåll
+   Startsida innehåll
 ---------------------------*/
 main {
-  margin-top: 20px;
   margin-top: 40px;
 }
 
 main p {
-font-size: 1.2em;
-margin-bottom: 20px;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* --------------------------
+   Responsive tweaks (valfritt)
+---------------------------*/
+@media screen and (max-width: 600px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  .menu-toggle {
+    font-size: 26px;
+    top: 10px;
+    right: 15px;
+  }
+
+  .floating-menu {
+    width: 220px;
+  }
 }
