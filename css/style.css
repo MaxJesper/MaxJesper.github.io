@@ -26,26 +26,6 @@ header h1 {
 }
 
 /* --------------------------
-   Ämnesknappar på startsidan
----------------------------*/
-.subject-btn {
-  display: inline-block;
-  background-color: #555; /* mörkgrå */
-  color: white;
-  padding: 25px 50px;
-  margin: 10px;
-  text-decoration: none;
-  font-size: 1.2em;
-  border-radius: 8px;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-.subject-btn:hover {
-  background-color: #333;
-  transform: scale(1.05);
-}
-
-/* --------------------------
    Hamburger-knapp
 ---------------------------*/
 .menu-toggle {
@@ -59,7 +39,7 @@ header h1 {
 }
 
 /* --------------------------
-   Flytande meny
+   Flytande dropdown-meny
 ---------------------------*/
 .floating-menu {
   position: fixed;
@@ -75,13 +55,19 @@ header h1 {
   padding-top: 60px;
 }
 
+/* Ta bort punkter */
 .floating-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.floating-menu li a {
+.floating-menu li {
+  border-bottom: 1px solid #444; /* subtil linje mellan ämnen */
+}
+
+.floating-menu li a,
+.floating-menu li span.expandable {
   display: block;
   padding: 15px 20px;
   color: white;
@@ -89,11 +75,13 @@ header h1 {
   cursor: pointer;
 }
 
-.floating-menu li a:hover {
+/* Hover-effekt */
+.floating-menu li a:hover,
+.floating-menu li span.expandable:hover {
   background-color: #555;
 }
 
-/* Undermeny initialt dold */
+/* Undermeny (initialt dold) */
 .floating-menu .sub-menu {
   display: none;
   background-color: #444;
@@ -101,13 +89,14 @@ header h1 {
 
 .floating-menu .sub-menu li a {
   padding-left: 35px;
+  font-size: 0.95em;
 }
 
 /* --------------------------
    Startsida innehåll
 ---------------------------*/
 main {
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 main p {
