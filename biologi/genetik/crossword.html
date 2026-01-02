@@ -5,165 +5,121 @@
   <title>Genetik - Korsord</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body {
-      font-family: sans-serif;
-    }
-    .crossword-container {
-      max-width: 800px;
-      margin: 20px auto;
-      text-align: center;
-    }
+    body { font-family: sans-serif; background-color:#fff; color:#212529; }
+    header { text-align:center; margin:20px; }
+    header h1 { font-size:2rem; }
+    header p { font-style:italic; }
 
-    table {
-      border-collapse: collapse;
-      margin: 0 auto;
-    }
+    .crossword-container { max-width: 800px; margin: 0 auto; text-align:center; }
+    table { border-collapse: collapse; margin: 0 auto; }
+    td { width:35px; height:35px; border:1px solid #000; text-align:center; vertical-align:middle; position:relative; }
+    td.black { background-color:black; }
+    input { width:100%; height:100%; border:none; text-align:center; text-transform:uppercase; font-weight:bold; font-size:14px; }
 
-    td {
-      border: 1px solid #000;
-      width: 35px;
-      height: 35px;
-      text-align: center;
-      vertical-align: middle;
-      font-size: 14px;
-      position: relative;
-    }
+    button { margin-top:15px; padding:5px 10px; cursor:pointer; }
+    #result { margin-top:10px; font-weight:bold; }
 
-    input {
-      width: 100%;
-      height: 100%;
-      border: none;
-      text-align: center;
-      text-transform: uppercase;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    td.black {
-      background-color: black;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-
-    .questions {
-      max-width: 800px;
-      margin: 20px auto;
-      text-align: left;
-    }
+    .questions { max-width: 800px; margin:20px auto; text-align:left; }
+    .questions li { margin-bottom:5px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Genetik - Korsord</h1>
-    <p>Jesper Tordsson</p>
-  </header>
+<header>
+  <h1>Genetik - Korsord</h1>
+  <p>Jesper Tordsson</p>
+</header>
 
-  <p><a href="index.html" class="subject-btn">← Tillbaka till Genetik</a></p>
+<p><a href="index.html" class="subject-btn">← Tillbaka till Genetik</a></p>
 
-  <div class="crossword-container">
-    <h2>Korsord</h2>
+<div class="crossword-container">
+  <table id="crossword"><tbody></tbody></table>
+  <button onclick="checkCrossword()">Kontrollera svar</button>
+  <div id="result"></div>
+</div>
 
-    <!-- Enkel 10x10 grid -->
-    <table id="crossword">
-      <!-- Vi använder 10 rader som exempel -->
-      <!-- "black" är tomruta -->
-      <tbody>
-        <!-- Rader genereras nedan med id-cell -->
-      </tbody>
-    </table>
-
-    <button onclick="checkCrossword()">Kontrollera svar</button>
-    <div id="result"></div>
-  </div>
-
-  <div class="questions">
-    <h3>Frågor</h3>
-    <ul>
-      <li>1. Molekyler som bär genetisk information</li>
-      <li>2. Byggstenar för proteiner</li>
-      <li>3. Processen när DNA blir RNA</li>
-      <li>4. Processen när RNA blir protein</li>
-      <li>5. Strukturer som bär gener</li>
-      <li>6. Typ av molekyl som fungerar som budbärare i cellen</li>
-      <li>7. Dominant allel</li>
-      <li>8. Två olika alleler</li>
-      <li>9. Två lika alleler</li>
-      <li>10. Reduktionsdelning vid könsceller</li>
-      <li>11. Vanlig celldelning</li>
-      <li>12. Cellens proteinsyntetiserande organell</li>
-    </ul>
-  </div>
+<div class="questions">
+  <h3>Frågor</h3>
+  <ul>
+    <li>NUKLEINSYRA – Molekyler som bär genetisk information</li>
+    <li>PROTEIN – Byggs av aminosyror</li>
+    <li>TRANSKRIPTION – Processen när DNA skrivs av och bildar RNA</li>
+    <li>TRANSLATION – Processen när RNA läses av och aminosyror sätt ihop till protein</li>
+    <li>KROMOSOM – När DNA packas kring proteiner till en tät struktur som syns i mikroskop</li>
+    <li>RNA – Budbärare i cellen för hur ett protein ska sättas samman</li>
+    <li>DOMINANT – Allel vars fenotyp slår igenom även vid heterozygot genotyp</li>
+    <li>HETEROZYGOT – Två olika alleler</li>
+    <li>HOMOZYGOT – Två lika alleler</li>
+    <li>MEIOS – Reduktionsdelning av celler vid bildning av könsceller</li>
+    <li>MITOS – Vanlig celldelning</li>
+    <li>RIBOSOM – Cellens proteinsyntetiserande organell</li>
+  </ul>
+</div>
 
 <script>
-  const rows = 12;
-  const cols = 12;
-  const crossword = document.getElementById("crossword").querySelector("tbody");
+const rows = 15;
+const cols = 15;
+const tbody = document.getElementById("crossword").querySelector("tbody");
 
-  // Skapa grid
-  for (let r = 0; r < rows; r++) {
-    const tr = document.createElement("tr");
-    for (let c = 0; c < cols; c++) {
-      const td = document.createElement("td");
-      td.id = `cell-${r}-${c}`;
-      tr.appendChild(td);
-    }
-    crossword.appendChild(tr);
+// Skapa grid
+for (let r=0; r<rows; r++){
+  const tr = document.createElement("tr");
+  for (let c=0; c<cols; c++){
+    const td = document.createElement("td");
+    td.id = `cell-${r}-${c}`;
+    tr.appendChild(td);
   }
+  tbody.appendChild(tr);
+}
 
-  // Ord och startposition [rad, kol, riktning] (h=horisontell, v=vertikal)
-  const words = [
-    {word:"NUKLEINSYRA", row:0, col:0, dir:"h"},
-    {word:"PROTEIN", row:2, col:0, dir:"h"},
-    {word:"TRANSKRIPTION", row:4, col:0, dir:"h"},
-    {word:"TRANSLATION", row:6, col:0, dir:"h"},
-    {word:"KROMOSOM", row:0, col:2, dir:"v"},
-    {word:"RNA", row:0, col:4, dir:"v"},
-    {word:"DOMINANT", row:1, col:6, dir:"v"},
-    {word:"HETEROZYGOT", row:0, col:8, dir:"v"},
-    {word:"HOMOZYGOT", row:2, col:10, dir:"v"},
-    {word:"MEIOS", row:9, col:0, dir:"h"},
-    {word:"MITOS", row:10, col:2, dir:"h"},
-    {word:"RIBOSOM", row:7, col:7, dir:"h"}
-  ];
+// Ord och positioner enligt ditt korsordsförslag
+const words = [
+  {word:"HETEROZYGOT", row:0, col:0, dir:"v"},
+  {word:"DOMINANT", row:0, col:2, dir:"h"},
+  {word:"TRANSLATION", row:10, col:0, dir:"h"},
+  {word:"MITOS", row:7, col:3, dir:"h"},
+  {word:"TRANSKRIPTION", row:7, col:2, dir:"h"},
+  {word:"MEIOS", row:7, col:10, dir:"v"},
+  {word:"NUKLEINSYRA", row:2, col:5, dir:"v"},
+  {word:"KROMOSOM", row:2, col:2, dir:"h"},
+  {word:"RNA", row:10, col:6, dir:"v"},
+  {word:"HOMOZYGOT", row:5, col:7, dir:"v"},
+  {word:"RIBOSOM", row:8, col:4, dir:"h"},
+  {word:"PROTEIN", row:12, col:5, dir:"v"}
+];
 
-  // Placera input-fält i grid
-  words.forEach((w, idx) => {
-    const letters = w.word.split("");
-    letters.forEach((l, i) => {
-      let r = w.row;
-      let c = w.col;
-      if (w.dir === "h") c += i;
-      else r += i;
-      const td = document.getElementById(`cell-${r}-${c}`);
-      td.innerHTML = `<input id="input-${idx}-${i}" maxlength="1">`;
-      td.dataset.letter = l;
+// Placera input-fält
+words.forEach((w, idx)=>{
+  const letters = w.word.split("");
+  letters.forEach((l,i)=>{
+    let r=w.row;
+    let c=w.col;
+    if(w.dir==="h") c+=i;
+    else r+=i;
+    const td = document.getElementById(`cell-${r}-${c}`);
+    td.innerHTML = `<input id="input-${idx}-${i}" maxlength="1">`;
+    td.dataset.letter = l;
+  });
+});
+
+// Kontrollfunktion
+function checkCrossword(){
+  let correct=0;
+  words.forEach((w,idx)=>{
+    w.word.split("").forEach((l,i)=>{
+      const input=document.getElementById(`input-${idx}-${i}`);
+      if(input && input.value.toUpperCase()===l) correct++;
     });
   });
-
-  // Kontrollfunktion
-  function checkCrossword() {
-    let correct = 0;
-    words.forEach((w, idx) => {
-      const letters = w.word.split("");
-      letters.forEach((l, i) => {
-        const input = document.getElementById(`input-${idx}-${i}`);
-        if (input && input.value.toUpperCase() === l) correct++;
-      });
-    });
-    const total = words.reduce((acc,w) => acc + w.word.length, 0);
-    const result = document.getElementById("result");
-    if (correct === total) {
-      result.textContent = `Alla rätt! 🎉`;
-      result.style.color = "green";
-    } else {
-      result.textContent = `${correct} av ${total} bokstäver rätt.`;
-      result.style.color = "red";
-    }
+  const total=words.reduce((acc,w)=>acc+w.word.length,0);
+  const result=document.getElementById("result");
+  if(correct===total){
+    result.textContent="Alla rätt! 🎉";
+    result.style.color="green";
+  } else {
+    result.textContent=`${correct} av ${total} bokstäver rätt.`;
+    result.style.color="red";
   }
+}
 </script>
 </body>
 </html>
