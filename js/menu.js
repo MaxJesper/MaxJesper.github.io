@@ -47,12 +47,12 @@ function generateMenu(data) {
   for (let subject in data) {
     const li = document.createElement("li");
 
-    // Skapa huvudämne
+    // Huvudämne
     const span = document.createElement("span");
     span.textContent = subject + " ➕";
     span.onclick = function() { toggleSubmenu(span); };
 
-    // Skapa undermeny
+    // Undermeny
     const subUl = document.createElement("ul");
     subUl.classList.add("submenu");
 
@@ -60,9 +60,8 @@ function generateMenu(data) {
       const subLi = document.createElement("li");
       const a = document.createElement("a");
 
-      // Skapa webvänlig länk (ex: /biologi/vad-ar-liv/index.html)
       const folder = subject.toLowerCase();
-      const file = area.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // ta bort accenter
+      const file = area.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                       .replace(/ /g, "-").toLowerCase();
       a.href = `/${folder}/${file}/index.html`;
 
@@ -90,24 +89,24 @@ function toggleSubmenu(el) {
   const submenu = el.nextElementSibling;
   if (!submenu) return;
 
-  // Stäng alla andra undermenyer först (endast en öppen åt gången)
+  // Stäng alla andra huvudämnens undermenyer
   const allSubmenus = document.querySelectorAll(".submenu");
   allSubmenus.forEach(sub => {
     if (sub !== submenu) {
       sub.classList.remove("open");
       const parentSpan = sub.previousElementSibling;
-      if (parentSpan) {
-        parentSpan.textContent = parentSpan.textContent.replace('➖', '➕');
-      }
+      if (parentSpan) parentSpan.textContent = parentSpan.textContent.replace('➖','➕');
     }
   });
 
-  // Öppna/stäng den klickade
+  // Öppna/stäng klickad huvudkategori
   submenu.classList.toggle("open");
   if (submenu.classList.contains("open")) {
-    el.textContent = el.textContent.replace('➕', '➖');
+    el.textContent = el.textContent.replace('➕','➖');
+    // Scrolla menyn för att visa öppnad kategori
+    submenu.scrollIntoView({behavior: "smooth", block: "start"});
   } else {
-    el.textContent = el.textContent.replace('➖', '➕');
+    el.textContent = el.textContent.replace('➖','➕');
   }
 }
 
@@ -122,9 +121,7 @@ document.addEventListener('click', function(e) {
     submenus.forEach(sub => {
       sub.classList.remove("open");
       const parentSpan = sub.previousElementSibling;
-      if (parentSpan) {
-        parentSpan.textContent = parentSpan.textContent.replace('➖', '➕');
-      }
+      if (parentSpan) parentSpan.textContent = parentSpan.textContent.replace('➖','➕');
     });
   }
 });
