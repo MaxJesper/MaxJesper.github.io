@@ -10,7 +10,7 @@ body {
   line-height: 1.6;
   font-size: 18px;
   color: #212529;
-  background-color: #fff; /* justera om du har bakgrundsbild */
+  background-color: #fff;
 }
 
 /* =================== HEADER / BANNER =================== */
@@ -23,7 +23,7 @@ header {
 header h1 {
   font-size: 2rem;
   margin-bottom: 5px;
-  text-align: left; /* vänstermarginal istället för centrerad */
+  text-align: left;
 }
 
 header p {
@@ -67,14 +67,13 @@ main a:hover {
 }
 
 /* =================== SIDOMENY / HAMBURGER =================== */
-/* Sidomeny */
 #side-menu {
   position: fixed;
   top: 0;
   right: 0;
   width: 250px;
-  height: 100vh;          /* hela skärmhöjden */
-  overflow-y: auto;       /* scroll om menyn är för lång */
+  height: 100vh;          /* hela höjden */
+  overflow-y: auto;       /* scroll vid behov */
   background-color: white;
   box-shadow: -2px 0 5px rgba(0,0,0,0.2);
   padding: 20px;
@@ -112,7 +111,7 @@ main a:hover {
 }
 
 .submenu li a {
-  color: black; /* underkategorierna svarta */
+  color: black;
   text-decoration: none;
 }
 
@@ -124,7 +123,6 @@ main a:hover {
   display: block;
 }
 
-/* Hamburger-knapp */
 .hamburger {
   position: fixed;
   top: 15px;
@@ -157,9 +155,10 @@ p, li {
   margin-bottom: 10px;
 }
 
-/* Anpassa scrollbeteende på mobilen */
 @media (max-width: 768px) {
   #side-menu {
     width: 80%;
+    height: 100vh;
+    overflow-y: auto;
   }
 }
