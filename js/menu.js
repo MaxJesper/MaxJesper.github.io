@@ -60,7 +60,7 @@ function generateMenu(data) {
       const subLi = document.createElement("li");
       const a = document.createElement("a");
 
-      // Skapa webvänlig länk (exempel: /biologi/vad-ar-liv/index.html)
+      // Skapa webvänlig länk (ex: /biologi/vad-ar-liv/index.html)
       const folder = subject.toLowerCase();
       const file = area.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // ta bort accenter
                       .replace(/ /g, "-").toLowerCase();
@@ -88,13 +88,26 @@ function toggleMenu() {
 // ================== UNDERSIDEMENY-FUNKTION ==================
 function toggleSubmenu(el) {
   const submenu = el.nextElementSibling;
-  if (submenu) {
-    submenu.classList.toggle("open");
-    if (submenu.classList.contains("open")) {
-      el.textContent = el.textContent.replace('➕', '➖');
-    } else {
-      el.textContent = el.textContent.replace('➖', '➕');
+  if (!submenu) return;
+
+  // Stäng alla andra undermenyer först (endast en öppen åt gången)
+  const allSubmenus = document.querySelectorAll(".submenu");
+  allSubmenus.forEach(sub => {
+    if (sub !== submenu) {
+      sub.classList.remove("open");
+      const parentSpan = sub.previousElementSibling;
+      if (parentSpan) {
+        parentSpan.textContent = parentSpan.textContent.replace('➖', '➕');
+      }
     }
+  });
+
+  // Öppna/stäng den klickade
+  submenu.classList.toggle("open");
+  if (submenu.classList.contains("open")) {
+    el.textContent = el.textContent.replace('➕', '➖');
+  } else {
+    el.textContent = el.textContent.replace('➖', '➕');
   }
 }
 
