@@ -96,11 +96,16 @@ main a:hover {
   margin-bottom: 5px;
 }
 
-.menu-main li span {
-  cursor: pointer;
+.menu-toggle {
+  background: none;
+  border: none;
+  padding: 5px 0;
+  font-size: 1rem;
   font-weight: bold;
-  display: block;
+  cursor: pointer;
   color: black;
+  text-align: left;
+  width: 100%;
 }
 
 .submenu {
@@ -117,10 +122,6 @@ main a:hover {
 
 .submenu li a:hover {
   text-decoration: underline;
-}
-
-.submenu.open {
-  display: block;
 }
 
 .hamburger {
@@ -155,6 +156,7 @@ p, li {
   margin-bottom: 10px;
 }
 
+/* =================== RESPONSIV =================== */
 @media (max-width: 768px) {
   #side-menu {
     width: 80%;
