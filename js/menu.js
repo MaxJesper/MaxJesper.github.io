@@ -1,15 +1,95 @@
-// HAMBURGER KNAPP: Öppna/stäng sidomeny
+// ================== DATA FÖR MENYN ==================
+const menuData = {
+  "Biologi": [
+    "Vad är liv?",
+    "Ekologi",
+    "Sex & relationer",
+    "Hjärta-blod-lungor",
+    "Immunologi",
+    "Matspjälkningen",
+    "Nervsystemet",
+    "Sinnena",
+    "Genetik",
+    "Evolution",
+    "Infektionssjukdomar"
+  ],
+  "Kemi": [
+    "Atomer & Molekyler",
+    "Separationsprocesser",
+    "Syror & Baser",
+    "Kolföreningar",
+    "Matens kemi",
+    "Periodiska systemet",
+    "Jonföreningar",
+    "Elektrokemi"
+  ],
+  "Fysik": [
+    "Materia",
+    "Kraft & Rörelse",
+    "Tryck",
+    "Universum",
+    "Ljud",
+    "Ljus",
+    "Magnetism-induktion",
+    "Arbete-Energi-Effekt",
+    "Atomfysik"
+  ]
+};
+
+// ================== GENERERA MENY ==================
+function generateMenu(data) {
+  const menu = document.getElementById("side-menu");
+  menu.innerHTML = ""; // Töm menyn först
+
+  const ul = document.createElement("ul");
+  ul.classList.add("menu-main");
+
+  for (let subject in data) {
+    const li = document.createElement("li");
+
+    // Skapa huvudämne
+    const span = document.createElement("span");
+    span.textContent = subject + " ➕";
+    span.onclick = function() { toggleSubmenu(span); };
+
+    // Skapa undermeny
+    const subUl = document.createElement("ul");
+    subUl.classList.add("submenu");
+
+    data[subject].forEach(area => {
+      const subLi = document.createElement("li");
+      const a = document.createElement("a");
+
+      // Skapa webvänlig länk (exempel: /biologi/vad-ar-liv/index.html)
+      const folder = subject.toLowerCase();
+      const file = area.normalize("NFD").replace(/[\u0300-\u036f]/g, "") // ta bort accenter
+                      .replace(/ /g, "-").toLowerCase();
+      a.href = `/${folder}/${file}/index.html`;
+
+      a.textContent = area;
+      subLi.appendChild(a);
+      subUl.appendChild(subLi);
+    });
+
+    li.appendChild(span);
+    li.appendChild(subUl);
+    ul.appendChild(li);
+  }
+
+  menu.appendChild(ul);
+}
+
+// ================== HAMBURGER-FUNKTION ==================
 function toggleMenu() {
   const menu = document.getElementById("side-menu");
   menu.classList.toggle("open");
 }
 
-// UNDERMENY: Öppna/fäll ihop + för varje ämne
+// ================== UNDERSIDEMENY-FUNKTION ==================
 function toggleSubmenu(el) {
   const submenu = el.nextElementSibling;
   if (submenu) {
     submenu.classList.toggle("open");
-    // Ändra tecknet från + till - när öppen
     if (submenu.classList.contains("open")) {
       el.textContent = el.textContent.replace('➕', '➖');
     } else {
@@ -18,13 +98,13 @@ function toggleSubmenu(el) {
   }
 }
 
-// Stäng menyn om man klickar utanför (valfritt)
+// ================== STÄNG MENY VID KLICK UTOMHUS ==================
 document.addEventListener('click', function(e) {
   const menu = document.getElementById("side-menu");
   const hamburger = document.querySelector(".hamburger");
   if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
     menu.classList.remove("open");
-    // Stäng alla undermenyer
+
     const submenus = document.querySelectorAll(".submenu");
     submenus.forEach(sub => {
       sub.classList.remove("open");
@@ -35,3 +115,8 @@ document.addEventListener('click', function(e) {
     });
   }
 });
+
+// ================== KÖR VID SIDLADDNING ==================
+window.onload = function() {
+  generateMenu(menuData);
+};
