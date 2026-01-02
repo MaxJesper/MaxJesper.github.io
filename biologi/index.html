@@ -6,6 +6,38 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+<!-- Hamburger-knapp -->
+<button class="hamburger" onclick="toggleMenu()">
+  ☰
+</button>
+
+<!-- Sidomeny -->
+<nav id="side-menu">
+  <ul class="menu-main">
+    <li>
+      <span onclick="toggleSubmenu(this)">Biologi ➕</span>
+      <ul class="submenu">
+        <li><a href="/biologi/index.html">Översikt</a></li>
+        <li><a href="/biologi/flashcards.html">Flashcards</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <span onclick="toggleSubmenu(this)">Kemi ➕</span>
+      <ul class="submenu">
+        <li><a href="/kemi/index.html">Översikt</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <span onclick="toggleSubmenu(this)">Fysik ➕</span>
+      <ul class="submenu">
+        <li><a href="/fysik/index.html">Översikt</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
   <!-- Tillbaka-knapp till huvudsidan -->
   <p><a href="../index.html" class="subject-btn">← Tillbaka till huvudsidan</a></p>
 
