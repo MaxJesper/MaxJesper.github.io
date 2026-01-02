@@ -1,132 +1,99 @@
-// ================== DATA FÖR MENYN ==================
-const menuData = {
-  "Biologi": [
-    "Vad är liv?",
-    "Ekologi",
-    "Sex & relationer",
-    "Hjärta-blod-lungor",
-    "Immunologi",
-    "Matspjälkningen",
-    "Nervsystemet",
-    "Sinnena",
-    "Genetik",
-    "Evolution",
-    "Infektionssjukdomar"
-  ],
-  "Kemi": [
-    "Atomer & Molekyler",
-    "Separationsprocesser",
-    "Syror & Baser",
-    "Kolföreningar",
-    "Matens kemi",
-    "Periodiska systemet",
-    "Jonföreningar",
-    "Elektrokemi"
-  ],
-  "Fysik": [
-    "Materia",
-    "Kraft & Rörelse",
-    "Tryck",
-    "Universum",
-    "Ljud",
-    "Ljus",
-    "Magnetism-induktion",
-    "Arbete-Energi-Effekt",
-    "Atomfysik"
-  ]
-};
-
-// ================== GENERERA MENY ==================
-function generateMenu(data) {
+document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("side-menu");
-  menu.innerHTML = ""; // töm menyn
 
-  const ul = document.createElement("ul");
-  ul.classList.add("menu-main");
+  menu.innerHTML = `
+    <ul class="menu-root">
 
-  for (let subject in data) {
-    const li = document.createElement("li");
+      <li class="menu-home">
+        <a href="/index.html">🏠 Hem</a>
+      </li>
 
-    // Huvudämne
-    const span = document.createElement("span");
-    span.textContent = subject + " ➕";
-    span.onclick = function() { toggleSubmenu(span); };
+      ${createSubjectMenu(
+        "Biologi",
+        "biologi",
+        [
+          ["Vad är liv?", "vad-ar-liv"],
+          ["Ekologi", "ekologi"],
+          ["Sex & relationer", "sex-&-relationer"],
+          ["Hjärta-blod-lungor", "hjarta-blod-lungor"],
+          ["Immunologi", "immunologi"],
+          ["Matspjälkningen", "matspjalkningen"],
+          ["Nervsystemet", "nervsystemet"],
+          ["Sinnena", "sinnena"],
+          ["Genetik", "genetik"],
+          ["Evolution", "evolution"],
+          ["Infektionssjukdomar", "infektionssjukdomar"]
+        ]
+      )}
 
-    // Undermeny
-    const subUl = document.createElement("ul");
-    subUl.classList.add("submenu");
+      ${createSubjectMenu(
+        "Kemi",
+        "kemi",
+        [
+          ["Atomer & molekyler", "atomer-&-molekyler"],
+          ["Separationsprocesser", "separationsprocesser"],
+          ["Syror & baser", "syror-&-baser"],
+          ["Kolföreningar", "kolföreningar"],
+          ["Matens kemi", "matens-kemi"],
+          ["Periodiska systemet", "periodiska-systemet"],
+          ["Jonföreningar", "jonforeningar"],
+          ["Elektrokemi", "elektrokemi"]
+        ]
+      )}
 
-    data[subject].forEach(area => {
-      const subLi = document.createElement("li");
-      const a = document.createElement("a");
+      ${createSubjectMenu(
+        "Fysik",
+        "fysik",
+        [
+          ["Materia", "materia"],
+          ["Kraft & rörelse", "kraft-&-rorelse"],
+          ["Tryck", "tryck"],
+          ["Universum", "universum"],
+          ["Ljud", "ljud"],
+          ["Ljus", "ljus"],
+          ["Magnetism & induktion", "magnetism-induktion"],
+          ["Arbete, energi & effekt", "arbete-energi-effekt"],
+          ["Atomfysik", "atomfysik"]
+        ]
+      )}
 
-      const folder = subject.toLowerCase();
-      const file = area.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                      .replace(/ /g, "-").toLowerCase();
-      a.href = `/${folder}/${file}/index.html`;
+    </ul>
+  `;
+});
 
-      a.textContent = area;
-      subLi.appendChild(a);
-      subUl.appendChild(subLi);
-    });
+/* ===== Hjälpfunktioner ===== */
 
-    li.appendChild(span);
-    li.appendChild(subUl);
-    ul.appendChild(li);
-  }
-
-  menu.appendChild(ul);
+function createSubjectMenu(title, folder, items) {
+  return `
+    <li class="menu-subject">
+      <span class="menu-title" onclick="toggleSubmenu(this)">
+        ${title}
+      </span>
+      <ul class="submenu">
+        <li class="overview">
+          <a href="/${folder}/index.html">Ämnet ${title}</a>
+        </li>
+        ${items
+          .map(
+            ([name, path]) =>
+              `<li><a href="/${folder}/${path}/index.html">${name}</a></li>`
+          )
+          .join("")}
+      </ul>
+    </li>
+  `;
 }
 
-// ================== HAMBURGER ==================
 function toggleMenu() {
-  const menu = document.getElementById("side-menu");
-  menu.classList.toggle("open");
+  document.getElementById("side-menu").classList.toggle("open");
 }
 
-// ================== ACCORDION ==================
 function toggleSubmenu(el) {
-  const submenu = el.nextElementSibling;
-  if (!submenu) return;
-
-  // Stäng alla andra undermenyer
-  const allSubmenus = document.querySelectorAll(".submenu");
-  allSubmenus.forEach(sub => {
-    if (sub !== submenu) {
-      sub.classList.remove("open");
-      const parentSpan = sub.previousElementSibling;
-      if (parentSpan) parentSpan.textContent = parentSpan.textContent.replace('➖','➕');
+  document.querySelectorAll(".submenu").forEach(menu => {
+    if (menu !== el.nextElementSibling) {
+      menu.classList.remove("open");
     }
   });
 
-  // Öppna/stäng klickad huvudkategori
-  submenu.classList.toggle("open");
-  if (submenu.classList.contains("open")) {
-    el.textContent = el.textContent.replace('➕','➖');
-    // Scrolla menyn till synligt område
-    submenu.scrollIntoView({behavior: "smooth", block: "nearest"});
-  } else {
-    el.textContent = el.textContent.replace('➖','➕');
-  }
+  el.nextElementSibling.classList.toggle("open");
 }
-
-// ================== STÄNG MENY VID KLICK UTOMHUS ==================
-document.addEventListener('click', function(e) {
-  const menu = document.getElementById("side-menu");
-  const hamburger = document.querySelector(".hamburger");
-  if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
-    menu.classList.remove("open");
-
-    const submenus = document.querySelectorAll(".submenu");
-    submenus.forEach(sub => {
-      sub.classList.remove("open");
-      const parentSpan = sub.previousElementSibling;
-      if (parentSpan) parentSpan.textContent = parentSpan.textContent.replace('➖','➕');
-    });
-  }
-});
-
-// ================== INIT VID SIDLADDNING ==================
-window.onload = function() {
-  generateMenu(menuData);
-};
