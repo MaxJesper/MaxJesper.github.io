@@ -2,75 +2,55 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Startsida</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Undervisningsplattform NO</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- Hamburger-knapp -->
-  <div class="menu-toggle">☰</div>
+<!-- Hamburger-knapp -->
+<button class="hamburger" onclick="toggleMenu()">☰</button>
 
-  <!-- Flytande dropdown-meny -->
-  <nav class="floating-menu">
-    <ul class="main-menu">
-      <li>
-        <span class="expandable">Biologi +</span>
-        <ul class="sub-menu">
-          <li><a href="biologi/flashcards.html">Flash cards</a></li>
-          <li><a href="biologi/ovningar.html">Övningar</a></li>
-        </ul>
-      </li>
-      <li>
-        <span class="expandable">Kemi +</span>
-        <ul class="sub-menu">
-          <li><a href="kemi/flashcards.html">Flash cards</a></li>
-          <li><a href="kemi/ovningar.html">Övningar</a></li>
-        </ul>
-      </li>
-      <li>
-        <span class="expandable">Fysik +</span>
-        <ul class="sub-menu">
-          <li><a href="fysik/flashcards.html">Flash cards</a></li>
-          <li><a href="fysik/ovningar.html">Övningar</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
+<!-- Sidomeny -->
+<nav id="side-menu">
+  <ul class="menu-main">
+    <li>
+      <span onclick="toggleSubmenu(this)">Biologi ➕</span>
+      <ul class="submenu">
+        <li><a href="/biologi/index.html">Översikt</a></li>
+        <li><a href="/biologi/flashcards.html">Flashcards</a></li>
+      </ul>
+    </li>
 
-  <!-- Banner -->
-  <header>
-    <h1>Undervisningsplattform för NO-undervisning på högstadiet</h1>
-    <p class="subheader">Jesper Tordsson</p>
-  </header>
+    <li>
+      <span onclick="toggleSubmenu(this)">Kemi ➕</span>
+      <ul class="submenu">
+        <li><a href="/kemi/index.html">Översikt</a></li>
+      </ul>
+    </li>
 
-  <main>
-    <p>Välj ämne via hamburgermeny uppe till höger.</p>
-  </main>
+    <li>
+      <span onclick="toggleSubmenu(this)">Fysik ➕</span>
+      <ul class="submenu">
+        <li><a href="/fysik/index.html">Översikt</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
 
-  <!-- Script för dropdown och expandering -->
-  <script>
-    const toggle = document.querySelector('.menu-toggle');
-    const menu = document.querySelector('.floating-menu');
+<header>
+  <h1>Undervisningsplattform för NO-undervisning på högstadiet</h1>
+  <p><em>Jesper Tordsson</em></p>
+</header>
 
-    // Visa/gömmen hela menyn
-    toggle.addEventListener('click', () => {
-      if(menu.style.right === '0px'){
-        menu.style.right = '-250px';
-      } else {
-        menu.style.right = '0px';
-      }
-    });
+<main>
+  <p>Välj ämne:</p>
+  <ul>
+    <li><a href="/biologi/index.html">Biologi</a></li>
+    <li><a href="/kemi/index.html">Kemi</a></li>
+    <li><a href="/fysik/index.html">Fysik</a></li>
+  </ul>
+</main>
 
-    // Expandera undermenyer
-    document.querySelectorAll('.expandable').forEach(el => {
-      el.addEventListener('click', e => {
-        const submenu = el.nextElementSibling;
-        if(submenu){
-          submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
-        }
-      });
-    });
-  </script>
 <script src="/js/menu.js"></script>
 </body>
 </html>
