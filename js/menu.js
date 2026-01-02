@@ -39,7 +39,7 @@ const menuData = {
 // ================== GENERERA MENY ==================
 function generateMenu(data) {
   const menu = document.getElementById("side-menu");
-  menu.innerHTML = ""; // Töm menyn först
+  menu.innerHTML = ""; // töm menyn
 
   const ul = document.createElement("ul");
   ul.classList.add("menu-main");
@@ -78,18 +78,18 @@ function generateMenu(data) {
   menu.appendChild(ul);
 }
 
-// ================== HAMBURGER-FUNKTION ==================
+// ================== HAMBURGER ==================
 function toggleMenu() {
   const menu = document.getElementById("side-menu");
   menu.classList.toggle("open");
 }
 
-// ================== UNDERSIDEMENY-FUNKTION ==================
+// ================== ACCORDION ==================
 function toggleSubmenu(el) {
   const submenu = el.nextElementSibling;
   if (!submenu) return;
 
-  // Stäng alla andra huvudämnens undermenyer
+  // Stäng alla andra undermenyer
   const allSubmenus = document.querySelectorAll(".submenu");
   allSubmenus.forEach(sub => {
     if (sub !== submenu) {
@@ -103,8 +103,8 @@ function toggleSubmenu(el) {
   submenu.classList.toggle("open");
   if (submenu.classList.contains("open")) {
     el.textContent = el.textContent.replace('➕','➖');
-    // Scrolla menyn för att visa öppnad kategori
-    submenu.scrollIntoView({behavior: "smooth", block: "start"});
+    // Scrolla menyn till synligt område
+    submenu.scrollIntoView({behavior: "smooth", block: "nearest"});
   } else {
     el.textContent = el.textContent.replace('➖','➕');
   }
@@ -126,7 +126,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ================== KÖR VID SIDLADDNING ==================
+// ================== INIT VID SIDLADDNING ==================
 window.onload = function() {
   generateMenu(menuData);
 };
