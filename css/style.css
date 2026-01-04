@@ -15,10 +15,33 @@ body {
 
 /* =================== HEADER / BANNER =================== */
 header {
-  background-color: black;
+  position: relative;
+  background-image: url("/images/biologi.png");
+  background-size: cover;
+  background-position: center;
   color: white;
-  padding: 20px 30px;
+  padding: 30px 30px;
 }
+
+/* Mörkt overlay för läsbarhet */
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.55); /* justera mellan 0.4–0.7 efter behov */
+  z-index: 0;
+}
+
+/* Se till att texten ligger över overlay */
+header h1,
+header p {
+  position: relative;
+  z-index: 1;
+}
+
 
 header h1 {
   font-size: 2rem;
