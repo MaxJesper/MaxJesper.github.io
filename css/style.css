@@ -16,16 +16,13 @@ body {
 /* =================== HEADER / BANNER =================== */
 header {
   position: relative;
-  background-image: url("/images/biology.png"); /* rätt filnamn nu */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center top;
+  background-image: url("/images/biology.png"); /* byt bild för varje ämne */
+  background-size: cover;       /* fyller hela headern */
+  background-position: center;  /* centrerar bilden */
   color: white;
   padding: 30px 30px;
-
-  min-height: 150px;  /* ger headern höjd */
+  min-height: 250px;           /* justera mellan 200–250px efter önskemål */
 }
-
 
 
 /* Mörkt overlay för läsbarhet */
@@ -36,7 +33,7 @@ header::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4); /* justera mellan 0.4–0.7 efter behov */
+  background-color: rgba(0, 0, 0, 0.55); /* justera mellan 0.4–0.7 efter behov */
   z-index: 0;
 }
 
