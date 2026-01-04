@@ -17,12 +17,13 @@ body {
 header {
   position: relative;
   background-image: url("/images/biology.png"); /* rätt filnamn nu */
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
   color: white;
   padding: 30px 30px;
 
-  min-height: 200px;  /* ger headern höjd */
+  min-height: 150px;  /* ger headern höjd */
 }
 
 
