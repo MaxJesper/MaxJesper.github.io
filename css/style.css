@@ -14,48 +14,44 @@ body {
 }
 
 /* =================== HEADER / BANNER =================== */
-header {
-  position: relative;
-  background-image: url("/images/biology.png"); /* byt bild för varje ämne */
-  background-size: cover;       /* fyller hela headern */
-  background-position: center;  /* centrerar bilden */
-  color: white;
-  padding: 30px 30px;
-  min-height: 250px;           /* justera mellan 200–250px efter önskemål */
+.biologi-header {
+  background-image: url("/images/biology.png");
 }
 
+.kemi-header {
+  background-image: url("/images/chemistry.png");
+}
 
-/* Mörkt overlay för läsbarhet */
+.fysik-header {
+  background-image: url("/images/physics.png");
+}
+
+/* Gemensamma regler för alla headers */
+header {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 30px 30px;
+  min-height: 200px;
+}
+
+/* Overlay */
 header::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.55); /* justera mellan 0.4–0.7 efter behov */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.55);
   z-index: 0;
 }
 
-/* Se till att texten ligger över overlay */
+/* Text ovanpå overlay */
 header h1,
 header p {
   position: relative;
   z-index: 1;
 }
 
-
-header h1 {
-  font-size: 2rem;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-header p {
-  font-size: 1rem;
-  font-style: italic;
-  text-align: left;
-}
 
 /* =================== HUVUDINNEHÅLL =================== */
 main {
