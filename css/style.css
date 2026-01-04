@@ -21,7 +21,13 @@ header {
   background-position: center;
   color: white;
   padding: 30px 30px;
+
+  min-height: 200px; /* justera höjden efter behov */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centrerar text vertikalt */
 }
+
 
 /* Mörkt overlay för läsbarhet */
 header::before {
