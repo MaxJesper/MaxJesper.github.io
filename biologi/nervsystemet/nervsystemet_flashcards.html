@@ -96,18 +96,19 @@ const cards = {
     }
   ],
 
-  C: [
-    {
-      front: "C1 – Vad är ett hormon?",
-      back: "Hormoner är kemiska signalämnen som sprids med blodet och påverkar organ.",
-      deep: "Hormoner bildas i inre-sekretoriska körtlar och förs direkt ut i blodet. De påverkar bara celler som har rätt mottagare. Hormoner styr bland annat tillväxt, stressreaktioner, pubertet och ämnesomsättning."
-    },
-    {
-      front: "C2 – Varför kallas hypofysen för chefskörtel?",
-      back: "För att den styr andra hormonbildande körtlar i kroppen.",
-      deep: "Hypofysen sitter på undersidan av hjärnan och avger hormoner som reglerar andra körtlar, till exempel sköldkörteln och könskörtlarna. På så sätt ser hypofysen till att kroppen producerar lagom mycket hormoner."
-    }
-  ]
+  C: "Hormoner": [
+  {q:"1. Vad är ett hormon?", a:"Ett kemiskt ämne som produceras i körtlar och transporteras med blodet till målorgan.",
+   depth:"Fördjupning: Hormoner styr kroppens funktioner som tillväxt, ämnesomsättning och reproduktion. Exempel: Insulin reglerar blodsocker."},
+  {q:"2. Vad gör insulin?", a:"Sänker blodsockret genom att hjälpa cellerna ta upp glukos.",
+   depth:"Fördjupning: Insulin produceras i bukspottskörteln. Brist på insulin leder till diabetes typ 1."},
+  {q:"3. Vad gör adrenalin?", a:"Förbereder kroppen för snabb handling vid stress eller fara.",
+   depth:"Fördjupning: Ökar hjärtfrekvens, blodtryck och energi. Produceras i binjurarna."},
+  {q:"4. Vad är skillnaden mellan endokrina och exokrina körtlar?", a:"Endokrina utsöndrar hormoner i blodet, exokrina i kanaler.",
+   depth:"Fördjupning: Exempel på exokrina: svettkörtlar, spottkörtlar. Exempel på endokrina: sköldkörtel, binjurar."},
+  {q:"5. Vad gör sköldkörtelhormonerna T3 och T4?", a:"De reglerar ämnesomsättningen.",
+   depth:"Fördjupning: Snabb ämnesomsättning → mer energi och värme. Långsam → trötthet och frusenhet."}
+]
+
 };
 
 let currentCategory = 'A';
