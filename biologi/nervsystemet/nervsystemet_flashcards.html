@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Flashcards – Nervsystemet och hormonsystemet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .card {
+      background: white;
+      width: 70%;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      cursor: pointer;
+    }
+    .counter {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #555;
+    }
+    .nav {
+      margin-top: 15px;
+    }
+    .nav button {
+      padding: 8px 14px;
+      margin: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Nervsystemet & hormonsystemet</h1>
+
+<div class="buttons">
+  <button onclick="setCategory('A')">Kommunikation & nervsystem</button>
+  <button onclick="setCategory('B')">Hjärnan & reflexer</button>
+  <button onclick="setCategory('C')">Hormoner</button>
+</div>
+
+<div class="card" onclick="flipCard()">
+  <div class="counter" id="counter"></div>
+  <div id="cardText"></div>
+</div>
+
+<div class="nav">
+  <button onclick="prevCard()">◀ Föregående</button>
+  <button onclick="nextCard()">Nästa ▶</button>
+</div>
+
+<script>
+const cards = {
+  A: [
+    {
+      front: "A1 – Hur kan celler i kroppen skicka information till varandra?",
+      back: "Celler skickar information med nervimpulser eller med hormoner som sprids i blodet.",
+      deep: "Kroppens celler kommunicerar främst på två sätt: genom nervsystemet och hormonsystemet. Nervsystemet använder elektriska impulser som går mycket snabbt och kan riktas till en exakt plats, till exempel en muskel. Hormoner transporteras med blodet och påverkar ofta flera organ samtidigt, men långsammare och under längre tid."
+    },
+    {
+      front: "A2 – Vad är skillnaden mellan nervsystemet och hormonsystemet?",
+      back: "Nervsystemet är snabbt och exakt, hormonsystemet är långsammare men verkar längre.",
+      deep: "Nervsystemet använder elektriska impulser som leds i nerver med hög hastighet. Hormonsystemet använder kemiska signalämnen som sprids med blodet. Därför passar nervsystemet för snabba reaktioner, medan hormoner styr långsamma processer som tillväxt, pubertet och ämnesomsättning."
+    }
+  ],
+
+  B: [
+    {
+      front: "B1 – Vad är en reflex?",
+      back: "En reflex är en snabb och omedveten reaktion som ofta styrs av ryggmärgen.",
+      deep: "Vid en reflex leds nervimpulsen från sinnesorganet till ryggmärgen där den kopplas om direkt till en motorisk nerv. Muskeln reagerar innan hjärnan hinner tolka situationen. Detta skyddar kroppen från skador, till exempel när man rör vid något varmt."
+    },
+    {
+      front: "B2 – Vilka huvuddelar består hjärnan av?",
+      back: "Hjärnan består av storhjärnan, lillhjärnan och hjärnstammen.",
+      deep: "Storhjärnan står för medvetande, minne, tänkande och viljestyrda rörelser. Lillhjärnan samordnar rörelser och balans. Hjärnstammen styr livsviktiga funktioner som andning, hjärtslag och förbindelsen mellan hjärnan och ryggmärgen."
+    }
+  ],
+
+  C: [
+    {
+      front: "C1 – Vad är ett hormon?",
+      back: "Hormoner är kemiska signalämnen som sprids med blodet och påverkar organ.",
+      deep: "Hormoner bildas i inre-sekretoriska körtlar och förs direkt ut i blodet. De påverkar bara celler som har rätt mottagare. Hormoner styr bland annat tillväxt, stressreaktioner, pubertet och ämnesomsättning."
+    },
+    {
+      front: "C2 – Varför kallas hypofysen för chefskörtel?",
+      back: "För att den styr andra hormonbildande körtlar i kroppen.",
+      deep: "Hypofysen sitter på undersidan av hjärnan och avger hormoner som reglerar andra körtlar, till exempel sköldkörteln och könskörtlarna. På så sätt ser hypofysen till att kroppen producerar lagom mycket hormoner."
+    }
+  ]
+};
+
+let currentCategory = 'A';
+let index = 0;
+let side = 0; // 0 = front, 1 = back, 2 = deep
+
+function updateCard() {
+  const card = cards[currentCategory][index];
+  const counter = `${currentCategory}${index + 1} / ${cards[currentCategory].length}`;
+  document.getElementById("counter").innerText = counter;
+  document.getElementById("cardText").innerText =
+    side === 0 ? card.front : side === 1 ? card.back : card.deep;
+}
+
+function flipCard() {
+  side = (side + 1) % 3;
+  updateCard();
+}
+
+function nextCard() {
+  index = (index + 1) % cards[currentCategory].length;
+  side = 0;
+  updateCard();
+}
+
+function prevCard() {
+  index = (index - 1 + cards[currentCategory].length) % cards[currentCategory].length;
+  side = 0;
+  updateCard();
+}
+
+function setCategory(cat) {
+  currentCategory = cat;
+  index = 0;
+  side = 0;
+  updateCard();
+}
+
+updateCard();
+</script>
+
+</body>
+</html>
