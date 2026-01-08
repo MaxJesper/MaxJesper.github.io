@@ -13,18 +13,35 @@ document.addEventListener("DOMContentLoaded", () => {
     { section: "7.1", question: "Vad kännetecknar nervimpulser?", options: ["Långsamma och kemiska","Sprids i blodet","Snabba och elektriska","Består av hormoner"], correct: 2 },
     { section: "7.1", question: "Vilka nerver leder signaler från sinnesorganen till CNS?", options: ["Motoriska nerver","Sensoriska nerver","Autonoma nerver","Reflexnerver"], correct: 1 },
     { section: "7.1", question: "Vad är skillnaden mellan medvetna och omedvetna reaktioner?", options: ["Omedvetna styrs av hjärnan","Medvetna sker innan reflexen","Medvetna styrs av hjärnan, reflexer av ryggmärgen","Reflexer tar längre tid"], correct: 2 },
+    { section: "7.1", question: "Hur kommunicerar celler med varandra?", options: ["Med blodcirkulationen","Via nervimpulser och hormoner","Genom skelettet","Genom huden"], correct: 1 },
 
     // 7.2 Hjärnan
     { section: "7.2", question: "Vilka tre delar består hjärnan av?", options: ["Storhjärnan, lillhjärnan, hjärnstammen","Storhjärnan, ryggmärgen, lillhjärnan","Storhjärnan, hypofysen, lillhjärnan","Hjärnbarken, lillhjärnan, hjärnbalken"], correct: 0 },
     { section: "7.2", question: "Vilken funktion har lillhjärnan?", options: ["Styr viljestyrda rörelser","Samordnar balans och muskelrörelser","Lagrar minnen","Producerar hormoner"], correct: 1 },
     { section: "7.2", question: "Vad lagras i storhjärnans bark?", options: ["Axon och myelin","Cellkroppar som tänker och lagrar minnen","Blodkärl och vätska","Reflexer"], correct: 1 },
     { section: "7.2", question: "Vilken halva av hjärnan ansvarar för logik och tal?", options: ["Höger","Vänster","Båda lika","Lillhjärnan"], correct: 1 },
+    { section: "7.2", question: "Vilka delar styr livsviktiga funktioner som andning och hjärtslag?", options: ["Storhjärnan","Lillhjärnan","Hjärnstammen","Ryggmärgen"], correct: 2 },
 
     // 7.3 Hormonsystemet
     { section: "7.3", question: "Vad är ett hormon?", options: ["Elektrisk impuls i en nerv","Signalämne som sprids med blodet","Molekyl i muskler","Reflex"], correct: 1 },
     { section: "7.3", question: "Vilket hormon sänker blodsockret?", options: ["Insulin","Adrenalin","Testosteron","T3"], correct: 0 },
     { section: "7.3", question: "Vilket hormon frigörs vid stress och fara?", options: ["Adrenalin","Progesteron","Östrogen","Acetylkolin"], correct: 0 },
-    { section: "7.3", question: "Vilken körtel kallas chefskörtel och styr andra körtlar?", options: ["Sköldkörteln","Binjurarna","Hypofysen","Bukspottkörteln"], correct: 2 }
+    { section: "7.3", question: "Vilken körtel kallas chefskörtel och styr andra körtlar?", options: ["Sköldkörteln","Binjurarna","Hypofysen","Bukspottkörteln"], correct: 2 },
+    { section: "7.3", question: "Vad gör T3 och T4?", options: ["Reglerar hjärtfrekvensen","Reglerar ämnesomsättningen","Sänker blodsockret","Ökar reflexer"], correct: 1 },
+    { section: "7.3", question: "Vilken körtel producerar adrenalin?", options: ["Hypofysen","Sköldkörteln","Binjurarna","Bukspottkörteln"], correct: 2 },
+    { section: "7.3", question: "Vad gör endokrina körtlar?", options: ["Utsöndrar hormoner i blodet","Utsöndrar vätska via kanaler","Styr muskler","Skyddar kroppen mot infektion"], correct: 0 },
+    { section: "7.3", question: "Vad gör exokrina körtlar?", options: ["Utsöndrar hormoner i blodet","Utsöndrar sekret i kanaler","Styr nervimpulser","Producerar reflexer"], correct: 1 },
+    { section: "7.3", question: "Vilket hormon påverkar pubertet hos människor?", options: ["Östrogen, progesteron, testosteron","Insulin och adrenalin","T3 och T4","Endorfin"], correct: 0 },
+    { section: "7.3", question: "Vad gör insulin?", options: ["Höjer blodsockret","Sänker blodsockret genom att hjälpa cellerna ta upp glukos","Ökar hjärtfrekvensen","Påverkar andningen"], correct: 1 },
+
+    // 7.4 Fler frågor om hjärnan och nervsystem
+    { section: "7.4", question: "Vad är en reflex?", options: ["En viljestyrd rörelse","En långsam hormonreaktion","En snabb och omedveten reaktion","En muskelrörelse som styrs av hjärtat"], correct: 2 },
+    { section: "7.4", question: "Vad är en reflexbåge?", options: ["Sensorisk nerv → ryggmärg → motorisk nerv → muskel","Hjärnan → muskel → sensorisk nerv → ryggmärg","Endokrin signal → muskel","Synaps → muskel → nerv"], correct: 0 },
+    { section: "7.4", question: "Vad gör lillhjärnan?", options: ["Samordnar muskler och balans","Reglerar hjärtfrekvens","Producerar hormoner","Sköter medvetna handlingar"], correct: 0 },
+    { section: "7.4", question: "Vilket signalsubstans gör att muskler drar ihop sig?", options: ["Acetylkolin","Insulin","Adrenalin","Endorfin"], correct: 0 },
+    { section: "7.4", question: "Vad är hjärnbarken?", options: ["Yttre lagret av storhjärnan","Lillhjärnan","Hjärnstammen","Reflexcentrum"], correct: 0 },
+    { section: "7.4", question: "Vad styr höger hjärnhalva?", options: ["Kreativitet och konst","Logik och matematik","Reflexer","Hormoner"], correct: 0 },
+    { section: "7.4", question: "Vad styr vänster hjärnhalva?", options: ["Kreativitet och konst","Logik, tal och matematik","Reflexer","Hormoner"], correct: 1 }
   ];
 
   // ==== Elementreferenser ====
