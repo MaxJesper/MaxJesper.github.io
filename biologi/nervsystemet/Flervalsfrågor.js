@@ -176,3 +176,12 @@ function renderHighscores() {
 }
 
 renderHighscores();
+
+// Nollställ-knapp
+document.getElementById("resetButton").addEventListener("click", function() {
+    if(confirm("Vill du verkligen nollställa alla resultat?")) {
+        localStorage.removeItem("nervsystemetHighscores");
+        alert("Resultaten har nollställts.");
+        location.reload(); // uppdaterar sidan
+    }
+});
