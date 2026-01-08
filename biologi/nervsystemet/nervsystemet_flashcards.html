@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
+      background: #D6F5D6; /* Ljusgrön bakgrund */
       text-align: center;
       padding: 20px;
     }
@@ -42,6 +42,11 @@
       margin: 5px;
       cursor: pointer;
     }
+    a.subject-btn {
+      text-decoration: none;
+      font-weight: bold;
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -55,7 +60,7 @@
 <div class="buttons">
   <button onclick="setCategory('A')">Kommunikation & nervsystem</button>
   <button onclick="setCategory('B')">Hjärnan & reflexer</button>
-  <button onclick="setCategory('C')">Hormoner</button>
+  <button onclick="setCategory('C')">Hormoner & körtlar</button>
 </div>
 
 <div class="card" onclick="flipCard()">
@@ -71,44 +76,122 @@
 <script>
 const cards = {
   A: [
-    {
-      front: "A1 – Hur kan celler i kroppen skicka information till varandra?",
-      back: "Celler skickar information med nervimpulser eller med hormoner som sprids i blodet.",
-      deep: "Kroppens celler kommunicerar främst på två sätt: genom nervsystemet och hormonsystemet. Nervsystemet använder elektriska impulser som går mycket snabbt och kan riktas till en exakt plats, till exempel en muskel. Hormoner transporteras med blodet och påverkar ofta flera organ samtidigt, men långsammare och under längre tid."
-    },
-    {
-      front: "A2 – Vad är skillnaden mellan nervsystemet och hormonsystemet?",
-      back: "Nervsystemet är snabbt och exakt, hormonsystemet är långsammare men verkar längre.",
-      deep: "Nervsystemet använder elektriska impulser som leds i nerver med hög hastighet. Hormonsystemet använder kemiska signalämnen som sprids med blodet. Därför passar nervsystemet för snabba reaktioner, medan hormoner styr långsamma processer som tillväxt, pubertet och ämnesomsättning."
-    }
+    {front:"A1 – Hur kan celler i kroppen skicka information till varandra?", 
+     back:"Celler skickar information med nervimpulser eller hormoner som sprids i blodet.", 
+     deep:"Fördjupning: Nervsystemet använder elektriska impulser som sprids i nerver med hög hastighet och kan nå en specifik muskel på bråkdelen av en sekund. Hormonsystemet använder kemiska signalämnen som sprids via blodet och påverkar ofta flera organ samtidigt. Exempel: Insulin reglerar blodsocker, adrenalin ökar pulsen vid stress."},
+
+    {front:"A2 – Vad är skillnaden mellan nervsystemet och hormonsystemet?", 
+     back:"Nervsystemet är snabbt och exakt, hormonsystemet är långsammare men verkar längre.", 
+     deep:"Fördjupning: Nervsystemet är perfekt för snabba reaktioner som reflexer. Hormonsystemet är bättre för långsamma processer som pubertet, ämnesomsättning och stressrespons. Exempel: En adrenalinsprutning ger snabb ökning av puls, medan tillväxthormon verkar långsamt över månader."},
+
+    {front:"A3 – Vad är en nervimpuls?", 
+     back:"En elektrisk signal som skickas längs en nervcell.", 
+     deep:"Fördjupning: Nervimpulsen är en kortvarig elektrisk förändring över nervcellens membran. Den kan färdas upp till 100 m/s. Exempel: När du drar bort handen från en varm spis skickas impulser från fingertoppar till ryggmärgen och vidare till musklerna."},
+
+    {front:"A4 – Vad kallas nerver som leder signaler till CNS?", 
+     back:"Sensoriska nerver", 
+     deep:"Fördjupning: Sensoriska nerver tar emot signaler från sinnesorgan som ögon, hud och öron och leder dem till hjärna och ryggmärg. Exempel: Tryck mot huden registreras av sensoriska nerver och gör att du känner det."},
+
+    {front:"A5 – Vad kallas nerver som leder signaler från CNS?", 
+     back:"Motoriska nerver", 
+     deep:"Fördjupning: Motoriska nerver skickar impulser från hjärna eller ryggmärg till muskler så att vi kan röra oss. Exempel: När du lyfter en bok aktiveras motoriska nerver i armen och handen."},
+
+    {front:"A6 – Vad är en reflex?", 
+     back:"En snabb och omedveten reaktion som styrs av ryggmärgen.", 
+     deep:"Fördjupning: Reflexen går direkt från sensoriska nerver till ryggmärgen och tillbaka till musklerna utan att hjärnan först tolkar signalen. Exempel: Knäreflexen när knäskålen slås på och benet sträcks ut."},
+
+    {front:"A7 – Skillnad mellan medfödda och inlärda reflexer?", 
+     back:"Medfödda är automatiska, inlärda måste tränas.", 
+     deep:"Fördjupning: Blinkreflexen är medfödd, barnet blinkar automatiskt. Att cykla är en inlärd reflex som blir automatisk efter träning."},
+
+    {front:"A8 – Vad är en nervcell?", 
+     back:"En cell som kan leda elektriska impulser.", 
+     deep:"Fördjupning: Nervcellen har dendriter som tar emot impulser, en cellkropp med kärna och ett axon som skickar vidare signalen. Långa axoner kan vara upp till en meter. Exempel: Synnerver från ögonen består av tusentals nervceller."},
+
+    {front:"A9 – Vad är myelin?", 
+     back:"Isolerande hölje runt nervcellens axon.", 
+     deep:"Fördjupning: Myelin hindrar impulser från att spridas okontrollerat och ökar hastigheten. Exempel: Sjukdomen MS bryter ner myelin vilket leder till långsammare nervsignaler."},
+
+    {front:"A10 – Vad är en synaps?", 
+     back:"Kontaktställe mellan nervcell och mottagande cell.", 
+     deep:"Fördjupning: I synapsen frigörs signalämnen som startar ny impuls i nästa nervcell eller får en muskel att dra ihop sig. Exempel: Acetylkolin gör att muskler spänns, curare blockerar detta."}
   ],
 
   B: [
-    {
-      front: "B1 – Vad är en reflex?",
-      back: "En reflex är en snabb och omedveten reaktion som ofta styrs av ryggmärgen.",
-      deep: "Vid en reflex leds nervimpulsen från sinnesorganet till ryggmärgen där den kopplas om direkt till en motorisk nerv. Muskeln reagerar innan hjärnan hinner tolka situationen. Detta skyddar kroppen från skador, till exempel när man rör vid något varmt."
-    },
-    {
-      front: "B2 – Vilka huvuddelar består hjärnan av?",
-      back: "Hjärnan består av storhjärnan, lillhjärnan och hjärnstammen.",
-      deep: "Storhjärnan står för medvetande, minne, tänkande och viljestyrda rörelser. Lillhjärnan samordnar rörelser och balans. Hjärnstammen styr livsviktiga funktioner som andning, hjärtslag och förbindelsen mellan hjärnan och ryggmärgen."
-    }
+    {front:"B1 – Vilka huvuddelar består hjärnan av?", 
+     back:"Storhjärnan, lillhjärnan, hjärnstammen.", 
+     deep:"Fördjupning: Storhjärnan styr medvetande, minne, tänkande och viljestyrda rörelser. Lillhjärnan samordnar balans och muskelrörelser. Hjärnstammen styr hjärtfrekvens, andning och kopplingen mellan hjärna och ryggmärg."},
+
+    {front:"B2 – Vad är hjärnbarken?", 
+     back:"Yttre lagret av storhjärnan med nervcellskroppar.", 
+     deep:"Fördjupning: Här sker tänkande, minne och tolkning av sinnesintryck. Exempel: Synintryck tolkas i synbarken, tal i talbarken."},
+
+    {front:"B3 – Vad gör lillhjärnan?", 
+     back:"Samordnar muskler och balans.", 
+     deep:"Fördjupning: Tar emot signaler från ögon, balansorgan och muskler och ser till att rörelser blir mjuka och precisa. Exempel: När man går på lina koordinerar lillhjärnan varje steg."},
+
+    {front:"B4 – Vad är en motorikreflex?", 
+     back:"En rörelse som styrs av hjärnan och muskler.", 
+     deep:"Fördjupning: Motorikreflexer kan vara medfödda som att gå eller inlärda som att cykla. Hjärnan och ryggmärgen samarbetar för att koordinera dessa rörelser."},
+
+    {front:"B5 – Skillnader mellan vänster och höger hjärnhalva?", 
+     back:"Vänster logisk, höger kreativ.", 
+     deep:"Fördjupning: Vänster hjärnhalva styr tal, läsning, skrivning och matematik. Höger styr konstnärliga förmågor, ansiktsigenkänning och melodier. Samarbetar alltid för helheten."},
+
+    {front:"B6 – Vad är en reflexbåge?", 
+     back:"Vägen impuls går vid en reflex.", 
+     deep:"Fördjupning: Sensorisk nerv → ryggmärg → motorisk nerv → muskel. Exempel: Stick i fingret → handen dras bort innan hjärnan hinner tolka smärtan."},
+
+    {front:"B7 – Vad är medveten handling?", 
+     back:"När hjärnan tolkar signaler och styr rörelser.", 
+     deep:"Fördjupning: Allt vi gör medvetet, som att skriva eller rita, kräver hjärnans bearbetning och planering."},
+
+    {front:"B8 – Hur fungerar association i hjärnan?", 
+     back:"Hjärnan kopplar ihop minnen med varandra.", 
+     deep:"Fördjupning: När man ser en ros kan hjärnan aktivera minnet av dess färg, doft och känsla. Detta gör oss kreativa och fantasifulla."}
   ],
 
-C: [
-  {front:"C1 – Vad är ett hormon?", back:"Ett kemiskt ämne som produceras i körtlar och transporteras med blodet till målorgan.",
-   deep:"Fördjupning: Hormoner styr kroppens funktioner som tillväxt, ämnesomsättning och reproduktion. Exempel: Insulin reglerar blodsocker."},
-  {front:"C2 – Vad gör insulin?", back:"Sänker blodsockret genom att hjälpa cellerna ta upp glukos.",
-   deep:"Fördjupning: Insulin produceras i bukspottskörteln. Brist på insulin leder till diabetes typ 1."},
-  {front:"C3 – Vad gör adrenalin?", back:"Förbereder kroppen för snabb handling vid stress eller fara.",
-   deep:"Fördjupning: Ökar hjärtfrekvens, blodtryck och energi. Produceras i binjurarna."},
-  {front:"C4 – Vad är skillnaden mellan endokrina och exokrina körtlar?", back:"Endokrina utsöndrar hormoner i blodet, exokrina i kanaler.",
-   deep:"Fördjupning: Exempel på exokrina: svettkörtlar, spottkörtlar. Exempel på endokrina: sköldkörtel, binjurar."},
-  {front:"C5 – Vad gör sköldkörtelhormonerna T3 och T4?", back:"De reglerar ämnesomsättningen.",
-   deep:"Fördjupning: Snabb ämnesomsättning → mer energi och värme. Långsam → trötthet och frusenhet."}
-]
+  C: [
+    {front:"C1 – Vad är ett hormon?", 
+     back:"Ett kemiskt ämne som produceras i körtlar och transporteras med blodet till målorgan.", 
+     deep:"Fördjupning: Hormoner styr kroppens funktioner som tillväxt, ämnesomsättning och reproduktion. Exempel: Insulin reglerar blodsocker, adrenalin ökar vakenhet och puls."},
 
+    {front:"C2 – Vad gör insulin?", 
+     back:"Sänker blodsockret genom att hjälpa cellerna ta upp glukos.", 
+     deep:"Fördjupning: Produceras i bukspottkörteln. Brist leder till diabetes typ 1. Överdrivet intag av socker utan insulin leder till högt blodsocker."},
+
+    {front:"C3 – Vad gör adrenalin?", 
+     back:"Förbereder kroppen för snabb handling vid stress eller fara.", 
+     deep:"Fördjupning: Ökar hjärtfrekvens, blodtryck och energi. Exempel: Fly eller fäkta-svar vid fara, adrenalinet skickas ut från binjurarna."},
+
+    {front:"C4 – Vad är skillnaden mellan endokrina och exokrina körtlar?", 
+     back:"Endokrina utsöndrar hormoner i blodet, exokrina i kanaler.", 
+     deep:"Fördjupning: Exempel på exokrina körtlar: svettkörtlar, spottkörtlar. Exempel på endokrina: sköldkörtel, binjurar. Endokrina påverkar kroppen via blodet, exokrina via kanaler."},
+
+    {front:"C5 – Vad gör sköldkörtelhormonerna T3 och T4?", 
+     back:"De reglerar ämnesomsättningen.", 
+     deep:"Fördjupning: T3 och T4 ökar cellernas ämnesomsättning, ger mer energi och värme. För lite hormon → trötthet och frusenhet. För mycket → giftstruma, varm och viktnedgång."},
+
+    {front:"C6 – Vad gör hypofysen?", 
+     back:"Styr andra hormonbildande körtlar och tillväxt.", 
+     deep:"Fördjupning: Hypofysen sitter under hjärnan och avger tillväxthormon. Påverkar sköldkörteln, testiklar och äggstockar. Exempel: Brist på tillväxthormon → kortvuxenhet."},
+
+    {front:"C7 – Vad gör binjurarna?", 
+     back:"Producerar bl.a. adrenalin.", 
+     deep:"Fördjupning: Binjurarna sitter ovanför njurarna. Adrenalin förbereder kroppen på stress, ökar hjärtfrekvens, blodtryck och energi. Exempel: När man blir rädd för en hund."},
+
+    {front:"C8 – Vad gör könshormoner?", 
+     back:"Påverkar pubertet och reproduktion.", 
+     deep:"Fördjupning: Äggstockar producerar östrogen och progesteron som styr menstruation. Testiklar producerar testosteron som stimulerar muskler och skäggväxt. Exempel: Pubertetsutveckling hos tonåringar."},
+
+    {front:"C9 – Vad är endorfin?", 
+     back:"Ett signalämne som ger vällust och smärtlindring.", 
+     deep:"Fördjupning: Frigörs vid fysisk aktivitet, motion och glädje. Exempel: Känslan av eufori efter ett träningspass. Opiater fungerar på liknande sätt men kan ge beroende."},
+
+    {front:"C10 – Vad gör acetylkolin?", 
+     back:"Signalämne som får muskler att dra ihop sig.", 
+     deep:"Fördjupning: När nervceller aktiverar muskler frigörs acetylkolin. Gifter som curare blockerar detta och orsakar förlamning."}
+  ]
 };
 
 let currentCategory = 'A';
