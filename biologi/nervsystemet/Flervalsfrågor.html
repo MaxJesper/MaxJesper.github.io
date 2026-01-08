@@ -3,60 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Flervalsfrågor – Nervsystemet</title>
-
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    button {
-      margin: 6px 0;
-      padding: 6px 10px;
-      cursor: pointer;
-    }
-
-    .option {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-
-    .correct {
-      background-color: #c8f7c5;
-    }
-
-    .incorrect {
-      background-color: #f7c5c5;
-    }
-
-    #timer {
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    table {
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #999;
-      padding: 6px 10px;
-      text-align: center;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { margin: 5px; padding: 10px; }
+    .correct { background-color: #4CAF50; color: white; }
+    .incorrect { background-color: #f44336; color: white; }
+    #timer { font-weight: bold; margin-bottom: 10px; }
+    #quiz div { margin-bottom: 20px; }
+    #finalResult { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+    table { border-collapse: collapse; width: 50%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 5px; text-align: center; }
+    th { background-color: #f2f2f2; }
+    #topButtons { margin-bottom: 20px; }
   </style>
 </head>
-
 <body>
 
-<button onclick="window.location.href='index.html'">⬅ Tillbaka</button>
-
-<h1>Flervalsfrågor om nervsystemet, hjärnan och hormoner</h1>
-
-<button id="startBtn">Starta testet</button>
-<button id="resetButton">Nollställ resultat</button>
-
+<div id="topButtons">
+  <button onclick="window.location.href='index.html'">⬅ Tillbaka</button>
+  <button id="startBtn">Starta testet</button>
+  <button id="retryButton">Nytt försök</button>
+  <button id="resetButton">Nollställ resultat</button>
+</div>
 
 <div id="timer" style="display:none;">Tid: 0 s</div>
 
@@ -66,20 +34,22 @@
 
 <div id="finalResult"></div>
 
-<h2>🏆 Bästa resultat</h2>
+<h2>Topplista – Topp 3</h2>
 <table>
   <thead>
     <tr>
       <th>Placering</th>
-      <th>Rätt</th>
-      <th>Tid (s)</th>
+      <th>Rätt svar</th>
+      <th>Tid (sek)</th>
     </tr>
   </thead>
-  <tbody id="highscoreTable"></tbody>
+  <tbody id="highscoreTable">
+    <!-- Highscore genereras av JS -->
+  </tbody>
 </table>
 
-<!-- LÄNK TILL JAVASCRIPT -->
-<script src="Flervalsfrågor.js"></script>
+<!-- Länk till JS -->
+<script src="nerv_quiz.js"></script>
 
 </body>
 </html>
