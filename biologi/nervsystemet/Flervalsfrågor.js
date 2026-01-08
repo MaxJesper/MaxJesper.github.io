@@ -7,6 +7,7 @@ const sectionResults = {};
 
 // ====== FRÅGOR ======
 const questions = [
+  // 7.1 Nervsystemet
   {
     section: "7.1",
     question: "Vad är nervsystemets huvuduppgift?",
@@ -30,7 +31,66 @@ const questions = [
     correct: 2
   },
   {
+    section: "7.1",
+    question: "Vad kallas nerver som leder impulser från sinnesorgan till CNS?",
+    options: [
+      "Motoriska nerver",
+      "Sensoriska nerver",
+      "Autonoma nerver",
+      "Reflexnerver"
+    ],
+    correct: 1
+  },
+
+  // 7.2 Hjärnan
+  {
     section: "7.2",
+    question: "Vilka huvuddelar består hjärnan av?",
+    options: [
+      "Storhjärnan, lillhjärnan och hjärnstammen",
+      "Storhjärnan och ryggmärgen",
+      "Hjärnbalken och lillhjärnan",
+      "Endast storhjärnan"
+    ],
+    correct: 0
+  },
+  {
+    section: "7.2",
+    question: "Vilken del samordnar balans och muskelrörelser?",
+    options: [
+      "Storhjärnan",
+      "Hjärnstammen",
+      "Lillhjärnan",
+      "Ryggmärgen"
+    ],
+    correct: 2
+  },
+  {
+    section: "7.2",
+    question: "Vad gör vänster hjärnhalva särskilt bra?",
+    options: [
+      "Konst och musik",
+      "Tal, läsning, logiskt tänkande",
+      "Känna igen ansikten",
+      "Balans och koordination"
+    ],
+    correct: 1
+  },
+  {
+    section: "7.2",
+    question: "Vad innebär associering i hjärnan?",
+    options: [
+      "Att koppla ihop olika minnen och upplevelser",
+      "Att lagra minnen i lillhjärnan",
+      "Att skicka reflexsignaler utan hjärnan",
+      "Att stimulera hormoner i blodet"
+    ],
+    correct: 0
+  },
+
+  // 7.3 Reflexer
+  {
+    section: "7.3",
     question: "Vad är en reflex?",
     options: [
       "En viljestyrd rörelse",
@@ -42,14 +102,95 @@ const questions = [
   },
   {
     section: "7.3",
-    question: "Vad gör insulin?",
+    question: "Vad sker vid knäreflexen?",
     options: [
-      "Höjer blodsockret",
-      "Sänker blodsockret",
-      "Ökar hjärtfrekvensen",
-      "Påverkar andningen"
+      "Hjärnan tolkar slaget innan benet rör sig",
+      "Impulsen går direkt till ryggmärgen och benet sträcks ut",
+      "Reflexen styrs av lillhjärnan",
+      "Benet rör sig slumpmässigt"
     ],
     correct: 1
+  },
+
+  // 7.11 Hormoner
+  {
+    section: "7.11",
+    question: "Vad är ett hormon?",
+    options: [
+      "Ett kemiskt ämne som transporteras i blodet",
+      "En elektrisk impuls i nerver",
+      "En del av hjärnan",
+      "Ett muskelfibrer"
+    ],
+    correct: 0
+  },
+  {
+    section: "7.11",
+    question: "Vad gör insulin?",
+    options: [
+      "Ökar blodsockret",
+      "Sänker blodsockret",
+      "Ökar hjärtfrekvensen",
+      "Stänger luftrören"
+    ],
+    correct: 1
+  },
+  {
+    section: "7.11",
+    question: "Vilket hormon produceras vid stress eller fara?",
+    options: [
+      "Insulin",
+      "Adrenalin",
+      "Endorfin",
+      "Tillväxthormon"
+    ],
+    correct: 1
+  },
+  {
+    section: "7.11",
+    question: "Vilka körtlar styr könshormoner?",
+    options: [
+      "Binjurarna",
+      "Hypofysen",
+      "Testiklar och äggstockar",
+      "Sköldkörteln"
+    ],
+    correct: 2
+  },
+
+  // 7.14 Autonoma nervsystemet
+  {
+    section: "7.14",
+    question: "Vilken del av nervsystemet styr självgående funktioner som hjärta och tarmar?",
+    options: [
+      "Centrala nervsystemet",
+      "Autonoma nervsystemet",
+      "Motoriska nerver",
+      "Sensoriska nerver"
+    ],
+    correct: 1
+  },
+  {
+    section: "7.14",
+    question: "Vad gör det sympatiska nervsystemet vid fara?",
+    options: [
+      "Sänker pulsen och lugnar kroppen",
+      "Ökar hjärtfrekvens, blodflöde till muskler",
+      "Startar matsmältningen",
+      "Stänger andningen"
+    ],
+    correct: 1
+  },
+  {
+    section: "7.14",
+    question: "Vad gör parasympatiska nervsystemet när kroppen är lugn?",
+    options: [
+      "Ökar pulsen",
+      "Stänger tarmarna",
+      "Stimulerar matsmältning och lugnar hjärtat",
+      "Aktiverar muskler för flykt"
+    ],
+    correct: 2
   }
 ];
 
@@ -175,13 +316,41 @@ function renderHighscores() {
   });
 }
 
-renderHighscores();
-
-// Nollställ-knapp
+// ====== NOLLSTÄLL RESULTAT ======
 document.getElementById("resetButton").addEventListener("click", function() {
     if(confirm("Vill du verkligen nollställa alla resultat?")) {
-        localStorage.removeItem("nervsystemetHighscores");
+        localStorage.removeItem("nerv_quiz_scores");
+        totalCorrect = 0;
+        answered = 0;
+        for (let sec in sectionResults) {
+            sectionResults[sec].correct = 0;
+            sectionResults[sec].total = 0;
+        }
+        document.getElementById("quiz").innerHTML = "";
+        document.getElementById("sectionScore").innerHTML = "";
+        document.getElementById("finalResult").innerHTML = "";
+        renderHighscores();
         alert("Resultaten har nollställts.");
-        location.reload(); // uppdaterar sidan
     }
 });
+
+// ====== NYTT FÖRSÖK ======
+document.getElementById("retryButton").addEventListener("click", function() {
+    totalCorrect = 0;
+    answered = 0;
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+
+    for (let sec in sectionResults) {
+        sectionResults[sec].correct = 0;
+        sectionResults[sec].total = 0;
+    }
+
+    document.getElementById("quiz").innerHTML = "";
+    document.getElementById("sectionScore").innerHTML = "";
+    document.getElementById("finalResult").innerHTML = "";
+
+    loadQuiz();
+});
+
+renderHighscores();
