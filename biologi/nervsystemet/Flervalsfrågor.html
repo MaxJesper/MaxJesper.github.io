@@ -1,222 +1,83 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<title>Flervalsfrågor – Nervsystemet</title>
+  <meta charset="UTF-8">
+  <title>Flervalsfrågor – Nervsystemet</title>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  margin: 0;
-  padding: 20px;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
 
-a.back {
-  text-decoration: none;
-  font-size: 16px;
-  color: #0056b3;
-}
+    button {
+      margin: 6px 0;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
 
-h1, h2 {
-  text-align: center;
-}
+    .option {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
 
-.section {
-  background: white;
-  padding: 15px;
-  margin: 20px auto;
-  max-width: 900px;
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}
+    .correct {
+      background-color: #c8f7c5;
+    }
 
-.question {
-  margin-bottom: 10px;
-}
+    .incorrect {
+      background-color: #f7c5c5;
+    }
 
-.options label {
-  display: block;
-  margin: 5px 0;
-  cursor: pointer;
-}
+    #timer {
+      font-weight: bold;
+      margin: 10px 0;
+    }
 
-.feedback {
-  margin-top: 5px;
-  font-weight: bold;
-}
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
 
-.correct { color: green; }
-.wrong { color: red; }
-
-#result {
-  max-width: 900px;
-  margin: 30px auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 6px;
-  text-align: center;
-}
-</style>
+    th, td {
+      border: 1px solid #999;
+      padding: 6px 10px;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
 
-<a class="back" href="index.html">← Tillbaka</a>
+<button onclick="window.location.href='index.html'">⬅ Tillbaka</button>
 
 <h1>Flervalsfrågor om nervsystemet, hjärnan och hormoner</h1>
 
+<button id="startBtn">Starta testet</button>
+
+<div id="timer" style="display:none;">Tid: 0 s</div>
+
 <div id="quiz"></div>
 
-<div id="result" style="display:none;"></div>
+<div id="sectionScore"></div>
 
-<script>
-const quizData = [
-{
-title:"7.1 Nervsystemet",
-questions:[
-{q:"Hur kan celler i kroppen skicka information till varandra?",
-a:["Genom blodkroppar","Med hormoner och nervimpulser","Genom muskler","Med näringsämnen"],c:1},
-{q:"Varför är nervsystemet snabbare än hormonsystemet?",
-a:["Mer energi","Hormoner bryts ner","Elektriska impulser i nerver","Hormoner når inte hjärnan"],c:2},
-{q:"Vad ingår i det centrala nervsystemet?",
-a:["Alla nerver","Hjärnan och ryggmärgen","Muskler","Sinnesorgan"],c:1},
-{q:"Vilken uppgift har sensoriska nerver?",
-a:["Styra muskler","Leda impulser till CNS","Koppla hjärnceller","Skapa hormoner"],c:1},
-{q:"Vad kännetecknar en reflex?",
-a:["Viljestyrd","Går via hjärnan","Långsam","Snabb och omedveten"],c:3}
-]
-},
+<div id="finalResult"></div>
 
-{
-title:"7.2 Hjärnan",
-questions:[
-{q:"Varför behöver hjärnan ett extra bra skydd?",
-a:["Den är tung","Den är mjuk","Den är fet","Den arbetar långsamt"],c:1},
-{q:"Varför skadas hjärnan snabbt vid syrebrist?",
-a:["Lagrar syre","Kan inte lagra socker och syre","Arbetar ibland","Saknar blod"],c:1},
-{q:"Vilken del ansvarar för tänkande och minne?",
-a:["Hjärnstammen","Lillhjärnan","Storhjärnan","Ryggmärgen"],c:2},
-{q:"Vad händer om syncentrum skadas?",
-a:["Ögonen förstörs","Balansen påverkas","Hörseln minskar","Blind trots friska ögon"],c:3},
-{q:"Vad gör lillhjärnan?",
-a:["Minneslagring","Tänkande","Hormoner","Balans och samordning"],c:3}
-]
-},
+<h2>🏆 Bästa resultat</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Placering</th>
+      <th>Rätt</th>
+      <th>Tid (s)</th>
+    </tr>
+  </thead>
+  <tbody id="highscoreTable"></tbody>
+</table>
 
-{
-title:"7.13 Nervsystemets signalämnen",
-questions:[
-{q:"Vad kallas kontaktstället mellan nervceller?",
-a:["Dendrit","Axon","Synaps","Nerv"],c:2},
-{q:"Vad händer i ändplattan?",
-a:["Impuls stoppas","Signalämne frisätts","Muskeln slappnar av","Myelin bryts ner"],c:1},
-{q:"Vilket ämne aktiverar muskler?",
-a:["Endorfin","Dopamin","Serotonin","Acetylkolin"],c:3},
-{q:"Varför är nervgaser farliga?",
-a:["Stoppar impulser","Förstör nervceller","Ger ständig kramp","Sänker puls"],c:2},
-{q:"Hur verkar endorfin?",
-a:["Ökar stress","Ger smärta","Dämpar smärta","Stoppar impulser"],c:2}
-]
-},
-
-{
-title:"7.14 Det autonoma nervsystemet",
-questions:[
-{q:"Vad styr autonoma nervsystemet?",
-a:["Viljestyrda rörelser","Tankar","Ofrivilliga funktioner","Sinnen"],c:2},
-{q:"Vad gör sympatiska nervsystemet?",
-a:["Varvar ner","Ökar matsmältning","Förbereder för stress","Sänker puls"],c:2},
-{q:"När dominerar parasympatiska systemet?",
-a:["Stress","Fara","Vila","Träning"],c:2}
-]
-},
-
-{
-title:"7.11 Hormonerna",
-questions:[
-{q:"Vad är ett hormon?",
-a:["Elektrisk impuls","Kemiskt signalämne","Nervcell","Enzym"],c:1},
-{q:"Varför kallas körtlar inre-sekretoriska?",
-a:["Saknar blod","Har utförsgångar","Tömmer i blodet","Sitter i hjärnan"],c:2},
-{q:"Varför kallas hypofysen chefskörtel?",
-a:["Störst","Styr andra körtlar","Bildar flest hormon","Sitter högst"],c:1},
-{q:"Vad händer vid insulinbrist?",
-a:["Lågt blodsocker","Socker i celler","Högt blodsocker","Låg puls"],c:2},
-{q:"Vad gör adrenalin?",
-a:["Sömn","Lugn","Stressberedskap","Stoppar nerver"],c:2}
-]
-}
-];
-
-let startTime = Date.now();
-let score = 0;
-let total = 0;
-
-const quizDiv = document.getElementById("quiz");
-
-quizData.forEach(section=>{
-  const s = document.createElement("div");
-  s.className="section";
-  s.innerHTML=`<h2>${section.title}</h2>`;
-  section.questions.forEach((q,i)=>{
-    total++;
-    const div=document.createElement("div");
-    div.className="question";
-    div.innerHTML=`<p>${q.q}</p>`;
-    const opt=document.createElement("div");
-    opt.className="options";
-    q.a.forEach((alt,idx)=>{
-      opt.innerHTML+=`
-      <label>
-        <input type="radio" name="${section.title}${i}" onclick="check(this,${idx},${q.c})">
-        ${String.fromCharCode(97+idx)}) ${alt}
-      </label>`;
-    });
-    div.appendChild(opt);
-    div.innerHTML+=`<div class="feedback"></div>`;
-    s.appendChild(div);
-  });
-  quizDiv.appendChild(s);
-});
-
-function check(el,idx,correct){
-  const fb = el.closest(".question").querySelector(".feedback");
-  if(fb.textContent) return;
-  if(idx===correct){
-    fb.textContent="Rätt!";
-    fb.className="feedback correct";
-    score++;
-  } else {
-    fb.textContent="Fel. Rätt svar visas ovan.";
-    fb.className="feedback wrong";
-  }
-}
-
-window.addEventListener("beforeunload",showResult);
-
-function showResult(){
-  const time=Math.floor((Date.now()-startTime)/1000);
-  const res=document.getElementById("result");
-  res.style.display="block";
-  res.innerHTML=`
-  <h2>Resultat</h2>
-  <p>Du fick <b>${score} av ${total}</b> rätt.</p>
-  <p>Tid: ${time} sekunder.</p>
-  <p>Bra jobbat! Gör testet igen för ännu bättre resultat 💪</p>`;
-}
-</script>
+<!-- LÄNK TILL JAVASCRIPT -->
+<script src="Flervalsfrågor.js"></script>
 
 </body>
 </html>
