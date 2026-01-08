@@ -4,19 +4,88 @@
   <meta charset="UTF-8">
   <title>Flervalsfrågor – Nervsystemet</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    button { margin: 5px; padding: 10px; }
-    .correct { background-color: #4CAF50; color: white; }
-    .incorrect { background-color: #f44336; color: white; }
-    #timer { font-weight: bold; margin-bottom: 10px; }
-    #quiz div { margin-bottom: 20px; }
-    #finalResult { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
-    table { border-collapse: collapse; width: 50%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 5px; text-align: center; }
-    th { background-color: #f2f2f2; }
-    #topButtons { margin-bottom: 20px; }
+    /* Grundinställningar */
+    body { 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      background-color: #E6F0FA; /* Lugn ljusblå bakgrund */
+    }
+
+    /* Knappar */
+    button { 
+      margin: 5px; 
+      padding: 10px 15px; 
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s;
+    }
+    #startBtn { background-color: #2196F3; color: white; }
+    #retryButton { background-color: #FFC107; color: black; }
+    #resetButton { background-color: #f44336; color: white; }
+    #topButtons button:hover { opacity: 0.9; }
+
+    /* Rätt/fel markering */
+    .correct { 
+      background-color: #4CAF50; 
+      color: white; 
+    }
+    .incorrect { 
+      background-color: #f44336; 
+      color: white; 
+    }
+
+    /* Timer */
+    #timer { 
+      font-weight: bold; 
+      margin-bottom: 10px; 
+    }
+
+    /* Quizfrågor */
+    #quiz div { 
+      margin-bottom: 20px; 
+      padding: 10px; 
+      background-color: #ffffff; 
+      border-radius: 8px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Slutresultat */
+    #finalResult { 
+      margin-top: 20px; 
+      padding: 10px; 
+      border: 1px solid #ccc; 
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+
+    /* Tabell */
+    table { 
+      border-collapse: collapse; 
+      width: 50%; 
+      margin-top: 20px; 
+      background-color: #ffffff; 
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+    th, td { 
+      border: 1px solid #ccc; 
+      padding: 8px; 
+      text-align: center; 
+    }
+    th { 
+      background-color: #f2f2f2; 
+    }
+
+    /* Översta knappraden */
+    #topButtons { 
+      margin-bottom: 20px; 
+    }
   </style>
 </head>
+
 <body>
 
 <div id="topButtons">
