@@ -1,0 +1,139 @@
+korsningsshema.html:
+
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Genetiska korsningsscheman – Monohybrid</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #dfe8f5;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .layout {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 20px;
+    }
+
+    .column {
+      text-align: center;
+    }
+
+    .punnettWrapper {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .punnett {
+      display: grid;
+      grid-template-columns: 90px 90px 90px;
+      grid-template-rows: 60px 60px 60px;
+      gap: 5px;
+    }
+
+    .headerCell, .sideCell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .headerCell input,
+    .sideCell input {
+      width: 30px;
+      margin-left: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .offspringCell {
+      width: 90px;
+      height: 60px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Uppgift 1 – Grå starr</h1>
+
+<p style="max-width:800px;margin:auto;">
+Grå starr är en ärftlig ögonsjukdom. Den är dominant (S).
+En heterozygot kvinna (Ss) med grå starr får barn med en frisk man (ss).
+Vilka genotyper och fenotyper kan barnen få? Visa med korsningsschema.
+</p>
+
+<div class="layout">
+
+  <!-- ELEVENS KVADRAT -->
+  <div class="column">
+    <h3>Ditt korsningsschema</h3>
+
+    <div class="punnettWrapper">
+      <div class="punnett">
+
+        <div></div>
+        <div class="headerCell">♂ <input id="father0" maxlength="1"></div>
+        <div class="headerCell">♂ <input id="father1" maxlength="1"></div>
+
+        <div class="sideCell">♀ <input id="mother0" maxlength="1"></div>
+        <input id="cell0" class="offspringCell">
+        <input id="cell1" class="offspringCell">
+
+        <div class="sideCell">♀ <input id="mother1" maxlength="1"></div>
+        <input id="cell2" class="offspringCell">
+        <input id="cell3" class="offspringCell">
+
+      </div>
+    </div>
+
+    <button id="checkAnswers">Rätta</button>
+    <div id="result"></div>
+  </div>
+
+  <!-- KORREKT KVADRAT -->
+  <div class="column" id="correctColumn" style="display:none;">
+    <h3>Korrekt korsningsschema</h3>
+
+    <div class="punnettWrapper">
+      <div class="punnett" id="correctPunnett"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="korsningsscheman.js"></script>
+</body>
+</html>
+
+jsfilen.html:
