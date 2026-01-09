@@ -1,45 +1,72 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const offspring = [
-    document.getElementById("cell0"),
-    document.getElementById("cell1"),
-    document.getElementById("cell2"),
-    document.getElementById("cell3")
-  ];
+  const father = [father0, father1];
+  const mother = [mother0, mother1];
+  const cells = [cell0, cell1, cell2, cell3];
 
-  const genotypeBoxes = document.querySelectorAll(".genotype");
-  const phenotypeBoxes = document.querySelectorAll(".phenotype");
-  const ratioInput = document.getElementById("ratio");
-  const result = document.getElementById("result");
+  const resultDiv = document.getElementById("result");
+  const correctColumn = document.getElementById("correctColumn");
+  const correctPunnett = document.getElementById("correctPunnett");
 
-  const correctPunnett = ["Ss","Ss","ss","ss"];
-  const correctGenotypes = ["Ss","ss"];
-  const correctPhenotypes = ["Grå starr","Frisk"];
-  const correctRatio = "2:2";
+  document.getElementById("checkAnswers").addEventListener("click", () => {
 
-  document.getElementById("check").onclick = () => {
-    let score = 0;
-    let max = 0;
+    resultDiv.textContent = "";
+    correctColumn.style.display = "none";
+    correctPunnett.innerHTML = "";
 
-    offspring.forEach((cell, i) => {
-      max++;
-      if (cell.value.trim() === correctPunnett[i]) score++;
-    });
+    // Kontrollera att allt är ifyllt
+    const allFilled =
+      [...father, ...mother, ...cells].every(i => i.value.trim() !== "");
 
-    genotypeBoxes.forEach(box => {
-      max++;
-      if (box.checked && correctGenotypes.includes(box.value)) score++;
-    });
+    if (!allFilled) {
+      resultDiv.textContent = "Fyll i alla rutor först.";
+      return;
+    }
 
-    phenotypeBoxes.forEach(box => {
-      max++;
-      if (box.checked && correctPhenotypes.includes(box.value)) score++;
-    });
+    // Korrekt Punnett-resultat
+    const correct = [
+      father[0].value + mother[0].value,
+      father[1].value + mother[0].value,
+      father[0].value + mother[1].value,
+      father[1].value + mother[1].value
+    ];
 
-    max++;
-    if (ratioInput.value.trim() === correctRatio) score++;
+    // Jämför (ordning oviktig, Ss = sS)
+    let allRight = true;
 
-    result.innerHTML = `<strong>Resultat:</strong> ${score} av ${max} poäng`;
-  };
+    for (let i = 0; i < 4; i++) {
+      const student = cells[i].value.split("").sort().join("");
+      const corr = correct[i].split("").sort().join("");
+      if (student !== corr) {
+        allRight = false;
+      }
+    }
+
+    if (allRight) {
+      resultDiv.textContent = "✅ Rätt!";
+      return;
+    }
+
+    // Visa korrekt Punnett-kvadrat
+    correctColumn.style.display = "block";
+
+    const template = `
+      <div></div>
+      <div class="headerCell">♂ ${father[0].value}</div>
+      <div class="headerCell">♂ ${father[1].value}</div>
+
+      <div class="sideCell">♀ ${mother[0].value}</div>
+      <input class="offspringCell" value="${correct[0]}" readonly>
+      <input class="offspringCell" value="${correct[1]}" readonly>
+
+      <div class="sideCell">♀ ${mother[1].value}</div>
+      <input class="offspringCell" value="${correct[2]}" readonly>
+      <input class="offspringCell" value="${correct[3]}" readonly>
+    `;
+
+    correctPunnett.innerHTML = template;
+    resultDiv.textContent = "❌ Inte helt rätt – se korrekt korsningsschema till höger.";
+
+  });
 
 });
