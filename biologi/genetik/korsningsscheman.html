@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Monohybridkorsning – Genetiska korsningsscheman</title>
+  <title>Monohybridkorsning – Korsningsschema</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,43 +12,44 @@
     }
 
     .navigation {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-bottom: 10px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .navigation button {
+      margin-left: 5px;
     }
 
     .punnettWrapper {
       display: flex;
       justify-content: center;
-      margin: 20px 0;
+      margin: 25px 0;
     }
 
     .punnett {
       display: grid;
-      grid-template-columns: 40px 60px 60px;
-      grid-template-rows: 40px 60px 60px;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px 60px;
       gap: 5px;
     }
 
-    .labelCell {
+    .label {
+      font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
     }
 
-    .parentInput,
-    .offspringCell {
+    input {
       width: 60px;
       height: 60px;
       text-align: center;
       font-size: 18px;
       font-weight: bold;
-      border: 1px solid #555;
     }
 
-    .sectionsContainer {
+    .sections {
       display: flex;
       justify-content: center;
       gap: 50px;
@@ -70,67 +71,72 @@
 <body>
 
 <div class="navigation">
-  <button id="prevTask">Föregående uppgift</button>
-  <button id="nextTask">Nästa uppgift</button>
+  <button>Föregående uppgift</button>
+  <button>Nästa uppgift</button>
 </div>
 
-<h1 id="taskTitle">Uppgift 1 – Grå starr</h1>
-<p id="taskText"></p>
+<h1>Uppgift 1 – Grå starr</h1>
+
+<p>
+Grå starr är en ärftlig ögonsjukdom. Den är dominant (S).
+En heterozygot kvinna (Ss) med grå starr gifter sig med en frisk man (ss).
+De får barn. Får dessa starr? Vilka olika möjligheter finns?
+Visa med korsningsschema.
+</p>
 
 <!-- Punnett-kvadrat -->
 <div class="punnettWrapper">
   <div class="punnett">
 
     <div></div>
-    <div class="labelCell">♂</div>
-    <div class="labelCell">♂</div>
+    <div class="label">♂</div>
+    <div class="label">♂</div>
 
-    <div class="labelCell">♀</div>
-    <input type="text" id="cell0" class="offspringCell">
-    <input type="text" id="cell1" class="offspringCell">
+    <div class="label">♀</div>
+    <input id="cell0">
+    <input id="cell1">
 
-    <div class="labelCell">♀</div>
-    <input type="text" id="cell2" class="offspringCell">
-    <input type="text" id="cell3" class="offspringCell">
+    <div class="label">♀</div>
+    <input id="cell2">
+    <input id="cell3">
 
   </div>
 </div>
 
-<!-- Föräldragameter -->
+<!-- Gameter -->
 <p><strong>Fyll i föräldrarnas gameter:</strong></p>
-<div>
-  ♂ <input type="text" id="fatherAllele0" class="parentInput" maxlength="1">
-  ♂ <input type="text" id="fatherAllele1" class="parentInput" maxlength="1">
-</div>
-<div style="margin-top:10px;">
-  ♀ <input type="text" id="motherAllele0" class="parentInput" maxlength="1">
-  ♀ <input type="text" id="motherAllele1" class="parentInput" maxlength="1">
-</div>
+<p>
+♂ <input id="father0" maxlength="1">
+♂ <input id="father1" maxlength="1">
+</p>
+<p>
+♀ <input id="mother0" maxlength="1">
+♀ <input id="mother1" maxlength="1">
+</p>
 
-<!-- Flervalsfrågor -->
-<div class="sectionsContainer">
+<!-- Frågor -->
+<div class="sections">
   <div class="section">
     <h3>Avkommans genotyper</h3>
-    <label><input type="checkbox" name="offspringGenotype" value="SS"> SS</label><br>
-    <label><input type="checkbox" name="offspringGenotype" value="Ss"> Ss</label><br>
-    <label><input type="checkbox" name="offspringGenotype" value="ss"> ss</label>
+    <label><input type="checkbox" value="Ss" class="genotype"> Ss</label><br>
+    <label><input type="checkbox" value="ss" class="genotype"> ss</label>
   </div>
 
   <div class="section">
     <h3>Avkommans fenotyper</h3>
-    <label><input type="checkbox" name="offspringPhenotype" value="Grå starr"> Grå starr</label><br>
-    <label><input type="checkbox" name="offspringPhenotype" value="Frisk"> Frisk</label>
+    <label><input type="checkbox" value="Grå starr" class="phenotype"> Grå starr</label><br>
+    <label><input type="checkbox" value="Frisk" class="phenotype"> Frisk</label>
   </div>
 </div>
 
-<div style="margin-top:20px;">
-  <label>Klyvningstal: <input type="text" id="ratio" placeholder="t.ex. 2:2"></label>
-</div>
+<p>
+Klyvningstal:
+<input id="ratio" placeholder="t.ex. 2:2">
+</p>
 
-<button id="checkAnswers">Rätta svar</button>
+<button id="check">Rätta svar</button>
 <div id="result"></div>
 
 <script src="korsningsscheman.js"></script>
 </body>
 </html>
-
