@@ -15,15 +15,17 @@
       margin-bottom: 20px;
     }
 
-    .navButtons {
-      margin-bottom: 20px;
+    .navigation {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 10px;
     }
 
-    .navButtons button {
-      padding: 10px 15px;
-      font-size: 14px;
+    .navigation button {
+      margin-left: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
       cursor: pointer;
-      margin: 0 5px;
     }
 
     .parents {
@@ -39,36 +41,37 @@
 
     .punnett {
       display: inline-grid;
-      grid-template-columns: 50px 50px;
-      grid-template-rows: 50px 50px;
+      grid-template-columns: 60px 60px;
+      grid-template-rows: 60px 60px;
       gap: 5px;
       margin: 20px auto;
       position: relative;
     }
 
-    .punnett::before {
-      content: "♀";
+    .punnett .symbol {
       position: absolute;
-      top: -20px;
-      left: 0;
-      font-weight: bold;
-    }
-    .punnett::after {
-      content: "♂";
-      position: absolute;
-      top: 0;
-      left: -20px;
       font-weight: bold;
     }
 
+    #fatherSymbol {
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #motherSymbol {
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
     .offspringCell {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       text-align: center;
       font-weight: bold;
       font-size: 16px;
       border: 1px solid #555;
-      line-height: 50px;
     }
 
     .section {
@@ -98,18 +101,52 @@
 </head>
 <body>
 
-<h1>Genetiska korsningsscheman – Monohybridkorsning</h1>
+<h1 id="taskTitle">Uppgift 1 – Grå starr</h1>
 
-<div class="navButtons">
+<div class="navigation">
   <button id="prevTask">Föregående uppgift</button>
   <button id="nextTask">Nästa uppgift</button>
 </div>
 
-<div id="taskContainer">
-  <!-- Uppgift 1 kommer här dynamiskt via JS -->
+<div class="parents">
+  <label>Kvinnans genotyp: <input type="text" id="motherGenotype" maxlength="2" class="genInput" placeholder="Ss"></label>
+  <label>Mannens genotyp: <input type="text" id="fatherGenotype" maxlength="2" class="genInput" placeholder="ss"></label>
 </div>
 
-<script src="korsningsscheman.js"></script>
+<div class="punnett">
+  <div id="fatherSymbol" class="symbol">♂</div>
+  <div id="motherSymbol" class="symbol">♀</div>
+  <input type="text" id="cell0" class="offspringCell" readonly>
+  <input type="text" id="cell1" class="offspringCell" readonly>
+  <input type="text" id="cell2" class="offspringCell" readonly>
+  <input type="text" id="cell3" class="offspringCell" readonly>
+</div>
 
+<div class="section">
+  <h3>Avkommans genotyper</h3>
+  <div class="checkboxes">
+    <label><input type="checkbox" name="offspringGenotype" value="SS"> SS</label>
+    <label><input type="checkbox" name="offspringGenotype" value="Ss"> Ss</label>
+    <label><input type="checkbox" name="offspringGenotype" value="ss"> ss</label>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Avkommans fenotyper</h3>
+  <div class="checkboxes">
+    <label><input type="checkbox" name="offspringPhenotype" value="Grå starr"> Grå starr</label>
+    <label><input type="checkbox" name="offspringPhenotype" value="Frisk"> Frisk</label>
+  </div>
+</div>
+
+<div class="section">
+  <label>Klyvningstal (ex: 2:2): <input type="text" id="ratio" maxlength="5" placeholder="t.ex. 2:2"></label>
+</div>
+
+<button id="checkAnswers">Rätta svar</button>
+
+<div id="result"></div>
+
+<script src="korsningsscheman.js"></script>
 </body>
 </html>
