@@ -2,108 +2,114 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Korsningsscheman – Monohybrid klyvning</title>
+  <title>Monohybridkorsning – Genetiska korsningsscheman</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #d0f0c0; /* lite mörkare lugn ljusgrön */
-      text-align: center;
+      background-color: #dff0d8; /* ljusgrön bakgrund */
       padding: 20px;
+      text-align: center;
     }
+
     h1 {
       margin-bottom: 20px;
     }
-    .task {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-    .punnett-container {
-      display: inline-block;
-      text-align: center;
+
+    .parents {
       margin-bottom: 20px;
     }
-    table {
-      border-collapse: collapse;
-      margin: 0 auto;
-      font-size: 18px;
-    }
-    td, th {
-      border: 2px solid #333;
-      width: 80px;
-      height: 80px;
-      text-align: center;
-      vertical-align: middle;
-      font-weight: bold;
-    }
-    input.genotype-input {
-      width: 60px;
-      height: 60px;
+
+    input.genInput {
+      width: 40px;
       text-align: center;
       font-weight: bold;
-      font-size: 18px;
-      border: 1px solid #333;
-      border-radius: 4px;
+      font-size: 16px;
     }
-    button {
-      margin: 10px;
-      padding: 8px 14px;
+
+    .punnett {
+      display: inline-grid;
+      grid-template-columns: 50px 50px;
+      grid-template-rows: 50px 50px;
+      gap: 5px;
+      margin: 20px auto;
+    }
+
+    .offspringCell {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      border: 1px solid #555;
+    }
+
+    .section {
+      margin: 20px 0;
+      text-align: left;
+      display: inline-block;
+    }
+
+    .checkboxes label {
+      display: block;
+      margin: 3px 0;
+      cursor: pointer;
+    }
+
+    #checkAnswers {
+      margin-top: 20px;
+      padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
     }
-    .result {
+
+    #result {
       margin-top: 20px;
-      font-size: 18px;
       font-weight: bold;
-    }
-    label {
-      margin: 0 10px;
     }
   </style>
 </head>
 <body>
 
-<h1>Uppgift 1 – Monohybrid klyvning</h1>
+<h1>Uppgift 1 – Grå starr</h1>
 
-<div class="task">
-  Grå starr är en ärftlig ögonsjukdom. Den är dominant (S).<br>
-  En heterozygot kvinna (Ss) med grå starr gifter sig med en frisk man (ss).<br>
-  De får barn. Får dessa starr? Vilka olika möjligheter finns? Visa med korsningsschema.
+<p>Grå starr är en ärftlig ögonsjukdom. Den är dominant (S). En heterozygot kvinna (Ss) med grå starr gifter sig med en frisk man (ss). De får barn. Får dessa starr? Vilka olika möjligheter finns? Visa med korsningsschema.</p>
+
+<div class="parents">
+  <label>Kvinnans genotyp: <input type="text" id="motherGenotype" maxlength="2" class="genInput" placeholder="Ss"></label>
+  <label>Mannens genotyp: <input type="text" id="fatherGenotype" maxlength="2" class="genInput" placeholder="ss"></label>
 </div>
 
-<div class="punnett-container">
-  <table id="punnettTable">
-    <tr>
-      <th></th>
-      <th>♂1</th>
-      <th>♂2</th>
-    </tr>
-    <tr>
-      <th>♀1</th>
-      <td><input type="text" class="offspringCell" maxlength="2"></td>
-      <td><input type="text" class="offspringCell" maxlength="2"></td>
-    </tr>
-    <tr>
-      <th>♀2</th>
-      <td><input type="text" class="offspringCell" maxlength="2"></td>
-      <td><input type="text" class="offspringCell" maxlength="2"></td>
-    </tr>
-  </table>
+<div class="punnett">
+  <input type="text" class="offspringCell" readonly>
+  <input type="text" class="offspringCell" readonly>
+  <input type="text" class="offspringCell" readonly>
+  <input type="text" class="offspringCell" readonly>
 </div>
 
-<div>
-  <label>Moderns genotyp: <input type="text" id="motherGenotype" class="genotype-input" maxlength="2" value="Ss"></label>
-  <label>Faderns genotyp: <input type="text" id="fatherGenotype" class="genotype-input" maxlength="2" value="ss"></label>
-  <button id="fillTable">Fyll i Punnett-kvadrat</button>
+<div class="section">
+  <h3>Avkommans genotyper</h3>
+  <div class="checkboxes">
+    <label><input type="checkbox" name="genotype" value="SS"> SS</label>
+    <label><input type="checkbox" name="genotype" value="Ss"> Ss</label>
+    <label><input type="checkbox" name="genotype" value="ss"> ss</label>
+  </div>
 </div>
 
-<div style="margin-top:20px;">
-  <label>Avkommans genotyper (exempel: Ss, ss): <input type="text" id="offspringGenotypes"></label>
-  <label>Avkommans fenotyper (med grå starr / frisk): <input type="text" id="offspringPhenotypes"></label>
-  <label>Klyvningstal (t.ex. 2:2): <input type="text" id="ratio"></label>
-  <button id="checkAnswers">Rätta svar</button>
+<div class="section">
+  <h3>Avkommans fenotyper</h3>
+  <div class="checkboxes">
+    <label><input type="checkbox" name="phenotype" value="Grå starr"> Grå starr</label>
+    <label><input type="checkbox" name="phenotype" value="Frisk"> Frisk</label>
+  </div>
 </div>
 
-<div class="result" id="result"></div>
+<div class="section">
+  <label>Klyvningstal (ex: 2:2): <input type="text" id="ratio" maxlength="5" placeholder="t.ex. 2:2"></label>
+</div>
+
+<button id="checkAnswers">Rätta svar</button>
+
+<div id="result"></div>
 
 <script src="korsningsscheman.js"></script>
 
