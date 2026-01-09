@@ -6,95 +6,106 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #e6f2e6; /* Ljusgrön bakgrund */
-      padding: 20px;
+      background-color: #d0f0c0; /* lite mörkare lugn ljusgrön */
       text-align: center;
+      padding: 20px;
     }
-    h1 { margin-bottom: 5px; }
-    h2 { margin-top: 30px; }
-    p { font-size: 16px; }
-
-    .punnett {
-      display: grid;
-      grid-template-columns: 60px 60px 60px;
-      grid-template-rows: 60px 60px 60px;
-      margin: 20px auto;
-      gap: 5px;
+    h1 {
+      margin-bottom: 20px;
     }
-    .cell {
-      border: 1px solid #555;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .task {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .punnett-container {
+      display: inline-block;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      font-size: 18px;
+    }
+    td, th {
+      border: 2px solid #333;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: bold;
+    }
+    input.genotype-input {
+      width: 60px;
+      height: 60px;
+      text-align: center;
       font-weight: bold;
       font-size: 18px;
-      background-color: #fff;
-    }
-    .cell input {
-      width: 40px;
-      text-align: center;
-      font-size: 16px;
-      border: 1px solid #ccc;
+      border: 1px solid #333;
       border-radius: 4px;
     }
-
-    .answer-section {
-      margin-top: 20px;
-    }
-
-    input[type="text"] {
-      width: 80px;
-      font-size: 16px;
-      text-align: center;
-      margin: 5px;
-    }
-
     button {
       margin: 10px;
-      padding: 10px 15px;
+      padding: 8px 14px;
       font-size: 16px;
       cursor: pointer;
     }
-
-    .correct { background-color: #4CAF50; color: white; }
-    .incorrect { background-color: #f44336; color: white; }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    label {
+      margin: 0 10px;
+    }
   </style>
 </head>
 <body>
 
-<h1>Monohybrid klyvning – Uppgift 1</h1>
-<p>Fyll i genotyperna för pappa och mamma, avkommans genotyper i Punnett-kvadraten, samt avkommans fenotyper och klyvningstal.</p>
+<h1>Uppgift 1 – Monohybrid klyvning</h1>
 
-<h2>Steg 1: Ange föräldragener</h2>
-<p>Pappa: <input type="text" id="fatherGen" placeholder="t.ex. Aa"></p>
-<p>Mamma: <input type="text" id="motherGen" placeholder="t.ex. Aa"></p>
-
-<h2>Steg 2: Punnett-kvadrat</h2>
-<div class="punnett">
-  <div class="cell"></div>
-  <div class="cell" id="col1"></div>
-  <div class="cell" id="col2"></div>
-
-  <div class="cell" id="row1"></div>
-  <div class="cell"><input type="text" id="c1"></div>
-  <div class="cell"><input type="text" id="c2"></div>
-
-  <div class="cell" id="row2"></div>
-  <div class="cell"><input type="text" id="c3"></div>
-  <div class="cell"><input type="text" id="c4"></div>
+<div class="task">
+  Grå starr är en ärftlig ögonsjukdom. Den är dominant (S).<br>
+  En heterozygot kvinna (Ss) med grå starr gifter sig med en frisk man (ss).<br>
+  De får barn. Får dessa starr? Vilka olika möjligheter finns? Visa med korsningsschema.
 </div>
 
-<h2>Steg 3: Avkommans genotyper och fenotyper</h2>
-<div class="answer-section">
-  <p>Genotyper (t.ex. AA, Aa, aa): <input type="text" id="genoAnswer"></p>
-  <p>Fenotyper (t.ex. röd, vit): <input type="text" id="phenoAnswer"></p>
-  <p>Klyvningstal (t.ex. 1:2:1): <input type="text" id="ratioAnswer"></p>
-  <button id="checkBtn">Kontrollera svar</button>
+<div class="punnett-container">
+  <table id="punnettTable">
+    <tr>
+      <th></th>
+      <th>♂1</th>
+      <th>♂2</th>
+    </tr>
+    <tr>
+      <th>♀1</th>
+      <td><input type="text" class="offspringCell" maxlength="2"></td>
+      <td><input type="text" class="offspringCell" maxlength="2"></td>
+    </tr>
+    <tr>
+      <th>♀2</th>
+      <td><input type="text" class="offspringCell" maxlength="2"></td>
+      <td><input type="text" class="offspringCell" maxlength="2"></td>
+    </tr>
+  </table>
 </div>
 
-<div id="feedback"></div>
+<div>
+  <label>Moderns genotyp: <input type="text" id="motherGenotype" class="genotype-input" maxlength="2" value="Ss"></label>
+  <label>Faderns genotyp: <input type="text" id="fatherGenotype" class="genotype-input" maxlength="2" value="ss"></label>
+  <button id="fillTable">Fyll i Punnett-kvadrat</button>
+</div>
 
-<script src="korsningscheman.js"></script>
+<div style="margin-top:20px;">
+  <label>Avkommans genotyper (exempel: Ss, ss): <input type="text" id="offspringGenotypes"></label>
+  <label>Avkommans fenotyper (med grå starr / frisk): <input type="text" id="offspringPhenotypes"></label>
+  <label>Klyvningstal (t.ex. 2:2): <input type="text" id="ratio"></label>
+  <button id="checkAnswers">Rätta svar</button>
+</div>
+
+<div class="result" id="result"></div>
+
+<script src="korsningsscheman.js"></script>
 
 </body>
 </html>
