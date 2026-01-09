@@ -1,26 +1,88 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== UPPGIFTER ===== */
-  const tasks = [
-    {
-      text: "Uppgift 1. Grå starr är en ärftlig ögonsjukdom. Den är dominant (S). En heterozygot kvinna (Ss) med grå starr gifter sig med en frisk man (ss). De får barn. Får dessa starr? Vilka olika möjligheter finns? Visa med korsningsschema."
-    },
-    {
-      text: "Uppgift 2. (Text kommer senare)"
-    }
-  ];
+  const father = [father0, father1];
+  const mother = [mother0, mother1];
+  const cells = [cell0, cell1, cell2, cell3];
 
-  let currentTask = 0;
-
-  /* ===== ELEMENT ===== */
-  const taskText = document.getElementById("taskText");
-  const inputs = document.querySelectorAll("input");
   const resultDiv = document.getElementById("result");
+  const correctColumn = document.getElementById("correctColumn");
+  const correctPunnett = document.getElementById("correctPunnett");
 
-  /* ===== INIT ===== */
+  // ==== HUVUDFUNKTION FÖR RÄTTNING ====
+  document.getElementById("checkAnswers").addEventListener("click", () => {
+
+    resultDiv.textContent = "";
+    correctColumn.style.display = "none";
+    correctPunnett.innerHTML = "";
+
+    // Kontrollera att allt är ifyllt
+    const allFilled =
+      [...father, ...mother, ...cells].every(i => i.value.trim() !== "");
+
+    if (!allFilled) {
+      resultDiv.textContent = "Fyll i alla rutor först.";
+      return;
+    }
+
+    // Korrekt Punnett-resultat
+    const correct = [
+      father[0].value + mother[0].value,
+      father[1].value + mother[0].value,
+      father[0].value + mother[1].value,
+      father[1].value + mother[1].value
+    ];
+
+    // Jämför (ordning oviktig, Ss = sS)
+    let allRight = true;
+
+    for (let i = 0; i < 4; i++) {
+      const student = cells[i].value.split("").sort().join("");
+      const corr = correct[i].split("").sort().join("");
+      if (student !== corr) {
+        allRight = false;
+      }
+    }
+
+    if (allRight) {
+      resultDiv.textContent = "✅ Rätt!";
+      return;
+    }
+
+    // Visa korrekt Punnett-kvadrat
+    correctColumn.style.display = "block";
+
+    const template = `
+      <div></div>
+      <div class="headerCell">♂ ${father[0].value}</div>
+      <div class="headerCell">♂ ${father[1].value}</div>
+
+      <div class="sideCell">♀ ${mother[0].value}</div>
+      <input class="offspringCell" value="${correct[0]}" readonly>
+      <input class="offspringCell" value="${correct[1]}" readonly>
+
+      <div class="sideCell">♀ ${mother[1].value}</div>
+      <input class="offspringCell" value="${correct[2]}" readonly>
+      <input class="offspringCell" value="${correct[3]}" readonly>
+    `;
+
+    correctPunnett.innerHTML = template;
+    resultDiv.textContent = "❌ Inte helt rätt – se korrekt korsningsschema till höger.";
+
+  });
+
+  /* ===== NAVIGATION OCH RESET FÖR FLERA UPPGIFTER ===== */
+  const tasks = [
+    { text: "Uppgift 1 – Grå starr" },
+    { text: "Uppgift 2 – Exempel uppgift" } // Du kan lägga till fler uppgifter här
+  ];
+  let currentTask = 0;
+  const taskText = document.querySelector("h1");
+  const inputs = [father0, father1, mother0, mother1, cell0, cell1, cell2, cell3];
+
+  // Visa första uppgiften
   renderTask();
 
-  /* ===== NAV ===== */
+  // Nästa uppgift
   window.nextTask = () => {
     if (currentTask < tasks.length - 1) {
       currentTask++;
@@ -28,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Föregående uppgift
   window.prevTask = () => {
     if (currentTask > 0) {
       currentTask--;
@@ -35,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Tillbaka till index
   window.goBack = () => {
     window.location.href = "index.html";
   };
@@ -45,38 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function resetAll() {
-    inputs.forEach(i => {
-      if (i.type === "checkbox") i.checked = false;
-      else i.value = "";
-    });
+    inputs.forEach(i => i.value = "");
     resultDiv.innerHTML = "";
+    correctColumn.style.display = "none";
+    correctPunnett.innerHTML = "";
   }
-
-  /* ===== RÄTTNING ===== */
-  document.getElementById("checkAnswers").onclick = () => {
-    const correctCells = ["Ss", "Ss", "Ss", "Ss"];
-    const userCells = [
-      cell0.value, cell1.value, cell2.value, cell3.value
-    ];
-
-    let correct = true;
-    for (let i = 0; i < 4; i++) {
-      if (userCells[i] !== correctCells[i]) correct = false;
-    }
-
-    if (correct) {
-      resultDiv.innerHTML = "<h3>✔ Rätt!</h3>";
-    } else {
-      resultDiv.innerHTML = `
-        <h3>❌ Fel – korrekt schema:</h3>
-        <div class="punnett-wrapper">
-          <div class="punnett-grid">
-            <div></div><div>♂ S</div><div>♂ s</div>
-            <div>♀ s</div><div>Ss</div><div>Ss</div>
-            <div>♀ s</div><div>Ss</div><div>Ss</div>
-          </div>
-        </div>`;
-    }
-  };
 
 });
