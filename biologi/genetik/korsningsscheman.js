@@ -1,67 +1,79 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const fatherGenInput = document.getElementById("fatherGen");
-  const motherGenInput = document.getElementById("motherGen");
 
-  const col1 = document.getElementById("col1");
-  const col2 = document.getElementById("col2");
-  const row1 = document.getElementById("row1");
-  const row2 = document.getElementById("row2");
+  const motherInput = document.getElementById("motherGenotype");
+  const fatherInput = document.getElementById("fatherGenotype");
+  const fillTableBtn = document.getElementById("fillTable");
+  const checkBtn = document.getElementById("checkAnswers");
+  const resultDiv = document.getElementById("result");
+  const offspringCells = document.querySelectorAll(".offspringCell");
 
-  const checkBtn = document.getElementById("checkBtn");
-  const feedbackDiv = document.getElementById("feedback");
+  // Fyll i Punnett-kvadrat baserat på föräldrar
+  fillTableBtn.addEventListener("click", () => {
+    const mother = motherInput.value.toUpperCase();
+    const father = fatherInput.value.toUpperCase();
 
-  function updatePunnett() {
-    const father = fatherGenInput.value.toUpperCase();
-    const mother = motherGenInput.value.toUpperCase();
+    if (mother.length !== 2 || father.length !== 2) {
+      alert("Ange båda allelerna för modern och fadern (t.ex. Ss, ss).");
+      return;
+    }
 
-    if (father.length !== 2 || mother.length !== 2) return;
+    // Skapa kombinationer: två rader x två kolumner
+    const combinations = [
+      mother[0] + father[0],
+      mother[0] + father[1],
+      mother[1] + father[0],
+      mother[1] + father[1]
+    ];
 
-    // Fyll kolumn- och radrutor
-    col1.innerText = father[0];
-    col2.innerText = father[1];
-    row1.innerText = mother[0];
-    row2.innerText = mother[1];
-  }
+    offspringCells.forEach((cell, i) => {
+      cell.value = combinations[i];
+    });
 
-  fatherGenInput.addEventListener("input", updatePunnett);
-  motherGenInput.addEventListener("input", updatePunnett);
+    resultDiv.innerHTML = "Punnett-kvadraten har fyllts i.";
+  });
 
-  checkBtn.onclick = () => {
-    const father = fatherGenInput.value.toUpperCase();
-    const mother = motherGenInput.value.toUpperCase();
+  // Rättning
+  checkBtn.addEventListener("click", () => {
+    const mother = motherInput.value.toUpperCase();
+    const father = fatherInput.value.toUpperCase();
+    const correctCombinations = [
+      mother[0] + father[0],
+      mother[0] + father[1],
+      mother[1] + father[0],
+      mother[1] + father[1]
+    ];
 
-    const expected = [
-      father[0] + mother[0],
-      father[1] + mother[0],
-      father[0] + mother[1],
-      father[1] + mother[1]
-    ].sort();
+    // Kontrollera Punnett-kvadrat
+    let correctCells = 0;
+    offspringCells.forEach((cell, i) => {
+      if (cell.value.toUpperCase() === correctCombinations[i]) {
+        cell.style.backgroundColor = "#4CAF50"; // grön om korrekt
+        correctCells++;
+      } else {
+        cell.style.backgroundColor = "#f44336"; // röd om fel
+      }
+    });
 
-    const user = [
-      document.getElementById("c1").value.toUpperCase(),
-      document.getElementById("c2").value.toUpperCase(),
-      document.getElementById("c3").value.toUpperCase(),
-      document.getElementById("c4").value.toUpperCase()
-    ].sort();
+    // Rätt svar för avkommans genotyper, fenotyper och klyvningstal
+    const offspringGenotypesInput = document.getElementById("offspringGenotypes");
+    const offspringPhenotypesInput = document.getElementById("offspringPhenotypes");
+    const ratioInput = document.getElementById("ratio");
 
-    // Kontrollera genotyper
-    let genoCorrect = JSON.stringify(expected) === JSON.stringify(user);
+    const expectedGenotypes = ["Ss", "Ss", "ss", "ss"];
+    const expectedPhenotypes = ["Grå starr", "Grå starr", "Frisk", "Frisk"];
+    const expectedRatio = "2:2";
 
-    // Enkelt exempel för fenotyper: anta A dominant och a recessiv
-    let phenoExpected = user.map(g => g.includes("A") ? "dominant" : "recessiv").sort();
-    let phenoUser = document.getElementById("phenoAnswer").value.toLowerCase().split(",").map(s => s.trim()).sort();
-    let phenoCorrect = JSON.stringify(phenoExpected) === JSON.stringify(phenoUser);
+    let genotypeCorrect = offspringGenotypesInput.value.replace(/\s/g,'').toUpperCase() === expectedGenotypes.join("").toUpperCase();
+    let phenotypeCorrect = offspringPhenotypesInput.value.replace(/\s/g,'').toUpperCase() === expectedPhenotypes.join("").toUpperCase();
+    let ratioCorrect = ratioInput.value.replace(/\s/g,'') === expectedRatio;
 
-    // Klyvningstal
-    let counts = {AA:0, Aa:0, aa:0};
-    user.forEach(g => counts[g] !== undefined ? counts[g]++ : null);
-    let ratioExpected = `${counts.AA}:${counts.Aa}:${counts.aa}`;
-    let ratioUser = document.getElementById("ratioAnswer").value.replace(/\s/g,'');
-    let ratioCorrect = ratioExpected === ratioUser;
+    // Visa resultat
+    let resultHTML = `<p>Punnett-kvadrat: ${correctCells} / 4 rätt</p>`;
+    resultHTML += `<p>Genotyper: ${genotypeCorrect ? "✅ Rätt" : "❌ Fel"} (Rätt: ${expectedGenotypes.join(", ")})</p>`;
+    resultHTML += `<p>Fenotyper: ${phenotypeCorrect ? "✅ Rätt" : "❌ Fel"} (Rätt: ${expectedPhenotypes.join(", ")})</p>`;
+    resultHTML += `<p>Klyvningstal: ${ratioCorrect ? "✅ Rätt" : "❌ Fel"} (Rätt: ${expectedRatio})</p>`;
 
-    feedbackDiv.innerHTML = `<h3>Resultat</h3>
-      <p>Genotyper: ${genoCorrect ? "<span class='correct'>Rätt</span>" : "<span class='incorrect'>Fel</span> (Rätt: "+expected.join(", ")+")"}</p>
-      <p>Fenotyper: ${phenoCorrect ? "<span class='correct'>Rätt</span>" : "<span class='incorrect'>Fel</span> (Rätt: "+phenoExpected.join(", ")+")"}</p>
-      <p>Klyvningstal: ${ratioCorrect ? "<span class='correct'>Rätt</span>" : "<span class='incorrect'>Fel</span> (Rätt: "+ratioExpected+")"}</p>`;
-  };
+    resultDiv.innerHTML = resultHTML;
+  });
+
 });
