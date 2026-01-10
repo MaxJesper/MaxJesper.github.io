@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const correctColumn = document.getElementById("correctColumn");
   const correctPunnett = document.getElementById("correctPunnett");
 
-  // ==== HUVUDFUNKTION FÖR RÄTTNING ====
   document.getElementById("checkAnswers").addEventListener("click", () => {
 
     resultDiv.textContent = "";
@@ -69,50 +68,5 @@ document.addEventListener("DOMContentLoaded", () => {
     resultDiv.textContent = "❌ Inte helt rätt – se korrekt korsningsschema till höger.";
 
   });
-
-  /* ===== NAVIGATION OCH RESET FÖR FLERA UPPGIFTER ===== */
-  const tasks = [
-    { text: "Uppgift 1 – Grå starr" },
-    { text: "Uppgift 2 – Exempel uppgift" } // Du kan lägga till fler uppgifter här
-  ];
-  let currentTask = 0;
-  const taskText = document.querySelector("h1");
-  const inputs = [father0, father1, mother0, mother1, cell0, cell1, cell2, cell3];
-
-  // Visa första uppgiften
-  renderTask();
-
-  // Nästa uppgift
-  window.nextTask = () => {
-    if (currentTask < tasks.length - 1) {
-      currentTask++;
-      renderTask();
-    }
-  };
-
-  // Föregående uppgift
-  window.prevTask = () => {
-    if (currentTask > 0) {
-      currentTask--;
-      renderTask();
-    }
-  };
-
-  // Tillbaka till index
-  window.goBack = () => {
-    window.location.href = "index.html";
-  };
-
-  function renderTask() {
-    taskText.innerText = tasks[currentTask].text;
-    resetAll();
-  }
-
-  function resetAll() {
-    inputs.forEach(i => i.value = "");
-    resultDiv.innerHTML = "";
-    correctColumn.style.display = "none";
-    correctPunnett.innerHTML = "";
-  }
 
 });
