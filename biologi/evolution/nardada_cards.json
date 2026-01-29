@@ -177,3 +177,389 @@
     }
   }
 ]
+[
+  {
+    "id": 9,
+    "subject": "Evolution",
+    "intro": "Evolution förutsätter <span class=\"concept\">variation</span> mellan individer. Utan skillnader i egenskaper kan inget naturligt urval ske.",
+    "q1": {
+      "type": "year",
+      "question": "Runt vilket år blev genetisk variation allmänt accepterad som grund för evolution?",
+      "correctYear": 1900,
+      "extra": "Kring sekelskiftet 1900 återupptäcktes Mendels lagar, vilket knöt genetik till evolution."
+    },
+    "q2": {
+      "question": "Varför är variation nödvändig för evolution?",
+      "options": {
+        "A": "Alla individer måste vara olika för att överleva",
+        "B": "Utan variation kan inget urval ske mellan individer",
+        "C": "Variation uppstår bara vid miljöförändringar"
+      },
+      "correct": "B",
+      "explanation": "Naturligt urval kan bara verka om individer skiljer sig åt i egenskaper."
+    }
+  },
+
+  {
+    "id": 10,
+    "subject": "Evolution",
+    "intro": "Vissa likheter mellan arter beror inte på släktskap utan på liknande livsmiljöer. Detta kallas <span class=\"concept\">analogier</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När började analogi användas som begrepp inom evolutionsbiologi?",
+      "correctYear": 1859,
+      "extra": "Efter Darwins arbete blev skillnaden mellan analogi och homologi tydligare."
+    },
+    "q2": {
+      "question": "Vad kännetecknar analoga strukturer?",
+      "options": {
+        "A": "Samma ursprung men olika funktion",
+        "B": "Olika ursprung men liknande funktion",
+        "C": "Samma gener och samma funktion"
+      },
+      "correct": "B",
+      "explanation": "Analoga strukturer uppstår genom liknande selektion, inte gemensamt ursprung."
+    }
+  },
+
+  {
+    "id": 11,
+    "subject": "Evolution",
+    "intro": "Fåglars fjädrar tros ha utvecklats gradvis och haft flera funktioner innan de användes för flyg.",
+    "q1": {
+      "type": "period_fanerozoikum",
+      "question": "Under vilken geologisk period levde Archaeopteryx?",
+      "correct": "Jura",
+      "interval": "201–145 miljoner år sedan",
+      "extra": "Archaeopteryx visar både reptil- och fågelliknande drag."
+    },
+    "q2": {
+      "question": "Varför är Archaeopteryx viktig för evolutionsteorin?",
+      "options": {
+        "A": "Den är den första fågeln som kunde flyga långt",
+        "B": "Den visar egenskaper från både dinosaurier och fåglar",
+        "C": "Den levde samtidigt som moderna fåglar"
+      },
+      "correct": "B",
+      "explanation": "Den är ett klassiskt exempel på övergångsform."
+    }
+  },
+
+  {
+    "id": 12,
+    "subject": "Evolution",
+    "intro": "Ibland förändras populationers genetiska sammansättning av slumpen, särskilt i små populationer. Detta kallas <span class=\"concept\">genetisk drift</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När började genetisk drift beskrivas inom populationsgenetik?",
+      "correctYear": 1930,
+      "extra": "Ronald Fisher och Sewall Wright bidrog till begreppet."
+    },
+    "q2": {
+      "question": "När har genetisk drift störst effekt?",
+      "options": {
+        "A": "I stora populationer",
+        "B": "När naturligt urval är starkt",
+        "C": "I små populationer"
+      },
+      "correct": "C",
+      "explanation": "Slumpen får större genomslag när populationen är liten."
+    }
+  },
+
+  {
+    "id": 13,
+    "subject": "Evolution",
+    "intro": "Jordens historia präglas av flera <span class=\"concept\">massutdöenden</span> som kraftigt förändrat livets utveckling.",
+    "q1": {
+      "type": "period_fanerozoikum",
+      "question": "Under vilken period inträffade det största massutdöendet i jordens historia?",
+      "correct": "Perm",
+      "interval": "299–252 miljoner år sedan",
+      "extra": "Upp till 90 % av alla marina arter dog ut."
+    },
+    "q2": {
+      "question": "Vilken effekt kan massutdöenden ha på evolutionen?",
+      "options": {
+        "A": "Evolutionen upphör helt",
+        "B": "Nya ekologiska nischer öppnas för överlevande arter",
+        "C": "Alla kvarvarande arter blir oförändrade"
+      },
+      "correct": "B",
+      "explanation": "Massutdöenden kan bana väg för snabb evolution hos överlevande grupper."
+    }
+  },
+
+  {
+    "id": 14,
+    "subject": "Evolution",
+    "intro": "Likheter i embryoutveckling har använts som ett av flera <span class=\"concept\">bevis för evolution</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När började embryologi användas som stöd för evolutionsteorin?",
+      "correctYear": 1860,
+      "extra": "Tidiga embryon hos ryggradsdjur visar påfallande likheter."
+    },
+    "q2": {
+      "question": "Vad visar likheter i embryon?",
+      "options": {
+        "A": "Att alla arter utvecklas på exakt samma sätt",
+        "B": "Att arter delar gemensamt ursprung",
+        "C": "Att miljön styr embryoutvecklingen helt"
+      },
+      "correct": "B",
+      "explanation": "Gemensamma drag tidigt i utvecklingen tyder på gemensam härstamning."
+    }
+  },
+
+  {
+    "id": 15,
+    "subject": "Evolution",
+    "intro": "Evolution sker på populationsnivå, inte hos enskilda individer.",
+    "q1": {
+      "type": "year",
+      "question": "När etablerades populationsbegreppet tydligt inom evolutionsbiologi?",
+      "correctYear": 1930,
+      "extra": "Detta skedde under den moderna syntesen."
+    },
+    "q2": {
+      "question": "Varför kan individer inte evolvera?",
+      "options": {
+        "A": "Individer lever för kort tid",
+        "B": "Evolution kräver genetiska förändringar över generationer",
+        "C": "Individer saknar genetisk variation"
+      },
+      "correct": "B",
+      "explanation": "Evolution handlar om förändrade genfrekvenser över tid."
+    }
+  },
+
+  {
+    "id": 16,
+    "subject": "Evolution",
+    "intro": "När en population delas upp geografiskt kan nya arter uppstå genom <span class=\"concept\">artbildning</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När började begreppet allopatrisk artbildning användas?",
+      "correctYear": 1940,
+      "extra": "Begreppet utvecklades inom populationsgenetiken."
+    },
+    "q2": {
+      "question": "Vad krävs för allopatrisk artbildning?",
+      "options": {
+        "A": "Geografisk isolering",
+        "B": "Massutdöende",
+        "C": "Sexuell selektion"
+      },
+      "correct": "A",
+      "explanation": "Isolering hindrar genflöde mellan populationer."
+    }
+  },
+
+  {
+    "id": 17,
+    "subject": "Evolution",
+    "intro": "Alla mutationer är inte skadliga – vissa är neutrala eller till och med gynnsamma.",
+    "q1": {
+      "type": "year",
+      "question": "När blev mutationer accepterade som källa till genetisk variation?",
+      "correctYear": 1901,
+      "extra": "Hugo de Vries bidrog till muta­tionsteorin."
+    },
+    "q2": {
+      "question": "Vad är en mutation?",
+      "options": {
+        "A": "En riktad förändring som sker vid behov",
+        "B": "En förändring i DNA-sekvensen",
+        "C": "En förändring i miljön"
+      },
+      "correct": "B",
+      "explanation": "Mutationer uppstår slumpmässigt i DNA."
+    }
+  },
+
+  {
+    "id": 18,
+    "subject": "Evolution",
+    "intro": "Naturligt urval kan verka olika starkt i olika miljöer.",
+    "q1": {
+      "type": "year",
+      "question": "När publicerades de första studierna om industriell melanism hos björkmätare?",
+      "correctYear": 1896,
+      "extra": "Studierna visade snabb evolution i respons till miljöförändring."
+    },
+    "q2": {
+      "question": "Vad visade studierna om björkmätaren?",
+      "options": {
+        "A": "Att miljön ändrar individers gener direkt",
+        "B": "Att naturligt urval kan verka snabbt",
+        "C": "Att mutationer upphör i förorenade miljöer"
+      },
+      "correct": "B",
+      "explanation": "Mörka fjärilar gynnades i sotiga miljöer."
+    }
+  },
+
+  {
+    "id": 19,
+    "subject": "Evolution",
+    "intro": "Evolution leder inte mot ett förutbestämt mål, utan styrs av selektion i aktuell miljö.",
+    "q1": {
+      "type": "year",
+      "question": "När började man tydligt kritisera idén om evolution som framsteg?",
+      "correctYear": 1970,
+      "extra": "Stephen Jay Gould var en viktig kritiker."
+    },
+    "q2": {
+      "question": "Vilket påstående stämmer om evolution?",
+      "options": {
+        "A": "Evolution strävar alltid mot perfektion",
+        "B": "Evolution saknar riktning och mål",
+        "C": "Evolution gör arter mer komplexa"
+      },
+      "correct": "B",
+      "explanation": "Evolution anpassar organismer till nuvarande miljö."
+    }
+  },
+
+  {
+    "id": 20,
+    "subject": "Evolution",
+    "intro": "Vissa strukturer finns kvar trots att de inte längre fyller någon tydlig funktion.",
+    "q1": {
+      "type": "year",
+      "question": "När började begreppet rudimentära organ användas i evolutionära sammanhang?",
+      "correctYear": 1859,
+      "extra": "Darwin använde rudimentära organ som argument för evolution."
+    },
+    "q2": {
+      "question": "Vad är ett rudimentärt organ?",
+      "options": {
+        "A": "Ett nytt organ under utveckling",
+        "B": "Ett organ som saknar funktion hos alla arter",
+        "C": "En struktur med minskad eller förlorad funktion"
+      },
+      "correct": "C",
+      "explanation": "Rudimentära organ är rester från tidigare funktioner."
+    }
+  },
+
+  {
+    "id": 21,
+    "subject": "Evolution",
+    "intro": "Evolutionen påverkas även av hur individer väljer partners, vilket kallas <span class=\"concept\">sexuell selektion</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När beskrev Darwin sexuell selektion mer utförligt?",
+      "correctYear": 1871,
+      "extra": "Begreppet presenterades i boken The Descent of Man."
+    },
+    "q2": {
+      "question": "Vad kännetecknar sexuell selektion?",
+      "options": {
+        "A": "Egenskaper som ökar chansen att bli vald som partner",
+        "B": "Egenskaper som alltid ökar överlevnaden",
+        "C": "Slumpmässig parning"
+      },
+      "correct": "A",
+      "explanation": "Sexuell selektion påverkar reproduktiv framgång."
+    }
+  },
+
+  {
+    "id": 22,
+    "subject": "Evolution",
+    "intro": "När nya arter uppstår snabbare än normalt talar man ibland om <span class=\"concept\">adaptiv radiation</span>.",
+    "q1": {
+      "type": "year",
+      "question": "När började adaptiv radiation användas som etablerat begrepp?",
+      "correctYear": 1940,
+      "extra": "Begreppet kopplas till studier av isolerade miljöer som öar."
+    },
+    "q2": {
+      "question": "När sker adaptiv radiation ofta?",
+      "options": {
+        "A": "När nya livsmiljöer blir tillgängliga",
+        "B": "När populationer minskar",
+        "C": "När mutationer upphör"
+      },
+      "correct": "A",
+      "explanation": "Tomma ekologiska nischer gynnar snabb artbildning."
+    }
+  },
+
+  {
+    "id": 23,
+    "subject": "Evolution",
+    "intro": "Evolutionens tempo kan variera över tid.",
+    "q1": {
+      "type": "year",
+      "question": "När lanserades teorin om punktuerad jämvikt?",
+      "correctYear": 1972,
+      "extra": "Stephen Jay Gould och Niles Eldredge föreslog teorin."
+    },
+    "q2": {
+      "question": "Vad innebär punktuerad jämvikt?",
+      "options": {
+        "A": "Att evolution sker jämnt och långsamt",
+        "B": "Att evolution sker i snabba språng följt av stabilitet",
+        "C": "Att evolution upphör under långa perioder"
+      },
+      "correct": "B",
+      "explanation": "Teorin beskriver varierande evolutionstakt."
+    }
+  },
+
+  {
+    "id": 24,
+    "subject": "Evolution",
+    "intro": "Livets utveckling på land förändrade atmosfären och skapade nya ekologiska möjligheter.",
+    "q1": {
+      "type": "period_fanerozoikum",
+      "question": "Under vilken period blev ryggradsdjur vanliga på land?",
+      "correct": "Karbon",
+      "interval": "359–299 miljoner år sedan",
+      "extra": "Groddjur och tidiga reptiler spreds i fuktiga miljöer."
+    },
+    "q2": {
+      "question": "Vilken anpassning var viktig för livet på land?",
+      "options": {
+        "A": "Gälar",
+        "B": "Inre befruktning och ägg med skal",
+        "C": "Sidolinjesystem"
+      },
+      "correct": "B",
+      "explanation": "Dessa minskade beroendet av vatten vid fortplantning."
+    }
+  },
+
+  {
+    "id": 25,
+    "subject": "Evolution",
+    "intro": "Evolution är idag ett sammanhängande ramverk som integrerar genetik, paleontologi och ekologi.",
+    "q1": {
+      "type": "year",
+      "question": "När talar man om den moderna syntesen inom evolutionsteorin?",
+      "correctYear": 1930,
+      "extra": "Den förenade Darwins teori med Mendelsk genetik."
+    },
+    "q2": {
+      "question": "Vad kännetecknar den moderna syntesen?",
+      "options": {
+        "A": "Fokus på individers utveckling",
+        "B": "Koppling mellan genetik och naturligt urval",
+        "C": "Förkastande av fossil som bevis"
+      },
+      "correct": "B",
+      "explanation": "Den moderna syntesen band samman flera biologiska discipliner."
+    }
+  }
+]
+
+
+
+
+
+
+
+
