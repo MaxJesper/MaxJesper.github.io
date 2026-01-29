@@ -57,6 +57,76 @@
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
     code { background:#f3f3f3; padding:2px 6px; border-radius:6px; }
+
+  .scorebar{
+  max-width: 980px;
+  margin: 10px auto 0;
+  padding: 0 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.score-left{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.score-left button{
+  padding:8px 10px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  background:#fff;
+  font-size: 14px;
+}
+.score-left button:hover{ background:#f3f3f3; }
+
+.score-right{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.group{
+  background:#fff;
+  border-radius:12px;
+  padding:8px 10px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.group .name{
+  font-weight:700;
+  color:#003a8c;
+  min-width: 42px;
+}
+
+.group .pts{
+  font-weight:700;
+  min-width: 18px;
+  text-align:center;
+}
+
+.group button{
+  padding:6px 10px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  background:#f7f7f7;
+  font-size: 14px;
+}
+.group button:hover{ background:#ededed; } 
   </style>
 </head>
 
@@ -66,7 +136,25 @@
   &nbsp;
   <a href="nardada_regler.html" class="subject-btn">📘 Spelregler</a>
 </div>
+<div class="scorebar">
+  <div class="score-left">
+    <strong>Poäng:</strong>
+    <label style="margin-left:10px;">
+      Grupper:
+      <select id="groupCount" onchange="setGroupCountFromUI()">
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+    <button onclick="resetScores()">Nollställ</button>
+  </div>
 
+  <div class="score-right" id="scoreboard"></div>
+</div>
+ 
   <div id="container">
     <div id="card">
       <div id="meta">
