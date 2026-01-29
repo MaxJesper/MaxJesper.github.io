@@ -1,216 +1,181 @@
 [
   {
-    "id": 1,
+    "id": 101,
     "subject": "Evolution",
-    "intro": "När ryggradsdjur började lämna vattnet skedde detta inte i ett språng. Fossil visar former som kombinerar egenskaper från olika miljöer. Ett centralt begrepp här är <span class=\"concept\">övergångsform</span>.",
+    "intro": "Ett av de viktigaste bidragen till evolutionsbiologin är teorin om <span class=\"concept\">naturligt urval</span>. Den förklarar hur vissa egenskaper blir vanligare i en population över tid.",
+    "q1": {
+      "type": "year",
+      "question": "Vilket år publicerade Charles Darwin sitt verk om naturligt urval?",
+      "correctYear": 1859,
+      "extra": "Boken fick stort genomslag och förändrade synen på hur arter uppkommer."
+    },
+    "q2": {
+      "question": "Vad innebär naturligt urval?",
+      "options": {
+        "A": "Individer med gynnsamma egenskaper får fler avkommor",
+        "B": "Alla individer överlever lika bra",
+        "C": "Egenskaper uppstår för att de behövs"
+      },
+      "correct": "A",
+      "explanation": "Naturligt urval innebär att egenskaper som ökar överlevnad och reproduktion blir vanligare."
+    }
+  },
+
+  {
+    "id": 102,
+    "subject": "Evolution",
+    "intro": "Fossil är ett av de viktigaste <span class=\"concept\">bevisen för evolution</span> och visar hur livsformer förändrats över mycket lång tid.",
+    "q1": {
+      "type": "period_fanerozoikum",
+      "question": "Under vilken geologisk period inträffade den kambriska explosionen?",
+      "correct": "Kambrium",
+      "interval": "541–485 miljoner år sedan",
+      "extra": "Många av dagens djurstammar uppträder i fossilmaterialet under denna period."
+    },
+    "q2": {
+      "question": "Varför är fossil viktiga för evolutionsteorin?",
+      "options": {
+        "A": "De visar hur snabbt arter kan förändras på ett år",
+        "B": "De visar ordningsföljden av livsformer över tid",
+        "C": "De förklarar hur gener fungerar"
+      },
+      "correct": "B",
+      "explanation": "Fossil visar hur olika arter levt vid olika tider och hur de förändrats."
+    }
+  },
+
+  {
+    "id": 103,
+    "subject": "Evolution",
+    "intro": "Alla arter producerar fler avkommor än vad miljön kan försörja. Detta leder till konkurrens, ibland kallad <span class=\"concept\">kampen för tillvaron</span>.",
+    "q1": {
+      "type": "year",
+      "question": "Vilket år introducerades begreppet kampen för tillvaron i Darwins teori?",
+      "correctYear": 1859,
+      "extra": "Begreppet bygger delvis på idéer från Thomas Malthus om befolkningstillväxt."
+    },
+    "q2": {
+      "question": "Vad leder kampen för tillvaron till?",
+      "options": {
+        "A": "Att alla individer överlever",
+        "B": "Att miljön anpassar sig efter arterna",
+        "C": "Att vissa individer får större chans att överleva och fortplanta sig"
+      },
+      "correct": "C",
+      "explanation": "Resursbrist gör att individer med gynnsamma egenskaper selekteras."
+    }
+  },
+
+  {
+    "id": 104,
+    "subject": "Evolution",
+    "intro": "Vissa fossil visar drag från två större organismgrupper och kallas <span class=\"concept\">övergångsformer</span>.",
     "q1": {
       "type": "period_fanerozoikum",
       "question": "Under vilken geologisk period levde Tiktaalik?",
       "correct": "Devon",
       "interval": "419–359 miljoner år sedan",
-      "extra": "Devon kallas ibland \"fiskarnas tidsålder\" och flera viktiga steg mot ett liv delvis på land sker då."
+      "extra": "Devon kallas ofta fiskarnas tidsålder."
     },
     "q2": {
-      "question": "Vad menas med begreppet övergångsform?",
+      "question": "Varför räknas Tiktaalik som en övergångsform?",
       "options": {
-        "A": "En organism som är på väg att dö ut",
-        "B": "En organism som visar egenskaper från två större grupper",
-        "C": "En art som saknar fossila släktingar"
+        "A": "Den är en blandning av två arter",
+        "B": "Den visar egenskaper från både fiskar och landlevande ryggradsdjur",
+        "C": "Den levde både före och efter dinosaurierna"
       },
       "correct": "B",
-      "explanation": "En övergångsform har drag från två större organismgrupper och visar hur evolutionära förändringar kan ske stegvis."
+      "explanation": "Tiktaalik hade både fenor och strukturer som liknar ben."
     }
   },
+
   {
-    "id": 2,
+    "id": 105,
     "subject": "Evolution",
-    "intro": "Under en relativt kort period i jordens historia ökade antalet djurgrupper kraftigt. Många av dagens djurstammar får sina första tydliga fossilspår här.",
+    "intro": "Evolution sker inte bara genom urval, utan kräver också <span class=\"concept\">variation</span> mellan individer.",
     "q1": {
-      "type": "period_fanerozoikum",
-      "question": "När inträffade den kambriska explosionen?",
-      "correct": "Kambrium",
-      "interval": "541–485 miljoner år sedan",
-      "extra": "I kambrium blir hårda kroppsdelar vanligare i fossil, vilket gör att många djurgrupper syns tydligt i berglagren."
+      "type": "year",
+      "question": "När blev genetisk variation allmänt accepterad som grund för evolution?",
+      "correctYear": 1900,
+      "extra": "Kring 1900 återupptäcktes Mendels lagar."
     },
     "q2": {
-      "question": "Vad menas med evolutionär radiation?",
+      "question": "Varifrån kommer genetisk variation?",
       "options": {
-        "A": "När många arter snabbt utvecklas från en gemensam stamform",
-        "B": "När arter sprids geografiskt utan att förändras",
-        "C": "När mutationer minskar i en population"
+        "A": "Mutationer och omkombination",
+        "B": "Miljön skapar riktade förändringar",
+        "C": "Arter anpassar sig medvetet"
       },
       "correct": "A",
-      "explanation": "Evolutionär radiation innebär att en stamform ger upphov till många nya arter på relativt kort tid, ofta när nya nischer öppnas."
+      "explanation": "Mutationer och könlig fortplantning skapar variation."
     }
   },
+
   {
-    "id": 3,
+    "id": 106,
     "subject": "Evolution",
-    "intro": "När växter började etablera sig på land förändrades ekosystemen i grunden. Det påverkade syrehalter, markbildning och skapade nya livsmiljöer för djur.",
+    "intro": "Alla levande organismer är släkt och har utvecklats från gemensamma förfäder, ett centralt antagande i evolutionsteorin.",
     "q1": {
-      "type": "period_fanerozoikum",
-      "question": "När började växter etablera sig på land?",
-      "correct": "Silur",
-      "interval": "444–419 miljoner år sedan",
-      "extra": "Tidiga landväxter behövde hantera uttorkning och utvecklade skyddande ytskikt och enklare stödjevävnad."
+      "type": "year",
+      "question": "Vilket år föddes Charles Darwin?",
+      "correctYear": 1809,
+      "extra": "Darwin föddes samma år som Abraham Lincoln."
     },
     "q2": {
-      "question": "Vad är en anpassning (adaptation)?",
+      "question": "Vad menas med gemensamt ursprung?",
       "options": {
-        "A": "En egenskap som uppstår av träning under livet och ärvs",
-        "B": "En egenskap som ökar överlevnad eller reproduktion i en viss miljö",
-        "C": "En slumpmässig egenskap som alltid är neutral"
+        "A": "Att arter skapats samtidigt",
+        "B": "Att alla organismer härstammar från tidigare livsformer",
+        "C": "Att evolution alltid leder till mer avancerade arter"
       },
       "correct": "B",
-      "explanation": "En anpassning är en egenskap som ger fördel i en viss miljö och därför kan spridas genom naturligt urval."
+      "explanation": "Likheter mellan arter beror på gemensamma förfäder."
     }
   },
+
   {
-    "id": 4,
+    "id": 107,
     "subject": "Evolution",
-    "intro": "Ett av de mest kända <span class=\"concept\">massutdöendena</span> förändrade livets utveckling och öppnade nya ekologiska nischer.",
+    "intro": "Innan Darwin fanns andra idéer om hur arter förändras, bland annat <span class=\"concept\">lamarckismen</span>.",
     "q1": {
-      "type": "period_fanerozoikum",
-      "question": "Under vilken geologisk period inträffade utdöendet som tog bort de flesta dinosaurier?",
-      "correct": "Krita",
-      "interval": "145–66 miljoner år sedan (slutet vid ca 66 Ma)",
-      "extra": "Händelsen kopplas ofta till asteroidnedslag och följande klimatförändringar som slog hårt mot näringskedjor."
+      "type": "year",
+      "question": "Vilket år publicerade Jean-Baptiste Lamarck sin evolutionsteori?",
+      "correctYear": 1809,
+      "extra": "Lamarck föreslog att förvärvade egenskaper kunde ärvas."
     },
     "q2": {
-      "question": "Vad menas med massutdöende?",
+      "question": "Vad var centralt i Lamarcks teori?",
       "options": {
-        "A": "När alla arter dör ut samtidigt",
-        "B": "När många arter försvinner under kort tid (geologiskt sett)",
-        "C": "När en art ersätts av en annan i ett område"
-      },
-      "correct": "B",
-      "explanation": "Massutdöende innebär att en stor andel av jordens arter dör ut under en relativt kort tidsperiod."
-    }
-  },
-  {
-    "id": 5,
-    "subject": "Människans utveckling",
-    "intro": "Människan är en ung art i jordens historia. Fossil och DNA visar att vår art uppstod i Afrika och senare spreds över världen.",
-    "q1": {
-      "type": "human_time",
-      "question": "Ungefär när uppstod Homo sapiens?",
-      "correctText": "ca 300 000 år sedan (sen pleistocen)",
-      "extra": "Tidiga fynd av Homo sapiens är kopplade till Afrika och visar gradvis framväxt av moderna drag."
-    },
-    "q2": {
-      "question": "Vad skiljer kulturell från biologisk evolution?",
-      "options": {
-        "A": "Kulturell evolution sker genom gener och mutationer",
-        "B": "Biologisk evolution går alltid snabbare än kulturell",
-        "C": "Kulturell evolution sker genom lärande och traditioner"
+        "A": "Naturligt urval",
+        "B": "Slumpmässiga mutationer",
+        "C": "Att egenskaper som används mycket förs vidare till avkomman"
       },
       "correct": "C",
-      "explanation": "Kulturell evolution förs vidare genom lärande, språk och traditioner – inte via DNA."
+      "explanation": "Lamarck menade att användning och icke-användning styrde evolution."
     }
   },
+
   {
-    "id": 6,
-    "subject": "Människans utveckling",
-    "intro": "Tidiga homininer gick upprätt långt innan hjärnvolymen ökade kraftigt. Det visar att upprätt gång inte automatiskt betyder “modern människa”.",
-    "q1": {
-      "type": "human_time",
-      "question": "Ungefär när levde Australopithecus?",
-      "correctText": "ca 4–2 miljoner år sedan (pliocen–tidig pleistocen)",
-      "extra": "Australopithecus kopplas till tidig upprätt gång och levde i varierande miljöer i Afrika."
-    },
-    "q2": {
-      "question": "Vad är en hominin?",
-      "options": {
-        "A": "Alla primater (apor, halvapor och människor)",
-        "B": "Alla däggdjur som kan gå på två ben",
-        "C": "Människan och våra utdöda släktingar efter splittringen från schimpanser"
-      },
-      "correct": "C",
-      "explanation": "Homininer är människans gren efter separationen från schimpanslinjen."
-    }
-  },
-  {
-    "id": 7,
-    "subject": "Genetik",
-    "intro": "Genetik handlar om hur egenskaper ärvs. Mendels korsningar med ärtplantor visade tydliga mönster i ärftlighet, trots att man inte kände till DNA då.",
+    "id": 108,
+    "subject": "Evolution",
+    "intro": "Likheter i skelett mellan olika djurgrupper kallas <span class=\"concept\">homologa strukturer</span> och är viktiga bevis för evolution.",
     "q1": {
       "type": "year",
-      "question": "Vilket år publicerade Gregor Mendel sina resultat om ärftlighet?",
-      "correctYear": 1866,
-      "extra": "Mendels arbete fick genomslag först senare, när det återupptäcktes kring år 1900."
+      "question": "När började homologi användas systematiskt som evolutionsbevis?",
+      "correctYear": 1859,
+      "extra": "Efter Darwins teori fick jämförande anatomi ny betydelse."
     },
     "q2": {
-      "question": "Vad beskriver Mendels lagar?",
+      "question": "Vad visar homologa strukturer?",
       "options": {
-        "A": "Hur arter förändras genom naturligt urval",
-        "B": "Hur egenskaper ärvs mellan generationer via alleler",
-        "C": "Hur DNA:s dubbelhelix är uppbyggd"
+        "A": "Att arter har samma funktion",
+        "B": "Att arter har gemensamt ursprung",
+        "C": "Att miljön formar identiska organ"
       },
       "correct": "B",
-      "explanation": "Mendels lagar beskriver hur alleler fördelas till könsceller och kombineras i avkomman."
-    }
-  },
-  {
-    "id": 8,
-    "subject": "Genetik",
-    "intro": "Förståelsen av DNA:s struktur blev avgörande för modern biologi. Dubbelhelixen gjorde det tydligare hur genetisk information kan kopieras och överföras.",
-    "q1": {
-      "type": "year",
-      "question": "Vilket år publicerades modellen för DNA:s dubbelhelix?",
-      "correctYear": 1953,
-      "extra": "Upptäckten kopplas ofta till Watson & Crick, men Rosalind Franklins data var mycket viktig."
-    },
-    "q2": {
-      "question": "Vad menas med begreppet genotyp?",
-      "options": {
-        "A": "En individs genetiska uppsättning (vilka alleler den har)",
-        "B": "En individs utseende och mätbara egenskaper",
-        "C": "Miljöpåverkan som förändrar genuttrycket"
-      },
-      "correct": "A",
-      "explanation": "Genotyp beskriver vilka alleler en individ har. Fenotyp är hur egenskaperna uttrycks."
-    }
-  },
-  {
-    "id": 9,
-    "subject": "Genteknik",
-    "intro": "PCR gjorde det möjligt att kopiera en liten DNA-mängd till stora mängder, så att man kan analysera den. Det blev en nyckelmetod i forskning, diagnostik och kriminalteknik.",
-    "q1": {
-      "type": "year",
-      "question": "Vilket år utvecklades PCR-tekniken?",
-      "correctYear": 1983,
-      "extra": "PCR används t.ex. när man behöver förstärka DNA från ett mycket litet prov."
-    },
-    "q2": {
-      "question": "Vad används PCR främst till?",
-      "options": {
-        "A": "Att klippa DNA på specifika ställen",
-        "B": "Att kopiera (amplifiera) DNA",
-        "C": "Att översätta RNA till protein"
-      },
-      "correct": "B",
-      "explanation": "PCR (polymerase chain reaction) gör många kopior av ett DNA-avsnitt så att det går att analysera."
-    }
-  },
-  {
-    "id": 10,
-    "subject": "Genteknik",
-    "intro": "CRISPR-Cas9 är en modern metod för genredigering. Den bygger på ett bakterieförsvar där ett protein kan klippa DNA på en plats som matchar en styrsekvens.",
-    "q1": {
-      "type": "year",
-      "question": "Vilket år presenterades CRISPR-Cas9 som genredigeringsmetod?",
-      "correctYear": 2012,
-      "extra": "CRISPR används för att ändra gener i laboratoriet och har stor betydelse för forskning och medicinska tillämpningar."
-    },
-    "q2": {
-      "question": "Vad gör CRISPR-Cas9?",
-      "options": {
-        "A": "Förhindrar mutationer i alla celler",
-        "B": "Läser av DNA-sekvenser utan att påverka dem",
-        "C": "Klipper DNA på specifika platser (styrt av en guide-sekvens)"
-      },
-      "correct": "C",
-      "explanation": "Cas9 fungerar som en “molekylär sax” som klipper DNA på en plats som matchar guide-sekvensen."
+      "explanation": "Liknande grundstruktur tyder på gemensam härstamning."
     }
   }
+
+  /* … fortsättning upp till 25 kort i samma stil */
 ]
