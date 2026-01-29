@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>När då då? – Evolution, Genetik & Genteknik</title>
   <style>
-   body{
-  font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 65%);
-  margin:0; padding:0;
-}
+    body {
+      font-family: Arial, sans-serif;
+      /* Du skrev att du satt bakgrunden till #79cee3.
+         För att den ska kännas mjukare använder vi en lätt gradient. */
+      background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 65%);
+      margin: 0;
+      padding: 0;
+    }
+
     .topbar { max-width: 980px; margin: 14px auto 0; padding: 0 12px; }
     .subject-btn{
       display:inline-block; padding:8px 12px; background:#fff; border-radius:6px;
@@ -51,6 +55,8 @@
 
     .hint { margin-top: 10px; color:#555; font-size: 14px; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    code { background:#f3f3f3; padding:2px 6px; border-radius:6px; }
   </style>
 </head>
 
@@ -63,11 +69,12 @@
     <div id="card">
       <div id="meta">
         <div class="pill" id="subjectPill">När då då?</div>
-        <div class="small" id="statusText">Kort 1/10 · Steg 0/4</div>
+        <div class="small" id="statusText">Laddar frågor…</div>
       </div>
 
       <div id="content">
-        <!-- Dynamiskt innehåll -->
+        <h2>Laddar…</h2>
+        <p>Hämtar <code>nardada_cards.json</code>.</p>
       </div>
 
       <div class="controls">
@@ -76,10 +83,12 @@
         <button class="primary" onclick="nextStep()">Nästa steg ▶</button>
         <button onclick="nextCard()">➡️ Nästa kort</button>
         <button onclick="shuffleDeck()">🔀 Blanda frågor</button>
+        <button onclick="loadDeck()">⟳ Ladda om JSON</button>
       </div>
 
       <div class="hint">
-        Tips: <span class="mono">Nästa steg</span> visar i ordning: inledning → tidsfråga → tidssvar → begreppsfråga → begreppssvar.
+        Tips: <span class="mono">Nästa steg</span> visar i ordning:
+        inledning → tidsfråga → tidssvar → begreppsfråga → begreppssvar.
       </div>
     </div>
   </div>
@@ -98,265 +107,93 @@ const FANEROZOIKUM_PERIODER = [
   "Kambrium","Ordovicium","Silur","Devon","Karbon","Perm","Trias","Jura","Krita","Paleogen","Neogen","Kvartär"
 ];
 
-// 10 testkort (kan senare flyttas till JSON-fil)
-let deck = [
-  {
-    id: 1,
-    subject: "Evolution",
-    intro: `När ryggradsdjur började lämna vattnet skedde detta inte i ett språng. Fossil visar former som kombinerar egenskaper från olika miljöer. Ett centralt begrepp här är <span class="concept">övergångsform</span>.`,
-    q1: {
-      type: "period_fanerozoikum",
-      question: "Under vilken geologisk period levde Tiktaalik?",
-      correct: "Devon",
-      interval: "419–359 miljoner år sedan",
-      extra: "Devon kallas ibland \"fiskarnas tidsålder\" och flera viktiga steg i ryggradsdjurens utveckling mot ett liv delvis på land sker då."
-    },
-    q2: {
-      question: "Vad menas med begreppet övergångsform?",
-      options: {
-        A: "En organism som är på väg att dö ut",
-        B: "En organism som visar egenskaper från två större grupper",
-        C: "En art som saknar fossila släktingar"
-      },
-      correct: "B",
-      explanation: "En övergångsform har drag från två större organismgrupper och hjälper oss förstå hur evolutionära förändringar kan ske stegvis."
-    }
-  },
-  {
-    id: 2,
-    subject: "Evolution",
-    intro: `Under en relativt kort period i jordens historia ökade antalet djurgrupper kraftigt. Många av dagens djurstammar får sina första tydliga fossilspår här.`,
-    q1: {
-      type: "period_fanerozoikum",
-      question: "När inträffade den kambriska explosionen?",
-      correct: "Kambrium",
-      interval: "541–485 miljoner år sedan",
-      extra: "I kambrium blir hårda kroppsdelar vanligare i fossil, vilket gör att många djurgrupper syns tydligt i berglagren."
-    },
-    q2: {
-      question: "Vad menas med evolutionär radiation?",
-      options: {
-        A: "När många arter snabbt utvecklas från en gemensam stamform",
-        B: "När arter sprids geografiskt utan att förändras",
-        C: "När mutationer minskar i en population"
-      },
-      correct: "A",
-      explanation: "Evolutionär radiation innebär att en stamform ger upphov till många nya arter på relativt kort tid, ofta när nya livsmiljöer eller nischer öppnas."
-    }
-  },
-  {
-    id: 3,
-    subject: "Evolution",
-    intro: `När växter började etablera sig på land förändrades ekosystemen i grunden. Det påverkade syrehalter, markbildning och skapade nya livsmiljöer för djur.`,
-    q1: {
-      type: "period_fanerozoikum",
-      question: "När började växter etablera sig på land?",
-      correct: "Silur",
-      interval: "444–419 miljoner år sedan",
-      extra: "Tidiga landväxter behövde hantera uttorkning och utvecklade bland annat skyddande ytskikt och enklare stödjevävnad."
-    },
-    q2: {
-      question: "Vad är en anpassning (adaptation)?",
-      options: {
-        A: "En egenskap som uppstår av träning under livet och ärvs",
-        B: "En egenskap som ökar överlevnad eller reproduktion i en viss miljö",
-        C: "En slumpmässig egenskap som alltid är neutral"
-      },
-      correct: "B",
-      explanation: "En anpassning är en egenskap som ger fördel i en viss miljö och därför kan spridas genom naturligt urval."
-    }
-  },
-  {
-    id: 4,
-    subject: "Evolution",
-    intro: `Ett av de mest kända <span class="concept">massutdöendena</span> i jordens historia förändrade livets utveckling drastiskt. Efteråt tog däggdjur och fåglar en större roll i många ekosystem.`,
-    q1: {
-      type: "period_fanerozoikum",
-      question: "Under vilken geologisk period inträffade utdöendet som tog bort de flesta dinosaurier?",
-      correct: "Krita",
-      interval: "145–66 miljoner år sedan (slutet vid ca 66 Ma)",
-      extra: "Händelsen kopplas ofta till asteroidnedslag och följande klimatförändringar som slog hårt mot näringskedjor."
-    },
-    q2: {
-      question: "Vad menas med massutdöende?",
-      options: {
-        A: "När alla arter dör ut samtidigt",
-        B: "När många arter försvinner under kort tid (geologiskt sett)",
-        C: "När en art ersätts av en annan i ett område"
-      },
-      correct: "B",
-      explanation: "Massutdöende innebär att en stor andel av jordens arter dör ut under en relativt kort tidsperiod."
-    }
-  },
-  {
-    id: 5,
-    subject: "Människans utveckling",
-    intro: `Människan är en ung art i jordens historia. Fossil och DNA visar att vår art uppstod i Afrika och senare spreds över världen. Vår utveckling handlar både om biologi och kultur.`,
-    q1: {
-      type: "human_time",
-      question: "Ungefär när uppstod Homo sapiens?",
-      correctText: "ca 300 000 år sedan (sen pleistocen)",
-      extra: "Tidiga fynd av Homo sapiens är kopplade till Afrika och visar en gradvis utveckling av moderna drag."
-    },
-    q2: {
-      question: "Vad skiljer kulturell från biologisk evolution?",
-      options: {
-        A: "Kulturell evolution sker genom gener och mutationer",
-        B: "Biologisk evolution går alltid snabbare än kulturell",
-        C: "Kulturell evolution sker genom lärande och traditioner"
-      },
-      correct: "C",
-      explanation: "Kulturell evolution bygger på information som förs vidare via lärande, språk och traditioner – inte via DNA."
-    }
-  },
-  {
-    id: 6,
-    subject: "Människans utveckling",
-    intro: `Tidiga homininer gick upprätt långt innan hjärnvolymen ökade kraftigt. Det visar att gång på två ben inte automatiskt betyder “modern människa”.`,
-    q1: {
-      type: "human_time",
-      question: "Ungefär när levde Australopithecus?",
-      correctText: "ca 4–2 miljoner år sedan (pliocen–tidig pleistocen)",
-      extra: "Australopithecus har kopplats till tidig upprätt gång och levde i varierande miljöer i Afrika."
-    },
-    q2: {
-      question: "Vad är en hominin?",
-      options: {
-        A: "Alla primater (apor, halvapor och människor)",
-        B: "Alla däggdjur som kan gå på två ben",
-        C: "Människan och våra utdöda släktingar efter splittringen från schimpanser"
-      },
-      correct: "C",
-      explanation: "Homininer är människans gren efter att vår utvecklingslinje skiljdes från schimpansernas utvecklingslinje."
-    }
-  },
-  {
-    id: 7,
-    subject: "Genetik",
-    intro: `Genetik handlar om hur egenskaper ärvs. På 1800-talet visade experiment med ärtplantor att ärftlighet följer tydliga mönster, även om man då inte kände till DNA.`,
-    q1: {
-      type: "year",
-      question: "Vilket år publicerade Gregor Mendel sina resultat om ärftlighet?",
-      correctYear: 1866,
-      extra: "Mendels arbete fick först senare genomslag, när det “återupptäcktes” kring år 1900."
-    },
-    q2: {
-      question: "Vad beskriver Mendels lagar?",
-      options: {
-        A: "Hur arter förändras över tid genom naturligt urval",
-        B: "Hur egenskaper ärvs mellan generationer via alleler",
-        C: "Hur DNA:s dubbelhelix är uppbyggd"
-      },
-      correct: "B",
-      explanation: "Mendels lagar handlar om hur alleler fördelas till könsceller och hur de kombineras i avkomman."
-    }
-  },
-  {
-    id: 8,
-    subject: "Genetik",
-    intro: `Förståelsen av DNA:s struktur blev avgörande för modern biologi. När man förstod dubbelhelixen blev det tydligare hur genetisk information kan kopieras och överföras.`,
-    q1: {
-      type: "year",
-      question: "Vilket år publicerades modellen för DNA:s dubbelhelix?",
-      correctYear: 1953,
-      extra: "Upptäckten kopplas ofta till Watson & Crick, men Rosalind Franklins röntgendiffraktion var mycket viktig för pusslet."
-    },
-    q2: {
-      question: "Vad menas med begreppet genotyp?",
-      options: {
-        A: "En individs genetiska uppsättning (vilka alleler den har)",
-        B: "En individs utseende och mätbara egenskaper",
-        C: "Miljöpåverkan som förändrar genuttrycket"
-      },
-      correct: "A",
-      explanation: "Genotyp beskriver vilka alleler en individ har. Fenotyp är hur egenskaperna faktiskt uttrycks."
-    }
-  },
-  {
-    id: 9,
-    subject: "Genteknik",
-    intro: `I molekylärbiologi behöver man ofta kopiera en liten DNA-mängd till stora mängder för att kunna analysera den. Därför blev PCR en revolutionerande metod.`,
-    q1: {
-      type: "year",
-      question: "Vilket år utvecklades PCR-tekniken?",
-      correctYear: 1983,
-      extra: "PCR används bland annat i diagnostik, forskning och kriminalteknik när man behöver förstärka DNA."
-    },
-    q2: {
-      question: "Vad används PCR främst till?",
-      options: {
-        A: "Att klippa DNA på specifika ställen",
-        B: "Att kopiera (amplifiera) DNA",
-        C: "Att översätta RNA till protein"
-      },
-      correct: "B",
-      explanation: "PCR (polymerase chain reaction) gör många kopior av ett DNA-avsnitt så att det går att analysera."
-    }
-  },
-  {
-    id: 10,
-    subject: "Genteknik",
-    intro: `CRISPR-Cas9 är ett exempel på modern genredigering. Metoden bygger på ett bakterieförsvar där ett protein kan klippa DNA på ett ställe som matchar en styrsekvens.`,
-    q1: {
-      type: "year",
-      question: "Vilket år presenterades CRISPR-Cas9 som genredigeringsmetod?",
-      correctYear: 2012,
-      extra: "CRISPR används för att ändra gener i laboratoriet och har stor betydelse för forskning och medicinska tillämpningar."
-    },
-    q2: {
-      question: "Vad gör CRISPR-Cas9?",
-      options: {
-        A: "Förhindrar mutationer i alla celler",
-        B: "Läser av DNA-sekvenser utan att påverka dem",
-        C: "Klipper DNA på specifika platser (styrt av en guide-sekvens)"
-      },
-      correct: "C",
-      explanation: "Cas9 fungerar som en “molekylär sax” som klipper DNA på en plats som matchar guide-sekvensen."
-    }
-  }
-];
-
+let deck = [];
 let idx = 0;
 let step = 0; // 0..4
 
-function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+async function loadDeck() {
+  const content = document.getElementById("content");
+  const statusText = document.getElementById("statusText");
+  const subjectPill = document.getElementById("subjectPill");
+
+  statusText.textContent = "Laddar frågor…";
+  subjectPill.textContent = "När då då?";
+
+  try {
+    // JSON-filen ska ligga i samma mapp som nardada.html
+    const res = await fetch("./nardada_cards.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`Kunde inte ladda JSON (${res.status})`);
+
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("JSON laddades men innehåller ingen lista med kort (tom eller fel format).");
+    }
+
+    deck = data;
+    idx = 0;
+    step = 0;
+    render();
+  } catch (err) {
+    console.error(err);
+    content.innerHTML = `
+      <h2>Fel vid laddning</h2>
+      <p>Kunde inte läsa <code>nardada_cards.json</code>.</p>
+      <p><strong>Orsak:</strong> ${esc(err.message)}</p>
+      <p>Kontrollera att filen ligger i samma mapp som <code>nardada.html</code> och att den är giltig JSON.</p>
+    `;
+    statusText.textContent = "Fel: JSON kunde inte laddas";
+    subjectPill.textContent = "När då då?";
+  }
+}
 
 function render() {
-  const card = deck[idx];
   const subjectPill = document.getElementById("subjectPill");
   const statusText = document.getElementById("statusText");
   const content = document.getElementById("content");
 
-  subjectPill.textContent = card.subject;
+  if (!Array.isArray(deck) || deck.length === 0) {
+    subjectPill.textContent = "När då då?";
+    statusText.textContent = "Inga kort laddade";
+    content.innerHTML = `<h2>Inga kort</h2><p>Lägg in frågor i <code>nardada_cards.json</code> och klicka “Ladda om JSON”.</p>`;
+    return;
+  }
+
+  const card = deck[idx];
+  subjectPill.textContent = card.subject || "När då då?";
   statusText.textContent = `Kort ${idx+1}/${deck.length} · Steg ${step}/4`;
 
-  let html = `<h2>${esc(card.subject)} – kort ${card.id}</h2>`;
+  let html = `<h2>${esc(card.subject || "När då då?")} – kort ${esc(card.id ?? (idx+1))}</h2>`;
 
   if (step === 0) {
-    html += `<div class="intro">${card.intro}</div>`;
+    // intro kan innehålla span.concept (HTML). Vi släpper in den som HTML medvetet.
+    html += `<div class="intro">${card.intro || ""}</div>`;
   }
 
   if (step === 1) {
-    html += `<div class="intro">${card.intro}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1.question)}</div>`;
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
   }
 
   if (step === 2) {
-    html += `<div class="intro">${card.intro}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1.question)}</div>`;
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
     html += renderAnswer1(card.q1);
   }
 
   if (step === 3) {
-    html += `<div class="intro">${card.intro}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1.question)}</div>`;
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
     html += renderAnswer1(card.q1);
     html += renderQuestion2(card.q2);
   }
 
   if (step === 4) {
-    html += `<div class="intro">${card.intro}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1.question)}</div>`;
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
     html += renderAnswer1(card.q1);
     html += renderQuestion2(card.q2);
     html += renderAnswer2(card.q2);
@@ -368,9 +205,14 @@ function render() {
 function renderAnswer1(q1) {
   let box = `<div class="answerBox"><div class="label">Svar 1</div>`;
 
+  if (!q1 || !q1.type) {
+    box += `<div class="periodList"><span class="hit">[Saknar data för svar 1]</span></div></div>`;
+    return box;
+  }
+
   if (q1.type === "period_fanerozoikum") {
     const list = FANEROZOIKUM_PERIODER.map(p => {
-      if (p === q1.correct) return `<span class="hit">${esc(p)} (${esc(q1.interval)})</span>`;
+      if (p === q1.correct) return `<span class="hit">${esc(p)} (${esc(q1.interval || "")})</span>`;
       return esc(p);
     }).join(" · ");
     box += `<div class="periodList">${list}</div>`;
@@ -379,10 +221,11 @@ function renderAnswer1(q1) {
     box += `<div class="periodList"><span class="hit">${esc(q1.correctYear)}</span></div>`;
     if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
   } else if (q1.type === "human_time") {
-    box += `<div class="periodList"><span class="hit">${esc(q1.correctText)}</span></div>`;
+    box += `<div class="periodList"><span class="hit">${esc(q1.correctText || "")}</span></div>`;
     if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
   } else {
-    box += `<div class="periodList"><span class="hit">[Okänt format]</span></div>`;
+    box += `<div class="periodList"><span class="hit">[Okänt format: ${esc(q1.type)}]</span></div>`;
+    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
   }
 
   box += `</div>`;
@@ -390,50 +233,65 @@ function renderAnswer1(q1) {
 }
 
 function renderQuestion2(q2) {
+  if (!q2) return `<div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>[Saknar fråga 2]</div>`;
+
   return `
-    <div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>${esc(q2.question)}</div>
+    <div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>${esc(q2.question || "")}</div>
     <ol class="options" type="A">
-      <li>${esc(q2.options.A)}</li>
-      <li>${esc(q2.options.B)}</li>
-      <li>${esc(q2.options.C)}</li>
+      <li>${esc(q2.options?.A || "")}</li>
+      <li>${esc(q2.options?.B || "")}</li>
+      <li>${esc(q2.options?.C || "")}</li>
     </ol>
   `;
 }
 
 function renderAnswer2(q2) {
+  if (!q2) {
+    return `
+      <div class="answerBox">
+        <div class="label">Svar 2</div>
+        <div class="periodList"><span class="hit">[Saknar facit]</span></div>
+      </div>
+    `;
+  }
+
   return `
     <div class="answerBox">
       <div class="label">Svar 2</div>
-      <div class="periodList">Rätt alternativ: <span class="hit">${esc(q2.correct)}</span></div>
-      <div class="extra">${esc(q2.explanation)}</div>
+      <div class="periodList">Rätt alternativ: <span class="hit">${esc(q2.correct || "")}</span></div>
+      <div class="extra">${esc(q2.explanation || "")}</div>
     </div>
   `;
 }
 
 function nextStep() {
+  if (!deck.length) return;
   step = Math.min(4, step + 1);
   render();
 }
 
 function resetStep() {
+  if (!deck.length) return;
   step = 0;
   render();
 }
 
 function nextCard() {
+  if (!deck.length) return;
   idx = (idx + 1) % deck.length;
   step = 0;
   render();
 }
 
 function prevCard() {
+  if (!deck.length) return;
   idx = (idx - 1 + deck.length) % deck.length;
   step = 0;
   render();
 }
 
 function shuffleDeck() {
-  // Fisher–Yates
+  if (!deck.length) return;
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -443,9 +301,8 @@ function shuffleDeck() {
   render();
 }
 
-// Start
-render();
+// Start: ladda från JSON
+loadDeck();
 </script>
 </body>
 </html>
-
