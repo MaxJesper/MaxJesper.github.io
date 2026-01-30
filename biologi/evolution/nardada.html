@@ -201,6 +201,80 @@ let deck = [];
 let idx = 0;
 let step = 0; // 0..4
 
+// ===== Poängräknare (enkel) =====
+const SCORE_KEY = "nardada_scores_v1";
+let scores = [];         // array med poäng per grupp
+let groupCount = 3;      // default
+
+function loadScores(){
+  try{
+    const raw = localStorage.getItem(SCORE_KEY);
+    if(raw){
+      const obj = JSON.parse(raw);
+      if (Array.isArray(obj.scores)) scores = obj.scores;
+      if (Number.isFinite(obj.groupCount)) groupCount = obj.groupCount;
+    }
+  }catch(e){}
+  // säkerställ längd
+  setGroupCount(groupCount, false);
+  // synka dropdown om den finns
+  const sel = document.getElementById("groupCount");
+  if(sel) sel.value = String(groupCount);
+  renderScoreboard();
+}
+
+function saveScores(){
+  localStorage.setItem(SCORE_KEY, JSON.stringify({ groupCount, scores }));
+}
+
+function setGroupCount(n, persist=true){
+  groupCount = Math.max(2, Math.min(6, Number(n) || 3));
+  // justera scores-längd
+  if(scores.length < groupCount){
+    while(scores.length < groupCount) scores.push(0);
+  } else if(scores.length > groupCount){
+    scores = scores.slice(0, groupCount);
+  }
+  if(persist) saveScores();
+  renderScoreboard();
+}
+
+function setGroupCountFromUI(){
+  const sel = document.getElementById("groupCount");
+  setGroupCount(sel.value, true);
+}
+
+function renderScoreboard(){
+  const board = document.getElementById("scoreboard");
+  if(!board) return;
+  board.innerHTML = "";
+  for(let i=0;i<groupCount;i++){
+    const div = document.createElement("div");
+    div.className = "group";
+    div.innerHTML = `
+      <span class="name">G${i+1}</span>
+      <button title="Minus 1" onclick="addPoints(${i}, -1)">−</button>
+      <span class="pts">${scores[i]}</span>
+      <button title="Plus 1" onclick="addPoints(${i}, 1)">+</button>
+      <button title="Plus 2" onclick="addPoints(${i}, 2)">+2</button>
+    `;
+    board.appendChild(div);
+  }
+}
+
+function addPoints(i, delta){
+  scores[i] = Math.max(0, (scores[i] || 0) + delta);
+  saveScores();
+  renderScoreboard();
+}
+
+function resetScores(){
+  scores = Array.from({length: groupCount}, () => 0);
+  saveScores();
+  renderScoreboard();
+}
+
+  
 function esc(s){
   return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
@@ -392,6 +466,7 @@ function shuffleDeck() {
 }
 
 // Start: ladda från JSON
+loadScores();
 loadDeck();
 </script>
 </body>
