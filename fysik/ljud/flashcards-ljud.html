@@ -5,23 +5,21 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ljud – Flashcards (Akustik)</title>
 
-  <!-- Din sajt-stil -->
   <link rel="stylesheet" href="/css/style.css">
 
   <style>
     body.flashcards-page{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: #0b1020;
+      background:#0b1020;
       color:#eaf0ff;
       min-height:100vh;
     }
 
-    /* Wrap för innehåll */
     .fc-wrap{
       max-width: 980px;
       margin: 0 auto;
-      padding: 18px 16px 24px; /* lite mindre botten, footern tar plats */
+      padding: 18px 16px 24px;
       display:grid;
       gap:16px;
     }
@@ -63,14 +61,29 @@
       padding: 10px 12px;
       border-radius: 12px;
       cursor:pointer;
-      font-weight: 650;
+      font-weight: 700;
       font-size: 13px;
+      user-select:none;
     }
     .fc-btn:hover{ filter: brightness(1.08); }
     .fc-btn:active{ transform: translateY(1px); }
 
     .fc-btn.primary{
       background: linear-gradient(180deg, rgba(26,37,80,.95), rgba(35,48,105,.95));
+    }
+
+    /* Liten visuell markering när toggle är "på" */
+    .fc-btn.on{
+      outline: 2px solid rgba(139,211,255,.35);
+      background: rgba(139,211,255,.10);
+    }
+    .fc-btn.on.green{
+      outline: 2px solid rgba(183,255,161,.30);
+      background: rgba(183,255,161,.08);
+    }
+    .fc-btn.on.warn{
+      outline: 2px solid rgba(255,209,139,.28);
+      background: rgba(255,209,139,.08);
     }
 
     .fc-layout{
@@ -104,21 +117,41 @@
       margin-top: 10px;
     }
 
-    /* STEG 1: Definition */
-    .fc-defBox{
-      display:none;
+    .fc-panels{
       margin-top: 14px;
       border-top: 1px dashed rgba(255,255,255,.18);
       padding-top: 14px;
+      display:grid;
+      gap:12px;
     }
-    .fc-defBox.show{ display:block; }
 
-    .fc-defHighlight{
-      border: 1px solid rgba(139,211,255,.25);
-      background: radial-gradient(800px 300px at 0% 0%, rgba(139,211,255,.14), transparent 60%),
-                  rgba(255,255,255,.04);
+    .fc-panel{
+      display:none;
       border-radius: 18px;
       padding: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .fc-panel.show{ display:block; }
+
+    /* Definition framhävd */
+    .fc-panel.def{
+      border-color: rgba(139,211,255,.25);
+      background:
+        radial-gradient(800px 300px at 0% 0%, rgba(139,211,255,.14), transparent 60%),
+        rgba(255,255,255,.04);
+    }
+
+    .fc-panel.mini{
+      border-color: rgba(183,255,161,.22);
+      background:
+        radial-gradient(700px 260px at 100% 0%, rgba(183,255,161,.10), transparent 55%),
+        rgba(255,255,255,.035);
+    }
+
+    .fc-panel.facit{
+      border-color: rgba(255,209,139,.22);
+      background: rgba(0,0,0,.18);
     }
 
     .fc-label{
@@ -132,13 +165,17 @@
 
     .fc-dot{
       width:8px;height:8px;border-radius:99px;
-      background: #8bd3ff;
+      background:#8bd3ff;
       box-shadow: 0 0 0 4px rgba(139,211,255,.10);
       display:inline-block;
     }
     .fc-dot.green{
       background:#b7ffa1;
       box-shadow: 0 0 0 4px rgba(183,255,161,.10);
+    }
+    .fc-dot.warn{
+      background:#ffd18b;
+      box-shadow: 0 0 0 4px rgba(255,209,139,.10);
     }
 
     .fc-text{
@@ -147,36 +184,24 @@
       color:#eaf0ff;
       font-weight: 650;
     }
-
-    /* STEG 2: Mini */
-    .fc-miniBox{
-      display:none;
-      margin-top: 12px;
-      border-radius: 18px;
-      border: 1px solid rgba(183,255,161,.22);
-      background: radial-gradient(700px 260px at 100% 0%, rgba(183,255,161,.10), transparent 55%),
-                  rgba(255,255,255,.035);
-      padding: 14px;
-    }
-    .fc-miniBox.show{ display:block; }
-
     .fc-miniText{
       font-size: 15px;
       line-height: 1.45;
       font-weight: 550;
     }
-
-    /* STEG 3: Facit */
-    .fc-answer{
-      display:none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      background: rgba(0,0,0,.18);
-      border: 1px solid rgba(255,255,255,.10);
+    .fc-facitText{
       font-size: 14px;
+      line-height: 1.45;
+      font-weight: 600;
     }
-    .fc-answer.show{ display:block; }
+
+    .fc-toggleRow{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
 
     /* Footer-hint längst ned */
     .fc-footerhint{
@@ -188,12 +213,11 @@
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(11,16,32,.78);
       backdrop-filter: blur(10px);
-      color: rgba(234,240,255,.78);
+      color: rgba(234,240,255,.75);
       font-size: 12px;
       line-height: 1.45;
       z-index: 5;
     }
-
     .fc-kbd{
       padding: 2px 8px;
       border: 1px solid rgba(255,255,255,.18);
@@ -213,13 +237,11 @@
 </head>
 
 <body class="flashcards-page">
-  <!-- Din sajt-header -->
   <header class="fysik-header">
     <h1>Ljud – Flashcards</h1>
     <p>Jesper Tordsson</p>
   </header>
 
-  <!-- Hamburgermeny -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
@@ -227,19 +249,18 @@
     <div class="fc-toprow">
       <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
         <span class="fc-pill" id="progressPill">Kort 1 / 1</span>
-        <span class="fc-pill" id="modePill">Steg: 0</span>
       </div>
 
       <div class="fc-actions">
         <a class="subject-btn" href="./index.html">← Tillbaka till Ljud</a>
-        <button class="fc-btn" id="shuffleBtn" title="Blanda (S)">Blanda</button>
-        <button class="fc-btn" id="prevBtn">← Föregående</button>
-        <button class="fc-btn primary" id="nextBtn">Nästa →</button>
+        <button class="fc-btn" id="shuffleBtn" title="S">Blanda</button>
+        <button class="fc-btn" id="prevBtn" title="←">←</button>
+        <button class="fc-btn primary" id="nextBtn" title="→">→</button>
       </div>
     </div>
 
     <div class="fc-layout">
-      <section class="fc-card" id="flash">
+      <section class="fc-card">
         <div class="fc-kicker">
           <div><strong id="cardTitle">Kort</strong> <span id="cardIndex"></span></div>
           <div>Akustik</div>
@@ -247,65 +268,52 @@
 
         <div class="fc-front" id="frontText">...</div>
 
-        <!-- Steg 1: Definition -->
-        <div class="fc-defBox" id="defBox">
-          <div class="fc-defHighlight">
-            <div class="fc-label"><span class="fc-dot"></span> Definition (steg 1)</div>
+        <div class="fc-toggleRow">
+          <button class="fc-btn" id="btnDef">Svar</button>
+          <button class="fc-btn" id="btnMini">Miniproblem</button>
+          <button class="fc-btn" id="btnFacit">Facit</button>
+        </div>
+
+        <div class="fc-panels">
+          <div class="fc-panel def" id="panelDef">
+            <div class="fc-label"><span class="fc-dot"></span> Definition</div>
             <div class="fc-text" id="defText"></div>
           </div>
 
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="fc-btn primary" id="toggleMiniBtn">Nästa steg: mini-problem</button>
-            <button class="fc-btn" id="toggleDefBtn">Dölj definition</button>
-          </div>
-        </div>
-
-        <!-- Steg 2: Mini-problem + steg 3 facit -->
-        <div class="fc-miniBox" id="miniBox">
-          <div class="fc-label"><span class="fc-dot green"></span> Mini-problem (steg 2)</div>
-          <div class="fc-miniText" id="miniText"></div>
-
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="fc-btn" id="showAnswerBtn">Visa facit (steg 3)</button>
-            <button class="fc-btn" id="hideMiniBtn">Dölj mini-problem</button>
+          <div class="fc-panel mini" id="panelMini">
+            <div class="fc-label"><span class="fc-dot green"></span> Miniproblem</div>
+            <div class="fc-miniText" id="miniText"></div>
           </div>
 
-          <div class="fc-answer" id="answerText"></div>
-        </div>
-
-        <div style="margin-top:14px;">
-          <button class="fc-btn primary" id="showDefBtn">Visa svar (definition)</button>
+          <div class="fc-panel facit" id="panelFacit">
+            <div class="fc-label"><span class="fc-dot warn"></span> Facit</div>
+            <div class="fc-facitText" id="answerText"></div>
+          </div>
         </div>
       </section>
 
       <aside class="fc-card">
-        <h2 style="margin:0 0 10px; font-size:16px;">Upplägg i klassrummet</h2>
+        <h2 style="margin:0 0 10px; font-size:16px;">Ren vy – så här funkar togglarna</h2>
         <div style="color: rgba(234,240,255,.75); font-size:13px; line-height:1.55;">
-          <ol style="margin:10px 0 0; padding-left:18px;">
-            <li><b>Eleven svarar</b> på framsidan.</li>
-            <li>Tryck <b>Visa svar</b> → diskutera <b>definitionen</b> (steg 1).</li>
-            <li>Tryck <b>Nästa steg: mini-problem</b> (steg 2).</li>
-            <li>Tryck <b>Visa facit</b> (steg 3).</li>
-          </ol>
-          <p style="margin-top:12px;">
-            Tips: Kör en runda med bara definitioner först, och en andra runda med mini-problem.
-          </p>
+          <ul style="margin:10px 0 0; padding-left:18px;">
+            <li><b>Svar</b> visar/gömmer definitionen.</li>
+            <li><b>Miniproblem</b> visar/gömmer miniproblemet (och visar Svar automatiskt om det behövs).</li>
+            <li><b>Facit</b> visar/gömmer facit (och visar Miniproblem + Svar automatiskt om det behövs).</li>
+          </ul>
         </div>
       </aside>
     </div>
 
-    <!-- Tangent-hjälp längst ned -->
     <div class="fc-footerhint">
       Tangenter:
       <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
-      <span class="fc-kbd">mellanslag</span> visa/dölj definition •
-      <span class="fc-kbd">M</span> visa/dölj mini •
-      <span class="fc-kbd">N</span> visa facit •
-      <span class="fc-kbd">S</span> blanda
+      <span class="fc-kbd">mellanslag</span> Svar •
+      <span class="fc-kbd">M</span> Miniproblem •
+      <span class="fc-kbd">A</span> Facit •
+      <span class="fc-kbd">S</span> Blanda
     </div>
   </main>
 
-  <!-- Din meny-js -->
   <script src="/js/menu.js"></script>
 
   <script>
@@ -460,37 +468,43 @@
     let order = cards.map((_, i) => i);
     let idx = 0;
 
-    // 0 = framsida, 1 = definition, 2 = mini, 3 = facit
-    let step = 0;
+    // toggles
+    let showDef = false;
+    let showMini = false;
+    let showFacit = false;
 
     const progressPill = document.getElementById("progressPill");
-    const modePill = document.getElementById("modePill");
-
     const cardTitle = document.getElementById("cardTitle");
     const cardIndex = document.getElementById("cardIndex");
     const frontText = document.getElementById("frontText");
+
     const defText = document.getElementById("defText");
     const miniText = document.getElementById("miniText");
     const answerText = document.getElementById("answerText");
 
-    const defBox = document.getElementById("defBox");
-    const miniBox = document.getElementById("miniBox");
+    const panelDef = document.getElementById("panelDef");
+    const panelMini = document.getElementById("panelMini");
+    const panelFacit = document.getElementById("panelFacit");
 
-    const showDefBtn = document.getElementById("showDefBtn");
-    const toggleDefBtn = document.getElementById("toggleDefBtn");
-    const toggleMiniBtn = document.getElementById("toggleMiniBtn");
-    const hideMiniBtn = document.getElementById("hideMiniBtn");
-    const showAnswerBtn = document.getElementById("showAnswerBtn");
+    const btnDef = document.getElementById("btnDef");
+    const btnMini = document.getElementById("btnMini");
+    const btnFacit = document.getElementById("btnFacit");
 
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     const shuffleBtn = document.getElementById("shuffleBtn");
 
-    function stepLabel(){
-      if(step === 0) return "Steg: 0 (framsida)";
-      if(step === 1) return "Steg: 1 (definition)";
-      if(step === 2) return "Steg: 2 (mini)";
-      return "Steg: 3 (facit)";
+    function syncToggles(){
+      panelDef.classList.toggle("show", showDef);
+      panelMini.classList.toggle("show", showMini);
+      panelFacit.classList.toggle("show", showFacit);
+
+      btnDef.classList.toggle("on", showDef);
+      btnMini.classList.toggle("on", showMini);
+      btnFacit.classList.toggle("on", showFacit);
+
+      btnMini.classList.toggle("green", showMini);
+      btnFacit.classList.toggle("warn", showFacit);
     }
 
     function render(){
@@ -502,52 +516,69 @@
 
       defText.textContent = card.def;
       miniText.textContent = card.mini;
-      answerText.textContent = `Svar: ${card.answer}`;
+      answerText.textContent = card.answer;
 
       progressPill.textContent = `Kort ${idx+1} / ${order.length}`;
-      modePill.textContent = stepLabel();
 
-      defBox.classList.toggle("show", step >= 1);
-      miniBox.classList.toggle("show", step >= 2);
-      answerText.classList.toggle("show", step >= 3);
-
-      showDefBtn.style.display = (step === 0) ? "inline-block" : "none";
+      syncToggles();
     }
 
-    function setStep(newStep){
-      step = Math.max(0, Math.min(3, newStep));
-      render();
+    function resetCardView(){
+      showDef = false;
+      showMini = false;
+      showFacit = false;
     }
 
     function next(){
       idx = (idx + 1) % order.length;
-      step = 0;
+      resetCardView();
       render();
     }
-
     function prev(){
       idx = (idx - 1 + order.length) % order.length;
-      step = 0;
+      resetCardView();
       render();
     }
-
     function shuffle(){
       for(let i = order.length - 1; i > 0; i--){
         const j = Math.floor(Math.random() * (i + 1));
         [order[i], order[j]] = [order[j], order[i]];
       }
       idx = 0;
-      step = 0;
+      resetCardView();
       render();
     }
 
-    showDefBtn.addEventListener("click", () => setStep(1));
-    toggleDefBtn.addEventListener("click", () => setStep(0));
+    // Toggle-regler (steg-ordning, men ren UI)
+    function toggleDef(){
+      showDef = !showDef;
+      if(!showDef){
+        // om definition göms, göm också mini+facit för att undvika konstiga lägen
+        showMini = false;
+        showFacit = false;
+      }
+      syncToggles();
+    }
 
-    toggleMiniBtn.addEventListener("click", () => setStep(step >= 2 ? 1 : 2));
-    hideMiniBtn.addEventListener("click", () => setStep(1));
+    function toggleMini(){
+      if(!showDef) showDef = true; // säkerställ steg 1
+      showMini = !showMini;
+      if(!showMini){
+        showFacit = false; // facit kräver mini
+      }
+      syncToggles();
+    }
 
-    showAnswerBtn.addEventListener("click", () => setStep(3));
+    function toggleFacit(){
+      if(!showDef) showDef = true;
+      if(!showMini) showMini = true;
+      showFacit = !showFacit;
+      syncToggles();
+    }
+
+    btnDef.addEventListener("click", toggleDef);
+    btnMini.addEventListener("click", toggleMini);
+    btnFacit.addEventListener("click", toggleFacit);
 
     nextBtn.addEventListener("click", next);
     prevBtn.addEventListener("click", prev);
@@ -555,12 +586,11 @@
 
     window.addEventListener("keydown", (e) => {
       const key = e.key.toLowerCase();
-
       if(e.key === "ArrowRight") next();
       else if(e.key === "ArrowLeft") prev();
-      else if(e.key === " ") { e.preventDefault(); setStep(step === 0 ? 1 : 0); } // definition on/off
-      else if(key === "m") { if(step === 0) setStep(1); setStep(step >= 2 ? 1 : 2); } // mini on/off
-      else if(key === "n") { if(step < 2) setStep(2); setStep(3); } // facit
+      else if(e.key === " ") { e.preventDefault(); toggleDef(); }
+      else if(key === "m") toggleMini();
+      else if(key === "a") toggleFacit();
       else if(key === "s") shuffle();
     });
 
