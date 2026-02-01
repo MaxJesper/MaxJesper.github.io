@@ -252,4 +252,311 @@
 
           <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
             <button class="fc-btn" id="showAnswerBtn">Visa facit (steg 3)</button>
-            <button class="fc-btn" id="hideMiniBtn">Dö
+            <button class="fc-btn" id="hideMiniBtn">Dölj mini-problem</button>
+          </div>
+
+          <div class="fc-answer" id="answerText"></div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button class="fc-btn primary" id="showDefBtn">Visa svar (definition)</button>
+        </div>
+
+        <div class="fc-hint">
+          Tangenter:
+          <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
+          <span class="fc-kbd">mellanslag</span> visa/dölj definition •
+          <span class="fc-kbd">M</span> visa/dölj mini •
+          <span class="fc-kbd">A</span> visa facit •
+          <span class="fc-kbd">S</span> blanda
+        </div>
+      </section>
+
+      <aside class="fc-card">
+        <h2 style="margin:0 0 10px; font-size:16px;">Upplägg i klassrummet</h2>
+        <div style="color: rgba(234,240,255,.75); font-size:13px; line-height:1.55;">
+          <ol style="margin:10px 0 0; padding-left:18px;">
+            <li><b>Eleven svarar</b> på framsidan.</li>
+            <li>Tryck <b>Visa svar</b> → diskutera <b>definitionen</b> (steg 1).</li>
+            <li>Tryck <b>Nästa steg: mini-problem</b> (steg 2).</li>
+            <li>Tryck <b>Visa facit</b> (steg 3).</li>
+          </ol>
+          <p style="margin-top:12px;">
+            Tips: Kör en hel runda med bara definitioner först (snabbt), och andra rundan med mini-problem.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Din meny-js -->
+  <script src="/js/menu.js"></script>
+
+  <script>
+    // ====== DATA: Flashcards ======
+    const cards = [
+      { term:"Ljud", front:"Vad är ljud?",
+        def:"Ljud är svängningar som sprids som tryckvågor genom materia, t.ex. luft eller vatten.",
+        mini:"Kan ljud spridas i rymden? Varför / varför inte?",
+        answer:"Nej. Ljud behöver ett medium (materia). I vakuum finns inga partiklar som kan överföra tryckvågen."
+      },
+      { term:"Tryckvåg", front:"Vad är en tryckvåg?",
+        def:"En våg där partiklar packas ihop (förtätning) och glesas ut (förtunning) och sprider sig framåt.",
+        mini:"Är ljudvågor i luft längsgående eller tvärgående?",
+        answer:"Längsgående (trycket varierar i samma riktning som vågen färdas)."
+      },
+      { term:"Medium", front:"Vad menas med medium (i akustik)?",
+        def:"Det material som ljudet färdas genom, t.ex. luft, vatten eller metall.",
+        mini:"Nämn två medier där ljud kan spridas.",
+        answer:"Till exempel luft och vatten (även metall fungerar)."
+      },
+      { term:"Ljudets fart", front:"Vad menas med ljudets fart?",
+        def:"Hur snabbt ljudet sprids genom ett medium.",
+        mini:"Går ljud snabbast i luft eller metall? Varför?",
+        answer:"Metall. Partiklarna ligger tätare och kan överföra vibrationer snabbare."
+      },
+      { term:"Ljudets fart i luft", front:"Hur snabbt går ljud i luft?",
+        def:"Cirka 340 m/s (ungefär).",
+        mini:"Hur långt hinner ljudet på 2 sekunder i luft?",
+        answer:"340 m/s × 2 s = 680 m."
+      },
+      { term:"Trumhinna", front:"Vad gör trumhinnan när ljud kommer?",
+        def:"Den börjar svänga när ljudvågor träffar den. Svängningarna förs vidare i hörseln.",
+        mini:"Svänger trumhinnan med samma eller annan frekvens än ljudet?",
+        answer:"Samma frekvens som ljudet."
+      },
+      { term:"Våg", front:"Vad är en våg (i fysik)?",
+        def:"Ett sätt att beskriva hur en svängning/energi sprids genom ett medium (eller ibland i fält).",
+        mini:"Är det luften (partiklarna) eller vågen som färdas framåt?",
+        answer:"Vågen/energin färdas framåt. Partiklarna svänger mest fram och tillbaka runt sitt läge."
+      },
+      { term:"Våglängd (λ)", front:"Vad är våglängd?",
+        def:"Avståndet mellan två likadana punkter i en våg, t.ex. mellan två förtätningar.",
+        mini:"Hög ton → lång eller kort våglängd (i samma medium)?",
+        answer:"Kort våglängd (hög frekvens ger kortare våglängd i samma medium)."
+      },
+      { term:"Frekvens", front:"Vad är frekvens?",
+        def:"Antal svängningar (vågor) per sekund. Bestämmer hur hög eller låg tonen är.",
+        mini:"10 vågor på 1 sekund → vilken frekvens?",
+        answer:"10 Hz."
+      },
+      { term:"Hertz (Hz)", front:"Vad betyder hertz (Hz)?",
+        def:"Enheten för frekvens. 1 Hz = 1 svängning per sekund.",
+        mini:"5 Hz betyder vad?",
+        answer:"5 svängningar per sekund."
+      },
+      { term:"Hög ton (diskant)", front:"Vad menas med hög ton?",
+        def:"Ljud med hög frekvens. Uppfattas som ljusa/pipiga toner.",
+        mini:"Är en vissling oftast hög eller låg ton?",
+        answer:"Hög ton."
+      },
+      { term:"Låg ton (bas)", front:"Vad menas med låg ton?",
+        def:"Ljud med låg frekvens. Uppfattas som mörka/mullrande toner.",
+        mini:"Är åska oftast hög eller låg ton?",
+        answer:"Låg ton."
+      },
+      { term:"Amplitud", front:"Vad är amplitud?",
+        def:"Hur kraftig svängningen är (i en våg är det \"höjden\" från mittenlinjen).",
+        mini:"Stor amplitud → starkt eller svagt ljud?",
+        answer:"Starkt ljud."
+      },
+      { term:"Ljudstyrka", front:"Vad är ljudstyrka?",
+        def:"Hur starkt ett ljud är. Hänger ihop med amplituden i tryckvågen.",
+        mini:"Två ljud har samma frekvens men olika amplitud. Vilket låter starkast?",
+        answer:"Det med större amplitud."
+      },
+      { term:"Decibel (dB)", front:"Vad mäts i decibel (dB)?",
+        def:"Ljudstyrka (ljudnivå).",
+        mini:"Vilket är starkast: 30 dB eller 40 dB?",
+        answer:"40 dB."
+      },
+      { term:"Decibelskalan", front:"Hur fungerar decibelskalan (enkelt)?",
+        def:"0 dB är ungefär svagaste hörbara ljudet. +10 dB upplevs ungefär som dubbelt så starkt.",
+        mini:"20 dB → 30 dB. Hur upplevs ljudet?",
+        answer:"Ungefär dubbelt så starkt."
+      },
+      { term:"Grundton", front:"Vad är grundton?",
+        def:"Den lägsta frekvensen i ett ljud – ofta den ton vi uppfattar som \"själva\" tonen.",
+        mini:"Är grundtonen den lägsta eller högsta frekvensen i ljudet?",
+        answer:"Lägsta."
+      },
+      { term:"Övertoner", front:"Vad är övertoner?",
+        def:"Högre frekvenser som finns tillsammans med grundtonen. De är ofta multipler av grundtonen (2f, 3f, 4f...).",
+        mini:"Grundton 100 Hz → första övertonen?",
+        answer:"200 Hz (2 × 100 Hz)."
+      },
+      { term:"Klangfärg", front:"Vad är klangfärg?",
+        def:"Det som gör att samma ton låter olika på olika instrument. Beror på vilka övertoner som finns och deras styrka.",
+        mini:"Varför låter en fiol och en flöjt olika när de spelar samma grundton?",
+        answer:"De har olika övertoner/övertonsstyrkor → olika klangfärg."
+      },
+      { term:"Oktav", front:"Vad är en oktav?",
+        def:"När frekvensen fördubblas (eller halveras) – då hör vi ett steg på en oktav.",
+        mini:"220 Hz → en oktav upp?",
+        answer:"440 Hz."
+      },
+      { term:"Resonans (medsvängning)", front:"Vad är resonans?",
+        def:"När något börjar svänga med samma frekvens som en annan källa och då ofta förstärker ljudet.",
+        mini:"Varför låter en fiol starkare än en ensam sträng?",
+        answer:"Strängen får fiolens lock att resonera (större yta → mer ljud)."
+      },
+      { term:"Dopplereffekten", front:"Vad är dopplereffekten?",
+        def:"Frekvensen upplevs högre när ljudkällan närmar sig och lägre när den avlägsnar sig.",
+        mini:"Ambulans närmar sig → högre eller lägre frekvens? Varför?",
+        answer:"Högre frekvens. Vågtopparna \"trycks ihop\" när källan rör sig mot dig."
+      },
+      { term:"Infraljud", front:"Vad är infraljud?",
+        def:"Ljud med frekvens under 20 Hz. Människan hör det inte.",
+        mini:"Kan människor höra infraljud?",
+        answer:"Nej (under 20 Hz)."
+      },
+      { term:"Ultraljud", front:"Vad är ultraljud?",
+        def:"Ljud med frekvens över 20 000 Hz. Människan hör det inte.",
+        mini:"Nämn ett användningsområde för ultraljud.",
+        answer:"T.ex. fosterundersökning i vården (ultraljudsundersökning)."
+      },
+      { term:"Eko", front:"Vad är eko?",
+        def:"När ljud studsar mot en hård yta och kommer tillbaka.",
+        mini:"Varför hörs eko tydligare i en tunnel än i ett vardagsrum?",
+        answer:"Tunneln har hårda ytor som reflekterar ljud bättre. Ett rum har ofta mjukare material som dämpar."
+      },
+      { term:"Ekolod", front:"Vad är ekolod?",
+        def:"Teknik som använder eko för att mäta avstånd (t.ex. djup eller hitta fisk).",
+        mini:"Ett eko kommer tillbaka efter 2 s i luft. Hur långt bort är väggen? (340 m/s)",
+        answer:"Ljudet går dit och tillbaka: 340×2/2 = 340 m."
+      },
+      { term:"Buller", front:"Vad är buller?",
+        def:"Oregelbundna, “stökiga” svängningar utan tydligt mönster. Ofta tröttande/stressande.",
+        mini:"Varför kan buller kännas mer stressigt än musik?",
+        answer:"Hjärnan hittar inget stabilt mönster → mer belastning/stress."
+      },
+      { term:"Tinnitus", front:"Vad är tinnitus?",
+        def:"En hörselskada som gör att man hör pip/sus/ringning fast inget ljud finns.",
+        mini:"Orsak: svagt eller starkt ljud?",
+        answer:"Starkt ljud (skadar hörselorganen)."
+      },
+      { term:"Bullerbekämpning", front:"Vad är bullerbekämpning?",
+        def:"Åtgärder för att minska störande/skadligt ljud (dämpa, skärma av, skydda hörseln).",
+        mini:"Ge två exempel på bullerbekämpning.",
+        answer:"Hörselkåpor/proppar, bullerplank, ljudabsorberande tak/väggar, bättre motorunderhåll m.m."
+      }
+    ];
+
+    // ====== STATE ======
+    let order = cards.map((_, i) => i);
+    let idx = 0;
+
+    // steg:
+    // 0 = bara framsida
+    // 1 = definition synlig
+    // 2 = mini synlig
+    // 3 = facit synligt
+    let step = 0;
+
+    // ====== DOM ======
+    const progressPill = document.getElementById("progressPill");
+    const modePill = document.getElementById("modePill");
+
+    const cardTitle = document.getElementById("cardTitle");
+    const cardIndex = document.getElementById("cardIndex");
+    const frontText = document.getElementById("frontText");
+    const defText = document.getElementById("defText");
+    const miniText = document.getElementById("miniText");
+    const answerText = document.getElementById("answerText");
+
+    const defBox = document.getElementById("defBox");
+    const miniBox = document.getElementById("miniBox");
+
+    const showDefBtn = document.getElementById("showDefBtn");
+    const toggleDefBtn = document.getElementById("toggleDefBtn");
+    const toggleMiniBtn = document.getElementById("toggleMiniBtn");
+    const hideMiniBtn = document.getElementById("hideMiniBtn");
+    const showAnswerBtn = document.getElementById("showAnswerBtn");
+
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const shuffleBtn = document.getElementById("shuffleBtn");
+
+    function stepLabel(){
+      if(step === 0) return "Steg: 0 (framsida)";
+      if(step === 1) return "Steg: 1 (definition)";
+      if(step === 2) return "Steg: 2 (mini-problem)";
+      return "Steg: 3 (facit)";
+    }
+
+    function render(){
+      const card = cards[order[idx]];
+      cardTitle.textContent = card.term;
+      cardIndex.textContent = `• kort ${idx+1}`;
+      frontText.textContent = card.front;
+
+      defText.textContent = card.def;
+      miniText.textContent = card.mini;
+      answerText.textContent = `Svar: ${card.answer}`;
+
+      progressPill.textContent = `Kort ${idx+1} / ${order.length}`;
+      modePill.textContent = stepLabel();
+
+      // Stegvis visning
+      defBox.classList.toggle("show", step >= 1);
+      miniBox.classList.toggle("show", step >= 2);
+      answerText.classList.toggle("show", step >= 3);
+
+      // Visa/dölj "Visa svar"
+      showDefBtn.style.display = (step === 0) ? "inline-block" : "none";
+    }
+
+    function setStep(newStep){
+      step = Math.max(0, Math.min(3, newStep));
+      render();
+    }
+
+    function next(){
+      idx = (idx + 1) % order.length;
+      step = 0;
+      render();
+    }
+    function prev(){
+      idx = (idx - 1 + order.length) % order.length;
+      step = 0;
+      render();
+    }
+
+    function shuffle(){
+      for(let i=order.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      idx = 0;
+      step = 0;
+      render();
+    }
+
+    // ====== EVENTS ======
+    showDefBtn.addEventListener("click", () => setStep(1));
+    toggleDefBtn.addEventListener("click", () => setStep(0));
+
+    toggleMiniBtn.addEventListener("click", () => setStep(step >= 2 ? 1 : 2));
+    hideMiniBtn.addEventListener("click", () => setStep(1));
+
+    showAnswerBtn.addEventListener("click", () => setStep(3));
+
+    nextBtn.addEventListener("click", next);
+    prevBtn.addEventListener("click", prev);
+    shuffleBtn.addEventListener("click", shuffle);
+
+    // Keyboard
+    window.addEventListener("keydown", (e) => {
+      const key = e.key.toLowerCase();
+      if(e.key === "ArrowRight") next();
+      else if(e.key === "ArrowLeft") prev();
+      else if(e.key === " ") { e.preventDefault(); setStep(step === 0 ? 1 : 0); } // definition on/off
+      else if(key === "m") { if(step === 0) setStep(1); setStep(step >= 2 ? 1 : 2); } // mini
+      else if(key === "a") { if(step < 2) setStep(2); setStep(3); } // facit
+      else if(key === "s") shuffle();
+    });
+
+    render();
+  </script>
+</body>
+</html>
