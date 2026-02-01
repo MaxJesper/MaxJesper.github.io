@@ -72,7 +72,7 @@
       background: linear-gradient(180deg, rgba(26,37,80,.95), rgba(35,48,105,.95));
     }
 
-    /* Liten visuell markering när toggle är "på" */
+    /* Markering när en panel är på */
     .fc-btn.on{
       outline: 2px solid rgba(139,211,255,.35);
       background: rgba(139,211,255,.10);
@@ -134,7 +134,6 @@
     }
     .fc-panel.show{ display:block; }
 
-    /* Definition framhävd */
     .fc-panel.def{
       border-color: rgba(139,211,255,.25);
       background:
@@ -203,7 +202,6 @@
       align-items:center;
     }
 
-    /* Footer-hint längst ned */
     .fc-footerhint{
       position: sticky;
       bottom: 0;
@@ -253,7 +251,7 @@
 
       <div class="fc-actions">
         <a class="subject-btn" href="./index.html">← Tillbaka till Ljud</a>
-        <button class="fc-btn" id="shuffleBtn" title="S">Blanda</button>
+        <button class="fc-btn" id="shuffleBtn" title="B">Blanda</button>
         <button class="fc-btn" id="prevBtn" title="←">←</button>
         <button class="fc-btn primary" id="nextBtn" title="→">→</button>
       </div>
@@ -293,24 +291,27 @@
       </section>
 
       <aside class="fc-card">
-        <h2 style="margin:0 0 10px; font-size:16px;">Ren vy – så här funkar togglarna</h2>
+        <h2 style="margin:0 0 10px; font-size:16px;">Mellanslag cyklar steg</h2>
         <div style="color: rgba(234,240,255,.75); font-size:13px; line-height:1.55;">
-          <ul style="margin:10px 0 0; padding-left:18px;">
-            <li><b>Svar</b> visar/gömmer definitionen.</li>
-            <li><b>Miniproblem</b> visar/gömmer miniproblemet (och visar Svar automatiskt om det behövs).</li>
-            <li><b>Facit</b> visar/gömmer facit (och visar Miniproblem + Svar automatiskt om det behövs).</li>
-          </ul>
+          <ol style="margin:10px 0 0; padding-left:18px;">
+            <li>Fråga</li>
+            <li>Svar (definition)</li>
+            <li>Miniproblem</li>
+            <li>Facit</li>
+            <li>Tillbaka till Fråga</li>
+          </ol>
+          <p style="margin-top:12px;">
+            Du kan fortfarande klicka på knapparna om du vill, men tangentbordet räcker.
+          </p>
         </div>
       </aside>
     </div>
 
     <div class="fc-footerhint">
       Tangenter:
+      <span class="fc-kbd">mellanslag</span> nästa steg •
       <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
-      <span class="fc-kbd">mellanslag</span> Svar •
-      <span class="fc-kbd">M</span> Miniproblem •
-      <span class="fc-kbd">A</span> Facit •
-      <span class="fc-kbd">S</span> Blanda
+      <span class="fc-kbd">B</span> blanda
     </div>
   </main>
 
@@ -468,11 +469,10 @@
     let order = cards.map((_, i) => i);
     let idx = 0;
 
-    // toggles
-    let showDef = false;
-    let showMini = false;
-    let showFacit = false;
+    // 0 = fråga, 1 = def, 2 = mini, 3 = facit
+    let step = 0;
 
+    // DOM
     const progressPill = document.getElementById("progressPill");
     const cardTitle = document.getElementById("cardTitle");
     const cardIndex = document.getElementById("cardIndex");
@@ -494,7 +494,11 @@
     const nextBtn = document.getElementById("nextBtn");
     const shuffleBtn = document.getElementById("shuffleBtn");
 
-    function syncToggles(){
+    function applyStep(){
+      const showDef = (step >= 1);
+      const showMini = (step >= 2);
+      const showFacit = (step >= 3);
+
       panelDef.classList.toggle("show", showDef);
       panelMini.classList.toggle("show", showMini);
       panelFacit.classList.toggle("show", showFacit);
@@ -520,23 +524,21 @@
 
       progressPill.textContent = `Kort ${idx+1} / ${order.length}`;
 
-      syncToggles();
+      applyStep();
     }
 
-    function resetCardView(){
-      showDef = false;
-      showMini = false;
-      showFacit = false;
+    function resetStep(){
+      step = 0;
     }
 
     function next(){
       idx = (idx + 1) % order.length;
-      resetCardView();
+      resetStep();
       render();
     }
     function prev(){
       idx = (idx - 1 + order.length) % order.length;
-      resetCardView();
+      resetStep();
       render();
     }
     function shuffle(){
@@ -545,53 +547,49 @@
         [order[i], order[j]] = [order[j], order[i]];
       }
       idx = 0;
-      resetCardView();
+      resetStep();
       render();
     }
 
-    // Toggle-regler (steg-ordning, men ren UI)
-    function toggleDef(){
-      showDef = !showDef;
-      if(!showDef){
-        // om definition göms, göm också mini+facit för att undvika konstiga lägen
-        showMini = false;
-        showFacit = false;
-      }
-      syncToggles();
+    // Mellanslag: cykla 0->1->2->3->0
+    function cycleStep(){
+      step = (step + 1) % 4;
+      applyStep();
     }
 
-    function toggleMini(){
-      if(!showDef) showDef = true; // säkerställ steg 1
-      showMini = !showMini;
-      if(!showMini){
-        showFacit = false; // facit kräver mini
-      }
-      syncToggles();
-    }
-
-    function toggleFacit(){
-      if(!showDef) showDef = true;
-      if(!showMini) showMini = true;
-      showFacit = !showFacit;
-      syncToggles();
-    }
-
-    btnDef.addEventListener("click", toggleDef);
-    btnMini.addEventListener("click", toggleMini);
-    btnFacit.addEventListener("click", toggleFacit);
+    // Klick på knapparna: hoppa direkt till läge / toggle logik per knapp
+    // (Fortfarande ren vy, men tangentbordet är "primärt".)
+    btnDef.addEventListener("click", () => {
+      step = (step === 0) ? 1 : 0;  // svar på/av
+      applyStep();
+    });
+    btnMini.addEventListener("click", () => {
+      if(step < 1) step = 1;
+      step = (step < 2) ? 2 : 1;   // mini på/av (facit av om man går tillbaka)
+      applyStep();
+    });
+    btnFacit.addEventListener("click", () => {
+      if(step < 2) step = 2;
+      step = (step < 3) ? 3 : 2;   // facit på/av
+      applyStep();
+    });
 
     nextBtn.addEventListener("click", next);
     prevBtn.addEventListener("click", prev);
     shuffleBtn.addEventListener("click", shuffle);
 
+    // Keyboard: endast mellanslag, pilar, B
     window.addEventListener("keydown", (e) => {
-      const key = e.key.toLowerCase();
-      if(e.key === "ArrowRight") next();
-      else if(e.key === "ArrowLeft") prev();
-      else if(e.key === " ") { e.preventDefault(); toggleDef(); }
-      else if(key === "m") toggleMini();
-      else if(key === "a") toggleFacit();
-      else if(key === "s") shuffle();
+      if(e.key === " "){
+        e.preventDefault();
+        cycleStep();
+      } else if(e.key === "ArrowRight"){
+        next();
+      } else if(e.key === "ArrowLeft"){
+        prev();
+      } else if(e.key.toLowerCase() === "b"){
+        shuffle();
+      }
     });
 
     render();
