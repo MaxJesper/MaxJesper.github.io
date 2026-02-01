@@ -216,6 +216,20 @@
       line-height: 1.45;
       z-index: 5;
     }
+    /* Visa endast om enheten har mus/pekare */
+@media (hover: hover) and (pointer: fine) {
+  .fc-footerhint {
+    display: block;
+  }
+}
+
+/* Annars: dölj */
+@media (hover: none) {
+  .fc-footerhint {
+    display: none;
+  }
+}
+
     .fc-kbd{
       padding: 2px 8px;
       border: 1px solid rgba(255,255,255,.18);
