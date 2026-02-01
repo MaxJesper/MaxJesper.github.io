@@ -10,7 +10,7 @@
   <style>
     body.flashcards-page{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       background:#0b1020;
       color:#eaf0ff;
       min-height:100vh;
@@ -26,53 +26,48 @@
 
     .fc-toprow{
       display:flex;
+      justify-content:space-between;
+      align-items:center;
       gap:12px;
       flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
     }
 
     .fc-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(234,240,255,.75);
-      font-size: 12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      font-size:12px;
+      color:rgba(234,240,255,.75);
       white-space:nowrap;
     }
 
     .fc-actions{
       display:flex;
       gap:10px;
-      flex-wrap:wrap;
       align-items:center;
+      flex-wrap:wrap;
       justify-content:flex-end;
     }
 
     .fc-btn{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: #eaf0ff;
-      padding: 10px 12px;
-      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#eaf0ff;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:700;
       cursor:pointer;
-      font-weight: 700;
-      font-size: 13px;
       user-select:none;
     }
     .fc-btn:hover{ filter: brightness(1.08); }
     .fc-btn:active{ transform: translateY(1px); }
 
     .fc-btn.primary{
-      background: linear-gradient(180deg, rgba(26,37,80,.95), rgba(35,48,105,.95));
+      background:linear-gradient(180deg,#1a2550,#233069);
     }
 
-    /* Markering när en panel är på */
+    /* “på”-markering för panelknappar */
     .fc-btn.on{
       outline: 2px solid rgba(139,211,255,.35);
       background: rgba(139,211,255,.10);
@@ -88,17 +83,17 @@
 
     .fc-layout{
       display:grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 0.6fr;
       gap:16px;
       align-items:start;
     }
 
     .fc-card{
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(18,26,51,.95), rgba(15,23,48,.95));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(18,26,51,.95), rgba(15,23,48,.95));
       box-shadow: 0 18px 40px rgba(0,0,0,.35);
-      padding: 18px;
+      padding:18px;
     }
 
     .fc-kicker{
@@ -111,14 +106,21 @@
     }
 
     .fc-front{
-      font-size: 22px;
-      line-height: 1.25;
-      font-weight: 800;
-      margin-top: 10px;
+      font-size:22px;
+      font-weight:800;
+      margin-top:10px;
+      line-height:1.25;
+    }
+
+    .fc-toggleRow{
+      display:flex;
+      gap:10px;
+      margin-top:14px;
+      flex-wrap:wrap;
     }
 
     .fc-panels{
-      margin-top: 14px;
+      margin-top:14px;
       border-top: 1px dashed rgba(255,255,255,.18);
       padding-top: 14px;
       display:grid;
@@ -127,10 +129,10 @@
 
     .fc-panel{
       display:none;
-      border-radius: 18px;
-      padding: 14px;
+      border-radius:16px;
+      padding:14px;
       border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.05);
     }
     .fc-panel.show{ display:block; }
 
@@ -140,14 +142,12 @@
         radial-gradient(800px 300px at 0% 0%, rgba(139,211,255,.14), transparent 60%),
         rgba(255,255,255,.04);
     }
-
     .fc-panel.mini{
       border-color: rgba(183,255,161,.22);
       background:
         radial-gradient(700px 260px at 100% 0%, rgba(183,255,161,.10), transparent 55%),
         rgba(255,255,255,.035);
     }
-
     .fc-panel.facit{
       border-color: rgba(255,209,139,.22);
       background: rgba(0,0,0,.18);
@@ -161,7 +161,6 @@
       align-items:center;
       gap:8px;
     }
-
     .fc-dot{
       width:8px;height:8px;border-radius:99px;
       background:#8bd3ff;
@@ -177,59 +176,22 @@
       box-shadow: 0 0 0 4px rgba(255,209,139,.10);
     }
 
-    .fc-text{
-      font-size: 16px;
-      line-height: 1.5;
-      color:#eaf0ff;
-      font-weight: 650;
-    }
-    .fc-miniText{
-      font-size: 15px;
-      line-height: 1.45;
-      font-weight: 550;
-    }
-    .fc-facitText{
-      font-size: 14px;
-      line-height: 1.45;
-      font-weight: 600;
-    }
-
-    .fc-toggleRow{
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
+    .fc-text{ font-size:16px; line-height:1.5; font-weight:650; }
+    .fc-miniText{ font-size:15px; line-height:1.45; font-weight:550; }
+    .fc-facitText{ font-size:14px; line-height:1.45; font-weight:600; }
 
     .fc-footerhint{
-      position: sticky;
-      bottom: 0;
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(11,16,32,.78);
-      backdrop-filter: blur(10px);
-      color: rgba(234,240,255,.75);
-      font-size: 12px;
-      line-height: 1.45;
+      position:sticky;
+      bottom:0;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(11,16,32,.85);
+      font-size:12px;
+      color:rgba(234,240,255,.75);
       z-index: 5;
     }
-    /* Visa endast om enheten har mus/pekare */
-@media (hover: hover) and (pointer: fine) {
-  .fc-footerhint {
-    display: block;
-  }
-}
-
-/* Annars: dölj */
-@media (hover: none) {
-  .fc-footerhint {
-    display: none;
-  }
-}
-
     .fc-kbd{
       padding: 2px 8px;
       border: 1px solid rgba(255,255,255,.18);
@@ -242,385 +204,399 @@
       display:inline-block;
     }
 
-    @media (min-width: 840px){
-      .fc-layout{ grid-template-columns: 1fr 0.6fr; }
+    /* ============================
+       📱 MOBIL & PADDA: dölj aside + footer
+       ============================ */
+    @media (hover: none) {
+      .fc-footerhint{ display:none; }
+      aside.fc-card{ display:none; }
+      .fc-layout{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body class="flashcards-page">
-  <header class="fysik-header">
-    <h1>Ljud – Flashcards</h1>
-    <p>Jesper Tordsson</p>
-  </header>
+<header class="fysik-header">
+  <h1>Ljud – Flashcards</h1>
+  <p>Jesper Tordsson</p>
+</header>
 
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
 
-  <main class="fc-wrap">
-    <div class="fc-toprow">
-      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-        <span class="fc-pill" id="progressPill">Kort 1 / 1</span>
+<main class="fc-wrap">
+  <div class="fc-toprow">
+    <span class="fc-pill" id="progressPill">Kort 1 / 1</span>
+
+    <div class="fc-actions">
+      <a class="subject-btn" href="./index.html">← Tillbaka</a>
+      <button class="fc-btn" id="shuffleBtn" title="B">Blanda</button>
+      <button class="fc-btn" id="prevBtn" title="←">←</button>
+      <button class="fc-btn primary" id="nextBtn" title="→">→</button>
+    </div>
+  </div>
+
+  <div class="fc-layout">
+    <section class="fc-card" id="swipeArea">
+      <div class="fc-kicker">
+        <div><strong id="cardTitle">Kort</strong> <span id="cardIndex"></span></div>
+        <div>Akustik</div>
       </div>
 
-      <div class="fc-actions">
-        <a class="subject-btn" href="./index.html">← Tillbaka till Ljud</a>
-        <button class="fc-btn" id="shuffleBtn" title="B">Blanda</button>
-        <button class="fc-btn" id="prevBtn" title="←">←</button>
-        <button class="fc-btn primary" id="nextBtn" title="→">→</button>
+      <div class="fc-front" id="frontText"></div>
+
+      <div class="fc-toggleRow">
+        <button class="fc-btn" id="btnDef">Svar</button>
+        <button class="fc-btn" id="btnMini">Miniproblem</button>
+        <button class="fc-btn" id="btnFacit">Facit</button>
       </div>
-    </div>
 
-    <div class="fc-layout">
-      <section class="fc-card">
-        <div class="fc-kicker">
-          <div><strong id="cardTitle">Kort</strong> <span id="cardIndex"></span></div>
-          <div>Akustik</div>
+      <div class="fc-panels">
+        <div class="fc-panel def" id="panelDef">
+          <div class="fc-label"><span class="fc-dot"></span> Definition</div>
+          <div class="fc-text" id="defText"></div>
         </div>
 
-        <div class="fc-front" id="frontText">...</div>
-
-        <div class="fc-toggleRow">
-          <button class="fc-btn" id="btnDef">Svar</button>
-          <button class="fc-btn" id="btnMini">Miniproblem</button>
-          <button class="fc-btn" id="btnFacit">Facit</button>
+        <div class="fc-panel mini" id="panelMini">
+          <div class="fc-label"><span class="fc-dot green"></span> Miniproblem</div>
+          <div class="fc-miniText" id="miniText"></div>
         </div>
 
-        <div class="fc-panels">
-          <div class="fc-panel def" id="panelDef">
-            <div class="fc-label"><span class="fc-dot"></span> Definition</div>
-            <div class="fc-text" id="defText"></div>
-          </div>
-
-          <div class="fc-panel mini" id="panelMini">
-            <div class="fc-label"><span class="fc-dot green"></span> Miniproblem</div>
-            <div class="fc-miniText" id="miniText"></div>
-          </div>
-
-          <div class="fc-panel facit" id="panelFacit">
-            <div class="fc-label"><span class="fc-dot warn"></span> Facit</div>
-            <div class="fc-facitText" id="answerText"></div>
-          </div>
+        <div class="fc-panel facit" id="panelFacit">
+          <div class="fc-label"><span class="fc-dot warn"></span> Facit</div>
+          <div class="fc-facitText" id="answerText"></div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <aside class="fc-card">
-        <h2 style="margin:0 0 10px; font-size:16px;">Mellanslag cyklar steg</h2>
-        <div style="color: rgba(234,240,255,.75); font-size:13px; line-height:1.55;">
-          <ol style="margin:10px 0 0; padding-left:18px;">
-            <li>Fråga</li>
-            <li>Svar (definition)</li>
-            <li>Miniproblem</li>
-            <li>Facit</li>
-            <li>Tillbaka till Fråga</li>
-          </ol>
-          <p style="margin-top:12px;">
-            Du kan fortfarande klicka på knapparna om du vill, men tangentbordet räcker.
-          </p>
-        </div>
-      </aside>
-    </div>
-<div class="fc-footerhint">
-  <span class="hint-desktop">
-    Tangenter:
+    <!-- VISAS ENDAST PÅ DATOR (döljs på mobil/padda via CSS ovan) -->
+    <aside class="fc-card">
+      <h2 style="margin:0 0 10px; font-size:16px;">Mellanslag cyklar steg</h2>
+      <ol style="margin:10px 0 0; padding-left:18px; color: rgba(234,240,255,.75); line-height:1.55;">
+        <li>Fråga</li>
+        <li>Svar (definition)</li>
+        <li>Miniproblem</li>
+        <li>Facit</li>
+        <li>Tillbaka till Fråga</li>
+      </ol>
+      <p style="margin-top:12px; color: rgba(234,240,255,.75);">Tangentbordet räcker.</p>
+    </aside>
+  </div>
+
+  <!-- VISAS ENDAST PÅ DATOR (döljs på mobil/padda via CSS ovan) -->
+  <div class="fc-footerhint">
     <span class="fc-kbd">mellanslag</span> nästa steg •
     <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
     <span class="fc-kbd">B</span> blanda
-  </span>
+  </div>
+</main>
 
-  <span class="hint-mobile">
-    Tryck på <b>Svar</b> → <b>Miniproblem</b> → <b>Facit</b>
-  </span>
-</div>
-/* Standard: visa desktop-hjälp */
-.hint-mobile { display: none; }
-
-/* Mobil & surfplatta */
-@media (hover: none) {
-  .hint-desktop { display: none; }
-  .hint-mobile { display: inline; }
-}
- 
-  </main>
-
-  <script src="/js/menu.js"></script>
-
-  <script>
-    const cards = [
-      { term:"Ljud", front:"Vad är ljud?",
-        def:"Ljud är svängningar som sprids som tryckvågor genom materia, t.ex. luft eller vatten.",
-        mini:"Kan ljud spridas i rymden? Varför / varför inte?",
-        answer:"Nej. Ljud behöver ett medium (materia). I vakuum finns inga partiklar som kan överföra tryckvågen."
-      },
-      { term:"Tryckvåg", front:"Vad är en tryckvåg?",
-        def:"En våg där partiklar packas ihop (förtätning) och glesas ut (förtunning) och sprider sig framåt.",
-        mini:"Är ljudvågor i luft längsgående eller tvärgående?",
-        answer:"Längsgående (trycket varierar i samma riktning som vågen färdas)."
-      },
-      { term:"Medium", front:"Vad menas med medium (i akustik)?",
-        def:"Det material som ljudet färdas genom, t.ex. luft, vatten eller metall.",
-        mini:"Nämn två medier där ljud kan spridas.",
-        answer:"Till exempel luft och vatten (även metall fungerar)."
-      },
-      { term:"Ljudets fart", front:"Vad menas med ljudets fart?",
-        def:"Hur snabbt ljudet sprids genom ett medium.",
-        mini:"Går ljud snabbast i luft eller metall? Varför?",
-        answer:"Metall. Partiklarna ligger tätare och kan överföra vibrationer snabbare."
-      },
-      { term:"Ljudets fart i luft", front:"Hur snabbt går ljud i luft?",
-        def:"Cirka 340 m/s (ungefär).",
-        mini:"Hur långt hinner ljudet på 2 sekunder i luft?",
-        answer:"340 m/s × 2 s = 680 m."
-      },
-      { term:"Trumhinna", front:"Vad gör trumhinnan när ljud kommer?",
-        def:"Den börjar svänga när ljudvågor träffar den. Svängningarna förs vidare i hörseln.",
-        mini:"Svänger trumhinnan med samma eller annan frekvens än ljudet?",
-        answer:"Samma frekvens som ljudet."
-      },
-      { term:"Våg", front:"Vad är en våg (i fysik)?",
-        def:"Ett sätt att beskriva hur en svängning/energi sprids genom ett medium (eller ibland i fält).",
-        mini:"Är det luften (partiklarna) eller vågen som färdas framåt?",
-        answer:"Vågen/energin färdas framåt. Partiklarna svänger mest fram och tillbaka runt sitt läge."
-      },
-      { term:"Våglängd (λ)", front:"Vad är våglängd?",
-        def:"Avståndet mellan två likadana punkter i en våg, t.ex. mellan två förtätningar.",
-        mini:"Hög ton → lång eller kort våglängd (i samma medium)?",
-        answer:"Kort våglängd (hög frekvens ger kortare våglängd i samma medium)."
-      },
-      { term:"Frekvens", front:"Vad är frekvens?",
-        def:"Antal svängningar (vågor) per sekund. Bestämmer hur hög eller låg tonen är.",
-        mini:"10 vågor på 1 sekund → vilken frekvens?",
-        answer:"10 Hz."
-      },
-      { term:"Hertz (Hz)", front:"Vad betyder hertz (Hz)?",
-        def:"Enheten för frekvens. 1 Hz = 1 svängning per sekund.",
-        mini:"5 Hz betyder vad?",
-        answer:"5 svängningar per sekund."
-      },
-      { term:"Hög ton (diskant)", front:"Vad menas med hög ton?",
-        def:"Ljud med hög frekvens. Uppfattas som ljusa/pipiga toner.",
-        mini:"Är en vissling oftast hög eller låg ton?",
-        answer:"Hög ton."
-      },
-      { term:"Låg ton (bas)", front:"Vad menas med låg ton?",
-        def:"Ljud med låg frekvens. Uppfattas som mörka/mullrande toner.",
-        mini:"Är åska oftast hög eller låg ton?",
-        answer:"Låg ton."
-      },
-      { term:"Amplitud", front:"Vad är amplitud?",
-        def:"Hur kraftig svängningen är (i en våg är det \"höjden\" från mittenlinjen).",
-        mini:"Stor amplitud → starkt eller svagt ljud?",
-        answer:"Starkt ljud."
-      },
-      { term:"Ljudstyrka", front:"Vad är ljudstyrka?",
-        def:"Hur starkt ett ljud är. Hänger ihop med amplituden i tryckvågen.",
-        mini:"Två ljud har samma frekvens men olika amplitud. Vilket låter starkast?",
-        answer:"Det med större amplitud."
-      },
-      { term:"Decibel (dB)", front:"Vad mäts i decibel (dB)?",
-        def:"Ljudstyrka (ljudnivå).",
-        mini:"Vilket är starkast: 30 dB eller 40 dB?",
-        answer:"40 dB."
-      },
-      { term:"Decibelskalan", front:"Hur fungerar decibelskalan (enkelt)?",
-        def:"0 dB är ungefär svagaste hörbara ljudet. +10 dB upplevs ungefär som dubbelt så starkt.",
-        mini:"20 dB → 30 dB. Hur upplevs ljudet?",
-        answer:"Ungefär dubbelt så starkt."
-      },
-      { term:"Grundton", front:"Vad är grundton?",
-        def:"Den lägsta frekvensen i ett ljud – ofta den ton vi uppfattar som \"själva\" tonen.",
-        mini:"Är grundtonen den lägsta eller högsta frekvensen i ljudet?",
-        answer:"Lägsta."
-      },
-      { term:"Övertoner", front:"Vad är övertoner?",
-        def:"Högre frekvenser som finns tillsammans med grundtonen. De är ofta multipler av grundtonen (2f, 3f, 4f...).",
-        mini:"Grundton 100 Hz → första övertonen?",
-        answer:"200 Hz (2 × 100 Hz)."
-      },
-      { term:"Klangfärg", front:"Vad är klangfärg?",
-        def:"Det som gör att samma ton låter olika på olika instrument. Beror på vilka övertoner som finns och deras styrka.",
-        mini:"Varför låter en fiol och en flöjt olika när de spelar samma grundton?",
-        answer:"De har olika övertoner/övertonsstyrkor → olika klangfärg."
-      },
-      { term:"Oktav", front:"Vad är en oktav?",
-        def:"När frekvensen fördubblas (eller halveras) – då hör vi ett steg på en oktav.",
-        mini:"220 Hz → en oktav upp?",
-        answer:"440 Hz."
-      },
-      { term:"Resonans (medsvängning)", front:"Vad är resonans?",
-        def:"När något börjar svänga med samma frekvens som en annan källa och då ofta förstärker ljudet.",
-        mini:"Varför låter en fiol starkare än en ensam sträng?",
-        answer:"Strängen får fiolens lock att resonera (större yta → mer ljud)."
-      },
-      { term:"Dopplereffekten", front:"Vad är dopplereffekten?",
-        def:"Frekvensen upplevs högre när ljudkällan närmar sig och lägre när den avlägsnar sig.",
-        mini:"Ambulans närmar sig → högre eller lägre frekvens? Varför?",
-        answer:"Högre frekvens. Vågtopparna \"trycks ihop\" när källan rör sig mot dig."
-      },
-      { term:"Infraljud", front:"Vad är infraljud?",
-        def:"Ljud med frekvens under 20 Hz. Människan hör det inte.",
-        mini:"Kan människor höra infraljud?",
-        answer:"Nej (under 20 Hz)."
-      },
-      { term:"Ultraljud", front:"Vad är ultraljud?",
-        def:"Ljud med frekvens över 20 000 Hz. Människan hör det inte.",
-        mini:"Nämn ett användningsområde för ultraljud.",
-        answer:"T.ex. fosterundersökning i vården (ultraljudsundersökning)."
-      },
-      { term:"Eko", front:"Vad är eko?",
-        def:"När ljud studsar mot en hård yta och kommer tillbaka.",
-        mini:"Varför hörs eko tydligare i en tunnel än i ett vardagsrum?",
-        answer:"Tunneln har hårda ytor som reflekterar ljud bättre. Ett rum har ofta mjukare material som dämpar."
-      },
-      { term:"Ekolod", front:"Vad är ekolod?",
-        def:"Teknik som använder eko för att mäta avstånd (t.ex. djup eller hitta fisk).",
-        mini:"Ett eko kommer tillbaka efter 2 s i luft. Hur långt bort är väggen? (340 m/s)",
-        answer:"Ljudet går dit och tillbaka: 340×2/2 = 340 m."
-      },
-      { term:"Buller", front:"Vad är buller?",
-        def:"Oregelbundna, “stökiga” svängningar utan tydligt mönster. Ofta tröttande/stressande.",
-        mini:"Varför kan buller kännas mer stressigt än musik?",
-        answer:"Hjärnan hittar inget stabilt mönster → mer belastning/stress."
-      },
-      { term:"Tinnitus", front:"Vad är tinnitus?",
-        def:"En hörselskada som gör att man hör pip/sus/ringning fast inget ljud finns.",
-        mini:"Orsak: svagt eller starkt ljud?",
-        answer:"Starkt ljud (skadar hörselorganen)."
-      },
-      { term:"Bullerbekämpning", front:"Vad är bullerbekämpning?",
-        def:"Åtgärder för att minska störande/skadligt ljud (dämpa, skärma av, skydda hörseln).",
-        mini:"Ge två exempel på bullerbekämpning.",
-        answer:"Hörselkåpor/proppar, bullerplank, ljudabsorberande tak/väggar, bättre motorunderhåll m.m."
-      }
-    ];
-
-    let order = cards.map((_, i) => i);
-    let idx = 0;
-
-    // 0 = fråga, 1 = def, 2 = mini, 3 = facit
-    let step = 0;
-
-    // DOM
-    const progressPill = document.getElementById("progressPill");
-    const cardTitle = document.getElementById("cardTitle");
-    const cardIndex = document.getElementById("cardIndex");
-    const frontText = document.getElementById("frontText");
-
-    const defText = document.getElementById("defText");
-    const miniText = document.getElementById("miniText");
-    const answerText = document.getElementById("answerText");
-
-    const panelDef = document.getElementById("panelDef");
-    const panelMini = document.getElementById("panelMini");
-    const panelFacit = document.getElementById("panelFacit");
-
-    const btnDef = document.getElementById("btnDef");
-    const btnMini = document.getElementById("btnMini");
-    const btnFacit = document.getElementById("btnFacit");
-
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const shuffleBtn = document.getElementById("shuffleBtn");
-
-    function applyStep(){
-      const showDef = (step >= 1);
-      const showMini = (step >= 2);
-      const showFacit = (step >= 3);
-
-      panelDef.classList.toggle("show", showDef);
-      panelMini.classList.toggle("show", showMini);
-      panelFacit.classList.toggle("show", showFacit);
-
-      btnDef.classList.toggle("on", showDef);
-      btnMini.classList.toggle("on", showMini);
-      btnFacit.classList.toggle("on", showFacit);
-
-      btnMini.classList.toggle("green", showMini);
-      btnFacit.classList.toggle("warn", showFacit);
+<script src="/js/menu.js"></script>
+<script>
+  const cards = [
+    { term:"Ljud", front:"Vad är ljud?",
+      def:"Ljud är svängningar som sprids som tryckvågor genom materia, t.ex. luft eller vatten.",
+      mini:"Kan ljud spridas i rymden? Varför / varför inte?",
+      answer:"Nej. Ljud behöver ett medium (materia). I vakuum finns inga partiklar som kan överföra tryckvågen."
+    },
+    { term:"Tryckvåg", front:"Vad är en tryckvåg?",
+      def:"En våg där partiklar packas ihop (förtätning) och glesas ut (förtunning) och sprider sig framåt.",
+      mini:"Är ljudvågor i luft längsgående eller tvärgående?",
+      answer:"Längsgående (trycket varierar i samma riktning som vågen färdas)."
+    },
+    { term:"Medium", front:"Vad menas med medium (i akustik)?",
+      def:"Det material som ljudet färdas genom, t.ex. luft, vatten eller metall.",
+      mini:"Nämn två medier där ljud kan spridas.",
+      answer:"Till exempel luft och vatten (även metall fungerar)."
+    },
+    { term:"Ljudets fart", front:"Vad menas med ljudets fart?",
+      def:"Hur snabbt ljudet sprids genom ett medium.",
+      mini:"Går ljud snabbast i luft eller metall? Varför?",
+      answer:"Metall. Partiklarna ligger tätare och kan överföra vibrationer snabbare."
+    },
+    { term:"Ljudets fart i luft", front:"Hur snabbt går ljud i luft?",
+      def:"Cirka 340 m/s (ungefär).",
+      mini:"Hur långt hinner ljudet på 2 sekunder i luft?",
+      answer:"340 m/s × 2 s = 680 m."
+    },
+    { term:"Trumhinna", front:"Vad gör trumhinnan när ljud kommer?",
+      def:"Den börjar svänga när ljudvågor träffar den. Svängningarna förs vidare i hörseln.",
+      mini:"Svänger trumhinnan med samma eller annan frekvens än ljudet?",
+      answer:"Samma frekvens som ljudet."
+    },
+    { term:"Våg", front:"Vad är en våg (i fysik)?",
+      def:"Ett sätt att beskriva hur en svängning/energi sprids genom ett medium (eller ibland i fält).",
+      mini:"Är det luften (partiklarna) eller vågen som färdas framåt?",
+      answer:"Vågen/energin färdas framåt. Partiklarna svänger mest fram och tillbaka runt sitt läge."
+    },
+    { term:"Våglängd (λ)", front:"Vad är våglängd?",
+      def:"Avståndet mellan två likadana punkter i en våg, t.ex. mellan två förtätningar.",
+      mini:"Hög ton → lång eller kort våglängd (i samma medium)?",
+      answer:"Kort våglängd (hög frekvens ger kortare våglängd i samma medium)."
+    },
+    { term:"Frekvens", front:"Vad är frekvens?",
+      def:"Antal svängningar (vågor) per sekund. Bestämmer hur hög eller låg tonen är.",
+      mini:"10 vågor på 1 sekund → vilken frekvens?",
+      answer:"10 Hz."
+    },
+    { term:"Hertz (Hz)", front:"Vad betyder hertz (Hz)?",
+      def:"Enheten för frekvens. 1 Hz = 1 svängning per sekund.",
+      mini:"5 Hz betyder vad?",
+      answer:"5 svängningar per sekund."
+    },
+    { term:"Hög ton (diskant)", front:"Vad menas med hög ton?",
+      def:"Ljud med hög frekvens. Uppfattas som ljusa/pipiga toner.",
+      mini:"Är en vissling oftast hög eller låg ton?",
+      answer:"Hög ton."
+    },
+    { term:"Låg ton (bas)", front:"Vad menas med låg ton?",
+      def:"Ljud med låg frekvens. Uppfattas som mörka/mullrande toner.",
+      mini:"Är åska oftast hög eller låg ton?",
+      answer:"Låg ton."
+    },
+    { term:"Amplitud", front:"Vad är amplitud?",
+      def:"Hur kraftig svängningen är (i en våg är det \"höjden\" från mittenlinjen).",
+      mini:"Stor amplitud → starkt eller svagt ljud?",
+      answer:"Starkt ljud."
+    },
+    { term:"Ljudstyrka", front:"Vad är ljudstyrka?",
+      def:"Hur starkt ett ljud är. Hänger ihop med amplituden i tryckvågen.",
+      mini:"Två ljud har samma frekvens men olika amplitud. Vilket låter starkast?",
+      answer:"Det med större amplitud."
+    },
+    { term:"Decibel (dB)", front:"Vad mäts i decibel (dB)?",
+      def:"Ljudstyrka (ljudnivå).",
+      mini:"Vilket är starkast: 30 dB eller 40 dB?",
+      answer:"40 dB."
+    },
+    { term:"Decibelskalan", front:"Hur fungerar decibelskalan (enkelt)?",
+      def:"0 dB är ungefär svagaste hörbara ljudet. +10 dB upplevs ungefär som dubbelt så starkt.",
+      mini:"20 dB → 30 dB. Hur upplevs ljudet?",
+      answer:"Ungefär dubbelt så starkt."
+    },
+    { term:"Grundton", front:"Vad är grundton?",
+      def:"Den lägsta frekvensen i ett ljud – ofta den ton vi uppfattar som \"själva\" tonen.",
+      mini:"Är grundtonen den lägsta eller högsta frekvensen i ljudet?",
+      answer:"Lägsta."
+    },
+    { term:"Övertoner", front:"Vad är övertoner?",
+      def:"Högre frekvenser som finns tillsammans med grundtonen. De är ofta multipler av grundtonen (2f, 3f, 4f...).",
+      mini:"Grundton 100 Hz → första övertonen?",
+      answer:"200 Hz (2 × 100 Hz)."
+    },
+    { term:"Klangfärg", front:"Vad är klangfärg?",
+      def:"Det som gör att samma ton låter olika på olika instrument. Beror på vilka övertoner som finns och deras styrka.",
+      mini:"Varför låter en fiol och en flöjt olika när de spelar samma grundton?",
+      answer:"De har olika övertoner/övertonsstyrkor → olika klangfärg."
+    },
+    { term:"Oktav", front:"Vad är en oktav?",
+      def:"När frekvensen fördubblas (eller halveras) – då hör vi ett steg på en oktav.",
+      mini:"220 Hz → en oktav upp?",
+      answer:"440 Hz."
+    },
+    { term:"Resonans (medsvängning)", front:"Vad är resonans?",
+      def:"När något börjar svänga med samma frekvens som en annan källa och då ofta förstärker ljudet.",
+      mini:"Varför låter en fiol starkare än en ensam sträng?",
+      answer:"Strängen får fiolens lock att resonera (större yta → mer ljud)."
+    },
+    { term:"Dopplereffekten", front:"Vad är dopplereffekten?",
+      def:"Frekvensen upplevs högre när ljudkällan närmar sig och lägre när den avlägsnar sig.",
+      mini:"Ambulans närmar sig → högre eller lägre frekvens? Varför?",
+      answer:"Högre frekvens. Vågtopparna \"trycks ihop\" när källan rör sig mot dig."
+    },
+    { term:"Infraljud", front:"Vad är infraljud?",
+      def:"Ljud med frekvens under 20 Hz. Människan hör det inte.",
+      mini:"Kan människor höra infraljud?",
+      answer:"Nej (under 20 Hz)."
+    },
+    { term:"Ultraljud", front:"Vad är ultraljud?",
+      def:"Ljud med frekvens över 20 000 Hz. Människan hör det inte.",
+      mini:"Nämn ett användningsområde för ultraljud.",
+      answer:"T.ex. fosterundersökning i vården (ultraljudsundersökning)."
+    },
+    { term:"Eko", front:"Vad är eko?",
+      def:"När ljud studsar mot en hård yta och kommer tillbaka.",
+      mini:"Varför hörs eko tydligare i en tunnel än i ett vardagsrum?",
+      answer:"Tunneln har hårda ytor som reflekterar ljud bättre. Ett rum har ofta mjukare material som dämpar."
+    },
+    { term:"Ekolod", front:"Vad är ekolod?",
+      def:"Teknik som använder eko för att mäta avstånd (t.ex. djup eller hitta fisk).",
+      mini:"Ett eko kommer tillbaka efter 2 s i luft. Hur långt bort är väggen? (340 m/s)",
+      answer:"Ljudet går dit och tillbaka: 340×2/2 = 340 m."
+    },
+    { term:"Buller", front:"Vad är buller?",
+      def:"Oregelbundna, “stökiga” svängningar utan tydligt mönster. Ofta tröttande/stressande.",
+      mini:"Varför kan buller kännas mer stressigt än musik?",
+      answer:"Hjärnan hittar inget stabilt mönster → mer belastning/stress."
+    },
+    { term:"Tinnitus", front:"Vad är tinnitus?",
+      def:"En hörselskada som gör att man hör pip/sus/ringning fast inget ljud finns.",
+      mini:"Orsak: svagt eller starkt ljud?",
+      answer:"Starkt ljud (skadar hörselorganen)."
+    },
+    { term:"Bullerbekämpning", front:"Vad är bullerbekämpning?",
+      def:"Åtgärder för att minska störande/skadligt ljud (dämpa, skärma av, skydda hörseln).",
+      mini:"Ge två exempel på bullerbekämpning.",
+      answer:"Hörselkåpor/proppar, bullerplank, ljudabsorberande tak/väggar, bättre motorunderhåll m.m."
     }
+  ];
 
-    function render(){
-      const card = cards[order[idx]];
+  let order = cards.map((_, i) => i);
+  let idx = 0;
+  let step = 0; // 0 fråga, 1 def, 2 mini, 3 facit
 
-      cardTitle.textContent = card.term;
-      cardIndex.textContent = `• kort ${idx+1}`;
-      frontText.textContent = card.front;
+  const progressPill = document.getElementById("progressPill");
+  const cardTitle = document.getElementById("cardTitle");
+  const cardIndex = document.getElementById("cardIndex");
+  const frontText = document.getElementById("frontText");
+  const defText = document.getElementById("defText");
+  const miniText = document.getElementById("miniText");
+  const answerText = document.getElementById("answerText");
 
-      defText.textContent = card.def;
-      miniText.textContent = card.mini;
-      answerText.textContent = card.answer;
+  const panelDef = document.getElementById("panelDef");
+  const panelMini = document.getElementById("panelMini");
+  const panelFacit = document.getElementById("panelFacit");
 
-      progressPill.textContent = `Kort ${idx+1} / ${order.length}`;
+  const btnDef = document.getElementById("btnDef");
+  const btnMini = document.getElementById("btnMini");
+  const btnFacit = document.getElementById("btnFacit");
 
-      applyStep();
-    }
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const shuffleBtn = document.getElementById("shuffleBtn");
 
-    function resetStep(){
-      step = 0;
-    }
+  function applyStep(){
+    const showDef = (step >= 1);
+    const showMini = (step >= 2);
+    const showFacit = (step >= 3);
 
-    function next(){
-      idx = (idx + 1) % order.length;
-      resetStep();
-      render();
-    }
-    function prev(){
-      idx = (idx - 1 + order.length) % order.length;
-      resetStep();
-      render();
-    }
-    function shuffle(){
-      for(let i = order.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [order[i], order[j]] = [order[j], order[i]];
-      }
-      idx = 0;
-      resetStep();
-      render();
-    }
+    panelDef.classList.toggle("show", showDef);
+    panelMini.classList.toggle("show", showMini);
+    panelFacit.classList.toggle("show", showFacit);
 
-    // Mellanslag: cykla 0->1->2->3->0
-    function cycleStep(){
-      step = (step + 1) % 4;
-      applyStep();
-    }
+    btnDef.classList.toggle("on", showDef);
+    btnMini.classList.toggle("on", showMini);
+    btnFacit.classList.toggle("on", showFacit);
 
-    // Klick på knapparna: hoppa direkt till läge / toggle logik per knapp
-    // (Fortfarande ren vy, men tangentbordet är "primärt".)
-    btnDef.addEventListener("click", () => {
-      step = (step === 0) ? 1 : 0;  // svar på/av
-      applyStep();
-    });
-    btnMini.addEventListener("click", () => {
-      if(step < 1) step = 1;
-      step = (step < 2) ? 2 : 1;   // mini på/av (facit av om man går tillbaka)
-      applyStep();
-    });
-    btnFacit.addEventListener("click", () => {
-      if(step < 2) step = 2;
-      step = (step < 3) ? 3 : 2;   // facit på/av
-      applyStep();
-    });
+    btnMini.classList.toggle("green", showMini);
+    btnFacit.classList.toggle("warn", showFacit);
+  }
 
-    nextBtn.addEventListener("click", next);
-    prevBtn.addEventListener("click", prev);
-    shuffleBtn.addEventListener("click", shuffle);
+  function render(){
+    const c = cards[order[idx]];
+    cardTitle.textContent = c.term;
+    cardIndex.textContent = `• kort ${idx+1}`;
+    frontText.textContent = c.front;
+    defText.textContent = c.def;
+    miniText.textContent = c.mini;
+    answerText.textContent = c.answer;
 
-    // Keyboard: endast mellanslag, pilar, B
-    window.addEventListener("keydown", (e) => {
-      if(e.key === " "){
-        e.preventDefault();
-        cycleStep();
-      } else if(e.key === "ArrowRight"){
-        next();
-      } else if(e.key === "ArrowLeft"){
-        prev();
-      } else if(e.key.toLowerCase() === "b"){
-        shuffle();
-      }
-    });
+    progressPill.textContent = `Kort ${idx+1} / ${order.length}`;
+    applyStep();
+  }
 
+  function resetStep(){ step = 0; }
+
+  function next(){
+    idx = (idx + 1) % order.length;
+    resetStep();
     render();
-  </script>
+  }
+
+  function prev(){
+    idx = (idx - 1 + order.length) % order.length;
+    resetStep();
+    render();
+  }
+
+  function shuffle(){
+    for(let i = order.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    idx = 0;
+    resetStep();
+    render();
+  }
+
+  function cycleStep(){
+    step = (step + 1) % 4;
+    applyStep();
+  }
+
+  // Klick: samma logik som tidigare (ren, enkel)
+  btnDef.addEventListener("click", () => {
+    step = (step === 0) ? 1 : 0;
+    applyStep();
+  });
+  btnMini.addEventListener("click", () => {
+    if(step < 1) step = 1;
+    step = (step < 2) ? 2 : 1;
+    applyStep();
+  });
+  btnFacit.addEventListener("click", () => {
+    if(step < 2) step = 2;
+    step = (step < 3) ? 3 : 2;
+    applyStep();
+  });
+
+  nextBtn.addEventListener("click", next);
+  prevBtn.addEventListener("click", prev);
+  shuffleBtn.addEventListener("click", shuffle);
+
+  // Keyboard (dator)
+  window.addEventListener("keydown", (e) => {
+    if(e.key === " "){
+      e.preventDefault();
+      cycleStep();
+    } else if(e.key === "ArrowRight"){
+      next();
+    } else if(e.key === "ArrowLeft"){
+      prev();
+    } else if(e.key.toLowerCase() === "b"){
+      shuffle();
+    }
+  });
+
+  // Swipe (mobil/padda) – byter kort. Knapparna är kvar.
+  (function enableSwipe(){
+    const el = document.getElementById("swipeArea");
+    if(!el) return;
+
+    let startX = 0, startY = 0, startT = 0;
+    const thresholdX = 50;       // px
+    const thresholdY = 60;       // px (om man scrollar)
+    const maxTime = 800;         // ms
+
+    el.addEventListener("touchstart", (e) => {
+      if(!e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      startT = Date.now();
+    }, { passive: true });
+
+    el.addEventListener("touchend", (e) => {
+      const dt = Date.now() - startT;
+      if(dt > maxTime) return;
+
+      const touch = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+      if(!touch) return;
+
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+
+      // Om det mest är scroll: ignorera
+      if(Math.abs(dy) > thresholdY && Math.abs(dy) > Math.abs(dx)) return;
+
+      if(Math.abs(dx) >= thresholdX && Math.abs(dx) > Math.abs(dy) * 1.2){
+        if(dx < 0) next();  // swipe vänster
+        else prev();        // swipe höger
+      }
+    }, { passive: true });
+  })();
+
+  render();
+</script>
 </body>
 </html>
