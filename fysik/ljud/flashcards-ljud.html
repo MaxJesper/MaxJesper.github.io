@@ -320,13 +320,27 @@
         </div>
       </aside>
     </div>
+<div class="fc-footerhint">
+  <span class="hint-desktop">
+    Tangenter:
+    <span class="fc-kbd">mellanslag</span> nästa steg •
+    <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
+    <span class="fc-kbd">B</span> blanda
+  </span>
 
-    <div class="fc-footerhint">
-      Tangenter:
-      <span class="fc-kbd">mellanslag</span> nästa steg •
-      <span class="fc-kbd">←</span>/<span class="fc-kbd">→</span> byt kort •
-      <span class="fc-kbd">B</span> blanda
-    </div>
+  <span class="hint-mobile">
+    Tryck på <b>Svar</b> → <b>Miniproblem</b> → <b>Facit</b>
+  </span>
+</div>
+/* Standard: visa desktop-hjälp */
+.hint-mobile { display: none; }
+
+/* Mobil & surfplatta */
+@media (hover: none) {
+  .hint-desktop { display: none; }
+  .hint-mobile { display: inline; }
+}
+ 
   </main>
 
   <script src="/js/menu.js"></script>
