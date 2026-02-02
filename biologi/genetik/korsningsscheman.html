@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    /* Lokala styles bara för punnett + layout */
     body { background-color: #dfe8f5; }
 
     .task-box {
@@ -103,7 +102,6 @@
       margin-top: -6px;
     }
 
-    /* Fenotyp-box under elevens schema */
     #phenotypeBox {
       display: none;
       max-width: 520px;
@@ -120,7 +118,6 @@
 
 <body>
 
-  <!-- Samma menyupplägg som din index-sida -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
@@ -142,7 +139,6 @@
 
     <div class="layout">
 
-      <!-- ELEVENS KVADRAT -->
       <div class="column">
         <h3>Ditt korsningsschema</h3>
 
@@ -166,12 +162,11 @@
           <button id="checkAnswers">Rätta</button>
           <button id="nextTask">Nästa uppgift</button>
           <button id="resetBtn">Töm</button>
-          <button id="showPhenotypes" disabled>Fenotyper</button>
+          <button id="showPhenotypes">Fenotyper</button>
         </div>
 
         <div id="result"></div>
 
-        <!-- Fenotyp-facit (toggle) -->
         <div id="phenotypeBox">
           <div class="inner">
             <b>Facit – fenotyper:</b>
@@ -180,7 +175,6 @@
         </div>
       </div>
 
-      <!-- KORREKT KVADRAT -->
       <div class="column" id="correctColumn" style="display:none;">
         <h3>Korrekt korsningsschema</h3>
         <div class="punnettWrapper">
