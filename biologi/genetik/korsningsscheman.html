@@ -2,96 +2,24 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Genetiska korsningsscheman – Monohybrid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biologi - Korsningsscheman</title>
+
+  <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #dfe8f5;
-      padding: 20px;
-      margin: 0;
-    }
+    /* Lokala styles bara för punnett + layout (så du slipper röra style.css nu) */
+    body { background-color: #dfe8f5; }
 
-    /* TOPPBAR */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: #183a6b;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 0 0 12px 12px;
-      margin: -20px -20px 18px -20px;
-    }
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hamburger {
-      width: 44px;
-      height: 38px;
-      border: 0;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      font-size: 22px;
-      cursor: pointer;
-      line-height: 1;
-    }
-    .backbtn {
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 12px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      font-size: 14px;
-    }
-    .topbar-title {
-      font-weight: 700;
-    }
-
-    /* MENY */
-    .menuOverlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      z-index: 50;
-    }
-    .menu {
-      width: min(320px, 85vw);
-      height: 100%;
-      background: #ffffff;
-      padding: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    }
-    .menu h3 { margin: 8px 0 12px; }
-    .menu a {
-      display: block;
-      padding: 10px 8px;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #183a6b;
-      font-weight: 600;
-    }
-    .menu a:hover { background: #eef3fb; }
-
-    h1 { text-align: center; margin-top: 8px; }
-
-    .meta {
+    .task-box {
       max-width: 900px;
-      margin: 10px auto 0;
-      background: rgba(255,255,255,0.7);
+      margin: 12px auto;
+      background: rgba(255,255,255,0.75);
       border-radius: 14px;
       padding: 12px 14px;
     }
-    .meta .small { opacity: 0.85; font-size: 14px; margin-top: 6px; }
+    .task-extra { opacity: 0.85; font-size: 14px; margin-top: 6px; }
+    .format-hint { max-width: 900px; margin: 8px auto 0; font-size: 14px; opacity: 0.9; }
 
     .layout {
       display: flex;
@@ -100,22 +28,16 @@
       margin-top: 20px;
       flex-wrap: wrap;
     }
-
     .column { text-align: center; }
 
-    .punnettWrapper {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
+    .punnettWrapper { display: flex; justify-content: center; margin: 20px 0; }
 
     .punnett {
       display: grid;
       grid-template-columns: 90px 90px 90px;
       grid-template-rows: 60px 60px 60px;
-      gap: 5px;
+      gap: 6px;
     }
-
     .headerCell, .sideCell {
       display: flex;
       align-items: center;
@@ -123,11 +45,11 @@
       font-weight: bold;
       background: rgba(255,255,255,0.55);
       border-radius: 10px;
+      padding: 4px;
     }
-
     .headerCell input,
     .sideCell input {
-      width: 50px;
+      width: 56px;
       margin-left: 6px;
       text-align: center;
       font-weight: bold;
@@ -136,7 +58,6 @@
       border-radius: 10px;
       border: 1px solid #c7d6ee;
     }
-
     .offspringCell {
       width: 90px;
       height: 60px;
@@ -155,113 +76,104 @@
       flex-wrap: wrap;
       margin-top: 10px;
     }
-
-    button {
+    .controls button {
       padding: 10px 16px;
       font-size: 16px;
       cursor: pointer;
       border-radius: 12px;
       border: 0;
-      background: #183a6b;
-      color: #fff;
     }
-    button.secondary {
-      background: #4d6aa1;
-    }
+    #checkAnswers { background: #183a6b; color: #fff; }
+    #nextTask, #resetBtn { background: #4d6aa1; color: #fff; }
 
-    #result {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 18px;
-      min-height: 24px;
-    }
+    #result { margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 24px; }
 
-    .hint {
-      max-width: 900px;
-      margin: 10px auto 0;
+    .correct-summary {
+      max-width: 520px;
+      margin: 0 auto;
       font-size: 14px;
       opacity: 0.9;
+    }
+
+    .task-counter {
+      text-align: center;
+      opacity: 0.75;
+      font-size: 14px;
+      margin-top: -6px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOPPBAR -->
-  <div class="topbar">
-    <div class="topbar-left">
-      <button class="hamburger" id="menuBtn" aria-label="Öppna meny">☰</button>
-      <button class="backbtn" id="backBtn">← Tillbaka</button>
-      <div class="topbar-title">Korsningsscheman</div>
+  <!-- Samma menyupplägg som din index-sida -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <header class="biologi-header">
+    <h1>Korsningsscheman</h1>
+    <p>Jesper Tordsson</p>
+  </header>
+
+  <main>
+    <h2 id="taskTitle" style="text-align:center;">Uppgift</h2>
+    <div class="task-counter" id="taskCounter"></div>
+
+    <div class="task-box">
+      <div id="taskText"></div>
+      <div class="task-extra" id="taskExtra"></div>
     </div>
-    <div id="taskCounter" style="opacity:.9;font-size:14px;"></div>
-  </div>
 
-  <!-- MENY -->
-  <div class="menuOverlay" id="menuOverlay" aria-hidden="true">
-    <div class="menu">
-      <h3>Meny</h3>
-      <!-- Justera länkarna så de passar din struktur -->
-      <a href="../genetik.html">Genetik – startsida</a>
-      <a href="./korsningsscheman.html">Korsningsscheman</a>
-      <a href="../index.html">Biologi – index</a>
-      <a href="https://maxjesper.github.io/">MaxJesper.github.io</a>
-      <hr style="border:0;border-top:1px solid #e6e6e6;margin:10px 0;">
-      <a href="#" id="closeMenuLink">Stäng meny</a>
-    </div>
-  </div>
+    <div class="format-hint" id="formatHint"></div>
 
-  <h1 id="taskTitle">Uppgift</h1>
+    <div class="layout">
 
-  <div class="meta">
-    <div id="taskText"></div>
-    <div class="small" id="taskExtra"></div>
-  </div>
+      <!-- ELEVENS KVADRAT -->
+      <div class="column">
+        <h3>Ditt korsningsschema</h3>
 
-  <div class="hint" id="formatHint"></div>
+        <div class="punnettWrapper">
+          <div class="punnett">
+            <div></div>
+            <div class="headerCell">♂ <input id="father0" maxlength="4" autocomplete="off"></div>
+            <div class="headerCell">♂ <input id="father1" maxlength="4" autocomplete="off"></div>
 
-  <div class="layout">
+            <div class="sideCell">♀ <input id="mother0" maxlength="4" autocomplete="off"></div>
+            <input id="cell0" class="offspringCell" autocomplete="off">
+            <input id="cell1" class="offspringCell" autocomplete="off">
 
-    <!-- ELEVENS KVADRAT -->
-    <div class="column">
-      <h3>Ditt korsningsschema</h3>
-
-      <div class="punnettWrapper">
-        <div class="punnett">
-          <div></div>
-          <div class="headerCell">♂ <input id="father0" maxlength="4" autocomplete="off"></div>
-          <div class="headerCell">♂ <input id="father1" maxlength="4" autocomplete="off"></div>
-
-          <div class="sideCell">♀ <input id="mother0" maxlength="4" autocomplete="off"></div>
-          <input id="cell0" class="offspringCell" autocomplete="off">
-          <input id="cell1" class="offspringCell" autocomplete="off">
-
-          <div class="sideCell">♀ <input id="mother1" maxlength="4" autocomplete="off"></div>
-          <input id="cell2" class="offspringCell" autocomplete="off">
-          <input id="cell3" class="offspringCell" autocomplete="off">
+            <div class="sideCell">♀ <input id="mother1" maxlength="4" autocomplete="off"></div>
+            <input id="cell2" class="offspringCell" autocomplete="off">
+            <input id="cell3" class="offspringCell" autocomplete="off">
+          </div>
         </div>
+
+        <div class="controls">
+          <button id="checkAnswers">Rätta</button>
+          <button id="nextTask">Nästa uppgift</button>
+          <button id="resetBtn">Töm</button>
+        </div>
+
+        <div id="result"></div>
       </div>
 
-      <div class="controls">
-        <button id="checkAnswers">Rätta</button>
-        <button class="secondary" id="nextTask">Nästa uppgift</button>
-        <button class="secondary" id="resetBtn">Töm</button>
+      <!-- KORREKT KVADRAT -->
+      <div class="column" id="correctColumn" style="display:none;">
+        <h3>Korrekt korsningsschema</h3>
+        <div class="punnettWrapper">
+          <div class="punnett" id="correctPunnett"></div>
+        </div>
+        <div class="correct-summary" id="correctSummary"></div>
       </div>
 
-      <div id="result"></div>
     </div>
 
-    <!-- KORREKT KVADRAT -->
-    <div class="column" id="correctColumn" style="display:none;">
-      <h3>Korrekt korsningsschema</h3>
-      <div class="punnettWrapper">
-        <div class="punnett" id="correctPunnett"></div>
-      </div>
-      <div class="hint" id="correctSummary"></div>
-    </div>
+    <p style="text-align:center; margin-top: 18px;">
+      <a href="/biologi/genetik/index.html" class="subject-btn">← Tillbaka till Genetik</a>
+    </p>
+  </main>
 
-  </div>
-
+  <script src="/js/menu.js"></script>
   <script src="korsningsscheman.js"></script>
 </body>
 </html>
