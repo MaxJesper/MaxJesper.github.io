@@ -111,7 +111,7 @@
         // Försök kopiera
         await navigator.clipboard.writeText(prompt);
 
-        statusEl.textContent = "✅ Prompt kopierad! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
+        statusEl.textContent = "✅ När ChatGPT öppnas tryck Ctrl+V (Chrombook) eller Cmd+V (macintosh), return och börja.";
         window.open("https://chat.openai.com/", "_blank");
       } catch (err) {
         statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Jag öppnar prompt-filen istället.";
