@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // --- Hämta DOM-element robust (inga "magiska" id-variabler) ---
+  // --- DOM (robust, inga globala id-variabler) ---
   const father0 = document.getElementById("father0");
   const father1 = document.getElementById("father1");
   const mother0 = document.getElementById("mother0");
@@ -30,7 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn  = document.getElementById("nextTask");
   const resetBtn = document.getElementById("resetBtn");
 
+  const phenotypeBtn  = document.getElementById("showPhenotypes");
+  const phenotypeBox  = document.getElementById("phenotypeBox");
+  const phenotypeText = document.getElementById("phenotypeText");
+
+  let hasCheckedThisTask = false;
+
   // --- Uppgiftsbank ---
+  // Varje uppgift: gameter (2+2) + fenotyp-facittext.
   const tasks = [
     {
       id: 1,
@@ -38,36 +45,36 @@ document.addEventListener("DOMContentLoaded", () => {
       text:
         "Grå starr är en ärftlig ögonsjukdom. Den är dominant (S). " +
         "En heterozygot kvinna (Ss) med grå starr får barn med en frisk man (ss). " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Tips: Mamman ger S eller s. Pappan ger s och s.",
-      hint: "Skriv gameter som t.ex. S / s. Skriv barnens genotyper som t.ex. Ss eller ss.",
+      hint: "Gameter: S/s eller XH/Xh/Y. Rutor: genotyper (t.ex. Ss, ss, XHXh, XhY).",
       motherGametes: ["S", "s"],
       fatherGametes: ["s", "s"],
-      summary: "Fenotyp: 50% grå starr (Ss), 50% frisk (ss)."
+      phenotype: "1/2 får grå starr, 1/2 är friska."
     },
     {
       id: 2,
       title: "Uppgift 2 – Autosomal recessiv (två bärare)",
       text:
         "En sjukdom är recessiv (a). Två friska heterozygoter (Aa) får barn. " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Frisk = A_, sjuk = aa.",
-      hint: "Gameter: A och a från båda. Barn: AA, Aa, aa.",
+      hint: "Gameter: A och a från båda.",
       motherGametes: ["A", "a"],
       fatherGametes: ["A", "a"],
-      summary: "Genotyp: 25% AA, 50% Aa, 25% aa. Fenotyp: 75% friska, 25% sjuka."
+      phenotype: "3/4 är friska, 1/4 blir sjuka."
     },
     {
       id: 3,
       title: "Uppgift 3 – Autosomal dominant (heterozygot × heterozygot)",
       text:
         "En egenskap är autosomalt dominant (B). Två heterozygoter (Bb) får barn. " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Dominant fenotyp = B_. Recessiv fenotyp = bb.",
       hint: "Gameter: B och b från båda.",
       motherGametes: ["B", "b"],
       fatherGametes: ["B", "b"],
-      summary: "Genotyp: 25% BB, 50% Bb, 25% bb. Fenotyp: 75% dominanta, 25% recessiva."
+      phenotype: "3/4 visar den dominanta egenskapen, 1/4 visar den recessiva."
     },
     {
       id: 4,
@@ -75,24 +82,24 @@ document.addEventListener("DOMContentLoaded", () => {
       text:
         "Röd-grön färgblindhet är X-länkad recessiv (Xh). " +
         "En bärare kvinna (XH Xh) får barn med en man som ser normalt (XH Y). " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Mamman ger XH eller Xh. Pappan ger XH eller Y.",
-      hint: "Skriv gameter som XH, Xh, Y. Skriv barn t.ex. XHXH, XHXh, XHY, XhY.",
+      hint: "Gameter: XH, Xh, Y. Rutor: XHXH, XHXh, XHY, XhY.",
       motherGametes: ["XH", "Xh"],
       fatherGametes: ["XH", "Y"],
-      summary: "Döttrar: 50% XHXH (normal), 50% XHXh (bärare). Söner: 50% XHY (normal), 50% XhY (färgblind)."
+      phenotype: "Inga flickor blir sjuka. 1/2 av pojkarna blir sjuka, 1/2 av pojkarna blir friska."
     },
     {
       id: 5,
       title: "Uppgift 5 – Könsbunden X-länkad recessiv (sjuk man)",
       text:
         "En X-länkad recessiv sjukdom (Xh). En sjuk man (Xh Y) får barn med en kvinna som inte är bärare (XH XH). " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Mamman ger alltid XH. Pappan ger Xh eller Y.",
-      hint: "Alla döttrar blir bärare. Alla söner blir friska.",
+      hint: "Tänk: döttrar får pappans Xh, söner får pappans Y.",
       motherGametes: ["XH", "XH"],
       fatherGametes: ["Xh", "Y"],
-      summary: "Alla döttrar: XHXh (bärare). Alla söner: XHY (friska)."
+      phenotype: "Inga barn blir sjuka. Alla flickor blir bärare. Alla pojkar blir friska."
     },
     {
       id: 6,
@@ -100,43 +107,49 @@ document.addEventListener("DOMContentLoaded", () => {
       text:
         "Blomfärg nedärvs intermediärt: R = röd, W = vit, RW = rosa. " +
         "En rosa blomma (RW) korsas med en vit blomma (WW). " +
-        "Vilka genotyper kan avkomman få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Intermediärt = heterozygoten får en mellanfärg.",
-      hint: "Gameter: RW ger R och W. WW ger W och W. Barn: RW eller WW.",
+      hint: "Gameter: R/W från RW och W/W från WW.",
       motherGametes: ["R", "W"],
       fatherGametes: ["W", "W"],
-      summary: "Genotyp: 50% RW (rosa), 50% WW (vit)."
+      phenotype: "1/2 blir rosa, 1/2 blir vita."
     },
     {
       id: 7,
       title: "Uppgift 7 – Intermediär nedärvning (rosa × rosa)",
       text:
         "Samma intermediära blomfärg: R = röd, W = vit, RW = rosa. " +
-        "Två rosa blommor (RW × RW) korsas. Vilka genotyper får avkomman?",
+        "Två rosa blommor (RW × RW) korsas. " +
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Detta ger ofta en 1:2:1-fördelning.",
-      hint: "Gameter: R och W från båda. Barn: RR, RW, WW.",
+      hint: "Gameter: R och W från båda.",
       motherGametes: ["R", "W"],
       fatherGametes: ["R", "W"],
-      summary: "Genotyp: 25% RR (röd), 50% RW (rosa), 25% WW (vit)."
+      phenotype: "1/4 blir röda, 1/2 blir rosa, 1/4 blir vita."
     },
     {
       id: 8,
       title: "Uppgift 8 – Autosomal recessiv (sjuk × bärare)",
       text:
         "En recessiv sjukdom (a). En sjuk person (aa) får barn med en bärare (Aa). " +
-        "Vilka genotyper kan barnen få? Visa med korsningsschema.",
+        "Visa genotyperna med korsningsschema och ange vilka fenotyper som uppstår (och i vilken andel).",
       extra: "Sjuk = aa. Bärare = Aa.",
-      hint: "Gameter: aa ger a och a. Aa ger A och a. Barn: Aa eller aa.",
+      hint: "Gameter: a/a från aa och A/a från Aa.",
       motherGametes: ["a", "a"],
       fatherGametes: ["A", "a"],
-      summary: "Genotyp: 50% Aa (friska bärare), 50% aa (sjuka)."
+      phenotype: "1/2 blir friska bärare, 1/2 blir sjuka."
     }
   ];
 
+  // --- Helpers ---
   function clearInputs() {
     [...father, ...mother, ...cells].forEach(i => i.value = "");
   }
 
+  // Normalisera genotyp:
+  // - tar bort mellanslag
+  // - tokens: XH, Xh, Y eller enstaka alleler
+  // - sorterar så "sS" matchar "Ss" osv.
   function normalizeGenotype(str) {
     const s = (str || "").replace(/\s+/g, "");
     const tokens = s.match(/X[A-Za-z]|Y|[A-Za-z]/g) || [];
@@ -171,6 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const m0 = normalizeGenotype(studentMother[0]);
     const m1 = normalizeGenotype(studentMother[1]);
 
+    // cell-index: 0=(m0,f0) 1=(m0,f1) 2=(m1,f0) 3=(m1,f1)
     return [
       normalizeGenotype(m0 + f0),
       normalizeGenotype(m0 + f1),
@@ -203,17 +217,28 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="offspringCell" value="${correct[2]}" readonly>
       <input class="offspringCell" value="${correct[3]}" readonly>
     `;
-    correctSummary.textContent = task.summary || "";
+
+    // Under facit-kvadraten kan du ha en kort påminnelse om fenotyp-facit
+    correctSummary.innerHTML = `<b>Kom ihåg:</b> Ange även fenotyper. Tryck på knappen <b>Fenotyper</b> för facit.`;
   }
 
+  // --- Task handling ---
   let currentIndex = 0;
+
+  function resetPhenotypeUI() {
+    hasCheckedThisTask = false;
+    phenotypeBtn.disabled = true;
+    phenotypeBtn.textContent = "Fenotyper";
+    phenotypeBox.style.display = "none";
+    phenotypeText.textContent = "";
+  }
 
   function loadTask(index) {
     currentIndex = (index + tasks.length) % tasks.length;
     const task = tasks[currentIndex];
 
     taskTitle.textContent = task.title;
-    taskText.textContent = task.text;
+    taskText.textContent  = task.text;
     taskExtra.textContent = task.extra || "";
     formatHint.textContent = "Format: " + (task.hint || "Fyll i gameter och rutor.");
     taskCounter.textContent = `(${currentIndex + 1}/${tasks.length})`;
@@ -223,9 +248,25 @@ document.addEventListener("DOMContentLoaded", () => {
     correctPunnett.innerHTML = "";
     correctSummary.textContent = "";
 
+    resetPhenotypeUI();
     clearInputs();
   }
 
+  // --- Fenotyper (toggle) ---
+  phenotypeBtn.addEventListener("click", () => {
+    const task = tasks[currentIndex];
+
+    if (phenotypeBox.style.display === "none") {
+      phenotypeText.textContent = task.phenotype || "Ingen fenotyp angiven för denna uppgift.";
+      phenotypeBox.style.display = "block";
+      phenotypeBtn.textContent = "Dölj fenotyper";
+    } else {
+      phenotypeBox.style.display = "none";
+      phenotypeBtn.textContent = "Fenotyper";
+    }
+  });
+
+  // --- Rättning ---
   checkBtn.addEventListener("click", () => {
     const task = tasks[currentIndex];
 
@@ -234,18 +275,28 @@ document.addEventListener("DOMContentLoaded", () => {
     correctPunnett.innerHTML = "";
     correctSummary.textContent = "";
 
+    // Stäng fenotyper om den var öppen (så elever inte råkar ha facit synligt)
+    phenotypeBox.style.display = "none";
+    phenotypeBtn.textContent = "Fenotyper";
+
     const allFilled = [...father, ...mother, ...cells].every(i => i.value.trim() !== "");
     if (!allFilled) {
       resultDiv.textContent = "Fyll i alla rutor först.";
       return;
     }
 
+    // Lås upp fenotypknappen efter första rättningen
+    hasCheckedThisTask = true;
+    phenotypeBtn.disabled = false;
+
+    // 1) gameter måste stämma (ordning oviktig)
     const studentFather = father.map(x => x.value.trim());
     const studentMother = mother.map(x => x.value.trim());
 
     const okFatherGametes = sameMultiset(studentFather, task.fatherGametes);
     const okMotherGametes = sameMultiset(studentMother, task.motherGametes);
 
+    // 2) rutor måste stämma utifrån elevens ordning
     const expected = expectedGridForOrder(studentFather, studentMother);
 
     let allCellsRight = true;
@@ -255,10 +306,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (okFatherGametes && okMotherGametes && allCellsRight) {
-      resultDiv.textContent = "✅ Rätt!";
+      resultDiv.textContent = "✅ Rätt! (Glöm inte att redovisa fenotyper också – klicka på Fenotyper om du vill kolla facit.)";
       return;
     }
 
+    // Fel: visa facit-kvadrat
     correctColumn.style.display = "block";
     renderCorrectPunnett(task);
 
@@ -273,6 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // --- Nästa / Töm ---
   nextBtn.addEventListener("click", () => loadTask(currentIndex + 1));
 
   resetBtn.addEventListener("click", () => {
@@ -280,6 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
     correctColumn.style.display = "none";
     correctPunnett.innerHTML = "";
     correctSummary.textContent = "";
+    resetPhenotypeUI();
     clearInputs();
   });
 
