@@ -4,23 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Flashcards – Optik (Ljus)</title>
-
   <style>
     :root{
-      --bg: #f3f8ff;          /* Ljusare bakgrund runt kortet */
+      --bg: #f3f8ff;          /* ljusare "sidobakgrund" */
       --card: #ffffff;
       --ink: #0f172a;
       --muted: #475569;
       --border: #e2e8f0;
-      --shadow: 0 12px 28px rgba(2,6,23,.10);
+      --shadow: 0 12px 28px rgba(2, 6, 23, .10);
       --accent: #2563eb;
+      --accent2:#0ea5e9;
+      --good:#16a34a;
+      --warn:#f59e0b;
     }
 
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--ink);
       background: radial-gradient(1200px 800px at 15% 0%, #ffffff 0%, var(--bg) 55%, #eef6ff 100%);
       min-height:100vh;
@@ -30,286 +31,679 @@
     }
 
     header{
-      width:min(980px,94vw);
-      padding:18px 6px 10px;
+      width: min(980px, 94vw);
+      padding: 18px 6px 10px;
       display:flex;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
     }
-
-    header h1{
+    .title-wrap h1{
       margin:0;
-      font-size:clamp(18px,2.4vw,26px);
+      font-size: clamp(18px, 2.4vw, 26px);
+      letter-spacing:.2px;
     }
-
-    header p{
+    .title-wrap p{
       margin:6px 0 0;
-      font-size:14px;
       color:var(--muted);
+      font-size: 14px;
+      line-height:1.35;
     }
-
     .pill{
       display:inline-flex;
-      gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
       border:1px solid var(--border);
-      background:#fff;
+      background: rgba(255,255,255,.7);
+      border-radius: 999px;
+      box-shadow: 0 6px 16px rgba(2,6,23,.06);
       font-size:13px;
       color:var(--muted);
-      box-shadow:0 6px 16px rgba(0,0,0,.06);
       white-space:nowrap;
+      height: fit-content;
     }
+    .pill b{ color:var(--ink); }
 
     main{
-      width:min(980px,94vw);
+      width:min(980px, 94vw);
       flex:1;
-      padding:0 6px 22px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding: 0 6px 22px;
     }
 
     .card{
-      background:var(--card);
-      border-radius:22px;
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
 
     .card-top{
       display:flex;
-      justify-content:space-between;
       align-items:center;
-      padding:14px 16px;
+      justify-content:space-between;
+      padding: 14px 16px;
       border-bottom:1px solid var(--border);
-      background:linear-gradient(90deg,rgba(37,99,235,.07),rgba(14,165,233,.06));
+      background: linear-gradient(90deg, rgba(37,99,235,.07), rgba(14,165,233,.06));
+      gap:10px;
     }
 
     .badge{
-      display:flex;
+      display:inline-flex;
       align-items:center;
       gap:8px;
-      font-size:13px;
-      font-weight:600;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(37,99,235,.25);
+      background: rgba(37,99,235,.08);
+      color:#0b2a6f;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    .badge .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.12);
     }
 
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:var(--accent);
-    }
-
-    .meta span{
-      font-size:12px;
+    .meta{
+      display:flex;
+      gap:10px;
+      align-items:center;
       color:var(--muted);
-      padding:6px 10px;
-      border-radius:999px;
+      font-size:12px;
+      user-select:none;
+    }
+    .meta span{
+      padding: 6px 10px;
       border:1px solid var(--border);
-      background:#fff;
-      margin-left:6px;
+      background: rgba(255,255,255,.7);
+      border-radius: 999px;
     }
 
     .card-body{
-      padding:18px 16px;
-      min-height:260px;
+      padding: 18px 16px 16px;
+      min-height: 250px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
 
     .prompt{
-      font-size:clamp(18px,2.2vw,24px);
-      margin:0 0 6px;
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height:1.22;
+      margin:0;
+      letter-spacing:.1px;
     }
 
     .small{
-      font-size:13px;
-      color:var(--muted);
-      margin:0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height:1.45;
+      margin:0;
     }
 
     .box{
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:14px;
-      background:rgba(255,255,255,.85);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 12px;
+      background: rgba(255,255,255,.75);
     }
-
     .box h3{
-      margin:0 0 8px;
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color:#1e3a8a;
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing:.25px;
+      text-transform: uppercase;
+      color: #0b2a6f;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(2,6,23,.10);
+      background: rgba(2,6,23,.04);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform:none;
+      letter-spacing:0;
     }
 
-    .content{
-      white-space:pre-wrap;
+    .box .content{
+      margin:0;
+      white-space: pre-wrap;
       line-height:1.45;
-      font-size:15px;
+      font-size: 15px;
     }
 
     .controls{
       display:flex;
-      justify-content:space-between;
+      flex-wrap:wrap;
       gap:10px;
-      padding:14px 16px;
+      justify-content:space-between;
+      padding: 14px 16px 16px;
       border-top:1px solid var(--border);
-      background:#fff;
+      background: rgba(255,255,255,.85);
+    }
+
+    .btnrow{
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
     }
 
     button{
-      border-radius:14px;
+      appearance:none;
       border:1px solid var(--border);
       background:#fff;
-      padding:10px 14px;
-      font-size:14px;
+      color:var(--ink);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 14px;
       cursor:pointer;
-      box-shadow:0 6px 14px rgba(0,0,0,.06);
+      box-shadow: 0 6px 16px rgba(2,6,23,.06);
+      transition: transform .04s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      user-select:none;
+    }
+    button:hover{ border-color: rgba(37,99,235,.35); }
+    button:active{ transform: translateY(1px); box-shadow: 0 4px 10px rgba(2,6,23,.08); }
+
+    .primary{
+      border-color: rgba(37,99,235,.35);
+      background: rgba(37,99,235,.10);
+    }
+    .danger{
+      border-color: rgba(239,68,68,.25);
+      background: rgba(239,68,68,.08);
     }
 
-    button.primary{
-      background:rgba(37,99,235,.1);
-      border-color:rgba(37,99,235,.4);
+    .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
     }
 
     .kbd{
-      font-family:monospace;
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      background:#fff;
-      color:var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.7);
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: var(--muted);
+      user-select:none;
     }
 
-    @media(max-width:820px){
-      .pill,.kbd{display:none;}
+    footer{
+      width:min(980px, 94vw);
+      padding: 0 6px 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height:1.4;
+    }
+
+    @media (max-width: 820px){
+      header{ padding-top:14px; }
+      .pill{ display:none; }
+      .card-body{ min-height: 240px; }
+    }
+    @media (max-width: 520px){
+      .controls{ flex-direction:column; align-items:stretch; }
+      .right{ justify-content:space-between; }
+      button{ width:100%; }
+      .btnrow{ width:100%; }
+      .btnrow button{ flex:1; }
     }
   </style>
 </head>
-
 <body>
-
-<header>
-  <div>
-    <h1>Flashcards – Optik (Ljus)</h1>
-    <p>Mellanslag = nästa steg (dator). Swipe på mobil/padda.</p>
-  </div>
-  <div class="pill">
-    ⌨️ <b>Mellanslag</b> → steg &nbsp; | &nbsp; ←/→ → kort
-  </div>
-</header>
-
-<main>
-  <section class="card">
-    <div class="card-top">
-      <div class="badge"><span class="dot"></span><span id="stageLabel">Fråga</span></div>
-      <div class="meta">
-        <span id="cardCounter">1 / 1</span>
-        <span id="topicChip">Optik</span>
-      </div>
+  <header>
+    <div class="title-wrap">
+      <h1>Flashcards – Optik (Ljus)</h1>
+      <p>
+        Cykla steg med mellanslag på dator. På mobil/padda kan du svepa vänster/höger mellan steg och kort.
+      </p>
     </div>
-
-    <div class="card-body">
-      <p class="prompt" id="prompt"></p>
-      <p class="small" id="subhint"></p>
-
-      <div class="box">
-        <h3 id="boxTitle">Innehåll</h3>
-        <div class="content" id="boxContent"></div>
-      </div>
+    <div class="pill" id="helpPill" aria-hidden="true">
+      <span>⌨️ <b>Mellanslag</b> = nästa steg</span>
+      <span>←/→ = byta kort</span>
     </div>
+  </header>
 
-    <div class="controls">
-      <div>
-        <button id="prevCard">← Förra kort</button>
-        <button id="nextCard">Nästa kort →</button>
+  <main>
+    <section class="card" aria-live="polite">
+      <div class="card-top">
+        <div class="badge"><span class="dot"></span><span id="stageLabel">Fråga</span></div>
+        <div class="meta">
+          <span id="cardCounter">1 / 1</span>
+          <span id="topicChip">Optik</span>
+        </div>
       </div>
-      <div>
-        <span class="kbd">Mellanslag</span>
-        <button class="primary" id="nextStep">Nästa steg</button>
+
+      <div class="card-body">
+        <p class="prompt" id="prompt"></p>
+        <p class="small" id="subhint"></p>
+
+        <div class="box" id="box">
+          <h3 id="boxTitle">Innehåll <span class="tag">nivå</span></h3>
+          <p class="content" id="boxContent"></p>
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+
+      <div class="controls">
+        <div class="btnrow">
+          <button class="danger" id="prevCardBtn">← Förra kort</button>
+          <button class="danger" id="nextCardBtn">Nästa kort →</button>
+        </div>
+
+        <div class="right">
+          <span class="kbd" id="kbdHint">Mellanslag: nästa steg</span>
+          <button class="primary" id="nextStepBtn">Nästa steg</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Tips: Om ett kort känns lätt – prova Utmaning (⭐) när den finns. Om den inte finns på kortet är det helt okej – då är fokus på grunderna.
+  </footer>
 
 <script>
 const cards = [
   {
-    topic:"Ljus",
-    q:"Vad är ljus?",
-    def:"Ljus är en form av energi (elektromagnetisk strålning) som gör att vi kan se.",
-    mini:"Ge ett exempel på när ljusenergi omvandlas till en annan energiform.",
-    facit:"I en lampa omvandlas elektrisk energi till ljus (och värme)."
+    id: 1, topic: "Grunder",
+    q: "Vad är optik?",
+    def: "Optik är läran om ljuset: hur ljus sprids, reflekteras, bryts, absorberas och hur det gör att vi kan se.",
+    mini: "Ge två exempel på vardagssaker där optik är viktig (t.ex. spegel, glasögon, kamera).",
+    facit: "Exempel: speglar (reflektion), glasögon/linser (brytning), kamera/projektor (lins + bild), regnbåge/prisma (spektrum).",
+    level: "grund"
   },
   {
-    topic:"Reflektion",
-    q:"Vad säger reflektionslagen?",
-    def:"Infallsvinkeln är lika stor som reflektionsvinkeln, mätt mot normalen.",
-    mini:"Rita en stråle som träffar en spegel snett.",
-    facit:"Infallsvinkel = reflektionsvinkel.",
-    challenge:"Varför mäts vinklarna mot normalen och inte mot spegelytan?",
-    challengeFacit:"Normalen gör att lagen fungerar oberoende av hur ytan lutar."
+    id: 2, topic: "Ljus",
+    q: "Vad är ljus och vad är en ljuskälla?",
+    def: "Ljus kan ses som energi (elektromagnetisk strålning). En ljuskälla är något som sänder ut ljus, t.ex. solen, en lampa eller en LED.",
+    mini: "Är månen en ljuskälla? Förklara med en mening.",
+    facit: "Nej. Månen lyser inte själv utan reflekterar solens ljus.",
+    level: "grund"
+  },
+  {
+    id: 3, topic: "Ljus",
+    q: "Hur kan vi se föremål som inte lyser själva?",
+    def: "Vi ser föremål när ljus från en ljuskälla reflekteras (studsar) på föremålet och når våra ögon.",
+    mini: "Varför ser ett svart papper mörkare ut än ett vitt i samma ljus?",
+    facit: "Svart absorberar mer av ljuset och reflekterar mindre till ögat. Vitt reflekterar mycket ljus.",
+    challenge: "Utmaning ⭐: Förklara varför en röd tröja ser röd ut i vitt ljus – och vad som händer om du belyser den med blått ljus.",
+    challengeFacit: "Tröjan reflekterar främst rött ljus och absorberar många andra färger. I blått ljus finns nästan inget rött att reflektera → den kan se mycket mörk/svart ut.",
+    level: "mix"
+  },
+  {
+    id: 4, topic: "Ljusets hastighet",
+    q: "Hur snabbt går ljuset?",
+    def: "I vakuum går ljuset ungefär 300 000 km/s (≈ 3,0·10⁸ m/s). I material går det långsammare.",
+    mini: "Skriv om 300 000 km/s till m/s.",
+    facit: "300 000 km/s = 300 000 000 m/s = 3,0·10⁸ m/s.",
+    level: "grund"
+  },
+  {
+    id: 5, topic: "Ljusets utbredning",
+    q: "Hur sprider sig ljus?",
+    def: "Ljus färdas (nästan alltid) rakt fram tills det reflekteras eller bryts. Genomskinliga material släpper igenom mycket ljus, medan ogenomskinliga stoppar det och kan skapa skuggor.",
+    mini: "Varför blir det en skugga bakom ett föremål?",
+    facit: "För att ljuset går rakt fram och blockeras av föremålet, så området bakom får mindre/inget ljus.",
+    level: "grund"
+  },
+  {
+    id: 6, topic: "Reflektion",
+    q: "Vad säger reflektionslagen?",
+    def: "Infallsvinkeln är lika stor som reflektionsvinkeln, mätt mot normalen (en linje vinkelrät mot ytan).",
+    mini: "Rita en plan spegel, en infallande stråle och normalen. Markera i och r och visa att i = r.",
+    facit: "Normalen ritas vinkelrätt mot spegelytan i träffpunkten. Infallsvinkel i och reflektionsvinkel r mäts mot normalen och är lika stora.",
+    challenge: "Utmaning ⭐: Varför är normal-linjen (vinkelrät mot ytan) så viktig när man ritar/reflekterar strålar?",
+    challengeFacit: "För att vinklarna definieras mot normalen, inte mot ytan. Normalen gör att lagen blir enkel och fungerar för alla ytors lutning.",
+    level: "mix"
+  },
+  {
+    id: 7, topic: "Speglar",
+    q: "Vilka tre typer av speglar brukar man prata om?",
+    def: "Plan spegel, konkav spegel (buktar inåt) och konvex spegel (buktar utåt).",
+    mini: "Skriv en kort egenskap för varje spegeltyp.",
+    facit: "Plan: oförändrad storlek. Konkav: kan förstora nära, kan vända bilden upp-och-ner långt bort, samlar strålar. Konvex: förminskar, ger större synfält, sprider strålar.",
+    level: "grund"
+  },
+  {
+    id: 8, topic: "Plan spegel",
+    q: "Hur ser bilden ut i en plan spegel?",
+    def: "Bilden är ungefär lika stor som föremålet och verkar ligga lika långt bakom spegeln som föremålet är framför.",
+    mini: "Om du står 1 m från spegeln: hur långt 'bakom spegeln' verkar din spegelbild vara?",
+    facit: "Den verkar vara 1 m bakom spegeln (totalt 2 m mellan dig och bilden).",
+    level: "grund"
+  },
+  {
+    id: 9, topic: "Konkav spegel",
+    q: "Vad är en konkav spegel och vad händer med parallella strålar?",
+    def: "En konkav spegel buktar inåt och kan samla parallella strålar mot en brännpunkt (fokus) framför spegeln.",
+    mini: "Rita en konkav spegel och ett knippe parallella strålar. Visa var brännpunkten hamnar.",
+    facit: "Parallella strålar reflekteras och möts i brännpunkten framför spegeln (på huvudaxeln).",
+    challenge: "Utmaning ⭐: Varför ger en konkav spegel förstorad bild på nära håll men kan ge upp-och-ner på långt håll?",
+    challengeFacit: "Det beror på var föremålet är i förhållande till brännvidden. När föremålet är innanför brännvidden blir bilden virtuell och förstorad. Utanför brännvidden blir bilden reell och kan bli upp-och-ner.",
+    level: "utmaning"
+  },
+  {
+    id: 10, topic: "Konvex spegel",
+    q: "Vad är en konvex spegel och hur påverkar den bilden?",
+    def: "En konvex spegel buktar utåt och sprider strålar. Den ger en förminskad bild men större synfält.",
+    mini: "Varför används konvexa speglar som backspeglar och trafikspeglar?",
+    facit: "De ger större synfält så man kan se mer av omgivningen (även om bilden blir mindre).",
+    challenge: "Utmaning ⭐: Var hamnar brännpunkten för en konvex spegel – och varför säger man att den är 'tänkt'?",
+    challengeFacit: "Den ligger bakom spegeln. Strålarna möts inte på riktigt, men om man förlänger de reflekterade strålarna bakåt verkar de komma från en punkt där (virtuell brännpunkt).",
+    level: "mix"
+  },
+  {
+    id: 11, topic: "Brännpunkt",
+    q: "Vad menas med brännpunkt (fokus)?",
+    def: "Brännpunkt är punkten där strålar samlas (eller verkar komma ifrån) efter reflektion/brytning.",
+    mini: "Ge ett exempel på något i vardagen där brännpunkt används.",
+    facit: "Förstoringsglas, kamera, projektor, strålkastare, sminkspegel (konkav), kikare/mikroskop (linser).",
+    level: "grund"
+  },
+  {
+    id: 12, topic: "Brytning",
+    q: "Vad är ljusets brytning och varför sker den?",
+    def: "Brytning är när ljus ändrar riktning när det går mellan två material där ljuset har olika hastighet (t.ex. luft ↔ vatten/glas).",
+    mini: "När ljus går från luft till vatten: böjs strålen mot normalen eller från normalen?",
+    facit: "Mot normalen (vatten är optiskt tätare än luft).",
+    challenge: "Utmaning ⭐: Förklara varför dina ben ser kortare och tjockare ut när du tittar ner i en pool.",
+    challengeFacit: "Ljuset från benen bryts i gränsen vatten–luft och ändrar riktning. Hjärnan antar att ljus går rakt, så den 'placerar' bilden fel: delar av benen verkar vara närmare/uppflyttade → de ser förkortade och tjockare ut.",
+    level: "mix"
+  },
+  {
+    id: 13, topic: "Normal",
+    q: "Vad är normalen i optik?",
+    def: "Normalen är en tänkt linje som är vinkelrät (90°) mot ytan i den punkt där ljusstrålen träffar.",
+    mini: "Rita en yta och en ljusstråle som träffar den. Rita normalen.",
+    facit: "Normalen ritas rakt ut från ytan (90° mot ytan) i träffpunkten.",
+    level: "grund"
+  },
+  {
+    id: 14, topic: "Totalreflektion",
+    q: "Vad är totalreflektion?",
+    def: "Totalreflektion betyder att allt ljus reflekteras tillbaka när ljus i ett optiskt tätare material träffar gränsen till ett optiskt tunnare material med stor infallsvinkel (över en kritisk vinkel).",
+    mini: "Varför kan man leda ljus i en fiberoptisk kabel?",
+    facit: "Ljuset totalreflekteras mot fiberns väggar om och om igen, så det stannar kvar och leds framåt i kabeln.",
+    challenge: "Utmaning ⭐: Vad händer om fibern böjs för skarpt?",
+    challengeFacit: "Då kan infallsvinkeln mot väggen lokalt bli för liten → totalreflektion uteblir och ljus kan 'läcka' ut → signalen blir svagare.",
+    level: "utmaning"
+  },
+  {
+    id: 15, topic: "Prisma & spektrum",
+    q: "Vad gör ett prisma med vitt ljus?",
+    def: "Ett prisma bryter ljus olika mycket beroende på färg (våglängd) och kan därför dela upp vitt ljus i ett spektrum (regnbågens färger).",
+    mini: "Vilken färg bryts mest: rött eller violett?",
+    facit: "Violett bryts mest, rött bryts minst.",
+    level: "grund"
+  },
+  {
+    id: 16, topic: "Regnbåge",
+    q: "Hur uppstår en regnbåge?",
+    def: "Solljus bryts när det går in i en regndroppe, reflekteras inne i droppen och bryts igen när det lämnar droppen. Färgerna separeras till ett spektrum.",
+    mini: "Varför ser man oftast regnbåge när solen är bakom dig och regnet framför?",
+    facit: "För att ljuset behöver komma in i dropparna bakom dig och skickas tillbaka mot dina ögon från droppar framför dig.",
+    level: "mix"
+  },
+  {
+    id: 17, topic: "Linser",
+    q: "Vilka två huvudtyper av linser finns och hur känner man igen dem?",
+    def: "Konvex lins (samlingslins) är tjockast på mitten. Konkav lins (spridningslins) är tunnast på mitten.",
+    mini: "Skriv vilket som är rätt: Konvex = samlar / sprider. Konkav = samlar / sprider.",
+    facit: "Konvex samlar. Konkav sprider.",
+    level: "grund"
+  },
+  {
+    id: 18, topic: "Konvex lins",
+    q: "Vad gör en konvex (positiv) lins med parallella ljusstrålar?",
+    def: "Den bryter strålarna så att de samlas och möts i en brännpunkt bakom linsen.",
+    mini: "Rita en konvex lins och ett knippe parallella strålar. Markera brännpunkten.",
+    facit: "Strålarna böjs in mot huvudaxeln och möts i brännpunkten på andra sidan linsen.",
+    challenge: "Utmaning ⭐: Hur skulle du använda en konvex lins för att tända eld på ett papper en solig dag?",
+    challengeFacit: "Håll linsen så att solens parallella strålar samlas i en liten punkt (brännpunkten) på pappret. Justera avståndet tills punkten är som minst och ljusstarkast.",
+    level: "mix"
+  },
+  {
+    id: 19, topic: "Konkav lins",
+    q: "Vad gör en konkav (negativ) lins med parallella ljusstrålar?",
+    def: "Den sprider strålarna. Om man förlänger strålarna bakåt verkar de komma från en tänkt brännpunkt framför linsen.",
+    mini: "Rita en konkav lins och visa hur ett knippe parallella strålar sprids.",
+    facit: "Strålarna böjs bort från huvudaxeln. Förlänger man dem bakåt möts de i en virtuell brännpunkt framför linsen.",
+    level: "mix"
+  },
+  {
+    id: 20, topic: "Ögat",
+    q: "Varför hamnar bilden upp och ner på näthinnan?",
+    def: "Ögats lins är en konvex lins som samlar ljus. Strålar från toppen av föremålet bryts så att de hamnar längst ner på näthinnan och tvärtom, vilket ger en upp-och-ner-bild.",
+    mini: "Skriv en mening: vad gör hjärnan med bilden?",
+    facit: "Hjärnan tolkar och 'vänder' informationen så att vi uppfattar världen rättvänd.",
+    challenge: "Utmaning ⭐: Om man kommer närmare ett föremål – vad måste ögats lins göra för att bilden ska bli skarp?",
+    challengeFacit: "Ackommodera: ändra form (bli rundare) för att öka brytningen och få fokus på näthinnan.",
+    level: "utmaning"
+  },
+  {
+    id: 21, topic: "Polaroid",
+    q: "Hur fungerar polaroidglasögon (i vardaglig mening)?",
+    def: "De minskar bländning genom att släppa igenom ljus som svänger i en viss riktning och blockera mycket av reflexljuset från t.ex. vatten/asfalt.",
+    mini: "Ge ett exempel: när är polaroidglasögon extra bra?",
+    facit: "Vid vatten/fiske, bilkörning på våt väg, snö – där reflexer annars bländar.",
+    level: "mix"
+  },
+  {
+    id: 22, topic: "Färg & absorption",
+    q: "Varför blir svarta kläder varmare än vita i solen?",
+    def: "Svart absorberar mer av ljusets energi och omvandlar den till värme. Vitt reflekterar mer ljus och tar upp mindre energi.",
+    mini: "Skriv: Absorbera betyder…? Reflektera betyder…?",
+    facit: "Absorbera = suga upp. Reflektera = studsa tillbaka.",
+    level: "grund"
+  },
+  {
+    id: 23, topic: "Laser",
+    q: "Vad är laserljus (en enkel beskrivning)?",
+    def: "Laserljus är mycket riktat (nästan parallellt), ofta med en bestämd färg (våglängd) och kan vara intensivt.",
+    mini: "Varför används laser som 'rak linje' i experiment?",
+    facit: "För att strålen är smal och går nästan rakt utan att spridas så mycket, vilket gör den lätt att rita/visa.",
+    level: "mix"
+  },
+  {
+    id: 24, topic: "Bildskärm",
+    q: "Vad är pixlar och varför pratar man om RGB?",
+    def: "Pixlar är små bildpunkter på en skärm. Många skärmar skapar färger genom att blanda rött, grönt och blått ljus (RGB).",
+    mini: "Vilka tre färger bygger en TV-bild upp av?",
+    facit: "Rött, grönt och blått (RGB).",
+    level: "mix"
+  },
+  {
+    id: 25, topic: "Sammanfattning",
+    q: "Sammanfatta: Vad händer med en ljusstråle vid en yta eller gräns?",
+    def: "Den kan reflekteras (studsa), brytas (ända riktning), absorberas (tas upp) eller släppas igenom (transmission).",
+    mini: "Ge ett exempel på varje: reflektion, brytning, absorption, genomsläpp.",
+    facit: "Reflektion: spegel. Brytning: sugrör ser böjt i vatten. Absorption: svart tröja blir varm. Genomsläpp: ljus genom glas.",
+    level: "grund"
   }
 ];
 
 let cardIndex = 0;
-let stepIndex = 0;
+let stageIndex = 0;
 
-function steps(card){
-  const s = ["Fråga","Svar","Miniproblem"];
-  if(card.challenge) s.push("Utmaning");
-  s.push("Facit");
-  return s;
+const elStageLabel = document.getElementById("stageLabel");
+const elCounter = document.getElementById("cardCounter");
+const elTopicChip = document.getElementById("topicChip");
+const elPrompt = document.getElementById("prompt");
+const elSubhint = document.getElementById("subhint");
+const elBoxTitle = document.getElementById("boxTitle");
+const elBoxContent = document.getElementById("boxContent");
+
+const prevCardBtn = document.getElementById("prevCardBtn");
+const nextCardBtn = document.getElementById("nextCardBtn");
+const nextStepBtn = document.getElementById("nextStepBtn");
+const kbdHint = document.getElementById("kbdHint");
+const helpPill = document.getElementById("helpPill");
+
+function isMobileish(){
+  return window.matchMedia("(max-width: 820px)").matches || ("ontouchstart" in window);
+}
+
+function updateKbdHints(){
+  const mobile = isMobileish();
+  kbdHint.style.display = mobile ? "none" : "inline-flex";
+  helpPill.setAttribute("aria-hidden", mobile ? "true" : "false");
+  helpPill.style.display = mobile ? "none" : "inline-flex";
+}
+window.addEventListener("resize", updateKbdHints);
+
+function currentCard(){ return cards[cardIndex]; }
+
+function stageSequenceForCard(c){
+  const seq = ["Fråga","Svar","Miniproblem"];
+  if (c.challenge) seq.push("Utmaning");
+  seq.push("Facit");
+  return seq;
+}
+
+function difficultyLabel(c){
+  return c.level || "mix";
 }
 
 function render(){
-  const card = cards[cardIndex];
-  const s = steps(card);
-  const step = s[stepIndex];
+  const c = currentCard();
+  const seq = stageSequenceForCard(c);
+  if (stageIndex >= seq.length) stageIndex = 0;
 
-  document.getElementById("stageLabel").textContent = step;
-  document.getElementById("cardCounter").textContent = (cardIndex+1)+" / "+cards.length;
-  document.getElementById("topicChip").textContent = card.topic;
+  const stage = seq[stageIndex];
+  elStageLabel.textContent = stage;
+  elCounter.textContent = `${cardIndex+1} / ${cards.length}`;
+  elTopicChip.textContent = c.topic || "Optik";
 
-  if(step==="Fråga"){
-    prompt.textContent = card.q;
-    subhint.textContent = "Tänk själv först.";
-    boxTitle.textContent = "Fokus";
-    boxContent.textContent = "";
-  }
-  if(step==="Svar"){
-    boxTitle.textContent = "Definition";
-    boxContent.textContent = card.def;
-  }
-  if(step==="Miniproblem"){
-    boxTitle.textContent = "Miniproblem";
-    boxContent.textContent = card.mini;
-  }
-  if(step==="Utmaning"){
-    boxTitle.textContent = "Utmaning ⭐";
-    boxContent.textContent = card.challenge;
-  }
-  if(step==="Facit"){
-    boxTitle.textContent = "Facit";
-    boxContent.textContent =
-      card.facit +
-      (card.challengeFacit ? "\n\n— Utmaning —\n"+card.challengeFacit : "");
+  if (stage === "Fråga"){
+    elPrompt.textContent = c.q;
+    elSubhint.textContent = "Tänk först själv – byt steg när du är redo.";
+    elBoxTitle.innerHTML = `Fokus <span class="tag">${difficultyLabel(c)}</span>`;
+    elBoxContent.textContent = "Svara med ord, eller rita en snabb figur om det hjälper.";
+  } else if (stage === "Svar"){
+    elPrompt.textContent = c.q;
+    elSubhint.textContent = "Kort definition / förklaring:";
+    elBoxTitle.innerHTML = `Definition <span class="tag">${difficultyLabel(c)}</span>`;
+    elBoxContent.textContent = c.def;
+  } else if (stage === "Miniproblem"){
+    elPrompt.textContent = c.q;
+    elSubhint.textContent = "Miniproblem (gör/rita/förklara):";
+    elBoxTitle.innerHTML = `Miniproblem <span class="tag">${difficultyLabel(c)}</span>`;
+    elBoxContent.textContent = c.mini;
+  } else if (stage === "Utmaning"){
+    elPrompt.textContent = c.q;
+    elSubhint.textContent = "Utmaning ⭐ (frivillig, lite svårare):";
+    elBoxTitle.innerHTML = `Utmaning <span class="tag">${difficultyLabel(c)}</span>`;
+    elBoxContent.textContent = c.challenge || "";
+  } else if (stage === "Facit"){
+    elPrompt.textContent = c.q;
+    elSubhint.textContent = "Facit:";
+    elBoxTitle.innerHTML = `Facit <span class="tag">${difficultyLabel(c)}</span>`;
+    const showChallengeFacit = c.challenge && c.challengeFacit;
+    const main = c.facit || "";
+    const extra = showChallengeFacit ? `\n\n— Utmaning (facit) —\n${c.challengeFacit}` : "";
+    elBoxContent.textContent = main + extra;
   }
 }
 
-nextStep.onclick = ()=>{ stepIndex=(stepIndex+1)%steps(cards[cardIndex]).length; render(); };
-nextCard.onclick = ()=>{ cardIndex=(cardIndex+1)%cards.length; stepIndex=0; render(); };
-prevCard.onclick = ()=>{ cardIndex=(cardIndex-1+cards.length)%cards.length; stepIndex=0; render(); };
+function nextStep(){
+  const seq = stageSequenceForCard(currentCard());
+  stageIndex = (stageIndex + 1) % seq.length;
+  render();
+}
 
-document.addEventListener("keydown",e=>{
-  if(e.code==="Space"){ e.preventDefault(); nextStep.onclick(); }
-  if(e.code==="ArrowRight"){ nextCard.onclick(); }
-  if(e.code==="ArrowLeft"){ prevCard.onclick(); }
+function prevCard(){
+  cardIndex = (cardIndex - 1 + cards.length) % cards.length;
+  stageIndex = 0;
+  render();
+}
+
+function nextCard(){
+  cardIndex = (cardIndex + 1) % cards.length;
+  stageIndex = 0;
+  render();
+}
+
+prevCardBtn.addEventListener("click", prevCard);
+nextCardBtn.addEventListener("click", nextCard);
+nextStepBtn.addEventListener("click", nextStep);
+
+// Tangentbord (desktop)
+document.addEventListener("keydown", (e) => {
+  const tag = (document.activeElement && document.activeElement.tagName) ? document.activeElement.tagName.toLowerCase() : "";
+  if (tag === "input" || tag === "textarea") return;
+
+  if (e.code === "Space"){
+    e.preventDefault();
+    nextStep();
+  } else if (e.code === "ArrowLeft"){
+    e.preventDefault();
+    prevCard();
+  } else if (e.code === "ArrowRight"){
+    e.preventDefault();
+    nextCard();
+  }
 });
 
+// Swipe (mobil/padda)
+let touchStartX = 0, touchStartY = 0, touchStartT = 0;
+let activeTouches = 0;
+
+function onTouchStart(ev){
+  activeTouches = ev.touches.length;
+  touchStartX = ev.touches[0].clientX;
+  touchStartY = ev.touches[0].clientY;
+  touchStartT = Date.now();
+}
+function onTouchEnd(ev){
+  const dt = Date.now() - touchStartT;
+  if (dt > 900) return;
+  const touch = (ev.changedTouches && ev.changedTouches[0]) ? ev.changedTouches[0] : null;
+  if (!touch) return;
+
+  const dx = touch.clientX - touchStartX;
+  const dy = touch.clientY - touchStartY;
+
+  if (Math.abs(dy) > Math.abs(dx)) return;
+  if (Math.abs(dx) < 45) return;
+
+  if (activeTouches >= 2){
+    if (dx < 0) nextCard(); else prevCard();
+    return;
+  }
+
+  if (dx < 0) nextStep();
+  else {
+    const seq = stageSequenceForCard(currentCard());
+    stageIndex = (stageIndex - 1 + seq.length) % seq.length;
+    render();
+  }
+}
+
+document.addEventListener("touchstart", onTouchStart, {passive:true});
+document.addEventListener("touchend", onTouchEnd, {passive:true});
+
+// Init
+updateKbdHints();
 render();
 </script>
-
 </body>
 </html>
-
