@@ -7,134 +7,137 @@
   <link rel="stylesheet" href="/css/style.css">
   <!-- Valfritt: favicon -->
   <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
-</head>  
+</head>
+
 <body>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
-<nav id="side-menu"></nav>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<header class="biologi-header">
-  <h1>Genetik</h1>
-  <p>Jesper Tordsson</p>
-</header> 
-<main>
-  <p>Välj material:</p>
-  <ul>
-    <li><a href="/biologi/genetik/flashcards.html">Flashcards</a></li>
-    <li><a href="/biologi/genetik/korsningsscheman.html">Korsningsscheman – monohybrid klyvning</a></li>
-  </ul>
+  <header class="biologi-header">
+    <h1>Genetik</h1>
+    <p>Jesper Tordsson</p>
+  </header>
 
-  <div style="margin:14px 0;">
-    <button id="ai-genetik-btn" class="subject-btn">
-      🤖 AI-träning: Genetik & evolution
-    </button>
-    <p id="ai-genetik-status" style="margin-top:8px;"></p>
-  </div>
+  <main>
+    <p>Välj material:</p>
+    <ul>
+      <li><a href="/biologi/genetik/flashcards.html">Flashcards</a></li>
+      <li><a href="/biologi/genetik/korsningsscheman.html">Korsningsscheman – monohybrid klyvning</a></li>
+    </ul>
 
-
-
-  <!-- =================== Transkription =================== -->
-  <section class="video-section">
-    <h2 class="small-title">Transkription</h2>
-    <p class="small-text">
-      Transkription är processen där DNA kopieras till mRNA i cellkärnan. 
-      RNA-polymeras skapar en komplementär mRNA-sträng som sedan transporteras ut till cytoplasman för sammansättning av proteinet (translation).
-    </p>
-
-    <div class="video-container">
-      <iframe src="https://www.youtube.com/embed/jkkP8YeLDO0" 
-              title="Transkription" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-      </iframe>
+    <!-- =================== AI-träning =================== -->
+    <div style="margin:14px 0;">
+      <a href="#" id="ai-genetik-link" class="subject-btn">🤖 AI-träning: Genetik & evolution</a>
+      <p id="ai-genetik-status" style="margin-top:8px;"></p>
     </div>
-  </section>
 
-<!-- =================== Translation =================== -->
-<section class="video-section">
-  <h2 class="small-title">Translation</h2>
-  <p class="small-text">
-    När en mRNA-molekyl har tillverkats via transkription är nästa steg att denna ska läsas av en ribosom och sätta samman aminosyror till ett protein. 
-    I cytoplasman finns aminosyrorna kopplade till en kort tRNA-sträng som ser till att rätt aminosyra kopplar in som motsvarar koden i mRNA.
-  </p>
+    <!-- =================== Transkription =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Transkription</h2>
+      <p class="small-text">
+        Transkription är processen där DNA kopieras till mRNA i cellkärnan.
+        RNA-polymeras skapar en komplementär mRNA-sträng som sedan transporteras ut till cytoplasman
+        för sammansättning av proteinet (translation).
+      </p>
 
-  <!-- Responsiv video -->
-  <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/U8DJ0atQ0Y0" 
-            title="Translation" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-    </iframe>
-  </div>
-</section>
-<!-- Slut på translation -->
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/jkkP8YeLDO0"
+                title="Transkription"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+      </div>
+    </section>
 
-<!-- =================== DNA replikation =================== -->
-<section class="video-section">
-  <h2 class="small-title">DNA replikation</h2>
-  <p class="small-text">
-    Vid den vanliga celldelningen, mitosen, måste alla 46 kromosomerna kopieras så att den nya cellen får exakt samma genetiska information. 
-    Den här processen kallas DNA replikation, eftersom replika betyder kopia.
-    
-  </p>
+    <!-- =================== Translation =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Translation</h2>
+      <p class="small-text">
+        När en mRNA-molekyl har tillverkats via transkription är nästa steg att denna ska läsas av en ribosom
+        och sätta samman aminosyror till ett protein. I cytoplasman finns aminosyrorna kopplade till en kort
+        tRNA-sträng som ser till att rätt aminosyra kopplar in som motsvarar koden i mRNA.
+      </p>
 
-  <!-- Responsiv video -->
-  <div class="video-container">
-     <iframe src="https://www.youtube.com/embed/Mu2bJgEZtwE"
-            title="DNA replikation" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
-    </iframe>
-  </div>
-</section>
-<!-- Slut på DNA replikation -->
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/U8DJ0atQ0Y0"
+                title="Translation"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+      </div>
+    </section>
 
-<!-- =================== Korsningsscheman =================== -->
-<section class="video-section">
-  <h2 class="small-title">Korsningsscheman</h2>
-  <p class="small-text">
-    Här visas hur könscellerna spermier och ägg kombineras på olika sätt till befruktade celler
-    som slutligen blir fullvuxna individer.
-  </p>
+    <!-- =================== DNA replikation =================== -->
+    <section class="video-section">
+      <h2 class="small-title">DNA replikation</h2>
+      <p class="small-text">
+        Vid den vanliga celldelningen, mitosen, måste alla 46 kromosomerna kopieras så att den nya cellen
+        får exakt samma genetiska information. Den här processen kallas DNA replikation, eftersom replika betyder kopia.
+      </p>
 
-  <p class="small-text">
-    <a href="https://www.youtube.com/watch?v=aaTEL2xTpIo&t=16s" target="_blank">
-      Öppna videon om korsningsscheman på YouTube
-    </a>
-  </p>
-</section>
-<!-- Slut på korsningsscheman -->
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Mu2bJgEZtwE"
+                title="DNA replikation"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+      </div>
+    </section>
 
-  <p><a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a></p>
-</main>
+    <!-- =================== Korsningsscheman =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Korsningsscheman</h2>
+      <p class="small-text">
+        Här visas hur könscellerna spermier och ägg kombineras på olika sätt till befruktade celler
+        som slutligen blir fullvuxna individer.
+      </p>
 
-<script src="/js/menu.js"></script>
-<script>
-const PROMPT_URL = "/biologi/genetik/prompts/genetik-evolution.txt";
+      <p class="small-text">
+        <a href="https://www.youtube.com/watch?v=aaTEL2xTpIo&t=16s" target="_blank" rel="noopener noreferrer">
+          Öppna videon om korsningsscheman på YouTube
+        </a>
+      </p>
+    </section>
 
-document.getElementById("ai-genetik-link").addEventListener("click", async (e) => {
-  e.preventDefault();
-  const status = document.getElementById("ai-genetik-status");
-  status.textContent = "Laddar AI-träning…";
+    <p>
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+    </p>
+  </main>
 
-  try {
-    const r = await fetch(PROMPT_URL, { cache: "no-store" });
-    const prompt = await r.text();
+  <script src="/js/menu.js"></script>
 
-    await navigator.clipboard.writeText(prompt);
+  <script>
+    // OBS: Filen finns hos dig på:
+    // /biologi/genetik/prompts/genetik-evolution.txt
+    const PROMPT_URL = "/biologi/genetik/prompts/genetik-evolution.txt";
 
-    status.textContent = "✅ Klar! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
-    window.open("https://chat.openai.com/", "_blank");
-  } catch (err) {
-    status.textContent = "⚠️ Kunde inte kopiera. Prompt-filen öppnas istället.";
-    window.open(PROMPT_URL, "_blank");
-    window.open("https://chat.openai.com/", "_blank");
-  }
-});
-</script>
-  
+    document.getElementById("ai-genetik-link").addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const status = document.getElementById("ai-genetik-status");
+      status.textContent = "Laddar AI-träning…";
+
+      try {
+        const r = await fetch(PROMPT_URL, { cache: "no-store" });
+        if (!r.ok) throw new Error("Kunde inte hämta promptfilen (HTTP " + r.status + ")");
+
+        const prompt = await r.text();
+        await navigator.clipboard.writeText(prompt);
+
+        status.textContent = "✅ Prompt kopierad! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
+        window.open("https://chat.openai.com/", "_blank");
+      } catch (err) {
+        status.textContent = "⚠️ Kunde inte kopiera automatiskt. Jag öppnar prompt-filen istället.";
+        window.open(PROMPT_URL, "_blank");
+        window.open("https://chat.openai.com/", "_blank");
+      }
+    });
+  </script>
+
 </body>
 </html>
+
