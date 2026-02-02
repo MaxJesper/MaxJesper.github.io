@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // --- DOM ---
+  // --- Hämta DOM-element robust (inga "magiska" id-variabler) ---
+  const father0 = document.getElementById("father0");
+  const father1 = document.getElementById("father1");
+  const mother0 = document.getElementById("mother0");
+  const mother1 = document.getElementById("mother1");
+
+  const cell0 = document.getElementById("cell0");
+  const cell1 = document.getElementById("cell1");
+  const cell2 = document.getElementById("cell2");
+  const cell3 = document.getElementById("cell3");
+
   const father = [father0, father1];
   const mother = [mother0, mother1];
   const cells  = [cell0, cell1, cell2, cell3];
@@ -16,10 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const correctPunnett = document.getElementById("correctPunnett");
   const correctSummary = document.getElementById("correctSummary");
 
+  const checkBtn = document.getElementById("checkAnswers");
+  const nextBtn  = document.getElementById("nextTask");
+  const resetBtn = document.getElementById("resetBtn");
+
   // --- Uppgiftsbank ---
-  // Facit anges som 2 gameter för mamma + 2 gameter för pappa.
-  // Eleverna fyller i gameter + 4 rutor.
-  // X-länkat: använd XH, Xh, Y
   const tasks = [
     {
       id: 1,
@@ -122,32 +133,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // --- Helpers ---
   function clearInputs() {
     [...father, ...mother, ...cells].forEach(i => i.value = "");
   }
 
-  // Normalisera genotyp för jämförelse:
-  // - tar bort mellanslag
-  // - tokeniserar: XH, Xh, Y eller enstaka alleler (A,a,R,W,...)
-  // - sorterar så "sS" matchar "Ss" och "XHY" matchar "YXH" etc.
   function normalizeGenotype(str) {
     const s = (str || "").replace(/\s+/g, "");
     const tokens = s.match(/X[A-Za-z]|Y|[A-Za-z]/g) || [];
 
     const rank = (t) => {
-      if (t.startsWith("X")) return 0;     // X först
-      if (t === "Y") return 1;             // sen Y
+      if (t.startsWith("X")) return 0;
+      if (t === "Y") return 1;
       const isUpper = (t === t.toUpperCase());
-      return isUpper ? 2 : 3;              // autosomala: versal före gemen
+      return isUpper ? 2 : 3;
     };
 
     tokens.sort((a, b) => {
       const ra = rank(a), rb = rank(b);
       if (ra !== rb) return ra - rb;
-      if (a < b) return -1;
-      if (a > b) return 1;
-      return 0;
+      return a.localeCompare(b);
     });
 
     return tokens.join("");
@@ -167,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const m0 = normalizeGenotype(studentMother[0]);
     const m1 = normalizeGenotype(studentMother[1]);
 
-    // cell-index: 0=(m0,f0) 1=(m0,f1) 2=(m1,f0) 3=(m1,f1)
     return [
       normalizeGenotype(m0 + f0),
       normalizeGenotype(m0 + f1),
@@ -187,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
       normalizeGenotype(m[1] + f[1]),
     ];
 
-    const template = `
+    correctPunnett.innerHTML = `
       <div></div>
       <div class="headerCell">♂ ${f[0]}</div>
       <div class="headerCell">♂ ${f[1]}</div>
@@ -200,11 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <input class="offspringCell" value="${correct[2]}" readonly>
       <input class="offspringCell" value="${correct[3]}" readonly>
     `;
-    correctPunnett.innerHTML = template;
     correctSummary.textContent = task.summary || "";
   }
 
-  // --- Task handling ---
   let currentIndex = 0;
 
   function loadTask(index) {
@@ -212,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const task = tasks[currentIndex];
 
     taskTitle.textContent = task.title;
-    taskText.textContent  = task.text;
+    taskText.textContent = task.text;
     taskExtra.textContent = task.extra || "";
     formatHint.textContent = "Format: " + (task.hint || "Fyll i gameter och rutor.");
     taskCounter.textContent = `(${currentIndex + 1}/${tasks.length})`;
@@ -225,8 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInputs();
   }
 
-  // --- Rättning ---
-  document.getElementById("checkAnswers").addEventListener("click", () => {
+  checkBtn.addEventListener("click", () => {
     const task = tasks[currentIndex];
 
     resultDiv.textContent = "";
@@ -240,14 +240,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 1) gameter måste stämma (ordning oviktig)
     const studentFather = father.map(x => x.value.trim());
     const studentMother = mother.map(x => x.value.trim());
 
     const okFatherGametes = sameMultiset(studentFather, task.fatherGametes);
     const okMotherGametes = sameMultiset(studentMother, task.motherGametes);
 
-    // 2) rutor måste stämma utifrån elevens ordning
     const expected = expectedGridForOrder(studentFather, studentMother);
 
     let allCellsRight = true;
@@ -275,10 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- Nästa / Töm ---
-  document.getElementById("nextTask").addEventListener("click", () => loadTask(currentIndex + 1));
+  nextBtn.addEventListener("click", () => loadTask(currentIndex + 1));
 
-  document.getElementById("resetBtn").addEventListener("click", () => {
+  resetBtn.addEventListener("click", () => {
     resultDiv.textContent = "";
     correctColumn.style.display = "none";
     correctPunnett.innerHTML = "";
@@ -286,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInputs();
   });
 
-  // Init
+  // Starta
   loadTask(0);
-
 });
