@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/style.css">
   <!-- Valfritt: favicon -->
   <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
-</head>
+</head>  
 <body>
 
 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -109,5 +109,29 @@
 </main>
 
 <script src="/js/menu.js"></script>
+<script>
+const PROMPT_URL = "/biologi/genetik/prompts/genetik-evolution.txt";
+
+document.getElementById("ai-genetik-btn").addEventListener("click", async () => {
+  const status = document.getElementById("ai-genetik-status");
+  status.textContent = "Laddar AI-träning…";
+
+  try {
+    const r = await fetch(PROMPT_URL, { cache: "no-store" });
+    const prompt = await r.text();
+
+    await navigator.clipboard.writeText(prompt);
+
+    status.textContent = "✅ Klar! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
+    window.open("https://chat.openai.com/", "_blank");
+  } catch (e) {
+    status.textContent = "⚠️ Något gick fel. Prompt-filen öppnas istället.";
+    window.open(PROMPT_URL, "_blank");
+    window.open("https://chat.openai.com/", "_blank");
+  }
+});
+</script>
+
+  
 </body>
 </html>
