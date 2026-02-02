@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    /* Lokala styles bara för punnett + layout (så du slipper röra style.css nu) */
+    /* Lokala styles bara för punnett + layout */
     body { background-color: #dfe8f5; }
 
     .task-box {
@@ -84,7 +84,7 @@
       border: 0;
     }
     #checkAnswers { background: #183a6b; color: #fff; }
-    #nextTask, #resetBtn { background: #4d6aa1; color: #fff; }
+    #nextTask, #resetBtn, #showPhenotypes { background: #4d6aa1; color: #fff; }
 
     #result { margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 24px; }
 
@@ -93,6 +93,7 @@
       margin: 0 auto;
       font-size: 14px;
       opacity: 0.9;
+      text-align: left;
     }
 
     .task-counter {
@@ -100,6 +101,19 @@
       opacity: 0.75;
       font-size: 14px;
       margin-top: -6px;
+    }
+
+    /* Fenotyp-box under elevens schema */
+    #phenotypeBox {
+      display: none;
+      max-width: 520px;
+      margin: 12px auto 0;
+      text-align: left;
+    }
+    #phenotypeBox .inner {
+      background: rgba(255,255,255,0.75);
+      border-radius: 14px;
+      padding: 12px 14px;
     }
   </style>
 </head>
@@ -152,9 +166,18 @@
           <button id="checkAnswers">Rätta</button>
           <button id="nextTask">Nästa uppgift</button>
           <button id="resetBtn">Töm</button>
+          <button id="showPhenotypes" disabled>Fenotyper</button>
         </div>
 
         <div id="result"></div>
+
+        <!-- Fenotyp-facit (toggle) -->
+        <div id="phenotypeBox">
+          <div class="inner">
+            <b>Facit – fenotyper:</b>
+            <div id="phenotypeText" style="margin-top:6px;"></div>
+          </div>
+        </div>
       </div>
 
       <!-- KORREKT KVADRAT -->
