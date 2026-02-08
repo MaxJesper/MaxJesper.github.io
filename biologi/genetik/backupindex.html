@@ -1,1 +1,135 @@
 
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biologi - Genetik</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+</head>
+
+<body>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <header class="biologi-header">
+    <h1>Genetik</h1>
+    <p>Jesper Tordsson</p>
+  </header>
+
+  <main>
+    <p>Välj material:</p>
+    <ul>
+      <li><a href="/biologi/genetik/flashcards.html">Flashcards</a></li>
+      <li><a href="/biologi/genetik/korsningsscheman.html">Korsningsscheman – monohybrid klyvning</a></li>
+    </ul>
+
+    <!-- =================== AI-träning (ALLTID SYNLIG) =================== -->
+    <p style="margin:16px 0;">
+      <a href="#" id="ai-genetik-link"
+         style="display:inline-block; padding:12px 16px; border-radius:14px; border:2px solid #000;
+                background:#fffd9e; color:#000; font-weight:800; text-decoration:none;
+                position:relative; z-index:9999;">
+        🤖 AI-träning: Genetik & evolution
+      </a>
+    </p>
+    <p id="ai-genetik-status" style="margin-top:6px;"></p>
+
+    <!-- =================== Transkription =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Transkription</h2>
+      <p class="small-text">
+        Transkription är processen där DNA kopieras till mRNA i cellkärnan.
+        RNA-polymeras skapar en komplementär mRNA-sträng som sedan transporteras ut till cytoplasman
+        för sammansättning av proteinet (translation).
+      </p>
+
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/jkkP8YeLDO0"
+                title="Transkription"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <!-- =================== Translation =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Translation</h2>
+      <p class="small-text">
+        När en mRNA-molekyl har tillverkats via transkription är nästa steg att denna ska läsas av en ribosom
+        och sätta samman aminosyror till ett protein. I cytoplasman finns aminosyrorna kopplade till en kort
+        tRNA-sträng som ser till att rätt aminosyra kopplar in som motsvarar koden i mRNA.
+      </p>
+
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/U8DJ0atQ0Y0"
+                title="Translation"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <!-- =================== Korsningsscheman =================== -->
+    <section class="video-section">
+      <h2 class="small-title">Korsningsscheman</h2>
+      <p class="small-text">
+        Här visas hur könscellerna spermier och ägg kombineras på olika sätt till befruktade celler
+        som slutligen blir fullvuxna individer.
+      </p>
+
+      <p class="small-text">
+        <a href="https://www.youtube.com/watch?v=aaTEL2xTpIo&t=16s" target="_blank" rel="noopener noreferrer">
+          Öppna videon om korsningsscheman på YouTube
+        </a>
+      </p>
+    </section>
+
+    <p>
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+
+  <script>
+    const PROMPT_URL = "/biologi/genetik/prompts/genetik-evolution.txt";
+
+    async function openAITutor(statusEl) {
+      statusEl.textContent = "Laddar AI-träning…";
+
+      try {
+        const r = await fetch(PROMPT_URL, { cache: "no-store" });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+
+        const prompt = await r.text();
+
+        // Försök kopiera
+        await navigator.clipboard.writeText(prompt);
+
+        statusEl.textContent = "✅ Prompt kopierad! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
+        window.open("https://chat.openai.com/", "_blank");
+      } catch (err) {
+        statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Jag öppnar prompt-filen istället.";
+        window.open(PROMPT_URL, "_blank");
+        window.open("https://chat.openai.com/", "_blank");
+      }
+    }
+
+    // Övre knapp
+    const topLink = document.getElementById("ai-genetik-link");
+    const statusEl = document.getElementById("ai-genetik-status");
+    topLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      openAITutor(statusEl);
+    });
+  </script>
+
+</body>
+</html>
+
