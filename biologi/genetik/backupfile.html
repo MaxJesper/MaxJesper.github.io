@@ -1,212 +1,197 @@
-korsningsshema.html:
 
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <title>Genetiska korsningsscheman – Monohybrid</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biologi - Korsningsscheman</title>
+
+  <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #dfe8f5;
-      padding: 20px;
-    }
+    body { background-color: #dfe8f5; }
 
-    h1 {
-      text-align: center;
+    .task-box {
+      max-width: 900px;
+      margin: 12px auto;
+      background: rgba(255,255,255,0.75);
+      border-radius: 14px;
+      padding: 12px 14px;
     }
+    .task-extra { opacity: 0.85; font-size: 14px; margin-top: 6px; }
+    .format-hint { max-width: 900px; margin: 8px auto 0; font-size: 14px; opacity: 0.9; }
 
     .layout {
       display: flex;
       justify-content: center;
       gap: 50px;
       margin-top: 20px;
+      flex-wrap: wrap;
     }
+    .column { text-align: center; }
 
-    .column {
-      text-align: center;
-    }
-
-    .punnettWrapper {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
+    .punnettWrapper { display: flex; justify-content: center; margin: 20px 0; }
 
     .punnett {
       display: grid;
       grid-template-columns: 90px 90px 90px;
       grid-template-rows: 60px 60px 60px;
-      gap: 5px;
+      gap: 6px;
     }
-
     .headerCell, .sideCell {
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
+      background: rgba(255,255,255,0.55);
+      border-radius: 10px;
+      padding: 4px;
     }
-
     .headerCell input,
     .sideCell input {
-      width: 30px;
-      margin-left: 5px;
+      width: 56px;
+      margin-left: 6px;
       text-align: center;
       font-weight: bold;
+      font-size: 16px;
+      padding: 6px 6px;
+      border-radius: 10px;
+      border: 1px solid #c7d6ee;
     }
-
     .offspringCell {
       width: 90px;
       height: 60px;
       text-align: center;
       font-size: 18px;
       font-weight: bold;
+      border-radius: 10px;
+      border: 1px solid #c7d6ee;
+      background: #fff;
     }
 
-    .section {
-      margin-top: 20px;
+    .controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
     }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
+    .controls button {
+      padding: 10px 16px;
       font-size: 16px;
       cursor: pointer;
+      border-radius: 12px;
+      border: 0;
+    }
+    #checkAnswers { background: #183a6b; color: #fff; }
+    #nextTask, #resetBtn, #showPhenotypes { background: #4d6aa1; color: #fff; }
+
+    #result { margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 24px; }
+
+    .correct-summary {
+      max-width: 520px;
+      margin: 0 auto;
+      font-size: 14px;
+      opacity: 0.9;
+      text-align: left;
     }
 
-    #result {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 18px;
+    .task-counter {
+      text-align: center;
+      opacity: 0.75;
+      font-size: 14px;
+      margin-top: -6px;
+    }
+
+    #phenotypeBox {
+      display: none;
+      max-width: 520px;
+      margin: 12px auto 0;
+      text-align: left;
+    }
+    #phenotypeBox .inner {
+      background: rgba(255,255,255,0.75);
+      border-radius: 14px;
+      padding: 12px 14px;
     }
   </style>
 </head>
 
 <body>
 
-<h1>Uppgift 1 – Grå starr</h1>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<p style="max-width:800px;margin:auto;">
-Grå starr är en ärftlig ögonsjukdom. Den är dominant (S).
-En heterozygot kvinna (Ss) med grå starr får barn med en frisk man (ss).
-Vilka genotyper och fenotyper kan barnen få? Visa med korsningsschema.
-</p>
+  <header class="biologi-header">
+    <h1>Korsningsscheman</h1>
+    <p>Jesper Tordsson</p>
+  </header>
 
-<div class="layout">
+  <main>
+    <h2 id="taskTitle" style="text-align:center;">Uppgift</h2>
+    <div class="task-counter" id="taskCounter"></div>
 
-  <!-- ELEVENS KVADRAT -->
-  <div class="column">
-    <h3>Ditt korsningsschema</h3>
+    <div class="task-box">
+      <div id="taskText"></div>
+      <div class="task-extra" id="taskExtra"></div>
+    </div>
 
-    <div class="punnettWrapper">
-      <div class="punnett">
+    <div class="format-hint" id="formatHint"></div>
 
-        <div></div>
-        <div class="headerCell">♂ <input id="father0" maxlength="1"></div>
-        <div class="headerCell">♂ <input id="father1" maxlength="1"></div>
+    <div class="layout">
 
-        <div class="sideCell">♀ <input id="mother0" maxlength="1"></div>
-        <input id="cell0" class="offspringCell">
-        <input id="cell1" class="offspringCell">
+      <div class="column">
+        <h3>Ditt korsningsschema</h3>
 
-        <div class="sideCell">♀ <input id="mother1" maxlength="1"></div>
-        <input id="cell2" class="offspringCell">
-        <input id="cell3" class="offspringCell">
+        <div class="punnettWrapper">
+          <div class="punnett">
+            <div></div>
+            <div class="headerCell">♂ <input id="father0" maxlength="4" autocomplete="off"></div>
+            <div class="headerCell">♂ <input id="father1" maxlength="4" autocomplete="off"></div>
 
+            <div class="sideCell">♀ <input id="mother0" maxlength="4" autocomplete="off"></div>
+            <input id="cell0" class="offspringCell" autocomplete="off">
+            <input id="cell1" class="offspringCell" autocomplete="off">
+
+            <div class="sideCell">♀ <input id="mother1" maxlength="4" autocomplete="off"></div>
+            <input id="cell2" class="offspringCell" autocomplete="off">
+            <input id="cell3" class="offspringCell" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="checkAnswers">Rätta</button>
+          <button id="nextTask">Nästa uppgift</button>
+          <button id="resetBtn">Töm</button>
+          <button id="showPhenotypes">Fenotyper</button>
+        </div>
+
+        <div id="result"></div>
+
+        <div id="phenotypeBox">
+          <div class="inner">
+            <b>Facit – fenotyper:</b>
+            <div id="phenotypeText" style="margin-top:6px;"></div>
+          </div>
+        </div>
       </div>
+
+      <div class="column" id="correctColumn" style="display:none;">
+        <h3>Korrekt korsningsschema</h3>
+        <div class="punnettWrapper">
+          <div class="punnett" id="correctPunnett"></div>
+        </div>
+        <div class="correct-summary" id="correctSummary"></div>
+      </div>
+
     </div>
 
-    <button id="checkAnswers">Rätta</button>
-    <div id="result"></div>
-  </div>
+    <p style="text-align:center; margin-top: 18px;">
+      <a href="/biologi/genetik/index.html" class="subject-btn">← Tillbaka till Genetik</a>
+    </p>
+  </main>
 
-  <!-- KORREKT KVADRAT -->
-  <div class="column" id="correctColumn" style="display:none;">
-    <h3>Korrekt korsningsschema</h3>
-
-    <div class="punnettWrapper">
-      <div class="punnett" id="correctPunnett"></div>
-    </div>
-  </div>
-
-</div>
-
-<script src="korsningsscheman.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="korsningsscheman.js"></script>
 </body>
 </html>
-
-korsningsschema.js:
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const father = [father0, father1];
-  const mother = [mother0, mother1];
-  const cells = [cell0, cell1, cell2, cell3];
-
-  const resultDiv = document.getElementById("result");
-  const correctColumn = document.getElementById("correctColumn");
-  const correctPunnett = document.getElementById("correctPunnett");
-
-  document.getElementById("checkAnswers").addEventListener("click", () => {
-
-    resultDiv.textContent = "";
-    correctColumn.style.display = "none";
-    correctPunnett.innerHTML = "";
-
-    // Kontrollera att allt är ifyllt
-    const allFilled =
-      [...father, ...mother, ...cells].every(i => i.value.trim() !== "");
-
-    if (!allFilled) {
-      resultDiv.textContent = "Fyll i alla rutor först.";
-      return;
-    }
-
-    // Korrekt Punnett-resultat
-    const correct = [
-      father[0].value + mother[0].value,
-      father[1].value + mother[0].value,
-      father[0].value + mother[1].value,
-      father[1].value + mother[1].value
-    ];
-
-    // Jämför (ordning oviktig, Ss = sS)
-    let allRight = true;
-
-    for (let i = 0; i < 4; i++) {
-      const student = cells[i].value.split("").sort().join("");
-      const corr = correct[i].split("").sort().join("");
-      if (student !== corr) {
-        allRight = false;
-      }
-    }
-
-    if (allRight) {
-      resultDiv.textContent = "✅ Rätt!";
-      return;
-    }
-
-    // Visa korrekt Punnett-kvadrat
-    correctColumn.style.display = "block";
-
-    const template = `
-      <div></div>
-      <div class="headerCell">♂ ${father[0].value}</div>
-      <div class="headerCell">♂ ${father[1].value}</div>
-
-      <div class="sideCell">♀ ${mother[0].value}</div>
-      <input class="offspringCell" value="${correct[0]}" readonly>
-      <input class="offspringCell" value="${correct[1]}" readonly>
-
-      <div class="sideCell">♀ ${mother[1].value}</div>
-      <input class="offspringCell" value="${correct[2]}" readonly>
-      <input class="offspringCell" value="${correct[3]}" readonly>
-    `;
-
-    correctPunnett.innerHTML = template;
-    resultDiv.textContent = "❌ Inte helt rätt – se korrekt korsningsschema till höger.";
-
-  });
-
-});
