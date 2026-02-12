@@ -2,6 +2,8 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
   const mount = document.getElementById(mountId);
   if (!mount) return;
 
+  const storageKeyBase = `studyAnswers::${jsonPath}`;
+
   mount.innerHTML = `<p>Laddar instuderingsfrågor…</p>`;
 
   fetch(jsonPath, { cache: "no-store" })
@@ -37,18 +39,29 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
 
           const q = it.q || "";
           const a = it.a || "";
-          const id = `q-${gi}-${ii}`;
+          const qid = `q-${gi}-${ii}`; // stabil id i detta JSON
+          const answerStorageKey = `${storageKeyBase}::${qid}`;
 
           if (mode === "interactive") {
             return `
               <div class="study-card">
-                <button class="study-q" type="button" id="${id}" aria-expanded="false" aria-controls="${id}-a">
+                <button class="study-q" type="button" id="${qid}"
+                        aria-expanded="false" aria-controls="${qid}-a">
                   <span class="study-q-label">Fråga</span>
                   <span class="study-q-text">${escapeHtml(q)}</span>
                 </button>
-                <div class="study-a" id="${id}-a" hidden>
+
+                <div class="study-youranswer">
+                  <div class="study-youranswer-label">Mitt svar</div>
+                  <textarea class="study-youranswer-input"
+                            rows="${clampInt(it.lines ?? defaultLinesForQuestion(q), 2, 8)}"
+                            data-storage-key="${escapeHtml(answerStorageKey)}"
+                            placeholder="Skriv ditt svar här..."></textarea>
+                </div>
+
+                <div class="study-a" id="${qid}-a" hidden>
                   <div class="study-a-inner">
-                    <div class="study-a-label">Svar</div>
+                    <div class="study-a-label">Svar / Facit</div>
                     <div class="study-a-text">${escapeHtml(a)}</div>
                   </div>
                 </div>
@@ -65,18 +78,27 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
             `;
           }
 
-          // print-student: olika antal rader
-          const lines = clampInt(it.lines ?? defaultLinesForQuestion(q), 2, 8);
-          const linesHtml = Array.from({ length: lines }).map(() => `<div class="line"></div>`).join("");
-
-          return `
-            <div class="print-item">
-              <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
-              <div class="print-lines">
-                ${linesHtml}
+          // print-student: om elevens svar finns -> skriv ut det, annars linjer
+          const saved = getStoredAnswer(answerStorageKey);
+          if (saved && saved.trim().length > 0) {
+            return `
+              <div class="print-item">
+                <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
+                <div class="print-student-answer">
+                  ${escapeHtml(saved).replaceAll("\n", "<br>")}
+                </div>
               </div>
-            </div>
-          `;
+            `;
+          } else {
+            const lines = clampInt(it.lines ?? defaultLinesForQuestion(q), 2, 8);
+            const linesHtml = Array.from({ length: lines }).map(() => `<div class="line"></div>`).join("");
+            return `
+              <div class="print-item">
+                <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
+                <div class="print-lines">${linesHtml}</div>
+              </div>
+            `;
+          }
         }).join("");
 
         return `
@@ -87,13 +109,18 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
         `;
       }).join("");
 
-      if (mode === "interactive") wireInteractions(mount);
+      if (mode === "interactive") {
+        wireInteractions(mount);
+        hydrateAndAutosaveTextareas(mount);
+      }
     })
     .catch(err => {
       console.error(err);
       mount.innerHTML = `<p>Det gick inte att ladda instuderingsfrågorna. Kontrollera: <code>${escapeHtml(jsonPath)}</code></p>`;
     });
 }
+
+/* ===== Tangentbord + toggle ===== */
 
 function wireInteractions(root) {
   const buttons = Array.from(root.querySelectorAll(".study-q"));
@@ -146,6 +173,38 @@ function toggleAnswer(btn) {
   const answer = answerId ? document.getElementById(answerId) : null;
   if (answer) answer.hidden = !newState;
 }
+
+/* ===== Autosave elevsvar ===== */
+
+function hydrateAndAutosaveTextareas(root) {
+  const areas = Array.from(root.querySelectorAll(".study-youranswer-input"));
+  areas.forEach(area => {
+    const key = area.getAttribute("data-storage-key");
+    if (!key) return;
+
+    const saved = getStoredAnswer(key);
+    if (saved != null) area.value = saved;
+
+    area.addEventListener("input", () => {
+      try {
+        localStorage.setItem(key, area.value);
+      } catch (e) {
+        // Om localStorage är fullt eller blockerat
+        console.warn("Kunde inte spara elevsvar i localStorage.", e);
+      }
+    });
+  });
+}
+
+function getStoredAnswer(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+/* ===== Helpers ===== */
 
 function defaultLinesForQuestion(q) {
   const s = String(q).toLowerCase();
