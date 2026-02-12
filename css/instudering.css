@@ -236,3 +236,59 @@
     margin-bottom: 4px;
   }
 }
+/* ===== Print actions (knapp som checklistan) ===== */
+.print-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 12px 0;
+}
+
+.print-btn {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.print-btn:hover {
+  background: #eee;
+}
+
+/* ===== Namn/Klass-raden snygg ===== */
+.print-note {
+  margin: 10px 0 14px 0;
+  font-size: 16px;
+}
+
+.print-field {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-right: 18px;
+}
+
+.print-label {
+  font-weight: 700;
+}
+
+.print-line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  height: 14px;
+}
+
+.print-line-name { width: 220px; } /* kortare namnlinje */
+.print-line-class { width: 90px; }
+
+/* ===== Utskrift: göm knappar/meny ===== */
+@media print {
+  .print-actions,
+  .hamburger,
+  #side-menu,
+  a.subject-btn {
+    display: none !important;
+  }
+}
