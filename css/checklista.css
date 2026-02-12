@@ -1,3 +1,5 @@
+/* =================== CHECKLISTA =================== */
+
 .checklist-intro {
   margin-bottom: 12px;
 }
@@ -22,6 +24,8 @@
   background: #eee;
 }
 
+/* ===== Sektioner ===== */
+
 .checklist-section {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -33,7 +37,6 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 12px;
   align-items: center;
   padding: 12px 14px;
   background: #f8f8f8;
@@ -56,16 +59,28 @@
   padding: 10px 14px 12px 14px;
 }
 
+/* ===== Checkbox-rader (FIXAD JUSTERING) ===== */
+
 .checklist-item {
   display: flex;
+  align-items: flex-start;   /* Viktigt för snygg radbrytning */
   gap: 10px;
-  align-items: flex-start;
   padding: 6px 0;
+  line-height: 1.5;
 }
 
 .checklist-item input[type="checkbox"] {
-  transform: translateY(2px);
+  margin-top: 5px;   /* Justerad vertikal placering */
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
 }
+
+.checklist-item span {
+  flex: 1;
+}
+
+/* ===== Reflektion ===== */
 
 .checklist-reflection {
   margin-top: 24px;
@@ -82,7 +97,8 @@
   margin-bottom: 6px;
 }
 
-/* Utskrift: göm menyer/knappar */
+/* ===== Utskrift ===== */
+
 @media print {
   .hamburger,
   #side-menu,
