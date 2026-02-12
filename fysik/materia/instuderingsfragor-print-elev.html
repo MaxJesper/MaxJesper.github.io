@@ -18,10 +18,20 @@
   <nav id="side-menu"></nav>
 
   <main>
+    <div class="print-actions">
+      <button class="print-btn" type="button" onclick="window.print()">Skriv ut</button>
+      <a class="subject-btn" href="/fysik/materia/instuderingsfragor.html">← Tillbaka (digital)</a>
+    </div>
+
     <div class="print-note">
-      <strong>Namn:</strong> ____________________________ &nbsp;&nbsp;
-      <strong>Klass:</strong> ____________ &nbsp;&nbsp;
-      <strong>Datum:</strong> ____________
+      <div class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </div>
+      <div class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </div>
     </div>
 
     <div id="study-container" aria-live="polite"></div>
