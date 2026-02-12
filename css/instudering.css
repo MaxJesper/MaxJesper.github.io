@@ -1,4 +1,8 @@
-/* =================== INSTUDERING =================== */
+/* =====================================================
+   INSTUDERINGSFRÅGOR – MATERIA
+   ===================================================== */
+
+/* =================== INFOBOX =================== */
 
 .study-info {
   border: 1px solid #ddd;
@@ -9,14 +13,26 @@
   font-size: 16px;
 }
 
+/* =================== KNAPPRAD =================== */
+
 .study-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
-/* Grupper */
+/* Gröna utskriftsknappar (stilrent, utan !important) */
+.study-actions a.subject-btn.print-green {
+  background-color: #28a745;
+}
+
+.study-actions a.subject-btn.print-green:hover {
+  background-color: #1e7e34;
+}
+
+/* =================== GRUPPER =================== */
+
 .study-group {
   margin: 18px 0 22px 0;
 }
@@ -26,7 +42,8 @@
   margin-bottom: 10px;
 }
 
-/* Kort (digital) */
+/* =================== DIGITALA FRÅGEKORT =================== */
+
 .study-card {
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -67,7 +84,13 @@
   padding-left: 10px;
 }
 
-/* ===== Elevens digitala svar ===== */
+.study-a-label {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* =================== ELEVENS DIGITALA SVAR =================== */
+
 .study-youranswer {
   padding: 10px 14px 12px 14px;
   background: white;
@@ -90,22 +113,8 @@
   resize: vertical;
 }
 
-/* ===== Utskrift: elevens sparade svar ===== */
-.print-student-answer {
-  border: 1px solid #bbb;
-  padding: 8px 10px;
-  min-height: 18px;
-  margin-top: 6px;
-  white-space: normal;
-}
+/* =================== FIGURER (SVG) =================== */
 
-
-.study-a-label {
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
-/* Figurer (licensfria SVG) */
 .study-figure {
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -132,132 +141,8 @@
   color: #333;
 }
 
-/* Print */
-.print-note {
-  margin: 10px 0 14px 0;
-  font-size: 16px;
-}
+/* =================== PRINT – ALLMÄNT =================== */
 
-.print-item {
-  margin: 10px 0 14px 0;
-}
-
-.print-q,
-.print-a {
-  margin-bottom: 6px;
-}
-
-.tag {
-  font-weight: 700;
-}
-
-.print-lines .line {
-  border-bottom: 1px solid #bbb;
-  height: 22px;
-  margin-bottom: 6px;
-}
-
-/* =================== UTSKRIFT (A4, 11pt, kompakt) =================== */
-@media print {
-  @page {
-    size: A4;
-    margin: 18mm;
-  }
-
-  .hamburger,
-  #side-menu,
-  .study-info,
-  .study-actions,
-  a.subject-btn {
-    display: none !important;
-  }
-
-  body {
-    font-size: 11pt;
-    line-height: 1.35;
-  }
-
-  /* Liten header på papper (tar bort stort “luftgap”) */
-  header {
-    min-height: auto !important;
-    padding: 8mm 0 4mm 0 !important;
-    background: none !important;
-  }
-
-  header::before {
-    display: none !important;
-  }
-
-  header h1 {
-    margin-bottom: 2mm !important;
-  }
-
-  header p {
-    margin: 0 !important;
-  }
-
-  /* Spara plats */
-  .study-group {
-    margin: 10px 0 12px 0;
-  }
-
-  .study-group-title {
-    margin-bottom: 6px;
-    font-size: 13pt;
-  }
-
-  /* Visa figurer bra i print */
-  .study-figure {
-    border: 1px solid #ddd;
-    border-radius: 0;
-    padding: 6px 8px;
-    margin: 8px 0 10px 0;
-  }
-
-  /* Digitala “kort” ska inte synas i print-läge */
-  .study-card {
-    border: none;
-    margin: 0;
-  }
-
-  .study-q,
-  .study-a {
-    display: none !important;
-  }
-
-  /* Elev/lärar-layout */
-  .print-item {
-    page-break-inside: avoid;
-    margin: 8px 0 10px 0;
-  }
-
-  .print-lines .line {
-    height: 20px;
-    margin-bottom: 4px;
-  }
-}
-/* ===== Print actions (knapp som checklistan) ===== */
-.print-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 10px 0 12px 0;
-}
-
-.print-btn {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  cursor: pointer;
-  border-radius: 6px;
-  font-size: 16px;
-}
-
-.print-btn:hover {
-  background: #eee;
-}
-
-/* ===== Namn/Klass-raden snygg ===== */
 .print-note {
   margin: 10px 0 14px 0;
   font-size: 16px;
@@ -280,31 +165,92 @@
   height: 14px;
 }
 
-.print-line-name { width: 220px; } /* kortare namnlinje */
-.print-line-class { width: 90px; }
+.print-line-name {
+  width: 220px;   /* Kortare namnlinje */
+}
 
-/* ===== Utskrift: göm knappar/meny ===== */
+.print-line-class {
+  width: 90px;
+}
+
+/* Elevens sparade svar vid utskrift */
+.print-student-answer {
+  border: 1px solid #bbb;
+  padding: 8px 10px;
+  min-height: 18px;
+  margin-top: 6px;
+  white-space: normal;
+}
+
+/* Skrivlinjer (om inget digitalt svar finns) */
+.print-lines .line {
+  border-bottom: 1px solid #bbb;
+  height: 20px;
+  margin-bottom: 4px;
+}
+
+/* =================== UTSKRIFT – A4 OPTIMERAD =================== */
+
 @media print {
-  .print-actions,
+
+  @page {
+    size: A4;
+    margin: 18mm;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.35;
+  }
+
+  /* Dölj allt onödigt */
   .hamburger,
   #side-menu,
+  .study-info,
+  .study-actions,
   a.subject-btn {
     display: none !important;
   }
-}
-/* ===== Knapprad: tillbaka + utskrift ===== */
-.study-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 12px;
-}
 
-/* Gröna utskriftsknappar (utan att ändra din blå subject-btn globalt) */
-a.subject-btn.print-green {
-  background-color: #28a745;
-}
+  /* Mindre header på papper */
+  header {
+    min-height: auto !important;
+    padding: 8mm 0 4mm 0 !important;
+    background: none !important;
+  }
 
-a.subject-btn.print-green:hover {
-  background-color: #1e7e34;
+  header::before {
+    display: none !important;
+  }
+
+  header h1 {
+    margin-bottom: 2mm !important;
+  }
+
+  header p {
+    margin: 0 !important;
+  }
+
+  /* Kompakt layout */
+  .study-group {
+    margin: 10px 0 12px 0;
+  }
+
+  .study-group-title {
+    margin-bottom: 6px;
+    font-size: 13pt;
+  }
+
+  .print-item {
+    page-break-inside: avoid;
+    margin: 8px 0 10px 0;
+  }
+
+  /* Dölj digitala kort */
+  .study-card,
+  .study-q,
+  .study-a,
+  .study-youranswer {
+    display: none !important;
+  }
 }
