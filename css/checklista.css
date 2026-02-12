@@ -1,23 +1,23 @@
 /* =================== CHECKLISTA =================== */
 
 .checklist-intro {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .checklist-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 12px 0 18px 0;
+  gap: 8px;
+  margin: 10px 0 14px 0;
 }
 
 .checklist-btn {
-  padding: 8px 12px;
+  padding: 7px 10px;
   border: 1px solid #ccc;
   background: #f8f8f8;
   cursor: pointer;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .checklist-btn:hover {
@@ -29,7 +29,7 @@
 .checklist-section {
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   overflow: hidden;
 }
 
@@ -38,7 +38,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 14px;
+  padding: 10px 12px;
   background: #f8f8f8;
   border: none;
   cursor: pointer;
@@ -56,29 +56,26 @@
 }
 
 .checklist-section-body {
-  padding: 10px 14px 12px 14px;
+  padding: 8px 12px 10px 12px;
 }
 
-/* ===== Checkbox-rader (ROBUST FIX) =====
-   - Grid ger stabil layout vid radbrytning
-   - em-offset gör att det ser rätt ut i Chrome/Safari/Firefox
-*/
+/* ===== Checkbox-rader (ROBUST FIX) ===== */
 
 .checklist-item {
   display: grid;
   grid-template-columns: 22px 1fr;
   column-gap: 10px;
   align-items: start;
-  padding: 6px 0;
-  line-height: 1.5;
+  padding: 4px 0;       /* mindre luft */
+  line-height: 1.35;    /* kompaktare */
 }
 
 .checklist-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin: 0;
   position: relative;
-  top: 0.18em; /* JUSTERA VID BEHOV: 0.14–0.24em */
+  top: 0.16em;          /* stabil justering */
 }
 
 .checklist-item span {
@@ -88,23 +85,30 @@
 /* ===== Reflektion ===== */
 
 .checklist-reflection {
-  margin-top: 24px;
+  margin-top: 18px;     /* mindre luft */
 }
 
 .checklist-reflection h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 17px;
+  margin-bottom: 8px;
 }
 
 .write-lines .line {
   border-bottom: 1px solid #bbb;
-  height: 26px;
-  margin-bottom: 6px;
+  height: 22px;         /* kompaktare rader */
+  margin-bottom: 5px;
 }
 
-/* ===== Utskrift ===== */
+/* ===== Utskrift (KOMPAKT, A4, 11pt) ===== */
 
 @media print {
+
+  @page {
+    size: A4;
+    margin: 18mm;
+  }
+
+  /* göm meny/knappar och navigering */
   .hamburger,
   #side-menu,
   .checklist-actions,
@@ -112,25 +116,73 @@
     display: none !important;
   }
 
+  /* kompakt typografi */
+  body {
+    font-size: 11pt;
+    line-height: 1.35;
+  }
+
+  /* header mindre för att spara plats */
   header {
     min-height: auto;
-    padding: 18px 18px;
+    padding: 12mm 12mm;
   }
 
-  body {
-    font-size: 12pt;
+  /* undvik bakgrundsbild i header vid utskrift (sparar bläck + kan ge konstigt resultat) */
+  header::before {
+    background-color: transparent !important;
   }
 
+  /* fäll ut allt vid utskrift */
   .checklist-section-body {
     display: block !important;
   }
 
+  /* förenkla rubrikerna vid utskrift */
   .checklist-section-header {
-    background: none;
+    background: none !important;
+    padding: 6px 0 4px 0;
     border-bottom: 1px solid #ddd;
   }
 
   .checklist-section-toggle {
     display: none;
+  }
+
+  /* komprimera lådor vid utskrift */
+  .checklist-section {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 8px;
+  }
+
+  .checklist-section-body {
+    padding: 4px 0 6px 0;
+  }
+
+  .checklist-item {
+    grid-template-columns: 18px 1fr;
+    column-gap: 8px;
+    padding: 3px 0;
+    line-height: 1.25;
+  }
+
+  .checklist-item input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    top: 0.14em;
+  }
+
+  .checklist-reflection {
+    margin-top: 12px;
+  }
+
+  .checklist-reflection h2 {
+    margin-bottom: 6px;
+  }
+
+  .write-lines .line {
+    height: 20px;
+    margin-bottom: 4px;
   }
 }
