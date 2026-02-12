@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – Materia (Elev)</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+</head>
+
+<body>
+  <header class="fysik-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>Materia (åk 7) – elev</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="print-note">
+      <strong>Namn:</strong> ____________________________ &nbsp;&nbsp;
+      <strong>Klass:</strong> ____________ &nbsp;&nbsp;
+      <strong>Datum:</strong> ____________
+    </div>
+
+    <div id="study-container" aria-live="polite"></div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "/fysik/materia/data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "print-student"
+    });
+  </script>
+</body>
+</html>
