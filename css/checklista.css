@@ -59,15 +59,15 @@
   padding: 8px 12px 10px 12px;
 }
 
-/* ===== Checkbox-rader (ROBUST FIX) ===== */
+/* ===== Checkbox-rader (stabil layout) ===== */
 
 .checklist-item {
   display: grid;
   grid-template-columns: 22px 1fr;
   column-gap: 10px;
   align-items: start;
-  padding: 4px 0;       /* mindre luft */
-  line-height: 1.35;    /* kompaktare */
+  padding: 4px 0;
+  line-height: 1.35;
 }
 
 .checklist-item input[type="checkbox"] {
@@ -75,7 +75,7 @@
   height: 16px;
   margin: 0;
   position: relative;
-  top: 0.16em;          /* stabil justering */
+  top: 0.16em;
 }
 
 .checklist-item span {
@@ -85,7 +85,7 @@
 /* ===== Reflektion ===== */
 
 .checklist-reflection {
-  margin-top: 18px;     /* mindre luft */
+  margin-top: 18px;
 }
 
 .checklist-reflection h2 {
@@ -95,11 +95,11 @@
 
 .write-lines .line {
   border-bottom: 1px solid #bbb;
-  height: 22px;         /* kompaktare rader */
+  height: 22px;
   margin-bottom: 5px;
 }
 
-/* ===== Utskrift (KOMPAKT, A4, 11pt) ===== */
+/* ===== Utskrift (A4, kompakt och utan stort header-gap) ===== */
 
 @media print {
 
@@ -122,15 +122,23 @@
     line-height: 1.35;
   }
 
-  /* header mindre för att spara plats */
+  /* ===== FIX: gör headern liten vid utskrift (tar bort "luftgapet") ===== */
   header {
-    min-height: auto;
-    padding: 12mm 12mm;
+    min-height: auto !important;     /* överstyr 200px från style.css */
+    padding: 8mm 0 4mm 0 !important; /* mindre luft ovan/under */
+    background: none !important;     /* ingen bannerbild */
   }
 
-  /* undvik bakgrundsbild i header vid utskrift (sparar bläck + kan ge konstigt resultat) */
   header::before {
-    background-color: transparent !important;
+    display: none !important;        /* ta bort overlay */
+  }
+
+  header h1 {
+    margin-bottom: 2mm !important;   /* liten luft till underraden */
+  }
+
+  header p {
+    margin: 0 !important;
   }
 
   /* fäll ut allt vid utskrift */
@@ -185,19 +193,4 @@
     height: 20px;
     margin-bottom: 4px;
   }
-}
-/* ===== Kompakt header för checklistan ===== */
-
-header h1 {
-  margin-bottom: 4px;   /* halverar avståndet */
-}
-
-header p {
-  margin-bottom: 0;
-}
-
-/* Gör så att titel + undertitel kan ligga tätare */
-header {
-  min-height: 140px;    /* istället för 200px */
-  padding: 22px 30px;   /* mindre vertikalt */
 }
