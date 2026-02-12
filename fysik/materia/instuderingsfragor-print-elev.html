@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instuderingsfrågor – Materia (Lärare)</title>
+  <title>Instuderingsfrågor – Materia (Elev)</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/instudering.css" />
 </head>
@@ -11,7 +11,7 @@
 <body>
   <header class="fysik-header">
     <h1>Instuderingsfrågor</h1>
-    <p>Materia (åk 7) – lärare / facit</p>
+    <p>Materia (åk 7) – elev</p>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -19,7 +19,14 @@
 
   <main>
     <div class="print-note">
-      <strong>Facit – för läraren</strong>
+      <div class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </div>
+      <div class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </div>
     </div>
 
     <div id="study-container"></div>
@@ -31,9 +38,10 @@
     renderStudySet({
       jsonPath: "/fysik/materia/data/instuderingsfragor.json",
       mountId: "study-container",
-      mode: "print-teacher"
+      mode: "print-student"
     });
 
+    // Vänta lite så att innehållet hinner renderas innan print startar
     window.addEventListener("load", () => {
       setTimeout(() => window.print(), 300);
     });
