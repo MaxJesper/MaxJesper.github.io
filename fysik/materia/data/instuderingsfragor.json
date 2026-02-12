@@ -1,0 +1,51 @@
+{
+  "title": "Instuderingsfrågor – Materia (åk 7)",
+  "groups": [
+    {
+      "title": "Grund",
+      "items": [
+        { "type": "qa", "q": "Vad är materia?", "a": "Materia är allt som tar plats (har volym) och väger (har massa).", "lines": 2 },
+        { "type": "qa", "q": "Ge två exempel på något som är materia.", "a": "Till exempel luft, vatten, sten, trä, järn.", "lines": 2 },
+        { "type": "qa", "q": "Ge två exempel på något som inte är materia.", "a": "Till exempel en tanke, en sång, en sekund (sådant kan inte vägas eller ha volym på samma sätt).", "lines": 2 },
+        { "type": "qa", "q": "Vad är en atom?", "a": "Den minsta delen av ett grundämne (t.ex. en järnatom i grundämnet järn).", "lines": 2 },
+        { "type": "qa", "q": "Vad är en molekyl?", "a": "Två eller flera atomer som sitter ihop (t.ex. O₂).", "lines": 2 },
+        { "type": "qa", "q": "Vad är ett grundämne?", "a": "Ett ämne som består av bara en sorts atomer (t.ex. syre, järn).", "lines": 2 },
+        { "type": "qa", "q": "Vad är en kemisk förening?", "a": "Ett ämne vars molekyler består av olika sorters atomer (t.ex. vatten H₂O).", "lines": 2 },
+        { "type": "qa", "q": "Vad menas med volym?", "a": "Hur stor plats något tar. Vanliga enheter: L, ml, dm³, cm³.", "lines": 2 },
+        { "type": "qa", "q": "Vad menas med massa?", "a": "Hur mycket materia något innehåller. Vanliga enheter: g, hg, kg.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "Fördjupning",
+      "items": [
+        { "type": "qa", "q": "Varför räknas luft som materia fast man inte alltid ser den?", "a": "Luft tar plats och har massa. Det märks t.ex. i motvind eller när man pumpar ett däck/ballong.", "lines": 4 },
+        { "type": "qa", "q": "Förklara skillnaden mellan grundämne och kemisk förening med egna exempel.", "a": "Grundämne: en sorts atom. Kemisk förening: molekyler med minst två olika sorters atomer.", "lines": 4 },
+        { "type": "qa", "q": "Hur kan det finnas massor av kemiska föreningar om det bara finns runt hundra grundämnen?", "a": "Atomer kan kombineras på många sätt: olika antal, olika sorter och olika strukturer → många olika molekyler.", "lines": 4 },
+        { "type": "qa", "q": "Hur kan man mäta volymen av en sten med ett mätglas?", "a": "Läs av volymen före. Lägg i stenen. Läs av volymen efter. Skillnaden är stenens volym.", "lines": 4 }
+      ]
+    },
+    {
+      "title": "Utmaning (avläsning och problemlösning)",
+      "items": [
+        { "type": "figure", "title": "Mätglas (avläsning)", "caption": "Läs av volymen före och efter stenen." },
+
+        { "type": "qa", "q": "I bilden står vattnet på 50 ml före stenen och 68 ml efter stenen. Vilken volym har stenen?", "a": "68 ml − 50 ml = 18 ml. Det är samma som 18 cm³.", "lines": 4 },
+
+        { "type": "qa", "q": "En kub är 2 cm × 2 cm × 2 cm. Vilken volym har kuben?", "a": "2·2·2 = 8 cm³.", "lines": 3 },
+
+        { "type": "qa", "q": "Vad betyder densitet (täthet) med egna ord?", "a": "Hur mycket massa som finns i en viss volym. Hög densitet = mycket massa på liten volym.", "lines": 4 },
+
+        { "type": "qa", "q": "En metallbit har massan 54 g och volymen 6 cm³. Beräkna densiteten i g/cm³.", "a": "Densitet = massa/volym = 54/6 = 9 g/cm³.", "lines": 5 },
+
+        { "type": "qa", "q": "Ett ämne har densiteten 2 g/cm³. En bit har volymen 15 cm³. Vilken massa har biten?", "a": "Massa = densitet · volym = 2 · 15 = 30 g.", "lines": 5 },
+
+        { "type": "qa", "q": "Ett föremål har massan 120 g och densiteten 4 g/cm³. Vilken volym har föremålet?", "a": "Volym = massa/densitet = 120/4 = 30 cm³.", "lines": 5 }
+      ]
+    }
+  ],
+  "figures": {
+    "Mätglas (avläsning)": {
+      "svg": "<svg xmlns='http://www.w3.org/2000/svg' width='520' height='240' viewBox='0 0 520 240' role='img' aria-label='Två mätglas: före och efter en sten'><rect x='0' y='0' width='520' height='240' fill='white'/><text x='130' y='26' font-family='Arial' font-size='16' text-anchor='middle'>Före sten</text><text x='390' y='26' font-family='Arial' font-size='16' text-anchor='middle'>Efter sten</text><rect x='70' y='40' width='120' height='170' rx='8' ry='8' fill='none' stroke='#222' stroke-width='2'/><rect x='330' y='40' width='120' height='170' rx='8' ry='8' fill='none' stroke='#222' stroke-width='2'/><line x1='70' y1='210' x2='190' y2='210' stroke='#222' stroke-width='2'/><line x1='330' y1='210' x2='450' y2='210' stroke='#222' stroke-width='2'/><rect x='72' y='140' width='116' height='70' fill='#d9eefc'/><rect x='332' y='110' width='116' height='100' fill='#d9eefc'/><g font-family='Arial' font-size='12' fill='#222'><text x='56' y='210'>0</text><text x='50' y='185'>20</text><text x='50' y='160'>40</text><text x='50' y='135'>60</text><text x='50' y='110'>80</text><text x='44' y='85'>100</text></g><g stroke='#222' stroke-width='1'><line x1='70' y1='210' x2='60' y2='210'/><line x1='70' y1='185' x2='60' y2='185'/><line x1='70' y1='160' x2='60' y2='160'/><line x1='70' y1='135' x2='60' y2='135'/><line x1='70' y1='110' x2='60' y2='110'/><line x1='70' y1='85' x2='60' y2='85'/></g><g font-family='Arial' font-size='12' fill='#222'><text x='316' y='210'>0</text><text x='310' y='185'>20</text><text x='310' y='160'>40</text><text x='310' y='135'>60</text><text x='310' y='110'>80</text><text x='304' y='85'>100</text></g><g stroke='#222' stroke-width='1'><line x1='330' y1='210' x2='320' y2='210'/><line x1='330' y1='185' x2='320' y2='185'/><line x1='330' y1='160' x2='320' y2='160'/><line x1='330' y1='135' x2='320' y2='135'/><line x1='330' y1='110' x2='320' y2='110'/><line x1='330' y1='85' x2='320' y2='85'/></g><rect x='375' y='154' width='30' height='28' rx='6' ry='6' fill='#777'/><text x='130' y='232' font-family='Arial' font-size='12' text-anchor='middle'>Vattennivå: 50 ml</text><text x='390' y='232' font-family='Arial' font-size='12' text-anchor='middle'>Vattennivå: 68 ml</text></svg>"
+    }
+  }
+}
