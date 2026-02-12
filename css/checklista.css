@@ -59,25 +59,30 @@
   padding: 10px 14px 12px 14px;
 }
 
-/* ===== Checkbox-rader (FIXAD JUSTERING) ===== */
+/* ===== Checkbox-rader (ROBUST FIX) =====
+   - Grid ger stabil layout vid radbrytning
+   - em-offset gör att det ser rätt ut i Chrome/Safari/Firefox
+*/
 
 .checklist-item {
-  display: flex;
-  align-items: flex-start;   /* Viktigt för snygg radbrytning */
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  column-gap: 10px;
+  align-items: start;
   padding: 6px 0;
   line-height: 1.5;
 }
 
 .checklist-item input[type="checkbox"] {
-  margin-top: 5px;   /* Justerad vertikal placering */
-  flex-shrink: 0;
   width: 18px;
   height: 18px;
+  margin: 0;
+  position: relative;
+  top: 0.18em; /* JUSTERA VID BEHOV: 0.14–0.24em */
 }
 
 .checklist-item span {
-  flex: 1;
+  display: block;
 }
 
 /* ===== Reflektion ===== */
