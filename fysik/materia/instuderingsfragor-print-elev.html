@@ -41,9 +41,23 @@
       mode: "print-student"
     });
 
-    // Vänta lite så att innehållet hinner renderas innan print startar
+    function autoPrintAndClose() {
+      // Stäng när print-dialogen är klar (gäller även Avbryt i de flesta browsers)
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+
+      // Fallback: om afterprint inte triggar, stäng ändå efter en kort stund
+      setTimeout(() => {
+        try { window.close(); } catch (e) {}
+      }, 2500);
+
+      window.print();
+    }
+
     window.addEventListener("load", () => {
-      setTimeout(() => window.print(), 300);
+      // liten delay så JSON-renderingen hinner in
+      setTimeout(autoPrintAndClose, 350);
     });
   </script>
 </body>
