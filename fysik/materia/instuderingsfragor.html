@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – Materia</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+</head>
+
+<body>
+  <header class="fysik-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>Materia (åk 7)</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="study-info" role="note" aria-label="Tips för tangentbord">
+      <strong>TIPS:</strong> Klicka på en fråga för att visa/stäng svaret.
+      Använd <strong>piltangenter ↑/↓</strong> för att gå mellan frågor och tryck <strong>mellanslag</strong> (eller Enter) för att toggla svar.
+    </div>
+
+    <div class="study-actions">
+      <a class="subject-btn" href="/fysik/materia/instuderingsfragor-print-elev.html" target="_blank" rel="noopener">🖨️ Utskrift – elev</a>
+      <a class="subject-btn" href="/fysik/materia/instuderingsfragor-print-larare.html" target="_blank" rel="noopener">🖨️ Utskrift – lärare (facit)</a>
+    </div>
+
+    <div id="study-container" aria-live="polite"></div>
+
+    <p>
+      <a href="/fysik/materia/" class="subject-btn">← Tillbaka till Materia</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "/fysik/materia/data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "interactive"
+    });
+  </script>
+</body>
+</html>
