@@ -1,0 +1,205 @@
+/* =================== INSTUDERING =================== */
+
+.study-info {
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 10px 0 14px 0;
+  font-size: 16px;
+}
+
+.study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Grupper */
+.study-group {
+  margin: 18px 0 22px 0;
+}
+
+.study-group-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Kort (digital) */
+.study-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.study-q {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: #f8f8f8;
+  cursor: pointer;
+  padding: 12px 14px;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 16px;
+}
+
+.study-q:focus {
+  outline: 3px solid rgba(0, 123, 255, 0.35);
+  outline-offset: -3px;
+}
+
+.study-q-label {
+  font-weight: 700;
+}
+
+.study-a {
+  padding: 10px 14px 12px 14px;
+  background: white;
+}
+
+.study-a-inner {
+  border-left: 4px solid #007bff;
+  padding-left: 10px;
+}
+
+.study-a-label {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Figurer (licensfria SVG) */
+.study-figure {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0 12px 0;
+  background: white;
+}
+
+.study-figure-svg {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.study-figure-svg svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.study-figure figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Print */
+.print-note {
+  margin: 10px 0 14px 0;
+  font-size: 16px;
+}
+
+.print-item {
+  margin: 10px 0 14px 0;
+}
+
+.print-q,
+.print-a {
+  margin-bottom: 6px;
+}
+
+.tag {
+  font-weight: 700;
+}
+
+.print-lines .line {
+  border-bottom: 1px solid #bbb;
+  height: 22px;
+  margin-bottom: 6px;
+}
+
+/* =================== UTSKRIFT (A4, 11pt, kompakt) =================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm;
+  }
+
+  .hamburger,
+  #side-menu,
+  .study-info,
+  .study-actions,
+  a.subject-btn {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.35;
+  }
+
+  /* Liten header på papper (tar bort stort “luftgap”) */
+  header {
+    min-height: auto !important;
+    padding: 8mm 0 4mm 0 !important;
+    background: none !important;
+  }
+
+  header::before {
+    display: none !important;
+  }
+
+  header h1 {
+    margin-bottom: 2mm !important;
+  }
+
+  header p {
+    margin: 0 !important;
+  }
+
+  /* Spara plats */
+  .study-group {
+    margin: 10px 0 12px 0;
+  }
+
+  .study-group-title {
+    margin-bottom: 6px;
+    font-size: 13pt;
+  }
+
+  /* Visa figurer bra i print */
+  .study-figure {
+    border: 1px solid #ddd;
+    border-radius: 0;
+    padding: 6px 8px;
+    margin: 8px 0 10px 0;
+  }
+
+  /* Digitala “kort” ska inte synas i print-läge */
+  .study-card {
+    border: none;
+    margin: 0;
+  }
+
+  .study-q,
+  .study-a {
+    display: none !important;
+  }
+
+  /* Elev/lärar-layout */
+  .print-item {
+    page-break-inside: avoid;
+    margin: 8px 0 10px 0;
+  }
+
+  .print-lines .line {
+    height: 20px;
+    margin-bottom: 4px;
+  }
+}
