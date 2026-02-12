@@ -1,0 +1,115 @@
+.checklist-intro {
+  margin-bottom: 12px;
+}
+
+.checklist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 18px 0;
+}
+
+.checklist-btn {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.checklist-btn:hover {
+  background: #eee;
+}
+
+.checklist-section {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.checklist-section-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  background: #f8f8f8;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+}
+
+.checklist-section-title {
+  font-weight: 700;
+}
+
+.checklist-section-toggle {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.checklist-section-body {
+  padding: 10px 14px 12px 14px;
+}
+
+.checklist-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 6px 0;
+}
+
+.checklist-item input[type="checkbox"] {
+  transform: translateY(2px);
+}
+
+.checklist-reflection {
+  margin-top: 24px;
+}
+
+.checklist-reflection h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.write-lines .line {
+  border-bottom: 1px solid #bbb;
+  height: 26px;
+  margin-bottom: 6px;
+}
+
+/* Utskrift: göm menyer/knappar */
+@media print {
+  .hamburger,
+  #side-menu,
+  .checklist-actions,
+  a.subject-btn {
+    display: none !important;
+  }
+
+  header {
+    min-height: auto;
+    padding: 18px 18px;
+  }
+
+  body {
+    font-size: 12pt;
+  }
+
+  .checklist-section-body {
+    display: block !important;
+  }
+
+  .checklist-section-header {
+    background: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .checklist-section-toggle {
+    display: none;
+  }
+}
