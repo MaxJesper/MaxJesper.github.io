@@ -186,3 +186,18 @@
     margin-bottom: 4px;
   }
 }
+/* ===== Kompakt header för checklistan ===== */
+
+header h1 {
+  margin-bottom: 4px;   /* halverar avståndet */
+}
+
+header p {
+  margin-bottom: 0;
+}
+
+/* Gör så att titel + undertitel kan ligga tätare */
+header {
+  min-height: 140px;    /* istället för 200px */
+  padding: 22px 30px;   /* mindre vertikalt */
+}
