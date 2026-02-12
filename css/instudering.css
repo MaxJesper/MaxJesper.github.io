@@ -292,3 +292,19 @@
     display: none !important;
   }
 }
+/* ===== Knapprad: tillbaka + utskrift ===== */
+.study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Gröna utskriftsknappar (utan att ändra din blå subject-btn globalt) */
+a.subject-btn.print-green {
+  background-color: #28a745;
+}
+
+a.subject-btn.print-green:hover {
+  background-color: #1e7e34;
+}
