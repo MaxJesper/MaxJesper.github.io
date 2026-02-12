@@ -34,8 +34,20 @@
       mode: "print-teacher"
     });
 
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+
+      setTimeout(() => {
+        try { window.close(); } catch (e) {}
+      }, 2500);
+
+      window.print();
+    }
+
     window.addEventListener("load", () => {
-      setTimeout(() => window.print(), 300);
+      setTimeout(autoPrintAndClose, 350);
     });
   </script>
 </body>
