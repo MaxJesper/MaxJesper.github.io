@@ -67,6 +67,39 @@
   padding-left: 10px;
 }
 
+/* ===== Elevens digitala svar ===== */
+.study-youranswer {
+  padding: 10px 14px 12px 14px;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+.study-youranswer-label {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.study-youranswer-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.35;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+/* ===== Utskrift: elevens sparade svar ===== */
+.print-student-answer {
+  border: 1px solid #bbb;
+  padding: 8px 10px;
+  min-height: 18px;
+  margin-top: 6px;
+  white-space: normal;
+}
+
+
 .study-a-label {
   font-weight: 700;
   margin-bottom: 4px;
