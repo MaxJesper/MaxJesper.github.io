@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklista – Materia</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/checklista.css">
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Checklista</h1>
+  <p>Materia (åk 7)</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p class="checklist-intro">
+    Kryssa i det du kan. Om något känns osäkert: skriv upp det längst ner.
+  </p>
+
+  <div class="checklist-actions">
+    <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
+    <button class="checklist-btn" type="button" id="expandAllBtn">Visa alla</button>
+    <button class="checklist-btn" type="button" id="collapseAllBtn">Fäll ihop</button>
+  </div>
+
+  <div id="checklist-container" aria-live="polite"></div>
+
+  <section class="checklist-reflection">
+    <h2>Det här behöver jag träna mer på</h2>
+    <div class="write-lines">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <p>
+    <a href="/fysik/materia/" class="subject-btn">← Tillbaka till Materia</a>
+  </p>
+</main>
+
+<script src="/js/menu.js"></script>
+<script src="/js/render-checklista.js"></script>
+<script>
+  // Kör renderingen (sökvägen matchar filen nedan)
+  renderChecklist({
+    jsonPath: "/fysik/materia/data/checklista.json",
+    mountId: "checklist-container",
+    expandAllBtnId: "expandAllBtn",
+    collapseAllBtnId: "collapseAllBtn"
+  });
+</script>
+
+</body>
+</html>
