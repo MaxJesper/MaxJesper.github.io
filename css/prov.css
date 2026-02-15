@@ -99,3 +99,37 @@
   header h1 { margin-bottom: 2mm !important; }
   header p { margin: 0 !important; }
 }
+/* ===== Matchningsfråga ===== */
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.match-box {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+.match-right div {
+  margin-bottom: 6px;
+}
+
+/* Utskrift */
+@media print {
+  .match-box {
+    width: 18px;
+    height: 18px;
+  }
+}
