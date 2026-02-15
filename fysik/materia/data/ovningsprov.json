@@ -5,23 +5,58 @@
       "title": "Del 1 – Kortfattade svar",
       "questions": [
         {
-          "q": "Vad är materia?",
-          "a": "Materia är allt som har massa och tar plats (har volym).",
-          "lines": 3
+          "q": "Para ihop begrepp med rätt förklaring. Svara med bokstav → siffra. (En förklaring blir över)\n\nBegrepp:\nA. Materia\nB. Grundämne\nC. Atom\nD. Molekyl\nE. Massa\nF. Densitet\nG. Volym\n\nFörklaringar:\n1. Hur stor plats något tar\n2. Grundämnenas minsta byggsten\n3. Två eller flera atomer som sitter ihop\n4. Hur mycket materia något innehåller\n5. Hur tätt partiklarna är packade i ett ämne\n6. Ämne som består av en sorts atomer\n7. Allt som tar plats och har massa\n8. Två eller flera olika sorters atomer som sitter ihop",
+          "a": "A→7, B→6, C→2, D→3, E→4, F→5, G→1. (Över blir 8.)",
+          "lines": 6
         },
         {
-          "q": "Ge tre exempel på något som är materia.",
-          "a": "Till exempel luft, vatten, sten, bensin, rosor.",
+          "q": "Vilka av dessa är materia? (Skriv upp de som är materia)\n\nbensin, trötthet, avgaser, rosor, sång, kunskap, luft",
+          "a": "Materia: bensin, avgaser, rosor, luft. Inte materia: trötthet, sång, kunskap.",
           "lines": 3
         },
         {
           "q": "Ungefär hur många grundämnen finns det?",
-          "a": "Ungefär 100 (lite fler än 100 i periodiska systemet).",
+          "a": "Cirka 100 (lite fler än 100 i periodiska systemet).",
           "lines": 2
         },
         {
-          "q": "Beräkna densiteten för ett föremål med massan 300 g och volymen 150 cm³.",
-          "a": "Densitet = massa / volym = 300 / 150 = 2 g/cm³.",
+          "q": "Skriv fem grundämnen du känner till.",
+          "a": "Exempel: syre, väte, kol, järn, koppar, aluminium, kväve, guld, silver.",
+          "lines": 3
+        },
+        {
+          "q": "Skriv en enhet för massa och en enhet för volym.",
+          "a": "Massa: g eller kg. Volym: ml, L, cm³ eller dm³.",
+          "lines": 2
+        },
+        {
+          "q": "Det finns två volymsystem. Vad heter de?",
+          "a": "Litersystemet och metersystemet (kubikenheter).",
+          "lines": 2
+        },
+        {
+          "q": "Beräkna volymen av en låda som är 10 cm lång, 6 cm bred och 4 cm hög.",
+          "a": "V = 10·6·4 = 240 cm³.",
+          "lines": 3
+        },
+        {
+          "q": "Ett mätglas visar 45 ml. Efter att du lägger i en liten sten visar det 61 ml. Vilken volym har stenen?",
+          "a": "61 − 45 = 16 ml = 16 cm³.",
+          "lines": 3
+        },
+        {
+          "q": "Förklara med egna ord hur man kan ta reda på volymen av en liten sten med ett mätglas.",
+          "a": "Läs av volymen före. Lägg i stenen. Läs av efter. Skillnaden är stenens volym.",
+          "lines": 4
+        },
+        {
+          "q": "Beräkna densiteten för ett föremål med massan 180 g och volymen 60 cm³.",
+          "a": "Densitet = massa/volym = 180/60 = 3,0 g/cm³.",
+          "lines": 4
+        },
+        {
+          "q": "Aluminium har densiteten 2,7 g/cm³. Hur stor massa har 5 cm³ aluminium?",
+          "a": "Massa = densitet·volym = 2,7·5 = 13,5 g.",
           "lines": 4
         },
         {
@@ -32,22 +67,87 @@
       ]
     },
     {
-      "title": "Del 2 – Resonemang",
+      "title": "Del 2 – Förklara noggrant (resonera)",
       "questions": [
         {
-          "q": "Vilket finns det flest av – olika sorters atomer eller olika sorters molekyler? Motivera.",
-          "a": "Det finns fler olika molekyler eftersom atomer kan kombineras på många olika sätt.",
+          "q": "Vilket finns det flest av i världen – olika sorters atomer eller olika sorters molekyler? Motivera!",
+          "a": "Det finns fler olika molekyler. Det finns runt 100 atomslag, men de kan kombineras på väldigt många sätt till molekyler.",
           "lines": 6
         },
         {
-          "q": "Varför kan värmen från solen nå jorden trots att rymden är tom?",
-          "a": "Värme från solen sprids genom strålning. Ledning och strömning kräver materia.",
+          "q": "En molekyl består av två kväveatomer (N₂). Är det ett grundämne eller en kemisk förening? Motivera.",
+          "a": "Grundämne. Molekylen består bara av kväveatomer (en sorts atom).",
           "lines": 5
         },
         {
-          "q": "Beskriv hur du kan ta reda på vilket ämne ett okänt föremål är gjort av.",
-          "a": "Mät massa med våg, mät volym (t.ex. vattenförskjutning), beräkna densitet och jämför med tabell.",
+          "q": "Man säger ibland att is är lättare än vatten. Hur menar man då? (2 kg is väger ju lika mycket som 2 kg vatten.)",
+          "a": "Man menar att is har lägre densitet: samma massa tar större volym. Därför flyter is på vatten.",
           "lines": 6
+        },
+        {
+          "q": "En tom bägare väger 150 g. Med 80 ml vätska väger den 214 g. a) Vätskans massa? b) Vätskans densitet?",
+          "a": "a) 214−150 = 64 g. b) densitet = 64/80 = 0,80 g/ml (≈ g/cm³).",
+          "lines": 6
+        },
+        {
+          "q": "Du värmer en liten metallkula. Vad händer med a) volymen b) massan c) densiteten? Förklara kort.",
+          "a": "Volymen ökar (utvidgning). Massan är i princip oförändrad. Densiteten minskar eftersom volymen ökar men massan är samma (densitet = m/V).",
+          "lines": 6
+        },
+        {
+          "q": "Flervalsfråga: När luft blir varmare, vad händer med molekylerna?\nA. De rör sig fortare\nB. De kommer närmare varandra\nC. De delas i atomer\nD. De försvinner",
+          "a": "Rätt svar: A.",
+          "lines": 2
+        },
+        {
+          "q": "Förklara vad en bimetall är och hur den fungerar.",
+          "a": "Två olika metaller ihop som utvidgas olika mycket när de värms. Då böjer sig remsan och kan t.ex. slå av/på en kontakt (termostat).",
+          "lines": 6
+        },
+        {
+          "q": "Nämn de tre sätt som värme kan spridas på.",
+          "a": "Ledning, strömning och strålning.",
+          "lines": 3
+        },
+        {
+          "q": "Ge två exempel på material som leder värme bra och två som leder värme dåligt.",
+          "a": "Bra: koppar, aluminium (metaller). Dåligt: trä, plast, luft/ull.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Del 3 – Längre resonemang (utmaning)",
+      "questions": [
+        {
+          "q": "Snögubbarna Bill och Bull står ute en molnig vårdag. Bull har en ljus jacka och Bill en mörk. Vem smälter snabbast? Motivera med strålning/reflektion.",
+          "a": "Den med mörk jacka smälter snabbare. Mörka färger absorberar mer strålning, ljusa reflekterar mer.",
+          "lines": 7
+        },
+        {
+          "q": "Varför placeras element ofta under fönster? Förklara hur värmen sprids i rummet och vad som kan hända om elementet sitter på väggen mittemot.",
+          "a": "För att motverka kallras från fönstret. Varm luft stiger och skapar cirkulation (strömning). Om elementet sitter fel kan kall luft falla längs fönstret och ge drag/kallare vid golvet.",
+          "lines": 8
+        },
+        {
+          "q": "Varför kan inte värmen från solen spridas till jorden genom ledning?",
+          "a": "Ledning kräver materia. Rymden är i stort sett vakuum, så värmen kommer via strålning.",
+          "lines": 5
+        },
+        {
+          "q": "Du får ett okänt föremål och ska ta reda på vilket ämne det är gjort av. Beskriv en metod med mätningar och hur du använder tabellvärden.",
+          "a": "Mät massan med våg. Mät volymen (vattenförskjutning eller mått). Räkna densitet = m/V och jämför med densitetstabell för att hitta materialet.",
+          "lines": 8
+        },
+        {
+          "q": "Vatten beter sig annorlunda än många andra ämnen. Beskriv två–tre sådana egenskaper och ge en fördel eller nackdel för varje.",
+          "a": "Exempel: hög ytspänning (insekter kan gå på vatten), is flyter (sjöar fryser uppifrån – bra för liv i vattnet), hög värmekapacitet (jämnar ut temperaturer men tar lång tid att värma/kalla).",
+          "lines": 9
+        },
+        {
+          "q": "En guldring sägs vara av rent guld. Beskriv hur du kan använda densitet för att undersöka om det stämmer.",
+          "a": "Mät ringens massa. Bestäm volym via vattenförskjutning i mätglas. Räkna densitet = m/V och jämför med guld (~19,3 g/cm³). Om densiteten är mycket lägre är det inte rent guld.",
+          "lines": 8
         }
       ]
     }
