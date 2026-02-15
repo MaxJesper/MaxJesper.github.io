@@ -253,3 +253,23 @@
   gap: 10px;
   margin-bottom: 8px;
 }
+/* ===== FIX: match-input blir kvadrat även om global input { width:100% } finns ===== */
+.match-left .match-row > input.match-input {
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  max-width: 28px !important;
+  min-width: 28px !important;
+
+  height: 28px !important;
+  max-height: 28px !important;
+  min-height: 28px !important;
+
+  display: inline-block !important;
+  box-sizing: border-box !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  text-align: center;
+  line-height: 28px;
+}
