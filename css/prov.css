@@ -218,3 +218,38 @@
     display: none !important;
   }
 }
+/* ===== MATCH – Siffer-rutor (tvingande kvadratiska) ===== */
+
+.match-row input.match-input {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: 1px solid #000;
+  border-radius: 4px;
+
+  text-align: center;
+  font-size: 16px;
+  line-height: 28px;
+
+  display: inline-block !important;
+  box-sizing: border-box;
+}
+
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 12px;
+}
+
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
