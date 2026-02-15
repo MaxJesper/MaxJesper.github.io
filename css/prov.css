@@ -57,33 +57,41 @@
 }
 
 /* Digital siffer-ruta */
-.match-input {
-  width: 26px;
-  height: 26px;
-  padding: 0;
+.match-left .match-row > input.match-input {
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  max-width: 28px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
   border: 1px solid #000;
   border-radius: 4px;
+
   text-align: center;
   font-size: 16px;
-  line-height: 26px;
-  appearance: textfield;
-}
+  line-height: 28px;
 
-.match-input:focus {
-  outline: 3px solid rgba(0, 123, 255, 0.35);
-  outline-offset: 0;
+  display: inline-block !important;
+  box-sizing: border-box !important;
 }
 
 /* Utskriftsruta */
-.match-box {
-  width: 22px;
-  height: 22px;
+.match-row .match-box {
+  flex: 0 0 22px !important;
+  width: 22px !important;
+  height: 22px !important;
+
   border: 1px solid #000;
   border-radius: 4px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12pt;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-sizing: border-box !important;
 }
 
 .match-right div {
@@ -166,7 +174,7 @@
 }
 
 /* =====================================================
-   PRINT – A4 OPTIMERING
+   PRINT – A4 OPTIMERING + SIDBRYTNINGAR
    ===================================================== */
 
 @media print {
@@ -208,68 +216,26 @@
 
   .prov-section {
     margin: 12px 0 16px 0;
+    page-break-inside: avoid;
+  }
+
+  .prov-title {
+    page-break-after: avoid;
   }
 
   .prov-item {
     page-break-inside: avoid;
   }
 
+  /* Starta Del 2 och Del 3 på ny sida */
+  .prov-section:nth-of-type(2),
+  .prov-section:nth-of-type(3) {
+    page-break-before: always;
+  }
+
+  /* Dölj digital input på utskrift */
   .match-input {
     display: none !important;
   }
-}
-/* ===== MATCH – Siffer-rutor (tvingande kvadratiska) ===== */
 
-.match-row input.match-input {
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  max-width: 28px !important;
-
-  padding: 0 !important;
-  margin: 0 !important;
-
-  border: 1px solid #000;
-  border-radius: 4px;
-
-  text-align: center;
-  font-size: 16px;
-  line-height: 28px;
-
-  display: inline-block !important;
-  box-sizing: border-box;
-}
-
-.match-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 12px;
-}
-
-.match-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-/* ===== FIX: match-input blir kvadrat även om global input { width:100% } finns ===== */
-.match-left .match-row > input.match-input {
-  flex: 0 0 28px !important;
-  width: 28px !important;
-  max-width: 28px !important;
-  min-width: 28px !important;
-
-  height: 28px !important;
-  max-height: 28px !important;
-  min-height: 28px !important;
-
-  display: inline-block !important;
-  box-sizing: border-box !important;
-
-  padding: 0 !important;
-  margin: 0 !important;
-
-  text-align: center;
-  line-height: 28px;
 }
