@@ -1,45 +1,101 @@
+/* ===== Actions-rad (om du har knappar på provsidan) ===== */
 .prov-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
+/* ===== Sektioner och frågor ===== */
 .prov-section {
-  margin-bottom: 25px;
+  margin: 16px 0 22px 0;
+}
+
+.prov-title {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .prov-item {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
 
-.prov-line {
-  border-bottom: 1px solid #aaa;
-  height: 22px;
-  margin-bottom: 6px;
+.prov-q {
+  margin-bottom: 8px;
 }
 
-.facit-text {
-  margin-left: 10px;
+/* ===== Digitalt svar ===== */
+.prov-answer {
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.35;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+/* ===== Utskrift: linjer eller elevens sparade svar ===== */
+.prov-lines .prov-line {
+  border-bottom: 1px solid #bbb;
+  height: 20px;
+  margin-bottom: 4px;
+}
+
+.prov-student-answer {
+  border: 1px solid #bbb;
+  padding: 8px 10px;
+  margin-top: 6px;
+}
+
+/* ===== Facit ===== */
+.prov-facit {
   border-left: 4px solid #28a745;
-  padding-left: 8px;
+  padding-left: 10px;
+  margin-top: 6px;
 }
 
-.prov-actions a.print-green {
-  background-color: #28a745;
+/* ===== Namn/Klass för utskrift ===== */
+.print-note {
+  margin: 10px 0 14px 0;
+  font-size: 16px;
 }
 
-.prov-actions a.print-green:hover {
-  background-color: #1e7e34;
+.print-field {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-right: 18px;
 }
 
+.print-label { font-weight: 700; }
+
+.print-line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  height: 14px;
+}
+
+.print-line-name { width: 220px; }
+.print-line-class { width: 90px; }
+
+/* ===== Print-optimering ===== */
 @media print {
-  .prov-actions,
-  .hamburger,
-  #side-menu {
+  @page { size: A4; margin: 18mm; }
+
+  body { font-size: 11pt; line-height: 1.35; }
+
+  .hamburger, #side-menu, .prov-actions, a.subject-btn {
     display: none !important;
   }
 
-  body {
-    font-size: 11pt;
+  header {
+    min-height: auto !important;
+    padding: 8mm 0 4mm 0 !important;
+    background: none !important;
   }
+  header::before { display: none !important; }
+  header h1 { margin-bottom: 2mm !important; }
+  header p { margin: 0 !important; }
 }
