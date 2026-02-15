@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Övningsprov – Materia</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prov.css">
+</head>
+<body>
+
+<header class="fysik-header">
+<h1>Övningsprov</h1>
+<p>Materia (åk 7)</p>
+</header>
+
+<main>
+
+<div class="prov-actions">
+<a href="/fysik/materia/" class="subject-btn">← Tillbaka</a>
+<a href="/fysik/materia/ovningsprov-print.html" target="_blank" class="subject-btn print-green">🖨️ Skriv ut prov</a>
+<a href="/fysik/materia/facit.html" class="subject-btn">Facit</a>
+</div>
+
+<p><strong>Namn:</strong> ____________________________</p>
+
+<div id="prov-container"></div>
+
+</main>
+
+<script src="/js/render-prov.js"></script>
+<script>
+renderProv({
+  jsonPath: "/fysik/materia/data/ovningsprov.json",
+  mountId: "prov-container",
+  mode: "exam"
+});
+</script>
+
+</body>
+</html>
