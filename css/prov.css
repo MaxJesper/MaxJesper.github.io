@@ -227,9 +227,10 @@
     page-break-inside: avoid;
   }
 
-  /* Starta Del 2 och Del 3 på ny sida */
-  .prov-section:nth-of-type(2),
-  .prov-section:nth-of-type(3) {
+  /* Starta Del 2 och Del 3 på ny sida (robust) */
+  .prov-section[data-section-index="1"],
+  .prov-section[data-section-index="2"] {
+    break-before: page;
     page-break-before: always;
   }
 
