@@ -22,7 +22,7 @@ function renderProv({ jsonPath, mountId, mode = "exam" }) {
         .map((section, si) => {
           const qs = Array.isArray(section.questions) ? section.questions : [];
           return `
-            <section class="prov-section">
+            <section class="prov-section" data-section-index="${si}">
               <h2 class="prov-title">${escapeHtml(section.title || "")}</h2>
               ${qs
                 .map((qObj, qi) =>
