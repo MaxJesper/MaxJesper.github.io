@@ -1,0 +1,45 @@
+.prov-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.prov-section {
+  margin-bottom: 25px;
+}
+
+.prov-item {
+  margin-bottom: 15px;
+}
+
+.prov-line {
+  border-bottom: 1px solid #aaa;
+  height: 22px;
+  margin-bottom: 6px;
+}
+
+.facit-text {
+  margin-left: 10px;
+  border-left: 4px solid #28a745;
+  padding-left: 8px;
+}
+
+.prov-actions a.print-green {
+  background-color: #28a745;
+}
+
+.prov-actions a.print-green:hover {
+  background-color: #1e7e34;
+}
+
+@media print {
+  .prov-actions,
+  .hamburger,
+  #side-menu {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+}
