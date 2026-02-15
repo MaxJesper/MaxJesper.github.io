@@ -4,11 +4,32 @@
     {
       "title": "Del 1 – Kortfattade svar",
       "questions": [
+       
         {
-          "q": "Para ihop begrepp med rätt förklaring. Svara med bokstav → siffra. (En förklaring blir över)\n\nBegrepp:\nA. Materia\nB. Grundämne\nC. Atom\nD. Molekyl\nE. Massa\nF. Densitet\nG. Volym\n\nFörklaringar:\n1. Hur stor plats något tar\n2. Grundämnenas minsta byggsten\n3. Två eller flera atomer som sitter ihop\n4. Hur mycket materia något innehåller\n5. Hur tätt partiklarna är packade i ett ämne\n6. Ämne som består av en sorts atomer\n7. Allt som tar plats och har massa\n8. Två eller flera olika sorters atomer som sitter ihop",
-          "a": "A→7, B→6, C→2, D→3, E→4, F→5, G→1. (Över blir 8.)",
-          "lines": 6
-        },
+  "type": "match",
+  "title": "Para ihop begrepp med rätt förklaring (en förklaring blir över).",
+  "left": [
+    "A. Materia",
+    "B. Grundämne",
+    "C. Atom",
+    "D. Molekyl",
+    "E. Massa",
+    "F. Densitet",
+    "G. Volym"
+  ],
+  "right": [
+    "1. Hur stor plats något tar",
+    "2. Grundämnenas minsta byggsten",
+    "3. Två eller flera atomer som sitter ihop",
+    "4. Hur mycket materia något innehåller",
+    "5. Hur tätt partiklarna är packade i ett ämne",
+    "6. Ämne som består av en sorts atomer",
+    "7. Allt som tar plats och har massa",
+    "8. Två eller flera olika sorters atomer som sitter ihop"
+  ],
+  "a": "A→7, B→6, C→2, D→3, E→4, F→5, G→1."
+},
+
         {
           "q": "Vilka av dessa är materia? (Skriv upp de som är materia)\n\nbensin, trötthet, avgaser, rosor, sång, kunskap, luft",
           "a": "Materia: bensin, avgaser, rosor, luft. Inte materia: trötthet, sång, kunskap.",
