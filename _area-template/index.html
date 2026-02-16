@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{OMRÅDE}} – {{ÄMNE}}</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<header class="{{HEADER-KLASS}}">
+  <h1>{{OMRÅDE}}</h1>
+  <p>Jesper Tordsson</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>Välj material:</p>
+
+  <ul>
+    <li><a href="checklista.html">Checklista</a></li>
+    <li><a href="instuderingsfragor.html">Instuderingsfrågor</a></li>
+    <li><a href="ovningsprov.html">Övningsprov</a></li>
+    <li><a href="facit.html">Facit</a></li>
+  </ul>
+
+  <p>
+    <a href="/{{ÄMNE-ROT}}/index.html" class="subject-btn">
+      ← Tillbaka till {{ÄMNE}}
+    </a>
+  </p>
+</main>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
