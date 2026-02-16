@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklista – {{OMRÅDE}}</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/checklista.css">
+</head>
+
+<body>
+
+<header class="{{HEADER-KLASS}}">
+  <h1>Checklista</h1>
+  <p>{{OMRÅDE}}</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main id="checklista-container"></main>
+
+<script src="/js/menu.js"></script>
+<script src="/js/render-checklista.js"></script>
+<script>
+renderChecklista({
+  jsonPath: "data/checklista.json",
+  title: "Checklista {{OMRÅDE}}"
+});
+</script>
+
+</body>
+</html>
