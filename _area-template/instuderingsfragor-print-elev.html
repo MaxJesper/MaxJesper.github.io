@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor (Elev) – {{OMRÅDE}}</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+</head>
+
+<body>
+  <header class="{{HEADER-KLASS}}">
+    <h1>Instuderingsfrågor</h1>
+    <p>{{OMRÅDE}}</p>
+  </header>
+
+  <main id="instudering-container"></main>
+
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderInstudering({
+      jsonPath: "data/instuderingsfragor.json",
+      mountId: "instudering-container",
+      mode: "print-elev",
+      title: "Instuderingsfrågor"
+    });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
+  </script>
+</body>
+</html>
 
