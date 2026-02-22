@@ -1,596 +1,445 @@
 {
-  "titel": "Instuderingsfrågor – Periodiska systemet",
-  "version": "1.0",
-  "fragor": [
+  "figures": {},
+  "groups": [
     {
-      "id": 1,
-      "fraga": "Vilka tre partiklar finns i en atom och vilken laddning har de?",
-      "svar": "Proton (+), neutron (0) och elektron (−).",
-      "nivå": 1,
-      "område": "atomens byggnad",
-      "typ": "begrepp",
-      "hint": "Tänk: kärnan + runt kärnan.",
-      "vanliga_fel": [""],
-      "följdfråga": "Var i atomen finns protoner och neutroner?"
+      "title": "1) Atomens byggnad",
+      "items": [
+        {
+          "q": "Vilka tre partiklar finns i en atom och vilken laddning har de?",
+          "a": "Proton (+), neutron (0) och elektron (−).",
+          "lines": 2,
+          "nivå": 1,
+          "område": "atomens byggnad",
+          "typ": "begrepp",
+          "hint": "Tänk: kärnan + runt kärnan.",
+          "vanliga_fel": [
+            "Blandar ihop neutronens laddning",
+            "Tror att elektronen är positiv"
+          ]
+        },
+        {
+          "q": "Var i atomen finns protoner och neutroner?",
+          "a": "I atomkärnan.",
+          "lines": 2,
+          "nivå": 1,
+          "område": "atomens byggnad",
+          "typ": "begrepp",
+          "hint": "Kärnan = centrum.",
+          "vanliga_fel": [
+            "Tror att neutroner kretsar i skal"
+          ]
+        },
+        {
+          "q": "Var finns elektronerna och varför faller de inte in i kärnan?",
+          "a": "Elektronerna finns i elektronskal runt kärnan. De dras mot kärnan (olika laddning) men deras rörelse gör att de inte faller in i kärnan.",
+          "lines": 4,
+          "nivå": 2,
+          "område": "atomens byggnad",
+          "typ": "förklaring",
+          "hint": "Attraktion + rörelse.",
+          "vanliga_fel": [
+            "Tror att elektroner hålls kvar av 'luft' eller 'tyngdkraft'"
+          ]
+        },
+        {
+          "q": "Varför är en atom oftast oladdad?",
+          "a": "En neutral atom har lika många protoner (+) som elektroner (−). Laddningarna tar ut varandra.",
+          "lines": 3,
+          "nivå": 1,
+          "område": "laddning",
+          "typ": "förklaring",
+          "hint": "Plus och minus tar ut varandra.",
+          "vanliga_fel": [
+            "Tror att neutroner påverkar laddningen"
+          ]
+        },
+        {
+          "q": "Vad visar atomnumret?",
+          "a": "Atomnumret visar antalet protoner i kärnan (och i en neutral atom även antalet elektroner).",
+          "lines": 2,
+          "nivå": 1,
+          "område": "periodiska systemet",
+          "typ": "begrepp",
+          "hint": "Atomnummer = protoner.",
+          "vanliga_fel": [
+            "Tror att atomnummer är protoner + neutroner"
+          ]
+        },
+        {
+          "q": "Guld har atomnummer 79. Vad vet du då om kärnan i en guldatom?",
+          "a": "Den har 79 protoner i kärnan (och en neutral guldatom har 79 elektroner).",
+          "lines": 2,
+          "nivå": 1,
+          "område": "periodiska systemet",
+          "typ": "tillämpning",
+          "hint": "Sätt in talet i 'protoner'.",
+          "vanliga_fel": [
+            "Blandar ihop atomnummer och masstal"
+          ]
+        }
+      ]
     },
     {
-      "id": 2,
-      "fraga": "Var i atomen finns protoner och neutroner?",
-      "svar": "I atomkärnan.",
-      "nivå": 1,
-      "område": "atomens byggnad",
-      "typ": "begrepp",
-      "hint": "Kärna = centrum.",
-      "vanliga_fel": [""],
-      "följdfråga": "Var finns elektronerna?"
+      "title": "2) Elektronskal och valenselektroner",
+      "items": [
+        {
+          "q": "Vad heter de tre första elektronskalen och hur många elektroner får plats i dem (på grundskolenivå)?",
+          "a": "K-skalet: 2. L-skalet: 8. M-skalet: 8 (för de första 20 elektronerna).",
+          "lines": 3,
+          "nivå": 1,
+          "område": "elektronskal",
+          "typ": "begrepp",
+          "hint": "2, 8, 8.",
+          "vanliga_fel": [
+            "Skriver 2, 8, 18 direkt utan sammanhang"
+          ]
+        },
+        {
+          "q": "Vad menas med valenselektroner?",
+          "a": "Valenselektroner är elektronerna i atomens yttersta elektronskal.",
+          "lines": 2,
+          "nivå": 1,
+          "område": "valenselektroner",
+          "typ": "begrepp",
+          "hint": "Yttersta skalet.",
+          "vanliga_fel": [
+            "Tror att alla elektroner deltar i reaktioner"
+          ]
+        },
+        {
+          "q": "Varför är valenselektronerna viktigast när det blir kemiska reaktioner?",
+          "a": "Det är främst valenselektroner som lämnas, tas upp eller delas när bindningar bildas.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "valenselektroner",
+          "typ": "förklaring",
+          "hint": "Bindningar = yttersta skalet.",
+          "vanliga_fel": [
+            "Tror att protoner flyttar sig vid kemiska reaktioner"
+          ]
+        },
+        {
+          "q": "Vad menas med ädelgasstruktur och varför driver det reaktioner?",
+          "a": "Ädelgasstruktur betyder fullt yttersta skal. Många atomer reagerar för att få ett fullt yttersta skal genom att lämna, ta upp eller dela elektroner.",
+          "lines": 4,
+          "nivå": 2,
+          "område": "ädelgasstruktur",
+          "typ": "förklaring",
+          "hint": "Fullt yttersta skal = stabilt.",
+          "vanliga_fel": [
+            "Tror att atomer 'vill' bli ädelgaser bokstavligt"
+          ]
+        },
+        {
+          "q": "Rita en aluminiumatom (13Al). Hur många valenselektroner har den?",
+          "a": "Al har 13 elektroner: 2,8,3 → den har 3 valenselektroner.",
+          "lines": 4,
+          "nivå": 3,
+          "område": "valenselektroner",
+          "typ": "tillämpning",
+          "hint": "Fördela elektronerna i skal: 2,8,...",
+          "vanliga_fel": [
+            "Glömmer att K-skalet fylls först (2)"
+          ]
+        }
+      ]
     },
     {
-      "id": 3,
-      "fraga": "Var finns elektronerna i en atom?",
-      "svar": "Runt atomkärnan i elektronskal (banor på olika avstånd).",
-      "nivå": 1,
-      "område": "atomens byggnad",
-      "typ": "begrepp",
-      "hint": "Skal runt kärnan.",
-      "vanliga_fel": [
-        "Tror att elektroner sitter i kärnan"
-      ],
-      "följdfråga": "Varför är en atom oftast oladdad?"
+      "title": "3) Periodiska systemet: perioder och grupper",
+      "items": [
+        {
+          "q": "Vad är en period i periodiska systemet och vad är gemensamt för ämnen i samma period?",
+          "a": "En period är en vågrät rad. Ämnen i samma period har lika många elektronskal.",
+          "lines": 3,
+          "nivå": 1,
+          "område": "periodiska systemet",
+          "typ": "begrepp",
+          "hint": "Period = rad.",
+          "vanliga_fel": [
+            "Blandar period och grupp"
+          ]
+        },
+        {
+          "q": "Vad är en grupp i periodiska systemet och vad är gemensamt för ämnen i samma grupp?",
+          "a": "En grupp är en lodrät kolumn. Ämnen i samma grupp har (oftast) lika många valenselektroner och därför liknande kemiska egenskaper.",
+          "lines": 4,
+          "nivå": 1,
+          "område": "periodiska systemet",
+          "typ": "begrepp",
+          "hint": "Grupp = kolumn.",
+          "vanliga_fel": [
+            "Tror att ämnen i samma grupp har lika många protoner"
+          ]
+        },
+        {
+          "q": "Varför har ämnen i samma grupp ofta liknande egenskaper?",
+          "a": "De har lika många valenselektroner, och valenselektronerna styr hur atomer reagerar kemiskt.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "periodiska systemet",
+          "typ": "förklaring",
+          "hint": "Valenselektroner = reaktivitet.",
+          "vanliga_fel": [
+            "Kopplar likhet till lika masstal"
+          ]
+        },
+        {
+          "q": "Varför ligger natrium, kisel och klor i samma period?",
+          "a": "De har lika många elektronskal (period = samma antal elektronskal).",
+          "lines": 2,
+          "nivå": 2,
+          "område": "perioder",
+          "typ": "förklaring",
+          "hint": "Period = antal skal.",
+          "vanliga_fel": [
+            "Svarar 'för att de är lika' utan att nämna skal"
+          ]
+        },
+        {
+          "q": "Var finns metaller och icke-metaller i periodiska systemet (grovt)?",
+          "a": "Metaller finns mest till vänster och i mitten. Icke-metaller finns mest till höger (undantag väte).",
+          "lines": 3,
+          "nivå": 1,
+          "område": "metaller och icke-metaller",
+          "typ": "begrepp",
+          "hint": "Högerkanten = många icke-metaller.",
+          "vanliga_fel": [
+            "Tror att väte är en metall bara för att det står i grupp 1"
+          ]
+        }
+      ]
     },
     {
-      "id": 4,
-      "fraga": "Varför är atomer oftast oladdade?",
-      "svar": "För att de har lika många protoner (+) som elektroner (−), så laddningarna tar ut varandra.",
-      "nivå": 1,
-      "område": "laddning",
-      "typ": "förklaring",
-      "hint": "Plus och minus tar ut varandra.",
-      "vanliga_fel": [
-        "Tror att neutroner påverkar laddningen"
-      ],
-      "följdfråga": "Vad visar atomnumret?"
+      "title": "4) Grundämnesfamiljer: alkalimetaller, halogener, ädelgaser",
+      "items": [
+        {
+          "q": "Vad kännetecknar alkalimetaller? (grupp, valenselektroner, reaktivitet)",
+          "a": "Alkalimetaller är metaller i grupp 1 (väte står där men är ingen metall). De har 1 valenselektron som de gärna lämnar och bildar +1-joner. De reagerar lätt med t.ex. vatten.",
+          "lines": 5,
+          "nivå": 2,
+          "område": "alkalimetaller",
+          "typ": "förklaring",
+          "hint": "Grupp 1, 1 valenselektron.",
+          "vanliga_fel": [
+            "Glömmer att väte är ett undantag (ingen metall)"
+          ]
+        },
+        {
+          "q": "Varför reagerar kalium häftigare med vatten än litium och natrium?",
+          "a": "Kaliums valenselektron sitter längre från kärnan och hålls svagare, så den lämnas lättare.",
+          "lines": 3,
+          "nivå": 3,
+          "område": "alkalimetaller",
+          "typ": "resonemang",
+          "hint": "Avstånd kärna–valenselektron.",
+          "vanliga_fel": [
+            "Tror att det beror på att kalium 'är större bit' i experimentet"
+          ]
+        },
+        {
+          "q": "Skriv reaktionsformeln när natrium reagerar med vatten och ange vilka joner som finns i lösningen samt vilken gas som bildas.",
+          "a": "2Na + 2H2O → 2Na+ + 2OH− + H2. I lösningen: Na+ och OH−. Gas: vätgas (H2).",
+          "lines": 5,
+          "nivå": 3,
+          "område": "alkalimetaller",
+          "typ": "tillämpning",
+          "hint": "Joner + gas. Gasen är H2.",
+          "vanliga_fel": [
+            "Skriver att gasen är syre",
+            "Glömmer hydroxidjoner"
+          ]
+        },
+        {
+          "q": "Vad kännetecknar halogener? (grupp, valenselektroner, jonladdning)",
+          "a": "Halogener finns i grupp 17. De har 7 valenselektroner och tar gärna upp 1 elektron för att få fullt skal och bildar −1-joner. Reagerar gärna med metaller och bildar salter.",
+          "lines": 5,
+          "nivå": 2,
+          "område": "halogener",
+          "typ": "förklaring",
+          "hint": "Grupp 17, saknar 1 elektron.",
+          "vanliga_fel": [
+            "Säger att halogener lämnar ifrån sig elektroner"
+          ]
+        },
+        {
+          "q": "Varför är det tur att tandkräm inte innehåller fluor i atomform?",
+          "a": "Fluor i atomform är en giftig och mycket reaktiv gas. I tandkräm används stabila fluorider (salter) som stärker emaljen.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "halogener",
+          "typ": "förklaring",
+          "hint": "Fluorid = stabilt salt.",
+          "vanliga_fel": [
+            "Tror att tandkräm innehåller fluorgas"
+          ]
+        },
+        {
+          "q": "Vad kallas ämnena i grupp 18 (ibland grupp 8) och varför reagerar de ogärna?",
+          "a": "Ädelgaser. De har fulla yttersta elektronskal (stabila) och bildar därför ogärna kemiska föreningar.",
+          "lines": 4,
+          "nivå": 2,
+          "område": "ädelgaser",
+          "typ": "förklaring",
+          "hint": "Fullt yttersta skal.",
+          "vanliga_fel": [
+            "Tror att ädelgaser är 'för tunga' för att reagera"
+          ]
+        },
+        {
+          "q": "Varför står helium i ädelgasgruppen trots att helium bara har 2 valenselektroner?",
+          "a": "Helium har fullt K-skal (K-skalet rymmer max 2 elektroner). Det är alltså stabilt som en ädelgas.",
+          "lines": 3,
+          "nivå": 3,
+          "område": "ädelgaser",
+          "typ": "resonemang",
+          "hint": "K-skalet blir fullt vid 2.",
+          "vanliga_fel": [
+            "Svarar 'för att det är en gas' utan koppling till fullt skal"
+          ]
+        }
+      ]
     },
     {
-      "id": 5,
-      "fraga": "Vad visar atomnumret?",
-      "svar": "Hur många protoner som finns i atomkärnan (och i en neutral atom också hur många elektroner).",
-      "nivå": 1,
-      "område": "periodiska systemet",
-      "typ": "begrepp",
-      "hint": "Atomnummer = protoner.",
-      "vanliga_fel": [
-        "Tror att atomnummer är antal protoner + neutroner"
-      ],
-      "följdfråga": "Järn har atomnummer 26. Vad betyder det?"
+      "title": "5) Joner, jonföreningar och lösningar",
+      "items": [
+        {
+          "q": "Hur bildas en positiv jon?",
+          "a": "När en atom lämnar ifrån sig en eller flera elektroner (då blir det fler protoner än elektroner).",
+          "lines": 2,
+          "nivå": 2,
+          "område": "joner",
+          "typ": "förklaring",
+          "hint": "Tappar elektroner → plus.",
+          "vanliga_fel": [
+            "Tror att atomen tappar protoner"
+          ]
+        },
+        {
+          "q": "Hur bildas en negativ jon?",
+          "a": "När en atom tar upp en eller flera elektroner (då blir det fler elektroner än protoner).",
+          "lines": 2,
+          "nivå": 2,
+          "område": "joner",
+          "typ": "förklaring",
+          "hint": "Tar upp elektroner → minus.",
+          "vanliga_fel": [
+            "Tror att atomen tar upp protoner"
+          ]
+        },
+        {
+          "q": "Varför hålls jonerna ihop i en jonförening (salt)? Vad kallas bindningen?",
+          "a": "Positiva och negativa joner dras till varandra av elektriska krafter. Bindningen kallas jonbindning.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "jonbindning",
+          "typ": "förklaring",
+          "hint": "Plus och minus attraherar.",
+          "vanliga_fel": [
+            "Kallar det molekylbindning"
+          ]
+        },
+        {
+          "q": "Varför kan natrium och klor (som båda är farliga var för sig) bilda ett stabilt och ofarligt ämne tillsammans (NaCl)?",
+          "a": "Natrium lämnar sin valenselektron till klor. Då blir det Na+ och Cl− med fulla yttersta skal, vilket ger en stabil jonförening.",
+          "lines": 4,
+          "nivå": 3,
+          "område": "jonföreningar",
+          "typ": "resonemang",
+          "hint": "Elektronöverföring → fulla skal.",
+          "vanliga_fel": [
+            "Tror att natrium och klor blir 'neutralare' utan att nämna joner"
+          ]
+        },
+        {
+          "q": "Varför leder saltvatten elektrisk ström, men destillerat vatten gör det inte (eller mycket dåligt)?",
+          "a": "I saltvatten finns rörliga joner som kan transportera laddning. Destillerat vatten har nästan inga joner.",
+          "lines": 4,
+          "nivå": 3,
+          "område": "lösningar",
+          "typ": "förklaring",
+          "hint": "Rörliga laddade partiklar behövs.",
+          "vanliga_fel": [
+            "Tror att vattenmolekyler i sig leder ström bra"
+          ]
+        },
+        {
+          "q": "Varför är vatten ett bra lösningsmedel för jonföreningar?",
+          "a": "Vatten är polärt: syredelen är lite negativ och vätedelarna lite positiva. Vattenmolekyler kan därför omge och dra isär + och − joner så att de löser sig.",
+          "lines": 5,
+          "nivå": 3,
+          "område": "lösningar",
+          "typ": "förklaring",
+          "hint": "Polär molekyl kan 'dra isär' joner.",
+          "vanliga_fel": [
+            "Tror att salt 'smälter' i vattnet utan att bindningar bryts"
+          ]
+        }
+      ]
     },
     {
-      "id": 6,
-      "fraga": "Järn har atomnummer 26. Vad betyder det?",
-      "svar": "En järnatom har 26 protoner i kärnan (och 26 elektroner om den är neutral).",
-      "nivå": 1,
-      "område": "periodiska systemet",
-      "typ": "tillämpning",
-      "hint": "Sätt in talet i 'protoner'.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad heter de tre första elektronskalen och hur många elektroner ryms i dem?"
-    },
-    {
-      "id": 7,
-      "fraga": "Vad heter de tre första elektronskalen och hur många elektroner får plats i dem?",
-      "svar": "K-skalet: 2. L-skalet: 8. M-skalet: 8 (för atomer upp till 20 elektroner; annars kan M rymma fler).",
-      "nivå": 1,
-      "område": "elektronskal",
-      "typ": "begrepp",
-      "hint": "2, 8, 8 är standard i början.",
-      "vanliga_fel": [
-        "Tror att M alltid rymmer 18 i grundskolans nivå"
-      ],
-      "följdfråga": "Vad menas med valenselektroner?"
-    },
-    {
-      "id": 8,
-      "fraga": "Vad menas med valenselektroner?",
-      "svar": "Elektronerna i atomens yttersta elektronskal.",
-      "nivå": 1,
-      "område": "valenselektroner",
-      "typ": "begrepp",
-      "hint": "Yttersta skalet.",
-      "vanliga_fel": [
-        "Blandar valenselektroner med alla elektroner"
-      ],
-      "följdfråga": "Varför är valenselektroner viktiga vid kemiska reaktioner?"
-    },
-    {
-      "id": 9,
-      "fraga": "Varför är valenselektroner viktiga vid kemiska reaktioner?",
-      "svar": "Det är främst valenselektroner som lämnas, tas upp eller delas när bindningar bildas och ämnen reagerar.",
-      "nivå": 2,
-      "område": "valenselektroner",
-      "typ": "förklaring",
-      "hint": "Reaktioner handlar om yttersta skalet.",
-      "vanliga_fel": [
-        "Tror att protoner flyttar sig vid kemiska reaktioner"
-      ],
-      "följdfråga": "Vad menas med att atomer 'vill' ha fulla skal (ädelgasstruktur)?"
-    },
-    {
-      "id": 10,
-      "fraga": "Vad menas med ädelgasstruktur?",
-      "svar": "Att atomens yttersta elektronskal är fullt (stabilt), vilket många atomer strävar efter vid reaktioner.",
-      "nivå": 2,
-      "område": "ädelgasstruktur",
-      "typ": "förklaring",
-      "hint": "Fullt yttersta skal = stabilt.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad är en period i periodiska systemet?"
-    },
-    {
-      "id": 11,
-      "fraga": "Vad är en period i periodiska systemet?",
-      "svar": "En vågrät rad. Alla ämnen i en period har lika många elektronskal.",
-      "nivå": 1,
-      "område": "periodiska systemet",
-      "typ": "begrepp",
-      "hint": "Period = rad.",
-      "vanliga_fel": [
-        "Blandar period (rad) och grupp (kolumn)"
-      ],
-      "följdfråga": "Vad är en grupp i periodiska systemet?"
-    },
-    {
-      "id": 12,
-      "fraga": "Vad är en grupp i periodiska systemet?",
-      "svar": "En lodrät kolumn. Ämnen i samma grupp har (oftast) lika många valenselektroner och liknande egenskaper.",
-      "nivå": 1,
-      "område": "periodiska systemet",
-      "typ": "begrepp",
-      "hint": "Grupp = kolumn.",
-      "vanliga_fel": [
-        "Tror att grupp betyder 'ämnen med lika många protoner'"
-      ],
-      "följdfråga": "Varför har ämnen i samma grupp ofta liknande egenskaper?"
-    },
-    {
-      "id": 13,
-      "fraga": "Varför har ämnen i samma grupp ofta liknande kemiska egenskaper?",
-      "svar": "För att de har lika många valenselektroner (som styr hur de reagerar).",
-      "nivå": 2,
-      "område": "periodiska systemet",
-      "typ": "förklaring",
-      "hint": "Valenselektroner = reaktioner.",
-      "vanliga_fel": [""],
-      "följdfråga": "Var finns metaller respektive icke-metaller i periodiska systemet?"
-    },
-    {
-      "id": 14,
-      "fraga": "Var finns metaller respektive icke-metaller i periodiska systemet?",
-      "svar": "Metaller finns mest till vänster och i mitten. Icke-metaller finns mest till höger (undantag väte).",
-      "nivå": 1,
-      "område": "metaller och icke-metaller",
-      "typ": "begrepp",
-      "hint": "Tänk: högerkanten = icke-metaller.",
-      "vanliga_fel": [
-        "Tror att väte är en metall för att det står i grupp 1"
-      ],
-      "följdfråga": "Vad är typiskt för metaller i reaktioner?"
-    },
-    {
-      "id": 15,
-      "fraga": "Vad är typiskt för metaller vid kemiska reaktioner?",
-      "svar": "De lämnar ofta ifrån sig elektroner och bildar positiva joner.",
-      "nivå": 2,
-      "område": "metaller och icke-metaller",
-      "typ": "förklaring",
-      "hint": "Metall → ger bort → plusjon.",
-      "vanliga_fel": [
-        "Tror att metaller tar upp elektroner"
-      ],
-      "följdfråga": "Vad är typiskt för många icke-metaller i reaktioner?"
-    },
-    {
-      "id": 16,
-      "fraga": "Vad är typiskt för många icke-metaller vid kemiska reaktioner?",
-      "svar": "De tar ofta upp elektroner och bildar negativa joner (eller delar elektroner i molekyler).",
-      "nivå": 2,
-      "område": "metaller och icke-metaller",
-      "typ": "förklaring",
-      "hint": "Icke-metall → tar upp → minusjon.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad är en jon?"
-    },
-    {
-      "id": 17,
-      "fraga": "Vad är en jon?",
-      "svar": "En atom (eller grupp av atomer) som har laddning för att den har lämnat ifrån sig eller tagit upp elektroner.",
-      "nivå": 1,
-      "område": "joner",
-      "typ": "begrepp",
-      "hint": "Jon = laddad partikel.",
-      "vanliga_fel": [
-        "Tror att joner bildas genom att protoner flyttas"
-      ],
-      "följdfråga": "Hur bildas en positiv jon?"
-    },
-    {
-      "id": 18,
-      "fraga": "Hur bildas en positiv jon?",
-      "svar": "När en atom lämnar ifrån sig en eller flera elektroner (då blir det fler protoner än elektroner).",
-      "nivå": 2,
-      "område": "joner",
-      "typ": "förklaring",
-      "hint": "Tappar elektroner → blir plus.",
-      "vanliga_fel": [""],
-      "följdfråga": "Hur bildas en negativ jon?"
-    },
-    {
-      "id": 19,
-      "fraga": "Hur bildas en negativ jon?",
-      "svar": "När en atom tar upp en eller flera elektroner (då blir det fler elektroner än protoner).",
-      "nivå": 2,
-      "område": "joner",
-      "typ": "förklaring",
-      "hint": "Tar upp elektroner → blir minus.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad kallas bindningen som håller ihop joner i en jonförening?"
-    },
-    {
-      "id": 20,
-      "fraga": "Vad kallas bindningen som håller ihop joner i en jonförening (salt)?",
-      "svar": "Jonbindning (elektrisk attraktion mellan + och − joner).",
-      "nivå": 1,
-      "område": "kemisk bindning",
-      "typ": "begrepp",
-      "hint": "Plus och minus dras ihop.",
-      "vanliga_fel": [
-        "Blandar jonbindning med molekylbindning"
-      ],
-      "följdfråga": "Varför blir natrium och klor stabila när de bildar natriumklorid?"
-    },
-
-    {
-      "id": 21,
-      "fraga": "Varför blir natrium och klor stabila när de bildar natriumklorid?",
-      "svar": "Natrium lämnar sin valenselektron till klor. Då får båda fulla yttersta skal (ädelgasstruktur).",
-      "nivå": 3,
-      "område": "jonföreningar",
-      "typ": "resonemang",
-      "hint": "Tänk: en ger bort, en tar emot → fulla skal.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför leder saltvatten ström men destillerat vatten inte gör det?"
-    },
-    {
-      "id": 22,
-      "fraga": "Varför leder saltvatten ström men destillerat vatten inte gör det?",
-      "svar": "I saltvatten finns fria joner som kan röra sig och transportera laddning. Destillerat vatten har nästan inga joner.",
-      "nivå": 3,
-      "område": "lösningar",
-      "typ": "förklaring",
-      "hint": "Ström i vätska kräver rörliga laddade partiklar.",
-      "vanliga_fel": [
-        "Tror att vattenmolekyler i sig leder ström bra"
-      ],
-      "följdfråga": "Varför är vatten bra på att lösa jonföreningar?"
-    },
-    {
-      "id": 23,
-      "fraga": "Varför är vatten bra på att lösa jonföreningar?",
-      "svar": "Vatten är polärt: syredelen är lite negativ och vätedelarna lite positiva, så vatten kan omge och dra isär + och − joner.",
-      "nivå": 3,
-      "område": "lösningar",
-      "typ": "förklaring",
-      "hint": "Polär molekyl kan 'dra isär' joner.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad är en molekylbindning?"
-    },
-
-    {
-      "id": 24,
-      "fraga": "Vad är en molekylbindning (elektronparbindning)?",
-      "svar": "En bindning där atomer delar elektronpar med varandra så att de får fulla yttersta skal.",
-      "nivå": 2,
-      "område": "molekyler",
-      "typ": "begrepp",
-      "hint": "Delar elektronpar.",
-      "vanliga_fel": [
-        "Tror att en atom alltid måste lämna över elektroner helt"
-      ],
-      "följdfråga": "Varför bildar väte molekylen H2?"
-    },
-    {
-      "id": 25,
-      "fraga": "Varför bildar väte molekylen H2?",
-      "svar": "Två väteatomer delar ett elektronpar så att båda upplever fullt K-skal (2 elektroner).",
-      "nivå": 3,
-      "område": "molekyler",
-      "typ": "förklaring",
-      "hint": "K-skalet vill bli fullt.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför är vatten en polär molekyl?"
-    },
-    {
-      "id": 26,
-      "fraga": "Varför är vatten (H2O) en polär molekyl?",
-      "svar": "Syre drar starkare i elektronparen än väte, så syresidan blir delvis negativ och vätesidan delvis positiv.",
-      "nivå": 3,
-      "område": "polära molekyler",
-      "typ": "förklaring",
-      "hint": "Ojämn fördelning av elektroner.",
-      "vanliga_fel": [
-        "Tror att vatten är opolärt eftersom det är neutralt totalt"
-      ],
-      "följdfråga": "Vad är metallbindning?"
-    },
-    {
-      "id": 27,
-      "fraga": "Vad är metallbindning?",
-      "svar": "Metallatomer hålls ihop av att de ligger i ett gemensamt 'elektronmoln' av fria valenselektroner som rör sig i metallen.",
-      "nivå": 3,
-      "område": "metaller",
-      "typ": "förklaring",
-      "hint": "Fria elektroner i hela metallbiten.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför leder metaller elektricitet bra?"
-    },
-    {
-      "id": 28,
-      "fraga": "Varför leder metaller elektricitet bra?",
-      "svar": "För att de har många fria elektroner som kan röra sig och transportera laddning.",
-      "nivå": 2,
-      "område": "metaller",
-      "typ": "förklaring",
-      "hint": "Fria elektroner → ledare.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad kännetecknar alkalimetaller?"
-    },
-
-    {
-      "id": 29,
-      "fraga": "Vad kännetecknar alkalimetaller (grundämnesfamilj)?",
-      "svar": "Metaller i grupp 1 (väte står också där men är ingen metall). De har 1 valenselektron som de gärna lämnar och bildar +1-joner. Reagerar lätt med t.ex. vatten.",
-      "nivå": 2,
-      "område": "grundämnesfamiljer",
-      "typ": "förklaring",
-      "hint": "Grupp 1, en valenselektron.",
-      "vanliga_fel": [
-        "Tror att alla i grupp 1 är metaller (glömmer väte-undantaget)"
-      ],
-      "följdfråga": "Varför reagerar kalium häftigare med vatten än litium?"
-    },
-    {
-      "id": 30,
-      "fraga": "Varför reagerar kalium häftigare med vatten än litium?",
-      "svar": "Kaliums valenselektron sitter längre från kärnan och hålls svagare, så den lämnas lättare.",
-      "nivå": 3,
-      "område": "alkalimetaller",
-      "typ": "resonemang",
-      "hint": "Avstånd kärna–valenselektron.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vilka ämnen bildas när natrium reagerar med vatten?"
-    },
-    {
-      "id": 31,
-      "fraga": "Vilka ämnen bildas när natrium reagerar med vatten?",
-      "svar": "Natriumjoner (Na+), hydroxidjoner (OH−) i lösning (natriumhydroxid), samt vätgas (H2). Reaktionsformel: 2Na + 2H2O → 2Na+ + 2OH− + H2.",
-      "nivå": 3,
-      "område": "alkalimetaller",
-      "typ": "tillämpning",
-      "hint": "Minns att gasen är vätgas.",
-      "vanliga_fel": [
-        "Tror att det bildas syre i stället för vätgas"
-      ],
-      "följdfråga": "Varför blir lösningen basisk efter reaktionen?"
-    },
-    {
-      "id": 32,
-      "fraga": "Varför blir lösningen basisk när natrium reagerar med vatten?",
-      "svar": "För att hydroxidjoner (OH−) bildas, och hydroxidjoner gör lösningen basisk.",
-      "nivå": 2,
-      "område": "alkalimetaller",
-      "typ": "förklaring",
-      "hint": "OH− = basiskt.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad kännetecknar halogener?"
-    },
-
-    {
-      "id": 33,
-      "fraga": "Vad kännetecknar halogener (grundämnesfamilj)?",
-      "svar": "I grupp 17. De har 7 valenselektroner och tar gärna upp 1 elektron för att få fullt skal, och bildar −1-joner. Reagerar gärna med metaller och bildar salter.",
-      "nivå": 2,
-      "område": "grundämnesfamiljer",
-      "typ": "förklaring",
-      "hint": "Grupp 17, saknar en elektron.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför reagerar fluor ofta häftigare än klor?"
-    },
-    {
-      "id": 34,
-      "fraga": "Varför reagerar fluor ofta häftigare än klor?",
-      "svar": "Fluor har större tendens att ta upp en elektron (mycket reaktiv) och reagerar därför med fler ämnen.",
-      "nivå": 3,
-      "område": "halogener",
-      "typ": "resonemang",
-      "hint": "Tänk: stark vilja att få fullt skal.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför är det tur att fluor i tandkräm inte är fluor-gas?"
-    },
-    {
-      "id": 35,
-      "fraga": "Varför är det tur att fluor i tandkräm inte är fluor i atomform (fluorgas)?",
-      "svar": "Fluor i atomform är en giftig, mycket reaktiv gas. I tandkräm används stabila fluorider (salter) som stärker emaljen.",
-      "nivå": 2,
-      "område": "halogener",
-      "typ": "förklaring",
-      "hint": "Fluorid = salt, stabilt.",
-      "vanliga_fel": [
-        "Tror att tandkräm innehåller ren fluorgas"
-      ],
-      "följdfråga": "Vad kännetecknar ädelgaser?"
-    },
-
-    {
-      "id": 36,
-      "fraga": "Vad kännetecknar ädelgaser?",
-      "svar": "De har fulla elektronskal och reagerar därför ogärna med andra ämnen. De förekommer ofta som enstaka atomer i gasform.",
-      "nivå": 2,
-      "område": "grundämnesfamiljer",
-      "typ": "förklaring",
-      "hint": "Fullt skal = reagerar inte gärna.",
-      "vanliga_fel": [
-        "Tror att ädelgaser bildar molekyler som O2"
-      ],
-      "följdfråga": "Varför är helium placerat i ädelgasgruppen trots att det bara har 2 valenselektroner?"
-    },
-    {
-      "id": 37,
-      "fraga": "Varför är helium placerat i ädelgasgruppen trots att det bara har 2 valenselektroner?",
-      "svar": "För att helium har fullt yttersta skal (K-skalet blir fullt vid 2 elektroner), alltså ädelgasstruktur.",
-      "nivå": 3,
-      "område": "periodiska systemet",
-      "typ": "resonemang",
-      "hint": "K-skalet rymmer bara 2.",
-      "vanliga_fel": [""],
-      "följdfråga": "Ge ett användningsområde för helium, neon eller argon."
-    },
-    {
-      "id": 38,
-      "fraga": "Ge ett användningsområde för helium, neon eller argon.",
-      "svar": "Exempel: Helium i ballonger (säker gas), flytande helium till nedkylning. Neon i neonskyltar (gulrött ljus). Argon som skyddsgas eller i lampor för att glödtråden inte ska brinna upp.",
-      "nivå": 2,
-      "område": "ädelgaser",
-      "typ": "tillämpning",
-      "hint": "Tänk: ballonger, skyltar, lampor.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad betyder 1 u och varför använder man det?"
-    },
-
-    {
-      "id": 39,
-      "fraga": "Vad betyder 1 u och varför använder man det?",
-      "svar": "1 u är en universell massenhet för mycket små partiklar (atomer). Man använder den för att atomers massa i gram blir opraktiskt små tal.",
-      "nivå": 2,
-      "område": "massa",
-      "typ": "förklaring",
-      "hint": "u = liten massenhet för atomer.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad är en isotop?"
-    },
-    {
-      "id": 40,
-      "fraga": "Vad är en isotop?",
-      "svar": "Varianter av samma grundämne: samma antal protoner men olika antal neutroner, alltså olika massa.",
-      "nivå": 2,
-      "område": "isotoper",
-      "typ": "begrepp",
-      "hint": "Samma atomnummer, olika neutroner.",
-      "vanliga_fel": [
-        "Tror att isotoper har olika antal protoner"
-      ],
-      "följdfråga": "Vad är formelmassa?"
-    },
-
-    {
-      "id": 41,
-      "fraga": "Vad är formelmassa?",
-      "svar": "Massan av en molekyl/förening beräknad genom att summera atommassorna för alla atomer i formeln (i u).",
-      "nivå": 3,
-      "område": "formelmassa",
-      "typ": "begrepp",
-      "hint": "Summera atommassor.",
-      "vanliga_fel": [""],
-      "följdfråga": "Beräkna formelmassan för H2O."
-    },
-    {
-      "id": 42,
-      "fraga": "Beräkna formelmassan för H2O.",
-      "svar": "2·1 u + 16 u = 18 u.",
-      "nivå": 3,
-      "område": "formelmassa",
-      "typ": "tillämpning",
-      "hint": "Väte 1, syre 16.",
-      "vanliga_fel": [
-        "Glömmer att multiplicera med 2 för H2"
-      ],
-      "följdfråga": "Vad är en mol?"
-    },
-    {
-      "id": 43,
-      "fraga": "Vad är en mol?",
-      "svar": "Ett bestämt antal partiklar: cirka 6·10^23 st (Avogadros tal).",
-      "nivå": 2,
-      "område": "mol",
-      "typ": "begrepp",
-      "hint": "En sexa med 23 nollor ungefär.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför väger 1 mol väteatomer 1 gram?"
-    },
-    {
-      "id": 44,
-      "fraga": "Varför väger 1 mol väteatomer 1 gram?",
-      "svar": "För att en väteatom väger ungefär 1 u, och 1 u gånger Avogadros tal motsvarar 1 gram.",
-      "nivå": 4,
-      "område": "mol",
-      "typ": "resonemang",
-      "hint": "Kopplingen mellan u och gram går via Avogadros tal.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad betyder 1 M (molar)?"
-    },
-    {
-      "id": 45,
-      "fraga": "Vad betyder att en lösning är 1 M (molar)?",
-      "svar": "Att en liter lösning innehåller 1 mol löst ämne.",
-      "nivå": 3,
-      "område": "molaritet",
-      "typ": "begrepp",
-      "hint": "Mol per liter.",
-      "vanliga_fel": [
-        "Tror att 1 M betyder 1 gram per liter"
-      ],
-      "följdfråga": "En liter 1 M NaCl innehåller hur många gram NaCl (avrundat)?"
-    },
-    {
-      "id": 46,
-      "fraga": "En liter 1 M NaCl innehåller hur många gram NaCl (avrundat)?",
-      "svar": "Ca 58 g (Na 23 + Cl 35).",
-      "nivå": 4,
-      "område": "molaritet",
-      "typ": "tillämpning",
-      "hint": "Räkna formelmassan i gram per mol.",
-      "vanliga_fel": [""],
-      "följdfråga": "Varför kan man inte räkna med att hitta rent natrium i naturen?"
-    },
-    {
-      "id": 47,
-      "fraga": "Varför kan man inte räkna med att hitta rent natrium i naturen?",
-      "svar": "För att natrium är en alkalimetall som reagerar lätt med andra ämnen (t.ex. vatten, syre, klor) och därför oftast finns i föreningar som salter.",
-      "nivå": 3,
-      "område": "alkalimetaller",
-      "typ": "resonemang",
-      "hint": "Reaktiv metall → binder sig snabbt.",
-      "vanliga_fel": [""],
-      "följdfråga": "Vad är radon och varför kan det vara farligt i bostäder?"
-    },
-    {
-      "id": 48,
-      "fraga": "Vad är radon och varför kan det vara farligt i bostäder?",
-      "svar": "Radon är en radioaktiv gas. Den kan ge skadlig joniserande strålning när den sönderfaller och öka risken för lungcancer vid inandning.",
-      "nivå": 2,
-      "område": "radon",
-      "typ": "förklaring",
-      "hint": "Radioaktiv gas som kan andas in.",
-      "vanliga_fel": [""],
-      "följdfråga": "Nämn två historiska atommodeller och vad de bidrog med."
-    },
-    {
-      "id": 49,
-      "fraga": "Nämn två historiska atommodeller och vad de bidrog med.",
-      "svar": "Exempel: Dalton – atomer som små odelbara kulor. Thomson – elektronen och 'russinkakemodellen'. Rutherford – atomkärna och att atomen mest är tomrum. Bohr – elektroner i bestämda skal. Chadwick – neutronen i kärnan.",
-      "nivå": 3,
-      "område": "atommodeller",
-      "typ": "förklaring",
-      "hint": "Välj två och koppla dem till upptäckten.",
-      "vanliga_fel": [""],
-      "följdfråga": ""
+      "title": "6) Kemiska bindningar + (Lär mer) u, isotoper, mol",
+      "items": [
+        {
+          "q": "Vad är skillnaden mellan jonbindning, molekylbindning och metallbindning (kort)?",
+          "a": "Jonbindning: attraktion mellan + och − joner. Molekylbindning: atomer delar elektronpar. Metallbindning: metallatomer hålls ihop av ett gemensamt elektronmoln av fria elektroner.",
+          "lines": 6,
+          "nivå": 3,
+          "område": "bindningar",
+          "typ": "sammanfattning",
+          "hint": "Joner – dela – elektronmoln.",
+          "vanliga_fel": [
+            "Blandar ihop jon- och molekylbindning"
+          ]
+        },
+        {
+          "q": "Vad är en isotop?",
+          "a": "Varianter av samma grundämne: samma antal protoner men olika antal neutroner, vilket ger olika massa.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "isotoper",
+          "typ": "begrepp",
+          "hint": "Samma atomnummer, olika neutroner.",
+          "vanliga_fel": [
+            "Tror att isotoper har olika antal protoner"
+          ]
+        },
+        {
+          "q": "Vad betyder den universella massenheten 1 u och varför används den?",
+          "a": "1 u är en massenhet för mycket små partiklar (atomer). Den används eftersom massor i gram blir opraktiskt små.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "massa",
+          "typ": "förklaring",
+          "hint": "Gram blir för små tal.",
+          "vanliga_fel": [
+            "Tror att u är samma sak som gram"
+          ]
+        },
+        {
+          "q": "Beräkna formelmassan för vatten (H2O). (Använd H=1 u, O=16 u.)",
+          "a": "2·1 u + 16 u = 18 u.",
+          "lines": 3,
+          "nivå": 3,
+          "område": "formelmassa",
+          "typ": "beräkning",
+          "hint": "Glöm inte 2 framför H.",
+          "vanliga_fel": [
+            "Glömmer multiplicera H med 2"
+          ]
+        },
+        {
+          "q": "Vad är 1 mol och ungefär hur många partiklar innehåller det?",
+          "a": "1 mol är ett bestämt antal partiklar: cirka 6·10^23 stycken.",
+          "lines": 3,
+          "nivå": 2,
+          "område": "mol",
+          "typ": "begrepp",
+          "hint": "Avogadros tal.",
+          "vanliga_fel": [
+            "Tror att mol är en massaenhet"
+          ]
+        }
+      ]
     }
   ]
 }
