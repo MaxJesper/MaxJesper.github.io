@@ -19,71 +19,53 @@
 <nav id="side-menu"></nav>
 
 <main>
-<p>Välj material:</p>
+  <p>Välj material:</p>
 
-<ul>
-  <li><a href="/periodiska-systemet/checklista.html">✅ Checklista</a></li>
+  <ul>
+    <li><a href="/periodiska-systemet/checklista.html">Checklista</a></li>
+    <li><a href="/periodiska-systemet/instuderingsfragor.html">Instuderingsfrågor</a></li>
+    <li><a href="/periodiska-systemet/ovningsprov.html">Övningsprov</a></li>
+  </ul>
 
-  <li>
-    📚 Instuderingsfrågor:
-    <ul>
-      <li><a href="/periodiska-systemet/instuderingsfragor.html">Öppna</a></li>
-      <li><a href="/periodiska-systemet/instuderingsfragor-print-elev.html">Skriv ut (elev)</a></li>
-      <li><a href="/periodiska-systemet/instuderingsfragor-print-larare.html">Skriv ut (lärare/facit)</a></li>
-    </ul>
-  </li>
+  <hr>
 
-  <li>
-    📝 Övningsprov:
-    <ul>
-      <li><a href="/periodiska-systemet/ovningsprov.html">Gör prov</a></li>
-      <li><a href="/periodiska-systemet/ovningsprov-print.html">Skriv ut prov</a></li>
-      <li><a href="/periodiska-systemet/facit.html">Visa facit</a></li>
-      <li><a href="/periodiska-systemet/facit-print.html">Skriv ut facit</a></li>
-    </ul>
-  </li>
-</ul>
+  <h3>🤖 Träna med AI</h3>
+  <button id="ai-train-btn" class="subject-btn">Starta AI-träning</button>
+  <p id="ai-status"></p>
 
-<hr>
+  <p>
+    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+  </p>
+</main>
 
-<h3>🤖 Träna med AI</h3>
-<p>Klicka för att kopiera träningsprompt och öppna ChatGPT.</p>
-
-<button id="ai-train-btn" class="ai-btn" type="button">🤖 Träna med AI</button>
-<p id="ai-status" style="margin-top:8px;"></p>
+<script src="/js/menu.js"></script>
 
 <script>
 const AI_TRAINING_PROMPT = `
 Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 8 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
 
 MÅL:
-Träna eleven aktivt. Ställ EN fråga i taget. Vänta på svar. Ge kort feedback. Anpassa nivån.
+Träna aktivt genom frågor. En fråga i taget. Anpassa nivån.
 
 REGLER:
-- Ge inte facit direkt.
-- Vid fel: förklara kort och ge en ledtråd.
-- Variera frågor: begrepp, förklara, resonera, exempel.
-- Svara kort och tydligt på svenska.
+- Ge inte facit direkt
+- Hjälp med ledtrådar
+- Variera frågor
+- Svara kort och tydligt
 
 INNEHÅLL:
-- proton, neutron, elektron + laddningar
-- varför atomer är oladdade
+- proton, neutron, elektron
 - atomnummer
 - elektronskal (2,8,8)
 - valenselektroner
-- period vs grupp
-- metaller vs icke-metaller
+- period och grupp
 - alkalimetaller, halogener, ädelgaser
 - joner (+/-)
-- jonbindning, molekylbindning, metallbindning
+- bindningar
 - varför saltvatten leder ström
 
 START:
-Fråga eleven:
-1) nivå (1–3)
-2) område (atomen / periodiska systemet / bindningar / blandat)
-
-Sedan börja direkt.
+Fråga efter nivå och område, börja sedan direkt.
 `.trim();
 
 document.getElementById("ai-train-btn").addEventListener("click", async () => {
@@ -92,18 +74,12 @@ document.getElementById("ai-train-btn").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
     window.open("https://chat.openai.com/", "_blank");
-    statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT (Ctrl+V / Cmd+V).";
+    statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT.";
   } catch (err) {
-    statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt.";
+    statusEl.textContent = "⚠️ Kunde inte kopiera.";
   }
 });
 </script>
-  
-  <p>
-    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-  </p>
-</main>
 
-<script src="/js/menu.js"></script>
 </body>
 </html>
