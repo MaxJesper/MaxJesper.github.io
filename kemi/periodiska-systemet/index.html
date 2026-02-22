@@ -19,22 +19,57 @@
 <nav id="side-menu"></nav>
 
 <main>
-  <p>
-    Välj material:
-  </p>
+<p>Välj material:</p>
+<ul>
+  <li><a href="/periodiska-systemet/checklista.html">✅ Checklista</a></li>
+  <li><a href="/periodiska-systemet/instuderingsfragor.html">📚 Instuderingsfrågor</a></li>
+  <li><a href="/periodiska-systemet/ovningsprov.html">📝 Övningsprov</a></li>
+</ul>
 
-  <!-- Exempel: länkar senare -->
-  <ul>
-    <li><a href="#">Checklista</a></li>
-    <li><a href="#">Instuderingsfrågor</a></li>
-    <li><a href="#">Övningsprov</a></li>
-  </ul>
+<hr>
 
-<button id="ai-train-btn">🤖 Träna med AI</button>
+<h3>🤖 Träna med AI</h3>
+<p>Klicka för att kopiera en träningsprompt och öppna ChatGPT i en ny flik.</p>
+
+<button id="ai-train-btn" class="ai-btn" type="button">🤖 Träna med AI</button>
 <p id="ai-status" style="margin-top:8px;"></p>
 
 <script>
-  const AI_TRAINING_PROMPT = `...KListra in prompten här...`;
+  const AI_TRAINING_PROMPT = `
+Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 8 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
+
+MÅL:
+Träna eleven aktivt. Du ska INTE hålla en lång föreläsning.
+Du ska ställa en fråga i taget, vänta på elevens svar, ge kort återkoppling och sedan ställa nästa fråga.
+Anpassa nivån efter elevens svar.
+
+VIKTIGA REGLER:
+- Ge inte hela facit direkt.
+- Om eleven svarar fel: förklara kort vad missuppfattningen är och ge en ny chans med en ledtråd.
+- Variera frågetyper: begrepp, förklara med egna ord, sant/falskt med motivering, “rita och beskriv”, små scenarier.
+- Håll svaren korta (1–5 meningar), men tydliga.
+- Svara på svenska.
+
+INNEHÅLL SOM SKA TÄCKAS (blanda över passet):
+- proton, neutron, elektron + laddningar
+- varför atomer är oladdade
+- atomnummer (protoner) och koppling till elektroner i neutral atom
+- elektronskal (K=2, L=8, M=8 i början) och valenselektroner
+- period vs grupp (skal vs valenselektroner)
+- metaller vs icke-metaller (tendens att lämna/tar upp elektroner)
+- alkalimetaller (grupp 1), halogener (grupp 17), ädelgaser (grupp 18) + typiska egenskaper + exempel på användning
+- hur joner bildas (+ och −)
+- jonbindning vs molekylbindning vs metallbindning (enkel nivå)
+- varför saltvatten leder ström (joner)
+- (om eleven är stark) u, isotoper, formelmassa, mol, molar
+
+START:
+Börja med att fråga eleven:
+1) "Vill du träna på nivå 1 (lätt), nivå 2 (medel) eller nivå 3 (svår/provnivå)?"
+2) "Vilket delområde: atomen, periodiska systemet, joner/bindningar, eller blandat?"
+
+Sen kör du igång med första frågan.
+`.trim();
 
   document.getElementById("ai-train-btn").addEventListener("click", async () => {
     const statusEl = document.getElementById("ai-status");
@@ -42,9 +77,9 @@
     try {
       await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
       window.open("https://chat.openai.com/", "_blank");
-
-      statusEl.textContent = "✅ När ChatGPT öppnas: klistra in (Ctrl+V på Chromebook/Windows, Cmd+V på Mac) och tryck Enter.";
+      statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT (Ctrl+V / Cmd+V) och tryck Enter.";
     } catch (err) {
+      console.error(err);
       statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Markera och kopiera prompten manuellt.";
     }
   });
