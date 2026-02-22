@@ -27,11 +27,13 @@
     <li><a href="/periodiska-systemet/ovningsprov.html">Övningsprov</a></li>
   </ul>
 
-  <hr>
+<hr>
 
-  <h3>🤖 Träna med AI</h3>
-  <button id="ai-train-btn" class="subject-btn">Starta AI-träning</button>
-  <p id="ai-status"></p>
+<p>Träna med AI (kopiera prompt):</p>
+<p>
+  <button id="ai-train-btn" class="subject-btn" type="button">🤖 Träna med AI</button>
+</p>
+<p id="ai-status"></p>
 
   <p>
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
@@ -41,44 +43,48 @@
 <script src="/js/menu.js"></script>
 
 <script>
-const AI_TRAINING_PROMPT = `
-Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 8 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
+  const AI_TRAINING_PROMPT = `
+Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 8–9 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
 
-MÅL:
-Träna aktivt genom frågor. En fråga i taget. Anpassa nivån.
+MÅL: Träna eleven aktivt. Du ska INTE hålla en lång föreläsning. Ställ en fråga i taget, vänta på elevens svar, ge kort återkoppling och ställ sedan nästa fråga. Anpassa nivån efter elevens svar.
 
-REGLER:
-- Ge inte facit direkt
-- Hjälp med ledtrådar
-- Variera frågor
-- Svara kort och tydligt
+VIKTIGA REGLER:
+- Ge inte facit direkt. Hjälp med ledtrådar och följdfrågor.
+- Om eleven svarar fel: förklara kort vad missuppfattningen är och ge en ny chans.
+- Svara på svenska.
+- Var tydlig, snäll och konkret.
+- Variera frågetyper: begrepp, förklara med egna ord, ordna i rätt ordning, sant/falskt med motivering.
+- Använd ibland små miniscenarier (t.ex. natrium + klor, salt i vatten, helium i ballong).
 
-INNEHÅLL:
-- proton, neutron, elektron
-- atomnummer
-- elektronskal (2,8,8)
-- valenselektroner
-- period och grupp
-- alkalimetaller, halogener, ädelgaser
-- joner (+/-)
-- bindningar
+INNEHÅLL SOM SKA ÖVAS (blanda):
+- proton, neutron, elektron (laddning och plats i atomen)
+- varför atomer är oladdade
+- atomnummer (koppling till protoner)
+- elektronskal (K=2, L=8, M=8 för de första 20) och valenselektroner
+- period vs grupp (skal vs valenselektroner)
+- metaller och icke-metaller (tendens att lämna/tar upp elektroner)
+- alkalimetaller (grupp 1), halogener (grupp 17), ädelgaser (grupp 18) + egenskaper och exempel på användning
+- hur joner bildas (+ och −)
+- jonbindning, molekylbindning, metallbindning (enkel nivå)
 - varför saltvatten leder ström
 
-START:
-Fråga efter nivå och område, börja sedan direkt.
+STARTA SÅ HÄR:
+1) Fråga: "Vill du börja med nivå 1 (lätt), nivå 2 (medel) eller nivå 3 (prov-nivå)?"
+2) Fråga: "Vill du träna atomen, periodiska systemet, familjerna (alkalimetaller/halogener/ädelgaser), joner/bindningar eller blandat?"
+3) Börja direkt med första frågan.
 `.trim();
 
-document.getElementById("ai-train-btn").addEventListener("click", async () => {
-  const statusEl = document.getElementById("ai-status");
-
-  try {
-    await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
-    window.open("https://chat.openai.com/", "_blank");
-    statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT.";
-  } catch (err) {
-    statusEl.textContent = "⚠️ Kunde inte kopiera.";
-  }
-});
+  document.getElementById("ai-train-btn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("ai-status");
+    try {
+      await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
+      window.open("https://chat.openai.com/", "_blank");
+      statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT (Ctrl+V / Cmd+V) och tryck Enter.";
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = "⚠️ Kunde inte kopiera. Kopiera prompten manuellt.";
+    }
+  });
 </script>
 
 </body>
