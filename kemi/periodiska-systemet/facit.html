@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Facit – Periodiska systemet</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prov.css">
+</head>
+<body>
+
+<header class="kemi-header">
+<h1>FACIT</h1>
+<p>Övningsprov – Periodiska systemet (åk 8/9)</p>
+</header>
+
+<main>
+
+<div class="prov-actions">
+  <a href="/periodiska-systemet/ovningsprov.html" class="subject-btn">← Tillbaka till prov</a>
+  <a href="/periodiska-systemet/facit-print.html" target="_blank" rel="noopener"
+     class="subject-btn print-green">🖨️ Skriv ut facit</a>
+</div>
+
+<div id="prov-container"></div>
+
+</main>
+
+<script src="/js/render-prov.js"></script>
+<script>
+renderProv({
+  jsonPath: "/periodiska-systemet/data/ovningsprov.json",
+  mountId: "prov-container",
+  mode: "facit"
+});
+</script>
+
+</body>
+</html>
