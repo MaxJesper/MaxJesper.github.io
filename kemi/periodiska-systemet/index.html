@@ -30,6 +30,26 @@
     <li><a href="#">Övningsprov</a></li>
   </ul>
 
+<button id="ai-train-btn">🤖 Träna med AI</button>
+<p id="ai-status" style="margin-top:8px;"></p>
+
+<script>
+  const AI_TRAINING_PROMPT = `...KListra in prompten här...`;
+
+  document.getElementById("ai-train-btn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("ai-status");
+
+    try {
+      await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
+      window.open("https://chat.openai.com/", "_blank");
+
+      statusEl.textContent = "✅ När ChatGPT öppnas: klistra in (Ctrl+V på Chromebook/Windows, Cmd+V på Mac) och tryck Enter.";
+    } catch (err) {
+      statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Markera och kopiera prompten manuellt.";
+    }
+  });
+</script>
+  
   <p>
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
   </p>
