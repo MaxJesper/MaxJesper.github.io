@@ -15,7 +15,6 @@
 </header>
 
 <button class="hamburger" onclick="toggleMenu()">☰</button>
-
 <nav id="side-menu"></nav>
 
 <main>
@@ -27,13 +26,13 @@
     <li><a href="/periodiska-systemet/ovningsprov.html">Övningsprov</a></li>
   </ul>
 
-<hr>
+  <hr>
 
-<p>Träna med AI (kopiera prompt):</p>
-<p>
-  <button id="ai-train-btn" class="subject-btn" type="button">🤖 Träna med AI</button>
-</p>
-<p id="ai-status"></p>
+  <p>Träna med AI (kopiera prompt):</p>
+  <p>
+    <button id="ai-train-btn" class="subject-btn" type="button">🤖 Träna med AI</button>
+  </p>
+  <p id="ai-status"></p>
 
   <p>
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
@@ -76,13 +75,14 @@ STARTA SÅ HÄR:
 
   document.getElementById("ai-train-btn").addEventListener("click", async () => {
     const statusEl = document.getElementById("ai-status");
+
     try {
       await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
       window.open("https://chat.openai.com/", "_blank");
-      statusEl.textContent = "✅ Prompt kopierad! Klistra in i ChatGPT (Ctrl+V / Cmd+V) och tryck Enter.";
+      statusEl.textContent = "✅ Prompt kopierad! När ChatGPT öppnas: Ctrl+V (Chromebook/Windows) eller Cmd+V (Mac), Enter.";
     } catch (err) {
       console.error(err);
-      statusEl.textContent = "⚠️ Kunde inte kopiera. Kopiera prompten manuellt.";
+      statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Kopiera prompten manuellt.";
     }
   });
 </script>
