@@ -510,9 +510,40 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             markWrong(r,c);
 
             if (v) {
-              const next = nextEditable(r,c);
-              if (next) next.focus();
+  // ===== Smart auto-advance: välj riktning =====
+            const canRight = !isBlack(r, c+1);
+            const canDown  = !isBlack(r+1, c);
+
+  // "del av ett vågrätt ord" om vänster inte är svart
+            const hasLeftWhite = !isBlack(r, c-1);
+
+  // Om bara en riktning finns
+            if (canDown && !canRight) {
+              lastTypedDir = 'down';
+              const nextDown = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
+              if (nextDown) nextDown.focus();
+              return;
             }
+            if (canRight && !canDown) {
+              lastTypedDir = 'across';
+              const nextRight = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
+              if (nextRight) nextRight.focus();
+              return;
+            }
+          
+            // Om båda riktningar finns:
+            // Regel: om man inte är första bokstaven i det vågräta ordet (har vit ruta till vänster),
+            // då fortsätt vågrätt, annars lodrätt.
+            if (hasLeftWhite) {
+              lastTypedDir = 'across';
+              const nextRight = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
+              if (nextRight) nextRight.focus();
+            } else {
+              lastTypedDir = 'down';
+              const nextDown = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
+              if (nextDown) nextDown.focus();
+            }
+          }
           });
 
           inp.addEventListener('keydown', (e) => {
