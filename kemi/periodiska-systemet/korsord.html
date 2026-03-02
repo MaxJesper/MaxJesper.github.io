@@ -15,9 +15,7 @@
   .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
 
   .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 980px) {
-    .layout { grid-template-columns: 420px 1fr; align-items: start; }
-  }
+  @media (min-width: 980px) { .layout { grid-template-columns: 420px 1fr; align-items: start; } }
 
   .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; }
@@ -36,10 +34,10 @@
   button:disabled { opacity: .55; cursor: not-allowed; }
 
   .status { margin-top: 8px; font-size: 14px; color: #222; }
+  .note { font-size: 13px; color: #333; margin-top: 6px; }
 
   .grid-wrap { display: grid; justify-content: center; }
 
-  /* ====== GRID ====== */
   .grid {
     --cell: 34px; /* skärm */
     display: grid;
@@ -50,7 +48,6 @@
     width: max-content;
     background: #000; /* helsvart bakgrund bakom rutorna */
   }
-
   .cell {
     position: relative;
     background: #fff;
@@ -75,9 +72,9 @@
   }
   .cell.black .num { display: none; }
 
-  /* ====== Felmarkering (färgblindvänligt) ====== */
+  /* Felmarkering (färgblindvänligt) */
   .cell.wrong {
-    background: #D32F2F !important;   /* tydlig röd */
+    background: #D32F2F !important;
     outline: 3px solid #7f0000;
     outline-offset: -3px;
   }
@@ -92,43 +89,28 @@
     pointer-events: none;
   }
 
-  .note { font-size: 13px; color: #333; margin-top: 6px; }
-
   /* Print-only: facit-sida */
   .print-only { display: none; }
 
-  /* ====== PRINT (Chrome) ====== */
   @media print {
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
-    }
-
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     @page { size: A4; margin: 12mm; }
-
     body { margin: 0; }
 
-    /* göm UI */
     .hamburger, #side-menu, .top-actions, .controls, .note, #status { display: none !important; }
 
     h1 { font-size: 18px; margin: 0 0 4px; }
     .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
 
-    .print-sheet { padding-left: 4mm; }
-
-    .print-sheet { break-inside: avoid; page-break-inside: avoid; }
+    .print-sheet { padding-left: 4mm; break-inside: avoid; page-break-inside: avoid; }
 
     .layout { grid-template-columns: 1fr !important; gap: 8px; }
 
     .clues { gap: 6px; }
     .clue-box { border: none; padding: 0; }
-
     .clue-box h2 { font-size: 12px; margin: 6px 0 2px; }
 
-    .print-clues {
-      column-count: 2;
-      column-gap: 10mm;
-    }
+    .print-clues { column-count: 2; column-gap: 10mm; }
     .print-clues ol { padding-left: 16px; }
     .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
 
@@ -136,11 +118,8 @@
     .cell input { font-size: 14px; }
     .num { font-size: 8px; }
 
-    /* Skriv alltid ut rent (utan felmarkeringar) */
-    .cell.wrong {
-      background: #fff !important;
-      outline: none !important;
-    }
+    /* Skriv alltid ut rent (utan felmarkeringar / symboler) */
+    .cell.wrong { background: #fff !important; outline: none !important; }
     .cell.wrong::after { display: none !important; }
 
     .print-only { display: block; }
@@ -151,7 +130,6 @@
 </head>
 
 <body>
-  <!-- Hamburgermeny -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
@@ -159,7 +137,6 @@
     <h1>Korsord: Periodiska systemet och atomens byggnad</h1>
     <p class="subtitle">Fyll i rutorna. En ruta blir röd direkt om bokstaven är fel.</p>
 
-    <!-- Knappar högst upp (skärm) -->
     <div class="top-actions">
       <button type="button" onclick="window.print()">Skriv ut</button>
       <a href="/kemi/periodiska-systemet/" class="subject-btn">← Tillbaka</a>
@@ -195,12 +172,15 @@
         <div class="clue-box">
           <h2>Verktyg</h2>
           <div class="controls">
-            <button id="undoBtn" class="secondary" type="button" disabled>Rensa senaste</button>
+            <button id="clearWordBtn" class="secondary" type="button" disabled>Rensa senaste</button>
             <button id="clearBtn" class="secondary" type="button">Rensa</button>
             <button id="revealBtn" type="button">Visa facit</button>
           </div>
           <div id="status" class="status"></div>
-          <div class="note">Tips: använd piltangenter. “Rensa senaste” fungerar som ångra (bakåt steg för steg).</div>
+          <div class="note">
+            “Rensa senaste” rensar det ord du senast arbetade med (vågrätt/lodrätt styrs av senaste piltangent).
+            “Visa facit” är en toggle: visar/döljer facit för senaste ordet (eller hela om allt är ifyllt).
+          </div>
         </div>
       </div>
 
@@ -210,7 +190,6 @@
     </div>
   </div>
 
-  <!-- ====== PRINT-ONLY FACIT (sida 2) ====== -->
   <div class="print-only facit-page">
     <h2 class="facit-title">Facit – Korsord: Periodiska systemet och atomens byggnad</h2>
     <div class="grid-wrap">
@@ -226,7 +205,13 @@ const DATA = {"rows": 17, "cols": 17, "black": [[1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1
 const gridEl = document.getElementById('grid');
 const gridSolEl = document.getElementById('grid-solution');
 const statusEl = document.getElementById('status');
-const undoBtn = document.getElementById('undoBtn');
+const clearWordBtn = document.getElementById('clearWordBtn');
+const revealBtn = document.getElementById('revealBtn');
+
+let direction = 'across';         // 'across' eller 'down'
+let lastCell = null;             // {r,c}
+let lastWordId = null;           // t.ex. 'A9' eller 'D11'
+let revealState = { mode: 'none', wordId: null, backup: new Map() }; // none | word | all
 
 function normalizeChar(ch) {
   if (!ch) return '';
@@ -235,87 +220,108 @@ function normalizeChar(ch) {
   for (const c of ch) if (ok.includes(c)) return c;
   return '';
 }
+function isEditable(r,c) { return DATA.black[r][c] !== 1; }
+function cellKey(r,c){ return `${r},${c}`; }
 
 function cellId(r,c,prefix='cell') { return `${prefix}-${r}-${c}`; }
-
-function isEditable(r,c) { return DATA.black[r][c] !== 1; }
-
-function getInput(r,c) {
+function getCellDiv(r,c){ return document.getElementById(cellId(r,c,'cell')); }
+function getInput(r,c){
   const cell = document.getElementById(cellId(r,c,'cell'));
   return cell ? cell.querySelector('input') : null;
 }
 
-function getCellDiv(r,c) {
-  return document.getElementById(cellId(r,c,'cell'));
+/* ====== Bygg ordlistor (vågrätt/lodrätt) ====== */
+const words = new Map(); // wordId -> {dir, number, cells:[{r,c}]}
+const cellToWords = new Map(); // "r,c" -> {across: wordId|null, down: wordId|null}
+
+function isBlack(r,c){
+  if (r<0 || c<0 || r>=DATA.rows || c>=DATA.cols) return true;
+  return DATA.black[r][c] === 1;
 }
 
-/* ===== Undo-historik (steg för steg) =====
-   Vi sparar hela rutnätet som en "snapshot" vid varje ändring.
-   Rensa senaste = ångra ett steg bakåt. */
-const history = [];
-let isRestoring = false;
+function buildWords() {
+  words.clear();
+  cellToWords.clear();
 
-function snapshot() {
-  const state = [];
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
-      if (!isEditable(r,c)) { state.push(null); continue; }
-      const inp = getInput(r,c);
-      state.push(inp ? normalizeChar(inp.value) : '');
-    }
-  }
-  return state;
-}
-
-function restore(state) {
-  isRestoring = true;
-  let idx = 0;
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
+  // init cellToWords
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
-      const inp = getInput(r,c);
-      if (inp) inp.value = state[idx] || '';
-      idx++;
+      cellToWords.set(cellKey(r,c), {across:null, down:null});
     }
   }
-  // Efter restore: uppdatera felmarkeringar
-  refreshAllWrongMarks();
-  isRestoring = false;
-  updateUndoBtn();
+
+  // Across starts: editable and (left is black/out) and has a run length >=2
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      if (!isBlack(r, c-1)) continue;
+      if (isBlack(r, c+1)) continue; // length 1 -> skip as word
+      const num = DATA.numbers[r][c] || null;
+      const id = `A${num ?? `${r}-${c}`}`;
+      const cells = [];
+      let cc = c;
+      while (cc < DATA.cols && isEditable(r,cc)) {
+        cells.push({r, c:cc});
+        const m = cellToWords.get(cellKey(r,cc));
+        if (m) m.across = id;
+        cc++;
+        if (cc < DATA.cols && isBlack(r,cc)) break;
+      }
+      words.set(id, {dir:'across', number:num, cells});
+    }
+  }
+
+  // Down starts: editable and (up is black/out) and run length >=2
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      if (!isBlack(r-1, c)) continue;
+      if (isBlack(r+1, c)) continue; // length 1 -> skip
+      const num = DATA.numbers[r][c] || null;
+      const id = `D${num ?? `${r}-${c}`}`;
+      const cells = [];
+      let rr = r;
+      while (rr < DATA.rows && isEditable(rr,c)) {
+        cells.push({r:rr, c});
+        const m = cellToWords.get(cellKey(rr,c));
+        if (m) m.down = id;
+        rr++;
+        if (rr < DATA.rows && isBlack(rr,c)) break;
+      }
+      words.set(id, {dir:'down', number:num, cells});
+    }
+  }
 }
 
-function pushHistory() {
-  if (isRestoring) return;
-  history.push(snapshot());
-  if (history.length > 300) history.shift(); // säkerhetsgräns
-  updateUndoBtn();
+function wordForCell(r,c,dir){
+  const m = cellToWords.get(cellKey(r,c));
+  if (!m) return null;
+  return dir === 'down' ? m.down : m.across;
 }
 
-function updateUndoBtn() {
-  undoBtn.disabled = history.length === 0;
+function updateLastWord(r,c){
+  lastCell = {r,c};
+  const preferred = wordForCell(r,c,direction);
+  const fallback = wordForCell(r,c, direction === 'across' ? 'down' : 'across');
+  lastWordId = preferred || fallback;
+  clearWordBtn.disabled = !lastWordId;
 }
 
-function undo() {
-  if (history.length === 0) return;
-  const prev = history.pop();
-  restore(prev);
-  statusEl.textContent = '';
-}
-
-function markWrong(r,c) {
+/* ====== Markera fel direkt ====== */
+function markWrong(r,c){
   const cell = getCellDiv(r,c);
   if (!cell) return;
   cell.classList.remove('wrong');
   const inp = getInput(r,c);
   const val = inp ? normalizeChar(inp.value) : '';
-  if (!val) return; // tomt = ingen markering
+  if (!val) return;
   const sol = DATA.solution[r][c];
   if (sol && val !== sol) cell.classList.add('wrong');
 }
-
-function refreshAllWrongMarks() {
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
+function refreshAllWrong(){
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
       const cell = getCellDiv(r,c);
       if (!cell) continue;
@@ -329,25 +335,191 @@ function refreshAllWrongMarks() {
   }
 }
 
+/* ====== Reveal toggle ====== */
+function puzzleFilledCompletely(){
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (!inp || !normalizeChar(inp.value)) return false;
+    }
+  }
+  return true;
+}
+
+function clearRevealState(){
+  revealState = { mode:'none', wordId:null, backup:new Map() };
+  revealBtn.textContent = 'Visa facit';
+}
+
+function hideReveal(){
+  if (revealState.mode === 'none') return;
+  // restore backups
+  for (const [k, v] of revealState.backup.entries()){
+    const [rS,cS] = k.split(',').map(Number);
+    const inp = getInput(rS,cS);
+    if (inp) inp.value = v;
+  }
+  refreshAllWrong();
+  clearRevealState();
+  statusEl.textContent = '';
+}
+
+function showRevealForWord(wordId){
+  const w = words.get(wordId);
+  if (!w) return;
+
+  // Only if word has something wrong or missing
+  let hasIssue = false;
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    const val = inp ? normalizeChar(inp.value) : '';
+    const sol = DATA.solution[r][c] || '';
+    if (!val || val !== sol) { hasIssue = true; break; }
+  }
+  if (!hasIssue){
+    statusEl.textContent = 'Senaste ordet verkar redan rätt.';
+    return;
+  }
+
+  revealState.mode = 'word';
+  revealState.wordId = wordId;
+  revealState.backup = new Map();
+
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (!inp) continue;
+    const k = cellKey(r,c);
+    revealState.backup.set(k, normalizeChar(inp.value));
+    inp.value = DATA.solution[r][c] || '';
+  }
+  refreshAllWrong();
+  revealBtn.textContent = 'Dölj facit';
+  statusEl.textContent = `Facit visas för senaste ordet (${w.dir === 'across' ? 'vågrätt' : 'lodrätt'}).`;
+}
+
+function showRevealForAll(){
+  revealState.mode = 'all';
+  revealState.wordId = null;
+  revealState.backup = new Map();
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (!inp) continue;
+      const k = cellKey(r,c);
+      revealState.backup.set(k, normalizeChar(inp.value));
+      inp.value = DATA.solution[r][c] || '';
+    }
+  }
+  refreshAllWrong();
+  revealBtn.textContent = 'Dölj facit';
+  statusEl.textContent = 'Facit visas för hela korsordet.';
+}
+
+function toggleReveal(){
+  if (revealState.mode !== 'none'){
+    hideReveal();
+    return;
+  }
+
+  if (!lastWordId){
+    statusEl.textContent = 'Klicka i en ruta först så jag vet vilket ord som är “senaste”.';
+    return;
+  }
+
+  if (puzzleFilledCompletely()){
+    showRevealForAll();
+  } else {
+    showRevealForWord(lastWordId);
+  }
+}
+
+/* ====== Rensa ====== */
+function clearAll(){
+  hideReveal();
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = '';
+    }
+  }
+  refreshAllWrong();
+  statusEl.textContent = '';
+}
+
+function clearLastWord(){
+  if (!lastWordId) return;
+  hideReveal();
+  const w = words.get(lastWordId);
+  if (!w) return;
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (inp) inp.value = '';
+  }
+  refreshAllWrong();
+  statusEl.textContent = 'Senaste ordet rensat.';
+}
+
+/* ====== Navigation ====== */
+function focusStep(r,c,dr,dc){
+  let rr=r+dr, cc=c+dc;
+  while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols){
+    if (isEditable(rr,cc)){
+      const inp = getInput(rr,cc);
+      if (inp) inp.focus();
+      return;
+    }
+    rr += dr; cc += dc;
+  }
+}
+function nextEditable(r,c){
+  for (let cc=c+1; cc<DATA.cols; cc++){
+    if (isEditable(r,cc)) return getInput(r,cc);
+    if (isBlack(r,cc)) break;
+  }
+  for (let rr=r; rr<DATA.rows; rr++){
+    for (let cc=(rr===r?c+1:0); cc<DATA.cols; cc++){
+      if (isEditable(rr,cc)) return getInput(rr,cc);
+    }
+  }
+  return null;
+}
+function prevEditable(r,c){
+  for (let cc=c-1; cc>=0; cc--){
+    if (isEditable(r,cc)) return getInput(r,cc);
+    if (isBlack(r,cc)) break;
+  }
+  for (let rr=r; rr>=0; rr--){
+    for (let cc=(rr===r?c-1:DATA.cols-1); cc>=0; cc--){
+      if (isEditable(rr,cc)) return getInput(rr,cc);
+    }
+  }
+  return null;
+}
+
+/* ====== Render ====== */
 function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
   if (!targetEl) return;
   targetEl.innerHTML = '';
   for (let r=0; r<DATA.rows; r++) {
     for (let c=0; c<DATA.cols; c++) {
-      const isBlack = DATA.black[r][c] === 1;
+      const isBlk = DATA.black[r][c] === 1;
       const cell = document.createElement('div');
-      cell.className = 'cell' + (isBlack ? ' black' : '');
+      cell.className = 'cell' + (isBlk ? ' black' : '');
       cell.id = cellId(r,c,idPrefix);
 
       const num = DATA.numbers[r][c];
-      if (!isBlack && num) {
+      if (!isBlk && num) {
         const s = document.createElement('div');
         s.className = 'num';
         s.textContent = num;
         cell.appendChild(s);
       }
 
-      if (!isBlack) {
+      if (!isBlk) {
         if (withInputs) {
           const inp = document.createElement('input');
           inp.setAttribute('maxlength','1');
@@ -357,20 +529,23 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.dataset.r = r;
           inp.dataset.c = c;
 
+          inp.addEventListener('focus', () => {
+            updateLastWord(r,c);
+          });
+
           inp.addEventListener('input', (e) => {
+            // Om facit är på: stäng av när eleven börjar skriva (förutsägbart)
+            if (revealState.mode !== 'none') hideReveal();
+
             const v = normalizeChar(e.target.value);
             e.target.value = v;
 
-            if (!isRestoring) {
-              // Spara undo-läge vid varje faktisk ändring
-              pushHistory();
-            }
-
-            // Markera fel direkt
+            updateLastWord(r,c);
             markWrong(r,c);
 
-            // Auto-advance
+            // auto-advance åt höger => vågrätt
             if (v) {
+              direction = 'across';
               const next = nextEditable(r,c);
               if (next) next.focus();
             }
@@ -379,13 +554,15 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.addEventListener('keydown', (e) => {
             const r0 = Number(e.target.dataset.r);
             const c0 = Number(e.target.dataset.c);
-            if (e.key === 'ArrowLeft') { e.preventDefault(); focusStep(r0,c0,0,-1); }
-            if (e.key === 'ArrowRight') { e.preventDefault(); focusStep(r0,c0,0, 1); }
-            if (e.key === 'ArrowUp') { e.preventDefault(); focusStep(r0,c0,-1,0); }
-            if (e.key === 'ArrowDown') { e.preventDefault(); focusStep(r0,c0, 1,0); }
+
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); direction='across'; updateLastWord(r0,c0); focusStep(r0,c0,0,-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); direction='across'; updateLastWord(r0,c0); focusStep(r0,c0,0, 1); }
+            if (e.key === 'ArrowUp')    { e.preventDefault(); direction='down';   updateLastWord(r0,c0); focusStep(r0,c0,-1,0); }
+            if (e.key === 'ArrowDown')  { e.preventDefault(); direction='down';   updateLastWord(r0,c0); focusStep(r0,c0, 1,0); }
+
             if (e.key === 'Backspace' && !e.target.value) {
               const prev = prevEditable(r0,c0);
-              if (prev) { prev.focus(); }
+              if (prev) prev.focus();
             }
           });
 
@@ -407,86 +584,29 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
   }
 }
 
-function focusStep(r,c,dr,dc) {
-  let rr = r+dr, cc = c+dc;
-  while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols) {
-    if (isEditable(rr,cc)) { const inp = getInput(rr,cc); if (inp) inp.focus(); return; }
-    rr += dr; cc += dc;
-  }
-}
+function init() {
+  buildWords();
 
-function nextEditable(r,c) {
-  for (let cc=c+1; cc<DATA.cols; cc++) {
-    if (isEditable(r,cc)) return getInput(r,cc);
-    if (DATA.black[r][cc]===1) break;
-  }
-  for (let rr=r; rr<DATA.rows; rr++) {
-    for (let cc=(rr===r?c+1:0); cc<DATA.cols; cc++) {
-      if (isEditable(rr,cc)) return getInput(rr,cc);
+  buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
+  buildGrid(gridSolEl, {withInputs:false, fillSolution:true, idPrefix:'sol'});
+
+  document.getElementById('clearBtn').addEventListener('click', clearAll);
+  document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
+  document.getElementById('revealBtn').addEventListener('click', toggleReveal);
+
+  // fokus första ruta
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (isEditable(r,c)) {
+        const i = getInput(r,c);
+        if (i) { i.focus(); updateLastWord(r,c); }
+        r = DATA.rows; break;
+      }
     }
   }
-  return null;
 }
 
-function prevEditable(r,c) {
-  for (let cc=c-1; cc>=0; cc--) {
-    if (isEditable(r,cc)) return getInput(r,cc);
-    if (DATA.black[r][cc]===1) break;
-  }
-  for (let rr=r; rr>=0; rr--) {
-    for (let cc=(rr===r?c-1:DATA.cols-1); cc>=0; cc--) {
-      if (isEditable(rr,cc)) return getInput(rr,cc);
-    }
-  }
-  return null;
-}
-
-function reveal() {
-  // Undo: spara nuvarande läge innan vi fyller facit
-  pushHistory();
-
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
-      if (!isEditable(r,c)) continue;
-      const inp = getInput(r,c);
-      if (inp) inp.value = DATA.solution[r][c] || '';
-    }
-  }
-  refreshAllWrongMarks(); // borde bli inga röda eftersom allt är rätt
-  statusEl.textContent = 'Facit ifyllt.';
-}
-
-function clearAll() {
-  pushHistory();
-
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
-      if (!isEditable(r,c)) continue;
-      const inp = getInput(r,c);
-      if (inp) inp.value = '';
-    }
-  }
-  refreshAllWrongMarks();
-  statusEl.textContent = '';
-}
-
-document.getElementById('revealBtn').addEventListener('click', reveal);
-document.getElementById('clearBtn').addEventListener('click', clearAll);
-document.getElementById('undoBtn').addEventListener('click', undo);
-
-// Bygg elevrutnät + facit-rutnät
-buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
-buildGrid(gridSolEl, {withInputs:false, fillSolution:true, idPrefix:'sol'});
-
-// Init: ingen undo innan man gör något
-updateUndoBtn();
-
-// fokus första ruta
-for (let r=0; r<DATA.rows; r++) {
-  for (let c=0; c<DATA.cols; c++) {
-    if (isEditable(r,c)) { const i=getInput(r,c); if(i){i.focus();} r=DATA.rows; break; }
-  }
-}
+init();
 </script>
 </body>
 </html>
