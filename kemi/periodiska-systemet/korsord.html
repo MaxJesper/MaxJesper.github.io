@@ -33,11 +33,13 @@
   }
   button.secondary { background: #fff; color: #111; }
   button:active { transform: translateY(1px); }
-  .status { margin-top: 8px; font-size: 14px; }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+
+  .status { margin-top: 8px; font-size: 14px; color: #222; }
 
   .grid-wrap { display: grid; justify-content: center; }
 
-  /* ====== GRID (din snygga) ====== */
+  /* ====== GRID ====== */
   .grid {
     --cell: 34px; /* skärm */
     display: grid;
@@ -48,6 +50,7 @@
     width: max-content;
     background: #000; /* helsvart bakgrund bakom rutorna */
   }
+
   .cell {
     position: relative;
     background: #fff;
@@ -72,40 +75,23 @@
   }
   .cell.black .num { display: none; }
 
-  /* ====== Tydligare rätt/fel (färgblindvänligt) ====== */
-  .cell.correct {
-    background: #c8f7c5;           /* mörkare grön */
-    outline: 3px solid #0b6b0b;     /* tydlig grön kant */
-    outline-offset: -3px;
-  }
+  /* ====== Felmarkering (färgblindvänligt) ====== */
   .cell.wrong {
-    background: #ffbdbd;           /* mörkare röd */
-    outline: 3px solid #8b0000;    /* tydlig röd kant */
+    background: #D32F2F !important;   /* tydlig röd */
+    outline: 3px solid #7f0000;
     outline-offset: -3px;
-  }
-  /* Extra skillnad utan färg */
-  .cell.correct::after {
-    content: "✓";
-    position: absolute;
-    right: 4px;
-    bottom: 2px;
-    font-size: 12px;
-    font-weight: 900;
-    color: #0b6b0b;
-    pointer-events: none;
   }
   .cell.wrong::after {
     content: "✕";
     position: absolute;
-    right: 4px;
-    bottom: 2px;
-    font-size: 12px;
+    right: 3px;
+    bottom: 1px;
+    font-size: 14px;
     font-weight: 900;
-    color: #8b0000;
+    color: #fff;
     pointer-events: none;
   }
 
-  .legend { font-size: 13px; color: #333; margin-top: 10px; }
   .note { font-size: 13px; color: #333; margin-top: 6px; }
 
   /* Print-only: facit-sida */
@@ -118,34 +104,27 @@
       print-color-adjust: exact !important;
     }
 
-    /* Lite större marginaler så text inte känns för långt ut till vänster */
     @page { size: A4; margin: 12mm; }
 
     body { margin: 0; }
 
     /* göm UI */
-    .hamburger, #side-menu, .top-actions, .controls, .legend, .note, #status { display: none !important; }
+    .hamburger, #side-menu, .top-actions, .controls, .note, #status { display: none !important; }
 
-    /* komprimera rubriker */
     h1 { font-size: 18px; margin: 0 0 4px; }
     .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
 
-    /* Liten extra vänstermarginal för just innehållet */
     .print-sheet { padding-left: 4mm; }
 
-    /* Håll ihop korsord + frågor */
     .print-sheet { break-inside: avoid; page-break-inside: avoid; }
 
-    /* Layout: korsord först, frågor under */
     .layout { grid-template-columns: 1fr !important; gap: 8px; }
 
-    /* inga ramar runt frågorna i print */
     .clues { gap: 6px; }
     .clue-box { border: none; padding: 0; }
 
     .clue-box h2 { font-size: 12px; margin: 6px 0 2px; }
 
-    /* två kolumner för att få plats på en sida */
     .print-clues {
       column-count: 2;
       column-gap: 10mm;
@@ -153,23 +132,17 @@
     .print-clues ol { padding-left: 16px; }
     .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
 
-    /* Gör korsordet lite större på papper */
-    .grid { --cell: 28px; }         /* var 26px, nu större */
+    .grid { --cell: 28px; }
     .cell input { font-size: 14px; }
     .num { font-size: 8px; }
 
-    /* Viktigt: om någon råkat "Kontrollera", skriv ut ändå RENT */
-    .cell.correct,
+    /* Skriv alltid ut rent (utan felmarkeringar) */
     .cell.wrong {
       background: #fff !important;
       outline: none !important;
     }
-    .cell.correct::after,
-    .cell.wrong::after {
-      display: none !important;
-    }
+    .cell.wrong::after { display: none !important; }
 
-    /* Facit på baksidan */
     .print-only { display: block; }
     .facit-page { page-break-before: always; break-before: page; }
     .facit-title { font-size: 16px; margin: 0 0 6px; }
@@ -178,13 +151,13 @@
 </head>
 
 <body>
-  <!-- Hamburgermeny (som dina andra sidor) -->
+  <!-- Hamburgermeny -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
   <div class="print-sheet">
     <h1>Korsord: Periodiska systemet och atomens byggnad</h1>
-    <p class="subtitle">Fyll i rutorna. Siffran i första rutan motsvarar ledtråden för vågrätt/lodrätt.</p>
+    <p class="subtitle">Fyll i rutorna. En ruta blir röd direkt om bokstaven är fel.</p>
 
     <!-- Knappar högst upp (skärm) -->
     <div class="top-actions">
@@ -193,7 +166,6 @@
     </div>
 
     <div class="layout">
-      <!-- Skärm: ledtrådar i vänsterspalt. Print: under korsordet (1 kolumn) -->
       <div class="clues">
         <div class="clue-box print-clues">
           <h2>Vågrätt</h2>
@@ -220,17 +192,15 @@
           </ol>
         </div>
 
-        <!-- Verktyg syns på skärm, men döljs i print via CSS -->
         <div class="clue-box">
           <h2>Verktyg</h2>
           <div class="controls">
-            <button id="checkBtn">Kontrollera</button>
-            <button class="secondary" id="revealBtn" type="button">Visa facit</button>
-            <button class="secondary" id="clearBtn" type="button">Rensa</button>
+            <button id="undoBtn" class="secondary" type="button" disabled>Rensa senaste</button>
+            <button id="clearBtn" class="secondary" type="button">Rensa</button>
+            <button id="revealBtn" type="button">Visa facit</button>
           </div>
           <div id="status" class="status"></div>
-          <div class="legend">Grönt = rätt bokstav, rött = fel bokstav (bara efter “Kontrollera”).</div>
-          <div class="note">Tips: använd piltangenter för att flytta, och skriv en bokstav per ruta.</div>
+          <div class="note">Tips: använd piltangenter. “Rensa senaste” fungerar som ångra (bakåt steg för steg).</div>
         </div>
       </div>
 
@@ -256,6 +226,7 @@ const DATA = {"rows": 17, "cols": 17, "black": [[1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1
 const gridEl = document.getElementById('grid');
 const gridSolEl = document.getElementById('grid-solution');
 const statusEl = document.getElementById('status');
+const undoBtn = document.getElementById('undoBtn');
 
 function normalizeChar(ch) {
   if (!ch) return '';
@@ -266,6 +237,97 @@ function normalizeChar(ch) {
 }
 
 function cellId(r,c,prefix='cell') { return `${prefix}-${r}-${c}`; }
+
+function isEditable(r,c) { return DATA.black[r][c] !== 1; }
+
+function getInput(r,c) {
+  const cell = document.getElementById(cellId(r,c,'cell'));
+  return cell ? cell.querySelector('input') : null;
+}
+
+function getCellDiv(r,c) {
+  return document.getElementById(cellId(r,c,'cell'));
+}
+
+/* ===== Undo-historik (steg för steg) =====
+   Vi sparar hela rutnätet som en "snapshot" vid varje ändring.
+   Rensa senaste = ångra ett steg bakåt. */
+const history = [];
+let isRestoring = false;
+
+function snapshot() {
+  const state = [];
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) { state.push(null); continue; }
+      const inp = getInput(r,c);
+      state.push(inp ? normalizeChar(inp.value) : '');
+    }
+  }
+  return state;
+}
+
+function restore(state) {
+  isRestoring = true;
+  let idx = 0;
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = state[idx] || '';
+      idx++;
+    }
+  }
+  // Efter restore: uppdatera felmarkeringar
+  refreshAllWrongMarks();
+  isRestoring = false;
+  updateUndoBtn();
+}
+
+function pushHistory() {
+  if (isRestoring) return;
+  history.push(snapshot());
+  if (history.length > 300) history.shift(); // säkerhetsgräns
+  updateUndoBtn();
+}
+
+function updateUndoBtn() {
+  undoBtn.disabled = history.length === 0;
+}
+
+function undo() {
+  if (history.length === 0) return;
+  const prev = history.pop();
+  restore(prev);
+  statusEl.textContent = '';
+}
+
+function markWrong(r,c) {
+  const cell = getCellDiv(r,c);
+  if (!cell) return;
+  cell.classList.remove('wrong');
+  const inp = getInput(r,c);
+  const val = inp ? normalizeChar(inp.value) : '';
+  if (!val) return; // tomt = ingen markering
+  const sol = DATA.solution[r][c];
+  if (sol && val !== sol) cell.classList.add('wrong');
+}
+
+function refreshAllWrongMarks() {
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      const cell = getCellDiv(r,c);
+      if (!cell) continue;
+      cell.classList.remove('wrong');
+      const inp = getInput(r,c);
+      const val = inp ? normalizeChar(inp.value) : '';
+      if (!val) continue;
+      const sol = DATA.solution[r][c];
+      if (sol && val !== sol) cell.classList.add('wrong');
+    }
+  }
+}
 
 function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
   if (!targetEl) return;
@@ -298,6 +360,16 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.addEventListener('input', (e) => {
             const v = normalizeChar(e.target.value);
             e.target.value = v;
+
+            if (!isRestoring) {
+              // Spara undo-läge vid varje faktisk ändring
+              pushHistory();
+            }
+
+            // Markera fel direkt
+            markWrong(r,c);
+
+            // Auto-advance
             if (v) {
               const next = nextEditable(r,c);
               if (next) next.focus();
@@ -313,7 +385,7 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             if (e.key === 'ArrowDown') { e.preventDefault(); focusStep(r0,c0, 1,0); }
             if (e.key === 'Backspace' && !e.target.value) {
               const prev = prevEditable(r0,c0);
-              if (prev) prev.focus();
+              if (prev) { prev.focus(); }
             }
           });
 
@@ -334,12 +406,6 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
     }
   }
 }
-
-function getInput(r,c) {
-  const cell = document.getElementById(cellId(r,c,'cell'));
-  return cell ? cell.querySelector('input') : null;
-}
-function isEditable(r,c) { return DATA.black[r][c] !== 1; }
 
 function focusStep(r,c,dr,dc) {
   let rr = r+dr, cc = c+dc;
@@ -375,38 +441,10 @@ function prevEditable(r,c) {
   return null;
 }
 
-function clearMarks() {
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
-      const cell = document.getElementById(cellId(r,c,'cell'));
-      if (!cell) continue;
-      cell.classList.remove('correct','wrong');
-    }
-  }
-}
-
-function check() {
-  clearMarks();
-  let total=0, correct=0, filled=0;
-  for (let r=0; r<DATA.rows; r++) {
-    for (let c=0; c<DATA.cols; c++) {
-      if (!isEditable(r,c)) continue;
-      total++;
-      const sol = DATA.solution[r][c];
-      const inp = getInput(r,c);
-      const val = inp ? normalizeChar(inp.value) : '';
-      if (val) filled++;
-      const cell = document.getElementById(cellId(r,c,'cell'));
-      if (!val) continue;
-      if (val === sol) { correct++; cell.classList.add('correct'); }
-      else { cell.classList.add('wrong'); }
-    }
-  }
-  statusEl.textContent = `Ifyllda rutor: ${filled}/${total}. Rätt ifyllda (av ifyllda): ${correct}/${(filled || 1)}.`;
-}
-
 function reveal() {
-  clearMarks();
+  // Undo: spara nuvarande läge innan vi fyller facit
+  pushHistory();
+
   for (let r=0; r<DATA.rows; r++) {
     for (let c=0; c<DATA.cols; c++) {
       if (!isEditable(r,c)) continue;
@@ -414,11 +452,13 @@ function reveal() {
       if (inp) inp.value = DATA.solution[r][c] || '';
     }
   }
+  refreshAllWrongMarks(); // borde bli inga röda eftersom allt är rätt
   statusEl.textContent = 'Facit ifyllt.';
 }
 
 function clearAll() {
-  clearMarks();
+  pushHistory();
+
   for (let r=0; r<DATA.rows; r++) {
     for (let c=0; c<DATA.cols; c++) {
       if (!isEditable(r,c)) continue;
@@ -426,16 +466,22 @@ function clearAll() {
       if (inp) inp.value = '';
     }
   }
+  refreshAllWrongMarks();
   statusEl.textContent = '';
 }
 
-document.getElementById('checkBtn').addEventListener('click', check);
 document.getElementById('revealBtn').addEventListener('click', reveal);
 document.getElementById('clearBtn').addEventListener('click', clearAll);
+document.getElementById('undoBtn').addEventListener('click', undo);
 
+// Bygg elevrutnät + facit-rutnät
 buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
 buildGrid(gridSolEl, {withInputs:false, fillSolution:true, idPrefix:'sol'});
 
+// Init: ingen undo innan man gör något
+updateUndoBtn();
+
+// fokus första ruta
 for (let r=0; r<DATA.rows; r++) {
   for (let c=0; c<DATA.cols; c++) {
     if (isEditable(r,c)) { const i=getInput(r,c); if(i){i.focus();} r=DATA.rows; break; }
