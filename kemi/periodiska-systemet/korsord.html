@@ -124,6 +124,15 @@
     .print-only { display: block; }
     .facit-page { page-break-before: always; break-before: page; }
     .facit-title { font-size: 16px; margin: 0 0 6px; }
+    
+    #facitBtn{
+      color: #fff !important;
+      background: #111 !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      opacity: 1 !important;
+    }
+    
   }
 </style>
 </head>
@@ -293,6 +302,8 @@ function wordForCell(r,c,dir){
 let lastTyped = null;               // {r,c}
 let lastTypedDir = 'across';        // senaste riktning när man skrev
 let lastTypedWordId = null;         // wordId för senaste skrivna ordet
+let activeDir = null;     // 'across' | 'down'  (låst medan man skriver)
+let activeCell = null;    // {r,c} senaste ruta man skrev i
 
 function setLastTyped(r,c){
   lastTyped = {r,c};
@@ -601,6 +612,11 @@ function init(){
 }
 
 init();
+window.addEventListener('load', () => {
+  const b = document.getElementById('facitBtn');
+  if (b) b.textContent = 'Facit';
+});
+  
 </script>
 </body>
 </html>
