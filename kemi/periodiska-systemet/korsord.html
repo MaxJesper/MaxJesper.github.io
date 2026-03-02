@@ -89,6 +89,22 @@
     pointer-events: none;
   }
 
+  /* ====== FIX: garantera att "Facit" syns på SKÄRM ====== */
+  #facitBtn, #facitBtn * {
+    color: #fff !important;
+    background: #111 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #facitBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+  }
+
   .print-only { display: none; }
 
   @media print {
@@ -124,15 +140,6 @@
     .print-only { display: block; }
     .facit-page { page-break-before: always; break-before: page; }
     .facit-title { font-size: 16px; margin: 0 0 6px; }
-    
-    #facitBtn{
-      color: #fff !important;
-      background: #111 !important;
-      font-size: 16px !important;
-      font-weight: 700 !important;
-      opacity: 1 !important;
-    }
-    
   }
 </style>
 </head>
@@ -216,6 +223,9 @@ const statusEl = document.getElementById('status');
 const clearWordBtn = document.getElementById('clearWordBtn');
 const facitBtn = document.getElementById('facitBtn');
 
+// tvinga text (om något script/CSS strular)
+facitBtn.textContent = 'Facit';
+
 function normalizeChar(ch) {
   if (!ch) return '';
   ch = ch.toUpperCase();
@@ -237,8 +247,8 @@ function getInput(r,c){
 }
 
 /* ====== Bygg ord (vågrätt/lodrätt) ====== */
-const words = new Map();         // wordId -> {dir, number, cells:[{r,c}]}
-const cellToWords = new Map();   // "r,c" -> {across, down}
+const words = new Map();
+const cellToWords = new Map();
 
 function buildWords(){
   words.clear();
@@ -251,12 +261,11 @@ function buildWords(){
     }
   }
 
-  // Across starts
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
       if (!isBlack(r, c-1)) continue;
-      if (isBlack(r, c+1)) continue; // måste vara minst 2
+      if (isBlack(r, c+1)) continue;
       const num = DATA.numbers[r][c] || null;
       const id = `A${num ?? `${r}-${c}`}`;
       const cells = [];
@@ -271,12 +280,11 @@ function buildWords(){
     }
   }
 
-  // Down starts
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
       if (!isBlack(r-1, c)) continue;
-      if (isBlack(r+1, c)) continue; // minst 2
+      if (isBlack(r+1, c)) continue;
       const num = DATA.numbers[r][c] || null;
       const id = `D${num ?? `${r}-${c}`}`;
       const cells = [];
@@ -298,23 +306,40 @@ function wordForCell(r,c,dir){
   return dir === 'down' ? m.down : m.across;
 }
 
-/* ====== Senaste ordet (EXAKT: senast man skrev) ====== */
-let lastTyped = null;               // {r,c}
-let lastTypedDir = 'across';        // senaste riktning när man skrev
-let lastTypedWordId = null;         // wordId för senaste skrivna ordet
-let activeDir = null;     // 'across' | 'down'  (låst medan man skriver)
-let activeCell = null;    // {r,c} senaste ruta man skrev i
+/* ====== Senaste ordet + låst riktning ====== */
+let lastTypedDir = 'across';
+let lastTypedWordId = null;
+let activeDir = null; // låses när man börjar skriva i ett ord
 
-function setLastTyped(r,c){
-  lastTyped = {r,c};
-  // använd senaste skrivriktning, fallback till andra om saknas
-  const preferred = wordForCell(r,c,lastTypedDir);
-  const fallback  = wordForCell(r,c, lastTypedDir === 'across' ? 'down' : 'across');
+function chooseInitialDir(r,c){
+  const leftBlack  = isBlack(r, c-1);
+  const rightBlack = isBlack(r, c+1);
+  const upBlack    = isBlack(r-1, c);
+  const downBlack  = isBlack(r+1, c);
+
+  const startsAcross = leftBlack && !rightBlack;
+  const startsDown   = upBlack && !downBlack;
+
+  if (startsAcross && !startsDown) return 'across';
+  if (startsDown && !startsAcross) return 'down';
+  if (startsAcross && startsDown) return 'across'; // default
+
+  // om man är "inne i" ett ord
+  if (!leftBlack && !rightBlack) return 'across';
+  if (!upBlack && !downBlack) return 'down';
+
+  return 'across';
+}
+
+function setLastTypedWord(r,c){
+  const dir = activeDir || lastTypedDir;
+  const preferred = wordForCell(r,c,dir);
+  const fallback  = wordForCell(r,c, dir === 'across' ? 'down' : 'across');
   lastTypedWordId = preferred || fallback;
   clearWordBtn.disabled = !lastTypedWordId;
 }
 
-/* ====== Felmarkering direkt ====== */
+/* ====== Felmarkering ====== */
 function markWrong(r,c){
   const cell = getCellDiv(r,c);
   if (!cell) return;
@@ -342,9 +367,8 @@ function refreshAllWrong(){
 }
 
 /* ====== Facit-toggle (för senaste ordet) ====== */
-let facitMode = 'off';                 // 'off' | 'word'
-let facitWordId = null;
-let facitBackup = new Map();           // "r,c" -> bokstav före facit
+let facitMode = 'off';
+let facitBackup = new Map();
 
 function hideFacit(){
   if (facitMode === 'off') return;
@@ -354,7 +378,6 @@ function hideFacit(){
     if (inp) inp.value = v;
   }
   facitMode = 'off';
-  facitWordId = null;
   facitBackup = new Map();
   facitBtn.textContent = 'Facit';
   refreshAllWrong();
@@ -368,11 +391,10 @@ function showFacitForLastWord(){
   }
   const w = words.get(lastTypedWordId);
   if (!w){
-    statusEl.textContent = 'Kunde inte hitta senaste ordet (ovanligt).';
+    statusEl.textContent = 'Kunde inte hitta senaste ordet.';
     return;
   }
 
-  // Endast om ordet innehåller minst EN FEL bokstav
   let hasWrong = false;
   for (const {r,c} of w.cells){
     const inp = getInput(r,c);
@@ -386,7 +408,6 @@ function showFacitForLastWord(){
   }
 
   facitMode = 'word';
-  facitWordId = lastTypedWordId;
   facitBackup = new Map();
 
   for (const {r,c} of w.cells){
@@ -403,11 +424,8 @@ function showFacitForLastWord(){
 }
 
 function toggleFacit(){
-  if (facitMode !== 'off'){
-    hideFacit();
-    return;
-  }
-  showFacitForLastWord();
+  if (facitMode !== 'off') hideFacit();
+  else showFacitForLastWord();
 }
 
 /* ====== Rensa ====== */
@@ -422,7 +440,6 @@ function clearAll(){
   }
   refreshAllWrong();
   statusEl.textContent = '';
-  // sista ordet finns kvar som "senast", men blir tomt
 }
 function clearLastWord(){
   hideFacit();
@@ -449,18 +466,6 @@ function focusStep(r,c,dr,dc){
     }
     rr += dr; cc += dc;
   }
-}
-function nextEditable(r,c){
-  for (let cc=c+1; cc<DATA.cols; cc++){
-    if (isEditable(r,cc)) return getInput(r,cc);
-    if (isBlack(r,cc)) break;
-  }
-  for (let rr=r; rr<DATA.rows; rr++){
-    for (let cc=(rr===r?c+1:0); cc<DATA.cols; cc++){
-      if (isEditable(rr,cc)) return getInput(rr,cc);
-    }
-  }
-  return null;
 }
 function prevEditable(r,c){
   for (let cc=c-1; cc>=0; cc--){
@@ -504,67 +509,44 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.dataset.r = r;
           inp.dataset.c = c;
 
+          // ny startpunkt => lås upp riktning
+          inp.addEventListener('focus', () => {
+            activeDir = null;
+          });
+
           inp.addEventListener('input', (e) => {
-            // Om facit är på: stäng av när man börjar skriva
             if (facitMode !== 'off') hideFacit();
 
             const v = normalizeChar(e.target.value);
             e.target.value = v;
 
-            // auto-advance åt höger -> senaste skrivna riktning = vågrätt
-            if (v) lastTypedDir = 'across';
+            // lås riktning första gången man skriver i ett ord
+            if (!activeDir) activeDir = chooseInitialDir(r,c);
+            lastTypedDir = activeDir;
 
-            // Sätt "senast skrivna ordet" baserat på denna ruta + senaste skrivdir
-            setLastTyped(r,c);
-
-            // Felmarkera direkt
+            setLastTypedWord(r,c);
             markWrong(r,c);
 
+            // auto-advance i LÅST riktning
             if (v) {
-  // ===== Smart auto-advance: välj riktning =====
-            const canRight = !isBlack(r, c+1);
-            const canDown  = !isBlack(r+1, c);
-
-  // "del av ett vågrätt ord" om vänster inte är svart
-            const hasLeftWhite = !isBlack(r, c-1);
-
-  // Om bara en riktning finns
-            if (canDown && !canRight) {
-              lastTypedDir = 'down';
-              const nextDown = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
-              if (nextDown) nextDown.focus();
-              return;
+              if (activeDir === 'down') {
+                const next = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
+                if (next) next.focus();
+              } else {
+                const next = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
+                if (next) next.focus();
+              }
             }
-            if (canRight && !canDown) {
-              lastTypedDir = 'across';
-              const nextRight = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
-              if (nextRight) nextRight.focus();
-              return;
-            }
-          
-            // Om båda riktningar finns:
-            // Regel: om man inte är första bokstaven i det vågräta ordet (har vit ruta till vänster),
-            // då fortsätt vågrätt, annars lodrätt.
-            if (hasLeftWhite) {
-              lastTypedDir = 'across';
-              const nextRight = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
-              if (nextRight) nextRight.focus();
-            } else {
-              lastTypedDir = 'down';
-              const nextDown = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
-              if (nextDown) nextDown.focus();
-            }
-          }
           });
 
           inp.addEventListener('keydown', (e) => {
             const r0 = Number(e.target.dataset.r);
             const c0 = Number(e.target.dataset.c);
 
-            if (e.key === 'ArrowLeft')  { e.preventDefault(); lastTypedDir='across'; focusStep(r0,c0,0,-1); }
-            if (e.key === 'ArrowRight') { e.preventDefault(); lastTypedDir='across'; focusStep(r0,c0,0, 1); }
-            if (e.key === 'ArrowUp')    { e.preventDefault(); lastTypedDir='down';   focusStep(r0,c0,-1,0); }
-            if (e.key === 'ArrowDown')  { e.preventDefault(); lastTypedDir='down';   focusStep(r0,c0, 1,0); }
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0,-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0, 1); }
+            if (e.key === 'ArrowUp')    { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0,-1,0); }
+            if (e.key === 'ArrowDown')  { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0, 1,0); }
 
             if (e.key === 'Backspace' && !e.target.value) {
               const prev = prevEditable(r0,c0);
@@ -599,7 +581,9 @@ function init(){
   document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
   document.getElementById('facitBtn').addEventListener('click', toggleFacit);
 
-  // fokus första ruta
+  // tvinga text efter allt är kopplat
+  document.getElementById('facitBtn').textContent = 'Facit';
+
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (isEditable(r,c)){
@@ -616,7 +600,6 @@ window.addEventListener('load', () => {
   const b = document.getElementById('facitBtn');
   if (b) b.textContent = 'Facit';
 });
-  
 </script>
 </body>
 </html>
