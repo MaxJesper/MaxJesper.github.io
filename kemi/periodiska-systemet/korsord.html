@@ -1,244 +1,348 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Korsord – Periodiska systemet</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Korsord: Periodiska systemet och atomens byggnad</title>
 
-  <link rel="stylesheet" href="/css/style.css" />
+<!-- Din vanliga styling (för hamburger/meny + subject-btn om du vill använda den) -->
+<link rel="stylesheet" href="/css/style.css" />
 
-  <style>
-    /* Håll det lätt – låt din style.css styra helhetskänslan */
-    .korsord-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 1rem;
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  h1 { margin: 0 0 6px; font-size: 28px; }
+  .subtitle { margin: 0 0 18px; color: #333; }
+
+  /* Topprad med knappar */
+  .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
+
+  .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 980px) {
+    .layout { grid-template-columns: 420px 1fr; align-items: start; }
+  }
+  .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 980px) {
+    .clues { grid-template-columns: 1fr; }
+  }
+  .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; }
+  .clue-box h2 { margin: 0 0 8px; font-size: 16px; }
+  ol { margin: 0; padding-left: 18px; }
+  li { margin: 6px 0; line-height: 1.25; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; }
+
+  button {
+    border: 1px solid #111; background: #111; color: #fff;
+    padding: 9px 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
+  }
+  button.secondary { background: #fff; color: #111; }
+  button:active { transform: translateY(1px); }
+  .status { margin-top: 8px; font-size: 14px; }
+
+  .grid-wrap { display: grid; justify-content: center; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(17, 34px);
+    grid-auto-rows: 34px;
+    gap: 0;
+    border: 2px solid #000;
+    width: max-content;
+    background: #000;
+  }
+  .cell {
+    position: relative;
+    background: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+  .cell.black { background: #000; border-color: #000; }
+  .cell input {
+    width: 100%; height: 100%;
+    border: none; outline: none;
+    text-align: center;
+    font-size: 18px; font-weight: 700;
+    background: transparent;
+    text-transform: uppercase;
+  }
+  .num {
+    position: absolute; left: 3px; top: 2px;
+    font-size: 9px; font-weight: 700; color: #111;
+    user-select: none;
+  }
+  .cell.black .num { display: none; }
+  .cell.correct { background: #eaffea; }
+  .cell.wrong { background: #ffecec; }
+  .legend { font-size: 13px; color: #333; margin-top: 10px; }
+  .note { font-size: 13px; color: #333; margin-top: 6px; }
+
+  /* Print: skriv ut ett rent elevblad */
+  @media print {
+    .hamburger,
+    #side-menu,
+    .top-actions,
+    .controls,
+    .legend,
+    .note,
+    #status {
+      display: none !important;
     }
-
-    .korsord-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      align-items: center;
-      margin: 0.5rem 0 1rem;
-    }
-
-    .print-btn {
-      border: 0;
-      cursor: pointer;
-    }
-
-    /* Korsordsgrid */
-    .crossword {
-      --cell: 38px;
-      display: grid;
-      grid-template-columns: repeat(11, var(--cell));
-      gap: 3px;
-      margin: 0.75rem 0 1.25rem;
-      user-select: none;
-    }
-
-    .cell {
-      width: var(--cell);
-      height: var(--cell);
-      border: 1px solid #111;
-      background: #fff;
-      position: relative;
-      box-sizing: border-box;
-    }
-
-    .cell.black {
-      background: #111;
-      border-color: #111;
-    }
-
-    .cell input {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      outline: none;
-      text-align: center;
-      font-size: 18px;
-      background: transparent;
-      text-transform: uppercase;
-    }
-
-    .num {
-      position: absolute;
-      top: 2px;
-      left: 4px;
-      font-size: 11px;
-      line-height: 1;
-      color: #111;
-      pointer-events: none;
-    }
-
-    .clues {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    @media (min-width: 900px) {
-      .clues {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .clues h2 {
-      margin: 0.5rem 0 0.25rem;
-    }
-
-    .clues ol {
-      margin: 0.25rem 0 0;
-      padding-left: 1.25rem;
-    }
-
-    /* Print: skriv ut ett rent elevblad */
-    @media print {
-      .hamburger,
-      #side-menu,
-      .korsord-actions {
-        display: none !important;
-      }
-
-      .korsord-wrap {
-        max-width: none;
-        padding: 0;
-      }
-
-      .crossword {
-        --cell: 34px; /* lite kompaktare på A4 */
-        gap: 2px;
-      }
-    }
-  </style>
+    body { margin: 0; }
+  }
+</style>
 </head>
 
 <body>
-  <!-- Hamburgermeny: din style.css placerar den uppe till höger -->
+  <!-- Hamburgermeny (din style.css placerar den uppe till höger som på andra sidor) -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
-  <main class="korsord-wrap">
-    <div class="korsord-actions">
-      <button class="subject-btn print-btn" type="button" onclick="window.print()">Skriv ut</button>
-      <a class="subject-btn" href="/kemi/periodiska-systemet/">← Tillbaka</a>
+  <h1>Korsord: Periodiska systemet och atomens byggnad</h1>
+  <p class="subtitle">Fyll i rutorna. Siffran i första rutan motsvarar ledtråden för vågrätt/lodrätt.</p>
+
+  <!-- Knappar högst upp -->
+  <div class="top-actions">
+    <button type="button" onclick="window.print()">Skriv ut</button>
+    <a href="/kemi/periodiska-systemet/" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <div class="layout">
+    <div class="clues">
+      <div class="clue-box">
+        <h2>Vågrätt</h2>
+        <ol>
+          <!-- OBS: borttaget <strong>4.</strong> etc för att undvika dubbelnumrering -->
+          <li value="4">Antal protoner i kärnan</li>
+          <li value="5">Laddad atom</li>
+          <li value="6">Atomens centrum</li>
+          <li value="7">Flera atomer bundna tillsammans</li>
+          <li value="8">Ämnen med fullt yttersta skal</li>
+          <li value="9">Vågrät rad i periodiska systemet</li>
+          <li value="10">Atomvariant med olika antal neutroner</li>
+          <li value="12">Negativt laddad partikel i atomen</li>
+          <li value="13">Minsta delen av ett grundämne</li>
+          <li value="14">Oladdad partikel i atomkärnan</li>
+        </ol>
+      </div>
+
+      <div class="clue-box">
+        <h2>Lodrätt</h2>
+        <ol>
+          <li value="1">Lodrät kolumn i periodiska systemet</li>
+          <li value="2">Elektron i yttersta skalet</li>
+          <li value="3">Ämne med bara en sorts atomer</li>
+          <li value="9">Positivt laddad partikel i atomkärnan</li>
+          <li value="11">Elektronerna rör sig i olika ___</li>
+        </ol>
+      </div>
+
+      <div class="clue-box">
+        <h2>Verktyg</h2>
+        <div class="controls">
+          <button id="checkBtn">Kontrollera</button>
+          <button class="secondary" id="revealBtn" type="button">Visa facit</button>
+          <button class="secondary" id="clearBtn" type="button">Rensa</button>
+        </div>
+        <div id="status" class="status"></div>
+        <div class="legend">Grönt = rätt bokstav, rött = fel bokstav (bara efter “Kontrollera”).</div>
+        <div class="note">Tips: använd piltangenter för att flytta, och skriv en bokstav per ruta.</div>
+      </div>
     </div>
 
-    <!-- KORSORD (11x11) -->
-    <section aria-label="Korsord">
-      <div class="crossword" id="crossword"></div>
-    </section>
+    <div class="grid-wrap">
+      <div id="grid" class="grid" aria-label="Korsord"></div>
+    </div>
+  </div>
 
-    <section class="clues" aria-label="Ledtrådar">
-      <div>
-        <h2>Vågrätt</h2>
-        <ol id="across-clues"></ol>
-      </div>
-
-      <div>
-        <h2>Lodrätt</h2>
-        <ol id="down-clues"></ol>
-      </div>
-    </section>
-  </main>
-
+  <!-- Din meny -->
   <script src="/js/menu.js"></script>
 
-  <script>
-    // ====== DATA: layout + numrering (11x11) ======
-    // null = svart ruta
-    // {n:1} = vit ruta, ev numrering i hörnet
-    // Alla vita rutor får input automatiskt.
+<script>
+const DATA = {"rows": 17, "cols": 17, "black": [[1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1], [1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0], [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1], [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1], [1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1], [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1], [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], "solution": [[null, null, null, null, null, null, null, null, "G", null, null, null, null, null, null, null, null], [null, null, null, "V", null, null, null, null, "R", null, null, null, "G", null, null, null, null], [null, null, null, "A", "T", "O", "M", "N", "U", "M", "M", "E", "R", null, null, null, null], [null, null, null, "L", null, null, null, null, "P", null, null, null, "U", null, null, null, null], [null, null, null, "E", null, null, null, null, "P", null, null, null, "N", null, null, null, null], [null, "J", "O", "N", null, null, null, null, null, null, null, null, "D", null, null, null, null], [null, null, null, "S", null, null, null, null, null, null, null, "K", "Ä", "R", "N", "A", null], ["M", "O", "L", "E", "K", "Y", "L", null, null, null, null, null, "M", null, null, null, null], [null, null, null, "L", null, null, null, null, null, null, null, null, "N", null, null, null, null], [null, "Ä", "D", "E", "L", "G", "A", "S", null, null, null, "P", "E", "R", "I", "O", "D"], [null, null, null, "K", null, null, null, null, null, null, null, "R", null, null, null, null, null], ["I", "S", "O", "T", "O", "P", null, null, null, null, null, "O", null, null, null, null, null], [null, "K", null, "R", null, null, null, "E", "L", "E", "K", "T", "R", "O", "N", null, null], [null, "A", "T", "O", "M", null, null, null, null, null, null, "O", null, null, null, null, null], [null, "L", null, "N", null, "N", "E", "U", "T", "R", "O", "N", null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]], "numbers": [[null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null], [null, null, null, 2, null, null, null, null, null, null, null, null, 3, null, null, null, null], [null, null, null, 4, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, 5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, 6, null, null, null, null, null], [7, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, 8, null, null, null, null, null, null, null, null, null, 9, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [10, 11, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, 12, null, null, null, null, null, null, null, null, null], [null, 13, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, 14, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]]};
+const gridEl = document.getElementById('grid');
+const statusEl = document.getElementById('status');
 
-    const grid = [
-      [null,null,null,null,null,null,null,null,null,null,null],
-      [null,{n:1},{},{},{},{},null,{n:2},{},{},{},null],
-      [null,{},null,null,{},null,null,{},null,{},null],
-      [null,{n:3},{},{},{},{},{},null,{},null,null],
-      [null,{},null,null,{},null,null,{},null,{},null],
-      [null,{n:4},{},{},{},null,{n:5},{},{},{},null],
-      [null,{},null,null,{},null,null,{},null,{},null],
-      [null,{n:6},{},{},{},{},null,{},null,null,null],
-      [null,{},null,null,{},null,null,{},null,{},null],
-      [null,{n:7},{},{},{},null,{n:8},{},{},{},null],
-      [null,null,null,null,null,null,null,null,null,null,null],
-    ];
+function normalizeChar(ch) {
+  if (!ch) return '';
+  ch = ch.toUpperCase();
+  const ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
+  for (const c of ch) {
+    if (ok.includes(c)) return c;
+  }
+  return '';
+}
 
-    // ====== Ledtrådar (15 totalt) ======
-    const across = [
-      { no: 1, clue: "Minsta delen av ett grundämne" },                 // ATOM
-      { no: 2, clue: "Negativ partikel" },                               // ELEKTRON
-      { no: 3, clue: "Positiv partikel i kärnan" },                      // PROTON
-      { no: 4, clue: "Elektroner rör sig i olika ___" },                 // SKAL
-      { no: 5, clue: "Laddad atom" },                                    // JON
-      { no: 6, clue: "Vågrät rad i periodiska systemet" },               // PERIOD
-      { no: 7, clue: "Atomens centrum" },                                // KÄRNA
-      { no: 8, clue: "Stabil grupp med fulla skal" },                    // ÄDELGAS
-    ];
+function cellId(r,c) { return `cell-${r}-${c}`; }
 
-    const down = [
-      { no: 1, clue: "Neutral partikel i kärnan" },                      // NEUTRON
-      { no: 2, clue: "Antal protoner avgör vilket ___ det är" },         // GRUNDÄMNE
-      { no: 3, clue: "Atomer vill ha fullt yttersta ___" },              // SKAL
-      { no: 4, clue: "Protoner och neutroner finns i ___" },             // KÄRNA
-      { no: 5, clue: "Lodrät kolumn i periodiska systemet" },            // GRUPP
-      { no: 6, clue: "Flera atomer bundna tillsammans" },                // MOLEKYL
-      { no: 7, clue: "Variant av atom med olika neutroner" },            // ISOTOP
-    ];
+function buildGrid() {
+  gridEl.innerHTML = '';
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      const isBlack = DATA.black[r][c] === 1;
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (isBlack ? ' black' : '');
+      cell.id = cellId(r,c);
 
-    // ====== Render ======
-    const crosswordEl = document.getElementById("crossword");
+      const num = DATA.numbers[r][c];
+      if (!isBlack && num) {
+        const s = document.createElement('div');
+        s.className = 'num';
+        s.textContent = num;
+        cell.appendChild(s);
+      }
 
-    function renderGrid() {
-      crosswordEl.innerHTML = "";
+      if (!isBlack) {
+        const inp = document.createElement('input');
+        inp.setAttribute('maxlength','1');
+        inp.setAttribute('inputmode','text');
+        inp.setAttribute('autocomplete','off');
+        inp.setAttribute('aria-label', `Ruta r${r+1} c${c+1}`);
+        inp.dataset.r = r;
+        inp.dataset.c = c;
 
-      for (let r = 0; r < grid.length; r++) {
-        for (let c = 0; c < grid[r].length; c++) {
-          const cellData = grid[r][c];
-
-          const cell = document.createElement("div");
-          cell.className = "cell";
-
-          if (cellData === null) {
-            cell.classList.add("black");
-            crosswordEl.appendChild(cell);
-            continue;
+        inp.addEventListener('input', (e) => {
+          const v = normalizeChar(e.target.value);
+          e.target.value = v;
+          if (v) {
+            const next = nextEditable(r,c);
+            if (next) next.focus();
           }
+        });
 
-          if (cellData && typeof cellData === "object" && cellData.n) {
-            const num = document.createElement("span");
-            num.className = "num";
-            num.textContent = cellData.n;
-            cell.appendChild(num);
+        inp.addEventListener('keydown', (e) => {
+          const r0 = Number(e.target.dataset.r);
+          const c0 = Number(e.target.dataset.c);
+          if (e.key === 'ArrowLeft') { e.preventDefault(); focusStep(r0,c0,0,-1); }
+          if (e.key === 'ArrowRight') { e.preventDefault(); focusStep(r0,c0,0, 1); }
+          if (e.key === 'ArrowUp') { e.preventDefault(); focusStep(r0,c0,-1,0); }
+          if (e.key === 'ArrowDown') { e.preventDefault(); focusStep(r0,c0, 1,0); }
+          if (e.key === 'Backspace' && !e.target.value) {
+            const prev = prevEditable(r0,c0);
+            if (prev) { prev.focus(); }
           }
+        });
 
-          const input = document.createElement("input");
-          input.maxLength = 1;
-          input.setAttribute("aria-label", `Ruta rad ${r+1} kolumn ${c+1}`);
-          input.addEventListener("input", (e) => {
-            e.target.value = e.target.value.toUpperCase();
-          });
+        cell.appendChild(inp);
+      }
 
-          cell.appendChild(input);
-          crosswordEl.appendChild(cell);
-        }
+      gridEl.appendChild(cell);
+    }
+  }
+}
+
+function getInput(r,c) {
+  const cell = document.getElementById(cellId(r,c));
+  return cell ? cell.querySelector('input') : null;
+}
+
+function isEditable(r,c) {
+  return DATA.black[r][c] !== 1;
+}
+
+function focusStep(r,c,dr,dc) {
+  let rr = r+dr, cc = c+dc;
+  while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols) {
+    if (isEditable(rr,cc)) {
+      const inp = getInput(rr,cc);
+      if (inp) inp.focus();
+      return;
+    }
+    rr += dr; cc += dc;
+  }
+}
+
+function nextEditable(r,c) {
+  for (let cc=c+1; cc<DATA.cols; cc++) {
+    if (isEditable(r,cc)) return getInput(r,cc);
+    if (DATA.black[r][cc]===1) break;
+  }
+  for (let rr=r; rr<DATA.rows; rr++) {
+    for (let cc=(rr===r?c+1:0); cc<DATA.cols; cc++) {
+      if (isEditable(rr,cc)) return getInput(rr,cc);
+    }
+  }
+  return null;
+}
+
+function prevEditable(r,c) {
+  for (let cc=c-1; cc>=0; cc--) {
+    if (isEditable(r,cc)) return getInput(r,cc);
+    if (DATA.black[r][cc]===1) break;
+  }
+  for (let rr=r; rr>=0; rr--) {
+    for (let cc=(rr===r?c-1:DATA.cols-1); cc>=0; cc--) {
+      if (isEditable(rr,cc)) return getInput(rr,cc);
+    }
+  }
+  return null;
+}
+
+function clearMarks() {
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      const cell = document.getElementById(cellId(r,c));
+      if (!cell) continue;
+      cell.classList.remove('correct','wrong');
+    }
+  }
+}
+
+function check() {
+  clearMarks();
+  let total=0, correct=0, filled=0;
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      total++;
+      const sol = DATA.solution[r][c];
+      const inp = getInput(r,c);
+      const val = inp ? normalizeChar(inp.value) : '';
+      if (val) filled++;
+      const cell = document.getElementById(cellId(r,c));
+      if (!val) continue;
+      if (val === sol) {
+        correct++;
+        cell.classList.add('correct');
+      } else {
+        cell.classList.add('wrong');
       }
     }
+  }
+  statusEl.textContent = `Ifyllda rutor: ${filled}/${total}. Rätt ifyllda (av ifyllda): ${correct}/${(filled || 1)}.`;
+}
 
-    function renderClues() {
-      const acrossEl = document.getElementById("across-clues");
-      const downEl = document.getElementById("down-clues");
-
-      acrossEl.innerHTML = across.map(x => `<li value="${x.no}">${x.clue}</li>`).join("");
-      downEl.innerHTML = down.map(x => `<li value="${x.no}">${x.clue}</li>`).join("");
+function reveal() {
+  clearMarks();
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = DATA.solution[r][c];
     }
+  }
+  statusEl.textContent = 'Facit ifyllt.';
+}
 
-    document.addEventListener("DOMContentLoaded", () => {
-      renderGrid();
-      renderClues();
-    });
-  </script>
+function clearAll() {
+  clearMarks();
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = '';
+    }
+  }
+  statusEl.textContent = '';
+}
+
+document.getElementById('checkBtn').addEventListener('click', check);
+document.getElementById('revealBtn').addEventListener('click', reveal);
+document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+buildGrid();
+for (let r=0; r<DATA.rows; r++) {
+  for (let c=0; c<DATA.cols; c++) {
+    if (isEditable(r,c)) { const i=getInput(r,c); if(i){i.focus();} r=DATA.rows; break; }
+  }
+}
+</script>
 </body>
 </html>
