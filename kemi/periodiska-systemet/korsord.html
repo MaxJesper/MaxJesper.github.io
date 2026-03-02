@@ -1,1 +1,244 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korsord – Periodiska systemet</title>
 
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    /* Håll det lätt – låt din style.css styra helhetskänslan */
+    .korsord-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .korsord-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0.5rem 0 1rem;
+    }
+
+    .print-btn {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* Korsordsgrid */
+    .crossword {
+      --cell: 38px;
+      display: grid;
+      grid-template-columns: repeat(11, var(--cell));
+      gap: 3px;
+      margin: 0.75rem 0 1.25rem;
+      user-select: none;
+    }
+
+    .cell {
+      width: var(--cell);
+      height: var(--cell);
+      border: 1px solid #111;
+      background: #fff;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .cell.black {
+      background: #111;
+      border-color: #111;
+    }
+
+    .cell input {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      outline: none;
+      text-align: center;
+      font-size: 18px;
+      background: transparent;
+      text-transform: uppercase;
+    }
+
+    .num {
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      font-size: 11px;
+      line-height: 1;
+      color: #111;
+      pointer-events: none;
+    }
+
+    .clues {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 900px) {
+      .clues {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .clues h2 {
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .clues ol {
+      margin: 0.25rem 0 0;
+      padding-left: 1.25rem;
+    }
+
+    /* Print: skriv ut ett rent elevblad */
+    @media print {
+      .hamburger,
+      #side-menu,
+      .korsord-actions {
+        display: none !important;
+      }
+
+      .korsord-wrap {
+        max-width: none;
+        padding: 0;
+      }
+
+      .crossword {
+        --cell: 34px; /* lite kompaktare på A4 */
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hamburgermeny: din style.css placerar den uppe till höger -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="korsord-wrap">
+    <div class="korsord-actions">
+      <button class="subject-btn print-btn" type="button" onclick="window.print()">Skriv ut</button>
+      <a class="subject-btn" href="/kemi/periodiska-systemet/">← Tillbaka</a>
+    </div>
+
+    <!-- KORSORD (11x11) -->
+    <section aria-label="Korsord">
+      <div class="crossword" id="crossword"></div>
+    </section>
+
+    <section class="clues" aria-label="Ledtrådar">
+      <div>
+        <h2>Vågrätt</h2>
+        <ol id="across-clues"></ol>
+      </div>
+
+      <div>
+        <h2>Lodrätt</h2>
+        <ol id="down-clues"></ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+
+  <script>
+    // ====== DATA: layout + numrering (11x11) ======
+    // null = svart ruta
+    // {n:1} = vit ruta, ev numrering i hörnet
+    // Alla vita rutor får input automatiskt.
+
+    const grid = [
+      [null,null,null,null,null,null,null,null,null,null,null],
+      [null,{n:1},{},{},{},{},null,{n:2},{},{},{},null],
+      [null,{},null,null,{},null,null,{},null,{},null],
+      [null,{n:3},{},{},{},{},{},null,{},null,null],
+      [null,{},null,null,{},null,null,{},null,{},null],
+      [null,{n:4},{},{},{},null,{n:5},{},{},{},null],
+      [null,{},null,null,{},null,null,{},null,{},null],
+      [null,{n:6},{},{},{},{},null,{},null,null,null],
+      [null,{},null,null,{},null,null,{},null,{},null],
+      [null,{n:7},{},{},{},null,{n:8},{},{},{},null],
+      [null,null,null,null,null,null,null,null,null,null,null],
+    ];
+
+    // ====== Ledtrådar (15 totalt) ======
+    const across = [
+      { no: 1, clue: "Minsta delen av ett grundämne" },                 // ATOM
+      { no: 2, clue: "Negativ partikel" },                               // ELEKTRON
+      { no: 3, clue: "Positiv partikel i kärnan" },                      // PROTON
+      { no: 4, clue: "Elektroner rör sig i olika ___" },                 // SKAL
+      { no: 5, clue: "Laddad atom" },                                    // JON
+      { no: 6, clue: "Vågrät rad i periodiska systemet" },               // PERIOD
+      { no: 7, clue: "Atomens centrum" },                                // KÄRNA
+      { no: 8, clue: "Stabil grupp med fulla skal" },                    // ÄDELGAS
+    ];
+
+    const down = [
+      { no: 1, clue: "Neutral partikel i kärnan" },                      // NEUTRON
+      { no: 2, clue: "Antal protoner avgör vilket ___ det är" },         // GRUNDÄMNE
+      { no: 3, clue: "Atomer vill ha fullt yttersta ___" },              // SKAL
+      { no: 4, clue: "Protoner och neutroner finns i ___" },             // KÄRNA
+      { no: 5, clue: "Lodrät kolumn i periodiska systemet" },            // GRUPP
+      { no: 6, clue: "Flera atomer bundna tillsammans" },                // MOLEKYL
+      { no: 7, clue: "Variant av atom med olika neutroner" },            // ISOTOP
+    ];
+
+    // ====== Render ======
+    const crosswordEl = document.getElementById("crossword");
+
+    function renderGrid() {
+      crosswordEl.innerHTML = "";
+
+      for (let r = 0; r < grid.length; r++) {
+        for (let c = 0; c < grid[r].length; c++) {
+          const cellData = grid[r][c];
+
+          const cell = document.createElement("div");
+          cell.className = "cell";
+
+          if (cellData === null) {
+            cell.classList.add("black");
+            crosswordEl.appendChild(cell);
+            continue;
+          }
+
+          if (cellData && typeof cellData === "object" && cellData.n) {
+            const num = document.createElement("span");
+            num.className = "num";
+            num.textContent = cellData.n;
+            cell.appendChild(num);
+          }
+
+          const input = document.createElement("input");
+          input.maxLength = 1;
+          input.setAttribute("aria-label", `Ruta rad ${r+1} kolumn ${c+1}`);
+          input.addEventListener("input", (e) => {
+            e.target.value = e.target.value.toUpperCase();
+          });
+
+          cell.appendChild(input);
+          crosswordEl.appendChild(cell);
+        }
+      }
+    }
+
+    function renderClues() {
+      const acrossEl = document.getElementById("across-clues");
+      const downEl = document.getElementById("down-clues");
+
+      acrossEl.innerHTML = across.map(x => `<li value="${x.no}">${x.clue}</li>`).join("");
+      downEl.innerHTML = down.map(x => `<li value="${x.no}">${x.clue}</li>`).join("");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderGrid();
+      renderClues();
+    });
+  </script>
+</body>
+</html>
