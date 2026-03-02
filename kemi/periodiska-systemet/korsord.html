@@ -37,9 +37,9 @@
 
   .grid-wrap { display: grid; justify-content: center; }
 
-  /* ====== GRID (samma som din snygga) ====== */
+  /* ====== GRID (din snygga) ====== */
   .grid {
-    --cell: 34px; /* default (skärm) */
+    --cell: 34px; /* skärm */
     display: grid;
     grid-template-columns: repeat(17, var(--cell));
     grid-auto-rows: var(--cell);
@@ -72,8 +72,38 @@
   }
   .cell.black .num { display: none; }
 
-  .cell.correct { background: #eaffea; }
-  .cell.wrong { background: #ffecec; }
+  /* ====== Tydligare rätt/fel (färgblindvänligt) ====== */
+  .cell.correct {
+    background: #c8f7c5;           /* mörkare grön */
+    outline: 3px solid #0b6b0b;     /* tydlig grön kant */
+    outline-offset: -3px;
+  }
+  .cell.wrong {
+    background: #ffbdbd;           /* mörkare röd */
+    outline: 3px solid #8b0000;    /* tydlig röd kant */
+    outline-offset: -3px;
+  }
+  /* Extra skillnad utan färg */
+  .cell.correct::after {
+    content: "✓";
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #0b6b0b;
+    pointer-events: none;
+  }
+  .cell.wrong::after {
+    content: "✕";
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #8b0000;
+    pointer-events: none;
+  }
 
   .legend { font-size: 13px; color: #333; margin-top: 10px; }
   .note { font-size: 13px; color: #333; margin-top: 6px; }
@@ -81,15 +111,15 @@
   /* Print-only: facit-sida */
   .print-only { display: none; }
 
-  /* ====== PRINT ====== */
+  /* ====== PRINT (Chrome) ====== */
   @media print {
-    /* Viktigt för att svart bakgrund verkligen ska skrivas ut */
     * {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
 
-    @page { size: A4; margin: 10mm; }
+    /* Lite större marginaler så text inte känns för långt ut till vänster */
+    @page { size: A4; margin: 12mm; }
 
     body { margin: 0; }
 
@@ -100,13 +130,16 @@
     h1 { font-size: 18px; margin: 0 0 4px; }
     .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
 
-    /* Gör så att korsord + frågor INTE delas upp */
+    /* Liten extra vänstermarginal för just innehållet */
+    .print-sheet { padding-left: 4mm; }
+
+    /* Håll ihop korsord + frågor */
     .print-sheet { break-inside: avoid; page-break-inside: avoid; }
 
-    /* Byt layout: korsord först, frågor under (och mer kompakt) */
+    /* Layout: korsord först, frågor under */
     .layout { grid-template-columns: 1fr !important; gap: 8px; }
 
-    /* Vi vill inte ha boxar runt frågorna i print, och vi vill ha dem under */
+    /* inga ramar runt frågorna i print */
     .clues { gap: 6px; }
     .clue-box { border: none; padding: 0; }
 
@@ -120,10 +153,21 @@
     .print-clues ol { padding-left: 16px; }
     .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
 
-    /* komprimera korsordet så det ryms */
-    .grid { --cell: 26px; }             /* 17*26=442px + ram -> ryms på A4 */
-    .cell input { font-size: 14px; }     /* mindre text i rutorna */
-    .num { font-size: 8px; }             /* lite mindre siffror */
+    /* Gör korsordet lite större på papper */
+    .grid { --cell: 28px; }         /* var 26px, nu större */
+    .cell input { font-size: 14px; }
+    .num { font-size: 8px; }
+
+    /* Viktigt: om någon råkat "Kontrollera", skriv ut ändå RENT */
+    .cell.correct,
+    .cell.wrong {
+      background: #fff !important;
+      outline: none !important;
+    }
+    .cell.correct::after,
+    .cell.wrong::after {
+      display: none !important;
+    }
 
     /* Facit på baksidan */
     .print-only { display: block; }
@@ -149,7 +193,7 @@
     </div>
 
     <div class="layout">
-      <!-- Skärm: ledtrådar i vänsterspalt. Print: kommer under korsordet p.g.a. 1 kolumn -->
+      <!-- Skärm: ledtrådar i vänsterspalt. Print: under korsordet (1 kolumn) -->
       <div class="clues">
         <div class="clue-box print-clues">
           <h2>Vågrätt</h2>
@@ -275,7 +319,6 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
 
           cell.appendChild(inp);
         } else {
-          // Facit: rendera bokstav utan input (snyggt och tydligt i print)
           const div = document.createElement('div');
           div.style.display = 'grid';
           div.style.placeItems = 'center';
@@ -390,11 +433,9 @@ document.getElementById('checkBtn').addEventListener('click', check);
 document.getElementById('revealBtn').addEventListener('click', reveal);
 document.getElementById('clearBtn').addEventListener('click', clearAll);
 
-// Bygg elevrutnät + facit-rutnät
 buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
 buildGrid(gridSolEl, {withInputs:false, fillSolution:true, idPrefix:'sol'});
 
-// fokus första ruta
 for (let r=0; r<DATA.rows; r++) {
   for (let c=0; c<DATA.cols; c++) {
     if (isEditable(r,c)) { const i=getInput(r,c); if(i){i.focus();} r=DATA.rows; break; }
