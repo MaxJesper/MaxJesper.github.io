@@ -455,6 +455,12 @@
       return arr;
     }
 
+    function pickNRandom(arr, n){
+      const copy = [...arr];
+      shuffle(copy);
+      return copy.slice(0, n);
+    }
+    
     function createGameData(){
       const gameData = [];
       vocabulary.forEach((item, idx) => {
