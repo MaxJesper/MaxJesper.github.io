@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Memory: Periodiska systemet & Atomen</title>
+  <title>Memory: Materia, värme, atomen & densitet</title>
 
   <link rel="stylesheet" href="/css/style.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -96,6 +96,18 @@
     }
     input[type="range"]{ width: 100%; }
 
+    /* Select (droplist) – ser ut som dina knappar */
+    .select{
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-weight: 650;
+      width: 100%;
+      cursor: pointer;
+    }
+
     /* ====== Spelrubrik över korten ====== */
     .game-title{
       font-size: 30px;
@@ -110,10 +122,10 @@
 
     /* ====== Memorykort ====== */
     :root{
-      --card-border: #5b21b6;   /* mörk violett kant */
-      --front-bg: #7c3aed;      /* violett framsida */
-      --front-icon: #ede9fe;    /* ljus lila atom */
-      --back-bg: #faf5ff;       /* svagt violett baksida */
+      --card-border: #5b21b6;
+      --front-bg: #7c3aed;
+      --front-icon: #ede9fe;
+      --back-bg: #faf5ff;
       --cell-gap: 10px;
     }
 
@@ -151,7 +163,6 @@
       border: 2px solid var(--card-border);
     }
 
-    /* Atom-ikon */
     .atom-icon{
       width: 56%;
       height: 56%;
@@ -178,7 +189,6 @@
       transition: visibility 0s 0.45s, opacity 0.45s linear;
     }
 
-    /* 6x5 grid */
     #game-grid{
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -226,10 +236,9 @@
       cursor: pointer;
     }
     body.open-mode .flip-card-inner.flipped{
-      transform: rotateY(180deg); /* lås alltid öppet */
+      transform: rotateY(180deg);
     }
 
-    /* markerad i öppet-läge */
     .selected{
       outline: 4px solid #111;
       outline-offset: 2px;
@@ -263,22 +272,45 @@
 </head>
 
 <body>
-  <!-- Hamburger + meny -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
   <div class="layout">
-    <!-- Vänsterspalt -->
     <aside class="panel">
       <div class="side-actions">
-        <!-- Identisk med korsord.html -->
         <a href="/fysik/materia/" class="subject-btn">← Tillbaka</a>
 
         <button class="btn" type="button" id="resetBtn">Starta om spel</button>
         <button class="btn secondary" type="button" id="shuffle15Btn">Slumpa 15 av 30</button>
-
-        <!-- Toggle-läge -->
         <button class="btn secondary" type="button" id="openModeBtn">Para ihop öppna kort</button>
+
+        <!-- NYTT: Segervrål -->
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <span>Ditt segervrål:</span>
+          </div>
+          <select id="victorySoundSelect" class="select">
+            <option value="silent" selected>🔇 Tyst läge</option>
+            <option value="trumpet">🎺 Trumpetfanfar</option>
+            <option value="frog">🐸 Groda</option>
+            <option value="cat">🐱 Katt</option>
+            <option value="dog">🐶 Hund</option>
+            <option value="rooster">🐔 Tupp</option>
+            <option value="monkey">🐵 Apa</option>
+            <option value="fart">💨 Fisljud</option>
+            <option value="rocket">🚀 Raket</option>
+            <option value="bell">🔔 Klocka</option>
+            <option value="retro">👾 8-bit seger</option>
+            <option value="game">🎮 Game win</option>
+            <option value="robot">🤖 Robot</option>
+            <option value="ghost">👻 Spöke</option>
+            <option value="drum">🥁 Trumvirvel</option>
+            <option value="duck">🦆 Anka</option>
+          </select>
+          <div class="note" style="margin:0;">
+            Ljudet spelas (2 gånger) när man vinner.
+          </div>
+        </div>
 
         <div class="stats" aria-live="polite">
           <div>Försök: <span id="moves">0</span></div>
@@ -303,25 +335,21 @@
       </div>
     </aside>
 
-    <!-- Spelyta -->
     <main class="panel">
-      <h2 class="game-title">Memory: Atomen &amp; Periodiska systemet</h2>
+      <h2 class="game-title">Memory: Materia, värme &amp; atomen</h2>
       <p class="game-subtitle" id="subtitle">Para ihop begreppet med rätt förklaring!</p>
-
       <div id="game-grid" aria-label="Memorykort (6x5)"></div>
     </main>
   </div>
 
-  <!-- Vinstmodal -->
   <div id="win-message" role="dialog" aria-modal="true" aria-label="Vinstmeddelande">
     <div class="win-card">
       <h2>🎉 Snyggt jobbat!</h2>
-      <p id="winText">Du klarade spelet på <strong><span id="final-moves">0</span></strong> försök.</p>
+      <p id="winText">Du klarade spelet!</p>
       <button class="btn" type="button" id="playAgainBtn">Spela igen</button>
     </div>
   </div>
 
-  <!-- Menylogik -->
   <script src="/js/menu.js"></script>
 
   <script>
@@ -338,7 +366,7 @@
       // Aggregation & fasövergångar
       { term: "Fast form", def: "Partiklarna sitter tätt och vibrerar på plats. Har bestämd form." },
       { term: "Flytande form", def: "Partiklarna sitter nära men kan glida förbi varandra. Har bestämd volym." },
-      { term: "Gasform", def: "Partiklarna är långt ifrån varandra och rör sig snabbt. Fyller hela behållaren." },
+      { term: "Gasform", def: "Partiklarna är långt ifrån varandra och rör sig snabbt. Fyller behållaren." },
       { term: "Smältning", def: "Fast → flytande (energi tas upp)." },
       { term: "Stelning", def: "Flytande → fast (energi avges)." },
       { term: "Avdunstning", def: "Flytande → gas från ytan (kan ske under kokpunkten)." },
@@ -348,39 +376,38 @@
 
       // Värme & temperatur
       { term: "Temperatur", def: "Mått på hur snabbt partiklarna rör sig i genomsnitt." },
-      { term: "Värmeenergi", def: "Energi som överförs p.g.a. skillnad i temperatur." },
+      { term: "Värmeenergi", def: "Energi som överförs p.g.a. temperaturskillnad." },
       { term: "Termisk jämvikt", def: "När två föremål har samma temperatur och ingen värme överförs." },
-      { term: "Specifik värmekapacitet", def: "Hur mycket energi som krävs för att höja 1 kg av ett ämne 1°C." },
+      { term: "Specifik värmekapacitet", def: "Energi som krävs för att höja 1 kg av ett ämne 1°C." },
 
       // Värmespridning
-      { term: "Värmeledning", def: "Värme sprids genom direkt kontakt mellan partiklar (vanligt i metaller)." },
-      { term: "Konvektion", def: "Värme sprids genom strömning i vätskor och gaser (varm luft stiger)." },
-      { term: "Värmestrålning", def: "Värme sprids som elektromagnetisk strålning (t.ex. från solen)." },
+      { term: "Värmeledning", def: "Värme sprids genom direktkontakt (vanligt i metaller)." },
+      { term: "Konvektion", def: "Värme sprids genom strömning i vätskor/gaser (varm luft stiger)." },
+      { term: "Värmestrålning", def: "Värme sprids som elektromagnetisk strålning." },
       { term: "Isolator", def: "Material som leder värme dåligt (t.ex. trä, plast, luft)." },
       { term: "Värmeledare", def: "Material som leder värme bra (t.ex. metaller)." },
 
       // Atomen
-      { term: "Atom", def: "Består av protoner, neutroner och elektroner." },
+      { term: "Atom", def: "Atomkärna (protoner+neutroner) och elektroner i skal." },
       { term: "Proton", def: "Positivt laddad partikel i kärnan. Antalet bestämmer grundämnet." },
       { term: "Neutron", def: "Oladdad partikel i kärnan. Påverkar masstalet." },
-      { term: "Elektron", def: "Negativt laddad partikel som finns i elektronskal runt kärnan." },
+      { term: "Elektron", def: "Negativt laddad partikel i elektronskal runt kärnan." },
       { term: "Atomnummer", def: "Antalet protoner i atomkärnan." },
 
       // Densitet–massa–volym
       { term: "Massa (m)", def: "Hur mycket materia ett föremål innehåller. Mäts i kg." },
       { term: "Volym (V)", def: "Hur stor plats något tar. Mäts ofta i m³ eller liter." },
-      { term: "Densitet (ρ)", def: "Massa per volymenhet. ρ = m / V." },
-      { term: "m = ρ·V", def: "Massan fås genom densitet gånger volym." },
-      { term: "V = m/ρ", def: "Volymen fås genom massa delat med densitet." }
+      { term: "Densitet (ρ)", def: "Massa per volymenhet. Formel: ρ = m / V." },
+      { term: "Formel: m = ρ·V", def: "Massan fås genom densitet gånger volym." },
+      { term: "Formel: V = m/ρ", def: "Volymen fås genom massa delat med densitet." }
     ];
 
     const grid = document.getElementById('game-grid');
     const movesEl = document.getElementById('moves');
     const pairsLeftEl = document.getElementById('pairs-left');
     const winEl = document.getElementById('win-message');
-    const finalMovesEl = document.getElementById('final-moves');
     const winTextEl = document.getElementById('winText');
-
+    const finalMovesEl = document.getElementById('final-moves'); // (finns ej längre i texten men ok om null)
     const delaySlider = document.getElementById('delaySlider');
     const delayLabel  = document.getElementById('delayLabel');
 
@@ -389,12 +416,11 @@
     const tipsText = document.getElementById('tipsText');
     const subtitle = document.getElementById('subtitle');
 
+    const victorySoundSelect = document.getElementById('victorySoundSelect');
+
     let flippedCards = [];
     let moves = 0;
-
-    // ✅ FIX: vocabulary finns inte längre — vi spelar 15 par per omgång
     let pairsLeft = 15;
-
     let lockBoard = false;
 
     // Tid innan felpar vänds tillbaka (stängt läge)
@@ -418,9 +444,7 @@
       const minutes = Math.floor(total / 60000);
       const seconds = Math.floor((total % 60000) / 1000);
       const tenths  = Math.floor((total % 1000) / 100);
-      const mm = String(minutes).padStart(2,'0');
-      const ss = String(seconds).padStart(2,'0');
-      return `${mm}:${ss}.${tenths}`;
+      return `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}.${tenths}`;
     }
 
     function tick(){
@@ -449,6 +473,7 @@
       timerEl.textContent = "00:00.0";
     }
 
+    // ====== Shuffle + urval ======
     function shuffle(arr){
       for (let i = arr.length - 1; i > 0; i--){
         const j = Math.floor(Math.random() * (i + 1));
@@ -456,17 +481,15 @@
       }
       return arr;
     }
-
     function pickNRandom(arr, n){
       const copy = [...arr];
       shuffle(copy);
       return copy.slice(0, n);
     }
 
-    let selectedSet = []; // de 15 par som används i aktuell omgång
+    let selectedSet = [];
 
     function createGameData(){
-      // välj 15 om vi inte redan har valt (eller om någon tryckt "Slumpa 15")
       if (!selectedSet.length) selectedSet = pickNRandom(vocabularyBank, 15);
 
       const gameData = [];
@@ -477,7 +500,7 @@
       return shuffle(gameData);
     }
 
-    // Inline SVG för atom på framsidan
+    // ====== Atom-SVG ======
     function atomSVG(){
       return `
         <svg class="atom-icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false">
@@ -521,14 +544,10 @@
       if (lockBoard) return;
       if (outer.classList.contains('matched')) return;
 
-      // starta timer vid första verkliga klicket
       startTimerIfNeeded();
 
-      if (openMode){
-        openPick(inner);
-      } else {
-        closedFlip(inner);
-      }
+      if (openMode) openPick(inner);
+      else closedFlip(inner);
     }
 
     // ====== Stängt läge ======
@@ -550,7 +569,6 @@
       const [c1, c2] = flippedCards;
       const m1 = c1.getAttribute('data-match-id');
       const m2 = c2.getAttribute('data-match-id');
-
       const t1 = c1.getAttribute('data-type');
       const t2 = c2.getAttribute('data-type');
 
@@ -569,7 +587,7 @@
 
           flippedCards = [];
           lockBoard = false;
-          
+
           if (pairsLeft === 0) showWin();
         }, 520);
       } else {
@@ -583,7 +601,7 @@
     }
 
     // ====== Öppet läge ======
-    let openPicked = []; // [inner, inner]
+    let openPicked = [];
 
     function openPick(inner){
       if (inner.classList.contains('selected')) return;
@@ -603,7 +621,6 @@
       const [c1, c2] = openPicked;
       const m1 = c1.getAttribute('data-match-id');
       const m2 = c2.getAttribute('data-match-id');
-
       const t1 = c1.getAttribute('data-type');
       const t2 = c2.getAttribute('data-type');
 
@@ -637,87 +654,7 @@
       }
     }
 
-              // ====== VINSTLJUD (kort fanfar, offline via WebAudio) ======
-    let audioCtx = null;
-    
-    function ensureAudio(){
-      if (!audioCtx){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      // iOS/Chrome kan kräva "resume" efter första klick
-      if (audioCtx.state === "suspended") audioCtx.resume();
-    }
-    
-    function playFanfare(){
-      try{
-        ensureAudio();
-        const t0 = audioCtx.currentTime;
-    
-        // "Trumpet-ish": sawtooth + lite filter/envelope
-        const notes = [
-          { f: 523.25, d: 0.16 }, // C5
-          { f: 659.25, d: 0.16 }, // E5
-          { f: 783.99, d: 0.16 }, // G5
-          { f: 1046.5, d: 2.0 }, // C6 lång final
-        ];
-    
-        const master = audioCtx.createGain();
-        master.gain.value = 0.0;
-        master.connect(audioCtx.destination);
-    
-        // liten fade-in så det inte klickar
-        master.gain.setValueAtTime(0.0001, t0);
-        master.gain.linearRampToValueAtTime(0.55, t0 + 0.02);
-        master.gain.linearRampToValueAtTime(0.0001, t0 + 2.4);
-    
-        const filter = audioCtx.createBiquadFilter();
-        filter.type = "bandpass";
-        filter.frequency.value = 1100;
-        filter.Q.value = 1.2;
-        filter.connect(master);
-    
-        let t = t0;
-        for (const n of notes){
-          const osc = audioCtx.createOscillator();
-          const g = audioCtx.createGain();
-    
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(n.f, t);
-    
-          // envelope per ton
-          g.gain.setValueAtTime(0.0001, t);
-          g.gain.linearRampToValueAtTime(0.9, t + 0.02);
-          g.gain.exponentialRampToValueAtTime(0.0001, t + n.d);
-    
-          osc.connect(g);
-          g.connect(filter);
-    
-          osc.start(t);
-          osc.stop(t + n.d + 0.02);
-    
-          // liten paus mellan tonerna
-          t += n.d + 0.03;
-        }
-      } catch(e){
-        // Om ljud blockeras av browsern: gör inget (spelet funkar ändå)
-      }
-    }
-    
-    function showWin(){
-      stopTimer();
-      playFanfare(); // ✅ VINSTLJUD
-    
-      finalMovesEl.textContent = moves;
-    
-      const finalTime = timerEl.textContent;
-      winTextEl.innerHTML = `Du klarade spelet på <strong>${moves}</strong> försök och tiden <strong>${finalTime}</strong>.`;
-    
-      winEl.classList.add('open');
-    }
-    function hideWin(){
-      winEl.classList.remove('open');
-    }
-
+    // ====== Mode + UI ======
     function setMode(nextOpenMode){
       openMode = nextOpenMode;
       document.body.classList.toggle('open-mode', openMode);
@@ -732,18 +669,31 @@
         : "Tips: Först vänd ett begrepp, sedan en förklaring.";
     }
 
+    // ====== WIN + LJUD (2 gånger) ======
+    function showWin(){
+      stopTimer();
+
+      const finalTime = timerEl.textContent;
+      winTextEl.innerHTML = `Du klarade spelet på <strong>${moves}</strong> försök och tiden <strong>${finalTime}</strong>.`;
+      winEl.classList.add('open');
+
+      // belöning: spela 2 gånger
+      playVictorySoundTwice();
+    }
+
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    // ====== Reset ======
     function resetGame(){
       hideWin();
 
-      // reset state
       grid.innerHTML = '';
       moves = 0;
       movesEl.textContent = moves;
 
-      // bygg data (väljer 15 om inte valt)
-      const data = createGameData();
-
-      pairsLeft = selectedSet.length;       // ✅ nu alltid korrekt
+      pairsLeft = selectedSet.length || 15;
       pairsLeftEl.textContent = pairsLeft;
 
       flippedCards = [];
@@ -752,6 +702,7 @@
 
       resetTimer();
 
+      const data = createGameData();
       data.forEach(item => grid.appendChild(createCard(item)));
     }
 
@@ -767,11 +718,354 @@
       selectedSet = pickNRandom(vocabularyBank, 15);
       resetGame();
     });
-    // Lås upp ljud efter första klick (krävs i vissa browsers)
-    document.addEventListener('pointerdown', ensureAudio, { once: true });
-    
+
+    // ====== AUDIO ENGINE (Web Audio) ======
+    let audioCtx = null;
+    let masterGain = null;
+
+    function ensureAudio(){
+      if (audioCtx) return;
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new Ctx();
+
+      masterGain = audioCtx.createGain();
+      // lite rejäl volym som standard (du kan skruva här)
+      masterGain.gain.value = 0.90;
+      masterGain.connect(audioCtx.destination);
+    }
+
+    // Helper: skapa oscillator + envelope
+    function tone({type="sine", f=440, t0=0, dur=0.2, gain=0.25, endGain=0.0001}){
+      const start = audioCtx.currentTime + t0;
+      const stop  = start + dur;
+
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(f, start);
+
+      g.gain.setValueAtTime(gain, start);
+      g.gain.exponentialRampToValueAtTime(endGain, stop);
+
+      osc.connect(g).connect(masterGain);
+      osc.start(start);
+      osc.stop(stop);
+      return {osc, g, start, stop};
+    }
+
+    // Helper: noise burst
+    function noise({t0=0, dur=0.25, gain=0.25, type="bandpass", freq=600, q=1.5}){
+      const start = audioCtx.currentTime + t0;
+      const stop  = start + dur;
+
+      const bufferSize = Math.floor(audioCtx.sampleRate * dur);
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i=0; i<bufferSize; i++){
+        // brus med snabb decay
+        const env = Math.exp(-i / (audioCtx.sampleRate * dur * 0.45));
+        data[i] = (Math.random()*2 - 1) * env;
+      }
+
+      const src = audioCtx.createBufferSource();
+      src.buffer = buffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = type;
+      filter.frequency.value = freq;
+      filter.Q.value = q;
+
+      const g = audioCtx.createGain();
+      g.gain.setValueAtTime(gain, start);
+      g.gain.exponentialRampToValueAtTime(0.0001, stop);
+
+      src.connect(filter).connect(g).connect(masterGain);
+      src.start(start);
+      src.stop(stop);
+    }
+
+    // ====== 15 ljud ======
+    function playSilent(){ /* inget */ }
+
+    function playTrumpet(){
+      // liten fanfar + sista tonen längre (2s)
+      const seq = [
+        {f:523.25, d:0.14}, // C5
+        {f:659.25, d:0.14}, // E5
+        {f:783.99, d:0.18}, // G5
+      ];
+      let t0 = 0;
+      seq.forEach(n => { tone({type:"sawtooth", f:n.f, t0, dur:n.d, gain:0.23}); t0 += n.d * 0.95; });
+      // sista: lång (2s)
+      tone({type:"sawtooth", f:1046.5, t0, dur:2.0, gain:0.22});
+    }
+
+    function playFrog(){
+      // "kvääk" = snabb pitch-drop + kort
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "square";
+      osc.frequency.setValueAtTime(220, t);
+      osc.frequency.exponentialRampToValueAtTime(90, t + 0.22);
+      g.gain.setValueAtTime(0.28, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.25);
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      osc.stop(t + 0.28);
+    }
+
+    function playCat(){
+      // "mjao" = upp lite, ner länge
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(450, t);
+      osc.frequency.linearRampToValueAtTime(650, t + 0.12);
+      osc.frequency.linearRampToValueAtTime(280, t + 0.75);
+      g.gain.setValueAtTime(0.26, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.75);
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      osc.stop(t + 0.8);
+    }
+
+    function playDog(){
+      // "voff" = brus + kort ton
+      noise({t0:0.0, dur:0.10, gain:0.24, type:"bandpass", freq:500, q:2});
+      tone({type:"square", f:140, t0:0.02, dur:0.16, gain:0.18});
+    }
+
+    function playRooster(){
+      // "kuckeliku" = tontrappa upp
+      const notes = [330, 392, 494, 660, 880];
+      let t0 = 0;
+      notes.forEach((f,i)=>{
+        tone({type:"sawtooth", f, t0, dur:0.12, gain:0.18});
+        t0 += 0.11;
+      });
+      // liten efterklang
+      tone({type:"sine", f:660, t0:0.55, dur:0.35, gain:0.10});
+    }
+
+    function playMonkey(){
+      // "uh-uh" = vibrato + korta hopp
+      const base = 320;
+      for (let i=0;i<3;i++){
+        const t0 = i*0.12;
+        const t = audioCtx.currentTime + t0;
+        const osc = audioCtx.createOscillator();
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        const g = audioCtx.createGain();
+
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(base + i*40, t);
+
+        lfo.type = "sine";
+        lfo.frequency.value = 18;
+        lfoGain.gain.value = 22;
+
+        lfo.connect(lfoGain).connect(osc.frequency);
+        g.gain.setValueAtTime(0.22, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.10);
+
+        osc.connect(g).connect(masterGain);
+        osc.start(t);
+        lfo.start(t);
+        osc.stop(t + 0.11);
+        lfo.stop(t + 0.11);
+      }
+    }
+
+    function playFart(){
+      // filtrerat lågpassbrus med liten "plopp"-ton
+      noise({t0:0, dur:0.35, gain:0.22, type:"lowpass", freq:450, q:0.7});
+      tone({type:"sine", f:120, t0:0.04, dur:0.20, gain:0.10});
+    }
+
+    function playRocket(){
+      // saw upp + brus
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(120, t);
+      osc.frequency.exponentialRampToValueAtTime(2400, t + 1.1);
+      g.gain.setValueAtTime(0.20, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      osc.stop(t + 1.12);
+
+      noise({t0:0.0, dur:0.30, gain:0.10, type:"bandpass", freq:800, q:1.2});
+    }
+
+    function playBell(){
+      // "klocka" = två nära sinustoner
+      tone({type:"sine", f:880,  t0:0.0, dur:1.0, gain:0.20});
+      tone({type:"sine", f:1320, t0:0.0, dur:0.8, gain:0.13});
+      tone({type:"sine", f:1760, t0:0.0, dur:0.6, gain:0.09});
+    }
+
+    function playRetro(){
+      // 8-bit arpeggio
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      let t0 = 0;
+      notes.forEach(f => { tone({type:"square", f, t0, dur:0.14, gain:0.20}); t0 += 0.15; });
+    }
+
+    function playGameWin(){
+      // "game win" – snabb liten melodi + lång slutton
+      const seq = [659.25, 783.99, 987.77, 1318.5];
+      let t0 = 0;
+      seq.forEach(f => { tone({type:"square", f, t0, dur:0.12, gain:0.18}); t0 += 0.13; });
+      tone({type:"triangle", f:1046.5, t0, dur:2.0, gain:0.16});
+    }
+
+    function playRobot(){
+      // robot: tremolo + lite ringmod-känsla
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const lfo = audioCtx.createOscillator();
+      const lfoGain = audioCtx.createGain();
+      const g = audioCtx.createGain();
+
+      osc.type = "square";
+      osc.frequency.setValueAtTime(220, t);
+
+      lfo.type = "sine";
+      lfo.frequency.value = 24;
+      lfoGain.gain.value = 0.14;
+
+      lfo.connect(lfoGain).connect(g.gain);
+
+      g.gain.setValueAtTime(0.22, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      lfo.start(t);
+      osc.stop(t + 0.9);
+      lfo.stop(t + 0.9);
+    }
+
+    function playGhost(){
+      // spöke: lång glidande ton + vibrato
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const lfo = audioCtx.createOscillator();
+      const lfoGain = audioCtx.createGain();
+      const g = audioCtx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(480, t);
+      osc.frequency.linearRampToValueAtTime(220, t + 1.2);
+
+      lfo.type = "sine";
+      lfo.frequency.value = 6;
+      lfoGain.gain.value = 18;
+
+      lfo.connect(lfoGain).connect(osc.frequency);
+
+      g.gain.setValueAtTime(0.18, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
+
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      lfo.start(t);
+      osc.stop(t + 1.22);
+      lfo.stop(t + 1.22);
+    }
+
+    function playDrumroll(){
+      // trumvirvel: brus i flera korta bursts
+      for (let i=0;i<8;i++){
+        noise({t0:i*0.06, dur:0.06, gain:0.14, type:"highpass", freq:900, q:0.9});
+      }
+      // liten "ta-daa"
+      tone({type:"triangle", f:392, t0:0.52, dur:0.14, gain:0.16});
+      tone({type:"triangle", f:523.25, t0:0.66, dur:0.28, gain:0.16});
+    }
+
+    function playDuck(){
+      // "kvack" = snabb pitch-studs
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = "square";
+      osc.frequency.setValueAtTime(280, t);
+      osc.frequency.linearRampToValueAtTime(190, t + 0.12);
+      osc.frequency.linearRampToValueAtTime(260, t + 0.22);
+      g.gain.setValueAtTime(0.22, t);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
+      osc.connect(g).connect(masterGain);
+      osc.start(t);
+      osc.stop(t + 0.3);
+    }
+
+    function playVictorySoundOnce(){
+      const type = victorySoundSelect.value;
+      if (type === "silent") return;
+
+      ensureAudio();
+
+      // i vissa browsers behöver ctx väckas
+      if (audioCtx.state === "suspended") audioCtx.resume().catch(()=>{});
+
+      switch(type){
+        case "trumpet": playTrumpet(); break;
+        case "frog": playFrog(); break;
+        case "cat": playCat(); break;
+        case "dog": playDog(); break;
+        case "rooster": playRooster(); break;
+        case "monkey": playMonkey(); break;
+        case "fart": playFart(); break;
+        case "rocket": playRocket(); break;
+        case "bell": playBell(); break;
+        case "retro": playRetro(); break;
+        case "game": playGameWin(); break;
+        case "robot": playRobot(); break;
+        case "ghost": playGhost(); break;
+        case "drum": playDrumroll(); break;
+        case "duck": playDuck(); break;
+      }
+    }
+
+    function playVictorySoundTwice(){
+      // spela en gång direkt, sen en gång till lite senare
+      playVictorySoundOnce();
+
+      const type = victorySoundSelect.value;
+      if (type === "silent") return;
+
+      // ungefärliga längder (ms) per ljud – andra uppspelningen startar efter detta
+      const approxMs = {
+        trumpet: 2300,
+        frog: 350,
+        cat: 850,
+        dog: 350,
+        rooster: 950,
+        monkey: 450,
+        fart: 450,
+        rocket: 1200,
+        bell: 1100,
+        retro: 700,
+        game: 2400,
+        robot: 950,
+        ghost: 1250,
+        drum: 1050,
+        duck: 400
+      };
+
+      const wait = (approxMs[type] ?? 900) + 150;
+      setTimeout(() => playVictorySoundOnce(), wait);
+    }
+
     window.addEventListener('load', () => {
-      setMode(false); // start i stängt läge
+      setMode(false);
       resetGame();
     });
   </script>
