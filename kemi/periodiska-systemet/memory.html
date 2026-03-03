@@ -98,7 +98,7 @@
 
     /* ====== Spelrubrik över korten ====== */
     .game-title{
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 800;
       margin: 0 0 4px;
     }
@@ -166,7 +166,7 @@
       color: #111;
       transform: rotateY(180deg);
       border: 2px solid var(--card-border);
-      font-size: 0.86rem;   /* lite mindre */
+      font-size: 0.95rem;   /* större text än 0.86 */
       line-height: 1.18;
       overflow: hidden;
       font-weight: 700;
@@ -273,7 +273,7 @@
             <span>Vänd tillbaka efter:</span>
             <span><span id="delayLabel">950</span> ms</span>
           </div>
-          <input id="delaySlider" type="range" min="250" max="2500" step="50" value="950" />
+          <input id="delaySlider" type="range" min="250" max="5000" step="50" value="950" />
           <div class="note" style="margin:0;">
             Justerar hur länge felpar ligger öppna innan de vänds tillbaka.
           </div>
