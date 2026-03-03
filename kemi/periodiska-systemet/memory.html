@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Memory: Periodiska Systemet & Atomen</title>
 
-  <!-- Din gemensamma styles (för hamburger + subject-btn m.m.) -->
+  <!-- Din gemensamma styles (hamburger, meny m.m.) -->
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- Tailwind -->
@@ -13,86 +13,96 @@
 
   <style>
     .perspective { perspective: 1000px; }
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-      cursor: pointer;
+    .flip-card-inner{
+      position: relative; width: 100%; height: 100%;
+      text-align: center; transition: transform 0.6s;
+      transform-style: preserve-3d; cursor: pointer;
     }
-    .flip-card-inner.flipped { transform: rotateY(180deg); }
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    .flip-card-inner.flipped{ transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back{
+      position: absolute; width: 100%; height: 100%;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.75rem;
-      padding: 10px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 0.75rem; padding: 10px;
       box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     }
-    .flip-card-front {
-      background-color: #3b82f6;
-      color: white;
-      font-size: 2rem;
-      font-weight: bold;
+    .flip-card-front{
+      background-color: #3b82f6; color: white;
+      font-size: 2rem; font-weight: bold;
     }
-    .flip-card-back {
-      background-color: white;
-      color: #1f2937;
+    .flip-card-back{
+      background-color: white; color: #1f2937;
       transform: rotateY(180deg);
       border: 2px solid #3b82f6;
-      font-size: 0.85rem;
-      line-height: 1.2;
+      font-size: 0.85rem; line-height: 1.2;
       overflow: hidden;
     }
-    .matched {
-      visibility: hidden;
-      opacity: 0;
+    .matched{
+      visibility: hidden; opacity: 0;
       transition: visibility 0s 0.6s, opacity 0.6s linear;
     }
 
-    /* Placera hamburgaren uppe till höger som dina andra sidor */
+    /* Hamburger uppe till höger */
     .hamburger{
       position: fixed;
       top: 14px;
       right: 14px;
       z-index: 1001;
     }
+
+    /* Snygg “header-panel” oberoende av din globala css */
+    .header-panel{
+      border-radius: 18px;
+      padding: 18px 16px;
+      background: linear-gradient(135deg, rgba(59,130,246,.14), rgba(99,102,241,.10));
+      border: 1px solid rgba(15,23,42,.10);
+      box-shadow: 0 10px 20px rgba(2,6,23,.08);
+    }
+
+    /* Säkerställ att räkningsraden syns även om global css bråkar */
+    #moves, #pairs-left, #final-moves{
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* “Tillbaka”-knapp som alltid är klickbar */
+    .back-btn{
+      pointer-events: auto !important;
+    }
   </style>
 </head>
 
 <body class="bg-slate-50 min-h-screen p-4 md:p-8 font-sans">
 
-  <!-- Hamburger + meny (menu.js fyller #side-menu) -->
+  <!-- Hamburger + meny -->
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
   <div class="max-w-5xl mx-auto">
-    <header class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-slate-800 mb-2">Memory: Atomen & Periodiska Systemet</h1>
-      <p class="text-slate-600">Para ihop begreppet med rätt förklaring!</p>
+    <header class="header-panel text-center mb-8">
+      <h1 class="text-3xl font-bold text-slate-900 mb-2">Memory: Atomen & Periodiska Systemet</h1>
+      <p class="text-slate-700">Para ihop begreppet med rätt förklaring!</p>
 
-      <div class="mt-4 flex justify-center gap-4 text-lg font-semibold">
+      <!-- Räknare -->
+      <div class="mt-4 flex flex-wrap justify-center gap-6 text-lg font-semibold text-slate-900">
         <span>Försök: <span id="moves">0</span></span>
         <span>Par kvar: <span id="pairs-left">0</span></span>
       </div>
 
+      <!-- Knappar -->
       <div class="mt-5 flex flex-wrap justify-center gap-3">
-        <button onclick="resetGame()"
+        <button type="button"
+          onclick="resetGame()"
           class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors">
           Starta om spel
         </button>
 
-        <!-- Tillbaka-knapp -->
-        <a href="/kemi/periodiska-systemet/" class="subject-btn">
+        <!-- Tillbaka (onclick = garanterat) -->
+        <button type="button"
+          class="back-btn bg-white hover:bg-slate-50 text-slate-900 border border-slate-300 px-6 py-2 rounded-full transition-colors font-semibold"
+          onclick="window.location.href='/kemi/periodiska-systemet/';">
           ← Tillbaka
-        </a>
+        </button>
       </div>
     </header>
 
@@ -111,7 +121,7 @@
     </div>
   </div>
 
-  <!-- Din menylogik -->
+  <!-- Menylogik -->
   <script src="/js/menu.js"></script>
 
   <script>
@@ -150,6 +160,7 @@
     function createCardElement(data) {
       const container = document.createElement('div');
       container.className = 'perspective aspect-square';
+
       container.innerHTML = `
         <div class="flip-card-inner h-full w-full" data-id="${data.id}" data-match-id="${data.matchId}">
           <div class="flip-card-front">?</div>
@@ -159,9 +170,8 @@
         </div>
       `;
 
-      container.querySelector('.flip-card-inner').addEventListener('click', function () {
-        flipCard(this);
-      });
+      container.querySelector('.flip-card-inner')
+        .addEventListener('click', function () { flipCard(this); });
 
       return container;
     }
@@ -217,13 +227,18 @@
     function resetGame() {
       const grid = document.getElementById('game-grid');
       grid.innerHTML = '';
+
       moves = 0;
       document.getElementById('moves').textContent = moves;
+
       document.getElementById('win-message').classList.add('hidden');
 
       const gameData = createGameData();
       pairsLeft = vocabulary.length;
       document.getElementById('pairs-left').textContent = pairsLeft;
+
+      flippedCards = [];
+      isLockBoard = false;
 
       gameData.forEach(data => {
         grid.appendChild(createCardElement(data));
