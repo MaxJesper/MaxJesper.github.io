@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory: Periodiska systemet & Atomen</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ====== Viktigt: hindra att sidomenyn blockerar klick när den är stängd ====== */
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    /* Hamburger som i dina andra filer */
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+
+    /* ====== Varm bakgrund ====== */
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #fff3e6 0%, #fff0df 35%, #fdf6ee 100%);
+      color: #111;
+    }
+
+    .layout{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (min-width: 980px){
+      .layout{ grid-template-columns: 260px 1fr; }
+    }
+
+    .panel{
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+    }
+
+    .side-actions{ display: grid; gap: 10px; }
+
+    .stats{
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+      color: #111;
+    }
+    .stats span{ font-variant-numeric: tabular-nums; }
+
+    /* Knappar: matcha “korsord”-känslan */
+    .btn{
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .btn.secondary{ background: #fff; color: #111; }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Slider */
+    .slider-wrap{
+      display: grid;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(0,0,0,.18);
+      margin-top: 6px;
+    }
+    .slider-row{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: #222;
+      font-weight: 650;
+    }
+    input[type="range"]{ width: 100%; }
+
+    /* ====== Spelrubrik över korten ====== */
+    .game-title{
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+    .game-subtitle{
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    /* ====== Memorykort ====== */
+    :root{
+      --card-border: #5b21b6;   /* mörk violett kant */
+      --front-bg: #7c3aed;      /* violett framsida */
+      --front-icon: #ede9fe;    /* ljus lila atom */
+      --back-bg: #faf5ff;       /* svagt violett baksida */
+      --cell-gap: 10px;
+    }
+
+    .perspective { perspective: 1000px; }
+
+    .flip-card-inner{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.52s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .flip-card-inner.flipped{ transform: rotateY(180deg); }
+
+    .flip-card-front, .flip-card-back{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.10);
+      box-sizing: border-box;
+    }
+
+    .flip-card-front{
+      background: var(--front-bg);
+      color: white;
+      border: 2px solid var(--card-border);
+    }
+
+    /* Atom-ikon */
+    .atom-icon{
+      width: 56%;
+      height: 56%;
+      max-width: 58px;
+      max-height: 58px;
+      opacity: .96;
+      display: block;
+    }
+
+    .flip-card-back{
+      background: var(--back-bg);
+      color: #111;
+      transform: rotateY(180deg);
+      border: 2px solid var(--card-border);
+      font-size: 0.95rem;
+      line-height: 1.18;
+      overflow: hidden;
+      font-weight: 700;
+    }
+
+    .matched{
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 0.45s, opacity 0.45s linear;
+    }
+
+    /* 6x5 grid – något mindre kort */
+    #game-grid{
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: var(--cell-gap);
+    }
+
+    @media (max-width: 1100px){
+      :root{ --cell-gap: 9px; }
+      .flip-card-back{ font-size: 0.82rem; }
+    }
+    @media (max-width: 980px){
+      #game-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      :root{ --cell-gap: 9px; }
+    }
+    @media (max-width: 740px){
+      #game-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      :root{ --cell-gap: 8px; }
+    }
+    @media (max-width: 520px){
+      #game-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      :root{ --cell-gap: 8px; }
+    }
+
+    .card-wrap{
+      aspect-ratio: 1 / 1;
+      max-width: 135px;
+      width: 100%;
+      margin-inline: auto;
+    }
+    @media (max-width: 1200px){ .card-wrap{ max-width: 125px; } }
+    @media (max-width: 980px){  .card-wrap{ max-width: 115px; } }
+    @media (max-width: 740px){  .card-wrap{ max-width: 105px; } }
+    @media (max-width: 520px){  .card-wrap{ max-width: 115px; } }
+
+    .note{
+      font-size: 13px;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    /* ====== NYTT: Öppet-läge (alla kort visas öppna) ====== */
+    body.open-mode .flip-card-inner{
+      transform: rotateY(180deg);
+      cursor: pointer;
+    }
+    body.open-mode .flip-card-inner.flipped{
+      transform: rotateY(180deg); /* lås alltid öppet */
+    }
+
+    /* markerad i öppet-läge */
+    .selected{
+      outline: 4px solid #111;
+      outline-offset: 2px;
+      border-radius: 12px;
+    }
+
+    /* Win overlay */
+    #win-message{
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1200;
+    }
+    #win-message.open{ display: flex; }
+    .win-card{
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      text-align: center;
+    }
+    .win-card h2{ margin: 0 0 8px; font-size: 22px; }
+    .win-card p{ margin: 0 0 14px; }
+  </style>
+</head>
+
+<body>
+  <!-- Hamburger + meny -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="layout">
+    <!-- Vänsterspalt: knappar + räknare + slider -->
+    <aside class="panel">
+      <div class="side-actions">
+        <!-- Identisk med korsord.html -->
+        <a href="/kemi/periodiska-systemet/" class="subject-btn">← Tillbaka</a>
+
+        <button class="btn" type="button" id="resetBtn">Starta om spel</button>
+        <button class="btn secondary" type="button" id="shuffle15Btn">Slumpa 15 av 30</button>
+        
+        <!-- NYTT: Toggle-läge -->
+        <button class="btn secondary" type="button" id="openModeBtn">Para ihop öppna kort</button>
+
+        <div class="stats" aria-live="polite">
+          <div>Försök: <span id="moves">0</span></div>
+          <div>Par kvar: <span id="pairs-left">15</span></div>
+          <!-- NYTT: Timer -->
+          <div>Tid: <span id="timer">00:00.0</span></div>
+        </div>
+
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <span>Vänd tillbaka efter:</span>
+            <span><span id="delayLabel">950</span> ms</span>
+          </div>
+          <input id="delaySlider" type="range" min="250" max="5000" step="50" value="950" />
+          <div class="note" style="margin:0;">
+            Justerar hur länge felpar ligger öppna innan de vänds tillbaka.
+          </div>
+        </div>
+
+        <div class="note" id="tipsText">
+          Tips: Först vänd ett begrepp, sedan en förklaring.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Spelyta -->
+    <main class="panel">
+      <h2 class="game-title">Memory: Atomen &amp; Periodiska systemet</h2>
+      <p class="game-subtitle" id="subtitle">Para ihop begreppet med rätt förklaring!</p>
+
+      <div id="game-grid" aria-label="Memorykort (6x5)"></div>
+    </main>
+  </div>
+
+  <!-- Vinstmodal -->
+  <div id="win-message" role="dialog" aria-modal="true" aria-label="Vinstmeddelande">
+    <div class="win-card">
+      <h2>🎉 Snyggt jobbat!</h2>
+      <p id="winText">Du klarade memoryt på <strong><span id="final-moves">0</span></strong> försök.</p>
+      <button class="btn" type="button" id="playAgainBtn">Spela igen</button>
+    </div>
+  </div>
+
+  <!-- Menylogik (samma som korsord) -->
+  <script src="/js/menu.js"></script>
+
+  <script>
+    // ====== 15 par = 30 kort (6x5) ======
+    const vocabulary = [
+      { term: "Atom", def: "Den minsta byggstenen för ett grundämne. Består av protoner, neutroner och elektroner." },
+      { term: "Proton", def: "Positivt laddad partikel i atomkärnan. Dess antal bestämmer atomnumret." },
+      { term: "Neutron", def: "Oladdad (neutral) partikel i atomkärnan. Bidrar till atomens massa." },
+      { term: "Elektron", def: "Negativt laddad partikel som rör sig i skal runt atomkärnan." },
+      { term: "Atomkärna", def: "Atomens mittpunkt som innehåller nästan hela atomens massa." },
+      { term: "Elektronskal", def: "De energinivåer runt kärnan där elektronerna finns (t.ex. K, L, M)." },
+      { term: "Valenselektroner", def: "Elektronerna i atomens yttersta skal. Bestämmer ämnets kemiska egenskaper." },
+      { term: "Isotop", def: "Varianter av ett grundämne med samma antal protoner men olika antal neutroner." },
+      { term: "Grundämne", def: "Ett ämne i vilket alla atomerna har samma antal protoner." },
+      { term: "Atomnummer", def: "Antalet protoner i kärnan. Avgör vilket grundämne det är." },
+      { term: "Masstal", def: "Summan av antalet protoner och neutroner i en atomkärna." },
+      { term: "Periodiska systemet", def: "Tabell över alla grundämnen, sorterade efter stigande atomnummer." },
+      { term: "Grupp", def: "Lodrät kolumn i periodiska systemet vars ämnen ofta har liknande egenskaper." },
+      { term: "Period", def: "Vågrät rad i periodiska systemet, vars ämnen har lika många elektronskal." },
+      { term: "Metaller", def: "Grundämnen som leder värme/el, glänser och kan smidas. Finns mest till vänster/mitten." }
+    ];
+
+    const grid = document.getElementById('game-grid');
+    const movesEl = document.getElementById('moves');
+    const pairsLeftEl = document.getElementById('pairs-left');
+    const winEl = document.getElementById('win-message');
+    const finalMovesEl = document.getElementById('final-moves');
+    const winTextEl = document.getElementById('winText');
+
+    const delaySlider = document.getElementById('delaySlider');
+    const delayLabel  = document.getElementById('delayLabel');
+
+    const openModeBtn = document.getElementById('openModeBtn');
+    const timerEl = document.getElementById('timer');
+    const tipsText = document.getElementById('tipsText');
+    const subtitle = document.getElementById('subtitle');
+
+    let flippedCards = [];
+    let moves = 0;
+    let pairsLeft = vocabulary.length;
+    let lockBoard = false;
+
+    // Tid innan felpar vänds tillbaka (stängt läge)
+    let flipBackDelayMs = Number(delaySlider.value || 950);
+    delayLabel.textContent = flipBackDelayMs;
+
+    delaySlider.addEventListener('input', () => {
+      flipBackDelayMs = Number(delaySlider.value);
+      delayLabel.textContent = flipBackDelayMs;
+    });
+
+    // ====== NYTT: läge + timer ======
+    let openMode = false;
+
+    let timerRunning = false;
+    let startTs = 0;
+    let rafId = 0;
+
+    function formatTime(ms){
+      const total = Math.max(0, ms);
+      const minutes = Math.floor(total / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const tenths  = Math.floor((total % 1000) / 100);
+      const mm = String(minutes).padStart(2,'0');
+      const ss = String(seconds).padStart(2,'0');
+      return `${mm}:${ss}.${tenths}`;
+    }
+
+    function tick(){
+      if (!timerRunning) return;
+      const now = performance.now();
+      timerEl.textContent = formatTime(now - startTs);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startTimerIfNeeded(){
+      if (timerRunning) return;
+      timerRunning = true;
+      startTs = performance.now();
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopTimer(){
+      timerRunning = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function resetTimer(){
+      stopTimer();
+      timerEl.textContent = "00:00.0";
+    }
+
+    function shuffle(arr){
+      for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function createGameData(){
+      const gameData = [];
+      vocabulary.forEach((item, idx) => {
+        gameData.push({ id: `t-${idx}`, type:'term', content: item.term, matchId: idx });
+        gameData.push({ id: `d-${idx}`, type:'def',  content: item.def,  matchId: idx });
+      });
+      return shuffle(gameData);
+    }
+
+    // Inline SVG för atom på framsidan
+    function atomSVG(){
+      return `
+        <svg class="atom-icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="var(--front-icon)" stroke-width="6" stroke-linecap="round">
+            <ellipse cx="64" cy="64" rx="46" ry="22" />
+            <ellipse cx="64" cy="64" rx="46" ry="22" transform="rotate(60 64 64)"/>
+            <ellipse cx="64" cy="64" rx="46" ry="22" transform="rotate(120 64 64)"/>
+          </g>
+          <circle cx="64" cy="64" r="8" fill="var(--front-icon)"/>
+          <circle cx="100" cy="64" r="5" fill="var(--front-icon)"/>
+          <circle cx="42" cy="40" r="5" fill="var(--front-icon)"/>
+          <circle cx="42" cy="88" r="5" fill="var(--front-icon)"/>
+        </svg>
+      `;
+    }
+
+    function createCard(data){
+      const outer = document.createElement('div');
+      outer.className = 'perspective card-wrap';
+
+      outer.innerHTML = `
+        <div class="flip-card-inner h-full w-full"
+             data-id="${data.id}"
+             data-type="${data.type}"
+             data-match-id="${data.matchId}">
+          <div class="flip-card-front">
+            ${atomSVG()}
+          </div>
+          <div class="flip-card-back px-2 py-1 text-center">
+            ${data.content}
+          </div>
+        </div>
+      `;
+
+      const inner = outer.querySelector('.flip-card-inner');
+      inner.addEventListener('click', () => onCardClick(inner, outer));
+      return outer;
+    }
+
+    function onCardClick(inner, outer){
+      if (lockBoard) return;
+      if (outer.classList.contains('matched')) return;
+
+      // starta timer vid första verkliga klicket
+      startTimerIfNeeded();
+
+      if (openMode){
+        openPick(inner);
+      } else {
+        closedFlip(inner);
+      }
+    }
+
+    // ====== Stängt läge (nuvarande logik) ======
+    function closedFlip(inner){
+      if (inner.classList.contains('flipped')) return;
+      if (flippedCards.includes(inner)) return;
+
+      inner.classList.add('flipped');
+      flippedCards.push(inner);
+
+      if (flippedCards.length === 2) closedCheckMatch();
+    }
+
+    function closedCheckMatch(){
+      lockBoard = true;
+      moves++;
+      movesEl.textContent = moves;
+
+      const [c1, c2] = flippedCards;
+      const m1 = c1.getAttribute('data-match-id');
+      const m2 = c2.getAttribute('data-match-id');
+
+      const t1 = c1.getAttribute('data-type');
+      const t2 = c2.getAttribute('data-type');
+
+      const wrap1 = c1.parentElement;
+      const wrap2 = c2.parentElement;
+
+      const isMatch = (m1 === m2) && (t1 !== t2);
+
+      if (isMatch){
+        setTimeout(() => {
+          wrap1.classList.add('matched');
+          wrap2.classList.add('matched');
+
+          pairsLeft--;
+          pairsLeftEl.textContent = pairsLeft;
+
+          flippedCards = [];
+          lockBoard = false;
+
+          if (pairsLeft === 0) showWin();
+        }, 520);
+      } else {
+        setTimeout(() => {
+          c1.classList.remove('flipped');
+          c2.classList.remove('flipped');
+          flippedCards = [];
+          lockBoard = false;
+        }, flipBackDelayMs);
+      }
+    }
+
+    // ====== Öppet läge (NYTT) ======
+    let openPicked = []; // [inner, inner]
+
+    function openPick(inner){
+      if (inner.classList.contains('selected')) return;
+
+      // max 2 val
+      if (openPicked.length === 2) return;
+
+      inner.classList.add('selected');
+      openPicked.push(inner);
+
+      if (openPicked.length === 2) openCheckMatch();
+    }
+
+    function openCheckMatch(){
+      lockBoard = true;
+      moves++;
+      movesEl.textContent = moves;
+
+      const [c1, c2] = openPicked;
+      const m1 = c1.getAttribute('data-match-id');
+      const m2 = c2.getAttribute('data-match-id');
+
+      const t1 = c1.getAttribute('data-type');
+      const t2 = c2.getAttribute('data-type');
+
+      const wrap1 = c1.parentElement;
+      const wrap2 = c2.parentElement;
+
+      const isMatch = (m1 === m2) && (t1 !== t2);
+
+      if (isMatch){
+        setTimeout(() => {
+          wrap1.classList.add('matched');
+          wrap2.classList.add('matched');
+
+          pairsLeft--;
+          pairsLeftEl.textContent = pairsLeft;
+
+          // rensa markeringar
+          c1.classList.remove('selected');
+          c2.classList.remove('selected');
+          openPicked = [];
+          lockBoard = false;
+
+          if (pairsLeft === 0) showWin();
+        }, 240);
+      } else {
+        setTimeout(() => {
+          c1.classList.remove('selected');
+          c2.classList.remove('selected');
+          openPicked = [];
+          lockBoard = false;
+        }, 520);
+      }
+    }
+
+    function showWin(){
+      stopTimer();
+      finalMovesEl.textContent = moves;
+
+      const finalTime = timerEl.textContent;
+      winTextEl.innerHTML = `Du klarade spelet på <strong>${moves}</strong> försök och tiden <strong>${finalTime}</strong>.`;
+
+      winEl.classList.add('open');
+    }
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    function setMode(nextOpenMode){
+      openMode = nextOpenMode;
+      document.body.classList.toggle('open-mode', openMode);
+
+      openModeBtn.textContent = openMode ? "Till stängda kort" : "Para ihop öppna kort";
+      subtitle.textContent = openMode
+        ? "Para ihop begrepp och definitioner (alla kort är öppna)!"
+        : "Para ihop begreppet med rätt förklaring!";
+
+      tipsText.textContent = openMode
+        ? "Tips: Klicka två kort (ett begrepp + en förklaring). Rätt par försvinner direkt."
+        : "Tips: Först vänd ett begrepp, sedan en förklaring.";
+    }
+
+    function resetGame(){
+      hideWin();
+
+      // reset state
+      grid.innerHTML = '';
+      moves = 0;
+      movesEl.textContent = moves;
+
+      pairsLeft = vocabulary.length;
+      pairsLeftEl.textContent = pairsLeft;
+
+      flippedCards = [];
+      openPicked = [];
+      lockBoard = false;
+
+      resetTimer();
+
+      const data = createGameData();
+      data.forEach(item => grid.appendChild(createCard(item)));
+
+      // om vi är i öppet läge: allt ska vara öppet (css-lås sköter detta)
+      // om vi är i stängt läge: inget extra
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetGame);
+    document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+
+    openModeBtn.addEventListener('click', () => {
+      // byt läge + reset (så allt blir konsekvent)
+      setMode(!openMode);
+      resetGame();
+    });
+
+    window.addEventListener('load', () => {
+      setMode(false); // start i stängt läge
+      resetGame();
+    });
+  </script>
+</body>
+</html>
