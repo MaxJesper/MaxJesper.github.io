@@ -767,7 +767,9 @@
       selectedSet = pickNRandom(vocabularyBank, 15);
       resetGame();
     });
-
+    // Lås upp ljud efter första klick (krävs i vissa browsers)
+    document.addEventListener('pointerdown', ensureAudio, { once: true });
+    
     window.addEventListener('load', () => {
       setMode(false); // start i stängt läge
       resetGame();
