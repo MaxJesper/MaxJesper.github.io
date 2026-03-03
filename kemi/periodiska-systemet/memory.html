@@ -204,17 +204,18 @@
     }
 
     /* Kortstorlek: håll dem lite mindre än 1:1 “maximalt” */
+    
     .card-wrap{
       aspect-ratio: 1 / 1;
-      max-width: 110px;      /* <-- detta gör dem mindre på stora skärmar */
+      max-width: 135px;   /* större */
       width: 100%;
       margin-inline: auto;
     }
-    @media (max-width: 1200px){ .card-wrap{ max-width: 104px; } }
-    @media (max-width: 980px){  .card-wrap{ max-width: 96px; } }
-    @media (max-width: 740px){  .card-wrap{ max-width: 92px; } }
-    @media (max-width: 520px){  .card-wrap{ max-width: 96px; } }
-
+    @media (max-width: 1200px){ .card-wrap{ max-width: 125px; } }
+    @media (max-width: 980px){  .card-wrap{ max-width: 115px; } }
+    @media (max-width: 740px){  .card-wrap{ max-width: 105px; } }
+    @media (max-width: 520px){  .card-wrap{ max-width: 115px; } }
+    
     .note{
       font-size: 13px;
       color: #333;
