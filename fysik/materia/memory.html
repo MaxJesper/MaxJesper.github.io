@@ -178,7 +178,7 @@
       transition: visibility 0s 0.45s, opacity 0.45s linear;
     }
 
-    /* 6x5 grid – något mindre kort */
+    /* 6x5 grid */
     #game-grid{
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -220,7 +220,7 @@
       line-height: 1.3;
     }
 
-    /* ====== NYTT: Öppet-läge (alla kort visas öppna) ====== */
+    /* ====== Öppet-läge (alla kort visas öppna) ====== */
     body.open-mode .flip-card-inner{
       transform: rotateY(180deg);
       cursor: pointer;
@@ -268,7 +268,7 @@
   <nav id="side-menu"></nav>
 
   <div class="layout">
-    <!-- Vänsterspalt: knappar + räknare + slider -->
+    <!-- Vänsterspalt -->
     <aside class="panel">
       <div class="side-actions">
         <!-- Identisk med korsord.html -->
@@ -276,14 +276,13 @@
 
         <button class="btn" type="button" id="resetBtn">Starta om spel</button>
         <button class="btn secondary" type="button" id="shuffle15Btn">Slumpa 15 av 30</button>
-        
-        <!-- NYTT: Toggle-läge -->
+
+        <!-- Toggle-läge -->
         <button class="btn secondary" type="button" id="openModeBtn">Para ihop öppna kort</button>
 
         <div class="stats" aria-live="polite">
           <div>Försök: <span id="moves">0</span></div>
           <div>Par kvar: <span id="pairs-left">15</span></div>
-          <!-- NYTT: Timer -->
           <div>Tid: <span id="timer">00:00.0</span></div>
         </div>
 
@@ -317,17 +316,16 @@
   <div id="win-message" role="dialog" aria-modal="true" aria-label="Vinstmeddelande">
     <div class="win-card">
       <h2>🎉 Snyggt jobbat!</h2>
-      <p id="winText">Du klarade memoryt på <strong><span id="final-moves">0</span></strong> försök.</p>
+      <p id="winText">Du klarade spelet på <strong><span id="final-moves">0</span></strong> försök.</p>
       <button class="btn" type="button" id="playAgainBtn">Spela igen</button>
     </div>
   </div>
 
-  <!-- Menylogik (samma som korsord) -->
+  <!-- Menylogik -->
   <script src="/js/menu.js"></script>
 
   <script>
-
-        // ====== 30 par (bank) – vi väljer 15 per omgång ======
+    // ====== 30 par (bank) – vi väljer 15 per omgång ======
     const vocabularyBank = [
       // Materia & partikelmodell
       { term: "Materia", def: "Allt som har massa och tar plats (har volym)." },
@@ -336,7 +334,7 @@
       { term: "Kemisk förening", def: "Ämne som består av minst två olika grundämnen bundna till varandra." },
       { term: "Blandning", def: "Två eller flera ämnen som finns tillsammans utan att vara kemiskt bundna." },
       { term: "Lösning", def: "En blandning där ett ämne är löst i ett annat (t.ex. salt i vatten)." },
-    
+
       // Aggregation & fasövergångar
       { term: "Fast form", def: "Partiklarna sitter tätt och vibrerar på plats. Har bestämd form." },
       { term: "Flytande form", def: "Partiklarna sitter nära men kan glida förbi varandra. Har bestämd volym." },
@@ -347,27 +345,27 @@
       { term: "Kokning", def: "Flytande → gas i hela vätskan vid kokpunkten." },
       { term: "Kondensering", def: "Gas → flytande (energi avges)." },
       { term: "Sublimering", def: "Fast → gas utan att bli flytande (t.ex. torris)." },
-    
+
       // Värme & temperatur
       { term: "Temperatur", def: "Mått på hur snabbt partiklarna rör sig i genomsnitt." },
       { term: "Värmeenergi", def: "Energi som överförs p.g.a. temperaturskillnad." },
       { term: "Termisk jämvikt", def: "När två föremål har samma temperatur och ingen värme överförs." },
       { term: "Specifik värmekapacitet", def: "Hur mycket energi som krävs för att höja 1 kg av ett ämne 1°C." },
-    
+
       // Värmespridning
       { term: "Värmeledning", def: "Värme sprids genom direkt kontakt mellan partiklar (vanligt i metaller)." },
       { term: "Konvektion", def: "Värme sprids genom strömning i vätskor och gaser (varm luft stiger)." },
       { term: "Värmestrålning", def: "Värme sprids som elektromagnetisk strålning (t.ex. från solen)." },
       { term: "Isolator", def: "Material som leder värme dåligt (t.ex. trä, plast, luft)." },
       { term: "Värmeledare", def: "Material som leder värme bra (t.ex. metaller)." },
-    
+
       // Atomen
       { term: "Atom", def: "Består av atomkärna (protoner+neutroner) och elektroner i skal." },
       { term: "Proton", def: "Positivt laddad partikel i kärnan. Antalet bestämmer grundämnet." },
       { term: "Neutron", def: "Oladdad partikel i kärnan. Påverkar masstalet." },
       { term: "Elektron", def: "Negativt laddad partikel som finns i elektronskal runt kärnan." },
       { term: "Atomnummer", def: "Antalet protoner i atomkärnan." },
-    
+
       // Densitet–massa–volym
       { term: "Massa (m)", def: "Hur mycket materia ett föremål innehåller. Mäts i kg." },
       { term: "Volym (V)", def: "Hur stor plats något tar. Mäts ofta i m³ eller liter." },
@@ -375,6 +373,7 @@
       { term: "Formel: m = ρ·V", def: "Massan fås genom densitet gånger volym." },
       { term: "Formel: V = m/ρ", def: "Volymen fås genom massa delat med densitet." }
     ];
+
     const grid = document.getElementById('game-grid');
     const movesEl = document.getElementById('moves');
     const pairsLeftEl = document.getElementById('pairs-left');
@@ -392,7 +391,10 @@
 
     let flippedCards = [];
     let moves = 0;
-    let pairsLeft = vocabulary.length;
+
+    // ✅ FIX: vocabulary finns inte längre — vi spelar 15 par per omgång
+    let pairsLeft = 15;
+
     let lockBoard = false;
 
     // Tid innan felpar vänds tillbaka (stängt läge)
@@ -404,7 +406,7 @@
       delayLabel.textContent = flipBackDelayMs;
     });
 
-    // ====== NYTT: läge + timer ======
+    // ====== Läge + timer ======
     let openMode = false;
 
     let timerRunning = false;
@@ -466,7 +468,7 @@
     function createGameData(){
       // välj 15 om vi inte redan har valt (eller om någon tryckt "Slumpa 15")
       if (!selectedSet.length) selectedSet = pickNRandom(vocabularyBank, 15);
-    
+
       const gameData = [];
       selectedSet.forEach((item, idx) => {
         gameData.push({ id: `t-${idx}`, type:'term', content: item.term, matchId: idx });
@@ -529,7 +531,7 @@
       }
     }
 
-    // ====== Stängt läge (nuvarande logik) ======
+    // ====== Stängt läge ======
     function closedFlip(inner){
       if (inner.classList.contains('flipped')) return;
       if (flippedCards.includes(inner)) return;
@@ -580,13 +582,11 @@
       }
     }
 
-    // ====== Öppet läge (NYTT) ======
+    // ====== Öppet läge ======
     let openPicked = []; // [inner, inner]
 
     function openPick(inner){
       if (inner.classList.contains('selected')) return;
-
-      // max 2 val
       if (openPicked.length === 2) return;
 
       inner.classList.add('selected');
@@ -620,7 +620,6 @@
           pairsLeft--;
           pairsLeftEl.textContent = pairsLeft;
 
-          // rensa markeringar
           c1.classList.remove('selected');
           c2.classList.remove('selected');
           openPicked = [];
@@ -673,7 +672,10 @@
       moves = 0;
       movesEl.textContent = moves;
 
-      pairsLeft = selectedSet.length || 15;
+      // bygg data (väljer 15 om inte valt)
+      const data = createGameData();
+
+      pairsLeft = selectedSet.length;       // ✅ nu alltid korrekt
       pairsLeftEl.textContent = pairsLeft;
 
       flippedCards = [];
@@ -682,18 +684,13 @@
 
       resetTimer();
 
-      const data = createGameData();
       data.forEach(item => grid.appendChild(createCard(item)));
-
-      // om vi är i öppet läge: allt ska vara öppet (css-lås sköter detta)
-      // om vi är i stängt läge: inget extra
     }
 
     document.getElementById('resetBtn').addEventListener('click', resetGame);
     document.getElementById('playAgainBtn').addEventListener('click', resetGame);
 
     openModeBtn.addEventListener('click', () => {
-      // byt läge + reset (så allt blir konsekvent)
       setMode(!openMode);
       resetGame();
     });
@@ -703,7 +700,6 @@
       resetGame();
     });
 
-    
     window.addEventListener('load', () => {
       setMode(false); // start i stängt läge
       resetGame();
