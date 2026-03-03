@@ -69,6 +69,22 @@
     .back-btn{
       pointer-events: auto !important;
     }
+    /* Hindra att sidomenyn blockerar klick när den är stängd */
+    #side-menu {
+      pointer-events: none;   /* släpp igenom klick */
+    }
+    
+    /* När menyn är öppen ska den kunna ta emot klick */
+    #side-menu.open {
+      pointer-events: auto;
+    }
+    
+    /* Se till att innehållet ligger över ev. “osynliga” lager */
+    .max-w-5xl {
+      position: relative;
+      z-index: 1;
+    }
+    
   </style>
 </head>
 
