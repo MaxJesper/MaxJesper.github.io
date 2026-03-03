@@ -1,213 +1,236 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory: Periodiska Systemet & Atomen</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .perspective {
-            perspective: 1000px;
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-        }
-        .flip-card-inner.flipped {
-            transform: rotateY(180deg);
-        }
-        .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.75rem;
-            padding: 10px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-        .flip-card-front {
-            background-color: #3b82f6;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-        .flip-card-back {
-            background-color: white;
-            color: #1f2937;
-            transform: rotateY(180deg);
-            border: 2px solid #3b82f6;
-            font-size: 0.85rem;
-            line-height: 1.2;
-            overflow: hidden;
-        }
-        .matched {
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s 0.6s, opacity 0.6s linear;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory: Periodiska Systemet & Atomen</title>
+
+  <!-- Din gemensamma styles (för hamburger + subject-btn m.m.) -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .perspective { perspective: 1000px; }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+    .flip-card-inner.flipped { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.75rem;
+      padding: 10px;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+    .flip-card-front {
+      background-color: #3b82f6;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .flip-card-back {
+      background-color: white;
+      color: #1f2937;
+      transform: rotateY(180deg);
+      border: 2px solid #3b82f6;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      overflow: hidden;
+    }
+    .matched {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 0.6s, opacity 0.6s linear;
+    }
+
+    /* Placera hamburgaren uppe till höger som dina andra sidor */
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+  </style>
 </head>
+
 <body class="bg-slate-50 min-h-screen p-4 md:p-8 font-sans">
-    <div class="max-w-5xl mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-slate-800 mb-2">Memory: Atomen & Periodiska Systemet</h1>
-            <p class="text-slate-600">Para ihop begreppet med rätt förklaring!</p>
-            <div class="mt-4 flex justify-center gap-4 text-lg font-semibold">
-                <span>Försök: <span id="moves">0</span></span>
-                <span>Par kvar: <span id="pairs-left">0</span></span>
-            </div>
-            <button onclick="resetGame()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors">
-                Starta om spel
-            </button>
-        </header>
 
-        <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <!-- Korten genereras av JavaScript -->
-        </div>
+  <!-- Hamburger + meny (menu.js fyller #side-menu) -->
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-        <div id="win-message" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div class="bg-white p-8 rounded-2xl text-center shadow-2xl max-w-sm w-full">
-                <h2 class="text-2xl font-bold mb-4 text-green-600">Snyggt jobbat! 🎉</h2>
-                <p class="mb-6">Du klarade memoryt på <span id="final-moves"></span> försök.</p>
-                <button onclick="resetGame()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">Spela igen</button>
-            </div>
-        </div>
+  <div class="max-w-5xl mx-auto">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-slate-800 mb-2">Memory: Atomen & Periodiska Systemet</h1>
+      <p class="text-slate-600">Para ihop begreppet med rätt förklaring!</p>
+
+      <div class="mt-4 flex justify-center gap-4 text-lg font-semibold">
+        <span>Försök: <span id="moves">0</span></span>
+        <span>Par kvar: <span id="pairs-left">0</span></span>
+      </div>
+
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <button onclick="resetGame()"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors">
+          Starta om spel
+        </button>
+
+        <!-- Tillbaka-knapp -->
+        <a href="/kemi/periodiska-systemet/" class="subject-btn">
+          ← Tillbaka
+        </a>
+      </div>
+    </header>
+
+    <div id="game-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <!-- Korten genereras av JavaScript -->
     </div>
 
-    <script>
-        const vocabulary = [
-            { term: "Atom", def: "Den minsta byggstenen för ett grundämne. Består av protoner, neutroner och elektroner." },
-            { term: "Proton", def: "Positivt laddad partikel i atomkärnan. Antalet protoner bestämmer atomnumret." },
-            { term: "Neutron", def: "Oladdad (neutral) partikel i atomkärnan. Bidrar till atomens massa." },
-            { term: "Elektron", def: "Negativt laddad partikel som rör sig i skal runt atomkärnan." },
-            { term: "Atomkärna", def: "Atomens mittpunkt som består av protoner och neutroner. Innehåller nästan hela atomens massa." },
-            { term: "Elektronskal", def: "De energinivåer runt kärnan där elektronerna finns (t.ex. K, L, M-skal)." },
-            { term: "Valenselektroner", def: "Elektronerna i atomens yttersta skal. Bestämmer ämnets kemiska egenskaper." },
-            { term: "Isotop", def: "Varianter av ett grundämne med samma antal protoner men olika antal neutroner." },
-            { term: "Grundämne", def: "Ett ämne där alla atomer har samma antal protoner." },
-            { term: "Atomnummer", def: "Anger antalet protoner i kärnan och bestämmer grundämnets plats i periodiska systemet." },
-            { term: "Masstal", def: "Summan av antalet protoner och neutroner i en atomkärna." },
-            { term: "Periodiska systemet", def: "En tabell över alla grundämnen, sorterade efter stigande atomnummer." },
-            { term: "Grupp", def: "Lodrät kolumn i periodiska systemet. Ämnen i samma grupp har ofta samma antal valenselektroner." },
-            { term: "Period", def: "Vågrät rad i periodiska systemet. Ämnen i samma period har lika många elektronskal." },
-            { term: "Metaller", def: "Grundämnen som leder värme/el, glänser och kan smidas. Finns till vänster/mitten." }
-        ];
+    <div id="win-message" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <div class="bg-white p-8 rounded-2xl text-center shadow-2xl max-w-sm w-full">
+        <h2 class="text-2xl font-bold mb-4 text-green-600">Snyggt jobbat! 🎉</h2>
+        <p class="mb-6">Du klarade memoryt på <span id="final-moves"></span> försök.</p>
+        <button onclick="resetGame()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">
+          Spela igen
+        </button>
+      </div>
+    </div>
+  </div>
 
-        let cards = [];
-        let flippedCards = [];
-        let moves = 0;
-        let pairsLeft = 0;
-        let isLockBoard = false;
+  <!-- Din menylogik -->
+  <script src="/js/menu.js"></script>
 
-        function createGameData() {
-            const gameData = [];
-            vocabulary.forEach((item, index) => {
-                // Skapa ett kort för termen
-                gameData.push({ id: index, type: 'term', content: item.term, matchId: index });
-                // Skapa ett kort för definitionen
-                gameData.push({ id: index + 100, type: 'def', content: item.def, matchId: index });
-            });
-            return gameData.sort(() => Math.random() - 0.5);
-        }
+  <script>
+    const vocabulary = [
+      { term: "Atom", def: "Den minsta byggstenen för ett grundämne. Består av protoner, neutroner och elektroner." },
+      { term: "Proton", def: "Positivt laddad partikel i atomkärnan. Antalet protoner bestämmer atomnumret." },
+      { term: "Neutron", def: "Oladdad (neutral) partikel i atomkärnan. Bidrar till atomens massa." },
+      { term: "Elektron", def: "Negativt laddad partikel som rör sig i skal runt atomkärnan." },
+      { term: "Atomkärna", def: "Atomens mittpunkt som består av protoner och neutroner. Innehåller nästan hela atomens massa." },
+      { term: "Elektronskal", def: "De energinivåer runt kärnan där elektronerna finns (t.ex. K, L, M-skal)." },
+      { term: "Valenselektroner", def: "Elektronerna i atomens yttersta skal. Bestämmer ämnets kemiska egenskaper." },
+      { term: "Isotop", def: "Varianter av ett grundämne med samma antal protoner men olika antal neutroner." },
+      { term: "Grundämne", def: "Ett ämne där alla atomer har samma antal protoner." },
+      { term: "Atomnummer", def: "Anger antalet protoner i kärnan och bestämmer grundämnets plats i periodiska systemet." },
+      { term: "Masstal", def: "Summan av antalet protoner och neutroner i en atomkärna." },
+      { term: "Periodiska systemet", def: "En tabell över alla grundämnen, sorterade efter stigande atomnummer." },
+      { term: "Grupp", def: "Lodrät kolumn i periodiska systemet. Ämnen i samma grupp har ofta samma antal valenselektroner." },
+      { term: "Period", def: "Vågrät rad i periodiska systemet. Ämnen i samma period har lika många elektronskal." },
+      { term: "Metaller", def: "Grundämnen som leder värme/el, glänser och kan smidas. Finns till vänster/mitten." }
+    ];
 
-        function createCardElement(data) {
-            const container = document.createElement('div');
-            container.className = 'perspective aspect-square';
-            container.innerHTML = `
-                <div class="flip-card-inner h-full w-full" data-id="${data.id}" data-match-id="${data.matchId}">
-                    <div class="flip-card-front">?</div>
-                    <div class="flip-card-back px-2 py-1 text-center font-medium">
-                        ${data.content}
-                    </div>
-                </div>
-            `;
-            
-            container.querySelector('.flip-card-inner').addEventListener('click', function() {
-                flipCard(this);
-            });
-            
-            return container;
-        }
+    let flippedCards = [];
+    let moves = 0;
+    let pairsLeft = 0;
+    let isLockBoard = false;
 
-        function flipCard(cardElement) {
-            if (isLockBoard) return;
-            if (cardElement.classList.contains('flipped')) return;
-            if (flippedCards.includes(cardElement)) return;
+    function createGameData() {
+      const gameData = [];
+      vocabulary.forEach((item, index) => {
+        gameData.push({ id: index, type: 'term', content: item.term, matchId: index });
+        gameData.push({ id: index + 100, type: 'def', content: item.def, matchId: index });
+      });
+      return gameData.sort(() => Math.random() - 0.5);
+    }
 
-            cardElement.classList.add('flipped');
-            flippedCards.push(cardElement);
+    function createCardElement(data) {
+      const container = document.createElement('div');
+      container.className = 'perspective aspect-square';
+      container.innerHTML = `
+        <div class="flip-card-inner h-full w-full" data-id="${data.id}" data-match-id="${data.matchId}">
+          <div class="flip-card-front">?</div>
+          <div class="flip-card-back px-2 py-1 text-center font-medium">
+            ${data.content}
+          </div>
+        </div>
+      `;
 
-            if (flippedCards.length === 2) {
-                checkMatch();
-            }
-        }
+      container.querySelector('.flip-card-inner').addEventListener('click', function () {
+        flipCard(this);
+      });
 
-        function checkMatch() {
-            isLockBoard = true;
-            moves++;
-            document.getElementById('moves').textContent = moves;
+      return container;
+    }
 
-            const [card1, card2] = flippedCards;
-            const match1 = card1.getAttribute('data-match-id');
-            const match2 = card2.getAttribute('data-match-id');
+    function flipCard(cardElement) {
+      if (isLockBoard) return;
+      if (cardElement.classList.contains('flipped')) return;
+      if (flippedCards.includes(cardElement)) return;
 
-            if (match1 === match2) {
-                // Match!
-                setTimeout(() => {
-                    card1.parentElement.classList.add('matched');
-                    card2.parentElement.classList.add('matched');
-                    pairsLeft--;
-                    document.getElementById('pairs-left').textContent = pairsLeft;
-                    resetTurn();
-                    if (pairsLeft === 0) showWin();
-                }, 1000);
-            } else {
-                // Ingen match
-                setTimeout(() => {
-                    card1.classList.remove('flipped');
-                    card2.classList.remove('flipped');
-                    resetTurn();
-                }, 1500);
-            }
-        }
+      cardElement.classList.add('flipped');
+      flippedCards.push(cardElement);
 
-        function resetTurn() {
-            flippedCards = [];
-            isLockBoard = false;
-        }
+      if (flippedCards.length === 2) checkMatch();
+    }
 
-        function showWin() {
-            document.getElementById('final-moves').textContent = moves;
-            document.getElementById('win-message').classList.remove('hidden');
-        }
+    function checkMatch() {
+      isLockBoard = true;
+      moves++;
+      document.getElementById('moves').textContent = moves;
 
-        function resetGame() {
-            const grid = document.getElementById('game-grid');
-            grid.innerHTML = '';
-            moves = 0;
-            document.getElementById('moves').textContent = moves;
-            document.getElementById('win-message').classList.add('hidden');
-            
-            const gameData = createGameData();
-            pairsLeft = vocabulary.length;
-            document.getElementById('pairs-left').textContent = pairsLeft;
-            
-            gameData.forEach(data => {
-                grid.appendChild(createCardElement(data));
-            });
-        }
+      const [card1, card2] = flippedCards;
+      const match1 = card1.getAttribute('data-match-id');
+      const match2 = card2.getAttribute('data-match-id');
 
-        // Starta spelet vid laddning
-        window.onload = resetGame;
-    </script>
+      if (match1 === match2) {
+        setTimeout(() => {
+          card1.parentElement.classList.add('matched');
+          card2.parentElement.classList.add('matched');
+          pairsLeft--;
+          document.getElementById('pairs-left').textContent = pairsLeft;
+          resetTurn();
+          if (pairsLeft === 0) showWin();
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          card1.classList.remove('flipped');
+          card2.classList.remove('flipped');
+          resetTurn();
+        }, 1500);
+      }
+    }
+
+    function resetTurn() {
+      flippedCards = [];
+      isLockBoard = false;
+    }
+
+    function showWin() {
+      document.getElementById('final-moves').textContent = moves;
+      document.getElementById('win-message').classList.remove('hidden');
+    }
+
+    function resetGame() {
+      const grid = document.getElementById('game-grid');
+      grid.innerHTML = '';
+      moves = 0;
+      document.getElementById('moves').textContent = moves;
+      document.getElementById('win-message').classList.add('hidden');
+
+      const gameData = createGameData();
+      pairsLeft = vocabulary.length;
+      document.getElementById('pairs-left').textContent = pairsLeft;
+
+      gameData.forEach(data => {
+        grid.appendChild(createCardElement(data));
+      });
+    }
+
+    window.onload = resetGame;
+  </script>
 </body>
 </html>
