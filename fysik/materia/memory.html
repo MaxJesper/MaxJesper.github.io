@@ -326,25 +326,55 @@
   <script src="/js/menu.js"></script>
 
   <script>
-    // ====== 15 par = 30 kort (6x5) ======
-    const vocabulary = [
-      { term: "Atom", def: "Den minsta byggstenen för ett grundämne. Består av protoner, neutroner och elektroner." },
-      { term: "Proton", def: "Positivt laddad partikel i atomkärnan. Dess antal bestämmer atomnumret." },
-      { term: "Neutron", def: "Oladdad (neutral) partikel i atomkärnan. Bidrar till atomens massa." },
-      { term: "Elektron", def: "Negativt laddad partikel som rör sig i skal runt atomkärnan." },
-      { term: "Atomkärna", def: "Atomens mittpunkt som innehåller nästan hela atomens massa." },
-      { term: "Elektronskal", def: "De energinivåer runt kärnan där elektronerna finns (t.ex. K, L, M)." },
-      { term: "Valenselektroner", def: "Elektronerna i atomens yttersta skal. Bestämmer ämnets kemiska egenskaper." },
-      { term: "Isotop", def: "Varianter av ett grundämne med samma antal protoner men olika antal neutroner." },
-      { term: "Grundämne", def: "Ett ämne i vilket alla atomerna har samma antal protoner." },
-      { term: "Atomnummer", def: "Antalet protoner i kärnan. Avgör vilket grundämne det är." },
-      { term: "Masstal", def: "Summan av antalet protoner och neutroner i en atomkärna." },
-      { term: "Periodiska systemet", def: "Tabell över alla grundämnen, sorterade efter stigande atomnummer." },
-      { term: "Grupp", def: "Lodrät kolumn i periodiska systemet vars ämnen ofta har liknande egenskaper." },
-      { term: "Period", def: "Vågrät rad i periodiska systemet, vars ämnen har lika många elektronskal." },
-      { term: "Metaller", def: "Grundämnen som leder värme/el, glänser och kan smidas. Finns mest till vänster/mitten." }
-    ];
 
+        // ====== 30 par (bank) – vi väljer 15 per omgång ======
+    const vocabularyBank = [
+      // Materia & partikelmodell
+      { term: "Materia", def: "Allt som har massa och tar plats (har volym)." },
+      { term: "Ämne", def: "En sorts materia med bestämda egenskaper." },
+      { term: "Grundämne", def: "Ämne som består av en enda sorts atomer." },
+      { term: "Kemisk förening", def: "Ämne som består av minst två olika grundämnen bundna till varandra." },
+      { term: "Blandning", def: "Två eller flera ämnen som finns tillsammans utan att vara kemiskt bundna." },
+      { term: "Lösning", def: "En blandning där ett ämne är löst i ett annat (t.ex. salt i vatten)." },
+    
+      // Aggregation & fasövergångar
+      { term: "Fast form", def: "Partiklarna sitter tätt och vibrerar på plats. Har bestämd form." },
+      { term: "Flytande form", def: "Partiklarna sitter nära men kan glida förbi varandra. Har bestämd volym." },
+      { term: "Gasform", def: "Partiklarna är långt ifrån varandra och rör sig snabbt. Fyller hela behållaren." },
+      { term: "Smältning", def: "Fast → flytande (energi tas upp)." },
+      { term: "Stelning", def: "Flytande → fast (energi avges)." },
+      { term: "Avdunstning", def: "Flytande → gas från ytan (kan ske under kokpunkten)." },
+      { term: "Kokning", def: "Flytande → gas i hela vätskan vid kokpunkten." },
+      { term: "Kondensering", def: "Gas → flytande (energi avges)." },
+      { term: "Sublimering", def: "Fast → gas utan att bli flytande (t.ex. torris)." },
+    
+      // Värme & temperatur
+      { term: "Temperatur", def: "Mått på hur snabbt partiklarna rör sig i genomsnitt." },
+      { term: "Värmeenergi", def: "Energi som överförs p.g.a. temperaturskillnad." },
+      { term: "Termisk jämvikt", def: "När två föremål har samma temperatur och ingen värme överförs." },
+      { term: "Specifik värmekapacitet", def: "Hur mycket energi som krävs för att höja 1 kg av ett ämne 1°C." },
+    
+      // Värmespridning
+      { term: "Värmeledning", def: "Värme sprids genom direkt kontakt mellan partiklar (vanligt i metaller)." },
+      { term: "Konvektion", def: "Värme sprids genom strömning i vätskor och gaser (varm luft stiger)." },
+      { term: "Värmestrålning", def: "Värme sprids som elektromagnetisk strålning (t.ex. från solen)." },
+      { term: "Isolator", def: "Material som leder värme dåligt (t.ex. trä, plast, luft)." },
+      { term: "Värmeledare", def: "Material som leder värme bra (t.ex. metaller)." },
+    
+      // Atomen
+      { term: "Atom", def: "Består av atomkärna (protoner+neutroner) och elektroner i skal." },
+      { term: "Proton", def: "Positivt laddad partikel i kärnan. Antalet bestämmer grundämnet." },
+      { term: "Neutron", def: "Oladdad partikel i kärnan. Påverkar masstalet." },
+      { term: "Elektron", def: "Negativt laddad partikel som finns i elektronskal runt kärnan." },
+      { term: "Atomnummer", def: "Antalet protoner i atomkärnan." },
+    
+      // Densitet–massa–volym
+      { term: "Massa (m)", def: "Hur mycket materia ett föremål innehåller. Mäts i kg." },
+      { term: "Volym (V)", def: "Hur stor plats något tar. Mäts ofta i m³ eller liter." },
+      { term: "Densitet (ρ)", def: "Massa per volymenhet. Formel: ρ = m / V." },
+      { term: "Formel: m = ρ·V", def: "Massan fås genom densitet gånger volym." },
+      { term: "Formel: V = m/ρ", def: "Volymen fås genom massa delat med densitet." }
+    ];
     const grid = document.getElementById('game-grid');
     const movesEl = document.getElementById('moves');
     const pairsLeftEl = document.getElementById('pairs-left');
