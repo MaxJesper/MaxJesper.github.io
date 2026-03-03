@@ -658,7 +658,7 @@
           { f: 523.25, d: 0.16 }, // C5
           { f: 659.25, d: 0.16 }, // E5
           { f: 783.99, d: 0.16 }, // G5
-          { f: 1046.5, d: 0.28 }, // C6
+          { f: 1046.5, d: 2.0 }, // C6 lång final
         ];
     
         const master = audioCtx.createGain();
@@ -668,7 +668,7 @@
         // liten fade-in så det inte klickar
         master.gain.setValueAtTime(0.0001, t0);
         master.gain.linearRampToValueAtTime(0.55, t0 + 0.02);
-        master.gain.linearRampToValueAtTime(0.0001, t0 + 0.9);
+        master.gain.linearRampToValueAtTime(0.0001, t0 + 2.4);
     
         const filter = audioCtx.createBiquadFilter();
         filter.type = "bandpass";
