@@ -570,6 +570,72 @@
           flippedCards = [];
           lockBoard = false;
 
+              // ====== VINSTLJUD (kort fanfar, offline via WebAudio) ======
+    let audioCtx = null;
+    
+    function ensureAudio(){
+      if (!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      // iOS/Chrome kan kräva "resume" efter första klick
+      if (audioCtx.state === "suspended") audioCtx.resume();
+    }
+    
+    function playFanfare(){
+      try{
+        ensureAudio();
+        const t0 = audioCtx.currentTime;
+    
+        // "Trumpet-ish": sawtooth + lite filter/envelope
+        const notes = [
+          { f: 523.25, d: 0.16 }, // C5
+          { f: 659.25, d: 0.16 }, // E5
+          { f: 783.99, d: 0.16 }, // G5
+          { f: 1046.5, d: 0.28 }, // C6
+        ];
+    
+        const master = audioCtx.createGain();
+        master.gain.value = 0.0;
+        master.connect(audioCtx.destination);
+    
+        // liten fade-in så det inte klickar
+        master.gain.setValueAtTime(0.0001, t0);
+        master.gain.linearRampToValueAtTime(0.28, t0 + 0.02);
+        master.gain.linearRampToValueAtTime(0.0001, t0 + 0.9);
+    
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.value = 1100;
+        filter.Q.value = 1.2;
+        filter.connect(master);
+    
+        let t = t0;
+        for (const n of notes){
+          const osc = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+    
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(n.f, t);
+    
+          // envelope per ton
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.linearRampToValueAtTime(0.9, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + n.d);
+    
+          osc.connect(g);
+          g.connect(filter);
+    
+          osc.start(t);
+          osc.stop(t + n.d + 0.02);
+    
+          // liten paus mellan tonerna
+          t += n.d + 0.03;
+        }
+      } catch(e){
+        // Om ljud blockeras av browsern: gör inget (spelet funkar ändå)
+      }
+    }
+          
           if (pairsLeft === 0) showWin();
         }, 520);
       } else {
