@@ -460,10 +460,15 @@
       shuffle(copy);
       return copy.slice(0, n);
     }
-    
+
+    let selectedSet = []; // de 15 par som används i aktuell omgång
+
     function createGameData(){
+      // välj 15 om vi inte redan har valt (eller om någon tryckt "Slumpa 15")
+      if (!selectedSet.length) selectedSet = pickNRandom(vocabularyBank, 15);
+    
       const gameData = [];
-      vocabulary.forEach((item, idx) => {
+      selectedSet.forEach((item, idx) => {
         gameData.push({ id: `t-${idx}`, type:'term', content: item.term, matchId: idx });
         gameData.push({ id: `d-${idx}`, type:'def',  content: item.def,  matchId: idx });
       });
@@ -668,7 +673,7 @@
       moves = 0;
       movesEl.textContent = moves;
 
-      pairsLeft = vocabulary.length;
+      pairsLeft = selectedSet.length || 15;
       pairsLeftEl.textContent = pairsLeft;
 
       flippedCards = [];
@@ -693,6 +698,12 @@
       resetGame();
     });
 
+    document.getElementById('shuffle15Btn').addEventListener('click', () => {
+      selectedSet = pickNRandom(vocabularyBank, 15);
+      resetGame();
+    });
+
+    
     window.addEventListener('load', () => {
       setMode(false); // start i stängt läge
       resetGame();
