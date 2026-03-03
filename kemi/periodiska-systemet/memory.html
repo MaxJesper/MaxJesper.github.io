@@ -21,10 +21,13 @@
       z-index: 1001;
     }
 
-    /* Layout */
-    body { margin: 24px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-    h1 { margin: 0 0 6px; font-size: 28px; }
-    .subtitle { margin: 0 0 18px; color: #333; }
+    /* ====== Varm bakgrund ====== */
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #fff3e6 0%, #fff0df 35%, #fdf6ee 100%);
+      color: #111;
+    }
 
     .layout{
       display: grid;
@@ -32,22 +35,20 @@
       gap: 16px;
       align-items: start;
     }
-
     @media (min-width: 980px){
       .layout{ grid-template-columns: 260px 1fr; }
     }
 
     .panel{
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
       padding: 12px 14px;
-      background: #fff;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
     }
 
-    .side-actions{
-      display: grid;
-      gap: 10px;
-    }
+    .side-actions{ display: grid; gap: 10px; }
 
     .stats{
       display: grid;
@@ -55,9 +56,7 @@
       font-weight: 700;
       color: #111;
     }
-    .stats span{
-      font-variant-numeric: tabular-nums;
-    }
+    .stats span{ font-variant-numeric: tabular-nums; }
 
     /* Knappar: matcha “korsord”-känslan */
     .btn{
@@ -75,13 +74,49 @@
       gap: 8px;
       user-select: none;
     }
-    .btn.secondary{
-      background: #fff;
-      color: #111;
-    }
+    .btn.secondary{ background: #fff; color: #111; }
     .btn:active{ transform: translateY(1px); }
 
+    /* Slider */
+    .slider-wrap{
+      display: grid;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(0,0,0,.18);
+      margin-top: 6px;
+    }
+    .slider-row{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: #222;
+      font-weight: 650;
+    }
+    input[type="range"]{ width: 100%; }
+
+    /* ====== Spelrubrik över korten ====== */
+    .game-title{
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+    .game-subtitle{
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 14px;
+    }
+
     /* ====== Memorykort ====== */
+    :root{
+      --card-border: #111;
+      --front-bg: #111;
+      --front-icon: #ffedd5; /* varm creme */
+      --back-bg: #fff;
+      --cell-gap: 10px;
+    }
+
     .perspective { perspective: 1000px; }
 
     .flip-card-inner{
@@ -89,7 +124,7 @@
       width: 100%;
       height: 100%;
       text-align: center;
-      transition: transform 0.55s;
+      transition: transform 0.52s;
       transform-style: preserve-3d;
       cursor: pointer;
     }
@@ -104,56 +139,81 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 0.75rem;
-      padding: 10px;
-      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.10);
       box-sizing: border-box;
     }
 
     .flip-card-front{
-      background-color: #111;      /* lite “korsord”-stil */
+      background: var(--front-bg);
       color: white;
-      font-size: 1.9rem;
-      font-weight: 800;
-      letter-spacing: .5px;
+      border: 2px solid var(--card-border);
+    }
+
+    /* Atom-ikon */
+    .atom-icon{
+      width: 56%;
+      height: 56%;
+      max-width: 58px;
+      max-height: 58px;
+      opacity: .96;
+      display: block;
     }
 
     .flip-card-back{
-      background-color: white;
+      background: var(--back-bg);
       color: #111;
       transform: rotateY(180deg);
-      border: 2px solid #111;
-      font-size: 0.9rem;
-      line-height: 1.2;
+      border: 2px solid var(--card-border);
+      font-size: 0.86rem;   /* lite mindre */
+      line-height: 1.18;
       overflow: hidden;
+      font-weight: 700;
     }
 
-    /* För att “försvinna” snyggt när par är hittat */
     .matched{
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0s 0.5s, opacity 0.5s linear;
+      transition: visibility 0s 0.45s, opacity 0.45s linear;
     }
 
-    /* 6x5 grid */
+    /* 6x5 grid – något mindre kort */
     #game-grid{
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 12px;
+      gap: var(--cell-gap);
+    }
+
+    /* Mindre kort via mindre panelbredd och “tightare” gap på mindre skärmar */
+    @media (max-width: 1100px){
+      :root{ --cell-gap: 9px; }
+      .flip-card-back{ font-size: 0.82rem; }
     }
     @media (max-width: 980px){
       #game-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      :root{ --cell-gap: 9px; }
     }
     @media (max-width: 740px){
       #game-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      :root{ --cell-gap: 8px; }
     }
     @media (max-width: 520px){
       #game-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      :root{ --cell-gap: 8px; }
     }
 
+    /* Kortstorlek: håll dem lite mindre än 1:1 “maximalt” */
     .card-wrap{
       aspect-ratio: 1 / 1;
+      max-width: 110px;      /* <-- detta gör dem mindre på stora skärmar */
+      width: 100%;
+      margin-inline: auto;
     }
+    @media (max-width: 1200px){ .card-wrap{ max-width: 104px; } }
+    @media (max-width: 980px){  .card-wrap{ max-width: 96px; } }
+    @media (max-width: 740px){  .card-wrap{ max-width: 92px; } }
+    @media (max-width: 520px){  .card-wrap{ max-width: 96px; } }
 
     .note{
       font-size: 13px;
@@ -193,11 +253,8 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
-  <h1>Memory: Atomen & Periodiska systemet</h1>
-  <p class="subtitle">Para ihop begreppet med rätt förklaring!</p>
-
   <div class="layout">
-    <!-- Vänsterspalt: knappar + räknare -->
+    <!-- Vänsterspalt: knappar + räknare + slider -->
     <aside class="panel">
       <div class="side-actions">
         <!-- Identisk med korsord.html -->
@@ -210,14 +267,28 @@
           <div>Par kvar: <span id="pairs-left">15</span></div>
         </div>
 
+        <div class="slider-wrap">
+          <div class="slider-row">
+            <span>Vänd tillbaka efter:</span>
+            <span><span id="delayLabel">950</span> ms</span>
+          </div>
+          <input id="delaySlider" type="range" min="250" max="2500" step="50" value="950" />
+          <div class="note" style="margin:0;">
+            Justerar hur länge felpar ligger öppna innan de vänds tillbaka.
+          </div>
+        </div>
+
         <div class="note">
-          Tips: Först vänd ett begrepp, sedan en förklaring. När allt är matchat får du ett resultat.
+          Tips: Först vänd ett begrepp, sedan en förklaring.
         </div>
       </div>
     </aside>
 
     <!-- Spelyta -->
     <main class="panel">
+      <h2 class="game-title">Memory: Atomen &amp; Periodiska systemet</h2>
+      <p class="game-subtitle">Para ihop begreppet med rätt förklaring!</p>
+
       <div id="game-grid" aria-label="Memorykort (6x5)"></div>
     </main>
   </div>
@@ -260,10 +331,22 @@
     const winEl = document.getElementById('win-message');
     const finalMovesEl = document.getElementById('final-moves');
 
+    const delaySlider = document.getElementById('delaySlider');
+    const delayLabel  = document.getElementById('delayLabel');
+
     let flippedCards = [];
     let moves = 0;
     let pairsLeft = vocabulary.length;
     let lockBoard = false;
+
+    // Tid innan felpar vänds tillbaka (styr av slider)
+    let flipBackDelayMs = Number(delaySlider.value || 950);
+    delayLabel.textContent = flipBackDelayMs;
+
+    delaySlider.addEventListener('input', () => {
+      flipBackDelayMs = Number(delaySlider.value);
+      delayLabel.textContent = flipBackDelayMs;
+    });
 
     function shuffle(arr){
       for (let i = arr.length - 1; i > 0; i--){
@@ -276,21 +359,39 @@
     function createGameData(){
       const gameData = [];
       vocabulary.forEach((item, idx) => {
-        gameData.push({ id: `t-${idx}`, content: item.term, matchId: idx, kind: 'term' });
-        gameData.push({ id: `d-${idx}`, content: item.def,  matchId: idx, kind: 'def' });
+        gameData.push({ id: `t-${idx}`, content: item.term, matchId: idx });
+        gameData.push({ id: `d-${idx}`, content: item.def,  matchId: idx });
       });
       return shuffle(gameData);
+    }
+
+    // Inline SVG för atom på framsidan
+    function atomSVG(){
+      return `
+        <svg class="atom-icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="var(--front-icon)" stroke-width="6" stroke-linecap="round">
+            <ellipse cx="64" cy="64" rx="46" ry="22" />
+            <ellipse cx="64" cy="64" rx="46" ry="22" transform="rotate(60 64 64)"/>
+            <ellipse cx="64" cy="64" rx="46" ry="22" transform="rotate(120 64 64)"/>
+          </g>
+          <circle cx="64" cy="64" r="8" fill="var(--front-icon)"/>
+          <circle cx="100" cy="64" r="5" fill="var(--front-icon)"/>
+          <circle cx="42" cy="40" r="5" fill="var(--front-icon)"/>
+          <circle cx="42" cy="88" r="5" fill="var(--front-icon)"/>
+        </svg>
+      `;
     }
 
     function createCard(data){
       const outer = document.createElement('div');
       outer.className = 'perspective card-wrap';
 
-      // Framsida kan visa "?" (som tidigare), baksida visar innehåll
       outer.innerHTML = `
         <div class="flip-card-inner h-full w-full" data-id="${data.id}" data-match-id="${data.matchId}">
-          <div class="flip-card-front">?</div>
-          <div class="flip-card-back px-2 py-1 text-center font-semibold">
+          <div class="flip-card-front">
+            ${atomSVG()}
+          </div>
+          <div class="flip-card-back px-2 py-1 text-center">
             ${data.content}
           </div>
         </div>
@@ -298,7 +399,6 @@
 
       const inner = outer.querySelector('.flip-card-inner');
       inner.addEventListener('click', () => flipCard(inner, outer));
-
       return outer;
     }
 
@@ -338,14 +438,15 @@
           lockBoard = false;
 
           if (pairsLeft === 0) showWin();
-        }, 650);
+        }, 520);
       } else {
+        // Sliderstyrd tid innan felpar vänds tillbaka
         setTimeout(() => {
           c1.classList.remove('flipped');
           c2.classList.remove('flipped');
           flippedCards = [];
           lockBoard = false;
-        }, 950);
+        }, flipBackDelayMs);
       }
     }
 
@@ -353,7 +454,6 @@
       finalMovesEl.textContent = moves;
       winEl.classList.add('open');
     }
-
     function hideWin(){
       winEl.classList.remove('open');
     }
@@ -375,11 +475,9 @@
       data.forEach(item => grid.appendChild(createCard(item)));
     }
 
-    // Knappar
     document.getElementById('resetBtn').addEventListener('click', resetGame);
     document.getElementById('playAgainBtn').addEventListener('click', resetGame);
 
-    // Start
     window.addEventListener('load', resetGame);
   </script>
 </body>
