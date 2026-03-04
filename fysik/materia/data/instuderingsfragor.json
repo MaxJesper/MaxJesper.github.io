@@ -9,7 +9,7 @@
         { "type": "qa", "q": "Ge två exempel på något som inte är materia.", "a": "Till exempel en tanke, en sång, en sekund (sådant kan inte vägas eller ha volym på samma sätt).", "lines": 2 },
         { "type": "qa", "q": "Vad är en atom?", "a": "Den minsta delen av ett grundämne (t.ex. en järnatom i grundämnet järn).", "lines": 2 },
         { "type": "qa", "q": "Vad är en molekyl?", "a": "Två eller flera atomer som sitter ihop (t.ex. O₂).", "lines": 2 },
-        { "type": "qa", "q": "Vad är ett grundämne?", "a": "Ett ämne som består av bara en sorts atomer (t.ex. syre, järn).", "lines": 2 },
+        { "type": "qa", "q": "Vad är ett grundämne?", "a": "Ett ämne som består av bara en sorts atomer (t.ex. järnatomer).", "lines": 2 },
         { "type": "qa", "q": "Vad är en kemisk förening?", "a": "Ett ämne vars molekyler består av olika sorters atomer (t.ex. vatten H₂O).", "lines": 2 },
         { "type": "qa", "q": "Vad menas med volym?", "a": "Hur stor plats något tar. Vanliga enheter: L, ml, dm³, cm³.", "lines": 2 },
         { "type": "qa", "q": "Vad menas med massa?", "a": "Hur mycket materia något innehåller. Vanliga enheter: g, hg, kg.", "lines": 2 }
@@ -18,7 +18,7 @@
     {
       "title": "Fördjupning",
       "items": [
-        { "type": "qa", "q": "Varför räknas luft som materia fast man inte alltid ser den?", "a": "Luft tar plats och har massa. Det märks t.ex. i motvind eller när man pumpar ett däck/ballong.", "lines": 4 },
+        { "type": "qa", "q": "Varför räknas luft som materia fast man inte alltid ser den?", "a": "Luft tar plats och har massa. Det märks om du blåser luft på din hand. En kubikmeter luft väger ca 1,2 gram.", "lines": 4 },
         { "type": "qa", "q": "Förklara skillnaden mellan grundämne och kemisk förening med egna exempel.", "a": "Grundämne: en sorts atom. Kemisk förening: molekyler med minst två olika sorters atomer.", "lines": 4 },
         { "type": "qa", "q": "Hur kan det finnas massor av kemiska föreningar om det bara finns runt hundra grundämnen?", "a": "Atomer kan kombineras på många sätt: olika antal, olika sorter och olika strukturer → många olika molekyler.", "lines": 4 },
         { "type": "qa", "q": "Hur kan man mäta volymen av en sten med ett mätglas?", "a": "Läs av volymen före. Lägg i stenen. Läs av volymen efter. Skillnaden är stenens volym.", "lines": 4 }
@@ -31,15 +31,15 @@
 
         { "type": "qa", "q": "I bilden står vattnet på 50 ml före stenen och 68 ml efter stenen. Vilken volym har stenen?", "a": "68 ml − 50 ml = 18 ml. Det är samma som 18 cm³.", "lines": 4 },
 
-        { "type": "qa", "q": "En kub är 2 cm × 2 cm × 2 cm. Vilken volym har kuben?", "a": "2·2·2 = 8 cm³.", "lines": 3 },
+        { "type": "qa", "q": "En rätblock av järn ha måtten 3 cm, 2cm och 4cm. Vilken volym har det?", "a": "Volym = längd x bredd x djup = 3cm·2cm·4cm = 24 cm³.", "lines": 3 },
 
         { "type": "qa", "q": "Vad betyder densitet (täthet) med egna ord?", "a": "Hur mycket massa som finns i en viss volym. Hög densitet = mycket massa på liten volym.", "lines": 4 },
 
-        { "type": "qa", "q": "En metallbit har massan 54 g och volymen 6 cm³. Beräkna densiteten i g/cm³.", "a": "Densitet = massa/volym = 54/6 = 9 g/cm³.", "lines": 5 },
+        { "type": "qa", "q": "En metallbit har massan 54 g och volymen 6 cm³. Beräkna densiteten i g/cm³.", "a": "Densitet = massa/volym = 54 g/6 cm³ = 9 g/cm³.", "lines": 5 },
 
-        { "type": "qa", "q": "Ett ämne har densiteten 2 g/cm³. En bit har volymen 15 cm³. Vilken massa har biten?", "a": "Massa = densitet · volym = 2 · 15 = 30 g.", "lines": 5 },
+        { "type": "qa", "q": "Ett ämne har densiteten 2 g/cm³. En bit har volymen 15 cm³. Vilken massa har biten?", "a": "Massa = densitet · volym = 2 g/cm³ · 15 cm³ = 30 g.", "lines": 5 },
 
-        { "type": "qa", "q": "Ett föremål har massan 120 g och densiteten 4 g/cm³. Vilken volym har föremålet?", "a": "Volym = massa/densitet = 120/4 = 30 cm³.", "lines": 5 }
+        { "type": "qa", "q": "Ett föremål har massan 120 g och densiteten 4 g/cm³. Vilken volym har föremålet?", "a": "Volym = massa/densitet = 120 g/4 g/cm³ = 30 cm³.", "lines": 5 }
       ]
     }
   ],
