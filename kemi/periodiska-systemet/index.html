@@ -39,10 +39,14 @@
   <p id="ai-status"></p>
 
   <div id="ai-chat" style="margin-top:10px;">
-    <div id="ai-output" style="white-space:pre-wrap; border:1px solid #ccc; padding:8px; min-height:80px;"></div>
+    <div id="ai-output" style="white-space:pre-wrap; border:1px solid #ccc; padding:8px; min-height:90px;"></div>
 
-    <textarea id="ai-input" placeholder="Skriv ditt svar..." style="width:70%; margin-top:6px; height:90px;"></textarea>
+    <textarea id="ai-input" placeholder="Skriv ditt svar..." style="width:70%; margin-top:6px; height:110px;"></textarea>
     <button id="ai-send" type="button">Skicka</button>
+
+    <p style="margin:6px 0 0 0; font-size:0.9em; opacity:0.8;">
+      Tips: <b>Ctrl+Enter</b> (Windows/Chromebook) eller <b>Cmd+Enter</b> (Mac) för att skicka.
+    </p>
   </div>
 
   <p style="margin-top:12px;">
@@ -53,69 +57,40 @@
 <script src="/js/menu.js"></script>
 
 <script>
+  // ==== INSTÄLLNINGAR ====
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
-  const pageTitle = document.title;
+  const CHECKLIST_URL = "./data/checklista.json";   // Ändra om din checklista ligger någon annanstans
+  const MAX_CONTEXT_CHARS = 4000;                   // håller nere promptstorlek (minskar kvot/latens)
+
+  // ==== ÄMNE + OMRÅDE AUTOMATISKT FRÅN <title> ====
+  const pageTitle = document.title;                 // "Periodiska systemet – Kemi"
   const parts = pageTitle.split("–");
+  const AI_AREA = parts[0].trim();                  // "Periodiska systemet"
+  const AI_SUBJECT = parts[1]?.trim() || "NO";      // "Kemi"
 
-  const AI_AREA = parts[0].trim();     // t.ex. "Periodiska systemet"
-  const AI_SUBJECT = parts[1]?.trim() || "NO";  // t.ex. "Kemi"
-  
-  const AI_TRAINING_PROMPT = `
-  DU ÄR: En tålmodig, effektiv NO-lärare i svensk skola. Eleven går i åk 9 och tränar inför prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
-  
-  HUVUDUPPGIFT:
-  Träna aktivt i dialog. Du ska själv driva träningen framåt och "beta av" målen. Eleven ska aldrig behöva be dig fortsätta.
-  
-  STIL (MYCKET VIKTIGT):
-  - Svara på svenska.
-  - Var KORT. Max 1–2 korta meningar återkoppling, sedan direkt en ny fråga.
-  - Ingen onödig småprat/utfyllnad.
-  - Ge inte facit direkt. Använd ledtråd + följdfråga.
-  - Om svaret är rätt: skriv t.ex. "Bra." / "Stämmer." och gå vidare.
-  - Om delvis rätt: skriv "Delvis rätt – förtydliga ..." och ställ en precis följdfråga.
-  - Om fel: skriv kort vad som missförståtts (1 mening), ge ledtråd och ny chans.
-  
-  FORMAT (ALLTID):
-  1) Kort återkoppling (eller ledtråd)
-  2) Nästa fråga (sluta alltid med en fråga)
-  3) Om eleven skriver “fortsätt/ok/ja”: ställ nästa fråga direkt.
-  
-  INRE PLAN (visa inte för eleven):
-  Håll koll på delområden och markera dem som "avklarade" när eleven klarar 2–3 frågor i rad på området:
-  A) Atomens byggnad: proton/neutron/elektron, laddning, plats, atomnummer, varför atomer är neutrala
-  B) Elektronskal & valenselektroner (första 20): K=2 L=8 M=8, valenselektroner, period/grupp
-  C) Periodiska systemet: period vs grupp, metaller/icke-metaller, varför reaktivitet skiljer sig
-  D) Familjer: alkalimetaller (gr 1), halogener (gr 17), ädelgaser (gr 18): egenskaper + exempel på användning
-  E) Joner: hur + och – joner bildas, varför vissa lämnar/tar upp elektroner
-  F) Bindningar: jonbindning, molekylbindning, metallbindning (enkel nivå)
-  G) Saltvatten leder ström: koppla till joner
-  
-  NÄR ETT OMRÅDE ÄR AVKLARAT:
-  Skriv kort beröm (1 mening) och fråga:
-  "Vill du gå vidare till nästa område eller träna mer på detta?"
-  Om eleven väljer nästa: föreslå 2 alternativ och låt eleven välja.
-  
-  STARTA SÅ HÄR (exakt):
-  Fråga 1: "Välj nivå: 1 (lätt), 2 (medel), 3 (prov)."
-  Fråga 2: "Välj fokus: atomen, periodiska systemet, familjerna, joner/bindningar eller blandat?"
-  Fråga 3: börja direkt med första faktiska frågan.
-  
-  INNEHÅLL SOM SKA ÖVAS (blanda över tid):
-  - proton, neutron, elektron (laddning och plats i atomen)
-  - varför atomer är oladdade
-  - atomnummer (koppling till protoner)
-  - elektronskal (K=2, L=8, M=8 för de första 20) och valenselektroner
-  - period vs grupp (skal vs valenselektroner)
-  - metaller och icke-metaller (tendens att lämna/tar upp elektroner)
-  - alkalimetaller (gr 1), halogener (gr 17), ädelgaser (gr 18) + egenskaper och exempel på användning
-  - hur joner bildas (+ och −)
-  - jonbindning, molekylbindning, metallbindning (enkel nivå)
-  - varför saltvatten leder ström
-  
-  MINISCENARIER (ibland, kort):
-  Natrium + klor, salt i vatten, helium i ballong.
-  `.trim();
+  // ==== KONSTANT GRUNDPROMPT (SAMMA PÅ ALLA SIDOR) ====
+  const BASE_PROMPT = `
+DU ÄR: En effektiv NO-lärare i svensk skola.
 
+HUVUDUPPGIFT:
+Träna aktivt i dialog. Du ska själv driva träningen framåt. Eleven ska aldrig behöva be dig fortsätta.
+
+STIL (MYCKET VIKTIGT):
+- Svara på svenska.
+- Inget småprat/utfyllnad.
+- Max 1–2 korta meningar återkoppling, sedan direkt nästa fråga.
+- Avsluta alltid med en fråga.
+- Om eleven skriver "fortsätt", "ok", "ja", "kör": hoppa direkt till nästa fråga.
+- Ge inte facit direkt. Använd ledtråd + följdfråga.
+- När ett delområde verkar avklarat: kort beröm + fråga om eleven vill gå vidare eller träna mer.
+
+STARTA SÅ HÄR (exakt):
+1) "Välj nivå: 1 (lätt), 2 (medel), 3 (prov)."
+2) "Välj fokus: (a) begrepp, (b) resonemang, (c) blandat."
+3) Börja direkt med första frågan.
+`.trim();
+
+  // ==== UI ====
   const statusEl = document.getElementById("ai-status");
   const outputEl = document.getElementById("ai-output");
   const inputEl  = document.getElementById("ai-input");
@@ -123,10 +98,11 @@
   const startBtn = document.getElementById("ai-train-btn");
   const resetBtn = document.getElementById("ai-reset-btn");
 
-  // Enkel kontext som skickas till AI varje gång
+  // ==== STATE ====
   let conversation = "";
   let started = false;
   let busy = false;
+  let checklistGoalText = "";   // byggs från checklista.json
 
   function setBusy(on, msg) {
     busy = on;
@@ -157,67 +133,155 @@
     outputEl.textContent = "";
     statusEl.textContent = "";
     inputEl.value = "";
-    // Tar bort klasskoden så du kan byta i workern och tvinga ny kod
     sessionStorage.removeItem("APP_ACCESS_KEY");
     inputEl.focus();
   }
 
+  // ==== CHECKLISTA -> MÅLTEXT ====
+  function extractChecklistTexts(json) {
+    const out = [];
+
+    const pushIfText = (v) => {
+      if (!v) return;
+      if (typeof v === "string") {
+        const s = v.trim();
+        if (s) out.push(s);
+      }
+    };
+
+    const walk = (node) => {
+      if (!node) return;
+
+      if (Array.isArray(node)) {
+        node.forEach(walk);
+        return;
+      }
+
+      if (typeof node === "string") {
+        pushIfText(node);
+        return;
+      }
+
+      if (typeof node === "object") {
+        // Vanliga fält i checklistor
+        pushIfText(node.text);
+        pushIfText(node.title);
+        pushIfText(node.label);
+        pushIfText(node.question);
+
+        // Vanliga strukturer: items, sections, groups, checklist, data
+        walk(node.items);
+        walk(node.sections);
+        walk(node.groups);
+        walk(node.checklist);
+        walk(node.data);
+
+        // Ibland finns "children"
+        walk(node.children);
+      }
+    };
+
+    walk(json);
+
+    // unik + begränsa längd
+    const uniq = [...new Set(out)].slice(0, 60); // max 60 punkter
+    return uniq;
+  }
+
+  async function loadChecklistGoals() {
+    try {
+      const r = await fetch(CHECKLIST_URL, { cache: "no-store" });
+      if (!r.ok) return "(kunde inte läsa checklista.json)";
+      const data = await r.json();
+
+      const items = extractChecklistTexts(data);
+      if (!items.length) return "(hittade inga mål i checklista.json)";
+
+      // Gör en kort mållista (AI behöver inte hela romaner)
+      return items.map((s) => "- " + s).join("\n");
+    } catch {
+      return "(kunde inte läsa checklista.json)";
+    }
+  }
+
+  // ==== GEMINI CALL VIA WORKER ====
   async function callAI(promptText) {
     const accessKey = getAccessKey();
-    if (!accessKey) {
-      throw new Error("Ingen klasskod angiven.");
-    }
+    if (!accessKey) throw new Error("Ingen klasskod angiven.");
 
     const r = await fetch(workerUrl, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          accessKey: accessKey,
-          subject: AI_SUBJECT,
-          area: AI_AREA,
-          prompt: promptText
-        })
+      body: JSON.stringify({
+        accessKey: accessKey,
+        subject: AI_SUBJECT,
+        area: AI_AREA,
+        // Du kan (valfritt) styra modell/parametrar från sidan:
+        // model: "gemini-2.5-flash",
+        // temperature: 0.2,
+        // maxOutputTokens: 600,
+        prompt: promptText
+      })
     });
 
     const d = await r.json();
 
-    // Om fel kod: nollställ sparad kod så den frågar igen nästa gång
     if (d?.error === "Unauthorized" || r.status === 403) {
       sessionStorage.removeItem("APP_ACCESS_KEY");
       throw new Error("Fel klasskod. Försök igen.");
     }
 
-  if (!r.ok || !d.ok) {
-    console.error("AI-fel (hela objektet):", d);
-  
-    const googleMsg =
-      d?.details?.error?.message ||
-      d?.details?.error ||
-      d?.details?.message ||
-      "";
-  
-    const msg = (d?.error || ("HTTP " + r.status)) + (googleMsg ? (": " + googleMsg) : "");
-    throw new Error(msg);
-  }
+    if (!r.ok || !d.ok) {
+      const googleMsg =
+        d?.details?.error?.message ||
+        d?.details?.error ||
+        d?.details?.message ||
+        "";
+      throw new Error((d?.error || ("HTTP " + r.status)) + (googleMsg ? (": " + googleMsg) : ""));
+    }
 
     return d.text;
   }
 
+  function clampContext(s) {
+    if (!s) return "";
+    if (s.length <= MAX_CONTEXT_CHARS) return s;
+    return s.slice(s.length - MAX_CONTEXT_CHARS);
+  }
+
+  function buildTrainingPrompt() {
+    // Ämne/område + mål från checklista
+    const goalsBlock =
+      `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n\n` +
+      `MÅL/INNEHÅLL ATT BETA AV (blanda och bocka av internt):\n` +
+      `${checklistGoalText}\n\n` +
+      `VIKTIGT: Håll svaren korta. Driv träningen framåt.`;
+
+    return BASE_PROMPT + "\n\n" + goalsBlock;
+  }
+
   async function startTraining() {
     if (busy) return;
-    setBusy(true, "🤖 AI tänker...");
+
+    setBusy(true, "Läser in mål från checklista...");
     outputEl.textContent = "";
     inputEl.value = "";
     inputEl.focus();
 
+    // Ladda checklistan (en gång per start/reset)
+    checklistGoalText = await loadChecklistGoals();
+
+    const trainingPrompt = buildTrainingPrompt();
+
+    setBusy(true, "🤖 AI tänker...");
+
     try {
-      const aiText = await callAI(AI_TRAINING_PROMPT);
+      const aiText = await callAI(trainingPrompt);
       conversation = "AI: " + aiText;
       started = true;
 
       setBusy(false, "✅ Träning startad");
       appendLine("AI: " + aiText);
-
     } catch (err) {
       setBusy(false, "⚠️ " + err.message);
     }
@@ -241,14 +305,23 @@
     setBusy(true, "🤖 AI tänker...");
 
     try {
-      const promptText = conversation + "\n\nElev: " + studentText + "\nAI:";
+      // Skicka senaste kontext + nytt svar. Lägg in måltexten kort i början (så AI håller tråden).
+      const goalsHint =
+        `ÄMNE: ${AI_SUBJECT}. OMRÅDE: ${AI_AREA}.\n` +
+        `Träna mot målen (internt):\n${checklistGoalText}\n\n`;
+
+      const promptText =
+        goalsHint +
+        clampContext(conversation) +
+        "\n\nElev: " + studentText +
+        "\nAI:";
+
       const aiText = await callAI(promptText);
 
-      conversation += "\n\nElev: " + studentText + "\nAI: " + aiText;
+      conversation = clampContext(conversation + "\n\nElev: " + studentText + "\nAI: " + aiText);
 
       setBusy(false, "✅");
       appendLine("AI: " + aiText);
-
     } catch (err) {
       setBusy(false, "⚠️ " + err.message);
     }
@@ -261,8 +334,12 @@
     resetAll();
   });
 
+  // Ctrl+Enter (Win) / Cmd+Enter (Mac) skickar, Enter gör ny rad
   inputEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") sendStudentAnswer();
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      sendStudentAnswer();
+    }
   });
 </script>
 
