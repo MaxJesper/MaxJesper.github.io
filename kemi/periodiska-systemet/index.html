@@ -326,9 +326,7 @@ STARTA SÅ HÄR (exakt):
       const goalsHint =
         `ÄMNE: ${AI_SUBJECT}. OMRÅDE: ${AI_AREA}.\n` +
         `Träna mot målen (internt):\n${checklistGoalText}\n\n`;
-
       const promptText =
-        goalsHint +
         clampContext(conversation) +
         "\n\nElev: " + studentText +
         "\nAI:";
