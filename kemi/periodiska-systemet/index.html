@@ -55,8 +55,10 @@
 <script>
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
   const pageTitle = document.title;
-  const AI_SUBJECT = "Kemi";
-  const AI_AREA = "Periodiska systemet";
+  const parts = pageTitle.split("–");
+
+  const AI_AREA = parts[0].trim();     // t.ex. "Periodiska systemet"
+  const AI_SUBJECT = parts[1]?.trim() || "NO";  // t.ex. "Kemi"
   
   const AI_TRAINING_PROMPT = `
   DU ÄR: En tålmodig, effektiv NO-lärare i svensk skola. Eleven går i åk 9 och tränar inför prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
@@ -171,7 +173,8 @@
       headers: {"Content-Type":"application/json"},
         body: JSON.stringify({
           accessKey: accessKey,
-          area: pageTitle,
+          subject: AI_SUBJECT,
+          area: AI_AREA,
           prompt: promptText
         })
     });
