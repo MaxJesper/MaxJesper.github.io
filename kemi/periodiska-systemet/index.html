@@ -351,8 +351,8 @@ STARTA SÅ HÄR (exakt):
 
   // Ctrl+Enter (Win) / Cmd+Enter (Mac) skickar, Enter gör ny rad
   inputEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();      // stoppar ny rad
       sendStudentAnswer();
     }
   });
