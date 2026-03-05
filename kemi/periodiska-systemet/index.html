@@ -30,27 +30,32 @@
 
   <hr>
 
-  <p>Träna med AI (kopiera prompt):</p>
+  <p>Träna med AI:</p>
   <p>
     <button id="ai-train-btn" class="subject-btn" type="button">🤖 Träna med AI</button>
+    <button id="ai-reset-btn" class="subject-btn" type="button">🔄 Reset</button>
   </p>
+
   <p id="ai-status"></p>
+
   <div id="ai-chat" style="margin-top:10px;">
-    <div id="ai-output" style="white-space:pre-wrap; border:1px solid #ccc; padding:8px; min-height:60px;"></div>
+    <div id="ai-output" style="white-space:pre-wrap; border:1px solid #ccc; padding:8px; min-height:80px;"></div>
 
     <input id="ai-input" type="text" placeholder="Skriv ditt svar..." style="width:70%; margin-top:6px;">
-    <button id="ai-send">Skicka</button>
+    <button id="ai-send" type="button">Skicka</button>
   </div>
-  
-  <p>
+
+  <p style="margin-top:12px;">
     <a href="../kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
   </p>
 </main>
 
-<script>
-const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
+<script src="/js/menu.js"></script>
 
-const AI_TRAINING_PROMPT = `
+<script>
+  const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
+
+  const AI_TRAINING_PROMPT = `
 Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 9 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
 
 MÅL: Träna eleven aktivt. Du ska INTE hålla en lång föreläsning. Ställ en fråga i taget, vänta på elevens svar, ge kort återkoppling och ställ sedan nästa fråga. Anpassa nivån efter elevens svar.
@@ -81,34 +86,143 @@ STARTA SÅ HÄR:
 3) Börja direkt med första frågan.
 `.trim();
 
-document.getElementById("ai-train-btn").addEventListener("click", async () => {
-
   const statusEl = document.getElementById("ai-status");
-  statusEl.textContent = "🤖 AI tänker...";
+  const outputEl = document.getElementById("ai-output");
+  const inputEl  = document.getElementById("ai-input");
+  const sendBtn  = document.getElementById("ai-send");
+  const startBtn = document.getElementById("ai-train-btn");
+  const resetBtn = document.getElementById("ai-reset-btn");
 
-  try {
+  // Enkel kontext som skickas till AI varje gång
+  let conversation = "";
+  let started = false;
+  let busy = false;
 
-    const r = await fetch(workerUrl,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({prompt:AI_TRAINING_PROMPT})
+  function setBusy(on, msg) {
+    busy = on;
+    startBtn.disabled = on;
+    sendBtn.disabled = on;
+    inputEl.disabled = on;
+    resetBtn.disabled = on;
+    if (msg !== undefined) statusEl.textContent = msg;
+  }
+
+  function appendLine(text) {
+    outputEl.textContent += (outputEl.textContent ? "\n\n" : "") + text;
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+
+  function getAccessKey() {
+    let k = sessionStorage.getItem("APP_ACCESS_KEY");
+    if (!k) {
+      k = prompt("Skriv klasskoden för AI:");
+      if (k) sessionStorage.setItem("APP_ACCESS_KEY", k);
+    }
+    return k || "";
+  }
+
+  function resetAll() {
+    conversation = "";
+    started = false;
+    outputEl.textContent = "";
+    statusEl.textContent = "";
+    inputEl.value = "";
+    // Tar bort klasskoden så du kan byta i workern och tvinga ny kod
+    sessionStorage.removeItem("APP_ACCESS_KEY");
+    inputEl.focus();
+  }
+
+  async function callAI(promptText) {
+    const accessKey = getAccessKey();
+    if (!accessKey) {
+      throw new Error("Ingen klasskod angiven.");
+    }
+
+    const r = await fetch(workerUrl, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        accessKey: accessKey,
+        prompt: promptText
+      })
     });
 
     const d = await r.json();
 
-    if(!d.ok){
-      statusEl.textContent = "⚠️ AI-fel";
-      console.error(d);
+    // Om fel kod: nollställ sparad kod så den frågar igen nästa gång
+    if (d?.error === "Unauthorized" || r.status === 403) {
+      sessionStorage.removeItem("APP_ACCESS_KEY");
+      throw new Error("Fel klasskod. Försök igen.");
+    }
+
+    if (!r.ok || !d.ok) {
+      throw new Error(d?.error || ("HTTP " + r.status));
+    }
+
+    return d.text;
+  }
+
+  async function startTraining() {
+    if (busy) return;
+    setBusy(true, "🤖 AI tänker...");
+    outputEl.textContent = "";
+    inputEl.value = "";
+    inputEl.focus();
+
+    try {
+      const aiText = await callAI(AI_TRAINING_PROMPT);
+      conversation = "AI: " + aiText;
+      started = true;
+
+      setBusy(false, "✅ Träning startad");
+      appendLine("AI: " + aiText);
+
+    } catch (err) {
+      setBusy(false, "⚠️ " + err.message);
+    }
+  }
+
+  async function sendStudentAnswer() {
+    if (busy) return;
+
+    const studentText = (inputEl.value || "").trim();
+    if (!studentText) return;
+
+    if (!started) {
+      statusEl.textContent = "ℹ️ Klicka först på “🤖 Träna med AI”.";
       return;
     }
 
-    statusEl.textContent = d.text;
+    inputEl.value = "";
+    inputEl.focus();
 
-  } catch(err){
-    statusEl.textContent = "⚠️ Kopplingsfel: " + err.message;
+    appendLine("Elev: " + studentText);
+    setBusy(true, "🤖 AI tänker...");
+
+    try {
+      const promptText = conversation + "\n\nElev: " + studentText + "\nAI:";
+      const aiText = await callAI(promptText);
+
+      conversation += "\n\nElev: " + studentText + "\nAI: " + aiText;
+
+      setBusy(false, "✅");
+      appendLine("AI: " + aiText);
+
+    } catch (err) {
+      setBusy(false, "⚠️ " + err.message);
+    }
   }
 
-});
+  startBtn.addEventListener("click", startTraining);
+  sendBtn.addEventListener("click", sendStudentAnswer);
+  resetBtn.addEventListener("click", () => {
+    if (busy) return;
+    resetAll();
+  });
+
+  inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendStudentAnswer();
+  });
 </script>
 
 </body>
