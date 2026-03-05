@@ -1,5 +1,30 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>AI-test</title>
+
 <h1>AI-test</h1>
-<p>Om du ser detta är GitHub Pages inte blockat.</p>
+
+<button id="btn">Testa Worker</button>
+
+<pre id="out"></pre>
+
+<script>
+const out = document.getElementById("out");
+
+document.getElementById("btn").onclick = async () => {
+  out.textContent = "Testar...";
+  
+  try {
+    const r = await fetch("https://no-lararen-final.jesper-tordsson.workers.dev", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({prompt:"Test från skolan"})
+    });
+
+    out.textContent = await r.text();
+
+  } catch (e) {
+    out.textContent = "Fel: " + e.message;
+  }
+};
+</script>
