@@ -291,7 +291,10 @@ STARTA SÅ HÄR (exakt):
 
     try {
       const aiText = await callAI(trainingPrompt);
-      conversation = "AI: " + aiText;
+      conversation =
+        `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
+        `MÅL (internt):\n${checklistGoalText}\n\n` +
+        "AI: " + aiText;
       started = true;
 
       setBusy(false, "✅ Träning startad");
