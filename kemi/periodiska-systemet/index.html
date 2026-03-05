@@ -54,7 +54,7 @@
 
 <script>
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
-
+  const pageTitle = document.title;
   const AI_SUBJECT = "Kemi";
   const AI_AREA = "Periodiska systemet";
   
@@ -168,12 +168,11 @@
     const r = await fetch(workerUrl, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        accessKey: accessKey,
-        subject: AI_SUBJECT,
-        area: AI_AREA,
-        prompt: promptText
-      })
+        body: JSON.stringify({
+          accessKey: accessKey,
+          area: pageTitle,
+          prompt: promptText
+        })
     });
 
     const d = await r.json();
