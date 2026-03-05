@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>NO</title></head>
+<body>
+    <input type="password" id="pass" placeholder="Lösenord">
+    <div id="chat" style="height:200px; border:1px solid; margin:10px 0; padding:5px; overflow:auto;"></div>
+    <input type="text" id="userInput">
+    <button onclick="ask()">Skicka</button>
+
+<script>
+    const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
+
+    async function ask() {
+        const p = document.getElementById("pass").value;
+        const i = document.getElementById("userInput");
+        const c = document.getElementById("chat");
+        const t = (i.value || "").trim();
+
+        if (p !== "Kemi2026") { alert("Fel lösenord"); return; }
+        if (!t) return;
+
+        c.innerHTML += "<div><b>Du:</b> " + t + "</div>";
+        i.value = "";
+
+        try {
+            const res = await fetch(workerUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },  /* ÄNDRING 1 */
+                body: JSON.stringify({ prompt: t })               /* ÄNDRING 2 */
+            });
+
+            const d = await res.json();
+
+            if (!res.ok || !d.ok) {
+                c.innerHTML += "<div style='color:red'>API-fel: " + (d.error || res.status) + "</div>";
+                return;
+            }
+
+            const a = d.text;                                     /* ÄNDRING 3 */
+            c.innerHTML += "<div><b>Läraren:</b> " + a + "</div>";
+            c.scrollTop = c.scrollHeight;
+
+        } catch (err) {
+            c.innerHTML += "<div style='color:red'>Kopplingsfel: " + err.message + "</div>";
+        }
+    }
+	document.getElementById("userInput").addEventListener("keydown", function(e){
+  	if (e.key === "Enter") ask();
+	});
+
+</script>
+</body>
+</html>
