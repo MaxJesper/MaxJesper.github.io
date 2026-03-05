@@ -41,10 +41,10 @@
   </p>
 </main>
 
-<script src="/js/menu.js"></script>
-
 <script>
-  const AI_TRAINING_PROMPT = `
+const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
+
+const AI_TRAINING_PROMPT = `
 Du är en tålmodig och skicklig NO-lärare i svensk skola. Eleven går i årskurs 9 och ska ha prov på PERIODISKA SYSTEMET, ATOMENS BYGGNAD, JONER och KEMISK BINDNING.
 
 MÅL: Träna eleven aktivt. Du ska INTE hålla en lång föreläsning. Ställ en fråga i taget, vänta på elevens svar, ge kort återkoppling och ställ sedan nästa fråga. Anpassa nivån efter elevens svar.
@@ -75,17 +75,34 @@ STARTA SÅ HÄR:
 3) Börja direkt med första frågan.
 `.trim();
 
-  document.getElementById("ai-train-btn").addEventListener("click", async () => {
-    const statusEl = document.getElementById("ai-status");
-    try {
-      await navigator.clipboard.writeText(AI_TRAINING_PROMPT);
-      window.open("https://chat.openai.com/", "_blank");
-      statusEl.textContent = "✅ Prompt kopierad! När ChatGPT öppnas: Ctrl+V (Chromebook/Windows) eller Cmd+V (Mac), Enter.";
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Kopiera prompten manuellt.";
+document.getElementById("ai-train-btn").addEventListener("click", async () => {
+
+  const statusEl = document.getElementById("ai-status");
+  statusEl.textContent = "🤖 AI tänker...";
+
+  try {
+
+    const r = await fetch(workerUrl,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({prompt:AI_TRAINING_PROMPT})
+    });
+
+    const d = await r.json();
+
+    if(!d.ok){
+      statusEl.textContent = "⚠️ AI-fel";
+      console.error(d);
+      return;
     }
-  });
+
+    statusEl.textContent = d.text;
+
+  } catch(err){
+    statusEl.textContent = "⚠️ Kopplingsfel: " + err.message;
+  }
+
+});
 </script>
 
 </body>
