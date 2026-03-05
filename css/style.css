@@ -265,3 +265,8 @@ button.subject-btn:focus-visible,
 .video-section {
   margin-bottom: 32px;
 }
+/* AI-svarsruta fokus */
+#ai-input:focus {
+  outline: 2px solid #333;
+  outline-offset: 2px;
+}
