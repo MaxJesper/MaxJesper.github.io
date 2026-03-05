@@ -74,7 +74,7 @@
 
   <p>Träna med AI:</p>
 
-  <!-- (4) Dropdowns: nivå/fokus/startområde -->
+  <!-- Dropdowns: nivå/fokus/startområde -->
   <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px;">
     <label>
       Nivå:
@@ -118,12 +118,12 @@
 
   <p id="ai-status"></p>
 
-  <!-- (5) Progress -->
+  <!-- Progress -->
   <div id="ai-progress" style="margin:8px 0; padding:8px; border:1px solid #ddd; border-radius:8px;">
     <div style="font-weight:600; margin-bottom:6px;">Progress (A–G)</div>
     <div id="prog-items" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
     <div style="font-size:0.9em; opacity:0.75; margin-top:6px;">
-      Du kan välja startområde i dropdownen ovan (t.ex. Joner).
+      Du kan välja startområde (t.ex. Joner).
     </div>
   </div>
 
@@ -149,8 +149,6 @@
   // ====== INSTÄLLNINGAR ======
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
   const CHECKLIST_URLS = ["./data/checklista.json", "./checklista.json", "../data/checklista.json"];
-
-  // Smart kontext (2): behåll mål + senaste dialog
   const MAX_CONTEXT_CHARS = 4200;
 
   // ====== ÄMNE + OMRÅDE från <title> ======
@@ -158,6 +156,17 @@
   const parts = pageTitle.split("–");
   const AI_AREA = parts[0].trim();
   const AI_SUBJECT = parts[1]?.trim() || "NO";
+
+  // ====== Områdesguide (tvingar startområdet) ======
+  const AREA_GUIDE = {
+    A: "Atomens byggnad: proton/neutron/elektron, laddning, atomnummer, neutral atom.",
+    B: "Elektronskal/valens: K=2 L=8 M=8 (första 20), valenselektroner, period/grupp.",
+    C: "Periodiska systemet: period vs grupp, metaller/icke-metaller, egenskaper.",
+    D: "Familjer: alkalimetaller (1), halogener (17), ädelgaser (18) + egenskaper/användning.",
+    E: "Joner: hur + och – joner bildas, elektronavgivning/upptag, varför, exempel (Na+, Cl−).",
+    F: "Bindningar: jonbindning/molekylbindning/metallbindning (enkel nivå) + exempel.",
+    G: "Saltvatten leder ström: joner i lösning och laddningstransport."
+  };
 
   // ====== PROMPT: fråga först, återkoppling efter svar ======
   const BASE_PROMPT = `
@@ -171,7 +180,7 @@ VIKTIGA REGLER:
 - Frågan måste alltid vara en HEL mening som slutar med ? (ingen avhuggen fråga).
 - Ge inte facit direkt: använd ledtråd + följdfråga.
 - Om eleven skriver "fortsätt/ok/ja/kör": ställ nästa fråga direkt.
-- Om eleven frågar om något som inte hör till NO-ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant fråga inom området. (10)
+- Om eleven frågar om något som inte hör till NO-ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant fråga inom området.
 
 SVARFORMAT (följ alltid):
 Fråga: <en komplett fråga som slutar med ?>
@@ -193,12 +202,11 @@ PROGRESS-TAGG (alltid sist på egen rad):
   const resetBtn = document.getElementById("ai-reset-btn");
   const hintBtn  = document.getElementById("ai-hint-btn");
   const newQBtn  = document.getElementById("ai-newq-btn");
-
   const levelEl     = document.getElementById("ai-level");
   const focusEl     = document.getElementById("ai-focus");
   const startAreaEl = document.getElementById("ai-start-area");
 
-  // Progress UI (5)
+  // Progress UI
   const progWrap = document.getElementById("prog-items");
   const PROG_LABELS = {
     A: "Atomens byggnad",
@@ -210,16 +218,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
     G: "Saltvatten & ström",
   };
 
-  const AREA_GUIDE = {
-    A: "Atomens byggnad: proton/neutron/elektron, laddning, atomnummer, neutral atom.",
-    B: "Elektronskal/valens: K=2 L=8 M=8 (första 20), valenselektroner, period/grupp.",
-    C: "Periodiska systemet: period vs grupp, metaller/icke-metaller, egenskaper.",
-    D: "Familjer: alkalimetaller (1), halogener (17), ädelgaser (18) + egenskaper.",
-    E: "Joner: hur + och – joner bildas, elektronavgivning/elektronupptag, varför.",
-    F: "Bindningar: jonbindning/molekylbindning/metallbindning (enkel nivå).",
-    G: "Saltvatten leder ström: joner i lösning och laddningstransport."
-  };
-  
   // ====== STATE ======
   let conversation = "";
   let started = false;
@@ -227,7 +225,7 @@ PROGRESS-TAGG (alltid sist på egen rad):
   let checklistGoalText = "";
   let thinkingBubble = null;
 
-  // Quota fail-safe (8)
+  // Quota fail-safe
   let cooldownTimer = null;
   let cooldownLeft = 0;
 
@@ -287,18 +285,14 @@ PROGRESS-TAGG (alltid sist på egen rad):
     return text.replace(/\n?\[\[PROGRESS:[^\]]+\]\]\s*$/m, "").trim();
   }
 
-  // AI-bubbla: gör "Fråga" och "Återkoppling" tydligt (och blå)
   function renderAiBubble(bubble, rawText) {
     const text = stripHiddenTags(rawText);
-
-    // plocka ut rader som börjar med "Fråga:" och "Återkoppling:"
     const lines = text.split("\n").map(s => s.trim()).filter(Boolean);
     const qLines = lines.filter(l => /^Fråga:/i.test(l)).map(l => l.replace(/^Fråga:\s*/i, "").trim());
     const fbLines = lines.filter(l => /^Återkoppling:/i.test(l)).map(l => l.replace(/^Återkoppling:\s*/i, "").trim());
 
     bubble.innerHTML = "";
 
-    // Om vi inte hittar formatet: visa allt som vanligt
     if (!qLines.length && !fbLines.length) {
       bubble.textContent = text;
       return;
@@ -309,7 +303,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
       const b = document.createElement("b");
       b.textContent = "Fråga: ";
       row.appendChild(b);
-
       const span = document.createElement("span");
       span.style.fontWeight = "700";
       span.textContent = qLines[qLines.length - 1];
@@ -380,7 +373,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
     stopCooldown();
   }
 
-  // ====== CHECKLISTA -> MÅLTEXT ======
   function extractChecklistTexts(json) {
     const out = [];
     const pushIfText = (v) => {
@@ -418,12 +410,11 @@ PROGRESS-TAGG (alltid sist på egen rad):
     return "(kunde inte hitta/öppna checklista.json)";
   }
 
-  // ====== SMART CONTEXT (2) ======
   function clampContext(s) {
     if (!s) return "";
     if (s.length <= MAX_CONTEXT_CHARS) return s;
-    const head = s.slice(0, 1400);
-    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1400));
+    const head = s.slice(0, 1500); // behåll mål/startregler
+    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1500));
     return head + "\n...\n" + tail;
   }
 
@@ -432,27 +423,25 @@ PROGRESS-TAGG (alltid sist på egen rad):
     const focus = focusEl.value;
     const startArea = startAreaEl.value;
 
-    const startArea = startAreaEl.value;
-    
-    const startRule =
+    // Viktigt: lägg startkravet SENT i prompten så det "fastnar"
+    const hardStart =
       (startArea !== "auto")
         ? `STARTOMRÅDE: ${startArea} (MÅSTE).
-    Du MÅSTE börja i område ${startArea} och stanna där tills eleven säger att den vill byta område.
-    Område ${startArea} betyder: ${AREA_GUIDE[startArea]}
-    DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område ${startArea}.`
+Du MÅSTE börja i område ${startArea} och stanna där tills eleven säger att den vill byta område.
+Område ${startArea} betyder: ${AREA_GUIDE[startArea]}
+DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område ${startArea}.`
         : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.`;
 
     const goalsBlock =
       `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
-      `NIVÅ: ${level}\nFOKUS: ${focus}\n` +
-      startRule + "\n" +
+      `NIVÅ: ${level}\nFOKUS: ${focus}\n\n` +
       `MÅL/INNEHÅLL ATT BETA AV (bocka av internt):\n${checklistGoalText}\n\n` +
+      hardStart + "\n\n" +
       `Starta nu med EN fråga enligt SVARFORMAT.\n`;
 
     return BASE_PROMPT + "\n\n" + goalsBlock;
   }
 
-  // ====== QUOTA FAIL-SAFE (8) ======
   function startCooldown(seconds) {
     stopCooldown();
     cooldownLeft = Math.max(1, Math.ceil(seconds));
@@ -480,7 +469,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
     return null;
   }
 
-  // ====== GEMINI CALL VIA WORKER ======
   async function callAI(promptText) {
     const accessKey = getAccessKey();
     if (!accessKey) throw new Error("Ingen klasskod angiven.");
@@ -492,7 +480,7 @@ PROGRESS-TAGG (alltid sist på egen rad):
         accessKey,
         subject: AI_SUBJECT,
         area: AI_AREA,
-        // Motverkar avhuggna frågor:
+        // Motverkar avhuggna frågor
         maxOutputTokens: 900,
         temperature: 0.2,
         prompt: promptText
@@ -524,7 +512,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
     return d.text;
   }
 
-  // ====== ACTIONS ======
   async function startTraining() {
     if (busy) return;
 
@@ -545,7 +532,6 @@ PROGRESS-TAGG (alltid sist på egen rad):
     try {
       const aiRaw = await callAI(trainingPrompt);
       const prog = parseProgressTag(aiRaw);
-      const aiText = stripHiddenTags(aiRaw);
 
       conversation =
         `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
@@ -556,7 +542,7 @@ PROGRESS-TAGG (alltid sist på egen rad):
       started = true;
       setBusy(false, "✅ Träning startad");
 
-      replaceThinkingWith(aiRaw); // vi skickar raw så renderAiBubble kan hitta Fråga/Återkoppling
+      replaceThinkingWith(aiRaw);
       if (prog) setProgressFromMap(prog);
 
     } catch (err) {
@@ -604,13 +590,13 @@ PROGRESS-TAGG (alltid sist på egen rad):
     }
   }
 
-  // (3) Ledtråd
   function askHint() {
     if (!started) { statusEl.textContent = "ℹ️ Starta träningen först."; return; }
-    sendStudentAnswer("Jag vill ha en ledtråd (inte facit). Ställ en följdfråga som hjälper mig vidare.");
+    const startArea = startAreaEl.value;
+    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Jag vill ha en ledtråd (inte facit). Ställ en följdfråga som hjälper mig vidare." + extra);
   }
 
-  // (1) Ny fråga (respektera valt startområde om eleven vill)
   function askNewQuestion() {
     if (!started) { statusEl.textContent = "ℹ️ Starta träningen först."; return; }
     const startArea = startAreaEl.value;
@@ -618,15 +604,13 @@ PROGRESS-TAGG (alltid sist på egen rad):
     sendStudentAnswer("Ge en ny fråga på samma NIVÅ och FOKUS. Ingen förklaring, bara en fråga som slutar med ?." + extra);
   }
 
-  // ====== EVENTS ======
+  // EVENTS
   startBtn.addEventListener("click", startTraining);
   sendBtn.addEventListener("click", () => sendStudentAnswer());
   hintBtn.addEventListener("click", askHint);
   newQBtn.addEventListener("click", askNewQuestion);
-
   resetBtn.addEventListener("click", () => { if (!busy) resetAll(); });
 
-  // Enter skickar, Shift+Enter ny rad
   inputEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
