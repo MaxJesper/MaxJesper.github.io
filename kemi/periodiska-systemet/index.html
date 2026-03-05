@@ -59,7 +59,13 @@
 <script>
   // ==== INSTÄLLNINGAR ====
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
-  const CHECKLIST_URL = "./data/checklista.json";   // Ändra om din checklista ligger någon annanstans
+  const CHECKLIST_URLS = [
+    "./data/checklista.json",            // vanligast i dina områden
+    "./checklista.json",                 // om du råkat lägga den i roten för området
+    "../data/checklista.json",           // om HTML ligger i en undermapp
+    "/periodiska-systemet/data/checklista.json" // hård fallback (ändra om du vill)
+  ];
+  
   const MAX_CONTEXT_CHARS = 4000;                   // håller nere promptstorlek (minskar kvot/latens)
 
   // ==== ÄMNE + OMRÅDE AUTOMATISKT FRÅN <title> ====
