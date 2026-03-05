@@ -179,9 +179,18 @@
       throw new Error("Fel klasskod. Försök igen.");
     }
 
-    if (!r.ok || !d.ok) {
-      throw new Error(d?.error || ("HTTP " + r.status));
-    }
+  if (!r.ok || !d.ok) {
+    console.error("AI-fel (hela objektet):", d);
+  
+    const googleMsg =
+      d?.details?.error?.message ||
+      d?.details?.error ||
+      d?.details?.message ||
+      "";
+  
+    const msg = (d?.error || ("HTTP " + r.status)) + (googleMsg ? (": " + googleMsg) : "");
+    throw new Error(msg);
+  }
 
     return d.text;
   }
