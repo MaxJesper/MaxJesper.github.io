@@ -118,10 +118,23 @@ STARTA SÅ HÄR (exakt):
     if (msg !== undefined) statusEl.textContent = msg;
   }
 
-  function appendLine(text) {
-    outputEl.textContent += (outputEl.textContent ? "\n\n" : "") + text;
+  function appendLine(text, type) {
+
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble");
+  
+    if (type === "ai") {
+      bubble.classList.add("ai-bubble");
+    } else {
+      bubble.classList.add("student-bubble");
+    }
+  
+    bubble.textContent = text;
+  
+    outputEl.appendChild(bubble);
     outputEl.scrollTop = outputEl.scrollHeight;
   }
+
 
   function getAccessKey() {
     let k = sessionStorage.getItem("APP_ACCESS_KEY");
@@ -318,7 +331,7 @@ STARTA SÅ HÄR (exakt):
     inputEl.value = "";
     inputEl.focus();
 
-    appendLine("Elev: " + studentText);
+    appendLine(studentText, "student");
     setBusy(true, "🤖 AI tänker...");
 
     try {
@@ -336,7 +349,7 @@ STARTA SÅ HÄR (exakt):
       conversation = clampContext(conversation + "\n\nElev: " + studentText + "\nAI: " + aiText);
 
       setBusy(false, "✅");
-      appendLine("AI: " + aiText);
+      appendLine(aiText, "ai");
     } catch (err) {
       setBusy(false, "⚠️ " + err.message);
     }
