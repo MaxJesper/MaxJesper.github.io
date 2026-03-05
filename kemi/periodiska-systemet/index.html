@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Periodiska systemet – Kemi</title>
   <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Säkra tydliga chatbubblor även om style.css inte har dem -->
+  <style>
+    #ai-output { display:flex; flex-direction:column; gap:8px; }
+
+    .chat-bubble{
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      font-size: 15px;
+    }
+    .ai-bubble{
+      background:#e9eef6;
+      color:#0b3d91;
+      align-self:flex-start;
+      border:1px solid #c9d8f2;
+    }
+    .student-bubble{
+      background:#cfe3ff;
+      color:#0b1d3a;
+      align-self:flex-end;
+      border:1px solid #b7d1ff;
+    }
+
+    #ai-input{
+      width:100%;
+      height:120px;
+      border:1px solid #bbb;
+      border-radius:8px;
+      padding:10px;
+      font-size:16px;
+      box-sizing:border-box;
+      resize: vertical;
+    }
+    #ai-input:focus{
+      outline:none;
+      border-color:#4a90e2;
+      box-shadow:0 0 4px rgba(74,144,226,0.35);
+    }
+  </style>
 </head>
 
 <body>
@@ -32,7 +74,8 @@
 
   <p>Träna med AI:</p>
 
-  <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:8px;">
+  <!-- (4) Dropdowns: nivå/fokus/startområde -->
+  <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px;">
     <label>
       Nivå:
       <select id="ai-level">
@@ -50,6 +93,20 @@
         <option value="blandat" selected>Blandat</option>
       </select>
     </label>
+
+    <label>
+      Startområde:
+      <select id="ai-start-area">
+        <option value="auto" selected>Auto</option>
+        <option value="A">A: Atomens byggnad</option>
+        <option value="B">B: Elektronskal/valens</option>
+        <option value="C">C: Period/grupp/metaller</option>
+        <option value="D">D: Familjer (1/17/18)</option>
+        <option value="E">E: Joner</option>
+        <option value="F">F: Bindningar</option>
+        <option value="G">G: Saltvatten & ström</option>
+      </select>
+    </label>
   </div>
 
   <p>
@@ -61,19 +118,19 @@
 
   <p id="ai-status"></p>
 
-  <!-- Progress (5) -->
+  <!-- (5) Progress -->
   <div id="ai-progress" style="margin:8px 0; padding:8px; border:1px solid #ddd; border-radius:8px;">
     <div style="font-weight:600; margin-bottom:6px;">Progress (A–G)</div>
     <div id="prog-items" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
     <div style="font-size:0.9em; opacity:0.75; margin-top:6px;">
-      Tips: när ett område är “klart” frågar AI om du vill gå vidare.
+      Du kan välja startområde i dropdownen ovan (t.ex. Joner).
     </div>
   </div>
 
   <div id="ai-chat" style="margin-top:10px;">
-    <div id="ai-output" style="border:1px solid #ccc; padding:8px; min-height:110px; overflow-y:auto;"></div>
+    <div id="ai-output" style="border:1px solid #ccc; padding:10px; min-height:140px; overflow-y:auto; border-radius:10px; background:#f8f8f8;"></div>
 
-    <textarea id="ai-input" placeholder="Skriv ditt svar..." style="width:100%; margin-top:6px; height:120px;"></textarea>
+    <textarea id="ai-input" placeholder="Skriv ditt svar..."></textarea>
     <button id="ai-send" type="button">Skicka</button>
 
     <p style="margin:6px 0 0 0; font-size:0.9em; opacity:0.8;">
@@ -91,43 +148,40 @@
 <script>
   // ====== INSTÄLLNINGAR ======
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
-  const CHECKLIST_URLS = [
-    "./data/checklista.json",
-    "./checklista.json",
-    "../data/checklista.json",
-  ];
+  const CHECKLIST_URLS = ["./data/checklista.json", "./checklista.json", "../data/checklista.json"];
 
   // Smart kontext (2): behåll mål + senaste dialog
   const MAX_CONTEXT_CHARS = 4200;
 
-  // ====== ÄMNE + OMRÅDE automatiskt från <title> ======
+  // ====== ÄMNE + OMRÅDE från <title> ======
   const pageTitle = document.title; // "Periodiska systemet – Kemi"
   const parts = pageTitle.split("–");
   const AI_AREA = parts[0].trim();
   const AI_SUBJECT = parts[1]?.trim() || "NO";
 
-  // ====== KONSTANT GRUNDPROMPT (alla sidor) ======
+  // ====== PROMPT: fråga först, återkoppling efter svar ======
   const BASE_PROMPT = `
-DU ÄR: En effektiv lärare i NO (svensk skola).
+DU ÄR: En effektiv NO-lärare i svensk skola.
 
-REGLER (viktigt):
+VIKTIGA REGLER:
 - Svara på svenska.
 - Inget småprat/utfyllnad.
-- Skriv 1 kort mening återkoppling.
-- Skriv sedan en fullständig fråga i en ny rad.
-- Frågan måste alltid vara en komplett mening som slutar med ?.
-- Avsluta alltid med en fråga.
-- Om eleven skriver "fortsätt", "ok", "ja", "kör": hoppa direkt till nästa fråga.
-- Ge inte facit direkt. Använd ledtråd + följdfråga.
-- Om eleven frågar om något som inte hör till ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant NO-fråga inom området. (10)
-- När ett delområde verkar avklarat: kort beröm + fråga om eleven vill gå vidare eller träna mer.
+- Ställ alltid en fråga först.
+- Efter elevens svar: ge 1 kort mening återkoppling och ställ direkt nästa fråga.
+- Frågan måste alltid vara en HEL mening som slutar med ? (ingen avhuggen fråga).
+- Ge inte facit direkt: använd ledtråd + följdfråga.
+- Om eleven skriver "fortsätt/ok/ja/kör": ställ nästa fråga direkt.
+- Om eleven frågar om något som inte hör till NO-ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant fråga inom området. (10)
 
-FORMATKRAV:
-- Skriv svaret normalt.
-- LÄGG ALLTID SIST en dold tagg i en egen rad:
-  [[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]]
-  där varje ? är 0 eller 1.
-  (Exempel: [[PROGRESS:A=1,B=0,C=0,D=0,E=0,F=0,G=0]])
+SVARFORMAT (följ alltid):
+Fråga: <en komplett fråga som slutar med ?>
+
+(efter elevsvar)
+Återkoppling: <1 kort mening>
+Fråga: <nästa kompletta fråga som slutar med ?>
+
+PROGRESS-TAGG (alltid sist på egen rad):
+[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1.
 `.trim();
 
   // ====== UI ======
@@ -139,8 +193,10 @@ FORMATKRAV:
   const resetBtn = document.getElementById("ai-reset-btn");
   const hintBtn  = document.getElementById("ai-hint-btn");
   const newQBtn  = document.getElementById("ai-newq-btn");
-  const levelEl  = document.getElementById("ai-level");
-  const focusEl  = document.getElementById("ai-focus");
+
+  const levelEl     = document.getElementById("ai-level");
+  const focusEl     = document.getElementById("ai-focus");
+  const startAreaEl = document.getElementById("ai-start-area");
 
   // Progress UI (5)
   const progWrap = document.getElementById("prog-items");
@@ -175,6 +231,7 @@ FORMATKRAV:
     newQBtn.disabled = on;
     levelEl.disabled = on;
     focusEl.disabled = on;
+    startAreaEl.disabled = on;
     if (msg !== undefined) statusEl.textContent = msg;
   }
 
@@ -187,7 +244,7 @@ FORMATKRAV:
       chip.style.border = "1px solid #ccc";
       chip.style.borderRadius = "999px";
       chip.style.fontSize = "0.9em";
-      chip.style.opacity = "0.85";
+      chip.style.opacity = "0.9";
       chip.textContent = `⏳ ${key}: ${PROG_LABELS[key]}`;
       progWrap.appendChild(chip);
     }
@@ -199,17 +256,15 @@ FORMATKRAV:
       if (!chip) continue;
       const done = map[key] === 1;
       chip.textContent = `${done ? "✅" : "⏳"} ${key}: ${PROG_LABELS[key]}`;
-      chip.style.opacity = done ? "1" : "0.85";
       chip.style.borderColor = done ? "#6aa84f" : "#ccc";
+      chip.style.opacity = done ? "1" : "0.9";
     }
   }
 
   function parseProgressTag(text) {
-    // Expect a line like [[PROGRESS:A=1,B=0,...]]
     const m = text.match(/\[\[PROGRESS:([^\]]+)\]\]/);
     if (!m) return null;
-    const body = m[1];
-    const pairs = body.split(",").map(s => s.trim());
+    const pairs = m[1].split(",").map(s => s.trim());
     const map = {};
     for (const p of pairs) {
       const mm = p.match(/^([A-G])\s*=\s*([01])$/);
@@ -219,14 +274,55 @@ FORMATKRAV:
   }
 
   function stripHiddenTags(text) {
-    // Remove progress tag line from visible chat
     return text.replace(/\n?\[\[PROGRESS:[^\]]+\]\]\s*$/m, "").trim();
+  }
+
+  // AI-bubbla: gör "Fråga" och "Återkoppling" tydligt (och blå)
+  function renderAiBubble(bubble, rawText) {
+    const text = stripHiddenTags(rawText);
+
+    // plocka ut rader som börjar med "Fråga:" och "Återkoppling:"
+    const lines = text.split("\n").map(s => s.trim()).filter(Boolean);
+    const qLines = lines.filter(l => /^Fråga:/i.test(l)).map(l => l.replace(/^Fråga:\s*/i, "").trim());
+    const fbLines = lines.filter(l => /^Återkoppling:/i.test(l)).map(l => l.replace(/^Återkoppling:\s*/i, "").trim());
+
+    bubble.innerHTML = "";
+
+    // Om vi inte hittar formatet: visa allt som vanligt
+    if (!qLines.length && !fbLines.length) {
+      bubble.textContent = text;
+      return;
+    }
+
+    if (qLines.length) {
+      const row = document.createElement("div");
+      const b = document.createElement("b");
+      b.textContent = "Fråga: ";
+      row.appendChild(b);
+
+      const span = document.createElement("span");
+      span.style.fontWeight = "700";
+      span.textContent = qLines[qLines.length - 1];
+      row.appendChild(span);
+      bubble.appendChild(row);
+    }
+
+    if (fbLines.length) {
+      const row = document.createElement("div");
+      row.style.marginTop = qLines.length ? "8px" : "0";
+      const b = document.createElement("b");
+      b.textContent = "Återkoppling: ";
+      row.appendChild(b);
+      row.appendChild(document.createTextNode(fbLines[fbLines.length - 1]));
+      bubble.appendChild(row);
+    }
   }
 
   function appendBubble(text, type) {
     const bubble = document.createElement("div");
     bubble.classList.add("chat-bubble", type === "ai" ? "ai-bubble" : "student-bubble");
-    bubble.textContent = text;
+    if (type === "ai") renderAiBubble(bubble, text);
+    else bubble.textContent = text;
     outputEl.appendChild(bubble);
     outputEl.scrollTop = outputEl.scrollHeight;
   }
@@ -243,7 +339,8 @@ FORMATKRAV:
 
   function replaceThinkingWith(text) {
     if (thinkingBubble) {
-      thinkingBubble.textContent = text;
+      thinkingBubble.innerHTML = "";
+      renderAiBubble(thinkingBubble, text);
       thinkingBubble = null;
     } else {
       appendBubble(text, "ai");
@@ -288,10 +385,7 @@ FORMATKRAV:
       if (Array.isArray(node)) return node.forEach(walk);
       if (typeof node === "string") return pushIfText(node);
       if (typeof node === "object") {
-        pushIfText(node.text);
-        pushIfText(node.title);
-        pushIfText(node.label);
-        pushIfText(node.question);
+        pushIfText(node.text); pushIfText(node.title); pushIfText(node.label); pushIfText(node.question);
         walk(node.items); walk(node.sections); walk(node.groups);
         walk(node.checklist); walk(node.data); walk(node.children);
       }
@@ -309,7 +403,7 @@ FORMATKRAV:
         const items = extractChecklistTexts(data);
         if (!items.length) continue;
         return items.slice(0, 70).map((s) => "- " + s).join("\n");
-      } catch { /* try next */ }
+      } catch {}
     }
     return "(kunde inte hitta/öppna checklista.json)";
   }
@@ -318,7 +412,7 @@ FORMATKRAV:
   function clampContext(s) {
     if (!s) return "";
     if (s.length <= MAX_CONTEXT_CHARS) return s;
-    const head = s.slice(0, 1400); // keep goals/settings
+    const head = s.slice(0, 1400);
     const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1400));
     return head + "\n...\n" + tail;
   }
@@ -326,13 +420,19 @@ FORMATKRAV:
   function buildTrainingPrompt() {
     const level = levelEl.value;
     const focus = focusEl.value;
+    const startArea = startAreaEl.value;
+
+    const startRule =
+      (startArea !== "auto")
+        ? `STARTOMRÅDE: ${startArea}. Börja i område ${startArea} och håll dig där tills eleven vill byta.\n`
+        : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.\n`;
 
     const goalsBlock =
       `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
-      `NIVÅ: ${level}\nFOKUS: ${focus}\n\n` +
+      `NIVÅ: ${level}\nFOKUS: ${focus}\n` +
+      startRule + "\n" +
       `MÅL/INNEHÅLL ATT BETA AV (bocka av internt):\n${checklistGoalText}\n\n` +
-      `Starta direkt med en första fråga som passar NIVÅ och FOKUS.\n` +
-      `Kom ihåg: kort återkoppling + ny fråga + progress-taggen sist.`;
+      `Starta nu med EN fråga enligt SVARFORMAT.\n`;
 
     return BASE_PROMPT + "\n\n" + goalsBlock;
   }
@@ -360,7 +460,6 @@ FORMATKRAV:
   }
 
   function parseRetrySeconds(errMsg) {
-    // "Please retry in 46.171148446s." -> 46
     const m = String(errMsg).match(/retry in\s+([\d.]+)s/i);
     if (m) return Number(m[1]);
     return null;
@@ -375,11 +474,12 @@ FORMATKRAV:
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
-        accessKey: accessKey,
+        accessKey,
         subject: AI_SUBJECT,
         area: AI_AREA,
-        // valfritt: du kan styra tokens från sida om du vill:
-        // maxOutputTokens: 600,
+        // Motverkar avhuggna frågor:
+        maxOutputTokens: 900,
+        temperature: 0.2,
         prompt: promptText
       })
     });
@@ -399,19 +499,17 @@ FORMATKRAV:
         "";
       const msg = (d?.error || ("HTTP " + r.status)) + (googleMsg ? (": " + googleMsg) : "");
 
-      // quota fail-safe (8)
       if (msg.toLowerCase().includes("quota") || msg.toLowerCase().includes("rate")) {
         const secs = parseRetrySeconds(msg);
         if (secs) startCooldown(secs);
       }
-
       throw new Error(msg);
     }
 
     return d.text;
   }
 
-  // ====== START / SEND / HELPERS ======
+  // ====== ACTIONS ======
   async function startTraining() {
     if (busy) return;
 
@@ -422,9 +520,7 @@ FORMATKRAV:
 
     setBusy(true, "Läser in mål från checklista...");
     checklistGoalText = await loadChecklistGoals();
-    if (!checklistGoalText.includes("kunde inte")) {
-      statusEl.textContent = "✔ Mål laddade från checklista";
-    }
+    if (!checklistGoalText.includes("kunde inte")) statusEl.textContent = "✔ Mål laddade från checklista";
 
     const trainingPrompt = buildTrainingPrompt();
 
@@ -433,25 +529,22 @@ FORMATKRAV:
 
     try {
       const aiRaw = await callAI(trainingPrompt);
-
-      // Progress parsing (5)
       const prog = parseProgressTag(aiRaw);
       const aiText = stripHiddenTags(aiRaw);
 
       conversation =
         `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
-        `NIVÅ: ${levelEl.value}\nFOKUS: ${focusEl.value}\n` +
+        `NIVÅ: ${levelEl.value}\nFOKUS: ${focusEl.value}\nSTARTOMRÅDE: ${startAreaEl.value}\n` +
         `MÅL (internt):\n${checklistGoalText}\n\n` +
         "AI: " + aiRaw;
 
       started = true;
       setBusy(false, "✅ Träning startad");
 
-      replaceThinkingWith(aiText);
+      replaceThinkingWith(aiRaw); // vi skickar raw så renderAiBubble kan hitta Fråga/Återkoppling
       if (prog) setProgressFromMap(prog);
 
     } catch (err) {
-      // Om cooldown startade i callAI låser setBusy ändå, men vi visar feltexten också.
       if (!cooldownTimer) setBusy(false, "⚠️ " + err.message);
       if (thinkingBubble) { thinkingBubble.remove(); thinkingBubble = null; }
     }
@@ -482,15 +575,12 @@ FORMATKRAV:
         "\nAI:";
 
       const aiRaw = await callAI(promptText);
-
-      // Progress parsing (5)
       const prog = parseProgressTag(aiRaw);
-      const aiText = stripHiddenTags(aiRaw);
 
       conversation = clampContext(conversation + "\n\nElev: " + studentText + "\nAI: " + aiRaw);
 
       setBusy(false, "✅");
-      replaceThinkingWith(aiText);
+      replaceThinkingWith(aiRaw);
       if (prog) setProgressFromMap(prog);
 
     } catch (err) {
@@ -499,26 +589,19 @@ FORMATKRAV:
     }
   }
 
-  // (3) Hint-knapp
+  // (3) Ledtråd
   function askHint() {
-    if (!started) {
-      statusEl.textContent = "ℹ️ Starta träningen först.";
-      return;
-    }
+    if (!started) { statusEl.textContent = "ℹ️ Starta träningen först."; return; }
     sendStudentAnswer("Jag vill ha en ledtråd (inte facit). Ställ en följdfråga som hjälper mig vidare.");
   }
 
-  // (1) Ny fråga-knapp
+  // (1) Ny fråga (respektera valt startområde om eleven vill)
   function askNewQuestion() {
-    if (!started) {
-      statusEl.textContent = "ℹ️ Starta träningen först.";
-      return;
-    }
-    sendStudentAnswer("Ge en ny fråga på samma NIVÅ och FOKUS. Ingen förklaring, bara en kort fråga.");
+    if (!started) { statusEl.textContent = "ℹ️ Starta träningen först."; return; }
+    const startArea = startAreaEl.value;
+    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Ge en ny fråga på samma NIVÅ och FOKUS. Ingen förklaring, bara en fråga som slutar med ?." + extra);
   }
-
-  // (10) Guardrail förstärks även via UI: om eleven skriver “off topic”
-  // (workern har också guardrail)
 
   // ====== EVENTS ======
   startBtn.addEventListener("click", startTraining);
@@ -526,10 +609,7 @@ FORMATKRAV:
   hintBtn.addEventListener("click", askHint);
   newQBtn.addEventListener("click", askNewQuestion);
 
-  resetBtn.addEventListener("click", () => {
-    if (busy) return;
-    resetAll();
-  });
+  resetBtn.addEventListener("click", () => { if (!busy) resetAll(); });
 
   // Enter skickar, Shift+Enter ny rad
   inputEl.addEventListener("keydown", (e) => {
