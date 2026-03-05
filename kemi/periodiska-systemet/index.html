@@ -194,19 +194,22 @@ STARTA SÅ HÄR (exakt):
   }
 
   async function loadChecklistGoals() {
-    try {
-      const r = await fetch(CHECKLIST_URL, { cache: "no-store" });
-      if (!r.ok) return "(kunde inte läsa checklista.json)";
-      const data = await r.json();
-
-      const items = extractChecklistTexts(data);
-      if (!items.length) return "(hittade inga mål i checklista.json)";
-
-      // Gör en kort mållista (AI behöver inte hela romaner)
-      return items.map((s) => "- " + s).join("\n");
-    } catch {
-      return "(kunde inte läsa checklista.json)";
+    for (const url of CHECKLIST_URLS) {
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) continue;
+  
+        const data = await r.json();
+        const items = extractChecklistTexts(data);
+        if (!items.length) continue;
+  
+        // Gör en kort mållista (AI behöver inte romaner)
+        return items.slice(0, 60).map((s) => "- " + s).join("\n");
+      } catch {
+        // prova nästa url
+      }
     }
+    return "(kunde inte hitta/öppna checklista.json)";
   }
 
   // ==== GEMINI CALL VIA WORKER ====
