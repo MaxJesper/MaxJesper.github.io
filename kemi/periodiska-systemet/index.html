@@ -278,7 +278,9 @@ STARTA SÅ HÄR (exakt):
 
     // Ladda checklistan (en gång per start/reset)
     checklistGoalText = await loadChecklistGoals();
-
+      if (!checklistGoalText.includes("kunde inte")) {
+        statusEl.textContent = "✔ Mål laddade från checklista";
+      }
     const trainingPrompt = buildTrainingPrompt();
 
     setBusy(true, "🤖 AI tänker...");
