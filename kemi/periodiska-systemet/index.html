@@ -432,10 +432,15 @@ PROGRESS-TAGG (alltid sist på egen rad):
     const focus = focusEl.value;
     const startArea = startAreaEl.value;
 
+    const startArea = startAreaEl.value;
+    
     const startRule =
       (startArea !== "auto")
-        ? `STARTOMRÅDE: ${startArea}. Börja i område ${startArea} och håll dig där tills eleven vill byta.\n`
-        : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.\n`;
+        ? `STARTOMRÅDE: ${startArea} (MÅSTE).
+    Du MÅSTE börja i område ${startArea} och stanna där tills eleven säger att den vill byta område.
+    Område ${startArea} betyder: ${AREA_GUIDE[startArea]}
+    DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område ${startArea}.`
+        : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.`;
 
     const goalsBlock =
       `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
