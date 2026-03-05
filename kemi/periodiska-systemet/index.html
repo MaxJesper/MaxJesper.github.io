@@ -254,7 +254,11 @@ STARTA SÅ HÄR (exakt):
   function clampContext(s) {
     if (!s) return "";
     if (s.length <= MAX_CONTEXT_CHARS) return s;
-    return s.slice(s.length - MAX_CONTEXT_CHARS);
+  
+    // Behåll början (där målen står) + slutet (senaste dialogen)
+    const head = s.slice(0, 1200);
+    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1200));
+    return head + "\n...\n" + tail;
   }
 
   function buildTrainingPrompt() {
