@@ -2,88 +2,149 @@
 <html lang="sv">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bildstöd – Periodiska systemet</title>
   <link rel="stylesheet" href="/periodiska-systemet/style.css" />
   <style>
-    .toolbar {
+    :root {
+      --violett: #7a3db8;
+      --kortbredd: 3.5cm;
+      --bildstorlek: 3cm;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .verktygsrad {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
       align-items: center;
-      margin: 1rem 0 1.5rem;
+      margin: 1rem 0 1.25rem;
     }
 
-    .toolbar label {
-      font-weight: 600;
-    }
-
-    .toolbar select {
-      padding: 0.5rem 0.75rem;
+    .verktygsrad input {
+      padding: 0.55rem 0.75rem;
       font: inherit;
+      border: 1px solid #bbb;
       border-radius: 10px;
-      border: 1px solid #ccc;
-      background: #fff;
+      min-width: 10rem;
+    }
+
+    .verktygsrad button {
+      padding: 0.55rem 0.9rem;
+      font: inherit;
+      border: 1px solid #bbb;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .info {
+      color: #444;
+      margin-bottom: 1rem;
     }
 
     .bildgrid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(var(--kortbredd), 1fr));
+      gap: 0.6cm;
+      align-items: start;
     }
 
     .bildkort {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      width: var(--kortbredd);
+      min-height: 5.5cm;
+      border: 3px solid var(--violett);
+      border-radius: 12px;
+      padding: 0.2cm 0.15cm 0.15cm;
+      box-sizing: border-box;
       text-align: center;
+      background: white;
+      page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .bildkort img {
-      width: 120px;
-      height: 120px;
-      object-fit: contain;
-      margin: 0 auto 0.75rem;
+      width: var(--bildstorlek);
+      height: var(--bildstorlek);
       display: block;
+      margin: 0 auto 0.15cm;
+      object-fit: contain;
     }
 
-    .svenska {
+    .ord-sv {
       font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .andra-spraket {
-      color: #444;
       font-size: 0.95rem;
-      min-height: 1.2em;
+      line-height: 1.2;
+      margin-top: 0.1cm;
     }
 
-    .saknas {
-      opacity: 0.7;
-      font-style: italic;
+    .ord-andra {
+      font-size: 0.9rem;
+      line-height: 1.2;
+      margin-top: 0.12cm;
+      color: #333;
+      min-height: 1.1em;
+    }
+
+    .utan-andra .ord-andra {
+      display: none;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+
+      .verktygsrad,
+      .info,
+      .tillbaka {
+        display: none;
+      }
+
+      .container {
+        max-width: none;
+        padding: 0;
+      }
+
+      .bildgrid {
+        grid-template-columns: repeat(5, 3.5cm);
+        gap: 0.45cm;
+        justify-content: start;
+      }
+
+      .bildkort {
+        width: 3.5cm;
+      }
     }
   </style>
 </head>
 <body>
   <main class="container">
-    <p><a href="/periodiska-systemet/index.html">← Tillbaka</a></p>
+    <p class="tillbaka"><a href="/periodiska-systemet/index.html">← Tillbaka</a></p>
     <h1>Bildstöd</h1>
-    <p>Här visas svenska ord tillsammans med valt språk.</p>
 
-    <div class="toolbar">
-      <label for="sprakVal">Välj språk:</label>
-      <select id="sprakVal">
-        <option value="en">Engelska</option>
-        <option value="ar">Arabiska</option>
-        <option value="fa">Persiska</option>
-        <option value="prs">Dari</option>
-        <option value="so">Somaliska</option>
-        <option value="uk">Ukrainska</option>
-      </select>
+    <div class="verktygsrad">
+      <label for="sprakkod">Språk (t.ex. en, ar, fa, so, uk):</label>
+      <input id="sprakkod" type="text" placeholder="Lämna tomt för bara svenska" />
+      <button id="uppdateraBtn" type="button">Uppdatera språk</button>
+      <button id="skrivUtBtn" type="button">Skriv ut</button>
     </div>
+
+    <p class="info">
+      Tom ruta visar bara svenska. Skriver du t.ex. <strong>en</strong> hämtas översättningarna från
+      <code>/periodiska-systemet/sprak/en.json</code>.
+    </p>
 
     <section id="bildgrid" class="bildgrid"></section>
   </main>
