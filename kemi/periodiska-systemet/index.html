@@ -1,1 +1,140 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Periodiska systemet – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
 
+  <style>
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li {
+      margin-bottom: 0.45rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Periodiska systemet</h1>
+    <p>Jesper Tordsson</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <section class="page-intro">
+      <p>
+        Här hittar du material för att träna på periodiska systemet, atomens byggnad,
+        joner och kemisk bindning.
+      </p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>För elever</h2>
+        <p>Material för att träna inför prov och bygga förståelse.</p>
+        <ul>
+          <li><a href="./checklista.html">Checklista</a></li>
+          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+          <li><a href="./ovningsprov.html">Övningsprov</a></li>
+          <li><a href="./trana-med-ai.html">Träna med AI</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <h2>För lektioner / läraren</h2>
+        <p>Övrigt material som kan användas i undervisningen.</p>
+        <ul>
+          <li><a href="./facit.html">Facit till övningsprovet</a></li>
+          <li><a href="./korsord.html">Korsord periodiska systemet</a></li>
+          <li><a href="./memory.html">Memoryspel periodiska systemet</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Inläsningstips</summary>
+        <ul>
+          <li>Börja med att läsa rubrikerna och titta på bilderna för att få en överblick.</li>
+          <li>Träna först på de viktigaste begreppen: atom, jon, elektronskal, valenselektron och bindning.</li>
+          <li>Jämför begrepp som liknar varandra, till exempel atom och jon.</li>
+          <li>Säg gärna svaren högt med egna ord. Då märker du bättre vad du kan och vad du behöver träna mer på.</li>
+          <li>Dela upp pluggandet i kortare pass i stället för att försöka göra allt på en gång.</li>
+        </ul>
+      </details>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="../kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
