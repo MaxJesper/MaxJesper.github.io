@@ -1,1 +1,655 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Träna med AI – Periodiska systemet – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css">
 
+  <style>
+    #ai-output {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .chat-bubble {
+      max-width: 78%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      font-size: 15px;
+    }
+
+    .ai-bubble {
+      background: #e9eef6;
+      color: #0b3d91;
+      align-self: flex-start;
+      border: 1px solid #c9d8f2;
+    }
+
+    .student-bubble {
+      background: #cfe3ff;
+      color: #0b1d3a;
+      align-self: flex-end;
+      border: 1px solid #b7d1ff;
+    }
+
+    #ai-input {
+      width: 100%;
+      height: 120px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+
+    #ai-input:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 4px rgba(74, 144, 226, 0.35);
+    }
+
+    .ai-intro {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      background: #f8f9fb;
+    }
+
+    .ai-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="kemi-header">
+  <h1>Träna med AI – Periodiska systemet</h1>
+  <p>Jesper Tordsson</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <section class="ai-intro">
+    <p>
+      Här kan du träna på området med en AI-lärare som ställer frågor, ger kort återkoppling
+      och hjälper dig vidare steg för steg.
+    </p>
+    <p>
+      Börja med att välja nivå, fokus och eventuellt startområde. Klicka sedan på
+      <strong>Starta träning</strong>.
+    </p>
+  </section>
+
+  <div class="ai-controls">
+    <label>
+      Nivå:
+      <select id="ai-level">
+        <option value="1">1 (lätt)</option>
+        <option value="2" selected>2 (medel)</option>
+        <option value="3">3 (prov)</option>
+      </select>
+    </label>
+
+    <label>
+      Fokus:
+      <select id="ai-focus">
+        <option value="begrepp">Begrepp</option>
+        <option value="resonemang">Resonemang</option>
+        <option value="blandat" selected>Blandat</option>
+      </select>
+    </label>
+
+    <label>
+      Startområde:
+      <select id="ai-start-area">
+        <option value="auto" selected>Auto</option>
+        <option value="A">A: Atomens byggnad</option>
+        <option value="B">B: Elektronskal/valens</option>
+        <option value="C">C: Period/grupp/metaller</option>
+        <option value="D">D: Familjer (1/17/18)</option>
+        <option value="E">E: Joner</option>
+        <option value="F">F: Bindningar</option>
+        <option value="G">G: Saltvatten & ström</option>
+      </select>
+    </label>
+  </div>
+
+  <p>
+    <button id="ai-train-btn" class="subject-btn" type="button">🤖 Starta träning</button>
+    <button id="ai-hint-btn" class="subject-btn" type="button">💡 Ledtråd</button>
+    <button id="ai-newq-btn" class="subject-btn" type="button">🎲 Ny fråga</button>
+    <button id="ai-reset-btn" class="subject-btn" type="button">🔄 Reset</button>
+  </p>
+
+  <p id="ai-status"></p>
+
+  <div id="ai-progress" style="margin:8px 0; padding:8px; border:1px solid #ddd; border-radius:8px;">
+    <div style="font-weight:600; margin-bottom:6px;">Progress (A–G)</div>
+    <div id="prog-items" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
+    <div style="font-size:0.9em; opacity:0.75; margin-top:6px;">
+      Du kan välja startområde, till exempel Joner.
+    </div>
+  </div>
+
+  <div id="ai-chat" style="margin-top:10px;">
+    <div id="ai-output" style="border:1px solid #ccc; padding:10px; min-height:140px; overflow-y:auto; border-radius:10px; background:#f8f8f8;"></div>
+
+    <textarea id="ai-input" placeholder="Skriv ditt svar..."></textarea>
+    <button id="ai-send" type="button">Skicka</button>
+
+    <p style="margin:6px 0 0 0; font-size:0.9em; opacity:0.8;">
+      Enter = skicka · Shift+Enter = ny rad
+    </p>
+  </div>
+
+  <p style="margin-top:12px;">
+    <a href="./index.html" class="subject-btn">← Tillbaka till Periodiska systemet</a>
+  </p>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
+  const CHECKLIST_URLS = ["./data/checklista.json", "./checklista.json", "../data/checklista.json"];
+  const MAX_CONTEXT_CHARS = 4200;
+
+  const AI_SUBJECT = "Kemi";
+  const AI_AREA = "Periodiska systemet";
+
+  const AREA_GUIDE = {
+    A: "Atomens byggnad: proton/neutron/elektron, laddning, atomnummer, neutral atom.",
+    B: "Elektronskal/valens: K=2 L=8 M=8 (första 20), valenselektroner, period/grupp.",
+    C: "Periodiska systemet: period vs grupp, metaller/icke-metaller, egenskaper.",
+    D: "Familjer: alkalimetaller (1), halogener (17), ädelgaser (18) + egenskaper/användning.",
+    E: "Joner: hur + och – joner bildas, elektronavgivning/upptag, varför, exempel (Na+, Cl−).",
+    F: "Bindningar: jonbindning/molekylbindning/metallbindning (enkel nivå) + exempel.",
+    G: "Saltvatten leder ström: joner i lösning och laddningstransport."
+  };
+
+  const BASE_PROMPT = `
+DU ÄR: En effektiv NO-lärare i svensk skola.
+
+VIKTIGA REGLER:
+- Svara på svenska.
+- Inget småprat/utfyllnad.
+- Ställ alltid en fråga först.
+- Efter elevens svar: ge 1 kort mening återkoppling och ställ direkt nästa fråga.
+- Frågan måste alltid vara en HEL mening som slutar med ? (ingen avhuggen fråga).
+- Ge inte facit direkt: använd ledtråd + följdfråga.
+- Om eleven skriver "fortsätt/ok/ja/kör": ställ nästa fråga direkt.
+- Om eleven frågar om något som inte hör till NO-ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant fråga inom området.
+
+SVARFORMAT (följ alltid):
+Fråga: <en komplett fråga som slutar med ?>
+
+(efter elevsvar)
+Återkoppling: <1 kort mening>
+Fråga: <nästa kompletta fråga som slutar med ?>
+
+PROGRESS-TAGG (alltid sist på egen rad):
+[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1.
+`.trim();
+
+  const statusEl = document.getElementById("ai-status");
+  const outputEl = document.getElementById("ai-output");
+  const inputEl  = document.getElementById("ai-input");
+  const sendBtn  = document.getElementById("ai-send");
+  const startBtn = document.getElementById("ai-train-btn");
+  const resetBtn = document.getElementById("ai-reset-btn");
+  const hintBtn  = document.getElementById("ai-hint-btn");
+  const newQBtn  = document.getElementById("ai-newq-btn");
+  const levelEl     = document.getElementById("ai-level");
+  const focusEl     = document.getElementById("ai-focus");
+  const startAreaEl = document.getElementById("ai-start-area");
+
+  const progWrap = document.getElementById("prog-items");
+  const PROG_LABELS = {
+    A: "Atomens byggnad",
+    B: "Elektronskal/valens",
+    C: "Period/grupp/metall",
+    D: "Familjer (1/17/18)",
+    E: "Joner",
+    F: "Bindningar",
+    G: "Saltvatten & ström",
+  };
+
+  let conversation = "";
+  let started = false;
+  let busy = false;
+  let checklistGoalText = "";
+  let thinkingBubble = null;
+
+  let cooldownTimer = null;
+  let cooldownLeft = 0;
+
+  function setBusy(on, msg) {
+    busy = on;
+    startBtn.disabled = on;
+    sendBtn.disabled = on;
+    inputEl.disabled = on;
+    resetBtn.disabled = on;
+    hintBtn.disabled = on;
+    newQBtn.disabled = on;
+    levelEl.disabled = on;
+    focusEl.disabled = on;
+    startAreaEl.disabled = on;
+    if (msg !== undefined) statusEl.textContent = msg;
+  }
+
+  function initProgressUI() {
+    progWrap.innerHTML = "";
+    for (const key of Object.keys(PROG_LABELS)) {
+      const chip = document.createElement("div");
+      chip.id = "prog-" + key;
+      chip.style.padding = "4px 8px";
+      chip.style.border = "1px solid #ccc";
+      chip.style.borderRadius = "999px";
+      chip.style.fontSize = "0.9em";
+      chip.style.opacity = "0.9";
+      chip.textContent = `⏳ ${key}: ${PROG_LABELS[key]}`;
+      progWrap.appendChild(chip);
+    }
+  }
+
+  function setProgressFromMap(map) {
+    for (const key of Object.keys(PROG_LABELS)) {
+      const chip = document.getElementById("prog-" + key);
+      if (!chip) continue;
+      const done = map[key] === 1;
+      chip.textContent = `${done ? "✅" : "⏳"} ${key}: ${PROG_LABELS[key]}`;
+      chip.style.borderColor = done ? "#6aa84f" : "#ccc";
+      chip.style.opacity = done ? "1" : "0.9";
+    }
+  }
+
+  function parseProgressTag(text) {
+    const m = text.match(/\[\[PROGRESS:([^\]]+)\]\]/);
+    if (!m) return null;
+    const pairs = m[1].split(",").map(s => s.trim());
+    const map = {};
+    for (const p of pairs) {
+      const mm = p.match(/^([A-G])\s*=\s*([01])$/);
+      if (mm) map[mm[1]] = Number(mm[2]);
+    }
+    return Object.keys(map).length ? map : null;
+  }
+
+  function stripHiddenTags(text) {
+    return text.replace(/\n?\[\[PROGRESS:[^\]]+\]\]\s*$/m, "").trim();
+  }
+
+  function renderAiBubble(bubble, rawText) {
+    const text = stripHiddenTags(rawText);
+    const lines = text.split("\n").map(s => s.trim()).filter(Boolean);
+    const qLines = lines.filter(l => /^Fråga:/i.test(l)).map(l => l.replace(/^Fråga:\s*/i, "").trim());
+    const fbLines = lines.filter(l => /^Återkoppling:/i.test(l)).map(l => l.replace(/^Återkoppling:\s*/i, "").trim());
+
+    bubble.innerHTML = "";
+
+    if (!qLines.length && !fbLines.length) {
+      bubble.textContent = text;
+      return;
+    }
+
+    if (qLines.length) {
+      const row = document.createElement("div");
+      const b = document.createElement("b");
+      b.textContent = "Fråga: ";
+      row.appendChild(b);
+      const span = document.createElement("span");
+      span.style.fontWeight = "700";
+      span.textContent = qLines[qLines.length - 1];
+      row.appendChild(span);
+      bubble.appendChild(row);
+    }
+
+    if (fbLines.length) {
+      const row = document.createElement("div");
+      row.style.marginTop = qLines.length ? "8px" : "0";
+      const b = document.createElement("b");
+      b.textContent = "Återkoppling: ";
+      row.appendChild(b);
+      row.appendChild(document.createTextNode(fbLines[fbLines.length - 1]));
+      bubble.appendChild(row);
+    }
+  }
+
+  function appendBubble(text, type) {
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble", type === "ai" ? "ai-bubble" : "student-bubble");
+    if (type === "ai") renderAiBubble(bubble, text);
+    else bubble.textContent = text;
+    outputEl.appendChild(bubble);
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+
+  function showThinking() {
+    if (thinkingBubble) thinkingBubble.remove();
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble", "ai-bubble");
+    bubble.textContent = "AI tänker…";
+    outputEl.appendChild(bubble);
+    outputEl.scrollTop = outputEl.scrollHeight;
+    thinkingBubble = bubble;
+  }
+
+  function replaceThinkingWith(text) {
+    if (thinkingBubble) {
+      thinkingBubble.innerHTML = "";
+      renderAiBubble(thinkingBubble, text);
+      thinkingBubble = null;
+    } else {
+      appendBubble(text, "ai");
+    }
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+
+  function getAccessKey() {
+    let k = sessionStorage.getItem("APP_ACCESS_KEY");
+    if (!k) {
+      k = prompt("Skriv klasskoden för AI:");
+      if (k) sessionStorage.setItem("APP_ACCESS_KEY", k);
+    }
+    return k || "";
+  }
+
+  function resetAll() {
+    conversation = "";
+    started = false;
+    outputEl.innerHTML = "";
+    statusEl.textContent = "";
+    inputEl.value = "";
+    thinkingBubble = null;
+    sessionStorage.removeItem("APP_ACCESS_KEY");
+    initProgressUI();
+    inputEl.focus();
+    stopCooldown();
+  }
+
+  function extractChecklistTexts(json) {
+    const out = [];
+    const pushIfText = (v) => {
+      if (!v) return;
+      if (typeof v === "string") {
+        const s = v.trim();
+        if (s) out.push(s);
+      }
+    };
+    const walk = (node) => {
+      if (!node) return;
+      if (Array.isArray(node)) return node.forEach(walk);
+      if (typeof node === "string") return pushIfText(node);
+      if (typeof node === "object") {
+        pushIfText(node.text);
+        pushIfText(node.title);
+        pushIfText(node.label);
+        pushIfText(node.question);
+        walk(node.items);
+        walk(node.sections);
+        walk(node.groups);
+        walk(node.checklist);
+        walk(node.data);
+        walk(node.children);
+      }
+    };
+    walk(json);
+    return [...new Set(out)].slice(0, 70);
+  }
+
+  async function loadChecklistGoals() {
+    for (const url of CHECKLIST_URLS) {
+      try {
+        const r = await fetch(url, { cache: "no-store" });
+        if (!r.ok) continue;
+        const data = await r.json();
+        const items = extractChecklistTexts(data);
+        if (!items.length) continue;
+        return items.slice(0, 70).map((s) => "- " + s).join("\n");
+      } catch {}
+    }
+    return "(kunde inte hitta/öppna checklista.json)";
+  }
+
+  function clampContext(s) {
+    if (!s) return "";
+    if (s.length <= MAX_CONTEXT_CHARS) return s;
+    const head = s.slice(0, 1500);
+    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1500));
+    return head + "\n...\n" + tail;
+  }
+
+  function buildTrainingPrompt() {
+    const level = levelEl.value;
+    const focus = focusEl.value;
+    const startArea = startAreaEl.value;
+
+    const hardStart =
+      (startArea !== "auto")
+        ? `STARTOMRÅDE: ${startArea} (MÅSTE).
+Du MÅSTE börja i område ${startArea} och stanna där tills eleven säger att den vill byta område.
+Område ${startArea} betyder: ${AREA_GUIDE[startArea]}
+DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område ${startArea}.`
+        : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.`;
+
+    const goalsBlock =
+      `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
+      `NIVÅ: ${level}\nFOKUS: ${focus}\n\n` +
+      `MÅL/INNEHÅLL ATT BETA AV (bocka av internt):\n${checklistGoalText}\n\n` +
+      hardStart + "\n\n" +
+      `Starta nu med EN fråga enligt SVARFORMAT.\n`;
+
+    return BASE_PROMPT + "\n\n" + goalsBlock;
+  }
+
+  function startCooldown(seconds) {
+    stopCooldown();
+    cooldownLeft = Math.max(1, Math.ceil(seconds));
+    setBusy(true, `⏳ AI-gräns nådd. Försök igen om ${cooldownLeft}s`);
+    cooldownTimer = setInterval(() => {
+      cooldownLeft -= 1;
+      if (cooldownLeft <= 0) {
+        stopCooldown();
+        setBusy(false, "✅ Du kan prova igen.");
+        return;
+      }
+      statusEl.textContent = `⏳ AI-gräns nådd. Försök igen om ${cooldownLeft}s`;
+    }, 1000);
+  }
+
+  function stopCooldown() {
+    if (cooldownTimer) clearInterval(cooldownTimer);
+    cooldownTimer = null;
+    cooldownLeft = 0;
+  }
+
+  function parseRetrySeconds(errMsg) {
+    const m = String(errMsg).match(/retry in\s+([\d.]+)s/i);
+    if (m) return Number(m[1]);
+    return null;
+  }
+
+  async function callAI(promptText) {
+    const accessKey = getAccessKey();
+    if (!accessKey) throw new Error("Ingen klasskod angiven.");
+
+    const r = await fetch(workerUrl, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        accessKey,
+        subject: AI_SUBJECT,
+        area: AI_AREA,
+        maxOutputTokens: 900,
+        temperature: 0.2,
+        prompt: promptText
+      })
+    });
+
+    const d = await r.json();
+
+    if (d?.error === "Unauthorized" || r.status === 403) {
+      sessionStorage.removeItem("APP_ACCESS_KEY");
+      throw new Error("Fel klasskod. Försök igen.");
+    }
+
+    if (!r.ok || !d.ok) {
+      const googleMsg =
+        d?.details?.error?.message ||
+        d?.details?.error ||
+        d?.details?.message ||
+        "";
+      const msg = (d?.error || ("HTTP " + r.status)) + (googleMsg ? (": " + googleMsg) : "");
+
+      if (msg.toLowerCase().includes("quota") || msg.toLowerCase().includes("rate")) {
+        const secs = parseRetrySeconds(msg);
+        if (secs) startCooldown(secs);
+      }
+      throw new Error(msg);
+    }
+
+    return d.text;
+  }
+
+  async function startTraining() {
+    if (busy) return;
+
+    initProgressUI();
+    outputEl.innerHTML = "";
+    inputEl.value = "";
+    inputEl.focus();
+
+    setBusy(true, "Läser in mål från checklista...");
+    checklistGoalText = await loadChecklistGoals();
+    if (!checklistGoalText.includes("kunde inte")) statusEl.textContent = "✔ Mål laddade från checklista";
+
+    const trainingPrompt = buildTrainingPrompt();
+
+    setBusy(true, "🤖 AI tänker...");
+    showThinking();
+
+    try {
+      const aiRaw = await callAI(trainingPrompt);
+      const prog = parseProgressTag(aiRaw);
+
+      conversation =
+        `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
+        `NIVÅ: ${levelEl.value}\nFOKUS: ${focusEl.value}\nSTARTOMRÅDE: ${startAreaEl.value}\n` +
+        `MÅL (internt):\n${checklistGoalText}\n\n` +
+        "AI: " + aiRaw;
+
+      started = true;
+      setBusy(false, "✅ Träning startad");
+
+      replaceThinkingWith(aiRaw);
+      if (prog) setProgressFromMap(prog);
+
+    } catch (err) {
+      if (!cooldownTimer) setBusy(false, "⚠️ " + err.message);
+      if (thinkingBubble) {
+        thinkingBubble.remove();
+        thinkingBubble = null;
+      }
+    }
+  }
+
+  async function sendStudentAnswer(customText) {
+    if (busy) return;
+
+    const studentText = (customText ?? (inputEl.value || "")).trim();
+    if (!studentText) return;
+
+    if (!started) {
+      statusEl.textContent = "ℹ️ Klicka först på “🤖 Starta träning”.";
+      return;
+    }
+
+    inputEl.value = "";
+    inputEl.focus();
+
+    appendBubble(studentText, "student");
+    setBusy(true, "🤖 AI tänker...");
+    showThinking();
+
+    try {
+      const promptText =
+        clampContext(conversation) +
+        "\n\nElev: " + studentText +
+        "\nAI:";
+
+      const aiRaw = await callAI(promptText);
+      const prog = parseProgressTag(aiRaw);
+
+      conversation = clampContext(conversation + "\n\nElev: " + studentText + "\nAI: " + aiRaw);
+
+      setBusy(false, "✅");
+      replaceThinkingWith(aiRaw);
+      if (prog) setProgressFromMap(prog);
+
+    } catch (err) {
+      if (!cooldownTimer) setBusy(false, "⚠️ " + err.message);
+      if (thinkingBubble) {
+        thinkingBubble.remove();
+        thinkingBubble = null;
+      }
+    }
+  }
+
+  function askHint() {
+    if (!started) {
+      statusEl.textContent = "ℹ️ Starta träningen först.";
+      return;
+    }
+    const startArea = startAreaEl.value;
+    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Jag vill ha en ledtråd (inte facit). Ställ en följdfråga som hjälper mig vidare." + extra);
+  }
+
+  function askNewQuestion() {
+    if (!started) {
+      statusEl.textContent = "ℹ️ Starta träningen först.";
+      return;
+    }
+    const startArea = startAreaEl.value;
+    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Ge en ny fråga på samma NIVÅ och FOKUS. Ingen förklaring, bara en fråga som slutar med ?." + extra);
+  }
+
+  startBtn.addEventListener("click", startTraining);
+  sendBtn.addEventListener("click", () => sendStudentAnswer());
+  hintBtn.addEventListener("click", askHint);
+  newQBtn.addEventListener("click", askNewQuestion);
+  resetBtn.addEventListener("click", () => {
+    if (!busy) resetAll();
+  });
+
+  inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendStudentAnswer();
+    }
+  });
+
+  window.addEventListener("load", () => {
+    initProgressUI();
+    inputEl.focus();
+  });
+
+  inputEl.addEventListener("click", () => inputEl.focus());
+</script>
+
+</body>
+</html>
