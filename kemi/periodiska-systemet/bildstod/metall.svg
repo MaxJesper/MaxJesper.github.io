@@ -1,6 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f7fa"/>
+      <stop offset="18%" stop-color="#bfc7cf"/>
+      <stop offset="38%" stop-color="#eef2f6"/>
+      <stop offset="58%" stop-color="#98a3ad"/>
+      <stop offset="78%" stop-color="#dfe5ea"/>
+      <stop offset="100%" stop-color="#7f8b96"/>
+    </linearGradient>
+  </defs>
+
   <rect x="3" y="3" width="94" height="94" rx="10" fill="#fff" stroke="#7a3db8" stroke-width="4"/>
-  <rect x="24" y="28" width="52" height="34" rx="4" fill="#cfd8dc" stroke="#555" stroke-width="3"/>
-  <path d="M28 32 L72 58" stroke="#fff" stroke-width="3" opacity="0.8"/>
-  <rect x="38" y="62" width="24" height="10" rx="3" fill="#9aa4aa" stroke="#555" stroke-width="2"/>
+  <ellipse cx="50" cy="77" rx="23" ry="7" fill="#d8d8d8" opacity="0.55"/>
+  <rect x="24" y="30" width="52" height="30" rx="4" fill="url(#metalGrad)" stroke="#555" stroke-width="2.5"/>
+  <path d="M28 34 L72 34" stroke="#fff" stroke-width="2" opacity="0.8"/>
+  <path d="M28 42 L72 42" stroke="#cfd6dc" stroke-width="2" opacity="0.8"/>
+  <path d="M28 50 L72 50" stroke="#ffffff" stroke-width="1.8" opacity="0.55"/>
+  <rect x="39" y="60" width="22" height="8" rx="2.5" fill="#8f9aa3" stroke="#555" stroke-width="2"/>
 </svg>
