@@ -11,53 +11,51 @@ const skrivUtKnapp = document.getElementById("skriv-ut-knapp");
 
 let bildposter = [];
 let aktivSprakkod = "";
-let aktivOversattning = {};
+let aktivSprakdata = null;
+let aktivTerms = {};
 
 init();
 
 async function init() {
   kopplaHandelser();
   await laddaBildposter();
-  await renderaBildstod();
+  renderaBildstod();
 }
 
 function kopplaHandelser() {
-  uppdateraKnapp.addEventListener("click", async () => {
-    await uppdateraSprakFranInput();
-  });
+  uppdateraKnapp.addEventListener("click", uppdateraSprakFranInput);
 
-  rensaKnapp.addEventListener("click", async () => {
+  rensaKnapp.addEventListener("click", () => {
     sprakkodInput.value = "";
     aktivSprakkod = "";
-    aktivOversattning = {};
-    await renderaBildstod();
+    aktivSprakdata = null;
+    aktivTerms = {};
+    visaStatus("Visar bara svenska ord.");
+    renderaBildstod();
   });
 
   skrivUtKnapp.addEventListener("click", () => {
     window.print();
   });
 
-  sprakkodInput.addEventListener("keydown", async (event) => {
+  sprakkodInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      await uppdateraSprakFranInput();
+      uppdateraSprakFranInput();
     }
   });
 }
 
 async function laddaBildposter() {
-  visaStatus("Laddar bildstöd ...");
-
   try {
+    visaStatus("Laddar bildstöd ...");
     const data = await hamtaJson(BILDSTOD_JSON);
 
     if (!Array.isArray(data)) {
-      throw new Error("bildstod.json måste innehålla en lista.");
+      throw new Error("bildstod.json måste innehålla en array.");
     }
 
-    bildposter = data.filter((post) => {
-      return post && post.sv && post.bild;
-    });
+    bildposter = data.filter((post) => post && post.sv && post.bild);
 
     if (bildposter.length === 0) {
       visaFel("Inga bildposter hittades i bildstod.json.");
@@ -66,61 +64,70 @@ async function laddaBildposter() {
 
     visaStatus(`${bildposter.length} bildkort laddade.`);
   } catch (error) {
-    console.error(error);
+    console.error("Fel vid laddning av bildstod.json:", error);
     visaFel(`Det gick inte att ladda ${BILDSTOD_JSON}.`);
   }
 }
 
 async function uppdateraSprakFranInput() {
-  const kod = normaliseraSprakkod(sprakkodInput.value);
+  const inmatning = String(sprakkodInput.value || "").trim();
+  const kod = tolkaSprakKod(inmatning);
 
   aktivSprakkod = kod;
-  aktivOversattning = {};
+  aktivSprakdata = null;
+  aktivTerms = {};
 
   if (!kod) {
     visaStatus("Visar bara svenska ord.");
-    await renderaBildstod();
+    renderaBildstod();
     return;
   }
 
-  visaStatus(`Laddar språk: ${kod} ...`);
+  const sprakUrl = `${SPRAK_MAPP}/${kod}.json`;
 
   try {
-    aktivOversattning = await hamtaJson(`${SPRAK_MAPP}/${kod}.json`);
-    visaStatus(`Visar svenska + ${kod}.`);
+    visaStatus(`Laddar språkfil: ${sprakUrl} ...`);
+    const data = await hamtaJson(sprakUrl);
+
+    console.log("Språkfil laddad:", sprakUrl, data);
+
+    aktivSprakdata = data;
+    aktivTerms = data && typeof data === "object" && data.terms ? data.terms : {};
+
+    const antalTermer = Object.keys(aktivTerms).length;
+    const sprakNamn =
+      data.language_name_sv ||
+      data.language_name_native ||
+      kod;
+
+    visaStatus(`Språk laddat: ${sprakNamn}. Hittade ${antalTermer} termer.`);
   } catch (error) {
-    console.warn(error);
-    aktivOversattning = {};
-    visaStatus(`Kunde inte ladda språkfilen för "${kod}". Visar bara svenska.`);
+    console.error(`Fel vid laddning av ${sprakUrl}:`, error);
+    visaFel(`Kunde inte ladda ${sprakUrl}. Visar bara svenska.`);
+    aktivSprakdata = null;
+    aktivTerms = {};
   }
 
-  await renderaBildstod();
+  renderaBildstod();
 }
 
-async function renderaBildstod() {
+function renderaBildstod() {
   if (!Array.isArray(bildposter) || bildposter.length === 0) {
     bildgrid.innerHTML = `<div class="tomt-resultat">Inga bildkort att visa.</div>`;
     return;
   }
 
-  const html = bildposter.map(skapaKortHtml).join("");
-  bildgrid.innerHTML = html;
+  bildgrid.innerHTML = bildposter.map(skapaKortHtml).join("");
 }
 
 function skapaKortHtml(post) {
   const svenska = String(post.sv || "").trim();
   const bild = String(post.bild || "").trim();
-  const nyckel = hamtaNycklar(post);
-  const oversattning = hamtaOversattning(nyckel);
-  const harOversattning = aktivSprakkod && oversattning;
-
-  const klasser = ["bildkort"];
-  if (!harOversattning) {
-    klasser.push("utan-oversattning");
-  }
+  const oversattning = hamtaOversattning(post);
+  const harOversattning = Boolean(aktivSprakkod && oversattning);
 
   return `
-    <article class="${klasser.join(" ")}">
+    <article class="bildkort ${harOversattning ? "" : "utan-oversattning"}">
       <div class="bildruta">
         <img
           src="${BILD_MAPP}/${escapeHtml(bild)}"
@@ -134,37 +141,80 @@ function skapaKortHtml(post) {
   `;
 }
 
-function hamtaNycklar(post) {
-  const nycklar = [];
-
-  if (post.key) nycklar.push(String(post.key));
-  if (post.id) nycklar.push(String(post.id));
-  if (post.slug) nycklar.push(String(post.slug));
-  if (post.sv) nycklar.push(slugga(post.sv));
-  if (post.alternativaNycklar && Array.isArray(post.alternativaNycklar)) {
-    post.alternativaNycklar.forEach((nyckel) => nycklar.push(String(nyckel)));
+function hamtaOversattning(post) {
+  if (!aktivSprakkod || !aktivTerms || typeof aktivTerms !== "object") {
+    return "";
   }
 
-  return nycklar.filter(Boolean);
-}
+  if (Array.isArray(post.parts) && post.parts.length > 0) {
+    const delar = post.parts
+      .map((key) => hamtaTermForKey(key))
+      .filter(Boolean);
 
-function hamtaOversattning(nycklar) {
-  if (!aktivSprakkod || !aktivOversattning) return "";
+    return delar.join(" / ");
+  }
 
-  for (const nyckel of nycklar) {
-    if (Object.prototype.hasOwnProperty.call(aktivOversattning, nyckel)) {
-      return String(aktivOversattning[nyckel] || "").trim();
-    }
+  const kandidater = [];
+
+  if (post.key) kandidater.push(String(post.key));
+  if (post.sv) kandidater.push(slugga(post.sv));
+  if (post.sv) kandidater.push(String(post.sv).trim());
+  if (post.alternativaNycklar && Array.isArray(post.alternativaNycklar)) {
+    kandidater.push(...post.alternativaNycklar.map(String));
+  }
+
+  for (const kandidat of kandidater) {
+    const term = hamtaTermForKey(kandidat);
+    if (term) return term;
   }
 
   return "";
 }
 
-function normaliseraSprakkod(varde) {
-  return String(varde || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z]/g, "");
+function hamtaTermForKey(key) {
+  if (!key || !aktivTerms[key]) return "";
+
+  const post = aktivTerms[key];
+
+  if (typeof post === "string") {
+    return post.trim();
+  }
+
+  if (post && typeof post === "object") {
+    if (typeof post.term === "string") return post.term.trim();
+    if (typeof post.word === "string") return post.word.trim();
+    if (typeof post.text === "string") return post.text.trim();
+    if (typeof post.value === "string") return post.value.trim();
+  }
+
+  return "";
+}
+
+function tolkaSprakKod(text) {
+  const normaliserad = String(text || "").trim().toLowerCase();
+
+  const karta = {
+    en: "en",
+    engelska: "en",
+    english: "en",
+    ar: "ar",
+    arabiska: "ar",
+    arabic: "ar",
+    fa: "fa",
+    persiska: "fa",
+    persian: "fa",
+    farsi: "fa",
+    prs: "prs",
+    dari: "prs",
+    so: "so",
+    somaliska: "so",
+    somali: "so",
+    uk: "uk",
+    ukrainska: "uk",
+    ukrainian: "uk"
+  };
+
+  return karta[normaliserad] || normaliserad.replace(/[^a-z]/g, "");
 }
 
 function slugga(text) {
@@ -175,7 +225,7 @@ function slugga(text) {
     .replace(/ö/g, "o")
     .replace(/\//g, "-")
     .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "")
+    .replace(/[^a-z0-9_-]/g, "")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 }
