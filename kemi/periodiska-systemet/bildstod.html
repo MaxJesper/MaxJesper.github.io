@@ -4,100 +4,175 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bildstöd – Periodiska systemet</title>
-  <link rel="stylesheet" href="/periodiska-systemet/style.css" />
+  <link rel="stylesheet" href="./style.css" />
   <style>
     :root {
-      --violett: #7a3db8;
-      --kortbredd: 3.5cm;
+      --bildkort-bredd: 3.5cm;
       --bildstorlek: 3cm;
+      --bildstod-lila: #7c4dff;
+      --bildstod-text: #222;
+      --bildstod-dov: #666;
+      --bildstod-bakgrund: #ffffff;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
+    .sida {
       max-width: 1100px;
       margin: 0 auto;
       padding: 1rem;
+    }
+
+    .tillbaka-lank {
+      margin: 0 0 1rem;
+    }
+
+    .sidhuvud {
+      margin-bottom: 1rem;
+    }
+
+    .sidhuvud h1 {
+      margin-bottom: 0.35rem;
+    }
+
+    .sidhuvud p {
+      margin-top: 0;
+      color: var(--bildstod-dov);
     }
 
     .verktygsrad {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      align-items: center;
-      margin: 1rem 0 1.25rem;
+      align-items: end;
+      margin: 1rem 0 1.5rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      background: #fafafa;
     }
 
-    .verktygsrad input {
-      padding: 0.55rem 0.75rem;
+    .faltgrupp {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 220px;
+    }
+
+    .faltgrupp label {
+      font-weight: 600;
+    }
+
+    .faltgrupp input {
       font: inherit;
+      padding: 0.65rem 0.8rem;
       border: 1px solid #bbb;
       border-radius: 10px;
-      min-width: 10rem;
+      background: white;
     }
 
-    .verktygsrad button {
-      padding: 0.55rem 0.9rem;
+    .knappar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .knapp {
       font: inherit;
+      padding: 0.7rem 1rem;
       border: 1px solid #bbb;
       border-radius: 10px;
       background: white;
       cursor: pointer;
     }
 
-    .info {
-      color: #444;
+    .knapp:hover {
+      background: #f3f3f3;
+    }
+
+    .statusrad {
+      min-height: 1.5rem;
       margin-bottom: 1rem;
+      color: var(--bildstod-dov);
     }
 
     .bildgrid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(var(--kortbredd), 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(var(--bildkort-bredd), 1fr));
       gap: 0.6cm;
       align-items: start;
+      justify-items: start;
     }
 
     .bildkort {
-      width: var(--kortbredd);
-      min-height: 5.5cm;
-      border: 3px solid var(--violett);
+      width: var(--bildkort-bredd);
+      min-height: 5.6cm;
+      padding: 0.2cm 0.15cm 0.18cm;
+      border: 3px solid var(--bildstod-lila);
       border-radius: 12px;
-      padding: 0.2cm 0.15cm 0.15cm;
+      background: var(--bildstod-bakgrund);
       box-sizing: border-box;
       text-align: center;
-      background: white;
       page-break-inside: avoid;
       break-inside: avoid;
     }
 
-    .bildkort img {
+    .bildruta {
       width: var(--bildstorlek);
       height: var(--bildstorlek);
-      display: block;
-      margin: 0 auto 0.15cm;
+      margin: 0 auto 0.2cm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bildruta img {
+      width: 100%;
+      height: 100%;
       object-fit: contain;
+      display: block;
     }
 
-    .ord-sv {
+    .ord-svenska {
       font-weight: 700;
-      font-size: 0.95rem;
+      color: var(--bildstod-text);
       line-height: 1.2;
-      margin-top: 0.1cm;
+      margin-top: 0.05cm;
+      word-break: break-word;
     }
 
-    .ord-andra {
-      font-size: 0.9rem;
-      line-height: 1.2;
+    .ord-oversattning {
       margin-top: 0.12cm;
       color: #333;
-      min-height: 1.1em;
+      line-height: 1.2;
+      min-height: 1.2em;
+      word-break: break-word;
     }
 
-    .utan-andra .ord-andra {
+    .utan-oversattning .ord-oversattning {
       display: none;
+    }
+
+    .tomt-resultat,
+    .felruta {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .felruta {
+      border-color: #d99;
+      background: #fff7f7;
+      color: #8a2d2d;
+    }
+
+    @media (max-width: 700px) {
+      .verktygsrad {
+        align-items: stretch;
+      }
+
+      .knappar {
+        width: 100%;
+      }
     }
 
     @media print {
@@ -106,20 +181,39 @@
         margin: 10mm;
       }
 
-      .verktygsrad,
-      .info,
-      .tillbaka {
-        display: none;
+      body {
+        background: white;
       }
 
-      .container {
+      .tillbaka-lank,
+      .verktygsrad,
+      .statusrad {
+        display: none !important;
+      }
+
+      .sida {
         max-width: none;
+        margin: 0;
         padding: 0;
+      }
+
+      .sidhuvud {
+        margin-bottom: 0.4cm;
+      }
+
+      .sidhuvud h1 {
+        font-size: 16pt;
+        margin: 0 0 0.15cm;
+      }
+
+      .sidhuvud p {
+        font-size: 10pt;
+        margin: 0 0 0.2cm;
       }
 
       .bildgrid {
         grid-template-columns: repeat(5, 3.5cm);
-        gap: 0.45cm;
+        gap: 0.4cm;
         justify-content: start;
       }
 
@@ -130,25 +224,44 @@
   </style>
 </head>
 <body>
-  <main class="container">
-    <p class="tillbaka"><a href="/periodiska-systemet/index.html">← Tillbaka</a></p>
-    <h1>Bildstöd</h1>
+  <main class="sida">
+    <p class="tillbaka-lank"><a href="./index.html">← Tillbaka</a></p>
 
-    <div class="verktygsrad">
-      <label for="sprakkod">Språk (t.ex. en, ar, fa, so, uk):</label>
-      <input id="sprakkod" type="text" placeholder="Lämna tomt för bara svenska" />
-      <button id="uppdateraBtn" type="button">Uppdatera språk</button>
-      <button id="skrivUtBtn" type="button">Skriv ut</button>
-    </div>
+    <header class="sidhuvud">
+      <h1>Bildstöd</h1>
+      <p>
+        Skriv in en språkkod, till exempel <strong>en</strong>, <strong>ar</strong>, <strong>fa</strong>,
+        <strong>prs</strong>, <strong>so</strong> eller <strong>uk</strong>.
+        Om rutan lämnas tom visas bara svenska.
+      </p>
+    </header>
 
-    <p class="info">
-      Tom ruta visar bara svenska. Skriver du t.ex. <strong>en</strong> hämtas översättningarna från
-      <code>/periodiska-systemet/sprak/en.json</code>.
-    </p>
+    <section class="verktygsrad" aria-label="Inställningar för bildstöd">
+      <div class="faltgrupp">
+        <label for="sprakkod">Språkkod</label>
+        <input
+          id="sprakkod"
+          type="text"
+          inputmode="latin"
+          autocomplete="off"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="t.ex. en"
+        />
+      </div>
 
-    <section id="bildgrid" class="bildgrid"></section>
+      <div class="knappar">
+        <button id="uppdatera-knapp" class="knapp" type="button">Visa språk</button>
+        <button id="rensa-knapp" class="knapp" type="button">Visa bara svenska</button>
+        <button id="skriv-ut-knapp" class="knapp" type="button">Skriv ut</button>
+      </div>
+    </section>
+
+    <div id="statusrad" class="statusrad" aria-live="polite"></div>
+
+    <section id="bildgrid" class="bildgrid" aria-label="Bildstödskort"></section>
   </main>
 
-  <script src="/periodiska-systemet/js/bildstod.js"></script>
+  <script src="./js/bildstod.js"></script>
 </body>
 </html>
