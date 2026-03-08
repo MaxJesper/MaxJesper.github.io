@@ -482,11 +482,14 @@
   const CHECKLIST_URLS = ["./data/checklista.json", "./checklista.json", "../data/checklista.json"];
   const MAX_CONTEXT_CHARS = 5000;
 
-  const STORAGE_KEY = "ps_ai_progress_v2";
+  const STORAGE_KEY = "ps_ai_progress_v3";
   const LANGUAGE_KEY = "ps_ai_support_language_v1";
 
   const AI_SUBJECT = "Kemi";
   const AI_AREA = "Periodiska systemet";
+
+  const BEGREPP_URL = "./begrepp.json";
+  const LANGUAGE_BASE_PATH = "./sprak/";
 
   const PROG_LABELS = {
     A: "Atomens byggnad",
@@ -522,80 +525,41 @@
     "4": "Fördjupning: var mer undervisande än kontrollerande. Ge först en mycket kort förklaring eller ledning, ställ sedan en fråga. Blandar mikrolektioner med ledande frågor. Markera tydligt om något ligger över vanlig provnivå."
   };
 
-  const GLOSSARY = {
-    common: [
-      { term: "atom", def: "minsta delen av ett grundämne som fortfarande är det ämnet" },
-      { term: "grundämne", def: "ämne som bara innehåller en sorts atomer" },
-      { term: "jon", def: "atom eller partikel som fått laddning" },
-      { term: "valenselektron", def: "elektron i yttersta skalet" },
-      { term: "bindning", def: "det som håller ihop atomer eller joner" }
-    ],
-    A: [
-      { term: "proton", def: "positivt laddad partikel i atomkärnan" },
-      { term: "neutron", def: "oladdad partikel i atomkärnan" },
-      { term: "elektron", def: "negativt laddad partikel runt kärnan" }
-    ],
-    B: [
-      { term: "elektronskal", def: "område där elektronerna finns runt kärnan" },
-      { term: "yttersta skal", def: "det skal som ligger längst ut och påverkar hur atomen reagerar" }
-    ],
-    C: [
-      { term: "period", def: "vågrät rad i periodiska systemet" },
-      { term: "grupp", def: "lodrät kolumn i periodiska systemet" },
-      { term: "metall", def: "ämne som ofta leder värme och elektricitet och ofta är formbart" }
-    ],
-    D: [
-      { term: "alkalimetall", def: "grundämne i grupp 1 som gärna lämnar ifrån sig en elektron" },
-      { term: "halogen", def: "grundämne i grupp 17 som gärna tar upp en elektron" },
-      { term: "ädelgas", def: "grundämne i grupp 18 med fullt yttersta skal" }
-    ],
-    E: [
-      { term: "jonbindning", def: "bindning mellan positiva och negativa joner" },
-      { term: "kovalent bindning", def: "bindning där atomer delar elektronpar" },
-      { term: "metallbindning", def: "bindning i metaller där elektroner kan röra sig mellan atomerna" }
-    ],
-    F: [
-      { term: "natriumjon", def: "skrivs Na⁺ och är en positiv jon" },
-      { term: "kloridjon", def: "skrivs Cl⁻ och är en negativ jon" },
-      { term: "formelenhet", def: "visar minsta heltalsförhållandet mellan joner i ett salt" },
-      { term: "laddningsbalans", def: "summan av positiva och negativa laddningar ska bli noll" }
-    ],
-    G: [
-      { term: "fällning", def: "fast ämne som bildas i en lösning" },
-      { term: "silvernitrat", def: "lösning som kan användas för att påvisa vissa halidjoner" },
-      { term: "bariumjoner", def: "kan användas för att påvisa sulfatjoner" },
-      { term: "salpetersyra", def: "kan användas i jonpåvisning för att skilja vissa reaktioner åt" }
-    ]
+  // Skriv olika varianter här så eleven kan skriva fritt.
+  const LANGUAGE_ALIASES = {
+    "engelska": "en",
+    "english": "en",
+    "en": "en",
+
+    "arabiska": "ar",
+    "arabic": "ar",
+    "العربية": "ar",
+    "ar": "ar",
+
+    "ukrainska": "uk",
+    "ukrainian": "uk",
+    "українська": "uk",
+    "uk": "uk",
+
+    "somaliska": "so",
+    "somali": "so",
+    "soomaali": "so",
+    "so": "so",
+
+    "persiska": "fa",
+    "farsi": "fa",
+    "فارسی": "fa",
+    "fa": "fa",
+
+    "dari": "prs",
+    "دری": "prs",
+    "prs": "prs"
   };
 
-  const BASE_PROMPT = `
-DU ÄR: En effektiv NO-lärare i svensk skola.
-
-VIKTIGA REGLER:
-- Svara på svenska.
-- Inget småprat eller utfyllnad.
-- Anpassa nivån efter elevens valda nivå.
-- Ställ alltid en fråga först.
-- Efter elevens svar: ge 1 kort mening återkoppling och ställ direkt nästa fråga.
-- Frågan måste alltid vara en HEL mening som slutar med ?.
-- Ge inte facit direkt: använd ledtråd och följdfråga.
-- Om eleven skriver "fortsätt", "ok", "ja" eller "kör": ställ nästa fråga direkt.
-- Om eleven frågar om något som inte hör till området: säg kort "Jag hjälper bara med kemi här" och ställ sedan en relevant fråga inom området.
-- I läget Fördjupning får du vara mer undervisande, men håll förklaringar korta och följ dem med en fråga.
-- Håll dig till det valda startområdet tills eleven tydligt vill byta område.
-
-SVARFORMAT:
-Fråga: <en komplett fråga som slutar med ?>
-
-(efter elevsvar)
-Återkoppling: <1 kort mening>
-Fråga: <nästa kompletta fråga som slutar med ?>
-
-TAGGAR SOM ALLTID SKA FINNAS SIST:
-[[AREA:X]] där X är A, B, C, D, E, F eller G
-[[AREA_PROGRESS:N]] där N är 0, 25, 50, 75 eller 100
-[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1
-`.trim();
+  // ====== DATA ======
+  let begreppData = [];
+  let loadedLanguageCode = null;
+  let loadedLanguageData = null;
 
   // ====== UI ======
   const statusEl = document.getElementById("ai-status");
@@ -638,6 +602,48 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
     currentArea: null,
     currentAreaProgress: 0
   };
+
+  // ====== PROMPT ======
+  const BASE_PROMPT = `
+DU ÄR: En effektiv NO-lärare i svensk skola.
+
+VIKTIGA REGLER:
+- Svara på svenska.
+- Inget småprat eller utfyllnad.
+- Anpassa nivån efter elevens valda nivå.
+- Ställ alltid en fråga först.
+- Efter elevens svar: ge 1 kort mening återkoppling och ställ direkt nästa fråga.
+- Frågan måste alltid vara en HEL mening som slutar med ?.
+- Ge inte facit direkt: använd ledtråd och följdfråga.
+- Om eleven skriver "fortsätt", "ok", "ja" eller "kör": ställ nästa fråga direkt.
+- Om eleven frågar om något som inte hör till området: säg kort "Jag hjälper bara med kemi här" och ställ sedan en relevant fråga inom området.
+- I läget Fördjupning får du vara mer undervisande, men håll förklaringar korta och följ dem med en fråga.
+- Håll dig till det valda startområdet tills eleven tydligt vill byta område.
+
+MYCKET VIKTIGT OM TAGGAR:
+- Du MÅSTE alltid avsluta svaret med exakt TRE taggrader.
+- Taggarna ska stå sist i svaret, en tagg per rad.
+- Du får aldrig hoppa över taggarna.
+- AREA_PROGRESS måste alltid vara ett av värdena 0, 25, 50, 75 eller 100.
+- Om området är färdigtränat ska AREA_PROGRESS vara 100 och motsvarande område sättas till 1 i PROGRESS-taggen.
+
+EXEMPEL PÅ KORREKT SLUT:
+[[AREA:F]]
+[[AREA_PROGRESS:50]]
+[[PROGRESS:A=1,B=1,C=0,D=0,E=0,F=0,G=0]]
+
+SVARFORMAT:
+Fråga: <en komplett fråga som slutar med ?>
+
+(efter elevsvar)
+Återkoppling: <1 kort mening>
+Fråga: <nästa kompletta fråga som slutar med ?>
+
+TAGGAR SOM ALLTID SKA FINNAS SIST:
+[[AREA:X]] där X är A, B, C, D, E, F eller G
+[[AREA_PROGRESS:N]] där N är 0, 25, 50, 75 eller 100
+[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1
+`.trim();
 
   // ====== HELPERS ======
   function getDefaultProgressState() {
@@ -732,6 +738,43 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
     return "(kunde inte hitta/öppna checklista.json)";
   }
 
+  async function loadBegreppData() {
+    try {
+      const r = await fetch(BEGREPP_URL, { cache: "no-store" });
+      if (!r.ok) throw new Error("Kunde inte ladda begrepp.json");
+      begreppData = await r.json();
+    } catch (err) {
+      begreppData = [];
+      glossaryTitleEl.textContent = "Kunde inte ladda begreppsstöd.";
+    }
+  }
+
+  function normalizeLanguageInput(value) {
+    const raw = (value || "").trim().toLowerCase();
+    return LANGUAGE_ALIASES[raw] || null;
+  }
+
+  async function loadLanguageData(languageCode) {
+    if (!languageCode) {
+      loadedLanguageCode = null;
+      loadedLanguageData = null;
+      return;
+    }
+
+    if (loadedLanguageCode === languageCode && loadedLanguageData) return;
+
+    try {
+      const r = await fetch(`${LANGUAGE_BASE_PATH}${languageCode}.json`, { cache: "no-store" });
+      if (!r.ok) throw new Error("Språkfil saknas");
+      loadedLanguageData = await r.json();
+      loadedLanguageCode = languageCode;
+    } catch (err) {
+      loadedLanguageCode = null;
+      loadedLanguageData = null;
+      throw err;
+    }
+  }
+
   function clampContext(s) {
     if (!s) return "";
     if (s.length <= MAX_CONTEXT_CHARS) return s;
@@ -763,11 +806,11 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
       `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
       `NIVÅ: ${LEVEL_TEXT[level]}\n` +
       `NIVÅINSTRUKTION: ${LEVEL_INSTRUCTIONS[level]}\n\n` +
-      `DELområden A-G:\n` +
+      `DELOMRÅDEN A-G:\n` +
       Object.entries(PROG_LABELS).map(([k, v]) => `${k}: ${v}. ${AREA_GUIDE[k]}`).join("\n") +
       `\n\nMÅL/INNEHÅLL ATT BETA AV:\n${checklistGoalText}\n\n` +
       startInstruction + `\n\n` +
-      `Starta nu med EN fråga enligt SVARFORMAT.`;
+      `Starta nu med EN fråga enligt SVARFORMAT och avsluta ALLTID med de tre taggraderna.`;
 
     return BASE_PROMPT + "\n\n" + goalsBlock;
   }
@@ -989,31 +1032,46 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
 
   function renderGlossary(areaCode) {
     glossaryListEl.innerHTML = "";
-    const selectedLanguage = (supportLanguageEl.value || "").trim();
 
-    glossaryTitleEl.textContent = selectedLanguage
-      ? `Stödord för området. Valt språk: ${selectedLanguage}`
-      : "Stödord för området";
+    const items = begreppData.filter(item => !areaCode || item.area === areaCode);
+    const selectedLanguageCode = normalizeLanguageInput(supportLanguageEl.value);
+    const langTerms = loadedLanguageData?.terms || null;
 
-    const items = [
-      ...GLOSSARY.common,
-      ...(areaCode && GLOSSARY[areaCode] ? GLOSSARY[areaCode] : [])
-    ];
-
-    for (const item of items) {
-      const div = document.createElement("div");
-      div.className = "glossary-item";
-      div.innerHTML = `
-        <div class="glossary-term">${item.term}</div>
-        <div class="glossary-def">${item.def}</div>
-      `;
-      glossaryListEl.appendChild(div);
+    if (selectedLanguageCode && loadedLanguageData?.language_name_sv) {
+      glossaryTitleEl.textContent = `Stödord för området. Valt språk: ${loadedLanguageData.language_name_sv}`;
+    } else if ((supportLanguageEl.value || "").trim()) {
+      glossaryTitleEl.textContent = `Stödord för området. Översättning saknas ännu för "${supportLanguageEl.value.trim()}".`;
+    } else {
+      glossaryTitleEl.textContent = "Stödord för området";
     }
 
     if (!items.length) {
       const div = document.createElement("div");
       div.className = "glossary-note";
       div.textContent = "Stödord visas här när träningen kommit igång.";
+      glossaryListEl.appendChild(div);
+      return;
+    }
+
+    for (const item of items) {
+      const langItem = langTerms?.[item.id] || null;
+
+      const div = document.createElement("div");
+      div.className = "glossary-item";
+
+      if (langItem) {
+        div.innerHTML = `
+          <div class="glossary-term">${item.sv} — ${langItem.term}</div>
+          <div class="glossary-def"><strong>Svenska:</strong> ${item.definition_sv}</div>
+          <div class="glossary-def"><strong>${loadedLanguageData.language_name_sv}:</strong> ${langItem.definition}</div>
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="glossary-term">${item.sv}</div>
+          <div class="glossary-def">${item.definition_sv}</div>
+        `;
+      }
+
       glossaryListEl.appendChild(div);
     }
   }
@@ -1042,21 +1100,59 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
     renderCurrentAreaProgress();
   }
 
-  function savePreferredLanguage() {
-    const value = (supportLanguageEl.value || "").trim();
-    localStorage.setItem(LANGUAGE_KEY, value);
-    languageStatusEl.textContent = value
-      ? `Språket "${value}" är sparat på denna enhet.`
-      : "Inget språk är sparat.";
+  async function savePreferredLanguage() {
+    const rawValue = (supportLanguageEl.value || "").trim();
+    localStorage.setItem(LANGUAGE_KEY, rawValue);
+
+    const code = normalizeLanguageInput(rawValue);
+
+    if (!rawValue) {
+      loadedLanguageCode = null;
+      loadedLanguageData = null;
+      languageStatusEl.textContent = "Inget språk är sparat.";
+      renderGlossary(progressState.currentArea);
+      return;
+    }
+
+    if (!code) {
+      loadedLanguageCode = null;
+      loadedLanguageData = null;
+      languageStatusEl.textContent = `Språket "${rawValue}" känns inte igen ännu.`;
+      renderGlossary(progressState.currentArea);
+      return;
+    }
+
+    try {
+      await loadLanguageData(code);
+      languageStatusEl.textContent = `Språket "${rawValue}" är sparat på denna enhet.`;
+    } catch {
+      languageStatusEl.textContent = `Hittade inte språkfilen för "${rawValue}".`;
+    }
+
     renderGlossary(progressState.currentArea);
   }
 
-  function loadPreferredLanguage() {
+  async function loadPreferredLanguage() {
     const value = localStorage.getItem(LANGUAGE_KEY) || "";
     supportLanguageEl.value = value;
-    languageStatusEl.textContent = value
-      ? `Språket "${value}" är sparat på denna enhet.`
-      : "";
+
+    if (!value) {
+      languageStatusEl.textContent = "";
+      return;
+    }
+
+    const code = normalizeLanguageInput(value);
+    if (!code) {
+      languageStatusEl.textContent = `Språket "${value}" känns inte igen ännu.`;
+      return;
+    }
+
+    try {
+      await loadLanguageData(code);
+      languageStatusEl.textContent = `Språket "${value}" är sparat på denna enhet.`;
+    } catch {
+      languageStatusEl.textContent = `Hittade inte språkfilen för "${value}".`;
+    }
   }
 
   function resetAll() {
@@ -1066,7 +1162,7 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
     statusEl.textContent = "";
     inputEl.value = "";
     thinkingBubble = null;
-    sessionStorage.removeItem("APP_ACCESS_KEY");
+    // Klasskoden ska INTE rensas här längre.
     stopCooldown();
     resetProgressState();
     inputEl.focus();
@@ -1212,9 +1308,10 @@ TAGGAR SOM ALLTID SKA FINNAS SIST:
     }
   });
 
-  window.addEventListener("load", () => {
+  window.addEventListener("load", async () => {
     loadProgressState();
-    loadPreferredLanguage();
+    await loadBegreppData();
+    await loadPreferredLanguage();
     renderOverview();
     renderCurrentAreaProgress();
 
