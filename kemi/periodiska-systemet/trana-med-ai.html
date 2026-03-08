@@ -7,72 +7,346 @@
   <link rel="stylesheet" href="/css/style.css">
 
   <style>
-    #ai-output {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    :root{
+      --card-bg:#ffffff;
+      --card-border:#d8e0ea;
+      --soft-bg:#f8f9fb;
+      --ai-bg:#e9eef6;
+      --ai-border:#c9d8f2;
+      --student-bg:#cfe3ff;
+      --student-border:#b7d1ff;
+      --text-dark:#0b1d3a;
+      --accent:#4a90e2;
+      --ok:#6aa84f;
+      --wait:#c9c9c9;
     }
 
-    .chat-bubble {
-      max-width: 78%;
-      padding: 10px 12px;
-      border-radius: 12px;
-      line-height: 1.45;
-      white-space: pre-wrap;
-      font-size: 15px;
+    .ai-page{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
     }
 
-    .ai-bubble {
-      background: #e9eef6;
-      color: #0b3d91;
-      align-self: flex-start;
-      border: 1px solid #c9d8f2;
+    .top-controls,
+    .info-panel,
+    .current-progress-card,
+    .overview-card,
+    .language-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
     }
 
-    .student-bubble {
-      background: #cfe3ff;
-      color: #0b1d3a;
-      align-self: flex-end;
-      border: 1px solid #b7d1ff;
+    .top-controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      align-items:end;
     }
 
-    #ai-input {
-      width: 100%;
-      height: 120px;
-      border: 1px solid #bbb;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 16px;
-      box-sizing: border-box;
-      resize: vertical;
+    .top-controls label{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-weight:600;
     }
 
-    #ai-input:focus {
-      outline: none;
-      border-color: #4a90e2;
-      box-shadow: 0 0 4px rgba(74, 144, 226, 0.35);
+    .top-controls select,
+    .top-controls input[type="text"]{
+      min-width:220px;
+      max-width:100%;
+      padding:8px 10px;
+      border:1px solid #bbb;
+      border-radius:8px;
+      font-size:15px;
+      box-sizing:border-box;
     }
 
-    .ai-intro {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border: 1px solid #d8e0ea;
-      border-radius: 12px;
-      background: #f8f9fb;
+    .top-controls button,
+    .action-row button,
+    #ai-send,
+    .small-btn{
+      border:none;
+      border-radius:8px;
+      padding:10px 12px;
+      font-size:15px;
+      cursor:pointer;
     }
 
-    .ai-controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-bottom: 10px;
+    .small-btn{
+      background:#eef4fb;
+      color:#123;
+      border:1px solid #d5e2f1;
+    }
+
+    .info-panel{
+      display:none;
+      background:var(--soft-bg);
+    }
+
+    .info-panel.open{
+      display:block;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      gap:12px;
+    }
+
+    .info-panel h2,
+    .current-progress-card h2,
+    .language-card h2,
+    .overview-card h2{
+      margin:0 0 8px 0;
+      font-size:1.05rem;
+    }
+
+    .info-panel p,
+    .info-panel li,
+    .language-card p,
+    .current-progress-card p{
+      margin:0 0 8px 0;
+      line-height:1.45;
+    }
+
+    .info-panel ul{
+      margin:0;
+      padding-left:18px;
+    }
+
+    .current-progress-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+
+    .progress-track{
+      width:100%;
+      height:12px;
+      background:#e8edf3;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid #d7e0ea;
+    }
+
+    .progress-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, #6fa8dc, #4a90e2);
+      transition:width 0.25s ease;
+    }
+
+    .main-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 2.15fr) minmax(260px, 0.95fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .chat-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:12px;
+      padding:12px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .action-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .action-row .subject-btn,
+    #ai-send{
+      background:#eef4fb;
+      color:#123;
+      border:1px solid #d5e2f1;
+    }
+
+    #ai-status{
+      min-height:1.2em;
+      margin:0 0 10px 0;
+      font-size:0.95rem;
+      color:#345;
+    }
+
+    #ai-output{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      border:1px solid #ccc;
+      padding:10px;
+      min-height:220px;
+      max-height:520px;
+      overflow-y:auto;
+      border-radius:10px;
+      background:#f8f8f8;
+    }
+
+    .chat-bubble{
+      max-width:88%;
+      padding:10px 12px;
+      border-radius:12px;
+      line-height:1.45;
+      white-space:pre-wrap;
+      font-size:15px;
+    }
+
+    .ai-bubble{
+      background:var(--ai-bg);
+      color:#0b3d91;
+      align-self:flex-start;
+      border:1px solid var(--ai-border);
+    }
+
+    .student-bubble{
+      background:var(--student-bg);
+      color:var(--text-dark);
+      align-self:flex-end;
+      border:1px solid var(--student-border);
+      margin-right:10px;
+    }
+
+    .bubble-title{
+      display:block;
+      font-size:0.78rem;
+      font-weight:700;
+      letter-spacing:0.02em;
+      opacity:0.8;
+      margin-bottom:4px;
+    }
+
+    #ai-input{
+      width:100%;
+      min-height:110px;
+      margin-top:10px;
+      border:1px solid #bbb;
+      border-radius:8px;
+      padding:10px;
+      font-size:16px;
+      box-sizing:border-box;
+      resize:vertical;
+    }
+
+    #ai-input:focus,
+    .top-controls select:focus,
+    .top-controls input[type="text"]:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 4px rgba(74,144,226,0.35);
+    }
+
+    .send-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .send-help{
+      font-size:0.9em;
+      opacity:0.8;
+      margin:0;
+    }
+
+    .language-card input[type="text"]{
+      width:100%;
+      padding:8px 10px;
+      border:1px solid #bbb;
+      border-radius:8px;
+      font-size:15px;
+      box-sizing:border-box;
+      margin-bottom:8px;
+    }
+
+    .glossary-list{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .glossary-item{
+      border:1px solid #dde6f0;
+      border-radius:10px;
+      padding:9px 10px;
+      background:#fbfcfe;
+    }
+
+    .glossary-term{
+      font-weight:700;
+      color:#123;
+      margin-bottom:2px;
+    }
+
+    .glossary-def{
+      font-size:0.95rem;
+      color:#333;
+    }
+
+    .glossary-note{
+      font-size:0.9rem;
+      color:#546;
+      margin-top:8px;
+    }
+
+    .overview-list{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+
+    .overview-item{
+      border:1px solid #ddd;
+      border-radius:10px;
+      padding:8px 10px;
+      background:#fafafa;
+      font-size:0.96rem;
+    }
+
+    .overview-item.done{
+      border-color:#b9d6aa;
+      background:#f6fbf2;
+    }
+
+    .overview-item .state{
+      font-weight:700;
+      margin-right:6px;
+    }
+
+    .subtle{
+      font-size:0.93rem;
+      color:#556;
+    }
+
+    @media (max-width: 980px){
+      .main-grid{
+        grid-template-columns:1fr;
+      }
+
+      .student-bubble{
+        margin-right:0;
+      }
+
+      .chat-bubble{
+        max-width:94%;
+      }
     }
   </style>
 </head>
 
 <body>
-
 <header class="kemi-header">
   <h1>Träna med AI – Periodiska systemet</h1>
   <p>Jesper Tordsson</p>
@@ -81,103 +355,217 @@
 <button class="hamburger" onclick="toggleMenu()">☰</button>
 <nav id="side-menu"></nav>
 
-<main>
-  <section class="ai-intro">
-    <p>
-      Här kan du träna på området med en AI-lärare som ställer frågor, ger kort återkoppling
-      och hjälper dig vidare steg för steg.
-    </p>
-    <p>
-      Börja med att välja nivå, fokus och eventuellt startområde. Klicka sedan på
-      <strong>Starta träning</strong>.
-    </p>
+<main class="ai-page">
+
+  <section class="top-controls">
+    <label for="ai-level">
+      Nivå
+      <select id="ai-level">
+        <option value="1">Grundnivå</option>
+        <option value="2" selected>Utvecklad nivå</option>
+        <option value="3">Avancerad nivå</option>
+        <option value="4">Fördjupning</option>
+      </select>
+    </label>
+
+    <label for="ai-start-area">
+      Startområde
+      <select id="ai-start-area">
+        <option value="all" selected>Alla områden</option>
+        <option value="A">Atomens byggnad</option>
+        <option value="B">Elektronskal och valenselektroner</option>
+        <option value="C">Periodiska systemet: perioder, grupper och metaller</option>
+        <option value="D">Grundämnesfamiljer</option>
+        <option value="E">Kemisk bindning</option>
+        <option value="F">Joner och salter</option>
+        <option value="G">Fällningar och jonpåvisning</option>
+      </select>
+    </label>
+
+    <button id="toggle-info-btn" class="small-btn" type="button">Info</button>
   </section>
 
-  <div class="ai-controls">
-    <label>
-      Nivå:
-      <select id="ai-level">
-        <option value="1">1 (lätt)</option>
-        <option value="2" selected>2 (medel)</option>
-        <option value="3">3 (prov)</option>
-      </select>
-    </label>
+  <section id="info-panel" class="info-panel">
+    <div class="info-grid">
+      <div>
+        <h2>Så fungerar träningen</h2>
+        <ul>
+          <li>AI ställer frågor och ger kort återkoppling.</li>
+          <li>Du kan be om en ledtråd utan att få facit direkt.</li>
+          <li>Svara gärna med egna ord.</li>
+          <li>AI kan ibland ha fel, så lärare och lärobok är viktigast om något verkar konstigt.</li>
+        </ul>
+      </div>
 
-    <label>
-      Fokus:
-      <select id="ai-focus">
-        <option value="begrepp">Begrepp</option>
-        <option value="resonemang">Resonemang</option>
-        <option value="blandat" selected>Blandat</option>
-      </select>
-    </label>
+      <div>
+        <h2>Vad betyder nivåerna?</h2>
+        <ul>
+          <li><strong>Grundnivå:</strong> träning på viktiga fakta och centrala begrepp.</li>
+          <li><strong>Utvecklad nivå:</strong> tydligare och mer exakta förklaringar.</li>
+          <li><strong>Avancerad nivå:</strong> helhetsförståelse, samband och resonemang.</li>
+          <li><strong>Fördjupning:</strong> blandar kort undervisning med frågor och ledtrådar. Nivån ligger delvis över det som krävs på provet.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <label>
-      Startområde:
-      <select id="ai-start-area">
-        <option value="auto" selected>Auto</option>
-        <option value="A">A: Atomens byggnad</option>
-        <option value="B">B: Elektronskal/valens</option>
-        <option value="C">C: Period/grupp/metaller</option>
-        <option value="D">D: Familjer (1/17/18)</option>
-        <option value="E">E: Joner</option>
-        <option value="F">F: Bindningar</option>
-        <option value="G">G: Saltvatten & ström</option>
-      </select>
-    </label>
-  </div>
+  <section class="current-progress-card">
+    <div class="current-progress-head">
+      <div>
+        <h2>Nuvarande delområde</h2>
+        <p id="current-area-label" class="subtle">Inte startat ännu</p>
+      </div>
+      <div id="current-area-percent" class="subtle">0%</div>
+    </div>
+    <div class="progress-track" aria-hidden="true">
+      <div id="current-area-fill" class="progress-fill"></div>
+    </div>
+    <p class="subtle" style="margin-top:8px;">Progressen här visar hur långt du kommit i det delområde som tränas just nu.</p>
+  </section>
 
-  <p>
-    <button id="ai-train-btn" class="subject-btn" type="button">🤖 Starta träning</button>
-    <button id="ai-hint-btn" class="subject-btn" type="button">💡 Ledtråd</button>
-    <button id="ai-newq-btn" class="subject-btn" type="button">🎲 Ny fråga</button>
-    <button id="ai-reset-btn" class="subject-btn" type="button">🔄 Reset</button>
+  <section class="main-grid">
+    <section class="chat-card">
+      <div class="action-row">
+        <button id="ai-train-btn" class="subject-btn" type="button">🤖 Starta träning</button>
+        <button id="ai-hint-btn" class="subject-btn" type="button">💡 Ledtråd</button>
+        <button id="ai-newq-btn" class="subject-btn" type="button">🎲 Ny fråga</button>
+        <button id="ai-reset-btn" class="subject-btn" type="button">🔄 Börja om</button>
+      </div>
+
+      <p id="ai-status"></p>
+
+      <div id="ai-output"></div>
+
+      <textarea id="ai-input" placeholder="Skriv ditt svar här..."></textarea>
+
+      <div class="send-row">
+        <button id="ai-send" type="button">Skicka</button>
+        <p class="send-help">Enter = skicka · Shift+Enter = ny rad</p>
+      </div>
+    </section>
+
+    <aside class="language-card">
+      <h2>Språkstöd</h2>
+      <p>Skriv in önskat språk. I denna version sparas språket och stödorden visas med korta svenska förklaringar.</p>
+
+      <label for="support-language" class="subtle">Önskat språk</label>
+      <input id="support-language" type="text" placeholder="Till exempel arabiska, ukrainska eller dari">
+      <button id="save-language-btn" class="small-btn" type="button">Spara språk</button>
+
+      <p id="language-status" class="glossary-note"></p>
+
+      <div id="glossary-title" class="glossary-note">Stödord för området visas här.</div>
+      <div id="glossary-list" class="glossary-list"></div>
+    </aside>
+  </section>
+
+  <section class="overview-card">
+    <h2>Det här har du tränat</h2>
+    <p class="subtle">När AI bedömer att ett delområde är tillräckligt tränat markeras det som klart och sparas på denna enhet.</p>
+    <div id="overview-list" class="overview-list"></div>
+  </section>
+
+  <p style="margin-top:4px;">
+    <a href="./index.html" class="subject-btn">← Tillbaka till Periodiska systemet</a>
   </p>
 
-  <p id="ai-status"></p>
-
-  <div id="ai-progress" style="margin:8px 0; padding:8px; border:1px solid #ddd; border-radius:8px;">
-    <div style="font-weight:600; margin-bottom:6px;">Progress (A–G)</div>
-    <div id="prog-items" style="display:flex; flex-wrap:wrap; gap:8px;"></div>
-    <div style="font-size:0.9em; opacity:0.75; margin-top:6px;">
-      Du kan välja startområde, till exempel Joner.
-    </div>
-  </div>
-
-  <div id="ai-chat" style="margin-top:10px;">
-    <div id="ai-output" style="border:1px solid #ccc; padding:10px; min-height:140px; overflow-y:auto; border-radius:10px; background:#f8f8f8;"></div>
-
-    <textarea id="ai-input" placeholder="Skriv ditt svar..."></textarea>
-    <button id="ai-send" type="button">Skicka</button>
-
-    <p style="margin:6px 0 0 0; font-size:0.9em; opacity:0.8;">
-      Enter = skicka · Shift+Enter = ny rad
-    </p>
-  </div>
-
-  <p style="margin-top:12px;">
-    <a href="./index.html" class="subject-btn">← Tillbaka till Periodiska systemet</a>
+  <p style="margin-top:0;">
+    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
   </p>
 </main>
 
 <script src="/js/menu.js"></script>
 
 <script>
+  // ====== INSTÄLLNINGAR ======
   const workerUrl = "https://no-lararen-final.jesper-tordsson.workers.dev";
   const CHECKLIST_URLS = ["./data/checklista.json", "./checklista.json", "../data/checklista.json"];
-  const MAX_CONTEXT_CHARS = 4200;
+  const MAX_CONTEXT_CHARS = 5000;
+
+  const STORAGE_KEY = "ps_ai_progress_v2";
+  const LANGUAGE_KEY = "ps_ai_support_language_v1";
 
   const AI_SUBJECT = "Kemi";
   const AI_AREA = "Periodiska systemet";
 
+  const PROG_LABELS = {
+    A: "Atomens byggnad",
+    B: "Elektronskal och valenselektroner",
+    C: "Periodiska systemet: perioder, grupper och metaller",
+    D: "Grundämnesfamiljer",
+    E: "Kemisk bindning",
+    F: "Joner och salter",
+    G: "Fällningar och jonpåvisning"
+  };
+
   const AREA_GUIDE = {
-    A: "Atomens byggnad: proton/neutron/elektron, laddning, atomnummer, neutral atom.",
-    B: "Elektronskal/valens: K=2 L=8 M=8 (första 20), valenselektroner, period/grupp.",
-    C: "Periodiska systemet: period vs grupp, metaller/icke-metaller, egenskaper.",
-    D: "Familjer: alkalimetaller (1), halogener (17), ädelgaser (18) + egenskaper/användning.",
-    E: "Joner: hur + och – joner bildas, elektronavgivning/upptag, varför, exempel (Na+, Cl−).",
-    F: "Bindningar: jonbindning/molekylbindning/metallbindning (enkel nivå) + exempel.",
-    G: "Saltvatten leder ström: joner i lösning och laddningstransport."
+    A: "Atomens byggnad: proton, neutron, elektron, laddning, atomnummer, masstal och neutral atom.",
+    B: "Elektronskal och valenselektroner: hur elektroner fördelas, valenselektroner och koppling till period och grupp.",
+    C: "Periodiska systemet: perioder, grupper, metaller och icke-metaller samt hur tabellen används.",
+    D: "Grundämnesfamiljer: alkalimetaller, halogener och ädelgaser med viktiga egenskaper.",
+    E: "Kemisk bindning: jonbindning, kovalent bindning och metallbindning på högstadienivå.",
+    F: "Joner och salter: vad joner är, vanliga joner, laddningar, hur salter sätts ihop, laddningsbalans och formelenheter.",
+    G: "Fällningar och jonpåvisning: enkla reaktioner med till exempel silvernitrat, bariumjoner och salpetersyra för att skilja mellan olika joner."
+  };
+
+  const LEVEL_TEXT = {
+    "1": "Grundnivå",
+    "2": "Utvecklad nivå",
+    "3": "Avancerad nivå",
+    "4": "Fördjupning"
+  };
+
+  const LEVEL_INSTRUCTIONS = {
+    "1": "Grundnivå: fråga om centrala fakta och enkla begrepp. Korta, tydliga frågor. Hjälp eleven stegvis.",
+    "2": "Utvecklad nivå: låt eleven ge tydligare och mer exakta förklaringar. Ställ frågor som kräver förståelse av samband.",
+    "3": "Avancerad nivå: låt eleven resonera, jämföra och använda kunskaper i nya men närliggande situationer.",
+    "4": "Fördjupning: var mer undervisande än kontrollerande. Ge först en mycket kort förklaring eller ledning, ställ sedan en fråga. Blandar mikrolektioner med ledande frågor. Markera tydligt om något ligger över vanlig provnivå."
+  };
+
+  const GLOSSARY = {
+    common: [
+      { term: "atom", def: "minsta delen av ett grundämne som fortfarande är det ämnet" },
+      { term: "grundämne", def: "ämne som bara innehåller en sorts atomer" },
+      { term: "jon", def: "atom eller partikel som fått laddning" },
+      { term: "valenselektron", def: "elektron i yttersta skalet" },
+      { term: "bindning", def: "det som håller ihop atomer eller joner" }
+    ],
+    A: [
+      { term: "proton", def: "positivt laddad partikel i atomkärnan" },
+      { term: "neutron", def: "oladdad partikel i atomkärnan" },
+      { term: "elektron", def: "negativt laddad partikel runt kärnan" }
+    ],
+    B: [
+      { term: "elektronskal", def: "område där elektronerna finns runt kärnan" },
+      { term: "yttersta skal", def: "det skal som ligger längst ut och påverkar hur atomen reagerar" }
+    ],
+    C: [
+      { term: "period", def: "vågrät rad i periodiska systemet" },
+      { term: "grupp", def: "lodrät kolumn i periodiska systemet" },
+      { term: "metall", def: "ämne som ofta leder värme och elektricitet och ofta är formbart" }
+    ],
+    D: [
+      { term: "alkalimetall", def: "grundämne i grupp 1 som gärna lämnar ifrån sig en elektron" },
+      { term: "halogen", def: "grundämne i grupp 17 som gärna tar upp en elektron" },
+      { term: "ädelgas", def: "grundämne i grupp 18 med fullt yttersta skal" }
+    ],
+    E: [
+      { term: "jonbindning", def: "bindning mellan positiva och negativa joner" },
+      { term: "kovalent bindning", def: "bindning där atomer delar elektronpar" },
+      { term: "metallbindning", def: "bindning i metaller där elektroner kan röra sig mellan atomerna" }
+    ],
+    F: [
+      { term: "natriumjon", def: "skrivs Na⁺ och är en positiv jon" },
+      { term: "kloridjon", def: "skrivs Cl⁻ och är en negativ jon" },
+      { term: "formelenhet", def: "visar minsta heltalsförhållandet mellan joner i ett salt" },
+      { term: "laddningsbalans", def: "summan av positiva och negativa laddningar ska bli noll" }
+    ],
+    G: [
+      { term: "fällning", def: "fast ämne som bildas i en lösning" },
+      { term: "silvernitrat", def: "lösning som kan användas för att påvisa vissa halidjoner" },
+      { term: "bariumjoner", def: "kan användas för att påvisa sulfatjoner" },
+      { term: "salpetersyra", def: "kan användas i jonpåvisning för att skilja vissa reaktioner åt" }
+    ]
   };
 
   const BASE_PROMPT = `
@@ -185,48 +573,57 @@ DU ÄR: En effektiv NO-lärare i svensk skola.
 
 VIKTIGA REGLER:
 - Svara på svenska.
-- Inget småprat/utfyllnad.
+- Inget småprat eller utfyllnad.
+- Anpassa nivån efter elevens valda nivå.
 - Ställ alltid en fråga först.
 - Efter elevens svar: ge 1 kort mening återkoppling och ställ direkt nästa fråga.
-- Frågan måste alltid vara en HEL mening som slutar med ? (ingen avhuggen fråga).
-- Ge inte facit direkt: använd ledtråd + följdfråga.
-- Om eleven skriver "fortsätt/ok/ja/kör": ställ nästa fråga direkt.
-- Om eleven frågar om något som inte hör till NO-ämnet/området: säg kort "Jag hjälper bara med NO här" och ställ en relevant fråga inom området.
+- Frågan måste alltid vara en HEL mening som slutar med ?.
+- Ge inte facit direkt: använd ledtråd och följdfråga.
+- Om eleven skriver "fortsätt", "ok", "ja" eller "kör": ställ nästa fråga direkt.
+- Om eleven frågar om något som inte hör till området: säg kort "Jag hjälper bara med kemi här" och ställ sedan en relevant fråga inom området.
+- I läget Fördjupning får du vara mer undervisande, men håll förklaringar korta och följ dem med en fråga.
+- Håll dig till det valda startområdet tills eleven tydligt vill byta område.
 
-SVARFORMAT (följ alltid):
+SVARFORMAT:
 Fråga: <en komplett fråga som slutar med ?>
 
 (efter elevsvar)
 Återkoppling: <1 kort mening>
 Fråga: <nästa kompletta fråga som slutar med ?>
 
-PROGRESS-TAGG (alltid sist på egen rad):
-[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1.
+TAGGAR SOM ALLTID SKA FINNAS SIST:
+[[AREA:X]] där X är A, B, C, D, E, F eller G
+[[AREA_PROGRESS:N]] där N är 0, 25, 50, 75 eller 100
+[[PROGRESS:A=?,B=?,C=?,D=?,E=?,F=?,G=?]] där ? är 0 eller 1
 `.trim();
 
+  // ====== UI ======
   const statusEl = document.getElementById("ai-status");
   const outputEl = document.getElementById("ai-output");
-  const inputEl  = document.getElementById("ai-input");
-  const sendBtn  = document.getElementById("ai-send");
+  const inputEl = document.getElementById("ai-input");
+  const sendBtn = document.getElementById("ai-send");
   const startBtn = document.getElementById("ai-train-btn");
   const resetBtn = document.getElementById("ai-reset-btn");
-  const hintBtn  = document.getElementById("ai-hint-btn");
-  const newQBtn  = document.getElementById("ai-newq-btn");
-  const levelEl     = document.getElementById("ai-level");
-  const focusEl     = document.getElementById("ai-focus");
+  const hintBtn = document.getElementById("ai-hint-btn");
+  const newQBtn = document.getElementById("ai-newq-btn");
+  const levelEl = document.getElementById("ai-level");
   const startAreaEl = document.getElementById("ai-start-area");
+  const toggleInfoBtn = document.getElementById("toggle-info-btn");
+  const infoPanel = document.getElementById("info-panel");
 
-  const progWrap = document.getElementById("prog-items");
-  const PROG_LABELS = {
-    A: "Atomens byggnad",
-    B: "Elektronskal/valens",
-    C: "Period/grupp/metall",
-    D: "Familjer (1/17/18)",
-    E: "Joner",
-    F: "Bindningar",
-    G: "Saltvatten & ström",
-  };
+  const currentAreaLabelEl = document.getElementById("current-area-label");
+  const currentAreaFillEl = document.getElementById("current-area-fill");
+  const currentAreaPercentEl = document.getElementById("current-area-percent");
 
+  const overviewListEl = document.getElementById("overview-list");
+
+  const supportLanguageEl = document.getElementById("support-language");
+  const saveLanguageBtn = document.getElementById("save-language-btn");
+  const languageStatusEl = document.getElementById("language-status");
+  const glossaryTitleEl = document.getElementById("glossary-title");
+  const glossaryListEl = document.getElementById("glossary-list");
+
+  // ====== STATE ======
   let conversation = "";
   let started = false;
   let busy = false;
@@ -235,6 +632,47 @@ PROGRESS-TAGG (alltid sist på egen rad):
 
   let cooldownTimer = null;
   let cooldownLeft = 0;
+
+  let progressState = {
+    doneMap: { A:0, B:0, C:0, D:0, E:0, F:0, G:0 },
+    currentArea: null,
+    currentAreaProgress: 0
+  };
+
+  // ====== HELPERS ======
+  function getDefaultProgressState() {
+    return {
+      doneMap: { A:0, B:0, C:0, D:0, E:0, F:0, G:0 },
+      currentArea: null,
+      currentAreaProgress: 0
+    };
+  }
+
+  function saveProgressState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progressState));
+  }
+
+  function loadProgressState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      progressState = {
+        doneMap: { ...getDefaultProgressState().doneMap, ...(parsed.doneMap || {}) },
+        currentArea: parsed.currentArea || null,
+        currentAreaProgress: Number(parsed.currentAreaProgress || 0)
+      };
+    } catch {
+      progressState = getDefaultProgressState();
+    }
+  }
+
+  function resetProgressState() {
+    progressState = getDefaultProgressState();
+    saveProgressState();
+    renderOverview();
+    renderCurrentAreaProgress();
+  }
 
   function setBusy(on, msg) {
     busy = on;
@@ -245,139 +683,9 @@ PROGRESS-TAGG (alltid sist på egen rad):
     hintBtn.disabled = on;
     newQBtn.disabled = on;
     levelEl.disabled = on;
-    focusEl.disabled = on;
     startAreaEl.disabled = on;
+    toggleInfoBtn.disabled = on;
     if (msg !== undefined) statusEl.textContent = msg;
-  }
-
-  function initProgressUI() {
-    progWrap.innerHTML = "";
-    for (const key of Object.keys(PROG_LABELS)) {
-      const chip = document.createElement("div");
-      chip.id = "prog-" + key;
-      chip.style.padding = "4px 8px";
-      chip.style.border = "1px solid #ccc";
-      chip.style.borderRadius = "999px";
-      chip.style.fontSize = "0.9em";
-      chip.style.opacity = "0.9";
-      chip.textContent = `⏳ ${key}: ${PROG_LABELS[key]}`;
-      progWrap.appendChild(chip);
-    }
-  }
-
-  function setProgressFromMap(map) {
-    for (const key of Object.keys(PROG_LABELS)) {
-      const chip = document.getElementById("prog-" + key);
-      if (!chip) continue;
-      const done = map[key] === 1;
-      chip.textContent = `${done ? "✅" : "⏳"} ${key}: ${PROG_LABELS[key]}`;
-      chip.style.borderColor = done ? "#6aa84f" : "#ccc";
-      chip.style.opacity = done ? "1" : "0.9";
-    }
-  }
-
-  function parseProgressTag(text) {
-    const m = text.match(/\[\[PROGRESS:([^\]]+)\]\]/);
-    if (!m) return null;
-    const pairs = m[1].split(",").map(s => s.trim());
-    const map = {};
-    for (const p of pairs) {
-      const mm = p.match(/^([A-G])\s*=\s*([01])$/);
-      if (mm) map[mm[1]] = Number(mm[2]);
-    }
-    return Object.keys(map).length ? map : null;
-  }
-
-  function stripHiddenTags(text) {
-    return text.replace(/\n?\[\[PROGRESS:[^\]]+\]\]\s*$/m, "").trim();
-  }
-
-  function renderAiBubble(bubble, rawText) {
-    const text = stripHiddenTags(rawText);
-    const lines = text.split("\n").map(s => s.trim()).filter(Boolean);
-    const qLines = lines.filter(l => /^Fråga:/i.test(l)).map(l => l.replace(/^Fråga:\s*/i, "").trim());
-    const fbLines = lines.filter(l => /^Återkoppling:/i.test(l)).map(l => l.replace(/^Återkoppling:\s*/i, "").trim());
-
-    bubble.innerHTML = "";
-
-    if (!qLines.length && !fbLines.length) {
-      bubble.textContent = text;
-      return;
-    }
-
-    if (qLines.length) {
-      const row = document.createElement("div");
-      const b = document.createElement("b");
-      b.textContent = "Fråga: ";
-      row.appendChild(b);
-      const span = document.createElement("span");
-      span.style.fontWeight = "700";
-      span.textContent = qLines[qLines.length - 1];
-      row.appendChild(span);
-      bubble.appendChild(row);
-    }
-
-    if (fbLines.length) {
-      const row = document.createElement("div");
-      row.style.marginTop = qLines.length ? "8px" : "0";
-      const b = document.createElement("b");
-      b.textContent = "Återkoppling: ";
-      row.appendChild(b);
-      row.appendChild(document.createTextNode(fbLines[fbLines.length - 1]));
-      bubble.appendChild(row);
-    }
-  }
-
-  function appendBubble(text, type) {
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble", type === "ai" ? "ai-bubble" : "student-bubble");
-    if (type === "ai") renderAiBubble(bubble, text);
-    else bubble.textContent = text;
-    outputEl.appendChild(bubble);
-    outputEl.scrollTop = outputEl.scrollHeight;
-  }
-
-  function showThinking() {
-    if (thinkingBubble) thinkingBubble.remove();
-    const bubble = document.createElement("div");
-    bubble.classList.add("chat-bubble", "ai-bubble");
-    bubble.textContent = "AI tänker…";
-    outputEl.appendChild(bubble);
-    outputEl.scrollTop = outputEl.scrollHeight;
-    thinkingBubble = bubble;
-  }
-
-  function replaceThinkingWith(text) {
-    if (thinkingBubble) {
-      thinkingBubble.innerHTML = "";
-      renderAiBubble(thinkingBubble, text);
-      thinkingBubble = null;
-    } else {
-      appendBubble(text, "ai");
-    }
-    outputEl.scrollTop = outputEl.scrollHeight;
-  }
-
-  function getAccessKey() {
-    let k = sessionStorage.getItem("APP_ACCESS_KEY");
-    if (!k) {
-      k = prompt("Skriv klasskoden för AI:");
-      if (k) sessionStorage.setItem("APP_ACCESS_KEY", k);
-    }
-    return k || "";
-  }
-
-  function resetAll() {
-    conversation = "";
-    started = false;
-    outputEl.innerHTML = "";
-    statusEl.textContent = "";
-    inputEl.value = "";
-    thinkingBubble = null;
-    sessionStorage.removeItem("APP_ACCESS_KEY");
-    initProgressUI();
-    inputEl.focus();
-    stopCooldown();
   }
 
   function extractChecklistTexts(json) {
@@ -407,7 +715,7 @@ PROGRESS-TAGG (alltid sist på egen rad):
       }
     };
     walk(json);
-    return [...new Set(out)].slice(0, 70);
+    return [...new Set(out)].slice(0, 80);
   }
 
   async function loadChecklistGoals() {
@@ -418,7 +726,7 @@ PROGRESS-TAGG (alltid sist på egen rad):
         const data = await r.json();
         const items = extractChecklistTexts(data);
         if (!items.length) continue;
-        return items.slice(0, 70).map((s) => "- " + s).join("\n");
+        return items.map((s) => "- " + s).join("\n");
       } catch {}
     }
     return "(kunde inte hitta/öppna checklista.json)";
@@ -427,32 +735,169 @@ PROGRESS-TAGG (alltid sist på egen rad):
   function clampContext(s) {
     if (!s) return "";
     if (s.length <= MAX_CONTEXT_CHARS) return s;
-    const head = s.slice(0, 1500);
-    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1500));
+    const head = s.slice(0, 1800);
+    const tail = s.slice(s.length - (MAX_CONTEXT_CHARS - 1800));
     return head + "\n...\n" + tail;
+  }
+
+  function getSelectedAreaLabel() {
+    const val = startAreaEl.value;
+    if (val === "all") return "Alla områden";
+    return PROG_LABELS[val] || "Alla områden";
+  }
+
+  function getInitialAreaCode() {
+    const val = startAreaEl.value;
+    return val === "all" ? "A" : val;
   }
 
   function buildTrainingPrompt() {
     const level = levelEl.value;
-    const focus = focusEl.value;
     const startArea = startAreaEl.value;
 
-    const hardStart =
-      (startArea !== "auto")
-        ? `STARTOMRÅDE: ${startArea} (MÅSTE).
-Du MÅSTE börja i område ${startArea} och stanna där tills eleven säger att den vill byta område.
-Område ${startArea} betyder: ${AREA_GUIDE[startArea]}
-DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område ${startArea}.`
-        : `STARTOMRÅDE: auto. Välj ett lämpligt startområde själv.`;
+    const startInstruction = startArea === "all"
+      ? `STARTOMRÅDE: alla områden. Börja i område A och arbeta stegvis vidare genom A–G. Byt bara område när eleven visat tillräcklig förståelse i det aktuella området eller tydligt vill byta.`
+      : `STARTOMRÅDE: ${startArea}. Du MÅSTE börja i område ${startArea} och stanna där tills eleven tydligt vill byta eller området är ordentligt tränat. Område ${startArea} betyder: ${AREA_GUIDE[startArea]}`;
 
     const goalsBlock =
       `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
-      `NIVÅ: ${level}\nFOKUS: ${focus}\n\n` +
-      `MÅL/INNEHÅLL ATT BETA AV (bocka av internt):\n${checklistGoalText}\n\n` +
-      hardStart + "\n\n" +
-      `Starta nu med EN fråga enligt SVARFORMAT.\n`;
+      `NIVÅ: ${LEVEL_TEXT[level]}\n` +
+      `NIVÅINSTRUKTION: ${LEVEL_INSTRUCTIONS[level]}\n\n` +
+      `DELområden A-G:\n` +
+      Object.entries(PROG_LABELS).map(([k, v]) => `${k}: ${v}. ${AREA_GUIDE[k]}`).join("\n") +
+      `\n\nMÅL/INNEHÅLL ATT BETA AV:\n${checklistGoalText}\n\n` +
+      startInstruction + `\n\n` +
+      `Starta nu med EN fråga enligt SVARFORMAT.`;
 
     return BASE_PROMPT + "\n\n" + goalsBlock;
+  }
+
+  function parseProgressTag(text) {
+    const m = text.match(/\[\[PROGRESS:([^\]]+)\]\]/);
+    if (!m) return null;
+    const pairs = m[1].split(",").map(s => s.trim());
+    const map = {};
+    for (const p of pairs) {
+      const mm = p.match(/^([A-G])\s*=\s*([01])$/);
+      if (mm) map[mm[1]] = Number(mm[2]);
+    }
+    return Object.keys(map).length ? map : null;
+  }
+
+  function parseAreaTag(text) {
+    const m = text.match(/\[\[AREA:([A-G])\]\]/);
+    return m ? m[1] : null;
+  }
+
+  function parseAreaProgressTag(text) {
+    const m = text.match(/\[\[AREA_PROGRESS:(\d{1,3})\]\]/);
+    if (!m) return null;
+    const n = Number(m[1]);
+    if (Number.isNaN(n)) return null;
+    return Math.max(0, Math.min(100, n));
+  }
+
+  function stripHiddenTags(text) {
+    return text
+      .replace(/\n?\[\[AREA:[A-G]\]\]\s*/g, "")
+      .replace(/\n?\[\[AREA_PROGRESS:\d{1,3}\]\]\s*/g, "")
+      .replace(/\n?\[\[PROGRESS:[^\]]+\]\]\s*/g, "")
+      .trim();
+  }
+
+  function renderAiBubble(bubble, rawText) {
+    const text = stripHiddenTags(rawText);
+    const lines = text.split("\n").map(s => s.trim()).filter(Boolean);
+    const qLines = lines.filter(l => /^Fråga:/i.test(l)).map(l => l.replace(/^Fråga:\s*/i, "").trim());
+    const fbLines = lines.filter(l => /^Återkoppling:/i.test(l)).map(l => l.replace(/^Återkoppling:\s*/i, "").trim());
+
+    bubble.innerHTML = "";
+
+    const title = document.createElement("span");
+    title.className = "bubble-title";
+    title.textContent = "AI";
+    bubble.appendChild(title);
+
+    if (!qLines.length && !fbLines.length) {
+      const body = document.createElement("div");
+      body.textContent = text;
+      bubble.appendChild(body);
+      return;
+    }
+
+    if (qLines.length) {
+      const q = document.createElement("div");
+      q.style.fontWeight = "700";
+      q.textContent = qLines[qLines.length - 1];
+      bubble.appendChild(q);
+    }
+
+    if (fbLines.length) {
+      const fb = document.createElement("div");
+      fb.style.marginTop = qLines.length ? "8px" : "0";
+      fb.textContent = fbLines[fbLines.length - 1];
+      bubble.appendChild(fb);
+    }
+  }
+
+  function appendBubble(text, type) {
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble", type === "ai" ? "ai-bubble" : "student-bubble");
+
+    if (type === "ai") {
+      renderAiBubble(bubble, text);
+    } else {
+      bubble.textContent = text;
+    }
+
+    outputEl.appendChild(bubble);
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+
+  function showThinking() {
+    if (thinkingBubble) thinkingBubble.remove();
+    const bubble = document.createElement("div");
+    bubble.classList.add("chat-bubble", "ai-bubble");
+    const title = document.createElement("span");
+    title.className = "bubble-title";
+    title.textContent = "AI";
+    bubble.appendChild(title);
+    bubble.appendChild(document.createTextNode("AI tänker…"));
+    outputEl.appendChild(bubble);
+    outputEl.scrollTop = outputEl.scrollHeight;
+    thinkingBubble = bubble;
+  }
+
+  function replaceThinkingWith(text) {
+    if (thinkingBubble) {
+      thinkingBubble.innerHTML = "";
+      renderAiBubble(thinkingBubble, text);
+      thinkingBubble = null;
+    } else {
+      appendBubble(text, "ai");
+    }
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+
+  function getAccessKey() {
+    let k = sessionStorage.getItem("APP_ACCESS_KEY");
+    if (!k) {
+      k = prompt("Skriv klasskoden för AI:");
+      if (k) sessionStorage.setItem("APP_ACCESS_KEY", k);
+    }
+    return k || "";
+  }
+
+  function parseRetrySeconds(errMsg) {
+    const m = String(errMsg).match(/retry in\s+([\d.]+)s/i);
+    if (m) return Number(m[1]);
+    return null;
+  }
+
+  function stopCooldown() {
+    if (cooldownTimer) clearInterval(cooldownTimer);
+    cooldownTimer = null;
+    cooldownLeft = 0;
   }
 
   function startCooldown(seconds) {
@@ -470,18 +915,6 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
     }, 1000);
   }
 
-  function stopCooldown() {
-    if (cooldownTimer) clearInterval(cooldownTimer);
-    cooldownTimer = null;
-    cooldownLeft = 0;
-  }
-
-  function parseRetrySeconds(errMsg) {
-    const m = String(errMsg).match(/retry in\s+([\d.]+)s/i);
-    if (m) return Number(m[1]);
-    return null;
-  }
-
   async function callAI(promptText) {
     const accessKey = getAccessKey();
     if (!accessKey) throw new Error("Ingen klasskod angiven.");
@@ -493,7 +926,7 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
         accessKey,
         subject: AI_SUBJECT,
         area: AI_AREA,
-        maxOutputTokens: 900,
+        maxOutputTokens: 950,
         temperature: 0.2,
         prompt: promptText
       })
@@ -518,23 +951,146 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
         const secs = parseRetrySeconds(msg);
         if (secs) startCooldown(secs);
       }
+
       throw new Error(msg);
     }
 
     return d.text;
   }
 
+  function renderCurrentAreaProgress() {
+    const code = progressState.currentArea;
+    const percent = Math.max(0, Math.min(100, Number(progressState.currentAreaProgress || 0)));
+
+    if (!code || !PROG_LABELS[code]) {
+      currentAreaLabelEl.textContent = "Inte startat ännu";
+      currentAreaPercentEl.textContent = "0%";
+      currentAreaFillEl.style.width = "0%";
+      renderGlossary(null);
+      return;
+    }
+
+    currentAreaLabelEl.textContent = PROG_LABELS[code];
+    currentAreaPercentEl.textContent = percent + "%";
+    currentAreaFillEl.style.width = percent + "%";
+    renderGlossary(code);
+  }
+
+  function renderOverview() {
+    overviewListEl.innerHTML = "";
+    for (const [key, label] of Object.entries(PROG_LABELS)) {
+      const done = progressState.doneMap[key] === 1;
+      const item = document.createElement("div");
+      item.className = "overview-item" + (done ? " done" : "");
+      item.innerHTML = `<span class="state">${done ? "✅" : "⏳"}</span>${label}`;
+      overviewListEl.appendChild(item);
+    }
+  }
+
+  function renderGlossary(areaCode) {
+    glossaryListEl.innerHTML = "";
+    const selectedLanguage = (supportLanguageEl.value || "").trim();
+
+    glossaryTitleEl.textContent = selectedLanguage
+      ? `Stödord för området. Valt språk: ${selectedLanguage}`
+      : "Stödord för området";
+
+    const items = [
+      ...GLOSSARY.common,
+      ...(areaCode && GLOSSARY[areaCode] ? GLOSSARY[areaCode] : [])
+    ];
+
+    for (const item of items) {
+      const div = document.createElement("div");
+      div.className = "glossary-item";
+      div.innerHTML = `
+        <div class="glossary-term">${item.term}</div>
+        <div class="glossary-def">${item.def}</div>
+      `;
+      glossaryListEl.appendChild(div);
+    }
+
+    if (!items.length) {
+      const div = document.createElement("div");
+      div.className = "glossary-note";
+      div.textContent = "Stödord visas här när träningen kommit igång.";
+      glossaryListEl.appendChild(div);
+    }
+  }
+
+  function updateProgressFromAI(aiRaw, fallbackArea = null) {
+    const parsedMap = parseProgressTag(aiRaw);
+    const parsedArea = parseAreaTag(aiRaw) || fallbackArea || progressState.currentArea || getInitialAreaCode();
+    const parsedAreaProgress = parseAreaProgressTag(aiRaw);
+
+    if (parsedMap) {
+      progressState.doneMap = { ...progressState.doneMap, ...parsedMap };
+    }
+
+    if (parsedArea && PROG_LABELS[parsedArea]) {
+      progressState.currentArea = parsedArea;
+    }
+
+    if (parsedAreaProgress !== null) {
+      progressState.currentAreaProgress = parsedAreaProgress;
+    } else if (progressState.currentArea && progressState.doneMap[progressState.currentArea] === 1) {
+      progressState.currentAreaProgress = 100;
+    }
+
+    saveProgressState();
+    renderOverview();
+    renderCurrentAreaProgress();
+  }
+
+  function savePreferredLanguage() {
+    const value = (supportLanguageEl.value || "").trim();
+    localStorage.setItem(LANGUAGE_KEY, value);
+    languageStatusEl.textContent = value
+      ? `Språket "${value}" är sparat på denna enhet.`
+      : "Inget språk är sparat.";
+    renderGlossary(progressState.currentArea);
+  }
+
+  function loadPreferredLanguage() {
+    const value = localStorage.getItem(LANGUAGE_KEY) || "";
+    supportLanguageEl.value = value;
+    languageStatusEl.textContent = value
+      ? `Språket "${value}" är sparat på denna enhet.`
+      : "";
+  }
+
+  function resetAll() {
+    conversation = "";
+    started = false;
+    outputEl.innerHTML = "";
+    statusEl.textContent = "";
+    inputEl.value = "";
+    thinkingBubble = null;
+    sessionStorage.removeItem("APP_ACCESS_KEY");
+    stopCooldown();
+    resetProgressState();
+    inputEl.focus();
+  }
+
+  // ====== START / SEND ======
   async function startTraining() {
     if (busy) return;
 
-    initProgressUI();
     outputEl.innerHTML = "";
     inputEl.value = "";
     inputEl.focus();
 
+    const initialArea = getInitialAreaCode();
+    progressState.currentArea = initialArea;
+    progressState.currentAreaProgress = 0;
+    saveProgressState();
+    renderCurrentAreaProgress();
+
     setBusy(true, "Läser in mål från checklista...");
     checklistGoalText = await loadChecklistGoals();
-    if (!checklistGoalText.includes("kunde inte")) statusEl.textContent = "✔ Mål laddade från checklista";
+    if (!checklistGoalText.includes("kunde inte")) {
+      statusEl.textContent = "✔ Mål laddade från checklista";
+    }
 
     const trainingPrompt = buildTrainingPrompt();
 
@@ -543,19 +1099,17 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
 
     try {
       const aiRaw = await callAI(trainingPrompt);
-      const prog = parseProgressTag(aiRaw);
 
       conversation =
         `ÄMNE: ${AI_SUBJECT}\nOMRÅDE: ${AI_AREA}\n` +
-        `NIVÅ: ${levelEl.value}\nFOKUS: ${focusEl.value}\nSTARTOMRÅDE: ${startAreaEl.value}\n` +
+        `NIVÅ: ${LEVEL_TEXT[levelEl.value]}\nSTARTOMRÅDE: ${getSelectedAreaLabel()}\n` +
         `MÅL (internt):\n${checklistGoalText}\n\n` +
         "AI: " + aiRaw;
 
       started = true;
       setBusy(false, "✅ Träning startad");
-
       replaceThinkingWith(aiRaw);
-      if (prog) setProgressFromMap(prog);
+      updateProgressFromAI(aiRaw, initialArea);
 
     } catch (err) {
       if (!cooldownTimer) setBusy(false, "⚠️ " + err.message);
@@ -591,13 +1145,12 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
         "\nAI:";
 
       const aiRaw = await callAI(promptText);
-      const prog = parseProgressTag(aiRaw);
 
       conversation = clampContext(conversation + "\n\nElev: " + studentText + "\nAI: " + aiRaw);
 
       setBusy(false, "✅");
       replaceThinkingWith(aiRaw);
-      if (prog) setProgressFromMap(prog);
+      updateProgressFromAI(aiRaw, progressState.currentArea || getInitialAreaCode());
 
     } catch (err) {
       if (!cooldownTimer) setBusy(false, "⚠️ " + err.message);
@@ -613,9 +1166,10 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
       statusEl.textContent = "ℹ️ Starta träningen först.";
       return;
     }
+
     const startArea = startAreaEl.value;
-    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
-    sendStudentAnswer("Jag vill ha en ledtråd (inte facit). Ställ en följdfråga som hjälper mig vidare." + extra);
+    const extra = (startArea !== "all") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Jag vill ha en ledtråd utan facit. Hjälp mig vidare med en kort ledtråd och en följdfråga." + extra);
   }
 
   function askNewQuestion() {
@@ -623,18 +1177,24 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
       statusEl.textContent = "ℹ️ Starta träningen först.";
       return;
     }
+
     const startArea = startAreaEl.value;
-    const extra = (startArea !== "auto") ? ` Håll dig till område ${startArea}.` : "";
-    sendStudentAnswer("Ge en ny fråga på samma NIVÅ och FOKUS. Ingen förklaring, bara en fråga som slutar med ?." + extra);
+    const extra = (startArea !== "all") ? ` Håll dig till område ${startArea}.` : "";
+    sendStudentAnswer("Ge en ny fråga på samma nivå. Bara nästa fråga, ingen lång förklaring." + extra);
   }
 
+  // ====== EVENTS ======
   startBtn.addEventListener("click", startTraining);
   sendBtn.addEventListener("click", () => sendStudentAnswer());
   hintBtn.addEventListener("click", askHint);
   newQBtn.addEventListener("click", askNewQuestion);
-  resetBtn.addEventListener("click", () => {
-    if (!busy) resetAll();
+  resetBtn.addEventListener("click", () => { if (!busy) resetAll(); });
+
+  toggleInfoBtn.addEventListener("click", () => {
+    infoPanel.classList.toggle("open");
   });
+
+  saveLanguageBtn.addEventListener("click", savePreferredLanguage);
 
   inputEl.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -643,13 +1203,32 @@ DIN ALLRA FÖRSTA RAD ska vara: "Fråga: ..." och frågan ska handla om område 
     }
   });
 
+  startAreaEl.addEventListener("change", () => {
+    if (!started) {
+      progressState.currentArea = getInitialAreaCode();
+      progressState.currentAreaProgress = 0;
+      saveProgressState();
+      renderCurrentAreaProgress();
+    }
+  });
+
   window.addEventListener("load", () => {
-    initProgressUI();
+    loadProgressState();
+    loadPreferredLanguage();
+    renderOverview();
+    renderCurrentAreaProgress();
+
+    if (!progressState.currentArea) {
+      progressState.currentArea = getInitialAreaCode();
+      progressState.currentAreaProgress = 0;
+      saveProgressState();
+      renderCurrentAreaProgress();
+    }
+
     inputEl.focus();
   });
 
   inputEl.addEventListener("click", () => inputEl.focus());
 </script>
-
 </body>
 </html>
