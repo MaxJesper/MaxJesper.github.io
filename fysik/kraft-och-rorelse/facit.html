@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Facit – Krafter och rörelse (Utskrift)</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/prov.css" />
+<meta charset="UTF-8">
+<title>Facit – Krafter och rörelse</title>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prov.css">
 </head>
-
 <body>
-  <header class="fysik-header">
-    <h1>FACIT</h1>
-    <p>Övningsprov – Krafter och rörelse</p>
-  </header>
 
-  <main>
-    <div id="prov-container"></div>
-  </main>
+<header class="fysik-header">
+<h1>FACIT</h1>
+<p>Övningsprov – Krafter och rörelse</p>
+</header>
 
-  <script src="/js/render-prov.js"></script>
-  <script>
-    renderProv({
-      jsonPath: "./data/ovningsprov.json",
-      mountId: "prov-container",
-      mode: "print-facit"
-    });
+<main>
 
-    function autoPrintAndClose() {
-      window.addEventListener("afterprint", () => {
-        try { window.close(); } catch (e) {}
-      });
-      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
-      window.print();
-    }
+<div class="prov-actions">
+  <a href="./ovningsprov.html" class="subject-btn">← Tillbaka till prov</a>
+  <a href="./facit-print.html" target="_blank" rel="noopener"
+     class="subject-btn print-green">🖨️ Skriv ut facit</a>
+</div>
 
-    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
-  </script>
+<div id="prov-container"></div>
+
+</main>
+
+<script src="/js/render-prov.js"></script>
+<script>
+renderProv({
+  jsonPath: "./data/ovningsprov.json",
+  mountId: "prov-container",
+  mode: "facit"
+});
+</script>
+
 </body>
 </html>
