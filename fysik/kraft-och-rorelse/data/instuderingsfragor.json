@@ -1,1 +1,444 @@
-
+{
+  "groups": [
+    {
+      "title": "Tyngd, massa och gravitation",
+      "items": [
+        {
+          "q": "Vad är skillnaden mellan massa och tyngd?",
+          "a": "Massa anger hur mycket materia något innehåller och mäts i kilogram (kg). Tyngd är kraften som gravitationen drar med och mäts i newton (N).",
+          "lines": 4
+        },
+        {
+          "q": "Vad menas med gravitation?",
+          "a": "Gravitation är dragningskraft mellan massor. Jordens gravitation kallas ofta tyngdkraft.",
+          "lines": 3
+        },
+        {
+          "q": "Hur är tyngdkraften alltid riktad?",
+          "a": "Tyngdkraften är riktad mot jordens centrum.",
+          "lines": 2
+        },
+        {
+          "q": "I vilken enhet anges kraft?",
+          "a": "Kraft anges i newton (N).",
+          "lines": 2
+        },
+        {
+          "q": "Vad kallas ett annat namn på en kraftmätare?",
+          "a": "Dynamometer.",
+          "lines": 2
+        },
+        {
+          "q": "Hur stor är tyngdkraften på 1 kg på jorden?",
+          "a": "Ungefär 10 N.",
+          "lines": 2
+        },
+        {
+          "q": "Hur stor är tyngdkraften på 0,65 kg på jorden?",
+          "a": "Ungefär 6,5 N, eftersom 0,65 × 10 ≈ 6,5.",
+          "lines": 3
+        },
+        {
+          "q": "Hur stor är tyngdkraften på 10 kg på jorden?",
+          "a": "Ungefär 100 N.",
+          "lines": 2
+        },
+        {
+          "q": "Skriv sambandet mellan tyngdkraft, massa och tyngdacceleration.",
+          "a": "F = m × g",
+          "lines": 2
+        },
+        {
+          "q": "Vad betyder bokstaven g i formeln F = m × g?",
+          "a": "g är tyngdacceleration eller tyngdfältets styrka. På jorden räknar man ofta med ungefär 10 N/kg.",
+          "lines": 3
+        },
+        {
+          "q": "Beräkna tyngdkraften på en person som har massan 50 kg på jorden.",
+          "a": "F = m × g = 50 × 10 = 500 N.",
+          "lines": 5
+        },
+        {
+          "q": "Varför kan man säga att en astronaut har samma massa i rymden men ändå känner sig tyngdlös?",
+          "a": "Massan förändras inte, men astronauten kan befinna sig i fritt fall och upplever därför tyngdlöshet.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Tröghet och rörelse",
+      "items": [
+        {
+          "q": "Vad säger tröghetslagen?",
+          "a": "Alla föremål behåller sin rörelse eller stannar i vila om de inte påverkas av en kraft. Bara en kraft kan ändra fart eller riktning på något.",
+          "lines": 5
+        },
+        {
+          "q": "Vad menas med en likformig rörelse?",
+          "a": "En rörelse som går rakt fram i lika stora steg hela tiden, alltså med konstant hastighet.",
+          "lines": 3
+        },
+        {
+          "q": "Vad menas med en accelererad rörelse?",
+          "a": "En rörelse där farten ökar.",
+          "lines": 2
+        },
+        {
+          "q": "Vad menas med en retarderad rörelse?",
+          "a": "En rörelse där farten minskar.",
+          "lines": 2
+        },
+        {
+          "q": "Ge ett vardagligt exempel på tröghet.",
+          "a": "Om en bil bromsar hastigt fortsätter kroppen framåt. Därför behövs bilbälte och krockkudde.",
+          "lines": 4
+        },
+        {
+          "q": "Varför kastas man åt sidan i en buss som svänger?",
+          "a": "Kroppen vill fortsätta i samma riktning som tidigare på grund av tröghet, medan bussen svänger.",
+          "lines": 4
+        },
+        {
+          "q": "Skriv sambandet för medelfart.",
+          "a": "Medelfart = sträcka / tid",
+          "lines": 2
+        },
+        {
+          "q": "Vilken medelfart i km/h håller en bil som kör 180 km på 3 timmar?",
+          "a": "Medelfart = 180 / 3 = 60 km/h.",
+          "lines": 4
+        },
+        {
+          "q": "Vilken medelfart i m/s håller en löpare som springer 100 meter på 10 sekunder?",
+          "a": "Medelfart = 100 / 10 = 10 m/s.",
+          "lines": 4
+        },
+        {
+          "q": "Hur kan en lastbil som kan köra 100 km/h förlora ett 100-meterslopp mot en sprinter som bara springer 38 km/h?",
+          "a": "Lastbilen behöver tid för att accelerera från stillastående. Sprintern kan därför hinna före på en kort sträcka trots lägre toppfart.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Krafter, fritt fall och F = m × a",
+      "items": [
+        {
+          "q": "Vad menas med fritt fall?",
+          "a": "Fritt fall är när något faller och man bortser från luftmotståndet, så att det bara är gravitationen som verkar.",
+          "lines": 4
+        },
+        {
+          "q": "Varför faller en tung kula och en lätt kula lika snabbt i fritt fall?",
+          "a": "Om man bortser från luftmotstånd påverkas båda av gravitationen så att de får samma acceleration nedåt.",
+          "lines": 4
+        },
+        {
+          "q": "Beskriv ett experiment som visar fritt fall.",
+          "a": "I ett lufttomt rör faller en fjäder och en kula lika snabbt. Då ser man att det är luftmotståndet som annars bromsar fjädern.",
+          "lines": 5
+        },
+        {
+          "q": "Vad kan krafter göra?",
+          "a": "Krafter kan hålla ihop materia, ändra form på saker, ändra fart och ändra rörelseriktning.",
+          "lines": 4
+        },
+        {
+          "q": "Vilken kraft håller månen kvar i sin bana runt jorden?",
+          "a": "Gravitationen eller jordens dragningskraft.",
+          "lines": 2
+        },
+        {
+          "q": "Skriv sambandet mellan kraft, massa och acceleration.",
+          "a": "F = m × a",
+          "lines": 2
+        },
+        {
+          "q": "Vad betyder bokstaven a i formeln F = m × a?",
+          "a": "a betyder acceleration, alltså hur snabbt hastigheten förändras.",
+          "lines": 3
+        },
+        {
+          "q": "Hur påverkas accelerationen om kraften ökar men massan är oförändrad?",
+          "a": "Accelerationen ökar.",
+          "lines": 2
+        },
+        {
+          "q": "Hur påverkas accelerationen om massan ökar men kraften är oförändrad?",
+          "a": "Accelerationen minskar.",
+          "lines": 2
+        },
+        {
+          "q": "Beräkna kraften om massan är 5 kg och accelerationen är 2 m/s².",
+          "a": "F = m × a = 5 × 2 = 10 N.",
+          "lines": 5
+        },
+        {
+          "q": "Beräkna kraften om massan är 12 kg och accelerationen är 3 m/s².",
+          "a": "F = 12 × 3 = 36 N.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Friktion",
+      "items": [
+        {
+          "q": "Vad är friktion?",
+          "a": "Friktion är en kraft som uppstår när två ytor gnids mot varandra eller när ett föremål dras eller rullar över en yta.",
+          "lines": 4
+        },
+        {
+          "q": "Vad kallas kraften som gör att det är trögt att dra något över golvet?",
+          "a": "Friktionskraft.",
+          "lines": 2
+        },
+        {
+          "q": "Vilken typ av ytor ger stor friktion?",
+          "a": "Skrovliga eller ojämna ytor ger stor friktion.",
+          "lines": 2
+        },
+        {
+          "q": "Hur påverkas friktionen om tyngden ökar?",
+          "a": "Friktionen blir större om tyngden ökar.",
+          "lines": 2
+        },
+        {
+          "q": "Hur påverkas friktionen av stödytans storlek när man drar en kloss över ett bord?",
+          "a": "Stödytans storlek påverkar inte friktionen nämnvärt i det här sammanhanget.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är skillnaden mellan släpfriktion och rullfriktion?",
+          "a": "Släpfriktion uppstår när något släpas över en yta och är större. Rullfriktion uppstår när något rullar och är mindre.",
+          "lines": 4
+        },
+        {
+          "q": "Ge exempel på hur man kan minska friktionen.",
+          "a": "Man kan använda hjul, kullager, smörjolja, släta ytor, luftkudde eller starka magnetfält.",
+          "lines": 4
+        },
+        {
+          "q": "Ge exempel på hur man kan öka friktionen.",
+          "a": "Man kan använda sand, dubbar, räfflade däck, räfflade handtag eller talk.",
+          "lines": 4
+        },
+        {
+          "q": "Varför är det enklare att knuffa bort en stol med hjul än en vanlig stol utan hjul?",
+          "a": "Eftersom rullfriktion är mindre än släpfriktion.",
+          "lines": 2
+        },
+        {
+          "q": "Vad är vattenplaning?",
+          "a": "Vattenplaning är när vatten samlas mellan däck och väg så att friktionen minskar kraftigt och bilen börjar glida.",
+          "lines": 4
+        },
+        {
+          "q": "Nämn ett par situationer där friktion är bra och nödvändig.",
+          "a": "När vi går, cyklar, bromsar, klättrar eller skriver behövs friktion.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Balans, tyngdpunkt och stödyta",
+      "items": [
+        {
+          "q": "Vad menas med tyngdpunkt?",
+          "a": "Tyngdpunkten är den punkt där man kan tänka sig att ett föremåls tyngd är samlad.",
+          "lines": 3
+        },
+        {
+          "q": "Vad menas med stödyta?",
+          "a": "Stödytan är den yta ett föremål eller en person vilar på.",
+          "lines": 3
+        },
+        {
+          "q": "Hur ska ett föremål vara för att stå stadigt?",
+          "a": "Det ska ha låg tyngdpunkt och stor stödyta.",
+          "lines": 2
+        },
+        {
+          "q": "Varför är det svårare att stå på ett ben än på två?",
+          "a": "Därför att stödytan blir mindre.",
+          "lines": 2
+        },
+        {
+          "q": "Varför står Eiffeltornet stadigt?",
+          "a": "Det står stadigt eftersom det har stor stödyta och låg tyngdpunkt.",
+          "lines": 3
+        },
+        {
+          "q": "Vilken står stadigast: en full läskflaska, en halvfull eller en tom? Förklara kort.",
+          "a": "En halvfull flaska kan stå stadigast eftersom tyngdpunkten ligger lägre än hos en full flaska, samtidigt som den har mer tyngd än en tom.",
+          "lines": 5
+        },
+        {
+          "q": "Hur kan du hålla balansen bättre om du fjällvandrar med en tung ryggsäck?",
+          "a": "Man kan gå bredare, böja sig framåt eller använda stavar så att stödytan blir större och tyngdpunkten hålls över stödytan.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Enkla maskiner och hävstång",
+      "items": [
+        {
+          "q": "Vad menas med enkla maskiner?",
+          "a": "Enkla maskiner är verktyg som gör det lättare att utföra arbete genom att man vinner kraft men förlorar väg.",
+          "lines": 4
+        },
+        {
+          "q": "Skriv mekanikens gyllene regel.",
+          "a": "Det man vinner i kraft, förlorar man i väg.",
+          "lines": 2
+        },
+        {
+          "q": "Ge två exempel på enkla maskiner.",
+          "a": "Till exempel sax, tång, kapsylöppnare, skruv, ramp eller hävstång.",
+          "lines": 3
+        },
+        {
+          "q": "Varför fungerar en ramp som en enkel maskin?",
+          "a": "Man behöver mindre kraft för att komma upp, men vägen blir längre.",
+          "lines": 3
+        },
+        {
+          "q": "Hur kan en skruv räknas som en enkel maskin?",
+          "a": "En skruv fungerar som ett lutande plan som är hoprullat.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är en hävstång?",
+          "a": "En hävstång är en stång som vrids kring en vridpunkt och gör det möjligt att vinna kraft.",
+          "lines": 3
+        },
+        {
+          "q": "Skriv hävstångslagen.",
+          "a": "Vänster hävarm × vänster kraft = höger hävarm × höger kraft.",
+          "lines": 3
+        },
+        {
+          "q": "Tyra väger 40 kg och lillebror väger 10 kg. Om Tyra sitter 0,5 meter från vridpunkten, hur långt från vridpunkten ska lillebror sitta för jämvikt?",
+          "a": "40 × 0,5 = 20. Då måste 10 × avstånd = 20, alltså ska lillebror sitta 2,0 meter från vridpunkten.",
+          "lines": 6
+        },
+        {
+          "q": "Varför behöver man mindre kraft om man håller längst ut på en blocknyckel än nära muttern?",
+          "a": "Hävarmen blir längre, och då behövs mindre kraft för samma vridning.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Kraftpilar, resultant, normalkraft och reaktionskraft",
+      "items": [
+        {
+          "q": "Hur ritar man krafter?",
+          "a": "Man ritar kraftpilar. Pilarna visar kraftens riktning, storlek och angreppspunkt.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är en resultant?",
+          "a": "En resultant är den sammanlagda kraften av två eller flera krafter.",
+          "lines": 3
+        },
+        {
+          "q": "Vad gäller om resultanten till alla krafter är noll?",
+          "a": "Föremålet står stilla eller rör sig med konstant hastighet.",
+          "lines": 3
+        },
+        {
+          "q": "Vilken kraft hindrar en sten från att falla genom marken eller ett bord?",
+          "a": "Normalkraften.",
+          "lines": 2
+        },
+        {
+          "q": "Vad är normalkraft?",
+          "a": "Normalkraft är den motkraft från underlaget som håller emot uppåt så att ett föremål inte faller genom golvet eller bordet.",
+          "lines": 4
+        },
+        {
+          "q": "Vad är reaktionskraft?",
+          "a": "Reaktionskraft är en lika stor kraft i motsatt riktning som uppstår samtidigt som en annan kraft.",
+          "lines": 4
+        },
+        {
+          "q": "Varför far en uppblåst ballong iväg när man släpper den utan att knyta den?",
+          "a": "Luften pressas ut bakåt och ger en reaktionskraft som driver ballongen framåt.",
+          "lines": 4
+        },
+        {
+          "q": "Hur ser krafterna ut på en låda som dras rakt fram med jämn fart?",
+          "a": "Dragkraft framåt, friktionskraft bakåt, tyngdkraft nedåt och normalkraft uppåt. Resultanten är noll.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Newtons lagar, Galilei och centralrörelse",
+      "items": [
+        {
+          "q": "Vilken vetenskapsman visade tidigt hur viktigt experiment är i naturvetenskapen?",
+          "a": "Galileo Galilei.",
+          "lines": 2
+        },
+        {
+          "q": "Vad innebär ett naturvetenskapligt arbetssätt?",
+          "a": "Man undersöker genom observationer, hypoteser, experiment och slutsatser som kan prövas.",
+          "lines": 4
+        },
+        {
+          "q": "Vilka är Newtons tre lagar?",
+          "a": "Första lagen: tröghetslagen. Andra lagen: F = m × a. Tredje lagen: kraft och motkraft är lika stora men motriktade.",
+          "lines": 5
+        },
+        {
+          "q": "Vad kallas Newtons första lag?",
+          "a": "Tröghetslagen.",
+          "lines": 2
+        },
+        {
+          "q": "Vad kallas Newtons andra lag?",
+          "a": "Accelerationslagen eller kraftekvationen.",
+          "lines": 2
+        },
+        {
+          "q": "Vad kallas Newtons tredje lag?",
+          "a": "Lagen om kraft och motkraft.",
+          "lines": 2
+        },
+        {
+          "q": "Hur fungerar en krockkudde?",
+          "a": "Den ökar tiden när kroppen bromsas upp, så att kraften och skadan blir mindre.",
+          "lines": 4
+        },
+        {
+          "q": "Vad är en centralrörelse?",
+          "a": "En rörelse som går runt ett centrum.",
+          "lines": 2
+        },
+        {
+          "q": "Åt vilket håll är centripetalkraften riktad?",
+          "a": "Mot centrum.",
+          "lines": 2
+        },
+        {
+          "q": "Vad händer om en person på en karusell plötsligt släpper taget?",
+          "a": "Personen fortsätter ungefär rakt fram i den riktning som personen hade just då, alltså tangent till cirkelbanan.",
+          "lines": 4
+        },
+        {
+          "q": "Vad menas med centrifugalkraft?",
+          "a": "Det är en skenbar kraft som man upplever i en roterande rörelse, som om något pressas utåt.",
+          "lines": 4
+        },
+        {
+          "q": "Hur blir tvätten torrare i en centrifug?",
+          "a": "Vattnet fortsätter i sin riktning ut genom hålen i trumman när trumman snurrar snabbt, medan kläderna hålls kvar.",
+          "lines": 4
+        }
+      ]
+    }
+  ]
+}
