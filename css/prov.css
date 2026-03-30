@@ -1,5 +1,5 @@
 /* =====================================================
-   ÖVNINGSPROV – MATERIA
+   ÖVNINGSPROV – KRAFT OCH RÖRELSE / MATERIA / GENERELL
    ===================================================== */
 
 /* ===== Åtgärdsknappar ===== */
@@ -8,7 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .prov-actions a.print-green {
@@ -22,16 +22,16 @@
 /* ===== Sektioner ===== */
 
 .prov-section {
-  margin: 20px 0 26px 0;
+  margin: 18px 0 22px 0;
 }
 
 .prov-title {
   font-size: 18px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .prov-item {
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .prov-q {
@@ -63,17 +63,13 @@
   height: 28px !important;
   min-width: 28px !important;
   max-width: 28px !important;
-
   padding: 0 !important;
   margin: 0 !important;
-
   border: 1px solid #000;
   border-radius: 4px;
-
   text-align: center;
   font-size: 16px;
   line-height: 28px;
-
   display: inline-block !important;
   box-sizing: border-box !important;
 }
@@ -83,14 +79,11 @@
   flex: 0 0 22px !important;
   width: 22px !important;
   height: 22px !important;
-
   border: 1px solid #000;
   border-radius: 4px;
-
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-
   box-sizing: border-box !important;
 }
 
@@ -99,7 +92,7 @@
 }
 
 /* =====================================================
-   DIGITALA SVAR (vanliga frågor)
+   DIGITALA SVAR
    ===================================================== */
 
 .prov-answer {
@@ -124,7 +117,7 @@
 }
 
 /* =====================================================
-   UTSKRIFT – linjer
+   UTSKRIFT – elevsvar / linjer
    ===================================================== */
 
 .prov-lines .prov-line {
@@ -137,14 +130,16 @@
   border: 1px solid #bbb;
   padding: 8px 10px;
   margin-top: 6px;
+  min-height: 18px;
+  white-space: normal;
 }
 
 /* =====================================================
-   Namn / Klass-rader (utskrift)
+   Namn / Klass-rader
    ===================================================== */
 
 .print-note {
-  margin: 12px 0 18px 0;
+  margin: 10px 0 14px 0;
   font-size: 16px;
 }
 
@@ -152,7 +147,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 8px;
-  margin-right: 22px;
+  margin-right: 18px;
 }
 
 .print-label {
@@ -174,7 +169,7 @@
 }
 
 /* =====================================================
-   PRINT – A4 OPTIMERING + SIDBRYTNINGAR
+   PRINT – A4 OPTIMERING
    ===================================================== */
 
 @media print {
@@ -189,6 +184,7 @@
     line-height: 1.35;
   }
 
+  /* Dölj allt onödigt */
   .hamburger,
   #side-menu,
   .prov-actions,
@@ -196,10 +192,14 @@
     display: none !important;
   }
 
+  /* Header mer kompakt, som instudering */
   header {
     min-height: auto !important;
     padding: 8mm 0 4mm 0 !important;
+    margin: 0 !important;
     background: none !important;
+    page-break-after: avoid;
+    break-after: avoid;
   }
 
   header::before {
@@ -214,29 +214,50 @@
     margin: 0 !important;
   }
 
+  main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .print-note {
+    margin: 10px 0 12px 0;
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
   .prov-section {
-    margin: 12px 0 16px 0;
-    page-break-inside: avoid;
+    margin: 10px 0 12px 0;
+    page-break-before: auto !important;
+    break-before: auto !important;
   }
 
   .prov-title {
+    margin-bottom: 6px;
+    font-size: 13pt;
     page-break-after: avoid;
+    break-after: avoid;
   }
 
   .prov-item {
+    margin: 8px 0 10px 0;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
 
-  /* Starta Del 2 och Del 3 på ny sida (robust) */
+  /* Ta bort artificiella försättssidor */
+  .prov-section[data-section-index="0"],
   .prov-section[data-section-index="1"],
-  .prov-section[data-section-index="2"] {
-    break-before: page;
-    page-break-before: always;
+  .prov-section[data-section-index="2"],
+  .prov-section[data-section-index="3"],
+  .prov-section[data-section-index="4"],
+  .prov-section[data-section-index="5"] {
+    page-break-before: auto !important;
+    break-before: auto !important;
   }
 
   /* Dölj digital input på utskrift */
-  .match-input {
+  .match-input,
+  .prov-answer {
     display: none !important;
   }
-
 }
