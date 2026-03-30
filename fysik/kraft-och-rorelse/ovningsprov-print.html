@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Övningsprov – Krafter och rörelse (Utskrift)</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/prov.css" />
+</head>
+
+<body>
+  <header class="fysik-header">
+    <h1>Övningsprov</h1>
+    <p>Krafter och rörelse</p>
+  </header>
+
+  <main>
+    <div class="print-note">
+      <div class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </div>
+      <div class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </div>
+    </div>
+
+    <div id="prov-container"></div>
+  </main>
+
+  <script src="/js/render-prov.js"></script>
+  <script>
+    renderProv({
+      jsonPath: "./data/ovningsprov.json",
+      mountId: "prov-container",
+      mode: "print-exam"
+    });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
+  </script>
+</body>
+</html>
