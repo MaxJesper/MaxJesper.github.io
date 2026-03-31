@@ -543,10 +543,10 @@
       const mode = els.modeSelect.value;
       let type = els.taskTypeSelect.value;
 
-      if(type === "mixed"){
+     if(type === "mixed"){
         type = mode === "mass"
           ? randFrom(["distance", "mass"])
-          : randFrom(["distance", "mass", "force"]);
+          : randFrom(["distance", "mass", "force", "convert_force"]);
       }
 
       if(mode === "mass" && type === "force"){
@@ -712,6 +712,56 @@
         };
       }
 
+      if(type === "convert_force"){
+        const leftMass = randFrom([10, 15, 20, 25, 30, 40, 50]);
+        const leftDistance = randFrom(distances);
+        const rightForce = randFrom([100, 150, 200, 250, 300, 400, 500]);
+      
+        const leftForce = leftMass * g;
+        const correctDistance = round1((leftForce * leftDistance) / rightForce);
+      
+        if((level === 1 && !Number.isInteger(correctDistance)) || correctDistance <= 0 || correctDistance > 4){
+          return generateTask();
+        }
+      
+        task = {
+          type,
+          formulaType: "force",
+          unknown: "distance",
+          answer: correctDistance,
+          tolerance: 0.05,
+          left: {
+            distance: leftDistance,
+            kind: "weight",
+            display: `${leftMass} kg`
+          },
+          right: {
+            distance: null,
+            kind: "person",
+            display: `${rightForce} N`
+          },
+          compareCorrect: function(userValue){
+            const leftSide = leftForce * leftDistance;
+            const rightSide = rightForce * userValue;
+            return { leftSide, rightSide };
+          },
+          question: `På vänster sida finns en låda med massan ${leftMass} kg på avståndet ${leftDistance} m från vridpunkten. På höger sida påverkar en person gungbrädan med kraften ${rightForce} N. Hur långt från vridpunkten måste personen stå för att gungbrädan ska vara i jämvikt?`,
+          unit: "m",
+          answerLabel: "Avstånd:",
+          solution: `
+            Räkna först om massan till tyngdkraft:<br>
+            F = m · g<br>
+            F = ${leftMass} kg · 10 N/kg = ${leftForce} N<br><br>
+      
+            Använd sedan:<br>
+            <strong>kraft × avstånd = kraft × avstånd</strong><br>
+            ${leftForce} N · ${leftDistance} m = ${rightForce} N · x m<br>
+            ${leftForce * leftDistance} Nm = ${rightForce} N · x m<br>
+            x = ${leftForce * leftDistance} Nm / ${rightForce} N = <strong>${correctDistance} m</strong>
+          `
+        };
+      }
+      
       return task;
     }
 
