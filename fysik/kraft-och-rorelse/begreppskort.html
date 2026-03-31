@@ -78,13 +78,6 @@
       color: #111;
     }
 
-    .btn.locked{
-      background: #d1d5db;
-      color: #555;
-      border-color: #bdbdbd;
-      cursor: not-allowed;
-    }
-
     .btn:active{ transform: translateY(1px); }
 
     .game-title{
@@ -108,18 +101,10 @@
       margin-bottom: 4px;
     }
 
-    .difficulty-grid,
-    .level-grid{
+    .difficulty-grid{
       display: grid;
       gap: 8px;
-    }
-
-    .difficulty-grid{
       grid-template-columns: 1fr;
-    }
-
-    .level-grid{
-      grid-template-columns: 1fr 1fr;
     }
 
     .choice-btn{
@@ -166,20 +151,19 @@
       --card-border: #5b21b6;
       --card-bg: #faf5ff;
       --card-selected: #111;
-      --cell-gap: 10px;
-      --match-glow: #22c55e;
+      --cell-gap: 12px;
     }
 
-   #game-grid{
+    #game-grid{
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      gap: var(--cell-gap);
     }
-    
+
     @media (max-width: 980px){
       #game-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
-    
+
     @media (max-width: 640px){
       #game-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -216,7 +200,16 @@
       overflow-wrap: break-word;
       word-break: break-word;
     }
-    
+
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(0,0,0,.12);
+    }
+
+    .card.term{
+      background: #ede9fe;
+    }
+
     .card.def{
       background: #faf5ff;
       font-size: 0.9rem;
@@ -404,7 +397,7 @@
       padding: 18px;
       border-radius: 16px;
       width: 100%;
-      max-width: 470px;
+      max-width: 480px;
       box-shadow: 0 20px 40px rgba(0,0,0,.25);
       text-align: center;
     }
@@ -434,29 +427,16 @@
           <div class="difficulty-grid" id="difficultyGrid"></div>
         </div>
 
-        <div>
-          <div class="section-label">Välj nivå</div>
-          <div class="level-grid">
-            <button class="choice-btn active" type="button" id="level1Btn">
-              Level 1
-              <small>Grunderna</small>
-            </button>
-            <button class="choice-btn" type="button" id="level2Btn">
-              Level 2
-              <small>Fördjupning</small>
-            </button>
-          </div>
-        </div>
-
         <button class="btn" type="button" id="resetBtn">Starta om nivå</button>
         <button class="btn secondary" type="button" id="toggleFoundBtn">Dölj hittade par</button>
 
         <div class="stats" aria-live="polite">
           <div>Nivå: <span id="currentLevelLabel">1</span></div>
+          <div>Omgång: <span id="currentRoundLabel">1 / 2</span></div>
           <div>Poäng: <span id="score">0</span></div>
           <div>Försök: <span id="moves">0</span></div>
           <div>Fel: <span id="mistakes">0</span></div>
-          <div>Par kvar: <span id="pairs-left">12</span></div>
+          <div>Par kvar: <span id="pairs-left">6</span></div>
           <div>Tid: <span id="timer">00:00.0</span></div>
         </div>
 
@@ -468,18 +448,19 @@
         </div>
 
         <div class="note" id="tipsText">
-          Tips: Klicka först på ett begrepp och sedan på en förklaring. Rätt par blinkar till och flyttas sedan ner till Hittade par.
+          Du startar genom att klicka på begreppskorten.
         </div>
       </div>
     </aside>
 
     <main class="panel">
       <h2 class="game-title">Begreppskort: Krafter och rörelse</h2>
-      <p class="game-subtitle" id="subtitle">Level 1: Para ihop begrepp och förklaringar. Alla kort är öppna hela tiden.</p>
+      <p class="game-subtitle" id="subtitle">Du startar genom att klicka på begreppskorten.</p>
 
       <div class="status-row">
         <span class="badge" id="difficultyBadge">Nybörjare</span>
         <span class="badge" id="levelBadge">Level 1</span>
+        <span class="badge" id="roundBadge">Omgång 1 av 2</span>
         <span class="badge countdown good" id="countdownBadge">Tid kvar: --</span>
       </div>
 
@@ -506,7 +487,6 @@
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <button class="btn" type="button" id="playAgainBtn">Spela samma nivå igen</button>
         <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
-        <button class="btn" type="button" id="goLevel2Btn" style="display:none;">Starta Level 2</button>
       </div>
     </div>
   </div>
@@ -551,9 +531,11 @@
         timeLimitSec: 210,
         maxMistakes: 4,
         pairPoints: 10,
+        roundBonus: 30,
         levelClearBonus: 40,
         unlockBonus: 60,
         level2PairPoints: 14,
+        level2RoundBonus: 40,
         level2ClearBonus: 70
       },
       normal: {
@@ -561,9 +543,11 @@
         timeLimitSec: 165,
         maxMistakes: 2,
         pairPoints: 12,
+        roundBonus: 35,
         levelClearBonus: 60,
         unlockBonus: 100,
         level2PairPoints: 16,
+        level2RoundBonus: 50,
         level2ClearBonus: 90
       },
       master: {
@@ -571,12 +555,16 @@
         timeLimitSec: 120,
         maxMistakes: 1,
         pairPoints: 15,
+        roundBonus: 45,
         levelClearBonus: 90,
         unlockBonus: 150,
         level2PairPoints: 20,
+        level2RoundBonus: 60,
         level2ClearBonus: 120
       }
     };
+
+    const ROUND_SIZE = 6;
 
     const grid = document.getElementById('game-grid');
     const movesEl = document.getElementById('moves');
@@ -591,21 +579,19 @@
     const toggleFoundBtn = document.getElementById('toggleFoundBtn');
 
     const goalBox = document.getElementById('goalBox');
-    const unlockBox = document.getElementById('unlockBox');
     const difficultyGrid = document.getElementById('difficultyGrid');
     const difficultyBadge = document.getElementById('difficultyBadge');
     const levelBadge = document.getElementById('levelBadge');
+    const roundBadge = document.getElementById('roundBadge');
     const countdownBadge = document.getElementById('countdownBadge');
     const subtitle = document.getElementById('subtitle');
     const currentLevelLabel = document.getElementById('currentLevelLabel');
-
-    const level1Btn = document.getElementById('level1Btn');
-    const level2Btn = document.getElementById('level2Btn');
+    const currentRoundLabel = document.getElementById('currentRoundLabel');
+    const unlockBox = document.getElementById('unlockBox');
 
     const winEl = document.getElementById('win-message');
     const winTitle = document.getElementById('winTitle');
     const winTextEl = document.getElementById('winText');
-    const goLevel2Btn = document.getElementById('goLevel2Btn');
 
     let picked = [];
     let moves = 0;
@@ -615,6 +601,7 @@
     let foundVisible = true;
 
     let currentLevel = 1;
+    let roundIndex = 0; // 0 eller 1
     let currentDifficultyKey = 'beginner';
     let score = 0;
     let level2Unlocked = false;
@@ -623,6 +610,7 @@
     let startTs = 0;
     let rafId = 0;
     let levelFinished = false;
+    let pausedForPopup = false;
 
     function formatTime(ms){
       const total = Math.max(0, ms);
@@ -632,6 +620,12 @@
       const mm = String(minutes).padStart(2,'0');
       const ss = String(seconds).padStart(2,'0');
       return `${mm}:${ss}.${tenths}`;
+    }
+
+    function formatPlainTime(totalSec){
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${min}:${String(sec).padStart(2,'0')}`;
     }
 
     function elapsedMs(){
@@ -659,7 +653,7 @@
       else if (remainSec > 20) countdownBadge.classList.add('warn');
       else countdownBadge.classList.add('danger');
 
-      if (remain <= 0 && !levelFinished){
+      if (remain <= 0 && !levelFinished && !pausedForPopup){
         timerRunning = false;
         cancelAnimationFrame(rafId);
         failLevelByTime();
@@ -670,7 +664,7 @@
     }
 
     function startTimerIfNeeded(){
-      if (timerRunning || levelFinished) return;
+      if (timerRunning || levelFinished || pausedForPopup) return;
       timerRunning = true;
       startTs = performance.now();
       cancelAnimationFrame(rafId);
@@ -699,11 +693,35 @@
       return arr;
     }
 
+    function getRoundVocabulary(level, roundIdx){
+      const all = LEVELS[level];
+      const start = roundIdx * ROUND_SIZE;
+      return all.slice(start, start + ROUND_SIZE);
+    }
+
+    function currentVocabulary(){
+      return getRoundVocabulary(currentLevel, roundIndex);
+    }
+
+    function currentConfig(){
+      return DIFFICULTIES[currentDifficultyKey];
+    }
+
+    function pairScore(){
+      const cfg = currentConfig();
+      return currentLevel === 1 ? cfg.pairPoints : cfg.level2PairPoints;
+    }
+
+    function roundBonus(){
+      const cfg = currentConfig();
+      return currentLevel === 1 ? cfg.roundBonus : cfg.level2RoundBonus;
+    }
+
     function createGameData(vocabulary){
       const gameData = [];
       vocabulary.forEach((item, idx) => {
-        gameData.push({ id: `t-${currentLevel}-${idx}`, type: 'term', content: item.term, matchId: idx });
-        gameData.push({ id: `d-${currentLevel}-${idx}`, type: 'def', content: item.def, matchId: idx });
+        gameData.push({ id: `t-${currentLevel}-${roundIndex}-${idx}`, type: 'term', content: item.term, matchId: idx });
+        gameData.push({ id: `d-${currentLevel}-${roundIndex}-${idx}`, type: 'def', content: item.def, matchId: idx });
       });
       return shuffle(gameData);
     }
@@ -727,7 +745,7 @@
     }
 
     function onCardClick(card, outer){
-      if (lockBoard || levelFinished) return;
+      if (lockBoard || levelFinished || pausedForPopup) return;
       if (outer.classList.contains('matched')) return;
       if (card.classList.contains('selected')) return;
       if (picked.length === 2) return;
@@ -742,25 +760,6 @@
       }
     }
 
-    function currentVocabulary(){
-      return LEVELS[currentLevel];
-    }
-
-    function currentConfig(){
-      return DIFFICULTIES[currentDifficultyKey];
-    }
-
-    function pairScore(){
-      const cfg = currentConfig();
-      return currentLevel === 1 ? cfg.pairPoints : cfg.level2PairPoints;
-    }
-
-    function clearFoundPairs(){
-      foundList.innerHTML = '';
-      foundEmpty.style.display = 'block';
-      foundList.appendChild(foundEmpty);
-    }
-
     function addFoundPair(pair){
       foundEmpty.style.display = 'none';
 
@@ -773,30 +772,38 @@
       foundList.appendChild(row);
     }
 
+    function clearFoundPairs(){
+      foundList.innerHTML = '';
+      foundEmpty.style.display = 'block';
+      foundList.appendChild(foundEmpty);
+    }
+
     function updateScore(){
       scoreEl.textContent = score;
     }
 
     function updateSideInfo(){
       const cfg = currentConfig();
+
       difficultyBadge.textContent = cfg.label;
       levelBadge.textContent = `Level ${currentLevel}`;
+      roundBadge.textContent = `Omgång ${roundIndex + 1} av 2`;
       currentLevelLabel.textContent = currentLevel;
-      subtitle.textContent = currentLevel === 1
-        ? "Level 1: Para ihop begrepp och förklaringar. Alla kort är öppna hela tiden."
-        : "Level 2: Nu kommer svårare begrepp. Fortsätt samla poäng!";
+      currentRoundLabel.textContent = `${roundIndex + 1} / 2`;
+
+      subtitle.textContent = "Du startar genom att klicka på begreppskorten.";
 
       goalBox.innerHTML = `
         <strong>Utmaning för Level 1</strong><br>
         Svårighet: <strong>${cfg.label}</strong><br>
-        Klara nivån inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
+        Klara hela Level 1 inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
       `;
 
       if (level2Unlocked) {
         unlockBox.classList.add('unlocked');
         unlockBox.innerHTML = `
           <strong>Level 2 är upplåst 🎉</strong>
-          Du klarade utmaningen. Nu kan du spela vidare på nästa nivå.
+          När du klarar båda omgångarna i Level 1 enligt målen ovan låses nästa nivå upp. Du är där nu.
         `;
       } else {
         unlockBox.classList.remove('unlocked');
@@ -805,25 +812,6 @@
           Klara Level 1 enligt målen ovan för att låsa upp nästa nivå.
         `;
       }
-
-      level1Btn.classList.toggle('active', currentLevel === 1);
-      level2Btn.classList.toggle('active', currentLevel === 2);
-
-      if (level2Unlocked) {
-        level2Btn.classList.remove('locked');
-        level2Btn.disabled = false;
-      } else {
-        level2Btn.classList.add('locked');
-        level2Btn.disabled = true;
-      }
-
-      resetTimer();
-    }
-
-    function formatPlainTime(totalSec){
-      const min = Math.floor(totalSec / 60);
-      const sec = totalSec % 60;
-      return `${min}:${String(sec).padStart(2,'0')}`;
     }
 
     function checkMatch(){
@@ -834,7 +822,6 @@
       const [c1, c2] = picked;
       const m1 = c1.getAttribute('data-match-id');
       const m2 = c2.getAttribute('data-match-id');
-
       const t1 = c1.getAttribute('data-type');
       const t2 = c2.getAttribute('data-type');
 
@@ -848,6 +835,7 @@
 
         c1.classList.add('success');
         c2.classList.add('success');
+
         score += pairScore();
         updateScore();
 
@@ -865,7 +853,9 @@
           picked = [];
           lockBoard = false;
 
-          if (pairsLeft === 0) finishLevel();
+          if (pairsLeft === 0) {
+            finishRoundOrLevel();
+          }
         }, 420);
       } else {
         mistakes++;
@@ -880,6 +870,44 @@
       }
     }
 
+    function showQuickMessage(title, html, duration = 1300){
+      pausedForPopup = true;
+      lockBoard = true;
+
+      winTitle.textContent = title;
+      winTextEl.innerHTML = html;
+      winEl.classList.add('open');
+
+      setTimeout(() => {
+        hideWin();
+        pausedForPopup = false;
+        lockBoard = false;
+      }, duration);
+    }
+
+    function finishRoundOrLevel(){
+      if (roundIndex === 0) {
+        score += roundBonus();
+        updateScore();
+
+        showQuickMessage(
+          "✨ Omgång klar!",
+          `Du klarade omgång 1 och får <strong>+${roundBonus()}</strong> bonuspoäng.<br><br>Nu laddas nästa 6 par.`,
+          1400
+        );
+
+        setTimeout(() => {
+          roundIndex = 1;
+          loadCurrentRoundBoard();
+          updateSideInfo();
+        }, 1450);
+
+        return;
+      }
+
+      finishLevel();
+    }
+
     function finishLevel(){
       levelFinished = true;
       stopTimer();
@@ -890,44 +918,40 @@
       const withinMistakes = mistakes <= cfg.maxMistakes;
       const finalTime = timerEl.textContent;
 
-      let unlockedNow = false;
-
       if (currentLevel === 1) {
         score += cfg.levelClearBonus;
 
         if (withinTime && withinMistakes) {
           level2Unlocked = true;
-          unlockedNow = true;
           score += cfg.unlockBonus;
+
+          updateScore();
+          updateSideInfo();
+
+          winTitle.textContent = "🚀 Level 2 upplåst!";
+          winTextEl.innerHTML = `
+            Du klarade <strong>Level 1</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
+            Bonuspoäng utdelade. Nästa gång du trycker <strong>Starta om nivå</strong> börjar du på <strong>Level 2</strong>.
+          `;
+        } else {
+          updateScore();
+          updateSideInfo();
+
+          winTitle.textContent = "👏 Level 1 klar!";
+          winTextEl.innerHTML = `
+            Du klarade Level 1 på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
+            För att låsa upp Level 2 behöver du klara tiden och hålla dig inom tillåtet antal fel.
+          `;
         }
       } else {
         score += cfg.level2ClearBonus;
-      }
+        updateScore();
 
-      updateScore();
-      updateSideInfo();
-
-      if (currentLevel === 1 && unlockedNow) {
-        winTitle.textContent = "🚀 Level 2 upplåst!";
-        winTextEl.innerHTML = `
-          Du klarade <strong>Level 1</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
-          Bonuspoäng utdelade. Du får nu gå vidare till <strong>Level 2</strong>.
-        `;
-        goLevel2Btn.style.display = 'inline-flex';
-      } else if (currentLevel === 1) {
-        winTitle.textContent = "👏 Level 1 klar!";
-        winTextEl.innerHTML = `
-          Du klarade Level 1 på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
-          För att låsa upp Level 2 behöver du klara tiden och hålla dig inom tillåtet antal fel.
-        `;
-        goLevel2Btn.style.display = 'none';
-      } else {
         winTitle.textContent = "🏆 Mästarjobb!";
         winTextEl.innerHTML = `
           Du klarade <strong>Level 2</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
           Total poäng: <strong>${score}</strong>.
         `;
-        goLevel2Btn.style.display = 'none';
       }
 
       winEl.classList.add('open');
@@ -936,12 +960,13 @@
     function failLevelByTime(){
       levelFinished = true;
       lockBoard = true;
+      stopTimer();
+
       winTitle.textContent = "⏰ Tiden är slut!";
       winTextEl.innerHTML = `
         Tiden tog slut på <strong>Level ${currentLevel}</strong>.<br><br>
         Du kan försöka igen på samma nivå. Dina poäng är fortfarande <strong>${score}</strong>.
       `;
-      goLevel2Btn.style.display = 'none';
       winEl.classList.add('open');
     }
 
@@ -949,10 +974,29 @@
       winEl.classList.remove('open');
     }
 
+    function loadCurrentRoundBoard(){
+      grid.innerHTML = '';
+      picked = [];
+      lockBoard = false;
+
+      const vocab = currentVocabulary();
+      pairsLeft = vocab.length;
+      pairsLeftEl.textContent = pairsLeft;
+
+      const data = createGameData(vocab);
+      data.forEach(item => grid.appendChild(createCard(item)));
+    }
+
     function resetGame(){
       hideWin();
 
-      grid.innerHTML = '';
+      if (level2Unlocked) {
+        currentLevel = 2;
+      } else {
+        currentLevel = 1;
+      }
+
+      roundIndex = 0;
       moves = 0;
       mistakes = 0;
       movesEl.textContent = moves;
@@ -961,16 +1005,13 @@
       picked = [];
       lockBoard = false;
       levelFinished = false;
-
-      const vocab = currentVocabulary();
-      pairsLeft = vocab.length;
-      pairsLeftEl.textContent = pairsLeft;
+      pausedForPopup = false;
 
       resetTimer();
       clearFoundPairs();
 
-      const data = createGameData(vocab);
-      data.forEach(item => grid.appendChild(createCard(item)));
+      loadCurrentRoundBoard();
+      updateSideInfo();
     }
 
     function renderDifficultyButtons(){
@@ -987,7 +1028,6 @@
         btn.addEventListener('click', () => {
           currentDifficultyKey = key;
           renderDifficultyButtons();
-          updateSideInfo();
           resetGame();
         });
 
@@ -1009,30 +1049,8 @@
     document.getElementById('playAgainBtn').addEventListener('click', resetGame);
     document.getElementById('closeWinBtn').addEventListener('click', hideWin);
 
-    goLevel2Btn.addEventListener('click', () => {
-      hideWin();
-      if (!level2Unlocked) return;
-      currentLevel = 2;
-      updateSideInfo();
-      resetGame();
-    });
-
-    level1Btn.addEventListener('click', () => {
-      currentLevel = 1;
-      updateSideInfo();
-      resetGame();
-    });
-
-    level2Btn.addEventListener('click', () => {
-      if (!level2Unlocked) return;
-      currentLevel = 2;
-      updateSideInfo();
-      resetGame();
-    });
-
     window.addEventListener('load', () => {
       renderDifficultyButtons();
-      updateSideInfo();
       resetGame();
     });
   </script>
