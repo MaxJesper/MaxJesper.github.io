@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppskort: Krafter och rörelse</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #fff3e6 0%, #fff0df 35%, #fdf6ee 100%);
+      color: #111;
+    }
+
+    .layout{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (min-width: 980px){
+      .layout{ grid-template-columns: 260px 1fr; }
+    }
+
+    .panel{
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+    }
+
+    .side-actions{ display: grid; gap: 10px; }
+
+    .stats{
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stats span{ font-variant-numeric: tabular-nums; }
+
+    .btn{
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .btn.secondary{
+      background: #fff;
+      color: #111;
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .game-title{
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+
+    .game-subtitle{
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    :root{
+      --card-border: #5b21b6;
+      --card-bg: #faf5ff;
+      --card-selected: #111;
+      --cell-gap: 10px;
+    }
+
+    #game-grid{
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: var(--cell-gap);
+    }
+
+    @media (max-width: 980px){
+      #game-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    }
+    @media (max-width: 740px){
+      #game-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 520px){
+      #game-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    .card-wrap{
+      aspect-ratio: 1 / 1;
+      max-width: 150px;
+      width: 100%;
+      margin-inline: auto;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .card{
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      color: #111;
+      padding: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.10);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.18;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card.term{
+      background: #ede9fe;
+    }
+
+    .card.def{
+      background: #faf5ff;
+      font-size: 0.84rem;
+      font-weight: 650;
+    }
+
+    .card.selected{
+      outline: 4px solid var(--card-selected);
+      outline-offset: 2px;
+    }
+
+    .matched{
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(.92);
+      transition: visibility 0s .3s, opacity .3s linear, transform .3s ease;
+    }
+
+    .found-panel{
+      margin-top: 18px;
+      border-top: 1px dashed rgba(0,0,0,.18);
+      padding-top: 14px;
+    }
+
+    .found-header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .found-title{
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .found-subtitle{
+      font-size: 13px;
+      color: #444;
+      margin: 0;
+    }
+
+    .found-list{
+      display: grid;
+      gap: 10px;
+    }
+
+    .found-empty{
+      color: #444;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .found-pair{
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 10px;
+      align-items: stretch;
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(255,255,255,.75);
+    }
+
+    .found-card{
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #ede9fe;
+      font-weight: 800;
+      line-height: 1.2;
+      min-height: 74px;
+    }
+
+    .found-card.def{
+      background: #faf5ff;
+      font-weight: 650;
+    }
+
+    @media (max-width: 740px){
+      .found-pair{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .note{
+      font-size: 13px;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    #win-message{
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1200;
+    }
+
+    #win-message.open{ display: flex; }
+
+    .win-card{
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      text-align: center;
+    }
+
+    .win-card h2{
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .win-card p{
+      margin: 0 0 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="side-actions">
+        <a href="/fysik/kraft-och-rorelse/larande-spel.html" class="subject-btn">← Tillbaka</a>
+
+        <button class="btn" type="button" id="resetBtn">Starta om spel</button>
+        <button class="btn secondary" type="button" id="toggleFoundBtn">Dölj hittade par</button>
+
+        <div class="stats" aria-live="polite">
+          <div>Försök: <span id="moves">0</span></div>
+          <div>Par kvar: <span id="pairs-left">15</span></div>
+          <div>Tid: <span id="timer">00:00.0</span></div>
+        </div>
+
+        <div class="note" id="tipsText">
+          Tips: Klicka först på ett begrepp och sedan på en förklaring. Om de hör ihop försvinner de och läggs under Hittade par.
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel">
+      <h2 class="game-title">Begreppskort: Krafter och rörelse</h2>
+      <p class="game-subtitle">Para ihop begrepp och förklaringar. Alla kort är öppna hela tiden.</p>
+
+      <div id="game-grid" aria-label="Begreppskort"></div>
+
+      <section class="found-panel" id="foundPanel">
+        <div class="found-header">
+          <div>
+            <h3 class="found-title">Hittade par</h3>
+            <p class="found-subtitle">Bra för repetition när du spelar.</p>
+          </div>
+        </div>
+        <div id="foundList" class="found-list">
+          <div class="found-empty" id="foundEmpty">Inga par hittade ännu.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="win-message" role="dialog" aria-modal="true" aria-label="Vinstmeddelande">
+    <div class="win-card">
+      <h2>🎉 Snyggt jobbat!</h2>
+      <p id="winText">Du klarade spelet på <strong><span id="final-moves">0</span></strong> försök.</p>
+      <button class="btn" type="button" id="playAgainBtn">Spela igen</button>
+    </div>
+  </div>
+
+  <script src="/js/menu.js"></script>
+
+  <script>
+    const vocabulary = [
+      { term: "Massa", def: "Hur mycket materia något innehåller. Mäts i kilogram, kg." },
+      { term: "Tyngd", def: "Den kraft som gravitationen drar med. Mäts i newton, N." },
+      { term: "Gravitation", def: "Dragningskraft mellan massor. Jordens gravitation kallas ofta tyngdkraft." },
+      { term: "Tröghetslagen", def: "Alla föremål behåller sin rörelse eller vila om de inte påverkas av en kraft." },
+      { term: "Likformig rörelse", def: "En rörelse som går rakt fram i lika stora steg hela tiden." },
+      { term: "Acceleration", def: "När hastigheten ökar eller förändras." },
+      { term: "Retardation", def: "När hastigheten minskar." },
+      { term: "Medelfart", def: "Sträcka delad med tid. Anges ofta i m/s eller km/h." },
+      { term: "Fritt fall", def: "När något faller och man bortser från luftmotståndet." },
+      { term: "Friktion", def: "En kraft som bromsar när två ytor rör vid varandra eller glider mot varandra." },
+      { term: "Tyngdpunkt", def: "Den punkt där man kan tänka sig att ett föremåls tyngd är samlad." },
+      { term: "Stödyta", def: "Den yta som ett föremål eller en person vilar på." },
+      { term: "Normalkraft", def: "Kraften från underlaget som håller emot uppåt." },
+      { term: "Mekanikens gyllene regel", def: "Det man vinner i kraft, förlorar man i väg." },
+      { term: "Hävstångslagen", def: "Vänster hävarm gånger vänster kraft är lika med höger hävarm gånger höger kraft." }
+    ];
+
+    const grid = document.getElementById('game-grid');
+    const movesEl = document.getElementById('moves');
+    const pairsLeftEl = document.getElementById('pairs-left');
+    const timerEl = document.getElementById('timer');
+    const foundList = document.getElementById('foundList');
+    const foundEmpty = document.getElementById('foundEmpty');
+    const foundPanel = document.getElementById('foundPanel');
+    const toggleFoundBtn = document.getElementById('toggleFoundBtn');
+
+    const winEl = document.getElementById('win-message');
+    const finalMovesEl = document.getElementById('final-moves');
+    const winTextEl = document.getElementById('winText');
+
+    let picked = [];
+    let moves = 0;
+    let pairsLeft = vocabulary.length;
+    let lockBoard = false;
+    let foundVisible = true;
+
+    let timerRunning = false;
+    let startTs = 0;
+    let rafId = 0;
+
+    function formatTime(ms){
+      const total = Math.max(0, ms);
+      const minutes = Math.floor(total / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const tenths  = Math.floor((total % 1000) / 100);
+      const mm = String(minutes).padStart(2,'0');
+      const ss = String(seconds).padStart(2,'0');
+      return `${mm}:${ss}.${tenths}`;
+    }
+
+    function tick(){
+      if (!timerRunning) return;
+      const now = performance.now();
+      timerEl.textContent = formatTime(now - startTs);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startTimerIfNeeded(){
+      if (timerRunning) return;
+      timerRunning = true;
+      startTs = performance.now();
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopTimer(){
+      timerRunning = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function resetTimer(){
+      stopTimer();
+      timerEl.textContent = "00:00.0";
+    }
+
+    function shuffle(arr){
+      for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function createGameData(){
+      const gameData = [];
+      vocabulary.forEach((item, idx) => {
+        gameData.push({ id: `t-${idx}`, type: 'term', content: item.term, matchId: idx });
+        gameData.push({ id: `d-${idx}`, type: 'def', content: item.def, matchId: idx });
+      });
+      return shuffle(gameData);
+    }
+
+    function createCard(data){
+      const outer = document.createElement('div');
+      outer.className = 'card-wrap';
+
+      outer.innerHTML = `
+        <div class="card ${data.type}"
+             data-id="${data.id}"
+             data-type="${data.type}"
+             data-match-id="${data.matchId}">
+          ${data.content}
+        </div>
+      `;
+
+      const card = outer.querySelector('.card');
+      card.addEventListener('click', () => onCardClick(card, outer));
+      return outer;
+    }
+
+    function onCardClick(card, outer){
+      if (lockBoard) return;
+      if (outer.classList.contains('matched')) return;
+      if (card.classList.contains('selected')) return;
+      if (picked.length === 2) return;
+
+      startTimerIfNeeded();
+
+      card.classList.add('selected');
+      picked.push(card);
+
+      if (picked.length === 2) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch(){
+      lockBoard = true;
+      moves++;
+      movesEl.textContent = moves;
+
+      const [c1, c2] = picked;
+      const m1 = c1.getAttribute('data-match-id');
+      const m2 = c2.getAttribute('data-match-id');
+
+      const t1 = c1.getAttribute('data-type');
+      const t2 = c2.getAttribute('data-type');
+
+      const wrap1 = c1.parentElement;
+      const wrap2 = c2.parentElement;
+
+      const isMatch = (m1 === m2) && (t1 !== t2);
+
+      if (isMatch){
+        const pairData = vocabulary[Number(m1)];
+
+        setTimeout(() => {
+          wrap1.classList.add('matched');
+          wrap2.classList.add('matched');
+
+          addFoundPair(pairData);
+
+          pairsLeft--;
+          pairsLeftEl.textContent = pairsLeft;
+
+          c1.classList.remove('selected');
+          c2.classList.remove('selected');
+          picked = [];
+          lockBoard = false;
+
+          if (pairsLeft === 0) showWin();
+        }, 220);
+      } else {
+        setTimeout(() => {
+          c1.classList.remove('selected');
+          c2.classList.remove('selected');
+          picked = [];
+          lockBoard = false;
+        }, 520);
+      }
+    }
+
+    function addFoundPair(pair){
+      foundEmpty.style.display = 'none';
+
+      const row = document.createElement('div');
+      row.className = 'found-pair';
+      row.innerHTML = `
+        <div class="found-card">${pair.term}</div>
+        <div class="found-card def">${pair.def}</div>
+      `;
+      foundList.appendChild(row);
+    }
+
+    function clearFoundPairs(){
+      foundList.innerHTML = '';
+      foundEmpty.style.display = 'block';
+      foundList.appendChild(foundEmpty);
+    }
+
+    function showWin(){
+      stopTimer();
+      finalMovesEl.textContent = moves;
+
+      const finalTime = timerEl.textContent;
+      winTextEl.innerHTML = `Du klarade begreppskorten på <strong>${moves}</strong> försök och tiden <strong>${finalTime}</strong>. Nu kan du repetera alla par du hittade längst ner.`;
+
+      winEl.classList.add('open');
+    }
+
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    function resetGame(){
+      hideWin();
+
+      grid.innerHTML = '';
+      moves = 0;
+      movesEl.textContent = moves;
+
+      pairsLeft = vocabulary.length;
+      pairsLeftEl.textContent = pairsLeft;
+
+      picked = [];
+      lockBoard = false;
+
+      resetTimer();
+      clearFoundPairs();
+
+      const data = createGameData();
+      data.forEach(item => grid.appendChild(createCard(item)));
+    }
+
+    toggleFoundBtn.addEventListener('click', () => {
+      foundVisible = !foundVisible;
+      foundPanel.style.display = foundVisible ? 'block' : 'none';
+      toggleFoundBtn.textContent = foundVisible ? 'Dölj hittade par' : 'Visa hittade par';
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', resetGame);
+    document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+
+    window.addEventListener('load', resetGame);
+  </script>
+</body>
+</html>
