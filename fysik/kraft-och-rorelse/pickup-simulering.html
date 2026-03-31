@@ -27,10 +27,10 @@
     .wrap{
       max-width:1220px;
       margin:0 auto;
-      padding:12px;
+      padding:10px;
       display:grid;
-      grid-template-columns:320px 1fr;
-      gap:12px;
+      grid-template-columns:310px 1fr;
+      gap:10px;
       min-height:100vh;
     }
 
@@ -42,11 +42,11 @@
     }
 
     .panel{
-      padding:14px;
+      padding:12px;
     }
 
     h1{
-      font-size:1.35rem;
+      font-size:1.25rem;
       margin:0 0 6px;
     }
 
@@ -54,7 +54,7 @@
       color:var(--muted);
       line-height:1.35;
       margin:0 0 10px;
-      font-size:.94rem;
+      font-size:.92rem;
     }
 
     .group{
@@ -66,7 +66,7 @@
     }
 
     .group h2{
-      font-size:.98rem;
+      font-size:.95rem;
       margin:0 0 8px;
     }
 
@@ -74,7 +74,7 @@
       display:block;
       font-weight:700;
       margin-bottom:4px;
-      font-size:.92rem;
+      font-size:.9rem;
     }
 
     .row-top{
@@ -94,7 +94,7 @@
       text-align:right;
       color:var(--accent);
       font-weight:700;
-      font-size:.92rem;
+      font-size:.9rem;
     }
 
     .buttons{
@@ -124,7 +124,7 @@
       background:#f6f9fd;
       border:1px solid #e0e8f2;
       line-height:1.4;
-      font-size:.9rem;
+      font-size:.88rem;
     }
 
     .scene-card{
@@ -133,7 +133,7 @@
 
     .hud{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(4, 1fr);
       gap:8px;
       margin:0 0 8px;
     }
@@ -143,35 +143,38 @@
       border-radius:12px;
       padding:8px 10px;
       background:#fafcff;
+      min-width:0;
     }
 
     .metric .k{
-      font-size:.76rem;
+      font-size:.74rem;
       color:var(--muted);
+      white-space:nowrap;
     }
 
     .metric .v{
-      font-size:1.05rem;
+      font-size:1rem;
       font-weight:700;
       margin-top:4px;
+      white-space:nowrap;
     }
 
     .sim{
       position:relative;
-      height:420px;
+      height:405px;
       border-radius:16px;
       overflow:hidden;
       background:
-        linear-gradient(#d8ecff 0%, #eef7ff 60%, #9dd27a 60%, #88c267 70%, #5c6470 70%, #464d58 100%);
+        linear-gradient(#d8ecff 0%, #eef7ff 58%, #9dd27a 58%, #88c267 67%, #5e6672 67%, #434a55 100%);
       border:1px solid #dde6f0;
     }
 
     .sun{
       position:absolute;
-      right:50px;
-      top:30px;
-      width:65px;
-      height:65px;
+      right:54px;
+      top:28px;
+      width:62px;
+      height:62px;
       border-radius:50%;
       background:rgba(255,220,120,.9);
     }
@@ -189,42 +192,52 @@
       border-radius:50%;
     }
 
-    .c1{
-      left:70px; top:60px; width:100px; height:30px;
-    }
-    .c1:before{
-      width:46px; height:46px; left:14px; top:-16px;
-    }
-    .c1:after{
-      width:42px; height:42px; right:14px; top:-14px;
+    .c1{ left:70px; top:58px; width:100px; height:30px; }
+    .c1:before{ width:46px; height:46px; left:14px; top:-16px; }
+    .c1:after{ width:42px; height:42px; right:14px; top:-14px; }
+
+    .c2{ left:240px; top:94px; width:110px; height:34px; }
+    .c2:before{ width:46px; height:46px; left:20px; top:-14px; }
+    .c2:after{ width:48px; height:48px; right:16px; top:-16px; }
+
+    /* Vägen */
+    .road-main{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:134px;
+      background:linear-gradient(180deg, #626b77 0%, #505863 48%, #404750 100%);
     }
 
-    .c2{
-      left:240px; top:95px; width:110px; height:34px;
-    }
-    .c2:before{
-      width:46px; height:46px; left:20px; top:-14px;
-    }
-    .c2:after{
-      width:48px; height:48px; right:16px; top:-16px;
+    .road-lane{
+      position:absolute;
+      left:0;
+      right:0;
+      top:26px;
+      height:58px;
+      background:rgba(255,255,255,0.04);
+      border-top:1px solid rgba(255,255,255,0.08);
+      border-bottom:1px solid rgba(0,0,0,0.12);
     }
 
     .roadline{
       position:absolute;
       left:0;
       right:0;
-      top:322px;
+      top:49px;
       height:7px;
-      background:repeating-linear-gradient(90deg, transparent 0 55px, #fff 55px 100px);
-      opacity:.9;
+      background:repeating-linear-gradient(90deg, transparent 0 54px, #fff 54px 104px);
+      opacity:.92;
     }
 
+    /* Bil */
     #truckWrap{
       position:absolute;
-      top:165px;
-      right:40px;
+      right:36px;
+      bottom:50px;
       width:350px;
-      height:150px;
+      height:145px;
       pointer-events:none;
     }
 
@@ -236,21 +249,23 @@
       height:auto;
       user-select:none;
       -webkit-user-drag:none;
-      filter:drop-shadow(0 8px 6px rgba(0,0,0,.18));
+      filter:drop-shadow(0 6px 5px rgba(0,0,0,.16));
+      z-index:2;
     }
 
+    /* Last på flaket */
     #cargo{
       position:absolute;
-      left:170px;
-      bottom:77px;
-      width:120px;
-      height:50px;
+      left:165px;
+      bottom:66px;
+      width:122px;
+      height:74px;
+      z-index:3;
       pointer-events:none;
     }
 
     .cargo-box{
       position:absolute;
-      bottom:0;
       width:28px;
       height:28px;
       border-radius:5px;
@@ -284,13 +299,54 @@
 
     .cargo-sand{
       position:absolute;
+      left:18px;
       bottom:0;
-      width:70px;
-      height:20px;
-      background:#d7bf7a;
-      border-radius:18px 18px 10px 10px;
+      width:82px;
+      height:18px;
+      background:#d8c07d;
       border:2px solid rgba(0,0,0,.12);
+      border-radius:18px 18px 8px 8px;
     }
+
+    .cargo-sand.high{
+      height:28px;
+      width:92px;
+      left:12px;
+    }
+
+    /* Hjulanimation */
+    .wheel{
+      position:absolute;
+      width:69px;
+      height:69px;
+      border:6px solid rgba(35,42,50,.95);
+      border-radius:50%;
+      background:
+        radial-gradient(circle, #bfc7d1 0 24%, #7b8796 25% 29%, transparent 30%),
+        repeating-conic-gradient(
+          #788391 0deg 8deg,
+          #3d434b 8deg 16deg
+        );
+      box-shadow:
+        inset 0 0 0 7px #9ea8b4,
+        inset 0 0 0 14px #d2d8df,
+        inset 0 0 0 18px #8993a0;
+      bottom:4px;
+      z-index:1;
+      opacity:.98;
+    }
+
+    .wheel::after{
+      content:"";
+      position:absolute;
+      inset:26px;
+      border-radius:50%;
+      background:#5c6673;
+      box-shadow:0 0 0 4px #aeb7c3 inset;
+    }
+
+    #wheelFront{ left:24px; }
+    #wheelRear{ left:245px; }
 
     @media (max-width: 980px){
       .wrap{
@@ -301,25 +357,43 @@
         height:360px;
       }
 
-      .roadline{
-        top:278px;
-      }
-
       #truckWrap{
-        top:155px;
         width:290px;
         height:120px;
+        bottom:44px;
       }
 
       #cargo{
-        left:140px;
-        bottom:60px;
-        width:100px;
-        height:44px;
+        left:135px;
+        bottom:54px;
+        width:95px;
+        height:62px;
       }
 
+      .wheel{
+        width:58px;
+        height:58px;
+        bottom:3px;
+      }
+
+      #wheelFront{ left:18px; }
+      #wheelRear{ left:203px; }
+
       .hud{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(4, 1fr);
+        gap:6px;
+      }
+
+      .metric{
+        padding:7px 8px;
+      }
+
+      .metric .k{
+        font-size:.68rem;
+      }
+
+      .metric .v{
+        font-size:.9rem;
       }
     }
   </style>
@@ -386,9 +460,16 @@
         <div class="sun"></div>
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
-        <div class="roadline" id="roadline"></div>
+
+        <div class="road-main">
+          <div class="road-lane">
+            <div class="roadline" id="roadline"></div>
+          </div>
+        </div>
 
         <div id="truckWrap">
+          <div class="wheel" id="wheelFront"></div>
+          <div class="wheel" id="wheelRear"></div>
           <div id="cargo"></div>
           <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
         </div>
@@ -415,7 +496,9 @@
       cargo: document.getElementById('cargo'),
       startBtn: document.getElementById('startBtn'),
       resetBtn: document.getElementById('resetBtn'),
-      sim: document.getElementById('sim')
+      sim: document.getElementById('sim'),
+      wheelFront: document.getElementById('wheelFront'),
+      wheelRear: document.getElementById('wheelRear')
     };
 
     function bindRange(range, out, fmt = v => v){
@@ -439,43 +522,39 @@
         return;
       }
 
-      if(extraMass < 900){
-        const bag = document.createElement('div');
-        bag.className = 'cargo-sand';
-        bag.style.left = '25px';
-        els.cargo.appendChild(bag);
+      if(extraMass < 800){
+        const sand = document.createElement('div');
+        sand.className = 'cargo-sand';
+        els.cargo.appendChild(sand);
         return;
       }
 
-      if(extraMass < 1600){
-        for(let i = 0; i < 2; i++){
-          const box = document.createElement('div');
-          box.className = 'cargo-box';
-          box.style.left = `${20 + i*32}px`;
-          els.cargo.appendChild(box);
-        }
+      if(extraMass < 1300){
+        const sand = document.createElement('div');
+        sand.className = 'cargo-sand high';
+        els.cargo.appendChild(sand);
         return;
       }
 
-      if(extraMass < 2300){
-        for(let i = 0; i < 3; i++){
-          const box = document.createElement('div');
-          box.className = 'cargo-box';
-          box.style.left = `${12 + i*30}px`;
-          els.cargo.appendChild(box);
-        }
-        return;
-      }
+      const layouts = [
+        [{x:12,y:0},{x:44,y:0}],
+        [{x:6,y:0},{x:38,y:0},{x:70,y:0}],
+        [{x:6,y:0},{x:38,y:0},{x:70,y:0},{x:22,y:30},{x:54,y:30}],
+        [{x:6,y:0},{x:38,y:0},{x:70,y:0},{x:6,y:30},{x:38,y:30},{x:70,y:30}]
+      ];
 
-      for(let row = 0; row < 2; row++){
-        for(let col = 0; col < 3; col++){
-          const box = document.createElement('div');
-          box.className = 'cargo-box';
-          box.style.left = `${8 + col*30}px`;
-          box.style.bottom = `${row*28}px`;
-          els.cargo.appendChild(box);
-        }
-      }
+      let layout = layouts[0];
+      if(extraMass < 1900) layout = layouts[1];
+      else if(extraMass < 2600) layout = layouts[2];
+      else layout = layouts[3];
+
+      layout.forEach(pos => {
+        const box = document.createElement('div');
+        box.className = 'cargo-box';
+        box.style.left = `${pos.x}px`;
+        box.style.bottom = `${pos.y}px`;
+        els.cargo.appendChild(box);
+      });
     }
 
     els.mass.addEventListener('input', updateCargo);
@@ -483,11 +562,16 @@
 
     let anim = null;
 
+    function setWheelRotation(deg){
+      els.wheelFront.style.transform = `rotate(${deg}deg)`;
+      els.wheelRear.style.transform = `rotate(${deg}deg)`;
+    }
+
     function resetSim(){
       if(anim) cancelAnimationFrame(anim);
       anim = null;
 
-      els.truckWrap.style.right = '40px';
+      els.truckWrap.style.right = '36px';
       els.timeOut.textContent = '0.0 s';
       els.speedOut.textContent = '0.0 m/s';
       els.accOut.textContent = '0.0 m/s²';
@@ -495,6 +579,7 @@
       els.startBtn.disabled = false;
       els.startBtn.style.opacity = '1';
       els.roadline.style.backgroundPositionX = '0px';
+      setWheelRotation(0);
       updateCargo();
     }
 
@@ -511,8 +596,9 @@
       let v = 0;
       let last = null;
       let roadOffset = 0;
+      let wheelDeg = 0;
 
-      const maxTravel = Math.max(140, els.sim.clientWidth - els.truckWrap.clientWidth - 80);
+      const maxTravel = Math.max(140, els.sim.clientWidth - els.truckWrap.clientWidth - 72);
 
       els.startBtn.disabled = true;
       els.startBtn.style.opacity = '.6';
@@ -533,10 +619,13 @@
         x += v * dt * 16;
         if(x > maxTravel) x = maxTravel;
 
-        els.truckWrap.style.right = `${40 + x}px`;
+        els.truckWrap.style.right = `${36 + x}px`;
 
         roadOffset += v * dt * 26;
         els.roadline.style.backgroundPositionX = `${roadOffset}px`;
+
+        wheelDeg += v * dt * 220;
+        setWheelRotation(wheelDeg);
 
         els.timeOut.textContent = `${t.toFixed(1)} s`;
         els.speedOut.textContent = `${v.toFixed(2)} m/s`;
