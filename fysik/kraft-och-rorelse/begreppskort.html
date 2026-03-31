@@ -397,7 +397,7 @@
       padding: 18px;
       border-radius: 16px;
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       box-shadow: 0 20px 40px rgba(0,0,0,.25);
       text-align: center;
     }
@@ -466,7 +466,7 @@
 
       <div id="game-grid" aria-label="Begreppskort"></div>
 
-      <section class="found-panel" id="foundPanel">
+      <section class="found-panel">
         <div class="found-header">
           <div>
             <h3 class="found-title">Hittade par</h3>
@@ -486,6 +486,7 @@
       <p id="winText">Du klarade nivån.</p>
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <button class="btn" type="button" id="playAgainBtn">Spela samma nivå igen</button>
+        <button class="btn" type="button" id="continueLevel2Btn" style="display:none;">Fortsätt till Level 2</button>
         <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
       </div>
     </div>
@@ -560,6 +561,7 @@
     const winEl = document.getElementById('win-message');
     const winTitle = document.getElementById('winTitle');
     const winTextEl = document.getElementById('winText');
+    const continueLevel2Btn = document.getElementById('continueLevel2Btn');
 
     let GAME_DATA = null;
 
@@ -583,9 +585,7 @@
 
     async function loadGameData() {
       const res = await fetch(JSON_PATH, { cache: "no-store" });
-      if (!res.ok) {
-        throw new Error(`Kunde inte läsa ${JSON_PATH} (${res.status})`);
-      }
+      if (!res.ok) throw new Error(`Kunde inte läsa ${JSON_PATH} (${res.status})`);
       GAME_DATA = await res.json();
     }
 
@@ -737,14 +737,11 @@
       card.classList.add('selected');
       picked.push(card);
 
-      if (picked.length === 2) {
-        checkMatch();
-      }
+      if (picked.length === 2) checkMatch();
     }
 
     function addFoundPair(pair){
       foundEmpty.style.display = 'none';
-
       const row = document.createElement('div');
       row.className = 'found-pair';
       row.innerHTML = `
@@ -785,7 +782,7 @@
         unlockBox.classList.add('unlocked');
         unlockBox.innerHTML = `
           <strong>Level 2 är upplåst 🎉</strong>
-          När du trycker <strong>Starta om nivå</strong> börjar du på nästa nivå.
+          Tryck <strong>Starta om nivå</strong> eller använd knappen i rutan när spelet säger till.
         `;
       } else {
         unlockBox.classList.remove('unlocked');
@@ -835,9 +832,7 @@
           picked = [];
           lockBoard = false;
 
-          if (pairsLeft === 0) {
-            finishRoundOrLevel();
-          }
+          if (pairsLeft === 0) finishRoundOrLevel();
         }, 420);
       } else {
         mistakes++;
@@ -855,6 +850,7 @@
     function showQuickMessage(title, html, duration = 1300){
       pausedForPopup = true;
       lockBoard = true;
+      continueLevel2Btn.style.display = 'none';
 
       winTitle.textContent = title;
       winTextEl.innerHTML = html;
@@ -910,12 +906,16 @@
           updateScore();
           updateSideInfo();
 
+          continueLevel2Btn.style.display = 'inline-flex';
+
           winTitle.textContent = "🚀 Level 2 upplåst!";
           winTextEl.innerHTML = `
             Du klarade <strong>Level 1</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
-            Bonuspoäng utdelade. Tryck <strong>Starta om nivå</strong> för att börja på <strong>Level 2</strong>.
+            Du fick <strong>+${cfg.unlockBonus} bonuspoäng</strong> för att låsa upp nästa nivå.
           `;
         } else {
+          continueLevel2Btn.style.display = 'none';
+
           updateScore();
           updateSideInfo();
 
@@ -926,6 +926,8 @@
           `;
         }
       } else {
+        continueLevel2Btn.style.display = 'none';
+
         score += cfg.level2ClearBonus;
         updateScore();
 
@@ -943,6 +945,7 @@
       levelFinished = true;
       lockBoard = true;
       stopTimer();
+      continueLevel2Btn.style.display = 'none';
 
       winTitle.textContent = "⏰ Tiden är slut!";
       winTextEl.innerHTML = `
@@ -971,6 +974,7 @@
 
     function resetGame(){
       hideWin();
+      continueLevel2Btn.style.display = 'none';
 
       currentLevel = level2Unlocked ? 2 : 1;
       roundIndex = 0;
@@ -993,6 +997,7 @@
 
     function restartFromBeginning(){
       hideWin();
+      continueLevel2Btn.style.display = 'none';
 
       level2Unlocked = false;
       currentLevel = 1;
@@ -1000,6 +1005,30 @@
       score = 0;
       updateScore();
 
+      moves = 0;
+      mistakes = 0;
+      movesEl.textContent = moves;
+      mistakesEl.textContent = mistakes;
+
+      picked = [];
+      lockBoard = false;
+      levelFinished = false;
+      pausedForPopup = false;
+
+      resetTimer();
+      clearFoundPairs();
+
+      loadCurrentRoundBoard();
+      updateSideInfo();
+    }
+
+    function continueToLevel2(){
+      hideWin();
+      continueLevel2Btn.style.display = 'none';
+      if (!level2Unlocked) return;
+
+      currentLevel = 2;
+      roundIndex = 0;
       moves = 0;
       mistakes = 0;
       movesEl.textContent = moves;
@@ -1034,10 +1063,7 @@
           restartFromBeginning();
         });
 
-        if (key === currentDifficultyKey) {
-          btn.classList.add('active');
-        }
-
+        if (key === currentDifficultyKey) btn.classList.add('active');
         difficultyGrid.appendChild(btn);
       });
     }
@@ -1055,6 +1081,7 @@
     document.getElementById('restartFullBtn').addEventListener('click', restartFromBeginning);
     document.getElementById('playAgainBtn').addEventListener('click', resetGame);
     document.getElementById('closeWinBtn').addEventListener('click', hideWin);
+    continueLevel2Btn.addEventListener('click', continueToLevel2);
 
     window.addEventListener('load', async () => {
       try {
