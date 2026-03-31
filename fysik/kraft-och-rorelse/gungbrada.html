@@ -532,100 +532,74 @@
     }
 
     function generateTask(){
-      const mode = els.modeSelect.value;
       let type = els.taskTypeSelect.value;
-
-     if(type === "mixed"){
-        type = mode === "mass"
-          ? randFrom(["distance", "mass"])
-          : randFrom(["distance", "mass", "force", "convert_force"]);
-      }
-
-      if(mode === "mass" && type === "force"){
-        type = randFrom(["distance", "mass"]);
-      }
-
+    
       const level = state.level;
       const distances = level === 1 ? [1,2,3,4] : [1,1.5,2,2.5,3,3.5,4];
-      const leftDistance = randFrom(distances);
-
+    
+      if(type === "mixed"){
+        type = randFrom(["distance_mass", "mass", "force", "convert_force"]);
+      }
+    
       let task = null;
-
-      if(type === "distance"){
+    
+      if(type === "distance_mass"){
         const leftMass = randFrom([10,20,30,40,50,60]);
         const rightMass = randFrom([10,20,30,40,50,60]);
-
-        const leftValue = mode === "force" ? leftMass * g : leftMass;
-        const rightValue = mode === "force" ? rightMass * g : rightMass;
-
+        const leftDistance = randFrom(distances);
+    
         const possible = [];
         for(const d of distances){
-          if(round1(leftValue * leftDistance) === round1(rightValue * d)){
+          if(round1(leftMass * leftDistance) === round1(rightMass * d)){
             possible.push(d);
           }
         }
         if(possible.length === 0) return generateTask();
-
+    
         const rightDistance = randFrom(possible);
-
+    
         task = {
           type,
-          formulaType: mode === "force" ? "force" : "mass",
+          formulaType: "mass",
           unknown: "distance",
           answer: rightDistance,
           tolerance: 0.05,
           left: {
             distance: leftDistance,
             kind: "weight",
-            display: mode === "force"
-              ? `${leftMass} kg (= ${leftMass * g} N)`
-              : `${leftMass} kg`
+            display: `${leftMass} kg`
           },
           right: {
             distance: null,
             kind: "person",
-            display: mode === "force"
-              ? `person: ${rightMass} kg (= ${rightMass * g} N)`
-              : `person: ${rightMass} kg`
+            display: `person: ${rightMass} kg`
           },
           compareCorrect: function(userValue){
-            const leftSide = leftValue * leftDistance;
-            const rightSide = rightValue * userValue;
+            const leftSide = leftMass * leftDistance;
+            const rightSide = rightMass * userValue;
             return { leftSide, rightSide };
           },
           question: `En vikt med massan ${leftMass} kg står ${leftDistance} m från vridpunkten på vänster sida. På höger sida finns en person med massan ${rightMass} kg. Hur långt från vridpunkten ska personen stå för att gungbrädan ska vara i jämvikt?`,
           unit: "m",
           answerLabel: "Avstånd:",
-          solution: mode === "force"
-            ? `
-              Räkna först om massorna till krafter:<br>
-              Vänster: ${leftMass} kg · 10 N/kg = ${leftMass * g} N<br>
-              Höger: ${rightMass} kg · 10 N/kg = ${rightMass * g} N<br><br>
-
-              Använd sedan:<br>
-              <strong>kraft × avstånd = kraft × avstånd</strong><br>
-              ${leftMass * g} N · ${leftDistance} m = ${rightMass * g} N · x m<br>
-              ${leftMass * g * leftDistance} Nm = ${rightMass * g} N · x m<br>
-              x = ${leftMass * g * leftDistance} Nm / ${rightMass * g} N = <strong>${rightDistance} m</strong>
-            `
-            : `
-              Använd:<br>
-              <strong>massa × avstånd = massa × avstånd</strong><br>
-              ${leftMass} kg · ${leftDistance} m = ${rightMass} kg · x m<br>
-              ${leftMass * leftDistance} kgm = ${rightMass} kg · x m<br>
-              x = ${leftMass * leftDistance} kgm / ${rightMass} kg = <strong>${rightDistance} m</strong>
-            `
+          solution: `
+            Använd:<br>
+            <strong>massa × avstånd = massa × avstånd</strong><br>
+            ${leftMass} kg · ${leftDistance} m = ${rightMass} kg · x m<br>
+            ${leftMass * leftDistance} kgm = ${rightMass} kg · x m<br>
+            x = ${leftMass * leftDistance} kgm / ${rightMass} kg = <strong>${rightDistance} m</strong>
+          `
         };
       }
-
+    
       if(type === "mass"){
         const knownMass = randFrom([10,15,20,25,30,40,50,60]);
         const knownDistance = randFrom(distances);
         const unknownDistance = randFrom(distances);
         const requiredMass = round1((knownMass * knownDistance) / unknownDistance);
-
+    
         if(!Number.isInteger(requiredMass) && level === 1) return generateTask();
-
+    
         task = {
           type,
           formulaType: "mass",
@@ -635,9 +609,7 @@
           left: {
             distance: knownDistance,
             kind: "weight",
-            display: mode === "force"
-              ? `${knownMass} kg (= ${knownMass * g} N)`
-              : `${knownMass} kg`
+            display: `${knownMass} kg`
           },
           right: {
             distance: unknownDistance,
@@ -661,15 +633,15 @@
           `
         };
       }
-
+    
       if(type === "force"){
         const knownForce = randFrom([100,150,200,250,300,400,500,600]);
         const knownDistance = randFrom(distances);
         const unknownDistance = randFrom(distances);
         const requiredForce = round1((knownForce * knownDistance) / unknownDistance);
-
+    
         if(!Number.isInteger(requiredForce) && level === 1) return generateTask();
-
+    
         task = {
           type,
           formulaType: "force",
@@ -703,19 +675,19 @@
           `
         };
       }
-
+    
       if(type === "convert_force"){
-        const leftMass = randFrom([10, 15, 20, 25, 30, 40, 50]);
+        const leftMass = randFrom([10,15,20,25,30,40,50]);
         const leftDistance = randFrom(distances);
-        const rightForce = randFrom([100, 150, 200, 250, 300, 400, 500]);
-      
+        const rightForce = randFrom([100,150,200,250,300,400,500]);
+    
         const leftForce = leftMass * g;
         const correctDistance = round1((leftForce * leftDistance) / rightForce);
-      
+    
         if((level === 1 && !Number.isInteger(correctDistance)) || correctDistance <= 0 || correctDistance > 4){
           return generateTask();
         }
-      
+    
         task = {
           type,
           formulaType: "force",
@@ -737,14 +709,14 @@
             const rightSide = rightForce * userValue;
             return { leftSide, rightSide };
           },
-          question: `På vänster sida finns en låda med massan ${leftMass} kg på avståndet ${leftDistance} m från vridpunkten. På höger sida står en person som trycker ned gungbrädan med kraften ${rightForce} N. Hur långt från vridpunkten måste personen stå för att gungbrädan ska vara i jämvikt?`,
+          question: `På vänster sida finns en låda med massan ${leftMass} kg på avståndet ${leftDistance} m från vridpunkten. På höger sida trycker en person ned gungbrädan med kraften ${rightForce} N. Hur långt från vridpunkten måste personen stå för att gungbrädan ska vara i jämvikt?`,
           unit: "m",
           answerLabel: "Avstånd:",
           solution: `
             Räkna först om massan till tyngdkraft:<br>
             F = m · g<br>
             F = ${leftMass} kg · 10 N/kg = ${leftForce} N<br><br>
-      
+    
             Använd sedan:<br>
             <strong>kraft × avstånd = kraft × avstånd</strong><br>
             ${leftForce} N · ${leftDistance} m = ${rightForce} N · x m<br>
@@ -753,7 +725,7 @@
           `
         };
       }
-      
+    
       return task;
     }
 
