@@ -3,135 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lärande spel – Krafter och rörelse</title>
+  <title>Lärande spel – Krafter och rörelse – Fysik</title>
   <link rel="stylesheet" href="/css/style.css" />
-
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:#f3f6fb;
+      color:#1f2937;
     }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
     }
 
-    .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    .hero{
+      background:linear-gradient(135deg, #e8f0ff, #ffffff);
+      border:1px solid #d8e0ea;
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:24px;
     }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.2rem;
+    .hero h1{
+      margin:0 0 8px;
+      font-size:2rem;
     }
 
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
+    .hero p{
+      margin:0;
+      color:#5b6472;
+      line-height:1.5;
     }
 
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
+    .back-link{
+      display:inline-block;
+      margin-bottom:18px;
+      color:#2563eb;
+      text-decoration:none;
+      font-weight:600;
     }
 
-    .resource-box li {
-      margin-bottom: 0.7rem;
+    .back-link:hover{
+      text-decoration:underline;
     }
 
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
+    .spel-symboler{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+      gap:24px;
+      align-items:start;
     }
 
-    .study-tips {
-      margin-top: 1.5rem;
-      background: #f8f9fb;
-      border: 1px solid #d8e0ea;
-      border-radius: 12px;
-      padding: 1rem;
+    .spel-symbol{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-decoration:none;
+      color:#1f2937;
     }
 
-    .study-tips summary {
-      cursor: pointer;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .spel-symbol img{
+      width:100%;
+      max-width:170px;
+      aspect-ratio:1 / 1;
+      object-fit:cover;
+      border-radius:18px;
+      border:1px solid #d8e0ea;
+      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      transition:transform 0.15s ease, box-shadow 0.15s ease;
+      background:#fff;
     }
 
-    .study-tips ul {
-      margin: 0.75rem 0 0 1.2rem;
+    .spel-symbol:hover img{
+      transform:translateY(-4px);
+      box-shadow:0 10px 22px rgba(0,0,0,0.12);
     }
 
-    .study-tips li {
-      margin-bottom: 0.45rem;
+    .spel-symbol span{
+      margin-top:10px;
+      font-size:1rem;
+      font-weight:700;
+      text-align:center;
+    }
+
+    @media (max-width: 768px){
+      .page{
+        padding:16px;
+      }
+
+      .hero h1{
+        font-size:1.7rem;
+      }
+
+      .spel-symboler{
+        grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));
+        gap:18px;
+      }
+
+      .spel-symbol img{
+        max-width:150px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="page">
+    <a class="back-link" href="/fysik/kraft-och-rorelse/">← Tillbaka till Krafter och rörelse</a>
 
-  <header class="fysik-header">
-    <h1>Lärande spel</h1>
-    <p>Krafter och rörelse</p>
-  </header>
-
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
-
-  <main>
-    <section class="page-intro">
-      <p>
-        Här hittar du lärande spel och övningar som hjälper dig att träna
-        begrepp och samband inom krafter och rörelse på ett mer aktivt sätt.
-      </p>
+    <section class="hero">
+      <h1>Lärande spel</h1>
+      <p>Välj ett spel för att träna begrepp och fysik på ett roligt sätt.</p>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>Begreppskort</h2>
-        <p>
-          Tävla med dig själv - para ihop begrepp och förklaringar och samla poäng
-        </p>
-        <ul>
-          <li><a href="./begreppskort.html">Öppna begreppskort</a></li>
-        </ul>
-      </article>
+    <section class="spel-symboler">
+      <a class="spel-symbol" href="/fysik/kraft-och-rorelse/begreppskort.html">
+        <img src="/images/fysik/kraft-och-rorelse/begrepp.png" alt="Begrepp" />
+        <span>Begrepp</span>
+      </a>
 
-      <article class="resource-box">
-        <h2>Gungbrädan</h2>
-        <p>
-          Var ska du placera vikten (kg) eller tyngden (Newton, N)?
-        </p>
-        <ul>
-          <li><a href="./gungbrada.html">Gungbräda (Hävstångslagen)</a></li>
-        </ul>
-      </article>
+      <a class="spel-symbol" href="/fysik/kraft-och-rorelse/gungbrada.html">
+        <img src="/images/fysik/kraft-och-rorelse/gungbrada.png" alt="Hävstångslagen" />
+        <span>Hävstångslagen</span>
+      </a>
     </section>
-
-    <section class="study-tips">
-      <details>
-        <summary>Tips</summary>
-        <ul>
-          <li>Börja med att träna de viktigaste begreppen först.</li>
-          <li>Spela gärna flera korta omgångar i stället för en lång.</li>
-          <li>När du fastnar: säg begreppet högt och försök förklara det med egna ord.</li>
-        </ul>
-      </details>
-    </section>
-
-    <p style="margin-top: 1.5rem;">
-      <a href="./" class="subject-btn">← Tillbaka</a>
-    </p>
-  </main>
-
-  <script src="/js/menu.js"></script>
+  </div>
 </body>
 </html>
