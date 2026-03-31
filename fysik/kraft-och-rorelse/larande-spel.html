@@ -28,6 +28,7 @@
       border-radius:18px;
       padding:20px;
       margin-bottom:24px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.05);
     }
 
     .hero h1{
@@ -55,17 +56,35 @@
 
     .spel-symboler{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
       gap:24px;
       align-items:start;
+      background:rgba(255,255,255,0.55);
+      border:1px solid rgba(216,224,234,0.8);
+      border-radius:22px;
+      padding:24px;
+      backdrop-filter:blur(2px);
     }
 
-    .spel-symbol{
+    .spel-symbol,
+    .spelikon{
       display:flex;
       flex-direction:column;
       align-items:center;
       text-decoration:none;
       color:#1f2937;
+      background:linear-gradient(180deg,#f7fbff,#eaf3ff);
+      border:1px solid #d7e3f0;
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 8px 20px rgba(0,0,0,.08);
+      transition:transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .spel-symbol:hover,
+    .spelikon:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 24px rgba(0,0,0,0.12);
     }
 
     .spel-symbol img{
@@ -75,17 +94,22 @@
       object-fit:cover;
       border-radius:18px;
       border:1px solid #d8e0ea;
-      box-shadow:0 4px 12px rgba(0,0,0,0.08);
-      transition:transform 0.15s ease, box-shadow 0.15s ease;
+      background:#fff;
+      display:block;
+    }
+
+    .spelikon img{
+      width:100%;
+      max-width:220px;
+      height:auto;
+      display:block;
+      border-radius:18px;
+      border:1px solid #d8e0ea;
       background:#fff;
     }
 
-    .spel-symbol:hover img{
-      transform:translateY(-4px);
-      box-shadow:0 10px 22px rgba(0,0,0,0.12);
-    }
-
-    .spel-symbol span{
+    .spel-symbol span,
+    .spelikon span{
       margin-top:10px;
       font-size:1rem;
       font-weight:700;
@@ -102,46 +126,18 @@
       }
 
       .spel-symboler{
-        grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));
+        grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
         gap:18px;
+        padding:18px;
       }
 
       .spel-symbol img{
         max-width:150px;
       }
 
-      .spel-symboler{
-        display:grid;
-        grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
-        gap:24px;
-        align-items:start;
-        background:rgba(255,255,255,0.55);
-        border:1px solid rgba(216,224,234,0.8);
-        border-radius:22px;
-        padding:24px;
-        backdrop-filter:blur(2px);
-      }
-      .spelikon{
-        display:inline-flex;
-        flex-direction:column;
-        align-items:center;
-        gap:10px;
-        text-decoration:none;
-        color:#14304d;
-        font-weight:700;
-        background:linear-gradient(180deg,#f7fbff,#eaf3ff);
-        border:1px solid #d7e3f0;
-        border-radius:18px;
-        padding:14px;
-        box-shadow:0 8px 20px rgba(0,0,0,.08);
-      }
-      
       .spelikon img{
-        width:220px;
-        height:auto;
-        display:block;
+        max-width:180px;
       }
-      
     }
   </style>
 </head>
@@ -164,11 +160,11 @@
         <img src="/images/fysik/kraft-och-rorelse/gungbrada.png" alt="Hävstångslagen" />
         <span>Hävstångslagen</span>
       </a>
-      
-      <a class="spelikon" href="./pickup-simulering.html">
+
+      <a class="spelikon" href="/fysik/kraft-och-rorelse/pickup-simulering.html">
         <img src="/images/fysik/kraft-och-rorelse/pickupbil.png" alt="Pickupbil – Newtons lagar" />
         <span>Pickupbil</span>
-      </a> 
+      </a>
     </section>
   </div>
 </body>
