@@ -235,7 +235,7 @@
     #truckWrap{
       position:absolute;
       right:36px;
-      bottom:40px;
+      bottom:12px;  /* sänkt ca 1 cm */
       width:350px;
       height:145px;
       pointer-events:none;
@@ -256,8 +256,8 @@
     /* Last på flaket */
     #cargo{
       position:absolute;
-      left:180px;
-      bottom:66px;
+      left:203px;    /* 1 cm åt höger från 180 px */
+      bottom:149px;  /* höjt ca 2,2 cm från 66 px */
       width:122px;
       height:74px;
       z-index:3;
@@ -314,40 +314,6 @@
       left:12px;
     }
 
-    /* Hjulanimation */
-    .wheel{
-      position:absolute;
-      width:69px;
-      height:69px;
-      border:6px solid rgba(35,42,50,.95);
-      border-radius:50%;
-      background:
-        radial-gradient(circle, #bfc7d1 0 24%, #7b8796 25% 29%, transparent 30%),
-        repeating-conic-gradient(
-          #788391 0deg 8deg,
-          #3d434b 8deg 16deg
-        );
-      box-shadow:
-        inset 0 0 0 7px #9ea8b4,
-        inset 0 0 0 14px #d2d8df,
-        inset 0 0 0 18px #8993a0;
-      bottom:4px;
-      z-index:1;
-      opacity:.98;
-    }
-
-    .wheel::after{
-      content:"";
-      position:absolute;
-      inset:26px;
-      border-radius:50%;
-      background:#5c6673;
-      box-shadow:0 0 0 4px #aeb7c3 inset;
-    }
-
-    #wheelFront{ left:24px; }
-    #wheelRear{ left:245px; }
-
     @media (max-width: 980px){
       .wrap{
         grid-template-columns:1fr;
@@ -369,15 +335,6 @@
         width:95px;
         height:62px;
       }
-
-      .wheel{
-        width:58px;
-        height:58px;
-        bottom:3px;
-      }
-
-      #wheelFront{ left:18px; }
-      #wheelRear{ left:203px; }
 
       .hud{
         grid-template-columns:repeat(4, 1fr);
@@ -468,8 +425,6 @@
         </div>
 
         <div id="truckWrap">
-          <div class="wheel" id="wheelFront"></div>
-          <div class="wheel" id="wheelRear"></div>
           <div id="cargo"></div>
           <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
         </div>
@@ -497,8 +452,6 @@
       startBtn: document.getElementById('startBtn'),
       resetBtn: document.getElementById('resetBtn'),
       sim: document.getElementById('sim'),
-      wheelFront: document.getElementById('wheelFront'),
-      wheelRear: document.getElementById('wheelRear')
     };
 
     function bindRange(range, out, fmt = v => v){
@@ -562,11 +515,6 @@
 
     let anim = null;
 
-    function setWheelRotation(deg){
-      els.wheelFront.style.transform = `rotate(${deg}deg)`;
-      els.wheelRear.style.transform = `rotate(${deg}deg)`;
-    }
-
     function resetSim(){
       if(anim) cancelAnimationFrame(anim);
       anim = null;
@@ -579,7 +527,6 @@
       els.startBtn.disabled = false;
       els.startBtn.style.opacity = '1';
       els.roadline.style.backgroundPositionX = '0px';
-      setWheelRotation(0);
       updateCargo();
     }
 
@@ -596,7 +543,6 @@
       let v = 0;
       let last = null;
       let roadOffset = 0;
-      let wheelDeg = 0;
 
       const maxTravel = Math.max(140, els.sim.clientWidth - els.truckWrap.clientWidth - 72);
 
@@ -623,9 +569,6 @@
 
         roadOffset += v * dt * 26;
         els.roadline.style.backgroundPositionX = `${roadOffset}px`;
-
-        wheelDeg += v * dt * 220;
-        setWheelRotation(wheelDeg);
 
         els.timeOut.textContent = `${t.toFixed(1)} s`;
         els.speedOut.textContent = `${v.toFixed(2)} m/s`;
