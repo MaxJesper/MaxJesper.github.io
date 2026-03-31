@@ -18,17 +18,28 @@ function renderProv({ jsonPath, mountId, mode = "exam" }) {
         return;
       }
 
+      let globalQuestionNumber = 0;
+
       mount.innerHTML = sections
         .map((section, si) => {
           const qs = Array.isArray(section.questions) ? section.questions : [];
+
+          const questionsHtml = qs.map((qObj, qi) => {
+            globalQuestionNumber += 1;
+            return renderQuestion({
+              qObj,
+              si,
+              qi,
+              qNumber: globalQuestionNumber,
+              mode,
+              storageKeyBase
+            });
+          }).join("");
+
           return `
             <section class="prov-section" data-section-index="${si}">
               <h2 class="prov-title">${escapeHtml(section.title || "")}</h2>
-              ${qs
-                .map((qObj, qi) =>
-                  renderQuestion({ qObj, si, qi, mode, storageKeyBase })
-                )
-                .join("")}
+              ${questionsHtml}
             </section>
           `;
         })
@@ -48,7 +59,7 @@ function renderProv({ jsonPath, mountId, mode = "exam" }) {
 /* =========================================================
    Render en fråga (vanlig eller matchning)
    ========================================================= */
-function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
+function renderQuestion({ qObj, si, qi, qNumber, mode, storageKeyBase }) {
   // ----------------------
   // MATCH-FRÅGA
   // ----------------------
@@ -58,17 +69,15 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
     const right = Array.isArray(qObj.right) ? qObj.right : [];
     const facit = qObj.a || "";
 
-    // Facit-läge: visa bara facittext (snyggt och kort)
     if (mode === "facit" || mode === "print-facit") {
       return `
         <div class="prov-item">
-          <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(title)}</p>
+          <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(title)}</p>
           <div class="prov-facit">${escapeHtml(facit)}</div>
         </div>
       `;
     }
 
-    // Digitalt prov: små inputs (1–8) framför begreppen
     if (mode === "exam") {
       const leftHtml = left
         .map((item, li) => {
@@ -89,7 +98,7 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
 
       return `
         <div class="prov-item">
-          <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(title)}</p>
+          <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(title)}</p>
           <div class="match-grid">
             <div class="match-left">
               ${leftHtml}
@@ -102,7 +111,6 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
       `;
     }
 
-    // Utskrift: visa tomma rutor (eller elevens sparade siffror om de finns)
     if (mode === "print-exam") {
       const leftHtml = left
         .map((item, li) => {
@@ -123,7 +131,7 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
 
       return `
         <div class="prov-item">
-          <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(title)}</p>
+          <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(title)}</p>
           <div class="match-grid">
             <div class="match-left">
               ${leftHtml}
@@ -140,7 +148,7 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
   }
 
   // ----------------------
-  // VANLIG FRÅGA (qa)
+  // VANLIG FRÅGA
   // ----------------------
   const q = qObj.q || "";
   const a = qObj.a || "";
@@ -148,21 +156,19 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
   const qid = `s${si}-q${qi}`;
   const key = `${storageKeyBase}::${qid}`;
 
-  // FACIT
   if (mode === "facit" || mode === "print-facit") {
     return `
       <div class="prov-item">
-        <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(q)}</p>
+        <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
         <div class="prov-facit">${escapeHtml(a)}</div>
       </div>
     `;
   }
 
-  // DIGITALT PROV (skrivbart)
   if (mode === "exam") {
     return `
       <div class="prov-item">
-        <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(q)}</p>
+        <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
         <textarea class="prov-answer"
           rows="${lines}"
           data-storage-key="${escapeHtml(key)}"
@@ -171,13 +177,12 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
     `;
   }
 
-  // UTSKRIFT PROV: skriv ut elevens sparade svar om det finns, annars linjer
   if (mode === "print-exam") {
     const saved = getStored(key);
     if (saved && saved.trim().length > 0) {
       return `
         <div class="prov-item">
-          <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(q)}</p>
+          <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
           <div class="prov-student-answer">${escapeHtml(saved).replaceAll("\n", "<br>")}</div>
         </div>
       `;
@@ -189,7 +194,7 @@ function renderQuestion({ qObj, si, qi, mode, storageKeyBase }) {
 
     return `
       <div class="prov-item">
-        <p class="prov-q"><strong>${qi + 1}.</strong> ${escapeHtml(q)}</p>
+        <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
         <div class="prov-lines">${lineHtml}</div>
       </div>
     `;
@@ -233,7 +238,6 @@ function hydrateAndAutosaveMatchInputs(root) {
     if (saved != null) inp.value = saved;
 
     inp.addEventListener("input", () => {
-      // Tillåt bara en siffra 1–8
       let v = inp.value.replace(/[^\d]/g, "");
       if (v.length > 1) v = v.slice(0, 1);
       inp.value = v;
