@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gungbrädan – Hävstångslagen – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root{
+      --card-bg:#ffffff;
+      --card-border:#d8e0ea;
+      --soft-bg:#f7f9fc;
+      --text:#1f2937;
+      --muted:#5b6472;
+      --accent:#2563eb;
+      --accent-2:#1d4ed8;
+      --good:#15803d;
+      --bad:#b91c1c;
+      --beam:#8b5a2b;
+      --fulcrum:#444;
+      --left:#dbeafe;
+      --right:#fee2e2;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:#f3f6fb;
+      color:var(--text);
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, #e8f0ff, #ffffff);
+      border:1px solid var(--card-border);
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-size:2rem;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .game-grid{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:18px;
+    }
+
+    .card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    select, input[type="number"]{
+      padding:10px 12px;
+      border:1px solid #cfd7e3;
+      border-radius:10px;
+      font-size:1rem;
+      background:#fff;
+    }
+
+    button{
+      padding:10px 14px;
+      border:none;
+      border-radius:10px;
+      background:var(--accent);
+      color:#fff;
+      font-size:1rem;
+      cursor:pointer;
+    }
+
+    button:hover{
+      background:var(--accent-2);
+    }
+
+    .secondary{
+      background:#64748b;
+    }
+
+    .secondary:hover{
+      background:#475569;
+    }
+
+    .stats{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .stat{
+      background:var(--soft-bg);
+      border:1px solid var(--card-border);
+      border-radius:12px;
+      padding:10px 12px;
+      min-width:110px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.1rem;
+    }
+
+    .question-box{
+      background:var(--soft-bg);
+      border:1px solid var(--card-border);
+      border-radius:14px;
+      padding:14px;
+      margin-bottom:14px;
+      line-height:1.6;
+    }
+
+    .question-box h2{
+      margin:0 0 8px;
+      font-size:1.15rem;
+    }
+
+    .formula{
+      background:#eef4ff;
+      border-left:4px solid var(--accent);
+      padding:10px 12px;
+      border-radius:8px;
+      margin-top:10px;
+      color:#1e3a8a;
+      font-size:0.98rem;
+    }
+
+    .answer-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .answer-row label{
+      font-weight:bold;
+    }
+
+    .feedback{
+      min-height:28px;
+      font-weight:bold;
+      margin-top:8px;
+    }
+
+    .feedback.good{ color:var(--good); }
+    .feedback.bad{ color:var(--bad); }
+
+    .diagram-wrap{
+      margin-top:10px;
+      background:linear-gradient(to bottom, #f9fbff, #eef4fb);
+      border:1px solid var(--card-border);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    svg{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
+    .legend{
+      margin-top:12px;
+      font-size:0.96rem;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
+    .mini{
+      font-size:0.92rem;
+      color:var(--muted);
+    }
+
+    .solution{
+      margin-top:10px;
+      background:#f8fafc;
+      border:1px dashed #94a3b8;
+      border-radius:12px;
+      padding:12px;
+      line-height:1.6;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    @media (max-width: 900px){
+      .game-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <h1>Gungbrädan – träna hävstångslagen</h1>
+      <p>
+        Träna på jämvikt, vridmoment och Newtons andra lag. 
+        Ibland räknar du med massor, ibland måste du först omvandla till kraft:
+        <strong>F = m · g</strong>, där vi här använder <strong>g ≈ 10 N/kg</strong>.
+      </p>
+    </div>
+
+    <div class="game-grid">
+      <section class="card">
+        <div class="controls">
+          <label>
+            Läge:
+            <select id="modeSelect">
+              <option value="mass">Bara massor</option>
+              <option value="force">Massor och krafter</option>
+            </select>
+          </label>
+
+          <label>
+            Typ:
+            <select id="taskTypeSelect">
+              <option value="distance">Räkna ut avstånd</option>
+              <option value="mass">Räkna ut massa</option>
+              <option value="force">Räkna ut kraft</option>
+              <option value="mixed">Blandat</option>
+            </select>
+          </label>
+
+          <button id="newTaskBtn">Ny uppgift</button>
+          <button id="resetBtn" class="secondary">Börja om</button>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Poäng</span><strong id="score">0</strong></div>
+          <div class="stat"><span>Rätt</span><strong id="correct">0</strong></div>
+          <div class="stat"><span>Försök</span><strong id="attempts">0</strong></div>
+          <div class="stat"><span>Nivå</span><strong id="level">1</strong></div>
+        </div>
+
+        <div class="question-box">
+          <h2>Uppgift</h2>
+          <div id="questionText">Tryck på "Ny uppgift".</div>
+          <div class="formula">
+            Hävstångslagen: <strong>kraft × avstånd = kraft × avstånd</strong><br>
+            eller med moment: <strong>M = F · l</strong>
+          </div>
+        </div>
+
+        <div class="answer-row">
+          <label for="answerInput" id="answerLabel">Svar:</label>
+          <input type="number" id="answerInput" step="0.1" placeholder="Skriv ditt svar">
+          <span id="unitLabel">m</span>
+          <button id="checkBtn">Kontrollera</button>
+          <button id="showSolutionBtn" class="secondary">Visa lösning</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+        <div id="solutionBox" class="solution hidden"></div>
+      </section>
+
+      <section class="card">
+        <h2 style="margin-top:0;">Gungbrädan</h2>
+        <div class="diagram-wrap">
+          <svg viewBox="0 0 700 360" aria-label="Gungbräda">
+            <!-- ground -->
+            <line x1="70" y1="300" x2="630" y2="300" stroke="#94a3b8" stroke-width="4" />
+
+            <!-- fulcrum -->
+            <polygon points="335,300 365,300 350,240" fill="var(--fulcrum)" />
+
+            <!-- beam -->
+            <rect x="120" y="215" width="460" height="14" rx="7" fill="var(--beam)" />
+
+            <!-- scale marks left -->
+            <g id="leftMarks"></g>
+
+            <!-- scale marks right -->
+            <g id="rightMarks"></g>
+
+            <!-- left object -->
+            <g id="leftObject"></g>
+
+            <!-- right object -->
+            <g id="rightObject"></g>
+
+            <!-- target marker -->
+            <g id="targetMarker"></g>
+
+            <!-- labels -->
+            <text x="140" y="60" font-size="20" fill="#1f2937" font-weight="bold">Vänster sida</text>
+            <text x="500" y="60" font-size="20" fill="#1f2937" font-weight="bold">Höger sida</text>
+          </svg>
+        </div>
+        <div class="legend" id="diagramText">
+          Diagrammet uppdateras när du får en ny uppgift.
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const g = 10;
+
+    const els = {
+      modeSelect: document.getElementById("modeSelect"),
+      taskTypeSelect: document.getElementById("taskTypeSelect"),
+      newTaskBtn: document.getElementById("newTaskBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      questionText: document.getElementById("questionText"),
+      answerInput: document.getElementById("answerInput"),
+      answerLabel: document.getElementById("answerLabel"),
+      unitLabel: document.getElementById("unitLabel"),
+      checkBtn: document.getElementById("checkBtn"),
+      showSolutionBtn: document.getElementById("showSolutionBtn"),
+      feedback: document.getElementById("feedback"),
+      solutionBox: document.getElementById("solutionBox"),
+      score: document.getElementById("score"),
+      correct: document.getElementById("correct"),
+      attempts: document.getElementById("attempts"),
+      level: document.getElementById("level"),
+      leftMarks: document.getElementById("leftMarks"),
+      rightMarks: document.getElementById("rightMarks"),
+      leftObject: document.getElementById("leftObject"),
+      rightObject: document.getElementById("rightObject"),
+      targetMarker: document.getElementById("targetMarker"),
+      diagramText: document.getElementById("diagramText")
+    };
+
+    const state = {
+      score: 0,
+      correct: 0,
+      attempts: 0,
+      level: 1,
+      currentTask: null
+    };
+
+    function round1(n){
+      return Math.round(n * 10) / 10;
+    }
+
+    function randFrom(arr){
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function randInt(min, max){
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function updateStats(){
+      els.score.textContent = state.score;
+      els.correct.textContent = state.correct;
+      els.attempts.textContent = state.attempts;
+      els.level.textContent = state.level;
+    }
+
+    function distanceToX(distance, side){
+      // 1 m = 60 px
+      const centerX = 350;
+      const px = distance * 60;
+      return side === "left" ? centerX - px : centerX + px;
+    }
+
+    function drawMarks(){
+      els.leftMarks.innerHTML = "";
+      els.rightMarks.innerHTML = "";
+
+      for(let d = 1; d <= 4; d++){
+        const leftX = distanceToX(d, "left");
+        const rightX = distanceToX(d, "right");
+
+        els.leftMarks.innerHTML += `
+          <line x1="${leftX}" y1="208" x2="${leftX}" y2="240" stroke="#475569" stroke-width="2"/>
+          <text x="${leftX-8}" y="255" font-size="16" fill="#334155">${d} m</text>
+        `;
+
+        els.rightMarks.innerHTML += `
+          <line x1="${rightX}" y1="208" x2="${rightX}" y2="240" stroke="#475569" stroke-width="2"/>
+          <text x="${rightX-8}" y="255" font-size="16" fill="#334155">${d} m</text>
+        `;
+      }
+    }
+
+    function drawPerson(x, label, side="left"){
+      return `
+        <g>
+          <circle cx="${x}" cy="135" r="18" fill="${side === 'left' ? '#93c5fd' : '#fca5a5'}"/>
+          <line x1="${x}" y1="153" x2="${x}" y2="195" stroke="#111827" stroke-width="4"/>
+          <line x1="${x-18}" y1="170" x2="${x+18}" y2="170" stroke="#111827" stroke-width="4"/>
+          <line x1="${x}" y1="195" x2="${x-16}" y2="225" stroke="#111827" stroke-width="4"/>
+          <line x1="${x}" y1="195" x2="${x+16}" y2="225" stroke="#111827" stroke-width="4"/>
+          <line x1="${x}" y1="225" x2="${x}" y2="215" stroke="#111827" stroke-width="2"/>
+          <text x="${x-42}" y="110" font-size="16" fill="#111827">${label}</text>
+        </g>
+      `;
+    }
+
+    function drawWeight(x, label, side="left"){
+      const fill = side === "left" ? "#60a5fa" : "#f87171";
+      return `
+        <g>
+          <rect x="${x-22}" y="160" width="44" height="44" rx="8" fill="${fill}" stroke="#1f2937" stroke-width="2"/>
+          <line x1="${x}" y1="204" x2="${x}" y2="215" stroke="#1f2937" stroke-width="2"/>
+          <text x="${x-38}" y="145" font-size="16" fill="#111827">${label}</text>
+        </g>
+      `;
+    }
+
+    function renderDiagram(task){
+      drawMarks();
+
+      els.leftObject.innerHTML = "";
+      els.rightObject.innerHTML = "";
+      els.targetMarker.innerHTML = "";
+
+      const leftX = distanceToX(task.left.distance, "left");
+      const rightX = distanceToX(task.right.distance || 2, "right");
+
+      const leftLabel = task.left.display;
+      const rightLabel = task.right.display || "?";
+
+      const leftGraphic = task.left.kind === "person"
+        ? drawPerson(leftX, leftLabel, "left")
+        : drawWeight(leftX, leftLabel, "left");
+
+      els.leftObject.innerHTML = leftGraphic;
+
+      if(task.unknown !== "distance"){
+        const rightGraphic = task.right.kind === "person"
+          ? drawPerson(rightX, rightLabel, "right")
+          : drawWeight(rightX, rightLabel, "right");
+        els.rightObject.innerHTML = rightGraphic;
+      } else {
+        els.rightObject.innerHTML = drawPerson(distanceToX(2, "right"), rightLabel, "right");
+        els.targetMarker.innerHTML = `
+          <text x="500" y="285" font-size="18" fill="#b91c1c" font-weight="bold">Placera personen på rätt avstånd</text>
+        `;
+      }
+
+      els.diagramText.innerHTML = `
+        Vänster sida: <strong>${task.left.display}</strong> på <strong>${task.left.distance} m</strong>.<br>
+        Höger sida: <strong>${task.right.display}</strong>${task.right.distance ? ` på <strong>${task.right.distance} m</strong>` : ""}.<br>
+        Målet är att få gungbrädan i jämvikt.
+      `;
+    }
+
+    function generateTask(){
+      const mode = els.modeSelect.value;
+      let type = els.taskTypeSelect.value;
+
+      if(type === "mixed"){
+        type = randFrom(["distance", "mass", "force"]);
+      }
+
+      const level = state.level;
+      const distances = level === 1 ? [1,2,3,4] : [1,1.5,2,2.5,3,3.5,4];
+      const leftDistance = randFrom(distances);
+
+      let leftMass = level === 1 ? randInt(10, 50) : randInt(10, 80);
+      let rightMass = level === 1 ? randInt(10, 50) : randInt(10, 80);
+      let rightDistance = randFrom(distances);
+
+      const leftForce = leftMass * g;
+      const rightForce = rightMass * g;
+
+      let task = null;
+
+      if(type === "distance"){
+        leftMass = randFrom([10,20,30,40,50,60]);
+        rightMass = randFrom([10,20,30,40,50,60]);
+
+        const leftF = mode === "force" ? leftMass * g : leftMass;
+        const rightF = mode === "force" ? rightMass * g : rightMass;
+
+        const possible = [];
+        for(const d of distances){
+          if(round1(leftF * leftDistance) === round1(rightF * d)){
+            possible.push(d);
+          }
+        }
+
+        if(possible.length === 0){
+          return generateTask();
+        }
+
+        rightDistance = randFrom(possible);
+
+        task = {
+          type,
+          unknown: "distance",
+          answer: rightDistance,
+          tolerance: 0.05,
+          left: {
+            mass: leftMass,
+            force: leftMass * g,
+            distance: leftDistance,
+            kind: "weight",
+            display: mode === "force" ? `${leftMass} kg (= ${leftMass * g} N)` : `${leftMass} kg`
+          },
+          right: {
+            mass: rightMass,
+            force: rightMass * g,
+            distance: null,
+            kind: "person",
+            display: mode === "force" ? `person: ${rightMass} kg (= ${rightMass * g} N)` : `person: ${rightMass} kg`
+          },
+          question: mode === "force"
+            ? `En vikt med massan ${leftMass} kg står ${leftDistance} m från vridpunkten på vänster sida. På höger sida finns en person med massan ${rightMass} kg. Hur långt från vridpunkten ska personen stå för att gungbrädan ska vara i jämvikt?`
+            : `En vikt med massan ${leftMass} kg står ${leftDistance} m från vridpunkten på vänster sida. På höger sida finns en person med massan ${rightMass} kg. Hur långt från vridpunkten ska personen stå för att gungbrädan ska vara i jämvikt?`,
+          unit: "m",
+          answerLabel: "Avstånd:",
+          solution:
+            mode === "force"
+            ? `
+            1. Räkna om massorna till krafter:<br>
+            Vänster: ${leftMass} · 10 = ${leftMass * g} N<br>
+            Höger: ${rightMass} · 10 = ${rightMass * g} N<br><br>
+            2. Använd hävstångslagen:<br>
+            ${leftMass * g} · ${leftDistance} = ${rightMass * g} · x<br>
+            ${leftMass * g * leftDistance} = ${rightMass * g}x<br>
+            x = ${leftMass * g * leftDistance} / ${rightMass * g} = <strong>${rightDistance} m</strong>
+            `
+            : `
+            Använd hävstångslagen:<br>
+            ${leftMass} · ${leftDistance} = ${rightMass} · x<br>
+            ${leftMass * leftDistance} = ${rightMass}x<br>
+            x = ${leftMass * leftDistance} / ${rightMass} = <strong>${rightDistance} m</strong>
+            `
+        };
+      }
+
+      if(type === "mass"){
+        const targetMass = randFrom([10,15,20,25,30,40,50,60]);
+        const knownMass = randFrom([10,15,20,25,30,40,50,60]);
+        const knownDistance = randFrom(distances);
+        const unknownDistance = randFrom(distances);
+
+        const leftMoment = knownMass * knownDistance;
+        const requiredMass = round1(leftMoment / unknownDistance);
+
+        if(!Number.isInteger(requiredMass) && level === 1){
+          return generateTask();
+        }
+
+        task = {
+          type,
+          unknown: "mass",
+          answer: requiredMass,
+          tolerance: 0.05,
+          left: {
+            mass: knownMass,
+            force: knownMass * g,
+            distance: knownDistance,
+            kind: "weight",
+            display: mode === "force" ? `${knownMass} kg (= ${knownMass * g} N)` : `${knownMass} kg`
+          },
+          right: {
+            mass: null,
+            force: null,
+            distance: unknownDistance,
+            kind: "person",
+            display: `person: ?`
+          },
+          question: mode === "force"
+            ? `På vänster sida står en vikt med massan ${knownMass} kg på ${knownDistance} m. På höger sida står en person på ${unknownDistance} m. Vilken massa måste personen ha för att gungbrädan ska vara i jämvikt?`
+            : `På vänster sida står en vikt med massan ${knownMass} kg på ${knownDistance} m. På höger sida står en person på ${unknownDistance} m. Vilken massa måste personen ha för att gungbrädan ska vara i jämvikt?`,
+          unit: "kg",
+          answerLabel: "Massa:",
+          solution:
+            mode === "force"
+            ? `
+            Massan kan först räknas som kraft, men eftersom båda sidor påverkas av samma g-värde går det också att räkna direkt med massor.<br><br>
+            Hävstångslagen:<br>
+            ${knownMass} · ${knownDistance} = m · ${unknownDistance}<br>
+            ${knownMass * knownDistance} = ${unknownDistance}m<br>
+            m = ${knownMass * knownDistance} / ${unknownDistance} = <strong>${requiredMass} kg</strong>
+            `
+            : `
+            Hävstångslagen:<br>
+            ${knownMass} · ${knownDistance} = m · ${unknownDistance}<br>
+            ${knownMass * knownDistance} = ${unknownDistance}m<br>
+            m = ${knownMass * knownDistance} / ${unknownDistance} = <strong>${requiredMass} kg</strong>
+            `
+        };
+      }
+
+      if(type === "force"){
+        const knownForce = randFrom([100,150,200,250,300,400,500,600]);
+        const knownDistance = randFrom(distances);
+        const unknownDistance = randFrom(distances);
+        const requiredForce = round1((knownForce * knownDistance) / unknownDistance);
+
+        if(!Number.isInteger(requiredForce) && level === 1){
+          return generateTask();
+        }
+
+        const approxMass = round1(requiredForce / g);
+
+        task = {
+          type,
+          unknown: "force",
+          answer: requiredForce,
+          tolerance: 0.05,
+          left: {
+            mass: knownForce / g,
+            force: knownForce,
+            distance: knownDistance,
+            kind: "weight",
+            display: `${knownForce} N`
+          },
+          right: {
+            mass: null,
+            force: null,
+            distance: unknownDistance,
+            kind: "person",
+            display: `person: ? N`
+          },
+          question: `På vänster sida verkar kraften ${knownForce} N på avståndet ${knownDistance} m från vridpunkten. På höger sida står en person på ${unknownDistance} m. Hur stor kraft måste personen påverka gungbrädan med för att den ska vara i jämvikt?`,
+          unit: "N",
+          answerLabel: "Kraft:",
+          solution: `
+            Hävstångslagen:<br>
+            ${knownForce} · ${knownDistance} = F · ${unknownDistance}<br>
+            ${knownForce * knownDistance} = ${unknownDistance}F<br>
+            F = ${knownForce * knownDistance} / ${unknownDistance} = <strong>${requiredForce} N</strong><br><br>
+            Det motsvarar ungefär en massa på ${requiredForce} / 10 = <strong>${approxMass} kg</strong>.
+          `
+        };
+      }
+
+      return task;
+    }
+
+    function showTask(){
+      state.currentTask = generateTask();
+      const t = state.currentTask;
+
+      els.questionText.innerHTML = t.question;
+      els.answerLabel.textContent = t.answerLabel;
+      els.unitLabel.textContent = t.unit;
+      els.answerInput.value = "";
+      els.feedback.textContent = "";
+      els.feedback.className = "feedback";
+      els.solutionBox.classList.add("hidden");
+      els.solutionBox.innerHTML = t.solution;
+
+      renderDiagram(t);
+    }
+
+    function checkAnswer(){
+      if(!state.currentTask) return;
+
+      const value = parseFloat(els.answerInput.value.replace(",", "."));
+      if(Number.isNaN(value)){
+        els.feedback.textContent = "Skriv ett svar först.";
+        els.feedback.className = "feedback bad";
+        return;
+      }
+
+      state.attempts++;
+      const t = state.currentTask;
+      const ok = Math.abs(value - t.answer) <= t.tolerance;
+
+      if(ok){
+        state.correct++;
+        state.score += 10;
+        els.feedback.textContent = `Rätt! Svaret är ${t.answer} ${t.unit}.`;
+        els.feedback.className = "feedback good";
+
+        if(state.correct % 5 === 0 && state.level < 3){
+          state.level++;
+          state.score += 20;
+          els.feedback.textContent += ` Nivå upp! Du är nu på nivå ${state.level}.`;
+        }
+      } else {
+        els.feedback.textContent = `Inte riktigt. Försök igen, eller visa lösningen.`;
+        els.feedback.className = "feedback bad";
+      }
+
+      updateStats();
+    }
+
+    function showSolution(){
+      if(!state.currentTask) return;
+      els.solutionBox.classList.remove("hidden");
+    }
+
+    function resetGame(){
+      state.score = 0;
+      state.correct = 0;
+      state.attempts = 0;
+      state.level = 1;
+      state.currentTask = null;
+      updateStats();
+
+      els.questionText.textContent = 'Tryck på "Ny uppgift".';
+      els.answerInput.value = "";
+      els.feedback.textContent = "";
+      els.feedback.className = "feedback";
+      els.solutionBox.classList.add("hidden");
+      els.solutionBox.innerHTML = "";
+      els.leftObject.innerHTML = "";
+      els.rightObject.innerHTML = "";
+      els.targetMarker.innerHTML = "";
+      els.diagramText.textContent = "Diagrammet uppdateras när du får en ny uppgift.";
+      drawMarks();
+    }
+
+    els.newTaskBtn.addEventListener("click", showTask);
+    els.checkBtn.addEventListener("click", checkAnswer);
+    els.showSolutionBtn.addEventListener("click", showSolution);
+    els.resetBtn.addEventListener("click", resetGame);
+
+    els.answerInput.addEventListener("keydown", (e) => {
+      if(e.key === "Enter"){
+        checkAnswer();
+      }
+    });
+
+    drawMarks();
+    updateStats();
+  </script>
+</body>
+</html>
