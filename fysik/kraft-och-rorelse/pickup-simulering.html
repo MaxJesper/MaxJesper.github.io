@@ -4,356 +4,379 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pickupbil – Newtons andra lag</title>
-  <style>
-    :root{
-      --bg1:#eef5ff;
-      --bg2:#d9ebff;
-      --card:#ffffff;
-      --line:#cfd8e3;
-      --text:#14304d;
-      --muted:#5f7388;
-      --accent:#2c6dd5;
-    }
 
-    *{ box-sizing:border-box; }
-
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:linear-gradient(180deg,var(--bg1),var(--bg2));
-    }
-
-    .wrap{
-      max-width:1220px;
-      margin:0 auto;
-      padding:10px;
-      display:grid;
-      grid-template-columns:310px 1fr;
-      gap:10px;
-      min-height:100vh;
-    }
-
-    .panel,.scene-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:0 8px 22px rgba(0,0,0,.06);
-    }
-
-    .panel{
-      padding:12px;
-    }
-
-    h1{
-      font-size:1.25rem;
-      margin:0 0 6px;
-    }
-
-    .lead{
-      color:var(--muted);
-      line-height:1.35;
-      margin:0 0 10px;
-      font-size:.92rem;
-    }
-
-    .group{
-      margin-bottom:10px;
-      padding:10px;
-      border:1px solid #e8eef6;
-      border-radius:14px;
-      background:#fbfdff;
-    }
-
-    .group h2{
-      font-size:.95rem;
-      margin:0 0 8px;
-    }
-
-    label{
-      display:block;
-      font-weight:700;
-      margin-bottom:4px;
-      font-size:.9rem;
-    }
-
-    .row-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-
-    input[type=range]{
-      width:100%;
-      margin-bottom:8px;
-    }
-
-    .value{
-      min-width:88px;
-      text-align:right;
-      color:var(--accent);
-      font-weight:700;
-      font-size:.9rem;
-    }
-
-    .buttons{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-
-    button{
-      border:none;
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:.95rem;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 6px 16px rgba(0,0,0,.08);
-    }
-
-    .start{ background:var(--accent); color:#fff; }
-    .reset{ background:#edf3fa; color:var(--text); }
-
-    .formula{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:12px;
-      background:#f6f9fd;
-      border:1px solid #e0e8f2;
-      line-height:1.4;
-      font-size:.88rem;
-    }
-
-    .scene-card{
-      padding:10px;
-    }
-
-    .hud{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:8px;
-      margin:0 0 8px;
-    }
-
-    .metric{
-      border:1px solid #e6edf5;
-      border-radius:12px;
-      padding:8px 10px;
-      background:#fafcff;
-      min-width:0;
-    }
-
-    .metric .k{
-      font-size:.74rem;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-
-    .metric .v{
-      font-size:1rem;
-      font-weight:700;
-      margin-top:4px;
-      white-space:nowrap;
-    }
-
-    .sim{
-      position:relative;
-      height:405px;
-      border-radius:16px;
-      overflow:hidden;
-      background:
-        linear-gradient(#d8ecff 0%, #eef7ff 58%, #9dd27a 58%, #88c267 67%, #5e6672 67%, #434a55 100%);
-      border:1px solid #dde6f0;
-    }
-
-    .sun{
-      position:absolute;
-      right:54px;
-      top:28px;
-      width:62px;
-      height:62px;
-      border-radius:50%;
-      background:rgba(255,220,120,.9);
-    }
-
-    .cloud{
-      position:absolute;
-      background:rgba(255,255,255,.85);
-      border-radius:999px;
-    }
-
-    .cloud:before,.cloud:after{
-      content:"";
-      position:absolute;
-      background:inherit;
-      border-radius:50%;
-    }
-
-    .c1{ left:70px; top:58px; width:100px; height:30px; }
-    .c1:before{ width:46px; height:46px; left:14px; top:-16px; }
-    .c1:after{ width:42px; height:42px; right:14px; top:-14px; }
-
-    .c2{ left:240px; top:94px; width:110px; height:34px; }
-    .c2:before{ width:46px; height:46px; left:20px; top:-14px; }
-    .c2:after{ width:48px; height:48px; right:16px; top:-16px; }
-
-    /* Vägen */
-    .road-main{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:134px;
-      background:linear-gradient(180deg, #626b77 0%, #505863 48%, #404750 100%);
-    }
-
-    .road-lane{
-      position:absolute;
-      left:0;
-      right:0;
-      top:26px;
-      height:58px;
-      background:rgba(255,255,255,0.04);
-      border-top:1px solid rgba(255,255,255,0.08);
-      border-bottom:1px solid rgba(0,0,0,0.12);
-    }
-
-    .roadline{
-      position:absolute;
-      left:0;
-      right:0;
-      top:49px;
-      height:7px;
-      background:repeating-linear-gradient(90deg, transparent 0 54px, #fff 54px 104px);
-      opacity:.92;
-    }
-
-    /* Bil */
-    #truckWrap{
-      position:absolute;
-      right:36px;
-      bottom:100px;  /* sänkt ca 1 cm */
-      width:350px;
-      height:145px;
-      pointer-events:none;
-    }
-
-    #truck{
-      position:absolute;
-      right:0;
-      bottom:0;
-      width:100%;
-      height:auto;
-      user-select:none;
-      -webkit-user-drag:none;
-      filter:drop-shadow(0 6px 5px rgba(0,0,0,.16));
-      z-index:2;
-    }
-
-    /* Last på flaket */
-    #cargo{
-      position:absolute;
-      left:300px;    /* 1 cm åt höger från 180 px */
-      bottom:300px;  /* höjt ca 2,2 cm från 66 px */
-      width:122px;
-      height:74px;
-      z-index:3;
-      pointer-events:none;
-    }
-
-    .cargo-box{
-      position:absolute;
-      width:28px;
-      height:28px;
-      border-radius:5px;
-      background:#c98b47;
-      border:2px solid rgba(0,0,0,.15);
-      box-shadow:inset 0 2px 0 rgba(255,255,255,.25);
-    }
-
-    .cargo-box::before,
-    .cargo-box::after{
-      content:"";
-      position:absolute;
-      background:rgba(255,255,255,.25);
-    }
-
-    .cargo-box::before{
-      left:50%;
-      top:3px;
-      bottom:3px;
-      width:2px;
-      transform:translateX(-50%);
-    }
-
-    .cargo-box::after{
-      top:50%;
-      left:3px;
-      right:3px;
-      height:2px;
-      transform:translateY(-50%);
-    }
-
-    .cargo-sand{
-      position:absolute;
-      left:18px;
-      bottom:0;
-      width:82px;
-      height:18px;
-      background:#d8c07d;
-      border:2px solid rgba(0,0,0,.12);
-      border-radius:18px 18px 8px 8px;
-    }
-
-    .cargo-sand.high{
-      height:28px;
-      width:92px;
-      left:12px;
-    }
-
-    @media (max-width: 980px){
+    <style>
+      :root{
+        --bg1:#eef5ff;
+        --bg2:#d9ebff;
+        --card:#ffffff;
+        --line:#cfd8e3;
+        --text:#14304d;
+        --muted:#5f7388;
+        --accent:#2c6dd5;
+      }
+    
+      *{ box-sizing:border-box; }
+    
+      body{
+        margin:0;
+        font-family:Arial, Helvetica, sans-serif;
+        color:var(--text);
+        background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      }
+    
       .wrap{
-        grid-template-columns:1fr;
+        max-width:1220px;
+        margin:0 auto;
+        padding:10px;
+        display:grid;
+        grid-template-columns:310px 1fr;
+        gap:10px;
+        min-height:100vh;
       }
-
-      .sim{
-        height:360px;
+    
+      .panel,.scene-card{
+        background:var(--card);
+        border:1px solid var(--line);
+        border-radius:18px;
+        box-shadow:0 8px 22px rgba(0,0,0,.06);
       }
-
-      #truckWrap{
-        width:290px;
-        height:120px;
-        bottom:44px;
+    
+      .panel{
+        padding:12px;
       }
-
-      #cargo{
-        left:135px;
-        bottom:54px;
-        width:95px;
-        height:62px;
+    
+      h1{
+        font-size:1.25rem;
+        margin:0 0 6px;
       }
-
-      .hud{
-        grid-template-columns:repeat(4, 1fr);
-        gap:6px;
+    
+      .lead{
+        color:var(--muted);
+        line-height:1.35;
+        margin:0 0 10px;
+        font-size:.92rem;
       }
-
-      .metric{
-        padding:7px 8px;
+    
+      .group{
+        margin-bottom:10px;
+        padding:10px;
+        border:1px solid #e8eef6;
+        border-radius:14px;
+        background:#fbfdff;
       }
-
-      .metric .k{
-        font-size:.68rem;
+    
+      .group h2{
+        font-size:.95rem;
+        margin:0 0 8px;
       }
-
-      .metric .v{
+    
+      label{
+        display:block;
+        font-weight:700;
+        margin-bottom:4px;
         font-size:.9rem;
       }
-    }
-  </style>
+    
+      .row-top{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+      }
+    
+      input[type=range]{
+        width:100%;
+        margin-bottom:8px;
+      }
+    
+      .value{
+        min-width:88px;
+        text-align:right;
+        color:var(--accent);
+        font-weight:700;
+        font-size:.9rem;
+      }
+    
+      .buttons{
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-top:8px;
+      }
+    
+      button{
+        border:none;
+        border-radius:999px;
+        padding:10px 14px;
+        font-size:.95rem;
+        font-weight:700;
+        cursor:pointer;
+        box-shadow:0 6px 16px rgba(0,0,0,.08);
+      }
+    
+      .start{ background:var(--accent); color:#fff; }
+      .reset{ background:#edf3fa; color:var(--text); }
+    
+      .formula{
+        margin-top:10px;
+        padding:10px 12px;
+        border-radius:12px;
+        background:#f6f9fd;
+        border:1px solid #e0e8f2;
+        line-height:1.4;
+        font-size:.88rem;
+      }
+    
+      .scene-card{
+        padding:10px;
+      }
+    
+      .hud{
+        display:grid;
+        grid-template-columns:repeat(4, 1fr);
+        gap:8px;
+        margin:0 0 8px;
+      }
+    
+      .metric{
+        border:1px solid #e6edf5;
+        border-radius:12px;
+        padding:8px 10px;
+        background:#fafcff;
+        min-width:0;
+      }
+    
+      .metric .k{
+        font-size:.74rem;
+        color:var(--muted);
+        white-space:nowrap;
+      }
+    
+      .metric .v{
+        font-size:1rem;
+        font-weight:700;
+        margin-top:4px;
+        white-space:nowrap;
+      }
+    
+      .sim{
+        position:relative;
+        height:405px;
+        border-radius:16px;
+        overflow:hidden;
+        background:
+          linear-gradient(#d8ecff 0%, #eef7ff 58%, #9dd27a 58%, #88c267 67%, #5e6672 67%, #434a55 100%);
+        border:1px solid #dde6f0;
+      }
+    
+      .sun{
+        position:absolute;
+        right:54px;
+        top:28px;
+        width:62px;
+        height:62px;
+        border-radius:50%;
+        background:rgba(255,220,120,.9);
+      }
+    
+      .cloud{
+        position:absolute;
+        background:rgba(255,255,255,.85);
+        border-radius:999px;
+      }
+    
+      .cloud:before,.cloud:after{
+        content:"";
+        position:absolute;
+        background:inherit;
+        border-radius:50%;
+      }
+    
+      .c1{ left:70px; top:58px; width:100px; height:30px; }
+      .c1:before{ width:46px; height:46px; left:14px; top:-16px; }
+      .c1:after{ width:42px; height:42px; right:14px; top:-14px; }
+    
+      .c2{ left:240px; top:94px; width:110px; height:34px; }
+      .c2:before{ width:46px; height:46px; left:20px; top:-14px; }
+      .c2:after{ width:48px; height:48px; right:16px; top:-16px; }
+    
+      /* Vägen */
+      .road-main{
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        height:134px;
+        background:linear-gradient(180deg, #626b77 0%, #505863 48%, #404750 100%);
+      }
+    
+      .road-lane{
+        position:absolute;
+        left:0;
+        right:0;
+        top:26px;
+        height:58px;
+        background:rgba(255,255,255,0.04);
+        border-top:1px solid rgba(255,255,255,0.08);
+        border-bottom:1px solid rgba(0,0,0,0.12);
+      }
+    
+      .roadline{
+        position:absolute;
+        left:0;
+        right:0;
+        top:49px;
+        height:7px;
+        background:repeating-linear-gradient(90deg, transparent 0 54px, #fff 54px 104px);
+        opacity:.92;
+      }
+    
+      /* =========================
+         BILENS POSITION
+         ÄNDRA HÄR
+         bottom = upp/ner
+           mindre värde = längre ner
+           större värde = längre upp
+    
+         right = höger/vänster
+           mindre värde = längre åt höger
+           större värde = längre åt vänster
+         ========================= */
+      #truckWrap{
+        position:absolute;
+        right:36px;
+        bottom:62px;
+        width:350px;
+        height:145px;
+        pointer-events:none;
+      }
+    
+      #truck{
+        position:absolute;
+        right:0;
+        bottom:0;
+        width:100%;
+        height:auto;
+        user-select:none;
+        -webkit-user-drag:none;
+        filter:drop-shadow(0 6px 5px rgba(0,0,0,.16));
+        z-index:2;
+      }
+    
+      /* =========================
+         LASTENS POSITION PÅ FLAKET
+         ÄNDRA HÄR
+         left = vänster/höger inne i bilen
+           mindre värde = längre åt vänster
+           större värde = längre åt höger
+    
+         bottom = upp/ner inne i bilen
+           mindre värde = längre ner
+           större värde = längre upp
+         ========================= */
+      #cargo{
+        position:absolute;
+        left:203px;
+        bottom:180px;
+        width:122px;
+        height:74px;
+        z-index:3;
+        pointer-events:none;
+      }
+    
+      .cargo-box{
+        position:absolute;
+        width:28px;
+        height:28px;
+        border-radius:5px;
+        background:#c98b47;
+        border:2px solid rgba(0,0,0,.15);
+        box-shadow:inset 0 2px 0 rgba(255,255,255,.25);
+      }
+    
+      .cargo-box::before,
+      .cargo-box::after{
+        content:"";
+        position:absolute;
+        background:rgba(255,255,255,.25);
+      }
+    
+      .cargo-box::before{
+        left:50%;
+        top:3px;
+        bottom:3px;
+        width:2px;
+        transform:translateX(-50%);
+      }
+    
+      .cargo-box::after{
+        top:50%;
+        left:3px;
+        right:3px;
+        height:2px;
+        transform:translateY(-50%);
+      }
+    
+      .cargo-sand{
+        position:absolute;
+        left:18px;
+        bottom:0;
+        width:82px;
+        height:18px;
+        background:#d8c07d;
+        border:2px solid rgba(0,0,0,.12);
+        border-radius:18px 18px 8px 8px;
+      }
+    
+      .cargo-sand.high{
+        height:28px;
+        width:92px;
+        left:12px;
+      }
+    
+      @media (max-width: 980px){
+        .wrap{
+          grid-template-columns:1fr;
+        }
+    
+        .sim{
+          height:360px;
+        }
+    
+        /* Mobil: bilens position */
+        #truckWrap{
+          width:290px;
+          height:120px;
+          bottom:44px;
+        }
+    
+        /* Mobil: lastens position */
+        #cargo{
+          left:135px;
+          bottom:54px;
+          width:95px;
+          height:62px;
+        }
+    
+        .hud{
+          grid-template-columns:repeat(4, 1fr);
+          gap:6px;
+        }
+    
+        .metric{
+          padding:7px 8px;
+        }
+    
+        .metric .k{
+          font-size:.68rem;
+        }
+    
+        .metric .v{
+          font-size:.9rem;
+        }
+      }
+    </style>
 </head>
 <body>
   <div class="wrap">
