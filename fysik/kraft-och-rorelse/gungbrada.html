@@ -20,7 +20,9 @@
       --fulcrum:#444;
     }
 
-    *{ box-sizing:border-box; }
+    *{
+      box-sizing:border-box;
+    }
 
     body{
       margin:0;
@@ -56,7 +58,7 @@
 
     .game-grid{
       display:grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns:1.1fr 0.9fr;
       gap:18px;
     }
 
@@ -82,7 +84,8 @@
       padding:10px 14px;
       border-radius:10px;
       background:#e2e8f0;
-      color:#1f2937;
+      color:#1f2937 !important;
+      -webkit-text-fill-color:#1f2937 !important;
       text-decoration:none;
       font-size:1rem;
       border:1px solid #cbd5e1;
@@ -90,14 +93,19 @@
 
     .back-btn:hover{
       background:#cbd5e1;
+      color:#1f2937 !important;
+      -webkit-text-fill-color:#1f2937 !important;
     }
 
-    select, input[type="number"]{
+    select,
+    input[type="number"]{
       padding:10px 12px;
       border:1px solid #cfd7e3;
       border-radius:10px;
       font-size:1rem;
       background:#fff;
+      color:#111827;
+      -webkit-text-fill-color:#111827;
     }
 
     button{
@@ -106,51 +114,85 @@
       border-radius:10px;
       background:var(--accent);
       color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
       font-size:1rem;
+      line-height:1.2;
       cursor:pointer;
       display:inline-flex;
       align-items:center;
       justify-content:center;
+      opacity:1 !important;
+      visibility:visible !important;
+      text-indent:0 !important;
+      text-shadow:none !important;
+      appearance:none;
+      -webkit-appearance:none;
     }
-    button,
-    .secondary,
-    .success-btn{
-      color:#ffffff !important;
-    }
-    
+
     button:hover{
       background:var(--accent-2);
-    }
-
-    .secondary{
-      background:#64748b;
-    }
-
-    .secondary:hover{
-      background:#475569;
-    }
-
-    .success-btn{
-      background:#15803d;
-    }
-
-    .success-btn:hover{
-      background:#166534;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
     }
 
     .game-btn{
       color:#ffffff !important;
       -webkit-text-fill-color:#ffffff !important;
       opacity:1 !important;
-      text-shadow:none !important;
+      visibility:visible !important;
     }
-    
+
     .game-btn:hover{
       color:#ffffff !important;
       -webkit-text-fill-color:#ffffff !important;
       opacity:1 !important;
+      visibility:visible !important;
     }
-    
+
+    .secondary{
+      background:#64748b !important;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+    }
+
+    .secondary:hover{
+      background:#475569 !important;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+    }
+
+    .success-btn{
+      background:#15803d !important;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+    }
+
+    .success-btn:hover{
+      background:#166534 !important;
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+    }
+
+    #newTaskBtn,
+    #resetBtn,
+    #nextTaskBtn{
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+      opacity:1 !important;
+      visibility:visible !important;
+      text-indent:0 !important;
+      overflow:visible !important;
+    }
+
+    #newTaskBtn *,
+    #resetBtn *,
+    #nextTaskBtn *{
+      color:#ffffff !important;
+      -webkit-text-fill-color:#ffffff !important;
+      opacity:1 !important;
+      visibility:visible !important;
+    }
+
     .stats{
       display:flex;
       flex-wrap:wrap;
@@ -213,8 +255,13 @@
       margin-top:8px;
     }
 
-    .feedback.good{ color:var(--good); }
-    .feedback.bad{ color:var(--bad); }
+    .feedback.good{
+      color:var(--good);
+    }
+
+    .feedback.bad{
+      color:var(--bad);
+    }
 
     .diagram-wrap{
       margin-top:10px;
@@ -247,7 +294,7 @@
     }
 
     .hidden{
-      display:none;
+      display:none !important;
     }
 
     .next-row{
@@ -267,13 +314,8 @@
         grid-template-columns:1fr;
       }
     }
-    #newTaskBtn,
-    #resetBtn{
-      color:#ffffff !important;
-      -webkit-text-fill-color:#ffffff !important;
-      opacity:1 !important;
-    }
   </style>
+
 </head>
 <body>
   <div class="page">
