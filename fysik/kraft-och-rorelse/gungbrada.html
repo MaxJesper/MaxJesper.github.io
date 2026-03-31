@@ -324,7 +324,7 @@
           <div class="stat"><span>Poäng</span><strong id="score">0</strong></div>
           <div class="stat"><span>Rätt</span><strong id="correct">0</strong></div>
           <div class="stat"><span>Försök</span><strong id="attempts">0</strong></div>
-          <div class="stat"><span>Nivå</span><strong id="level">1</strong></div>
+          <div class="stat"><span>Nivå</span><strong id="level">Nivå 1 (0–4 rätt)</strong></div>
         </div>
 
         <div class="question-box">
@@ -431,7 +431,14 @@
       els.score.textContent = state.score;
       els.correct.textContent = state.correct;
       els.attempts.textContent = state.attempts;
-      els.level.textContent = state.level;
+    
+      if(state.level === 1){
+        els.level.textContent = "Nivå 1 (0–4 rätt)";
+      } else if(state.level === 2){
+        els.level.textContent = "Nivå 2 (5–9 rätt)";
+      } else {
+        els.level.textContent = "Nivå 3 (10+ rätt)";
+      }
     }
 
     function distanceToX(distance, side){
@@ -775,31 +782,35 @@
 
     function checkAnswer(){
       if(!state.currentTask || state.lockedUntilNext) return;
-
+    
       const value = parseFloat(els.answerInput.value.replace(",", "."));
       if(Number.isNaN(value)){
         els.feedback.textContent = "Skriv ett svar först.";
         els.feedback.className = "feedback bad";
         return;
       }
-
+    
       state.attempts++;
       const t = state.currentTask;
       const ok = Math.abs(value - t.answer) <= t.tolerance;
-
+    
       if(ok){
         state.correct++;
         state.score += 10;
         els.feedback.textContent = `Rätt! Svaret är ${t.answer} ${t.unit}. Gungbrädan är i jämvikt.`;
         els.feedback.className = "feedback good";
         setBeamAngle(0);
-
-        if(state.correct % 5 === 0 && state.level < 3){
-          state.level++;
-          state.score += 20;
-          els.feedback.textContent += ` Nivå upp! Du är nu på nivå ${state.level}.`;
+    
+        if(state.correct === 5 && state.level < 2){
+          state.level = 2;
+          state.score += 50;
+          els.feedback.textContent += ` Nivå upp! Du är nu på nivå 2 och får 50 bonuspoäng.`;
+        } else if(state.correct === 10 && state.level < 3){
+          state.level = 3;
+          state.score += 100;
+          els.feedback.textContent += ` Nivå upp! Du är nu på nivå 3 och får 100 bonuspoäng.`;
         }
-
+    
         lockForNext();
       } else {
         tiltFromAnswer(value);
@@ -807,7 +818,7 @@
         els.feedback.className = "feedback bad";
         lockForNext();
       }
-
+    
       updateStats();
     }
 
