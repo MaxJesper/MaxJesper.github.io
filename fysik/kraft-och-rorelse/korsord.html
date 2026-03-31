@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Korsord: Krafter och rörelse</title>
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  h1 { margin: 0 0 6px; font-size: 28px; }
+  .subtitle { margin: 0 0 18px; color: #333; }
+
+  .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
+
+  .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 980px) { .layout { grid-template-columns: 420px 1fr; align-items: start; } }
+
+  .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; }
+  .clue-box h2 { margin: 0 0 8px; font-size: 16px; }
+  ol { margin: 0; padding-left: 18px; }
+  li { margin: 6px 0; line-height: 1.25; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; }
+
+  button {
+    border: 1px solid #111; background: #111; color: #fff;
+    padding: 9px 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
+  }
+  button.secondary { background: #fff; color: #111; }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+
+  .status { margin-top: 8px; font-size: 14px; color: #222; }
+  .note { font-size: 13px; color: #333; margin-top: 6px; }
+
+  .grid-wrap { display: grid; justify-content: center; overflow-x: auto; }
+
+  .grid {
+    --cell: 32px;
+    display: grid;
+    grid-template-columns: repeat(19, var(--cell));
+    grid-auto-rows: var(--cell);
+    gap: 0;
+    border: 2px solid #000;
+    width: max-content;
+    background: #000;
+  }
+
+  .cell {
+    position: relative;
+    background: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+  .cell.black { background: #000; border-color: #000; }
+
+  .cell input {
+    width: 100%; height: 100%;
+    border: none; outline: none;
+    text-align: center;
+    font-size: 18px; font-weight: 700;
+    background: transparent;
+    text-transform: uppercase;
+  }
+
+  .num {
+    position: absolute; left: 3px; top: 2px;
+    font-size: 9px; font-weight: 700; color: #111;
+    user-select: none;
+  }
+  .cell.black .num { display: none; }
+
+  .cell.wrong {
+    background: #D32F2F !important;
+    outline: 3px solid #7f0000;
+    outline-offset: -3px;
+  }
+  .cell.wrong::after {
+    content: "✕";
+    position: absolute;
+    right: 3px;
+    bottom: 1px;
+    font-size: 14px;
+    font-weight: 900;
+    color: #fff;
+    pointer-events: none;
+  }
+
+  #facitBtn, #facitBtn * {
+    color: #fff !important;
+    background: #111 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #facitBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+  }
+
+  .print-only { display: none; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    @page { size: A4; margin: 12mm; }
+    body { margin: 0; }
+
+    .hamburger, #side-menu, .top-actions, .controls, .note, #status { display: none !important; }
+
+    h1 { font-size: 18px; margin: 0 0 4px; }
+    .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
+
+    .print-sheet { padding-left: 4mm; break-inside: avoid; page-break-inside: avoid; }
+
+    .layout { grid-template-columns: 1fr !important; gap: 8px; }
+
+    .clues { gap: 6px; }
+    .clue-box { border: none; padding: 0; }
+    .clue-box h2 { font-size: 12px; margin: 6px 0 2px; }
+
+    .print-clues { column-count: 2; column-gap: 10mm; }
+    .print-clues ol { padding-left: 16px; }
+    .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
+
+    .grid { --cell: 25px; }
+    .cell input { font-size: 14px; }
+    .num { font-size: 8px; }
+
+    .cell.wrong { background: #fff !important; outline: none !important; }
+    .cell.wrong::after { display: none !important; }
+
+    .print-only { display: block; }
+    .facit-page { page-break-before: always; break-before: page; }
+    .facit-title { font-size: 16px; margin: 0 0 6px; }
+  }
+</style>
+</head>
+
+<body>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="print-sheet">
+    <h1>Korsord: Krafter och rörelse</h1>
+    <p class="subtitle">Fyll i rutorna. En ruta blir röd direkt om bokstaven är fel.</p>
+
+    <div class="top-actions">
+      <button type="button" onclick="window.print()">Skriv ut</button>
+      <a href="/fysik/kraft-och-rorelse/larande-spel.html" class="subject-btn">← Tillbaka</a>
+    </div>
+
+    <div class="layout">
+      <div class="clues">
+        <div class="clue-box print-clues">
+          <h2>Vågrätt</h2>
+          <ol>
+            <li value="1">När något faller rakt ner och man bortser från luftmotstånd</li>
+            <li value="3">Kan ändra form, fart eller rörelseriktning</li>
+            <li value="6">Den yta som ett föremål vilar på</li>
+            <li value="8">Tyngdkraft mellan massor</li>
+            <li value="9">Motkraften från underlaget uppåt</li>
+            <li value="11">Kraft riktad in mot centrum i en centralrörelse</li>
+            <li value="12">Lag som säger att föremål behåller vila eller likformig rörelse om ingen kraft verkar</li>
+            <li value="13">Kraft som är lika stor men riktad åt motsatt håll</li>
+            <li value="14">Vid jämvikt gäller vänster hävarm · vänster kraft = höger hävarm · höger kraft</li>
+            <li value="15">Rörelse som går runt ett centrum</li>
+          </ol>
+
+          <h2 style="margin-top:10px;">Lodrätt</h2>
+          <ol>
+            <li value="2">Punkt som visar hur massan är fördelad i ett föremål</li>
+            <li value="4">Kraft mellan ytor eller i luft/vätska som bromsar rörelse</li>
+            <li value="5">Tillstånd när något befinner sig i fritt fall</li>
+            <li value="7">Rörelse rakt fram i lika stora steg hela tiden</li>
+            <li value="10">Fartökning</li>
+          </ol>
+        </div>
+
+        <div class="clue-box">
+          <h2>Verktyg</h2>
+          <div class="controls">
+            <button id="clearWordBtn" class="secondary" type="button" disabled>Rensa senaste</button>
+            <button id="clearBtn" class="secondary" type="button">Rensa</button>
+            <button id="facitBtn" type="button">Facit</button>
+          </div>
+          <div id="status" class="status"></div>
+          <div class="note">
+            Rensa senaste = rensar ordet du senast skrev i. Facit = visar/döljer facit för senaste ordet om det innehåller fel.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-wrap">
+        <div id="grid" class="grid" aria-label="Korsord"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-only facit-page">
+    <h2 class="facit-title">Facit – Korsord: Krafter och rörelse</h2>
+    <div class="grid-wrap">
+      <div id="grid-solution" class="grid" aria-label="Facit"></div>
+    </div>
+  </div>
+
+  <script src="/js/menu.js"></script>
+
+<script>
+const DATA = {"rows":20,"cols":19,"black":[[0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],[1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1],[1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1],[1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0],[0,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,0,1,0],[1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0],[1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0],[1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0],[0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],[0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],[0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1]],"solution":[["F","R","I","T","T","F","A","L","L",null,null,null,null,"K","R","A","F","T",null],[null,null,null,"Y",null,null,null,null,null,null,null,null,null,null,null,null,"R",null,null],[null,null,null,"N",null,null,null,null,null,null,null,null,null,null,null,null,"I",null,null],[null,null,null,"G",null,null,null,null,null,null,null,null,null,null,null,null,"K",null,"T"],["S","T","Ö","D","Y","T","A",null,null,null,null,null,"L",null,null,null,"T",null,"Y"],[null,null,null,"P",null,null,null,null,"G","R","A","V","I","T","A","T","I","O","N"],[null,null,null,"U",null,null,null,null,null,null,null,null,"K",null,null,null,"O",null,"G"],[null,null,null,"N","O","R","M","A","L","K","R","A","F","T",null,null,"N",null,"D"],[null,null,null,"K",null,null,null,null,null,null,null,null,"O",null,null,null,null,null,"L"],["A",null,null,"T",null,null,null,null,null,null,null,null,"R",null,null,null,null,null,"Ö"],["C",null,null,null,null,null,null,null,null,null,null,null,"M",null,null,null,null,null,"S"],["C",null,null,null,null,null,null,null,null,null,null,null,"I",null,null,null,null,null,"H"],["E",null,"T","R","Ö","G","H","E","T","S","L","A","G","E","N",null,null,null,"E"],["L",null,null,null,null,null,null,null,null,null,null,null,"R",null,null,null,null,null,"T"],["E",null,null,null,null,null,null,null,null,null,null,null,"Ö",null,null,null,null,null,null],["R",null,"R","E","A","K","T","I","O","N","S","K","R","A","F","T",null,null,null],["A",null,null,null,null,null,null,null,null,null,null,null,"E",null,null,null,null,null,null],["T",null,null,"H","Ä","V","S","T","Å","N","G","S","L","A","G","E","N",null,null],["I",null,null,null,null,null,null,null,null,null,null,null,"S",null,null,null,null,null,null],["O",null,"C","E","N","T","R","A","L","R","Ö","R","E","L","S","E",null,null,null]],"numbers":[[1,null,null,2,null,null,null,null,null,null,null,null,null,3,null,null,4,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,5],[6,null,null,null,null,null,null,null,null,null,null,null,7,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,8,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,9,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[10,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,11,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,13,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,14,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,15,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]]};
+
+const gridEl = document.getElementById('grid');
+const gridSolEl = document.getElementById('grid-solution');
+
+const statusEl = document.getElementById('status');
+const clearWordBtn = document.getElementById('clearWordBtn');
+const facitBtn = document.getElementById('facitBtn');
+
+facitBtn.textContent = 'Facit';
+
+function normalizeChar(ch) {
+  if (!ch) return '';
+  ch = ch.toUpperCase();
+  const ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
+  for (const c of ch) if (ok.includes(c)) return c;
+  return '';
+}
+function cellKey(r,c){ return `${r},${c}`; }
+function isEditable(r,c){ return DATA.black[r][c] !== 1; }
+function isBlack(r,c){
+  if (r<0 || c<0 || r>=DATA.rows || c>=DATA.cols) return true;
+  return DATA.black[r][c] === 1;
+}
+function cellId(r,c,prefix='cell'){ return `${prefix}-${r}-${c}`; }
+function getCellDiv(r,c){ return document.getElementById(cellId(r,c,'cell')); }
+function getInput(r,c){
+  const cell = document.getElementById(cellId(r,c,'cell'));
+  return cell ? cell.querySelector('input') : null;
+}
+
+const words = new Map();
+const cellToWords = new Map();
+
+function buildWords(){
+  words.clear();
+  cellToWords.clear();
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      cellToWords.set(cellKey(r,c), {across:null, down:null});
+    }
+  }
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      if (!isBlack(r, c-1)) continue;
+      if (isBlack(r, c+1)) continue;
+      const num = DATA.numbers[r][c] || null;
+      const id = `A${num ?? `${r}-${c}`}`;
+      const cells = [];
+      let cc=c;
+      while (cc<DATA.cols && isEditable(r,cc) && !isBlack(r,cc)){
+        cells.push({r, c:cc});
+        const m = cellToWords.get(cellKey(r,cc));
+        if (m) m.across = id;
+        cc++;
+      }
+      words.set(id, {dir:'across', number:num, cells});
+    }
+  }
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      if (!isBlack(r-1, c)) continue;
+      if (isBlack(r+1, c)) continue;
+      const num = DATA.numbers[r][c] || null;
+      const id = `D${num ?? `${r}-${c}`}`;
+      const cells = [];
+      let rr=r;
+      while (rr<DATA.rows && isEditable(rr,c) && !isBlack(rr,c)){
+        cells.push({r:rr, c});
+        const m = cellToWords.get(cellKey(rr,c));
+        if (m) m.down = id;
+        rr++;
+      }
+      words.set(id, {dir:'down', number:num, cells});
+    }
+  }
+}
+
+function wordForCell(r,c,dir){
+  const m = cellToWords.get(cellKey(r,c));
+  if (!m) return null;
+  return dir === 'down' ? m.down : m.across;
+}
+
+let lastTypedDir = 'across';
+let lastTypedWordId = null;
+let activeDir = null;
+
+function chooseInitialDir(r,c){
+  const leftBlack  = isBlack(r, c-1);
+  const rightBlack = isBlack(r, c+1);
+  const upBlack    = isBlack(r-1, c);
+  const downBlack  = isBlack(r+1, c);
+
+  const startsAcross = leftBlack && !rightBlack;
+  const startsDown   = upBlack && !downBlack;
+
+  if (startsAcross && !startsDown) return 'across';
+  if (startsDown && !startsAcross) return 'down';
+  if (startsAcross && startsDown) return 'across';
+
+  if (!leftBlack && !rightBlack) return 'across';
+  if (!upBlack && !downBlack) return 'down';
+
+  return 'across';
+}
+
+function setLastTypedWord(r,c){
+  const dir = activeDir || lastTypedDir;
+  const preferred = wordForCell(r,c,dir);
+  const fallback  = wordForCell(r,c, dir === 'across' ? 'down' : 'across');
+  lastTypedWordId = preferred || fallback;
+  clearWordBtn.disabled = !lastTypedWordId;
+}
+
+function markWrong(r,c){
+  const cell = getCellDiv(r,c);
+  if (!cell) return;
+  cell.classList.remove('wrong');
+  const inp = getInput(r,c);
+  const val = inp ? normalizeChar(inp.value) : '';
+  if (!val) return;
+  const sol = DATA.solution[r][c];
+  if (sol && val !== sol) cell.classList.add('wrong');
+}
+
+function refreshAllWrong(){
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const cell = getCellDiv(r,c);
+      if (!cell) continue;
+      cell.classList.remove('wrong');
+      const inp = getInput(r,c);
+      const val = inp ? normalizeChar(inp.value) : '';
+      if (!val) continue;
+      const sol = DATA.solution[r][c];
+      if (sol && val !== sol) cell.classList.add('wrong');
+    }
+  }
+}
+
+let facitMode = 'off';
+let facitBackup = new Map();
+
+function hideFacit(){
+  if (facitMode === 'off') return;
+  for (const [k,v] of facitBackup.entries()){
+    const [r,c] = k.split(',').map(Number);
+    const inp = getInput(r,c);
+    if (inp) inp.value = v;
+  }
+  facitMode = 'off';
+  facitBackup = new Map();
+  facitBtn.textContent = 'Facit';
+  refreshAllWrong();
+  statusEl.textContent = '';
+}
+
+function showFacitForLastWord(){
+  if (!lastTypedWordId){
+    statusEl.textContent = 'Skriv i en ruta först, så vet jag vilket ord som är senaste.';
+    return;
+  }
+  const w = words.get(lastTypedWordId);
+  if (!w){
+    statusEl.textContent = 'Kunde inte hitta senaste ordet.';
+    return;
+  }
+
+  let hasWrong = false;
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    const val = inp ? normalizeChar(inp.value) : '';
+    const sol = DATA.solution[r][c] || '';
+    if (val && val !== sol) { hasWrong = true; break; }
+  }
+  if (!hasWrong){
+    statusEl.textContent = 'Inga fel bokstäver i senaste ordet just nu.';
+    return;
+  }
+
+  facitMode = 'word';
+  facitBackup = new Map();
+
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (!inp) continue;
+    const k = cellKey(r,c);
+    facitBackup.set(k, normalizeChar(inp.value));
+    inp.value = DATA.solution[r][c] || '';
+  }
+
+  refreshAllWrong();
+  facitBtn.textContent = 'Dölj facit';
+  statusEl.textContent = 'Facit visas för senaste ordet.';
+}
+
+function toggleFacit(){
+  if (facitMode !== 'off') hideFacit();
+  else showFacitForLastWord();
+}
+
+function clearAll(){
+  hideFacit();
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = '';
+    }
+  }
+  refreshAllWrong();
+  statusEl.textContent = '';
+}
+
+function clearLastWord(){
+  hideFacit();
+  if (!lastTypedWordId) return;
+  const w = words.get(lastTypedWordId);
+  if (!w) return;
+
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (inp) inp.value = '';
+  }
+  refreshAllWrong();
+  statusEl.textContent = 'Senaste ordet rensat.';
+}
+
+function focusStep(r,c,dr,dc){
+  let rr=r+dr, cc=c+dc;
+  while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols){
+    if (isEditable(rr,cc)){
+      const inp = getInput(rr,cc);
+      if (inp) inp.focus();
+      return;
+    }
+    rr += dr; cc += dc;
+  }
+}
+
+function prevEditable(r,c){
+  for (let cc=c-1; cc>=0; cc--){
+    if (isEditable(r,cc)) return getInput(r,cc);
+    if (isBlack(r,cc)) break;
+  }
+  for (let rr=r; rr>=0; rr--){
+    for (let cc=(rr===r?c-1:DATA.cols-1); cc>=0; cc--){
+      if (isEditable(rr,cc)) return getInput(rr,cc);
+    }
+  }
+  return null;
+}
+
+function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
+  if (!targetEl) return;
+  targetEl.innerHTML = '';
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      const isBlk = DATA.black[r][c] === 1;
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (isBlk ? ' black' : '');
+      cell.id = cellId(r,c,idPrefix);
+
+      const num = DATA.numbers[r][c];
+      if (!isBlk && num) {
+        const s = document.createElement('div');
+        s.className = 'num';
+        s.textContent = num;
+        cell.appendChild(s);
+      }
+
+      if (!isBlk) {
+        if (withInputs) {
+          const inp = document.createElement('input');
+          inp.setAttribute('maxlength','1');
+          inp.setAttribute('inputmode','text');
+          inp.setAttribute('autocomplete','off');
+          inp.setAttribute('aria-label', `Ruta r${r+1} c${c+1}`);
+          inp.dataset.r = r;
+          inp.dataset.c = c;
+
+          inp.addEventListener('focus', () => {
+            activeDir = null;
+          });
+
+          inp.addEventListener('input', (e) => {
+            if (facitMode !== 'off') hideFacit();
+
+            const v = normalizeChar(e.target.value);
+            e.target.value = v;
+
+            if (!activeDir) activeDir = chooseInitialDir(r,c);
+            lastTypedDir = activeDir;
+
+            setLastTypedWord(r,c);
+            markWrong(r,c);
+
+            if (v) {
+              if (activeDir === 'down') {
+                const next = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
+                if (next) next.focus();
+              } else {
+                const next = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
+                if (next) next.focus();
+              }
+            }
+          });
+
+          inp.addEventListener('keydown', (e) => {
+            const r0 = Number(e.target.dataset.r);
+            const c0 = Number(e.target.dataset.c);
+
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0,-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0, 1); }
+            if (e.key === 'ArrowUp')    { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0,-1,0); }
+            if (e.key === 'ArrowDown')  { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0, 1,0); }
+
+            if (e.key === 'Backspace' && !e.target.value) {
+              const prev = prevEditable(r0,c0);
+              if (prev) prev.focus();
+            }
+          });
+
+          cell.appendChild(inp);
+        } else {
+          const div = document.createElement('div');
+          div.style.display = 'grid';
+          div.style.placeItems = 'center';
+          div.style.height = '100%';
+          div.style.fontWeight = '800';
+          div.style.fontSize = '14px';
+          div.textContent = fillSolution ? (DATA.solution[r][c] || '') : '';
+          cell.appendChild(div);
+        }
+      }
+
+      targetEl.appendChild(cell);
+    }
+  }
+}
+
+function init(){
+  buildWords();
+  buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
+  buildGrid(gridSolEl,{withInputs:false, fillSolution:true, idPrefix:'sol'});
+
+  document.getElementById('clearBtn').addEventListener('click', clearAll);
+  document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
+  document.getElementById('facitBtn').addEventListener('click', toggleFacit);
+
+  document.getElementById('facitBtn').textContent = 'Facit';
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (isEditable(r,c)){
+        const i = getInput(r,c);
+        if (i) i.focus();
+        return;
+      }
+    }
+  }
+}
+
+init();
+window.addEventListener('load', () => {
+  const b = document.getElementById('facitBtn');
+  if (b) b.textContent = 'Facit';
+});
+</script>
+</body>
+</html>
