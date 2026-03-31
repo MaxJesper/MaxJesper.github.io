@@ -73,6 +73,23 @@
       flex-wrap:wrap;
       gap:10px;
       margin-bottom:14px;
+      align-items:center;
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      padding:10px 14px;
+      border-radius:10px;
+      background:#e2e8f0;
+      color:#1f2937;
+      text-decoration:none;
+      font-size:1rem;
+      border:1px solid #cbd5e1;
+    }
+
+    .back-btn:hover{
+      background:#cbd5e1;
     }
 
     select, input[type="number"]{
@@ -205,7 +222,7 @@
       border:1px dashed #94a3b8;
       border-radius:12px;
       padding:12px;
-      line-height:1.6;
+      line-height:1.7;
     }
 
     .hidden{
@@ -245,6 +262,8 @@
     <div class="game-grid">
       <section class="card">
         <div class="controls">
+          <a href="/fysik/kraft-och-rorelse/larande-spel.html" class="back-btn">← Tillbaka</a>
+
           <label>
             Läge:
             <select id="modeSelect">
@@ -304,7 +323,6 @@
         <div class="diagram-wrap">
           <svg viewBox="0 0 700 360" aria-label="Gungbräda">
             <line x1="70" y1="300" x2="630" y2="300" stroke="#94a3b8" stroke-width="4" />
-
             <polygon points="335,300 365,300 350,240" fill="var(--fulcrum)" />
 
             <g id="beamGroup">
@@ -373,10 +391,6 @@
 
     function randFrom(arr){
       return arr[Math.floor(Math.random() * arr.length)];
-    }
-
-    function randInt(min, max){
-      return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     function updateStats(){
@@ -451,17 +465,14 @@
       const leftX = distanceToX(task.left.distance, "left");
       const rightX = distanceToX(task.right.distance || 2, "right");
 
-      const leftGraphic = task.left.kind === "person"
+      els.leftObject.innerHTML = task.left.kind === "person"
         ? drawPerson(leftX, task.left.display, "left")
         : drawWeight(leftX, task.left.display, "left");
 
-      els.leftObject.innerHTML = leftGraphic;
-
       if(task.unknown !== "distance"){
-        const rightGraphic = task.right.kind === "person"
+        els.rightObject.innerHTML = task.right.kind === "person"
           ? drawPerson(rightX, task.right.display, "right")
           : drawWeight(rightX, task.right.display, "right");
-        els.rightObject.innerHTML = rightGraphic;
       } else {
         els.rightObject.innerHTML = drawPerson(distanceToX(2, "right"), task.right.display, "right");
         els.targetMarker.innerHTML = `
@@ -554,18 +565,21 @@
           solution: mode === "force"
             ? `
               Räkna först om massorna till krafter:<br>
-              Vänster: ${leftMass} · 10 = ${leftMass * g} N<br>
-              Höger: ${rightMass} · 10 = ${rightMass * g} N<br><br>
+              Vänster: ${leftMass} kg · 10 N/kg = ${leftMass * g} N<br>
+              Höger: ${rightMass} kg · 10 N/kg = ${rightMass * g} N<br><br>
+
               Använd sedan:<br>
               <strong>kraft × avstånd = kraft × avstånd</strong><br>
-              ${leftMass * g} × ${leftDistance} = ${rightMass * g} × x<br>
-              x = ${leftMass * g * leftDistance} / ${rightMass * g} = <strong>${rightDistance} m</strong>
+              ${leftMass * g} N · ${leftDistance} m = ${rightMass * g} N · x m<br>
+              ${leftMass * g * leftDistance} Nm = ${rightMass * g} N · x m<br>
+              x = ${leftMass * g * leftDistance} Nm / ${rightMass * g} N = <strong>${rightDistance} m</strong>
             `
             : `
               Använd:<br>
               <strong>massa × avstånd = massa × avstånd</strong><br>
-              ${leftMass} × ${leftDistance} = ${rightMass} × x<br>
-              x = ${leftMass * leftDistance} / ${rightMass} = <strong>${rightDistance} m</strong>
+              ${leftMass} kg · ${leftDistance} m = ${rightMass} kg · x m<br>
+              ${leftMass * leftDistance} kgm = ${rightMass} kg · x m<br>
+              x = ${leftMass * leftDistance} kgm / ${rightMass} kg = <strong>${rightDistance} m</strong>
             `
         };
       }
@@ -607,8 +621,9 @@
           solution: `
             Använd:<br>
             <strong>massa × avstånd = massa × avstånd</strong><br>
-            ${knownMass} × ${knownDistance} = m × ${unknownDistance}<br>
-            m = ${knownMass * knownDistance} / ${unknownDistance} = <strong>${requiredMass} kg</strong>
+            ${knownMass} kg · ${knownDistance} m = m kg · ${unknownDistance} m<br>
+            ${knownMass * knownDistance} kgm = m kg · ${unknownDistance} m<br>
+            m = ${knownMass * knownDistance} kgm / ${unknownDistance} m = <strong>${requiredMass} kg</strong>
           `
         };
       }
@@ -648,8 +663,9 @@
           solution: `
             Använd:<br>
             <strong>kraft × avstånd = kraft × avstånd</strong><br>
-            ${knownForce} × ${knownDistance} = F × ${unknownDistance}<br>
-            F = ${knownForce * knownDistance} / ${unknownDistance} = <strong>${requiredForce} N</strong>
+            ${knownForce} N · ${knownDistance} m = F · ${unknownDistance} m<br>
+            ${knownForce * knownDistance} Nm = F · ${unknownDistance} m<br>
+            F = ${knownForce * knownDistance} Nm / ${unknownDistance} m = <strong>${requiredForce} N</strong>
           `
         };
       }
