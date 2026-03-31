@@ -58,19 +58,19 @@
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
       gap:24px;
-      align-items:start;
+      align-items:stretch;
       background:rgba(255,255,255,0.55);
       border:1px solid rgba(216,224,234,0.8);
       border-radius:22px;
       padding:24px;
       backdrop-filter:blur(2px);
     }
-
-    .spel-symbol,
-    .spelikon{
+    
+    .spel-symbol{
       display:flex;
       flex-direction:column;
       align-items:center;
+      justify-content:flex-start;
       text-decoration:none;
       color:#1f2937;
       background:linear-gradient(180deg,#f7fbff,#eaf3ff);
@@ -79,37 +79,31 @@
       padding:14px;
       box-shadow:0 8px 20px rgba(0,0,0,.08);
       transition:transform 0.15s ease, box-shadow 0.15s ease;
+      min-height:250px;
     }
-
-    .spel-symbol:hover,
-    .spelikon:hover{
+    
+    .spel-symbol:hover{
       transform:translateY(-4px);
       box-shadow:0 12px 24px rgba(0,0,0,0.12);
     }
-
+    
     .spel-symbol img{
       width:100%;
       max-width:170px;
-      aspect-ratio:1 / 1;
+      height:170px;
       object-fit:cover;
       border-radius:18px;
       border:1px solid #d8e0ea;
       background:#fff;
       display:block;
     }
-
-    .spelikon img{
-      width:100%;
-      max-width:220px;
-      height:auto;
-      display:block;
-      border-radius:18px;
-      border:1px solid #d8e0ea;
-      background:#fff;
+    
+    .spel-symbol .pickup-bild{
+      object-fit:contain;
+      padding:8px;
     }
-
-    .spel-symbol span,
-    .spelikon span{
+    
+    .spel-symbol span{
       margin-top:10px;
       font-size:1rem;
       font-weight:700;
@@ -155,15 +149,20 @@
         <img src="/images/fysik/kraft-och-rorelse/begrepp.png" alt="Begrepp" />
         <span>Begrepp</span>
       </a>
-
+    
       <a class="spel-symbol" href="/fysik/kraft-och-rorelse/gungbrada.html">
         <img src="/images/fysik/kraft-och-rorelse/gungbrada.png" alt="Hävstångslagen" />
         <span>Hävstångslagen</span>
       </a>
-
-      <a class="spelikon" href="/fysik/kraft-och-rorelse/pickup-simulering.html">
-        <img src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Accelerationslagen" />
+    
+      <a class="spel-symbol" href="/fysik/kraft-och-rorelse/pickup-simulering.html">
+        <img class="pickup-bild" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Accelerationslagen" />
         <span>Accelerationslagen</span>
+      </a>
+    
+      <a class="spel-symbol" href="/fysik/kraft-och-rorelse/korsord.html">
+        <img src="/images/fysik/kraft-och-rorelse/korsord.png" alt="Korsord" />
+        <span>Korsord</span>
       </a>
     </section>
   </div>
