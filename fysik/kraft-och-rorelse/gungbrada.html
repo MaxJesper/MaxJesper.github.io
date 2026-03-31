@@ -555,14 +555,14 @@
         const rightMass = randFrom([10,20,30,40,50,60]);
         const leftDistance = randFrom(distances);
     
-        const possible = [];
+       const possible = [];
         for(const d of distances){
-          if(round1(leftMass * leftDistance) === round1(rightMass * d)){
+          if(round1(leftMass * leftDistance) === round1(rightMass * d) && d !== 2){
             possible.push(d);
           }
         }
         if(possible.length === 0) return generateTask();
-    
+        
         const rightDistance = randFrom(possible);
     
         task = {
@@ -691,7 +691,12 @@
         const leftForce = leftMass * g;
         const correctDistance = round1((leftForce * leftDistance) / rightForce);
     
-        if((level === 1 && !Number.isInteger(correctDistance)) || correctDistance <= 0 || correctDistance > 4){
+       if(
+          (level === 1 && !Number.isInteger(correctDistance)) ||
+          correctDistance <= 0 ||
+          correctDistance > 4 ||
+          correctDistance === 2
+        ){
           return generateTask();
         }
     
