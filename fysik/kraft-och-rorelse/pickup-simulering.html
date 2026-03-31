@@ -13,127 +13,314 @@
       --text:#14304d;
       --muted:#5f7388;
       --accent:#2c6dd5;
-      --accent2:#ffb84d;
-      --road:#404854;
-      --grass:#98c379;
     }
-    *{box-sizing:border-box}
+
+    *{ box-sizing:border-box; }
+
     body{
       margin:0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:linear-gradient(180deg,var(--bg1),var(--bg2));
     }
+
     .wrap{
-      max-width:1300px;
+      max-width:1220px;
       margin:0 auto;
-      padding:20px;
+      padding:12px;
       display:grid;
-      grid-template-columns: 360px 1fr;
-      gap:18px;
+      grid-template-columns:320px 1fr;
+      gap:12px;
+      min-height:100vh;
     }
+
     .panel,.scene-card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:0 10px 30px rgba(0,0,0,.06);
+      border-radius:18px;
+      box-shadow:0 8px 22px rgba(0,0,0,.06);
     }
-    .panel{padding:18px}
-    h1{font-size:1.7rem;margin:0 0 8px}
-    .lead{color:var(--muted);line-height:1.5;margin:0 0 16px}
-    .group{margin-bottom:16px;padding:12px;border:1px solid #e8eef6;border-radius:16px;background:#fbfdff}
-    .group h2{font-size:1rem;margin:0 0 10px}
-    label{display:block;font-weight:700;margin-bottom:5px}
+
+    .panel{
+      padding:14px;
+    }
+
+    h1{
+      font-size:1.35rem;
+      margin:0 0 6px;
+    }
+
+    .lead{
+      color:var(--muted);
+      line-height:1.35;
+      margin:0 0 10px;
+      font-size:.94rem;
+    }
+
+    .group{
+      margin-bottom:10px;
+      padding:10px;
+      border:1px solid #e8eef6;
+      border-radius:14px;
+      background:#fbfdff;
+    }
+
+    .group h2{
+      font-size:.98rem;
+      margin:0 0 8px;
+    }
+
+    label{
+      display:block;
+      font-weight:700;
+      margin-bottom:4px;
+      font-size:.92rem;
+    }
+
     .row-top{
-      display:flex;align-items:center;justify-content:space-between;gap:10px
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
-    input[type=range]{width:100%}
+
+    input[type=range]{
+      width:100%;
+      margin-bottom:8px;
+    }
+
     .value{
-      min-width:92px;text-align:right;color:var(--accent);font-weight:700
+      min-width:88px;
+      text-align:right;
+      color:var(--accent);
+      font-weight:700;
+      font-size:.92rem;
     }
-    .buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+
     button{
-      border:none;border-radius:999px;padding:12px 18px;font-size:1rem;font-weight:700;cursor:pointer;
-      box-shadow:0 8px 18px rgba(0,0,0,.08)
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:.95rem;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
     }
-    .start{background:var(--accent);color:#fff}
-    .reset{background:#edf3fa;color:var(--text)}
-    .scene-card{padding:14px}
+
+    .start{ background:var(--accent); color:#fff; }
+    .reset{ background:#edf3fa; color:var(--text); }
+
+    .formula{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:#f6f9fd;
+      border:1px solid #e0e8f2;
+      line-height:1.4;
+      font-size:.9rem;
+    }
+
+    .scene-card{
+      padding:10px;
+    }
+
     .hud{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 12px
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:8px;
+      margin:0 0 8px;
     }
+
     .metric{
-      border:1px solid #e6edf5;border-radius:16px;padding:12px;background:#fafcff
+      border:1px solid #e6edf5;
+      border-radius:12px;
+      padding:8px 10px;
+      background:#fafcff;
     }
-    .metric .k{font-size:.85rem;color:var(--muted)}
-    .metric .v{font-size:1.35rem;font-weight:700;margin-top:5px}
+
+    .metric .k{
+      font-size:.76rem;
+      color:var(--muted);
+    }
+
+    .metric .v{
+      font-size:1.05rem;
+      font-weight:700;
+      margin-top:4px;
+    }
+
     .sim{
       position:relative;
-      height:560px;
-      border-radius:18px;
+      height:420px;
+      border-radius:16px;
       overflow:hidden;
-      background:linear-gradient(#d8ecff 0%, #eef7ff 62%, #9dd27a 62%, #88c267 72%, #5c6470 72%, #464d58 100%);
+      background:
+        linear-gradient(#d8ecff 0%, #eef7ff 60%, #9dd27a 60%, #88c267 70%, #5c6470 70%, #464d58 100%);
       border:1px solid #dde6f0;
     }
+
     .sun{
-      position:absolute;right:70px;top:45px;width:90px;height:90px;border-radius:50%;
-      background:rgba(255,220,120,.9)
+      position:absolute;
+      right:50px;
+      top:30px;
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      background:rgba(255,220,120,.9);
     }
-    .cloud{position:absolute;background:rgba(255,255,255,.85);border-radius:999px}
-    .cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
-    .c1{left:80px;top:80px;width:130px;height:40px}.c1:before{width:60px;height:60px;left:18px;top:-20px}.c1:after{width:56px;height:56px;right:18px;top:-18px}
-    .c2{left:300px;top:120px;width:140px;height:42px}.c2:before{width:60px;height:60px;left:24px;top:-18px}.c2:after{width:62px;height:62px;right:20px;top:-21px}
+
+    .cloud{
+      position:absolute;
+      background:rgba(255,255,255,.85);
+      border-radius:999px;
+    }
+
+    .cloud:before,.cloud:after{
+      content:"";
+      position:absolute;
+      background:inherit;
+      border-radius:50%;
+    }
+
+    .c1{
+      left:70px; top:60px; width:100px; height:30px;
+    }
+    .c1:before{
+      width:46px; height:46px; left:14px; top:-16px;
+    }
+    .c1:after{
+      width:42px; height:42px; right:14px; top:-14px;
+    }
+
+    .c2{
+      left:240px; top:95px; width:110px; height:34px;
+    }
+    .c2:before{
+      width:46px; height:46px; left:20px; top:-14px;
+    }
+    .c2:after{
+      width:48px; height:48px; right:16px; top:-16px;
+    }
+
     .roadline{
-      position:absolute;left:0;right:0;top:432px;height:8px;
-      background:repeating-linear-gradient(90deg, transparent 0 70px, #fff 70px 125px);
-      opacity:.85
+      position:absolute;
+      left:0;
+      right:0;
+      top:322px;
+      height:7px;
+      background:repeating-linear-gradient(90deg, transparent 0 55px, #fff 55px 100px);
+      opacity:.9;
     }
-    #world{
-      position:absolute;left:0;top:0;width:100%;height:100%;
+
+    #truckWrap{
+      position:absolute;
+      top:165px;
+      right:40px;
+      width:350px;
+      height:150px;
+      pointer-events:none;
     }
+
     #truck{
       position:absolute;
-      left:170px;
-      top:275px;
-      width:290px;
+      right:0;
+      bottom:0;
+      width:100%;
       height:auto;
       user-select:none;
       -webkit-user-drag:none;
-      filter: drop-shadow(0 12px 8px rgba(0,0,0,.18));
+      filter:drop-shadow(0 8px 6px rgba(0,0,0,.18));
     }
-    .gauge-wrap{
-      position:absolute;right:20px;bottom:18px;width:185px;height:185px;border-radius:50%;
-      background:rgba(255,255,255,.92);border:1px solid #dce7f2;box-shadow:0 14px 24px rgba(0,0,0,.08);
-      display:flex;align-items:center;justify-content:center;
+
+    #cargo{
+      position:absolute;
+      left:170px;
+      bottom:77px;
+      width:120px;
+      height:50px;
+      pointer-events:none;
     }
-    .gauge{
-      position:relative;width:150px;height:150px;border:10px solid #edf3fa;border-radius:50%;
-      background:#fff;
+
+    .cargo-box{
+      position:absolute;
+      bottom:0;
+      width:28px;
+      height:28px;
+      border-radius:5px;
+      background:#c98b47;
+      border:2px solid rgba(0,0,0,.15);
+      box-shadow:inset 0 2px 0 rgba(255,255,255,.25);
     }
-    .gauge .mark{
-      position:absolute;left:50%;top:50%;width:3px;height:18px;background:#9db0c4;transform-origin:50% -48px;
+
+    .cargo-box::before,
+    .cargo-box::after{
+      content:"";
+      position:absolute;
+      background:rgba(255,255,255,.25);
     }
-    .needle{
-      position:absolute;left:50%;top:50%;width:5px;height:56px;background:#e55353;border-radius:8px;
-      transform-origin:50% 100%;
-      transform:translate(-50%,-100%) rotate(-110deg);
+
+    .cargo-box::before{
+      left:50%;
+      top:3px;
+      bottom:3px;
+      width:2px;
+      transform:translateX(-50%);
     }
-    .hub{
-      position:absolute;left:50%;top:50%;width:18px;height:18px;background:#29486b;border-radius:50%;
-      transform:translate(-50%,-50%);
+
+    .cargo-box::after{
+      top:50%;
+      left:3px;
+      right:3px;
+      height:2px;
+      transform:translateY(-50%);
     }
-    .gauge-label{
-      position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:.9rem;font-weight:700;color:var(--muted)
+
+    .cargo-sand{
+      position:absolute;
+      bottom:0;
+      width:70px;
+      height:20px;
+      background:#d7bf7a;
+      border-radius:18px 18px 10px 10px;
+      border:2px solid rgba(0,0,0,.12);
     }
-    .formula{
-      margin-top:12px;padding:12px 14px;border-radius:14px;background:#f6f9fd;border:1px solid #e0e8f2;line-height:1.55
-    }
-    .tiny{font-size:.92rem;color:var(--muted)}
-    @media (max-width: 1000px){
-      .wrap{grid-template-columns:1fr}
-      .sim{height:500px}
-      #truck{width:230px;top:300px}
-      .hud{grid-template-columns:repeat(2,1fr)}
+
+    @media (max-width: 980px){
+      .wrap{
+        grid-template-columns:1fr;
+      }
+
+      .sim{
+        height:360px;
+      }
+
+      .roadline{
+        top:278px;
+      }
+
+      #truckWrap{
+        top:155px;
+        width:290px;
+        height:120px;
+      }
+
+      #cargo{
+        left:140px;
+        bottom:60px;
+        width:100px;
+        height:44px;
+      }
+
+      .hud{
+        grid-template-columns:repeat(2,1fr);
+      }
     }
   </style>
 </head>
@@ -142,8 +329,8 @@
     <section class="panel">
       <h1>Pickupbil – kraft och rörelse</h1>
       <p class="lead">
-        Testa hur bilens acceleration påverkas av <strong>motorkraft</strong>, <strong>massa</strong> och
-        <strong>friktion</strong>. Motorn driver bilen framåt under en viss tid. Sedan får friktionen bromsa in den.
+        Testa hur <strong>massa</strong>, <strong>motorkraft</strong>, <strong>friktion</strong> och
+        <strong>motortid</strong> påverkar rörelsen.
       </p>
 
       <div class="group">
@@ -180,12 +367,10 @@
       </div>
 
       <div class="formula">
-        <strong>Fysiken bakom:</strong><br>
+        <strong>Fysik:</strong><br>
         Nettokraft = motorkraft − friktion<br>
-        Acceleration = nettokraft / massa<br>
-        <span class="tiny">
-          När motorn slutar driva bilen blir nettokraften negativ om friktion finns kvar, och då minskar hastigheten tills bilen stannar.
-        </span>
+        Acceleration = nettokraft / massa<br><br>
+        När motorn slutar verka bromsas bilen av friktionen tills den stannar.
       </div>
     </section>
 
@@ -202,13 +387,10 @@
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
         <div class="roadline" id="roadline"></div>
-        <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
-        <div class="gauge-wrap">
-          <div class="gauge" id="gauge">
-            <div class="needle" id="needle"></div>
-            <div class="hub"></div>
-            <div class="gauge-label">m/s</div>
-          </div>
+
+        <div id="truckWrap">
+          <div id="cargo"></div>
+          <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
         </div>
       </div>
     </section>
@@ -228,11 +410,12 @@
       speedOut: document.getElementById('speedOut'),
       accOut: document.getElementById('accOut'),
       netOut: document.getElementById('netOut'),
-      truck: document.getElementById('truck'),
-      needle: document.getElementById('needle'),
+      truckWrap: document.getElementById('truckWrap'),
       roadline: document.getElementById('roadline'),
+      cargo: document.getElementById('cargo'),
       startBtn: document.getElementById('startBtn'),
       resetBtn: document.getElementById('resetBtn'),
+      sim: document.getElementById('sim')
     };
 
     function bindRange(range, out, fmt = v => v){
@@ -240,28 +423,71 @@
       range.addEventListener('input', update);
       update();
     }
+
     bindRange(els.mass, els.massVal, v => Number(v).toFixed(0));
     bindRange(els.engine, els.engineVal, v => Number(v).toFixed(0));
     bindRange(els.friction, els.frictionVal, v => Number(v).toFixed(0));
     bindRange(els.duration, els.durationVal, v => Number(v).toFixed(1));
 
-    // Gauge marks
-    const gauge = document.getElementById('gauge');
-    for(let i=0;i<=12;i++){
-      const mark = document.createElement('div');
-      mark.className = 'mark';
-      const deg = -110 + (220/12)*i;
-      mark.style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
-      gauge.appendChild(mark);
+    function updateCargo(){
+      const mass = Number(els.mass.value);
+      els.cargo.innerHTML = '';
+
+      const extraMass = Math.max(0, mass - 1000);
+
+      if(extraMass < 250){
+        return;
+      }
+
+      if(extraMass < 900){
+        const bag = document.createElement('div');
+        bag.className = 'cargo-sand';
+        bag.style.left = '25px';
+        els.cargo.appendChild(bag);
+        return;
+      }
+
+      if(extraMass < 1600){
+        for(let i = 0; i < 2; i++){
+          const box = document.createElement('div');
+          box.className = 'cargo-box';
+          box.style.left = `${20 + i*32}px`;
+          els.cargo.appendChild(box);
+        }
+        return;
+      }
+
+      if(extraMass < 2300){
+        for(let i = 0; i < 3; i++){
+          const box = document.createElement('div');
+          box.className = 'cargo-box';
+          box.style.left = `${12 + i*30}px`;
+          els.cargo.appendChild(box);
+        }
+        return;
+      }
+
+      for(let row = 0; row < 2; row++){
+        for(let col = 0; col < 3; col++){
+          const box = document.createElement('div');
+          box.className = 'cargo-box';
+          box.style.left = `${8 + col*30}px`;
+          box.style.bottom = `${row*28}px`;
+          els.cargo.appendChild(box);
+        }
+      }
     }
+
+    els.mass.addEventListener('input', updateCargo);
+    updateCargo();
 
     let anim = null;
 
     function resetSim(){
       if(anim) cancelAnimationFrame(anim);
       anim = null;
-      els.truck.style.left = '170px';
-      els.needle.style.transform = `translate(-50%,-100%) rotate(${-110}deg)`;
+
+      els.truckWrap.style.right = '40px';
       els.timeOut.textContent = '0.0 s';
       els.speedOut.textContent = '0.0 m/s';
       els.accOut.textContent = '0.0 m/s²';
@@ -269,6 +495,7 @@
       els.startBtn.disabled = false;
       els.startBtn.style.opacity = '1';
       els.roadline.style.backgroundPositionX = '0px';
+      updateCargo();
     }
 
     function startSim(){
@@ -285,7 +512,8 @@
       let last = null;
       let roadOffset = 0;
 
-      const maxX = window.innerWidth > 1000 ? 540 : 420;
+      const maxTravel = Math.max(140, els.sim.clientWidth - els.truckWrap.clientWidth - 80);
+
       els.startBtn.disabled = true;
       els.startBtn.style.opacity = '.6';
 
@@ -301,23 +529,19 @@
 
         v += a * dt;
         if(v < 0) v = 0;
-        x += v * dt * 16; // scale factor for visible motion
 
-        if(x > maxX) x = maxX;
-        els.truck.style.left = `${170 + x}px`;
+        x += v * dt * 16;
+        if(x > maxTravel) x = maxTravel;
 
-        roadOffset -= v * dt * 28;
+        els.truckWrap.style.right = `${40 + x}px`;
+
+        roadOffset += v * dt * 26;
         els.roadline.style.backgroundPositionX = `${roadOffset}px`;
 
         els.timeOut.textContent = `${t.toFixed(1)} s`;
         els.speedOut.textContent = `${v.toFixed(2)} m/s`;
         els.accOut.textContent = `${a.toFixed(2)} m/s²`;
         els.netOut.textContent = `${Math.round(netForce)} N`;
-
-        const gaugeMax = 40; // m/s
-        const clamped = Math.max(0, Math.min(gaugeMax, v));
-        const angle = -110 + (clamped / gaugeMax) * 220;
-        els.needle.style.transform = `translate(-50%,-100%) rotate(${angle}deg)`;
 
         if(!(v <= 0 && !driving && t > driveDuration + 0.05)){
           anim = requestAnimationFrame(frame);
@@ -332,6 +556,7 @@
 
     els.startBtn.addEventListener('click', startSim);
     els.resetBtn.addEventListener('click', resetSim);
+
     resetSim();
   </script>
 </body>
