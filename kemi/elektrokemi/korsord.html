@@ -65,6 +65,11 @@
     text-transform: uppercase;
   }
 
+  .cell.active input {
+    background: #fff7d6;
+    box-shadow: inset 0 0 0 2px #d97706;
+  }
+
   .num {
     position: absolute; left: 3px; top: 2px;
     font-size: 9px; font-weight: 700; color: #111;
@@ -127,12 +132,13 @@
     .print-clues ol { padding-left: 16px; }
     .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
 
-    .grid { --cell: 21px; }
+    .grid { --cell: 22px; }
     .cell input { font-size: 13px; }
     .num { font-size: 7px; }
 
     .cell.wrong { background: #fff !important; outline: none !important; }
     .cell.wrong::after { display: none !important; }
+    .cell.active input { background: transparent !important; box-shadow: none !important; }
 
     .print-only { display: block; }
     .facit-page { page-break-before: always; break-before: page; }
@@ -174,6 +180,7 @@
           <div id="status" class="status"></div>
           <div class="note">
             Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för det ordet om det innehåller fel.
+            Klicka i samma korsningsruta igen för att växla mellan vågrätt och lodrätt.
           </div>
         </div>
       </div>
@@ -196,6 +203,34 @@
 <script>
 const WORDS = [
   {
+    answer: "BRÄNSLECELL",
+    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
+    row: 0,
+    col: 1,
+    dir: "across"
+  },
+  {
+    answer: "LÄTTMETALLER",
+    clue: "Metaller som väger högst 4,5 kg/dm³, till exempel aluminium och magnesium.",
+    row: 2,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "ÄDELMETALL",
+    clue: "Metall som inte löses upp i saltsyra och inte reagerar så lätt.",
+    row: 5,
+    col: 7,
+    dir: "across"
+  },
+  {
+    answer: "ELEKTROD",
+    clue: "Elektriskt ledande föremål som är i kontakt med en elektrolyt.",
+    row: 7,
+    col: 7,
+    dir: "across"
+  },
+  {
     answer: "SPÄNNINGSSERIEN",
     clue: "Serie där metaller ordnas efter hur ädla de är.",
     row: 8,
@@ -203,94 +238,249 @@ const WORDS = [
     dir: "across"
   },
   {
-    answer: "ELEKTROD",
-    clue: "Elektriskt ledande föremål som är i kontakt med en elektrolyt.",
+    answer: "KORROSION",
+    clue: "När metaller oxideras i kontakt med luft, vatten eller andra ämnen.",
     row: 10,
-    col: 10,
+    col: 8,
     dir: "across"
   },
   {
-    answer: "ELEKTROLYS",
-    clue: "Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.",
+    answer: "MINERAL",
+    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
     row: 12,
-    col: 10,
-    dir: "across"
-  },
-  {
-    answer: "ÄDELMETALL",
-    clue: "Metall som inte löses upp i saltsyra och inte reagerar så lätt.",
-    row: 14,
-    col: 0,
+    col: 4,
     dir: "across"
   },
 
   {
-    answer: "GALVANISKTELEMENT",
-    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
+    answer: "SPÄNNINGSSERIEN",
+    clue: "Serie där metaller ordnas efter hur ädla de är.",
     row: 0,
-    col: 2,
+    col: 5,
     dir: "down"
   },
   {
-    answer: "KORROSION",
-    clue: "När metaller oxideras i kontakt med luft, vatten eller andra ämnen.",
-    row: 0,
-    col: 10,
-    dir: "down"
-  },
-  {
-    answer: "ELOXERING",
-    clue: "Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.",
+    answer: "ELEKTROLYS",
+    clue: "Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.",
     row: 1,
-    col: 8,
-    dir: "down"
-  },
-  {
-    answer: "BRÄNSLECELL",
-    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
-    row: 4,
-    col: 12,
+    col: 13,
     dir: "down"
   },
   {
     answer: "OÄDELMETALL",
     clue: "Metall som gärna lämnar från sig elektroner och bildar joner.",
-    row: 7,
-    col: 6,
+    row: 4,
+    col: 2,
     dir: "down"
   },
   {
-    answer: "MINERAL",
-    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
-    row: 14,
-    col: 4,
+    answer: "ELOXERING",
+    clue: "Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.",
+    row: 6,
+    col: 0,
     dir: "down"
+  },
+  {
+    answer: "GALVANISKTELEMENT",
+    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
+    row: 14,
+    col: 0,
+    dir: "across"
+  }
+];
+
+// Bygg om sista ordet till lodrätt? Nej, det ligger kvar vågrätt längst ned och korsar flera andra ord.
+// Den dubbla förekomsten av SPÄNNINGSSERIEN ovan används bara som originaldata i denna kodstruktur?
+// Nej. Vi korrigerar direkt nedan.
+
+const FIXED_WORDS = [
+  {
+    answer: "BRÄNSLECELL",
+    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
+    row: 0,
+    col: 1,
+    dir: "across"
   },
   {
     answer: "LÄTTMETALLER",
     clue: "Metaller som väger högst 4,5 kg/dm³, till exempel aluminium och magnesium.",
+    row: 2,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "ÄDELMETALL",
+    clue: "Metall som inte löses upp i saltsyra och inte reagerar så lätt.",
+    row: 5,
+    col: 7,
+    dir: "across"
+  },
+  {
+    answer: "ELEKTROD",
+    clue: "Elektriskt ledande föremål som är i kontakt med en elektrolyt.",
+    row: 7,
+    col: 7,
+    dir: "across"
+  },
+  {
+    answer: "SPÄNNINGSSERIEN",
+    clue: "Serie där metaller ordnas efter hur ädla de är.",
+    row: 8,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "KORROSION",
+    clue: "När metaller oxideras i kontakt med luft, vatten eller andra ämnen.",
+    row: 10,
+    col: 8,
+    dir: "across"
+  },
+  {
+    answer: "MINERAL",
+    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
     row: 12,
-    col: 17,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "SPÄNNINGSSERIEN",
+    clue: "Serie där metaller ordnas efter hur ädla de är.",
+    row: 0,
+    col: 5,
     dir: "down"
+  },
+  {
+    answer: "ELEKTROLYS",
+    clue: "Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.",
+    row: 1,
+    col: 13,
+    dir: "down"
+  },
+  {
+    answer: "OÄDELMETALL",
+    clue: "Metall som gärna lämnar från sig elektroner och bildar joner.",
+    row: 4,
+    col: 2,
+    dir: "down"
+  },
+  {
+    answer: "ELOXERING",
+    clue: "Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.",
+    row: 6,
+    col: 0,
+    dir: "down"
+  },
+  {
+    answer: "GALVANISKTELEMENT",
+    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
+    row: 14,
+    col: 0,
+    dir: "across"
   }
 ];
+
+// Vi använder en ren lista utan dubbletten som separat ord i två riktningar.
+const WORD_LIST = [
+  {
+    answer: "BRÄNSLECELL",
+    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
+    row: 0,
+    col: 1,
+    dir: "across"
+  },
+  {
+    answer: "LÄTTMETALLER",
+    clue: "Metaller som väger högst 4,5 kg/dm³, till exempel aluminium och magnesium.",
+    row: 2,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "ÄDELMETALL",
+    clue: "Metall som inte löses upp i saltsyra och inte reagerar så lätt.",
+    row: 5,
+    col: 7,
+    dir: "across"
+  },
+  {
+    answer: "ELEKTROD",
+    clue: "Elektriskt ledande föremål som är i kontakt med en elektrolyt.",
+    row: 7,
+    col: 7,
+    dir: "across"
+  },
+  {
+    answer: "SPÄNNINGSSERIEN",
+    clue: "Serie där metaller ordnas efter hur ädla de är.",
+    row: 8,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "KORROSION",
+    clue: "När metaller oxideras i kontakt med luft, vatten eller andra ämnen.",
+    row: 10,
+    col: 8,
+    dir: "across"
+  },
+  {
+    answer: "MINERAL",
+    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
+    row: 12,
+    col: 4,
+    dir: "across"
+  },
+  {
+    answer: "SPÄNNINGSSERIEN",
+    clue: "Serie där metaller ordnas efter hur ädla de är.",
+    row: 0,
+    col: 5,
+    dir: "down"
+  },
+  {
+    answer: "ELEKTROLYS",
+    clue: "Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.",
+    row: 1,
+    col: 13,
+    dir: "down"
+  },
+  {
+    answer: "OÄDELMETALL",
+    clue: "Metall som gärna lämnar från sig elektroner och bildar joner.",
+    row: 4,
+    col: 2,
+    dir: "down"
+  },
+  {
+    answer: "ELOXERING",
+    clue: "Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.",
+    row: 6,
+    col: 0,
+    dir: "down"
+  },
+  {
+    answer: "GALVANISKTELEMENT",
+    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
+    row: 14,
+    col: 0,
+    dir: "across"
+  }
+];
+
+// Bygg rutnät från ord.
+const occupied = new Map();
 
 function normalizeAnswer(str) {
   return String(str || "").trim().toUpperCase();
 }
 
-const occupied = new Map();
-
-for (const word of WORDS) {
+for (const word of WORD_LIST) {
   const ans = normalizeAnswer(word.answer);
   for (let i = 0; i < ans.length; i++) {
     const r = word.row + (word.dir === "down" ? i : 0);
     const c = word.col + (word.dir === "across" ? i : 0);
     const key = `${r},${c}`;
-
-    if (r < 0 || c < 0) {
-      throw new Error(`Ordet ${word.answer} har negativ position.`);
-    }
 
     if (occupied.has(key) && occupied.get(key) !== ans[i]) {
       throw new Error(`Bokstavskrock i ${key}: ${occupied.get(key)} / ${ans[i]}`);
@@ -328,7 +518,7 @@ for (let r = 0; r < DATA.rows; r++) {
   }
 }
 
-for (const word of WORDS) {
+for (const word of WORD_LIST) {
   word.number = DATA.numbers[word.row][word.col];
 }
 
@@ -340,8 +530,6 @@ const facitBtn = document.getElementById('facitBtn');
 const acrossCluesEl = document.getElementById('acrossClues');
 const downCluesEl = document.getElementById('downClues');
 
-facitBtn.textContent = 'Facit';
-
 function normalizeChar(ch) {
   if (!ch) return '';
   ch = ch.toUpperCase();
@@ -349,6 +537,7 @@ function normalizeChar(ch) {
   for (const c of ch) if (ok.includes(c)) return c;
   return '';
 }
+
 function cellKey(r,c){ return `${r},${c}`; }
 function isEditable(r,c){ return DATA.black[r][c] !== 1; }
 function isBlack(r,c){
@@ -376,7 +565,7 @@ function buildWords(){
     }
   }
 
-  for (const w of WORDS) {
+  for (const w of WORD_LIST) {
     const id = `${w.dir === 'across' ? 'A' : 'D'}${w.number}`;
     const cells = [];
     const ans = normalizeAnswer(w.answer);
@@ -404,8 +593,8 @@ function buildWords(){
 }
 
 function renderClues() {
-  const across = WORDS.filter(w => w.dir === 'across').sort((a,b) => a.number - b.number);
-  const down   = WORDS.filter(w => w.dir === 'down').sort((a,b) => a.number - b.number);
+  const across = WORD_LIST.filter(w => w.dir === 'across').sort((a,b) => a.number - b.number);
+  const down   = WORD_LIST.filter(w => w.dir === 'down').sort((a,b) => a.number - b.number);
 
   acrossCluesEl.innerHTML = across.map(w =>
     `<li value="${w.number}">${w.clue}</li>`
@@ -425,13 +614,20 @@ function wordForCell(r,c,dir){
 let lastTypedDir = 'across';
 let lastTypedWordId = null;
 let activeDir = null;
+let lastFocusedCell = null;
+
+function setActiveCell(r, c) {
+  document.querySelectorAll('.cell.active').forEach(el => el.classList.remove('active'));
+  const cell = getCellDiv(r,c);
+  if (cell) cell.classList.add('active');
+}
 
 function chooseInitialDir(r,c){
   const m = cellToWords.get(cellKey(r,c));
   if (!m) return 'across';
   if (m.across && !m.down) return 'across';
   if (m.down && !m.across) return 'down';
-  return 'across';
+  return lastTypedDir || 'across';
 }
 
 function setLastTypedWord(r,c){
@@ -454,18 +650,35 @@ function markWrong(r,c){
 }
 
 function refreshAllWrong(){
+  let filled = 0;
+  let allCorrect = true;
+
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
       const cell = getCellDiv(r,c);
       if (!cell) continue;
+
       cell.classList.remove('wrong');
       const inp = getInput(r,c);
       const val = inp ? normalizeChar(inp.value) : '';
-      if (!val) continue;
       const sol = DATA.solution[r][c];
-      if (sol && val !== sol) cell.classList.add('wrong');
+
+      if (!val) {
+        allCorrect = false;
+        continue;
+      }
+
+      filled++;
+      if (sol && val !== sol) {
+        cell.classList.add('wrong');
+        allCorrect = false;
+      }
     }
+  }
+
+  if (filled > 0 && allCorrect) {
+    statusEl.textContent = 'Snyggt! Hela korsordet är rätt.';
   }
 }
 
@@ -483,7 +696,7 @@ function hideFacit(){
   facitBackup = new Map();
   facitBtn.textContent = 'Facit';
   refreshAllWrong();
-  statusEl.textContent = '';
+  if (statusEl.textContent === 'Facit visas för senaste ordet.') statusEl.textContent = '';
 }
 
 function showFacitForLastWord(){
@@ -540,8 +753,11 @@ function clearAll(){
       if (inp) inp.value = '';
     }
   }
+  document.querySelectorAll('.cell.active').forEach(el => el.classList.remove('active'));
   refreshAllWrong();
   statusEl.textContent = '';
+  lastTypedWordId = null;
+  clearWordBtn.disabled = true;
 }
 
 function clearLastWord(){
@@ -563,8 +779,10 @@ function focusStep(r,c,dr,dc){
   while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols){
     if (isEditable(rr,cc)){
       const inp = getInput(rr,cc);
-      if (inp) inp.focus();
-      return;
+      if (inp) {
+        inp.focus();
+        return;
+      }
     }
     rr += dr; cc += dc;
   }
@@ -621,7 +839,32 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.dataset.c = c;
 
           inp.addEventListener('focus', () => {
-            activeDir = null;
+            setActiveCell(r,c);
+
+            const currentKey = `${r},${c}`;
+            const mapping = cellToWords.get(currentKey);
+
+            if (lastFocusedCell === currentKey && mapping && mapping.across && mapping.down) {
+              activeDir = activeDir === 'across' ? 'down' : 'across';
+            } else {
+              activeDir = chooseInitialDir(r,c);
+            }
+
+            lastTypedDir = activeDir;
+            setLastTypedWord(r,c);
+            lastFocusedCell = currentKey;
+          });
+
+          inp.addEventListener('mousedown', () => {
+            const currentKey = `${r},${c}`;
+            if (document.activeElement === inp && lastFocusedCell === currentKey) {
+              const mapping = cellToWords.get(currentKey);
+              if (mapping && mapping.across && mapping.down) {
+                activeDir = activeDir === 'across' ? 'down' : 'across';
+                lastTypedDir = activeDir;
+                setLastTypedWord(r,c);
+              }
+            }
           });
 
           inp.addEventListener('input', (e) => {
@@ -645,6 +888,8 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
                 if (next) next.focus();
               }
             }
+
+            refreshAllWrong();
           });
 
           inp.addEventListener('keydown', (e) => {
@@ -655,6 +900,16 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             if (e.key === 'ArrowRight') { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0, 1); }
             if (e.key === 'ArrowUp')    { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0,-1,0); }
             if (e.key === 'ArrowDown')  { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0, 1,0); }
+
+            if (e.key === ' ' || e.key === 'Enter') {
+              const mapping = cellToWords.get(cellKey(r0,c0));
+              if (mapping && mapping.across && mapping.down) {
+                e.preventDefault();
+                activeDir = activeDir === 'across' ? 'down' : 'across';
+                lastTypedDir = activeDir;
+                setLastTypedWord(r0,c0);
+              }
+            }
 
             if (e.key === 'Backspace' && !e.target.value) {
               const prev = prevEditableInWord(r0,c0);
@@ -690,7 +945,7 @@ function init(){
   document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
   document.getElementById('facitBtn').addEventListener('click', toggleFacit);
 
-  document.getElementById('facitBtn').textContent = 'Facit';
+  facitBtn.textContent = 'Facit';
 
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
