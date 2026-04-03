@@ -170,6 +170,29 @@
       margin-bottom: 4px;
     }
 
+    .hover-info{
+      margin-top: 8px;
+      border: 1px solid #d8e0ea;
+      border-radius: 10px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      min-height: 52px;
+    }
+
+    .hover-info .small{
+      font-size: 12px;
+      color: #555;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .hover-info .big{
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
     .feedback{
       margin-top: 14px;
       min-height: 28px;
@@ -208,7 +231,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,.08);
       text-align: center;
       font-weight: 800;
-      cursor: grab;
+      cursor: pointer;
       user-select: none;
       transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease, background .15s ease;
     }
@@ -222,6 +245,12 @@
     .metal-card:hover{
       transform: translateY(-1px);
       box-shadow: 0 7px 16px rgba(0,0,0,.12);
+    }
+
+    .metal-card.selected{
+      outline: 4px solid #111;
+      outline-offset: 2px;
+      background: #fde68a;
     }
 
     .metal-card.correct{
@@ -261,6 +290,7 @@
       padding: 12px;
       background: #fff;
       transition: background .2s ease, border-color .2s ease, transform .15s ease;
+      cursor: pointer;
     }
 
     .zone h3{
@@ -313,6 +343,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
     }
 
     .series-slot.active-drop{
@@ -400,12 +431,17 @@
         </div>
 
         <div class="goal-box" id="goalBox"></div>
+
+        <div class="hover-info" id="hoverInfo">
+          <div class="small">Valt kort</div>
+          <div class="big" id="hoverInfoText">Inget kort valt ännu</div>
+        </div>
       </div>
     </aside>
 
     <main class="panel">
       <h2 class="game-title">Ädel eller oädel?</h2>
-      <p class="game-subtitle" id="subtitle">Level 1: sortera metallerna som ädla eller oädla. Level 2: ordna dem i rätt ordning enligt spänningsserien.</p>
+      <p class="game-subtitle" id="subtitle">Level 1: klicka på en metall och placera den som ädel eller oädel. Level 2: klicka på en metall och placera den i rätt ordning enligt spänningsserien.</p>
 
       <div class="status-row">
         <span class="badge" id="difficultyBadge">Nybörjare</span>
@@ -531,6 +567,7 @@
     const countdownBadge = document.getElementById('countdownBadge');
     const goalBox = document.getElementById('goalBox');
     const difficultyGrid = document.getElementById('difficultyGrid');
+    const hoverInfoText = document.getElementById('hoverInfoText');
 
     const winEl = document.getElementById('win-message');
     const winTitle = document.getElementById('winTitle');
@@ -549,6 +586,8 @@
     let startTs = 0;
     let rafId = 0;
     let levelFinished = false;
+
+    let selectedCard = null;
 
     function formatTime(ms){
       const total = Math.max(0, ms);
@@ -664,12 +703,12 @@
       if (currentLevel === 1) {
         goalBox.innerHTML = `
           <strong>Utmaning för Level 1</strong><br>
-          Sortera metallerna som <strong>ädla</strong> eller <strong>oädla</strong> inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
+          Klicka på en metall och placera den som <strong>ädel</strong> eller <strong>oädel</strong> inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
         `;
       } else {
         goalBox.innerHTML = `
           <strong>Utmaning för Level 2</strong><br>
-          Ordna metallerna från <strong>mest ädel till mest oädel</strong>.<br>
+          Klicka på en metall och placera den från <strong>mest ädel till mest oädel</strong>.<br>
           <strong>Au</strong> ska längst till vänster och <strong>Mg</strong> längst till höger.
         `;
       }
@@ -680,13 +719,43 @@
       feedback.className = `feedback ${good ? 'good' : 'bad'}`;
     }
 
+    function setInfoCard(card){
+      if (!card) {
+        hoverInfoText.textContent = "Inget kort valt ännu";
+        return;
+      }
+      hoverInfoText.textContent = `${card.dataset.symbol} = ${card.dataset.name}`;
+    }
+
+    function clearSelectedCard(){
+      if (selectedCard) selectedCard.classList.remove('selected');
+      selectedCard = null;
+      setInfoCard(null);
+    }
+
+    function selectCard(card){
+      if (levelFinished) return;
+      startTimerIfNeeded();
+
+      if (selectedCard === card){
+        card.classList.remove('selected');
+        selectedCard = null;
+        setInfoCard(null);
+        return;
+      }
+
+      if (selectedCard) selectedCard.classList.remove('selected');
+      selectedCard = card;
+      card.classList.add('selected');
+      setInfoCard(card);
+    }
+
     function createCard(item, useSymbol = false){
       const card = document.createElement('div');
       card.className = 'metal-card';
       if (useSymbol) card.classList.add('symbol');
 
       card.textContent = useSymbol ? item.symbol : item.name;
-      card.title = item.name;
       card.draggable = true;
       card.dataset.name = item.name;
       card.dataset.symbol = item.symbol;
@@ -696,8 +765,14 @@
 
       card.addEventListener('dragstart', () => {
         startTimerIfNeeded();
-        card.classList.remove('incorrect');
+        selectedCard = card;
+        setInfoCard(card);
       });
+
+      card.addEventListener('mouseenter', () => setInfoCard(card));
+      card.addEventListener('focus', () => setInfoCard(card));
+
+      card.addEventListener('click', () => selectCard(card));
 
       return card;
     }
@@ -706,12 +781,16 @@
       return [...poolGrid.querySelectorAll('.metal-card')].find(c => c.matches(':hover'));
     }
 
+    function getActiveCardForDrop(){
+      return getHoveredPoolCard() || selectedCard;
+    }
+
     function handleLevel1Drop(card, category){
-      if (levelFinished) return;
+      if (!card || levelFinished) return;
       const correct = card.dataset.category === category;
 
       if (correct){
-        card.classList.remove('incorrect');
+        card.classList.remove('incorrect', 'selected');
         card.classList.add('correct');
 
         const target = category === 'adel' ? adelCards : oadelCards;
@@ -725,6 +804,8 @@
         remaining--;
 
         setFeedback(`${card.dataset.name} placerades rätt.`, true);
+        selectedCard = null;
+        setInfoCard(null);
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
@@ -743,7 +824,7 @@
     }
 
     function handleLevel2Drop(card, slotIndex){
-      if (levelFinished) return;
+      if (!card || levelFinished) return;
 
       const correct = Number(card.dataset.orderIndex) === slotIndex;
       const slot = seriesBoard.querySelector(`.series-slot[data-slot-index="${slotIndex}"] .series-target`);
@@ -755,7 +836,7 @@
       }
 
       if (correct){
-        card.classList.remove('incorrect');
+        card.classList.remove('incorrect', 'selected');
         card.classList.add('correct');
         slot.appendChild(card);
         card.draggable = false;
@@ -766,6 +847,8 @@
         remaining--;
 
         setFeedback(`${card.dataset.name} lades på rätt plats i spänningsserien.`, true);
+        selectedCard = null;
+        setInfoCard(null);
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
@@ -783,6 +866,11 @@
 
     function setupLevel1Zones(){
       [document.getElementById('adelZone'), document.getElementById('oadelZone')].forEach(zone => {
+        zone.addEventListener('click', () => {
+          if (currentLevel !== 1) return;
+          handleLevel1Drop(selectedCard, zone.dataset.category);
+        });
+
         zone.addEventListener('dragover', (e) => {
           if (currentLevel !== 1) return;
           e.preventDefault();
@@ -797,8 +885,7 @@
           if (currentLevel !== 1) return;
           e.preventDefault();
           zone.classList.remove('active-drop');
-          const card = getHoveredPoolCard();
-          if (!card) return;
+          const card = getActiveCardForDrop();
           handleLevel1Drop(card, zone.dataset.category);
         });
       });
@@ -811,6 +898,11 @@
         slot.className = 'series-slot';
         slot.dataset.slotIndex = index;
         slot.innerHTML = `<div class="series-target"></div>`;
+
+        slot.addEventListener('click', () => {
+          if (currentLevel !== 2) return;
+          handleLevel2Drop(selectedCard, index);
+        });
 
         slot.addEventListener('dragover', (e) => {
           if (currentLevel !== 2) return;
@@ -826,8 +918,7 @@
           if (currentLevel !== 2) return;
           e.preventDefault();
           slot.classList.remove('active-drop');
-          const card = getHoveredPoolCard();
-          if (!card) return;
+          const card = getActiveCardForDrop();
           handleLevel2Drop(card, index);
         });
 
@@ -841,6 +932,7 @@
       oadelCards.innerHTML = '';
       feedback.textContent = '';
       feedback.className = 'feedback';
+      clearSelectedCard();
 
       if (currentLevel === 1){
         level1Area.classList.remove('hidden');
@@ -849,19 +941,6 @@
         const items = shuffle(LEVEL1_ITEMS);
         items.forEach(item => {
           const card = createCard(item, false);
-          card.addEventListener('click', () => {
-            startTimerIfNeeded();
-            const choice = window.prompt(`Var hör ${card.dataset.name} hemma?\nSkriv: ädel eller oädel`);
-            if (!choice) return;
-            const normalized = choice.trim().toLowerCase();
-            if (normalized === 'ädel' || normalized === 'adel'){
-              handleLevel1Drop(card, 'adel');
-            } else if (normalized === 'oädel' || normalized === 'oadel'){
-              handleLevel1Drop(card, 'oadel');
-            } else {
-              setFeedback('Skriv bara: ädel eller oädel.', false);
-            }
-          });
           poolGrid.appendChild(card);
         });
 
@@ -880,19 +959,6 @@
 
         items.forEach(item => {
           const card = createCard(item, true);
-          card.addEventListener('click', () => {
-            startTimerIfNeeded();
-            const raw = window.prompt(`Vilken position i raden ska ${card.dataset.name} ha?\nSkriv en siffra 1–11 där 1 = längst till vänster.`);
-            if (!raw) return;
-
-            const n = Number(raw.trim());
-            if (!Number.isInteger(n) || n < 1 || n > LEVEL2_ORDER.length){
-              setFeedback(`Skriv en siffra mellan 1 och ${LEVEL2_ORDER.length}.`, false);
-              return;
-            }
-
-            handleLevel2Drop(card, n - 1);
-          });
           poolGrid.appendChild(card);
         });
 
