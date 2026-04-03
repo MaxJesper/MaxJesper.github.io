@@ -234,6 +234,7 @@
       cursor: pointer;
       user-select: none;
       transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease, background .15s ease;
+      position: relative;
     }
 
     .metal-card.symbol{
@@ -256,6 +257,8 @@
     .metal-card.correct{
       background: #dcfce7;
       border-color: #15803d;
+      animation: successPop .32s ease;
+      box-shadow: 0 0 0 4px rgba(34,197,94,.18), 0 0 18px rgba(34,197,94,.30);
     }
 
     .metal-card.incorrect{
@@ -264,12 +267,36 @@
       animation: shake .25s ease;
     }
 
+    .metal-card.incorrect::after{
+      content: "✕";
+      position: absolute;
+      top: -10px;
+      right: -8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #dc2626;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      box-shadow: 0 4px 8px rgba(0,0,0,.16);
+    }
+
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-4px); }
       50% { transform: translateX(4px); }
       75% { transform: translateX(-3px); }
       100% { transform: translateX(0); }
+    }
+
+    @keyframes successPop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.06); }
+      100% { transform: scale(1); }
     }
 
     .zones{
@@ -339,17 +366,16 @@
       border-radius: 14px;
       padding: 8px;
       background: #fff;
-      transition: border-color .2s ease, transform .15s ease, background .15s ease;
+      transition: border-color .2s ease, transform .15s ease, background .15s ease, box-shadow .2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
     }
 
-    .series-slot.active-drop{
+    .series-slot.active-next{
       border-color: #111;
-      transform: scale(1.02);
       background: #fffbeb;
+      box-shadow: 0 0 0 4px rgba(250,204,21,.18);
     }
 
     .series-target{
@@ -432,8 +458,8 @@
 
         <div class="goal-box" id="goalBox"></div>
 
-        <div class="hover-info" id="hoverInfo">
-          <div class="small">Valt kort</div>
+        <div class="hover-info">
+          <div class="small">Aktivt kort</div>
           <div class="big" id="hoverInfoText">Inget kort valt ännu</div>
         </div>
       </div>
@@ -441,7 +467,7 @@
 
     <main class="panel">
       <h2 class="game-title">Ädel eller oädel?</h2>
-      <p class="game-subtitle" id="subtitle">Level 1: klicka på en metall och placera den som ädel eller oädel. Level 2: klicka på en metall och placera den i rätt ordning enligt spänningsserien.</p>
+      <p class="game-subtitle">Level 1: klicka på en metall och placera den som ädel eller oädel. Level 2: klicka på metallerna i rätt ordning så placeras de automatiskt.</p>
 
       <div class="status-row">
         <span class="badge" id="difficultyBadge">Nybörjare</span>
@@ -493,30 +519,9 @@
   <script src="/js/menu.js"></script>
   <script>
     const DIFFICULTIES = {
-      beginner: {
-        label: "Nybörjare",
-        timeLimitSec: 180,
-        maxMistakes: 3,
-        correctPoints: 10,
-        clearBonus: 40,
-        unlockBonus: 60
-      },
-      normal: {
-        label: "Van spelare",
-        timeLimitSec: 100,
-        maxMistakes: 2,
-        correctPoints: 12,
-        clearBonus: 60,
-        unlockBonus: 100
-      },
-      master: {
-        label: "Rutinerad mästare",
-        timeLimitSec: 70,
-        maxMistakes: 0,
-        correctPoints: 15,
-        clearBonus: 90,
-        unlockBonus: 150
-      }
+      beginner: { label: "Nybörjare", timeLimitSec: 180, maxMistakes: 3, correctPoints: 10, clearBonus: 40, unlockBonus: 60 },
+      normal: { label: "Van spelare", timeLimitSec: 100, maxMistakes: 2, correctPoints: 12, clearBonus: 60, unlockBonus: 100 },
+      master: { label: "Rutinerad mästare", timeLimitSec: 70, maxMistakes: 0, correctPoints: 15, clearBonus: 90, unlockBonus: 150 }
     };
 
     const LEVEL1_ITEMS = [
@@ -524,7 +529,6 @@
       { name: "Silver", symbol: "Ag", category: "adel" },
       { name: "Koppar", symbol: "Cu", category: "adel" },
       { name: "Platina", symbol: "Pt", category: "adel" },
-
       { name: "Magnesium", symbol: "Mg", category: "oadel" },
       { name: "Aluminium", symbol: "Al", category: "oadel" },
       { name: "Zink", symbol: "Zn", category: "oadel" },
@@ -588,6 +592,7 @@
     let levelFinished = false;
 
     let selectedCard = null;
+    let level2NextIndex = 0;
 
     function formatTime(ms){
       const total = Math.max(0, ms);
@@ -690,6 +695,13 @@
       });
     }
 
+    function updateSeriesNextHighlight(){
+      const slots = [...seriesBoard.querySelectorAll('.series-slot')];
+      slots.forEach((slot, idx) => {
+        slot.classList.toggle('active-next', currentLevel === 2 && idx === level2NextIndex && slot.querySelector('.series-target').children.length === 0);
+      });
+    }
+
     function updateInfo(){
       const cfg = currentConfig();
       scoreEl.textContent = score;
@@ -706,12 +718,15 @@
           Klicka på en metall och placera den som <strong>ädel</strong> eller <strong>oädel</strong> inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
         `;
       } else {
+        const next = LEVEL2_ORDER[level2NextIndex];
         goalBox.innerHTML = `
           <strong>Utmaning för Level 2</strong><br>
-          Klicka på en metall och placera den från <strong>mest ädel till mest oädel</strong>.<br>
-          <strong>Au</strong> ska längst till vänster och <strong>Mg</strong> längst till höger.
+          Klicka på nästa rätt metall i spänningsserien från <strong>mest ädel till mest oädel</strong>.<br>
+          Nästa plats gäller just nu: <strong>${next ? next.symbol : "klar"}</strong>
         `;
       }
+
+      updateSeriesNextHighlight();
     }
 
     function setFeedback(text, good){
@@ -750,6 +765,15 @@
       setInfoCard(card);
     }
 
+    function markWrong(card, text){
+      if (!card) return;
+      card.classList.add('incorrect');
+      mistakes++;
+      setFeedback(text, false);
+      updateInfo();
+      setTimeout(() => card.classList.remove('incorrect'), 400);
+    }
+
     function createCard(item, useSymbol = false){
       const card = document.createElement('div');
       card.className = 'metal-card';
@@ -772,7 +796,14 @@
       card.addEventListener('mouseenter', () => setInfoCard(card));
       card.addEventListener('focus', () => setInfoCard(card));
 
-      card.addEventListener('click', () => selectCard(card));
+      card.addEventListener('click', () => {
+        if (currentLevel === 2) {
+          startTimerIfNeeded();
+          handleLevel2Click(card);
+        } else {
+          selectCard(card);
+        }
+      });
 
       return card;
     }
@@ -807,13 +838,7 @@
         selectedCard = null;
         setInfoCard(null);
       } else {
-        card.classList.remove('correct');
-        card.classList.add('incorrect');
-
-        mistakes++;
-        setFeedback(`${card.dataset.name} hör inte hemma där. Försök igen.`, false);
-
-        setTimeout(() => card.classList.remove('incorrect'), 350);
+        markWrong(card, `${card.dataset.name} hör inte hemma där. Försök igen.`);
       }
 
       updateInfo();
@@ -823,19 +848,14 @@
       }
     }
 
-    function handleLevel2Drop(card, slotIndex){
+    function handleLevel2Click(card){
       if (!card || levelFinished) return;
 
-      const correct = Number(card.dataset.orderIndex) === slotIndex;
-      const slot = seriesBoard.querySelector(`.series-slot[data-slot-index="${slotIndex}"] .series-target`);
+      const expected = LEVEL2_ORDER[level2NextIndex];
+      if (!expected) return;
 
-      if (!slot) return;
-      if (slot.children.length > 0) {
-        setFeedback('Där ligger redan ett kort. Välj en tom plats.', false);
-        return;
-      }
-
-      if (correct){
+      if (card.dataset.symbol === expected.symbol){
+        const slot = seriesBoard.querySelector(`.series-slot[data-slot-index="${level2NextIndex}"] .series-target`);
         card.classList.remove('incorrect', 'selected');
         card.classList.add('correct');
         slot.appendChild(card);
@@ -845,22 +865,18 @@
         score += currentConfig().correctPoints;
         correctCount++;
         remaining--;
+        level2NextIndex++;
 
-        setFeedback(`${card.dataset.name} lades på rätt plats i spänningsserien.`, true);
+        setFeedback(`${card.dataset.name} placerades rätt i spänningsserien.`, true);
         selectedCard = null;
         setInfoCard(null);
+        updateInfo();
+
+        if (remaining === 0){
+          finishLevel();
+        }
       } else {
-        card.classList.remove('correct');
-        card.classList.add('incorrect');
-        mistakes++;
-        setFeedback(`${card.dataset.name} ligger inte rätt i ordningen. Försök igen.`, false);
-        setTimeout(() => card.classList.remove('incorrect'), 350);
-      }
-
-      updateInfo();
-
-      if (remaining === 0){
-        finishLevel();
+        markWrong(card, `Fel metall. Nästa rätta metall är inte ${card.dataset.symbol}.`);
       }
     }
 
@@ -898,32 +914,9 @@
         slot.className = 'series-slot';
         slot.dataset.slotIndex = index;
         slot.innerHTML = `<div class="series-target"></div>`;
-
-        slot.addEventListener('click', () => {
-          if (currentLevel !== 2) return;
-          handleLevel2Drop(selectedCard, index);
-        });
-
-        slot.addEventListener('dragover', (e) => {
-          if (currentLevel !== 2) return;
-          e.preventDefault();
-          slot.classList.add('active-drop');
-        });
-
-        slot.addEventListener('dragleave', () => {
-          slot.classList.remove('active-drop');
-        });
-
-        slot.addEventListener('drop', (e) => {
-          if (currentLevel !== 2) return;
-          e.preventDefault();
-          slot.classList.remove('active-drop');
-          const card = getActiveCardForDrop();
-          handleLevel2Drop(card, index);
-        });
-
         seriesBoard.appendChild(slot);
       });
+      updateSeriesNextHighlight();
     }
 
     function fillBoard(){
@@ -939,16 +932,14 @@
         level2Area.classList.add('hidden');
 
         const items = shuffle(LEVEL1_ITEMS);
-        items.forEach(item => {
-          const card = createCard(item, false);
-          poolGrid.appendChild(card);
-        });
+        items.forEach(item => poolGrid.appendChild(createCard(item, false)));
 
         remaining = items.length;
       } else {
         level1Area.classList.add('hidden');
         level2Area.classList.remove('hidden');
         setupSeriesBoard();
+        level2NextIndex = 0;
 
         const items = shuffle(
           LEVEL2_ORDER.map((item, index) => ({
@@ -957,10 +948,7 @@
           }))
         );
 
-        items.forEach(item => {
-          const card = createCard(item, true);
-          poolGrid.appendChild(card);
-        });
+        items.forEach(item => poolGrid.appendChild(createCard(item, true)));
 
         remaining = items.length;
       }
@@ -998,7 +986,7 @@
       } else {
         updateInfo();
         winTitle.textContent = '🏆 Snyggt!';
-        winText.innerHTML = `Du klarade <strong>Level 2</strong> och ordnade metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br><br>Total poäng: <strong>${score}</strong>.`;
+        winText.innerHTML = `Du klarade <strong>Level 2</strong> och klickade fram metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br><br>Total poäng: <strong>${score}</strong>.`;
       }
 
       winEl.classList.add('open');
