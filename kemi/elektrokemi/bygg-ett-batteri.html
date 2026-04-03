@@ -24,12 +24,16 @@
       --cu:#d86d30;
       --ag:#d7dce2;
       --mg:#d2d6dc;
+      --fe:#8a8f98;
+      --al:#bcc6cf;
+      --pb:#7b7f86;
       --bridge:#b9c1ca;
       --bridge-dark:#8f98a3;
       --minus:#1f5fa8;
       --plus:#c03a2b;
       --lamp-ray:#f7b500;
       --lamp-ray-soft:#ffd84d;
+      --broken:#444;
     }
 
     *{ box-sizing:border-box; }
@@ -44,7 +48,7 @@
     }
 
     main{
-      max-width:1400px;
+      max-width:1440px;
       margin:0 auto;
       padding:0 1rem 1.5rem;
     }
@@ -243,17 +247,20 @@
 
     .board-layout{
       display:grid;
-      grid-template-columns:minmax(680px, 1fr) 340px;
+      grid-template-columns:860px 340px;
       gap:1rem;
       align-items:start;
+      justify-content:start;
     }
 
     .diagram-wrap{
+      width:860px;
       border:1px solid var(--border);
       border-radius:16px;
       padding:0.9rem;
       background:#fafcff;
       overflow-x:auto;
+      overflow-y:hidden;
     }
 
     .diagram{
@@ -264,8 +271,10 @@
     }
 
     .side-panel{
+      width:340px;
       display:grid;
       gap:1rem;
+      align-self:start;
     }
 
     .parts-panel,
@@ -289,16 +298,18 @@
     }
 
     .part{
-      min-height:74px;
+      min-height:82px;
       border:1px solid var(--border);
       border-radius:14px;
       background:#fff;
-      padding:0.75rem 0.7rem;
+      padding:0.85rem 0.8rem;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      font-weight:700;
+      font-weight:800;
+      font-size:1.05rem;
+      line-height:1.25;
       cursor:pointer;
       user-select:none;
       transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
@@ -506,6 +517,9 @@
     .electrode[data-metal="koppar"]{ background:linear-gradient(180deg, #efb18d, var(--cu)); color:#351a09; }
     .electrode[data-metal="silver"]{ background:linear-gradient(180deg, #f3f5f8, var(--ag)); }
     .electrode[data-metal="magnesium"]{ background:linear-gradient(180deg, #f2f4f6, var(--mg)); }
+    .electrode[data-metal="jarn"]{ background:linear-gradient(180deg, #b0b5bd, var(--fe)); color:#fff; }
+    .electrode[data-metal="aluminium"]{ background:linear-gradient(180deg, #e5eaf0, var(--al)); }
+    .electrode[data-metal="bly"]{ background:linear-gradient(180deg, #9aa0a9, var(--pb)); color:#fff; }
 
     .metal-name{
       position:absolute;
@@ -549,7 +563,6 @@
       display:block;
     }
 
-    /* Sluten yttre krets */
     .wire-left-up,
     .wire-right-up,
     .wire-top-left,
@@ -573,14 +586,14 @@
       left:179px;
       top:104px;
       width:5px;
-      height:128px;
+      height:142px;
     }
 
     .wire-right-up{
       left:679px;
       top:104px;
       width:5px;
-      height:128px;
+      height:142px;
     }
 
     .wire-top-left{
@@ -622,6 +635,12 @@
     .lamp-zone.active{
       border-style:solid;
       background:#fdf1df;
+    }
+
+    .lamp-zone.broken{
+      background:#eceff3;
+      border-color:#8e98a3;
+      color:var(--broken);
     }
 
     .lamp-placeholder{
@@ -707,9 +726,15 @@
       text-shadow:0 0 18px rgba(255,159,28,0.95), 0 0 26px rgba(255,216,77,0.8);
     }
 
+    .lamp-zone.broken .lamp-icon{
+      filter:grayscale(1);
+      opacity:0.85;
+      text-shadow:none;
+    }
+
     .lamp-rating{
       position:absolute;
-      top:206px;
+      top:232px;
       left:50%;
       transform:translateX(-50%);
       font-size:0.8rem;
@@ -722,17 +747,15 @@
       z-index:8;
     }
 
-    .lamp-zone.active + .lamp-rating,
     .lamp-rating.show{
       display:block;
     }
 
-    /* Bredare saltbro */
     .bridge-click{
       position:absolute;
-      left:255px;
+      left:235px;
       top:118px;
-      width:350px;
+      width:390px;
       height:255px;
       cursor:pointer;
       border:2px dashed #b9c5d2;
@@ -772,7 +795,7 @@
     .bridge-label{
       position:absolute;
       left:50%;
-      top:4px;
+      top:34px;
       transform:translateX(-50%);
       background:rgba(255,255,255,0.95);
       padding:0.1rem 0.45rem;
@@ -792,21 +815,21 @@
 
     .bridge-top{
       left:86px;
-      top:34px;
-      width:178px;
+      top:70px;
+      width:218px;
       height:24px;
     }
 
     .bridge-left{
-      left:36px;
-      top:34px;
+      left:26px;
+      top:70px;
       width:24px;
       height:196px;
     }
 
     .bridge-right{
-      right:36px;
-      top:34px;
+      right:26px;
+      top:70px;
       width:24px;
       height:196px;
     }
@@ -822,28 +845,36 @@
 
     .bridge-inner-top{
       left:96px;
-      top:39px;
-      width:158px;
+      top:75px;
+      width:198px;
       height:9px;
     }
 
     .bridge-inner-left{
-      left:41px;
-      top:44px;
+      left:31px;
+      top:80px;
       width:8px;
       height:178px;
     }
 
     .bridge-inner-right{
-      right:41px;
-      top:44px;
+      right:31px;
+      top:80px;
       width:8px;
       height:178px;
     }
 
-    @media (max-width:1200px){
+    @media (max-width:1320px){
       .board-layout{
         grid-template-columns:1fr;
+      }
+
+      .diagram-wrap{
+        width:100%;
+      }
+
+      .side-panel{
+        width:100%;
       }
 
       .parts-grid{
@@ -948,7 +979,7 @@
 
                 <div class="lamp-zone" id="lampZone">
                   <span class="lamp-placeholder">Klicka här för vald lampa</span>
-                  <span class="lamp-icon">💡</span>
+                  <span class="lamp-icon" id="lampIcon">💡</span>
                   <div class="lamp-rays">
                     <span class="ray r1"></span>
                     <span class="ray r2"></span>
@@ -1018,19 +1049,24 @@
   <script src="/js/menu.js"></script>
   <script>
     const metalInfo = {
-      zink:      { symbol: "Zn", name: "Zink", label: "Zn(s)" },
-      koppar:    { symbol: "Cu", name: "Koppar", label: "Cu(s)" },
-      silver:    { symbol: "Ag", name: "Silver", label: "Ag(s)" },
-      magnesium: { symbol: "Mg", name: "Magnesium", label: "Mg(s)" }
+      zink:      { symbol: "Zn", name: "Zink", label: "Zn(s)", e0: -0.76 },
+      koppar:    { symbol: "Cu", name: "Koppar", label: "Cu(s)", e0: 0.34 },
+      silver:    { symbol: "Ag", name: "Silver", label: "Ag(s)", e0: 0.80 },
+      magnesium: { symbol: "Mg", name: "Magnesium", label: "Mg(s)", e0: -2.37 },
+      jarn:      { symbol: "Fe", name: "Järn", label: "Fe(s)", e0: -0.44 },
+      aluminium: { symbol: "Al", name: "Aluminium", label: "Al(s)", e0: -1.66 },
+      bly:       { symbol: "Pb", name: "Bly", label: "Pb(s)", e0: -0.13 }
     };
 
     const solutionInfo = {
-      znso4:       { label: "ZnSO₄(aq)", name: "Zinksulfat" },
-      cuso4:       { label: "CuSO₄(aq)", name: "Kopparsulfat" },
-      agno3:       { label: "AgNO₃(aq)", name: "Silvernitrat" },
-      mgso4:       { label: "MgSO₄(aq)", name: "Magnesiumsulfat" },
-      citronsyra:  { label: "Citronsyra", name: "Citronsyra" },
-      potatissaft: { label: "Potatisvätska", name: "Potatisvätska" }
+      znso4:       { label: "ZnSO₄(aq)", name: "Zinksulfat", metal: "zink" },
+      cuso4:       { label: "CuSO₄(aq)", name: "Kopparsulfat", metal: "koppar" },
+      agno3:       { label: "AgNO₃(aq)", name: "Silvernitrat", metal: "silver" },
+      mgso4:       { label: "MgSO₄(aq)", name: "Magnesiumsulfat", metal: "magnesium" },
+      feso4:       { label: "FeSO₄(aq)", name: "Järnsulfat", metal: "jarn" },
+      pbno3:       { label: "Pb(NO₃)₂(aq)", name: "Blynitrat", metal: "bly" },
+      citronsyra:  { label: "Citronsyra", name: "Citronsyra", metal: null },
+      potatissaft: { label: "Potatisvätska", name: "Potatisvätska", metal: null }
     };
 
     const lampInfo = {
@@ -1045,8 +1081,8 @@
         title: "Daniells element",
         voltage: 1.10,
         correctLamp: "lamp15",
-        metals: ["zink", "koppar", "silver"],
-        solutions: ["znso4", "cuso4"],
+        metals: ["zink", "koppar", "silver", "jarn", "bly"],
+        solutions: ["znso4", "cuso4", "agno3", "feso4"],
         correctLeftMetal: "zink",
         correctRightMetal: "koppar",
         correctLeftSolution: "znso4",
@@ -1067,8 +1103,8 @@
         title: "Zink–silver-element",
         voltage: 1.56,
         correctLamp: "lamp15",
-        metals: ["zink", "silver", "koppar"],
-        solutions: ["znso4", "agno3"],
+        metals: ["zink", "silver", "koppar", "bly", "jarn"],
+        solutions: ["znso4", "agno3", "cuso4", "pbno3"],
         correctLeftMetal: "zink",
         correctRightMetal: "silver",
         correctLeftSolution: "znso4",
@@ -1089,8 +1125,8 @@
         title: "Magnesium–koppar-batteri",
         voltage: 2.71,
         correctLamp: "lamp25",
-        metals: ["magnesium", "koppar", "zink"],
-        solutions: ["mgso4", "cuso4"],
+        metals: ["magnesium", "koppar", "zink", "aluminium", "jarn"],
+        solutions: ["mgso4", "cuso4", "znso4", "feso4"],
         correctLeftMetal: "magnesium",
         correctRightMetal: "koppar",
         correctLeftSolution: "mgso4",
@@ -1111,7 +1147,7 @@
         title: "Citronbatteri",
         voltage: 1.00,
         correctLamp: "lamp08",
-        metals: ["zink", "koppar", "silver"],
+        metals: ["zink", "koppar", "silver", "jarn"],
         solutions: ["citronsyra"],
         correctLeftMetal: "zink",
         correctRightMetal: "koppar",
@@ -1137,7 +1173,7 @@
         title: "Potatisbatteri",
         voltage: 0.90,
         correctLamp: "lamp08",
-        metals: ["zink", "koppar", "silver"],
+        metals: ["zink", "koppar", "silver", "jarn"],
         solutions: ["potatissaft"],
         correctLeftMetal: "zink",
         correctRightMetal: "koppar",
@@ -1161,6 +1197,7 @@
     let selectedPart = null;
     let state = {};
     let wrongStreak = 0;
+    let brokenLampTimeout = null;
 
     const partsGrid = document.getElementById("partsGrid");
     const leftCell = document.getElementById("leftCell");
@@ -1174,6 +1211,7 @@
     const bridgeZone = document.getElementById("bridgeZone");
     const lampZone = document.getElementById("lampZone");
     const lampRatingText = document.getElementById("lampRatingText");
+    const lampIcon = document.getElementById("lampIcon");
     const wireLeftUp = document.getElementById("wireLeftUp");
     const wireTopLeft = document.getElementById("wireTopLeft");
     const wireTopRight = document.getElementById("wireTopRight");
@@ -1270,8 +1308,17 @@
       taskText.textContent = currentTask.prompt;
       metaText.innerHTML = `
         <strong>${currentTask.title}</strong><br>
-        Ungefärlig spänning: ${currentTask.voltage.toFixed(2).replace(".", ",")} V
+        Målcellen ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V
       `;
+    }
+
+    function clearLampState(){
+      lampZone.classList.remove("on-dim", "on-medium", "on-strong", "broken");
+      lampIcon.textContent = "💡";
+      if (brokenLampTimeout) {
+        clearTimeout(brokenLampTimeout);
+        brokenLampTimeout = null;
+      }
     }
 
     function resetBoard(){
@@ -1307,8 +1354,10 @@
       bridgeZone.classList.remove("active");
 
       lampZone.className = "lamp-zone";
+      lampIcon.textContent = "💡";
       lampRatingText.textContent = "–";
       lampRatingText.classList.remove("show");
+      clearLampState();
 
       wireLeftUp.classList.remove("active");
       wireTopLeft.classList.remove("active");
@@ -1409,6 +1458,7 @@
       state.lamp = selectedPart;
       markPartUsed(selectedPart, true);
       lampZone.className = "lamp-zone active";
+      lampIcon.textContent = "💡";
       lampRatingText.textContent = lampInfo[selectedPart].label;
       lampRatingText.classList.add("show");
 
@@ -1459,23 +1509,6 @@
       );
     }
 
-    function lampMatchQuality(){
-      if(!state.lamp) return "none";
-
-      const batteryV = currentTask.voltage;
-      const lampV = lampInfo[state.lamp].rating;
-      const diff = Math.abs(batteryV - lampV);
-
-      if(state.lamp !== currentTask.correctLamp){
-        if(diff <= 0.35) return "dim";
-        return "wrong";
-      }
-
-      if(diff <= 0.2) return "medium";
-      if(diff <= 0.5) return "dim";
-      return "wrong";
-    }
-
     function incrementWrongStreak(){
       wrongStreak += 1;
       if(wrongStreak >= 3){
@@ -1498,8 +1531,56 @@
       feedbackBox.innerHTML = `${title}<div class="mini-explain">${text}</div>`;
     }
 
+    function lampBehavior(voltage, lampId){
+      const lampV = lampInfo[lampId].rating;
+      if (voltage < lampV - 0.25) return "too_low";
+      if (voltage > lampV + 0.75) return "too_high";
+      if (Math.abs(voltage - lampV) <= 0.2) return "good";
+      if (Math.abs(voltage - lampV) <= 0.5) return "dim";
+      return "works";
+    }
+
+    function computeStudentCellVoltage(){
+      const leftMetal = state.leftMetal ? metalInfo[state.leftMetal] : null;
+      const rightMetal = state.rightMetal ? metalInfo[state.rightMetal] : null;
+      const leftSol = state.leftSolution ? solutionInfo[state.leftSolution] : null;
+      const rightSol = state.rightSolution ? solutionInfo[state.rightSolution] : null;
+
+      if (!leftMetal || !rightMetal || !leftSol || !rightSol) {
+        return { valid:false, voltage:null, reason:"missing_parts" };
+      }
+
+      const bothSpecial = (leftSol.metal === null && rightSol.metal === null);
+      const standardLike =
+        leftSol.metal === state.leftMetal &&
+        rightSol.metal === state.rightMetal;
+
+      if (bothSpecial) {
+        const estimated = Math.max(0, Math.abs(metalInfo[state.rightMetal].e0 - metalInfo[state.leftMetal].e0) * 0.55);
+        return { valid:true, voltage:Math.round(estimated * 100) / 100, experimental:true };
+      }
+
+      if (!standardLike) {
+        return { valid:false, voltage:null, reason:"wrong_solutions" };
+      }
+
+      const voltage = Math.abs(rightMetal.e0 - leftMetal.e0);
+      return { valid:true, voltage:Math.round(voltage * 100) / 100, experimental:false };
+    }
+
+    function showBrokenLamp(){
+      clearLampState();
+      lampZone.classList.add("broken");
+      lampZone.classList.add("on-strong");
+      lampIcon.textContent = "💥";
+      brokenLampTimeout = setTimeout(() => {
+        lampZone.classList.remove("on-strong");
+      }, 550);
+    }
+
     function checkBattery(chosenAnswer = null){
-      const builtRight = buildIsCorrect();
+      const targetBuildCorrect = buildIsCorrect();
+      const builtCell = computeStudentCellVoltage();
 
       leftMetalSlot.classList.remove("correct", "wrong");
       rightMetalSlot.classList.remove("correct", "wrong");
@@ -1511,7 +1592,7 @@
         rightMetalSlot.classList.add(state.rightMetal === currentTask.correctRightMetal ? "correct" : "wrong");
       }
 
-      lampZone.classList.remove("on-dim", "on-medium", "on-strong");
+      clearLampState();
 
       if(!allPartsPlaced()){
         incrementWrongStreak();
@@ -1534,20 +1615,56 @@
       }
 
       const answerCorrect = chosenAnswer === currentTask.correctAnswer;
-      const lampCorrect = state.lamp === currentTask.correctLamp;
-      const lampQuality = lampMatchQuality();
 
-      if(builtRight && answerCorrect && lampCorrect){
+      if(!builtCell.valid){
+        incrementWrongStreak();
+        showFeedback(
+          false,
+          "Kretsen är byggd, men denna cell fungerar inte som tänkt.",
+          builtCell.reason === "wrong_solutions"
+            ? "Metall och elektrolyt passar inte ihop i båda kärlen. För ett galvaniskt element behöver varje metall normalt sin motsvarande jonlösning."
+            : "Det saknas något i cellen."
+        );
+        return;
+      }
+
+      const behavior = lampBehavior(builtCell.voltage, state.lamp);
+
+      if (behavior === "too_low") {
+        showFeedback(
+          false,
+          `Kretsen är sluten, men spänningen räcker inte för att lampan ska lysa.`,
+          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V, vilket är för lite för ${lampInfo[state.lamp].label}.`
+        );
+        incrementWrongStreak();
+        return;
+      }
+
+      if (behavior === "too_high") {
+        showBrokenLamp();
+        showFeedback(
+          false,
+          `Lampan får för hög spänning och går sönder.`,
+          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V. Det är för mycket för ${lampInfo[state.lamp].label}.`
+        );
+        incrementWrongStreak();
+        return;
+      }
+
+      if (behavior === "dim") {
+        lampZone.classList.add("on-dim");
+      } else if (behavior === "good") {
+        lampZone.classList.add("on-medium");
+      } else {
+        lampZone.classList.add("on-dim");
+      }
+
+      if(targetBuildCorrect && answerCorrect && state.lamp === currentTask.correctLamp){
         resetWrongStreak();
-
-        if(currentTask.voltage >= 2.3){
+        if (currentTask.voltage >= 2.3) {
+          lampZone.classList.remove("on-dim", "on-medium");
           lampZone.classList.add("on-strong");
-        } else if(currentTask.voltage >= 1.0){
-          lampZone.classList.add("on-medium");
-        } else {
-          lampZone.classList.add("on-dim");
         }
-
         showFeedback(
           true,
           `Rätt! Batteriet fungerar. Spänningen blir ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V.`,
@@ -1558,38 +1675,34 @@
 
       incrementWrongStreak();
 
-      if(builtRight && answerCorrect && !lampCorrect){
-        if(lampQuality === "dim"){
-          lampZone.classList.add("on-dim");
-          showFeedback(
-            false,
-            "Nästan rätt. Batteriet är rätt byggt, men lampan passar inte riktigt.",
-            `Batteriet ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V. Den valda lampan kan lysa svagt, men den bästa lampan här är ${lampInfo[currentTask.correctLamp].label}.`
-          );
-        } else {
-          showFeedback(
-            false,
-            "Bygget och frågan är rätt, men lampan är fel vald.",
-            `Batteriet ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V, så den mest passande lampan är ${lampInfo[currentTask.correctLamp].label}.`
-          );
-        }
-        return;
-      }
-
-      if(!builtRight && answerCorrect){
+      if(!targetBuildCorrect){
+        const base = `Den cell du faktiskt byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V.`;
+        const extra =
+          behavior === "good" || behavior === "dim" || behavior === "works"
+            ? " Lampan kan därför lysa, men det är inte den cell som uppgiften efterfrågade."
+            : "";
         showFeedback(
           false,
-          "Svaret på frågan var rätt, men batteriet är inte rätt byggt.",
-          "Kontrollera vilka metaller och lösningar som hör ihop och att saltbron sitter på plats."
+          "Detta var inte rätt cell för uppgiften.",
+          base + extra
         );
         return;
       }
 
-      if(builtRight && !answerCorrect){
+      if(targetBuildCorrect && !answerCorrect){
         showFeedback(
           false,
           "Batteriet är rätt byggt, men svaret på frågan blev fel.",
           currentTask.explain
+        );
+        return;
+      }
+
+      if(targetBuildCorrect && answerCorrect && state.lamp !== currentTask.correctLamp){
+        showFeedback(
+          false,
+          "Cellen och svaret är rätt, men lampan är inte bäst vald.",
+          `Den rätta cellen ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V. Din valda lampa fungerar ${behavior === "dim" ? "svagt" : "delvis"}, men den mest passande lampan här är ${lampInfo[currentTask.correctLamp].label}.`
         );
         return;
       }
