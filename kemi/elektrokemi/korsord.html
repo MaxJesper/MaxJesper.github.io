@@ -36,10 +36,10 @@
   .status { margin-top: 8px; font-size: 14px; color: #222; min-height: 20px; }
   .note { font-size: 13px; color: #333; margin-top: 6px; }
 
-  .grid-wrap { display: grid; justify-content: center; }
+  .grid-wrap { display: grid; justify-content: center; overflow-x: auto; }
 
   .grid {
-    --cell: 34px;
+    --cell: 32px;
     display: grid;
     gap: 0;
     border: 2px solid #000;
@@ -127,9 +127,9 @@
     .print-clues ol { padding-left: 16px; }
     .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
 
-    .grid { --cell: 24px; }
-    .cell input { font-size: 14px; }
-    .num { font-size: 8px; }
+    .grid { --cell: 21px; }
+    .cell input { font-size: 13px; }
+    .num { font-size: 7px; }
 
     .cell.wrong { background: #fff !important; outline: none !important; }
     .cell.wrong::after { display: none !important; }
@@ -173,7 +173,7 @@
           </div>
           <div id="status" class="status"></div>
           <div class="note">
-            Rensa senaste = rensar ordet du senast skrev i. Facit = visar/döljer facit för det ordet (bara om det innehåller fel).
+            Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för det ordet om det innehåller fel.
           </div>
         </div>
       </div>
@@ -199,49 +199,78 @@ const WORDS = [
     answer: "SPÄNNINGSSERIEN",
     clue: "Serie där metaller ordnas efter hur ädla de är.",
     row: 8,
-    col: 1,
+    col: 4,
     dir: "across"
   },
   {
-    answer: "BRÄNSLECELL",
-    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
-    row: 4,
-    col: 1,
-    dir: "down"
+    answer: "ELEKTROD",
+    clue: "Elektriskt ledande föremål som är i kontakt med en elektrolyt.",
+    row: 10,
+    col: 10,
+    dir: "across"
   },
   {
-    answer: "OÄDELMETALL",
-    clue: "Metall som gärna lämnar ifrån sig elektroner och bildar joner.",
-    row: 7,
-    col: 3,
-    dir: "down"
+    answer: "ELEKTROLYS",
+    clue: "Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.",
+    row: 12,
+    col: 10,
+    dir: "across"
   },
   {
-    answer: "MINERAL",
-    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
-    row: 6,
-    col: 5,
+    answer: "ÄDELMETALL",
+    clue: "Metall som inte löses upp i saltsyra och inte reagerar så lätt.",
+    row: 14,
+    col: 0,
+    dir: "across"
+  },
+
+  {
+    answer: "GALVANISKTELEMENT",
+    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
+    row: 0,
+    col: 2,
     dir: "down"
   },
   {
     answer: "KORROSION",
     clue: "När metaller oxideras i kontakt med luft, vatten eller andra ämnen.",
     row: 0,
-    col: 7,
+    col: 10,
     dir: "down"
   },
   {
     answer: "ELOXERING",
     clue: "Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.",
-    row: 8,
-    col: 11,
+    row: 1,
+    col: 8,
     dir: "down"
   },
   {
-    answer: "GALVANISKTELEMENT",
-    clue: "Anordning där kemiskt bunden energi omvandlas till elektrisk energi.",
-    row: 2,
-    col: 13,
+    answer: "BRÄNSLECELL",
+    clue: "Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.",
+    row: 4,
+    col: 12,
+    dir: "down"
+  },
+  {
+    answer: "OÄDELMETALL",
+    clue: "Metall som gärna lämnar från sig elektroner och bildar joner.",
+    row: 7,
+    col: 6,
+    dir: "down"
+  },
+  {
+    answer: "MINERAL",
+    clue: "Ämnen som finns i jordskorpan, till exempel i bergarter.",
+    row: 14,
+    col: 4,
+    dir: "down"
+  },
+  {
+    answer: "LÄTTMETALLER",
+    clue: "Metaller som väger högst 4,5 kg/dm³, till exempel aluminium och magnesium.",
+    row: 12,
+    col: 17,
     dir: "down"
   }
 ];
@@ -258,6 +287,10 @@ for (const word of WORDS) {
     const r = word.row + (word.dir === "down" ? i : 0);
     const c = word.col + (word.dir === "across" ? i : 0);
     const key = `${r},${c}`;
+
+    if (r < 0 || c < 0) {
+      throw new Error(`Ordet ${word.answer} har negativ position.`);
+    }
 
     if (occupied.has(key) && occupied.get(key) !== ans[i]) {
       throw new Error(`Bokstavskrock i ${key}: ${occupied.get(key)} / ${ans[i]}`);
