@@ -125,6 +125,8 @@
     text-align: center;
     box-shadow: 0 20px 50px rgba(0,0,0,0.22);
     z-index: 2;
+    animation: popIn 420ms cubic-bezier(.2,.9,.2,1.15);
+    transform-origin: center center;
   }
 
   .celebration-box h2 {
@@ -157,7 +159,7 @@
     width: 10px;
     height: 16px;
     opacity: 0.95;
-    animation: confettiFall 1400ms linear forwards;
+    animation: confettiFall 2600ms linear forwards;
   }
 
   @keyframes confettiFall {
@@ -166,6 +168,21 @@
     }
     100% {
       transform: translateY(110vh) rotate(720deg);
+    }
+  }
+
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.72);
+    }
+    65% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
@@ -503,7 +520,7 @@ function launchConfetti() {
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
     piece.style.left = `${Math.random() * 100}%`;
-    piece.style.animationDelay = `${Math.random() * 300}ms`;
+    piece.style.animationDelay = `${Math.random() * 350}ms`;
     piece.style.transform = `rotate(${Math.random() * 360}deg)`;
     piece.style.background = `hsl(${Math.floor(Math.random() * 360)}, 85%, 60%)`;
     confettiLayerEl.appendChild(piece);
@@ -511,7 +528,7 @@ function launchConfetti() {
 
   setTimeout(() => {
     confettiLayerEl.innerHTML = '';
-  }, 1800);
+  }, 3100);
 }
 
 function showCelebration() {
@@ -691,6 +708,29 @@ function prevEditable(r,c){
   return null;
 }
 
+function advanceToNextCell(r, c, dir) {
+  let rr = r;
+  let cc = c;
+
+  while (true) {
+    if (dir === 'down') rr++;
+    else cc++;
+
+    if (rr < 0 || rr >= DATA.rows || cc < 0 || cc >= DATA.cols) return null;
+    if (!isEditable(rr, cc)) return null;
+
+    const next = getInput(rr, cc);
+    if (!next) return null;
+
+    const val = normalizeChar(next.value);
+    const sol = DATA.solution[rr][cc] || '';
+
+    if (!val) return next;
+    if (val === sol) continue;
+    return next;
+  }
+}
+
 function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
   if (!targetEl) return;
   targetEl.innerHTML = '';
@@ -724,6 +764,7 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             if (!isAutoMoving) {
               activeDir = null;
             }
+            setTimeout(() => inp.select(), 0);
           });
 
           inp.addEventListener('input', (e) => {
@@ -739,13 +780,7 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             markWrong(r,c);
 
             if (v) {
-              let next = null;
-
-              if (activeDir === 'down') {
-                next = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
-              } else {
-                next = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
-              }
+              const next = advanceToNextCell(r, c, activeDir);
 
               if (next) {
                 isAutoMoving = true;
