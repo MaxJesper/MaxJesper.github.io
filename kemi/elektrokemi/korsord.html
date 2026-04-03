@@ -1,531 +1,632 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Korsord – Elektrokemi</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <style>
-    #side-menu { pointer-events: none; }
-    #side-menu.open { pointer-events: auto; }
-    .page-wrap{
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .crossword-intro{
-      margin-bottom: 1rem;
-    }
-    .crossword-actions{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 1rem 0 1.25rem 0;
-    }
-    .crossword-btn{
-      border: 1px solid #111;
-      background: #111;
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 15px;
-    }
-    .crossword-btn.secondary{
-      background: #fff;
-      color: #111;
-    }
-    .crossword-layout{
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-    @media (min-width: 1000px){
-      .crossword-layout{
-        grid-template-columns: minmax(320px, 520px) 1fr;
-        align-items: start;
-      }
-    }
-    .crossword-board-wrap{
-      background: #fff;
-      border: 1px solid #d8e0ea;
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-      overflow-x: auto;
-    }
-    .crossword-grid{
-      display: grid;
-      gap: 2px;
-      background: #cfd8e3;
-      width: max-content;
-      padding: 2px;
-      border-radius: 10px;
-    }
-    .cell{
-      position: relative;
-      width: 38px;
-      height: 38px;
-      background: #fff;
-      box-sizing: border-box;
-    }
-    .cell.block{
-      background: #2f3b4a;
-    }
-    .cell input{
-      width: 100%;
-      height: 100%;
-      border: none;
-      text-align: center;
-      font-size: 22px;
-      font-weight: 700;
-      text-transform: uppercase;
-      outline: none;
-      background: #fff;
-      color: #111;
-      box-sizing: border-box;
-    }
-    .cell input:focus{
-      background: #fff7d6;
-      box-shadow: inset 0 0 0 2px #d97706;
-    }
-    .cell.correct input{
-      background: #dcfce7;
-      color: #166534;
-    }
-    .cell.wrong input{
-      background: #fee2e2;
-      color: #991b1b;
-    }
-    .cell .number{
-      position: absolute;
-      top: 1px;
-      left: 3px;
-      font-size: 10px;
-      font-weight: 700;
-      color: #555;
-      pointer-events: none;
-      line-height: 1;
-    }
-    .clues-wrap{
-      background: #fff;
-      border: 1px solid #d8e0ea;
-      border-radius: 14px;
-      padding: 14px 16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-    }
-    .clues-wrap h2{
-      margin-top: 0;
-      margin-bottom: 0.8rem;
-      font-size: 1.2rem;
-    }
-    .clue-columns{
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    @media (min-width: 760px){
-      .clue-columns{
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    .clue-group h3{
-      margin-top: 0;
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-    .clue-group ol{
-      margin: 0;
-      padding-left: 1.25rem;
-    }
-    .clue-group li{
-      margin-bottom: 0.55rem;
-      line-height: 1.35;
-    }
-    .status-text{
-      margin-top: 0.8rem;
-      font-weight: 700;
-      min-height: 1.5rem;
-    }
-    .status-text.good{
-      color: #166534;
-    }
-    .status-text.bad{
-      color: #991b1b;
-    }
-    .legend{
-      margin-top: 1rem;
-      font-size: 14px;
-      color: #444;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Korsord: Elektrokemi</title>
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<style>
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
+  h1 { margin: 0 0 6px; font-size: 28px; }
+  .subtitle { margin: 0 0 18px; color: #333; }
+
+  .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
+
+  .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 980px) { .layout { grid-template-columns: 420px 1fr; align-items: start; } }
+
+  .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; background: #fff; }
+  .clue-box h2 { margin: 0 0 8px; font-size: 16px; }
+  ol { margin: 0; padding-left: 18px; }
+  li { margin: 6px 0; line-height: 1.25; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 0; }
+
+  button {
+    border: 1px solid #111; background: #111; color: #fff;
+    padding: 9px 12px; border-radius: 10px; cursor: pointer; font-weight: 600;
+  }
+  button.secondary { background: #fff; color: #111; }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+
+  .status { margin-top: 8px; font-size: 14px; color: #222; min-height: 20px; }
+  .note { font-size: 13px; color: #333; margin-top: 6px; }
+
+  .grid-wrap { display: grid; justify-content: center; overflow-x: auto; }
+
+  .grid {
+    --cell: 34px;
+    display: grid;
+    grid-template-columns: repeat(17, var(--cell));
+    grid-auto-rows: var(--cell);
+    gap: 0;
+    border: 2px solid #000;
+    width: max-content;
+    background: #000;
+  }
+  .cell {
+    position: relative;
+    background: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+  }
+  .cell.black { background: #000; border-color: #000; }
+
+  .cell input {
+    width: 100%; height: 100%;
+    border: none; outline: none;
+    text-align: center;
+    font-size: 18px; font-weight: 700;
+    background: transparent;
+    text-transform: uppercase;
+  }
+
+  .num {
+    position: absolute; left: 3px; top: 2px;
+    font-size: 9px; font-weight: 700; color: #111;
+    user-select: none;
+  }
+  .cell.black .num { display: none; }
+
+  .cell.wrong {
+    background: #D32F2F !important;
+    outline: 3px solid #7f0000;
+    outline-offset: -3px;
+  }
+  .cell.wrong::after {
+    content: "✕";
+    position: absolute;
+    right: 3px;
+    bottom: 1px;
+    font-size: 14px;
+    font-weight: 900;
+    color: #fff;
+    pointer-events: none;
+  }
+
+  #facitBtn, #facitBtn * {
+    color: #fff !important;
+    background: #111 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #facitBtn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+  }
+
+  .print-only { display: none; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    @page { size: A4; margin: 12mm; }
+    body { margin: 0; }
+
+    .hamburger, #side-menu, .top-actions, .controls, .note, #status { display: none !important; }
+
+    h1 { font-size: 18px; margin: 0 0 4px; }
+    .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
+
+    .print-sheet { padding-left: 4mm; break-inside: avoid; page-break-inside: avoid; }
+
+    .layout { grid-template-columns: 1fr !important; gap: 8px; }
+
+    .clues { gap: 6px; }
+    .clue-box { border: none; padding: 0; }
+    .clue-box h2 { font-size: 12px; margin: 6px 0 2px; }
+
+    .print-clues { column-count: 2; column-gap: 10mm; }
+    .print-clues ol { padding-left: 16px; }
+    .print-clues li { margin: 3px 0; font-size: 11px; line-height: 1.2; }
+
+    .grid { --cell: 24px; }
+    .cell input { font-size: 14px; }
+    .num { font-size: 8px; }
+
+    .cell.wrong { background: #fff !important; outline: none !important; }
+    .cell.wrong::after { display: none !important; }
+
+    .print-only { display: block; }
+    .facit-page { page-break-before: always; break-before: page; }
+    .facit-title { font-size: 16px; margin: 0 0 6px; }
+  }
+</style>
 </head>
+
 <body>
-  <header class="kemi-header">
-    <h1>Korsord</h1>
-    <p>Elektrokemi</p>
-  </header>
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
-  <main class="page-wrap">
-    <p>
+
+  <div class="print-sheet">
+    <h1>Korsord: Elektrokemi</h1>
+    <p class="subtitle">Fyll i rutorna. En ruta blir röd direkt om bokstaven är fel.</p>
+
+    <div class="top-actions">
+      <button type="button" onclick="window.print()">Skriv ut</button>
       <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
-    </p>
-    <section class="crossword-intro">
-      <p>
-        Träna viktiga ord inom elektrokemi. Skriv med stora eller små bokstäver – programmet rättar ändå.
-      </p>
-    </section>
-    <div class="crossword-actions">
-      <button class="crossword-btn" type="button" id="checkBtn">Rätta</button>
-      <button class="crossword-btn secondary" type="button" id="revealBtn">Visa facit</button>
-      <button class="crossword-btn secondary" type="button" id="resetBtn">Börja om</button>
     </div>
-    <section class="crossword-layout">
-      <div class="crossword-board-wrap">
-        <div id="crosswordGrid" class="crossword-grid" aria-label="Korsord"></div>
-        <div id="statusText" class="status-text" aria-live="polite"></div>
-        <div class="legend">
-          Tips: Klicka i en ruta och skriv bokstaven. Alla ord i detta korsord är hopkopplade.
+
+    <div class="layout">
+      <div class="clues">
+        <div class="clue-box print-clues">
+          <h2>Vågrätt</h2>
+          <ol>
+            <li value="1">Omvandlar kemisk energi direkt till elektrisk energi, ofta med vätgas och syre.</li>
+            <li value="9">Anordning där kemiskt bunden energi omvandlas till elektrisk energi.</li>
+            <li value="10">Lösning eller smälta som innehåller joner.</li>
+            <li value="11">Ytbehandling av aluminium som ger ett tjockt och skyddande oxidskikt.</li>
+            <li value="12">När metaller oxideras i kontakt med luft, vatten eller andra ämnen.</li>
+          </ol>
+
+          <h2 style="margin-top:10px;">Lodrätt</h2>
+          <ol>
+            <li value="2">Serie där metaller ordnas efter hur ädla de är.</li>
+            <li value="3">Metall som inte löses upp i saltsyra och inte reagerar så lätt.</li>
+            <li value="4">Metaller som väger högst 4,5 kg/dm³, till exempel aluminium och magnesium.</li>
+            <li value="5">Ämnen som finns i jordskorpan, till exempel i bergarter.</li>
+            <li value="6">Metall som gärna lämnar från sig elektroner och bildar joner.</li>
+            <li value="7">Elektriskt ledande föremål som är i kontakt med en elektrolyt.</li>
+            <li value="8">Process där elektrisk energi tillförs för att en kemisk reaktion ska ske.</li>
+          </ol>
+        </div>
+
+        <div class="clue-box">
+          <h2>Verktyg</h2>
+          <div class="controls">
+            <button id="clearWordBtn" class="secondary" type="button" disabled>Rensa senaste</button>
+            <button id="clearBtn" class="secondary" type="button">Rensa</button>
+            <button id="facitBtn" type="button">Facit</button>
+          </div>
+          <div id="status" class="status"></div>
+          <div class="note">
+            Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för det ordet om det innehåller fel.
+          </div>
         </div>
       </div>
-      <aside class="clues-wrap">
-        <h2>Ledtrådar</h2>
-        <div class="clue-columns">
-          <section class="clue-group">
-            <h3>Vågrätt</h3>
-            <ol id="acrossClues"></ol>
-          </section>
-          <section class="clue-group">
-            <h3>Lodrätt</h3>
-            <ol id="downClues"></ol>
-          </section>
-        </div>
-      </aside>
-    </section>
-  </main>
+
+      <div class="grid-wrap">
+        <div id="grid" class="grid" aria-label="Korsord"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-only facit-page">
+    <h2 class="facit-title">Facit – Korsord: Elektrokemi</h2>
+    <div class="grid-wrap">
+      <div id="grid-solution" class="grid" aria-label="Facit"></div>
+    </div>
+  </div>
+
   <script src="/js/menu.js"></script>
-  <script>
-    const WORDS = [
-      {
-        answer: "ELEKTROKEMI",
-        clue: "Läran om kemiska reaktioner där elektroner flyttas.",
-        row: 7,
-        col: 2,
-        dir: "across"
-      },
-      {
-        answer: "KATOD",
-        clue: "Den elektrod där reduktion sker.",
-        row: 5,
-        col: 6,
-        dir: "down"
-      },
-      {
-        answer: "ANOD",
-        clue: "Den elektrod där oxidation sker.",
-        row: 5,
-        col: 8,
-        dir: "down"
-      },
-      {
-        answer: "BATTERI",
-        clue: "Består av ett eller flera galvaniska element.",
-        row: 3,
-        col: 10,
-        dir: "down"
-      },
-      {
-        answer: "JONER",
-        clue: "Laddade partiklar i en elektrolyt.",
-        row: 3,
-        col: 7,
-        dir: "down"
-      },
-      {
-        answer: "REDOX",
-        clue: "Typ av reaktion där oxidation och reduktion hör ihop.",
-        row: 6,
-        col: 4,
-        dir: "down"
-      },
-      {
-        answer: "KORROSION",
-        clue: "När metaller angrips och återgår mot jonform.",
-        row: 1,
-        col: 12,
-        dir: "down"
-      },
-      {
-        answer: "ELEKTROLYS",
-        clue: "När elektrisk energi driver en kemisk reaktion.",
-        row: 7,
-        col: 2,
-        dir: "down"
-      },
-      {
-        answer: "PLUSPOL",
-        clue: "I ett galvaniskt element är detta den pol som tar emot elektroner.",
-        row: 6,
-        col: 3,
-        dir: "down"
-      },
-      {
-        answer: "MINUSPOL",
-        clue: "I ett galvaniskt element lämnar elektroner denna pol.",
-        row: 7,
-        col: 11,
-        dir: "down"
-      }
-    ];
-    const ROWS = 17;
-    const COLS = 15;
-    const gridEl = document.getElementById("crosswordGrid");
-    const acrossCluesEl = document.getElementById("acrossClues");
-    const downCluesEl = document.getElementById("downClues");
-    const statusTextEl = document.getElementById("statusText");
-    const cells = new Map(); // key => { letter, starts[] }
-    function key(r, c) {
-      return `${r},${c}`;
+
+<script>
+const DATA = {
+  rows: 17,
+  cols: 17,
+  black: [[1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1],[1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1],[1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1],[1,0,1,1,0,1,1,0,1,0,1,1,1,0,1,1,1],[1,0,1,1,0,1,1,0,1,0,1,1,1,0,1,1,0],[1,0,1,1,0,1,1,0,1,0,1,1,1,0,1,1,0],[1,0,1,1,0,1,1,0,1,0,1,1,1,0,1,1,0],[1,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[1,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,0],[1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,1,0],[1,1,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0],[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1],[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1],[0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1],[1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1]],
+  solution: [[null,null,null,"B","R","Ä","N","S","L","E","C","E","L","L",null,null,null],[null,"Ä",null,null,null,null,null,"P",null,null,null,null,null,null,null,null,null],[null,"D",null,null,null,null,null,"Ä",null,"L",null,null,null,null,null,null,null],[null,"E",null,null,"M",null,null,"N",null,"Ä",null,null,null,"O",null,null,null],[null,"L",null,null,"I",null,null,"N",null,"T",null,null,null,"Ä",null,null,"E"],[null,"M",null,null,"N",null,null,"I",null,"T",null,null,null,"D",null,null,"L"],[null,"E",null,null,"E",null,null,"N",null,"M",null,null,null,"E",null,null,"E"],[null,"T",null,null,"R",null,null,"G",null,"E",null,"E",null,"L",null,null,"K"],["G","A","L","V","A","N","I","S","K","T","E","L","E","M","E","N","T"],[null,"L",null,null,"L",null,null,"S",null,"A",null,"E",null,"E",null,null,"R"],[null,"L",null,null,null,null,null,"E",null,"L",null,"K",null,"T",null,null,"O"],[null,null,"E","L","E","K","T","R","O","L","Y","T",null,"A",null,null,"D"],[null,null,null,null,null,null,null,"I",null,"E",null,"R",null,"L",null,null,null],[null,null,null,null,null,null,null,"E",null,"R",null,"O",null,"L",null,null,null],["E","L","O","X","E","R","I","N","G",null,null,"L",null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,"Y",null,null,null,null,null],[null,null,null,null,null,null,"K","O","R","R","O","S","I","O","N",null,null]],
+  numbers: [[null,null,null,1,null,null,null,2,null,null,null,null,null,null,null,null,null],[null,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,4,null,null,null,null,null,null,null],[null,null,null,null,5,null,null,null,null,null,null,null,null,6,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,8,null,null,null,null,null],[9,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,10,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[11,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,12,null,null,null,null,null,null,null,null,null,null]]
+};
+
+const gridEl = document.getElementById('grid');
+const gridSolEl = document.getElementById('grid-solution');
+
+const statusEl = document.getElementById('status');
+const clearWordBtn = document.getElementById('clearWordBtn');
+const facitBtn = document.getElementById('facitBtn');
+
+facitBtn.textContent = 'Facit';
+
+function normalizeChar(ch) {
+  if (!ch) return '';
+  ch = ch.toUpperCase();
+  const ok = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ";
+  for (const c of ch) if (ok.includes(c)) return c;
+  return '';
+}
+function cellKey(r,c){ return `${r},${c}`; }
+function isEditable(r,c){ return DATA.black[r][c] !== 1; }
+function isBlack(r,c){
+  if (r<0 || c<0 || r>=DATA.rows || c>=DATA.cols) return true;
+  return DATA.black[r][c] === 1;
+}
+function cellId(r,c,prefix='cell'){ return `${prefix}-${r}-${c}`; }
+function getCellDiv(r,c){ return document.getElementById(cellId(r,c,'cell')); }
+function getInput(r,c){
+  const cell = document.getElementById(cellId(r,c,'cell'));
+  return cell ? cell.querySelector('input') : null;
+}
+
+const words = new Map();
+const cellToWords = new Map();
+
+function buildWords(){
+  words.clear();
+  cellToWords.clear();
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      cellToWords.set(cellKey(r,c), {across:null, down:null});
     }
-    function addWordToMap(word) {
-      for (let i = 0; i < word.answer.length; i++) {
-        const r = word.row + (word.dir === "down" ? i : 0);
-        const c = word.col + (word.dir === "across" ? i : 0);
-        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) {
-          throw new Error(`Ordet ${word.answer} går utanför rutnätet.`);
+  }
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+
+      if (!isBlack(r, c-1) || isBlack(r, c+1)) {
+        // inte start på vågrätt ord med minst 2 bokstäver
+      } else {
+        const num = DATA.numbers[r][c] || null;
+        const id = `A${num ?? `${r}-${c}`}`;
+        const cells = [];
+        let cc = c;
+        while (cc < DATA.cols && isEditable(r,cc) && !isBlack(r,cc)){
+          cells.push({r, c:cc});
+          const m = cellToWords.get(cellKey(r,cc));
+          if (m) m.across = id;
+          cc++;
         }
-        const k = key(r, c);
-        const existing = cells.get(k);
-        if (existing) {
-          if (existing.letter !== word.answer[i]) {
-            throw new Error(`Bokstavskrock i ${r},${c} mellan ${existing.letter} och ${word.answer[i]}.`);
-          }
+        words.set(id, {dir:'across', number:num, cells});
+      }
+
+      if (!isBlack(r-1, c) || isBlack(r+1, c)) {
+        // inte start på lodrätt ord med minst 2 bokstäver
+      } else {
+        const num = DATA.numbers[r][c] || null;
+        const id = `D${num ?? `${r}-${c}`}`;
+        const cells = [];
+        let rr = r;
+        while (rr < DATA.rows && isEditable(rr,c) && !isBlack(rr,c)){
+          cells.push({r:rr, c});
+          const m = cellToWords.get(cellKey(rr,c));
+          if (m) m.down = id;
+          rr++;
+        }
+        words.set(id, {dir:'down', number:num, cells});
+      }
+    }
+  }
+}
+
+function wordForCell(r,c,dir){
+  const m = cellToWords.get(cellKey(r,c));
+  if (!m) return null;
+  return dir === 'down' ? m.down : m.across;
+}
+
+let lastTypedDir = 'across';
+let lastTypedWordId = null;
+let activeDir = null;
+
+function chooseInitialDir(r,c){
+  const leftBlack  = isBlack(r, c-1);
+  const rightBlack = isBlack(r, c+1);
+  const upBlack    = isBlack(r-1, c);
+  const downBlack  = isBlack(r+1, c);
+
+  const startsAcross = leftBlack && !rightBlack;
+  const startsDown   = upBlack && !downBlack;
+
+  if (startsAcross && !startsDown) return 'across';
+  if (startsDown && !startsAcross) return 'down';
+  if (startsAcross && startsDown) return 'across';
+
+  if (!leftBlack && !rightBlack) return 'across';
+  if (!upBlack && !downBlack) return 'down';
+
+  return 'across';
+}
+
+function setLastTypedWord(r,c){
+  const dir = activeDir || lastTypedDir;
+  const preferred = wordForCell(r,c,dir);
+  const fallback  = wordForCell(r,c, dir === 'across' ? 'down' : 'across');
+  lastTypedWordId = preferred || fallback;
+  clearWordBtn.disabled = !lastTypedWordId;
+}
+
+function markWrong(r,c){
+  const cell = getCellDiv(r,c);
+  if (!cell) return;
+  cell.classList.remove('wrong');
+  const inp = getInput(r,c);
+  const val = inp ? normalizeChar(inp.value) : '';
+  if (!val) return;
+  const sol = DATA.solution[r][c];
+  if (sol && val !== sol) cell.classList.add('wrong');
+}
+
+function refreshAllWrong(){
+  let filled = 0;
+  let anyWrong = false;
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const cell = getCellDiv(r,c);
+      if (!cell) continue;
+      cell.classList.remove('wrong');
+      const inp = getInput(r,c);
+      const val = inp ? normalizeChar(inp.value) : '';
+      if (!val) continue;
+      filled++;
+      const sol = DATA.solution[r][c];
+      if (sol && val !== sol) {
+        cell.classList.add('wrong');
+        anyWrong = true;
+      }
+    }
+  }
+
+  if (filled > 0 && !anyWrong) {
+    let allFilled = true;
+    for (let r=0; r<DATA.rows; r++){
+      for (let c=0; c<DATA.cols; c++){
+        if (!isEditable(r,c)) continue;
+        const inp = getInput(r,c);
+        if (!inp || !normalizeChar(inp.value)) {
+          allFilled = false;
+          break;
+        }
+      }
+      if (!allFilled) break;
+    }
+    if (allFilled) statusEl.textContent = 'Snyggt! Hela korsordet är rätt.';
+  }
+}
+
+let facitMode = 'off';
+let facitBackup = new Map();
+
+function hideFacit(){
+  if (facitMode === 'off') return;
+  for (const [k,v] of facitBackup.entries()){
+    const [r,c] = k.split(',').map(Number);
+    const inp = getInput(r,c);
+    if (inp) inp.value = v;
+  }
+  facitMode = 'off';
+  facitBackup = new Map();
+  facitBtn.textContent = 'Facit';
+  refreshAllWrong();
+  if (statusEl.textContent === 'Facit visas för senaste ordet.') statusEl.textContent = '';
+}
+
+function showFacitForLastWord(){
+  if (!lastTypedWordId){
+    statusEl.textContent = 'Skriv i en ruta först, så vet jag vilket ord som är senaste.';
+    return;
+  }
+  const w = words.get(lastTypedWordId);
+  if (!w){
+    statusEl.textContent = 'Kunde inte hitta senaste ordet.';
+    return;
+  }
+
+  let hasWrong = false;
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    const val = inp ? normalizeChar(inp.value) : '';
+    const sol = DATA.solution[r][c] || '';
+    if (val && val !== sol) { hasWrong = true; break; }
+  }
+  if (!hasWrong){
+    statusEl.textContent = 'Inga fel bokstäver i senaste ordet just nu.';
+    return;
+  }
+
+  facitMode = 'word';
+  facitBackup = new Map();
+
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (!inp) continue;
+    const k = cellKey(r,c);
+    facitBackup.set(k, normalizeChar(inp.value));
+    inp.value = DATA.solution[r][c] || '';
+  }
+
+  refreshAllWrong();
+  facitBtn.textContent = 'Dölj facit';
+  statusEl.textContent = 'Facit visas för senaste ordet.';
+}
+
+function toggleFacit(){
+  if (facitMode !== 'off') hideFacit();
+  else showFacitForLastWord();
+}
+
+function clearAll(){
+  hideFacit();
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      if (inp) inp.value = '';
+    }
+  }
+  refreshAllWrong();
+  statusEl.textContent = '';
+  lastTypedWordId = null;
+  clearWordBtn.disabled = true;
+}
+
+function clearLastWord(){
+  hideFacit();
+  if (!lastTypedWordId) return;
+  const w = words.get(lastTypedWordId);
+  if (!w) return;
+
+  for (const {r,c} of w.cells){
+    const inp = getInput(r,c);
+    if (inp) inp.value = '';
+  }
+  refreshAllWrong();
+  statusEl.textContent = 'Senaste ordet rensat.';
+}
+
+function focusStep(r,c,dr,dc){
+  let rr=r+dr, cc=c+dc;
+  while (rr>=0 && rr<DATA.rows && cc>=0 && cc<DATA.cols){
+    if (isEditable(rr,cc)){
+      const inp = getInput(rr,cc);
+      if (inp) inp.focus();
+      return;
+    }
+    rr += dr; cc += dc;
+  }
+}
+
+function prevEditable(r,c){
+  if (activeDir === 'down') {
+    let rr = r - 1;
+    while (rr >= 0 && isEditable(rr,c)) {
+      const inp = getInput(rr,c);
+      if (inp) return inp;
+      rr--;
+    }
+  } else {
+    let cc = c - 1;
+    while (cc >= 0 && isEditable(r,cc)) {
+      const inp = getInput(r,cc);
+      if (inp) return inp;
+      cc--;
+    }
+  }
+  return null;
+}
+
+function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
+  if (!targetEl) return;
+  targetEl.innerHTML = '';
+
+  for (let r=0; r<DATA.rows; r++) {
+    for (let c=0; c<DATA.cols; c++) {
+      const isBlk = DATA.black[r][c] === 1;
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (isBlk ? ' black' : '');
+      cell.id = cellId(r,c,idPrefix);
+
+      const num = DATA.numbers[r][c];
+      if (!isBlk && num) {
+        const s = document.createElement('div');
+        s.className = 'num';
+        s.textContent = num;
+        cell.appendChild(s);
+      }
+
+      if (!isBlk) {
+        if (withInputs) {
+          const inp = document.createElement('input');
+          inp.setAttribute('maxlength','1');
+          inp.setAttribute('inputmode','text');
+          inp.setAttribute('autocomplete','off');
+          inp.setAttribute('aria-label', `Ruta r${r+1} c${c+1}`);
+          inp.dataset.r = r;
+          inp.dataset.c = c;
+
+          inp.addEventListener('focus', () => {
+            activeDir = null;
+          });
+
+          inp.addEventListener('input', (e) => {
+            if (facitMode !== 'off') hideFacit();
+
+            const v = normalizeChar(e.target.value);
+            e.target.value = v;
+
+            if (!activeDir) activeDir = chooseInitialDir(r,c);
+            lastTypedDir = activeDir;
+
+            setLastTypedWord(r,c);
+            markWrong(r,c);
+
+            if (v) {
+              if (activeDir === 'down') {
+                const next = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
+                if (next) next.focus();
+              } else {
+                const next = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
+                if (next) next.focus();
+              }
+            }
+
+            refreshAllWrong();
+          });
+
+          inp.addEventListener('keydown', (e) => {
+            const r0 = Number(e.target.dataset.r);
+            const c0 = Number(e.target.dataset.c);
+
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0,-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); activeDir='across'; lastTypedDir='across'; focusStep(r0,c0,0, 1); }
+            if (e.key === 'ArrowUp')    { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0,-1,0); }
+            if (e.key === 'ArrowDown')  { e.preventDefault(); activeDir='down';   lastTypedDir='down';   focusStep(r0,c0, 1,0); }
+
+            if (e.key === 'Backspace' && !e.target.value) {
+              const prev = prevEditable(r0,c0);
+              if (prev) prev.focus();
+            }
+          });
+
+          cell.appendChild(inp);
         } else {
-          cells.set(k, { letter: word.answer[i], starts: [] });
+          const div = document.createElement('div');
+          div.style.display = 'grid';
+          div.style.placeItems = 'center';
+          div.style.height = '100%';
+          div.style.fontWeight = '800';
+          div.style.fontSize = '14px';
+          div.textContent = fillSolution ? (DATA.solution[r][c] || '') : '';
+          cell.appendChild(div);
         }
       }
+
+      targetEl.appendChild(cell);
     }
-    function markStartsAndNumbers() {
-      let number = 1;
-      const numberMap = new Map();
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const k = key(r, c);
-          if (!cells.has(k)) continue;
-          const startsAcross = WORDS.find(w => w.row === r && w.col === c && w.dir === "across");
-          const startsDown = WORDS.find(w => w.row === r && w.col === c && w.dir === "down");
-          if (startsAcross || startsDown) {
-            numberMap.set(k, number);
-            if (startsAcross) startsAcross.number = number;
-            if (startsDown) startsDown.number = number;
-            number++;
-          }
-        }
-      }
-      return numberMap;
-    }
-    function verifyConnected() {
-      const occupied = [...cells.keys()];
-      if (occupied.length === 0) return true;
-      const visited = new Set();
-      const queue = [occupied[0]];
-      visited.add(occupied[0]);
-      while (queue.length) {
-        const current = queue.shift();
-        const [r, c] = current.split(",").map(Number);
-        const neighbors = [
-          [r - 1, c],
-          [r + 1, c],
-          [r, c - 1],
-          [r, c + 1]
-        ];
-        for (const [nr, nc] of neighbors) {
-          const nk = key(nr, nc);
-          if (cells.has(nk) && !visited.has(nk)) {
-            visited.add(nk);
-            queue.push(nk);
-          }
-        }
-      }
-      if (visited.size !== occupied.length) {
-        throw new Error("Korsordet är inte sammanhängande. Någon del ligger utanför de andra.");
-      }
-      return true;
-    }
-    function normalizeInput(str) {
-      return String(str || "")
-        .trim()
-        .toUpperCase()
-        .replace(/Å/g, "A")
-        .replace(/Ä/g, "A")
-        .replace(/Ö/g, "O");
-    }
-    function buildGrid() {
-      WORDS.forEach(addWordToMap);
-      verifyConnected();
-      const numberMap = markStartsAndNumbers();
-      gridEl.style.gridTemplateColumns = `repeat(${COLS}, 38px)`;
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const k = key(r, c);
-          const cell = document.createElement("div");
-          if (!cells.has(k)) {
-            cell.className = "cell block";
-            gridEl.appendChild(cell);
-            continue;
-          }
-          cell.className = "cell";
-          cell.dataset.row = r;
-          cell.dataset.col = c;
-          cell.dataset.answer = cells.get(k).letter;
-          if (numberMap.has(k)) {
-            const num = document.createElement("div");
-            num.className = "number";
-            num.textContent = numberMap.get(k);
-            cell.appendChild(num);
-          }
-          const input = document.createElement("input");
-          input.maxLength = 1;
-          input.autocomplete = "off";
-          input.spellcheck = false;
-          input.setAttribute("aria-label", `Ruta ${r + 1}, ${c + 1}`);
-          input.addEventListener("input", (e) => {
-            e.target.value = normalizeInput(e.target.value).slice(0, 1);
-            cell.classList.remove("correct", "wrong");
-            moveToNextCell(r, c);
-          });
-          input.addEventListener("keydown", (e) => {
-            if (e.key === "Backspace" && !e.target.value) {
-              moveToPreviousCell(r, c);
-            }
-          });
-          cell.appendChild(input);
-          gridEl.appendChild(cell);
-        }
-      }
-      renderClues();
-    }
-    function getCell(r, c) {
-      return gridEl.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
-    }
-    function moveToNextCell(r, c) {
-      for (let nc = c + 1; nc < COLS; nc++) {
-        const next = getCell(r, nc);
-        if (next) {
-          const input = next.querySelector("input");
-          if (input) {
-            input.focus();
-            return;
-          }
-        }
-      }
-      for (let nr = r + 1; nr < ROWS; nr++) {
-        for (let nc = 0; nc < COLS; nc++) {
-          const next = getCell(nr, nc);
-          if (next) {
-            const input = next.querySelector("input");
-            if (input) {
-              input.focus();
-              return;
-            }
-          }
-        }
-      }
-    }
-    function moveToPreviousCell(r, c) {
-      for (let nc = c - 1; nc >= 0; nc--) {
-        const prev = getCell(r, nc);
-        if (prev) {
-          const input = prev.querySelector("input");
-          if (input) {
-            input.focus();
-            return;
-          }
-        }
-      }
-      for (let nr = r - 1; nr >= 0; nr--) {
-        for (let nc = COLS - 1; nc >= 0; nc--) {
-          const prev = getCell(nr, nc);
-          if (prev) {
-            const input = prev.querySelector("input");
-            if (input) {
-              input.focus();
-              return;
-            }
-          }
-        }
-      }
-    }
-    function renderClues() {
-      const across = WORDS.filter(w => w.dir === "across").sort((a, b) => a.number - b.number);
-      const down = WORDS.filter(w => w.dir === "down").sort((a, b) => a.number - b.number);
-      acrossCluesEl.innerHTML = across
-        .map(w => `<li value="${w.number}"><strong>${w.number}.</strong> ${w.clue}</li>`)
-        .join("");
-      downCluesEl.innerHTML = down
-        .map(w => `<li value="${w.number}"><strong>${w.number}.</strong> ${w.clue}</li>`)
-        .join("");
-    }
-    function checkAnswers() {
-      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
-      let allCorrect = true;
-      let filledCount = 0;
-      activeCells.forEach(cell => {
-        const input = cell.querySelector("input");
-        const guess = normalizeInput(input.value);
-        const answer = normalizeInput(cell.dataset.answer);
-        cell.classList.remove("correct", "wrong");
-        if (guess) filledCount++;
-        if (!guess) {
-          allCorrect = false;
+  }
+}
+
+function init(){
+  buildWords();
+  buildGrid(gridEl, {withInputs:true, fillSolution:false, idPrefix:'cell'});
+  buildGrid(gridSolEl, {withInputs:false, fillSolution:true, idPrefix:'sol'});
+
+  document.getElementById('clearBtn').addEventListener('click', clearAll);
+  document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
+  document.getElementById('facitBtn').addEventListener('click', toggleFacit);
+
+  document.getElementById('facitBtn').textContent = 'Facit';
+
+  for (let r=0; r<DATA.rows; r++){
+    for (let c=0; c<DATA.cols; c++){
+      if (isEditable(r,c)){
+        const i = getInput(r,c);
+        if (i) {
+          i.focus();
           return;
         }
-        if (guess === answer) {
-          cell.classList.add("correct");
-        } else {
-          cell.classList.add("wrong");
-          allCorrect = false;
-        }
-      });
-      if (filledCount === 0) {
-        statusTextEl.textContent = "Du har inte fyllt i något ännu.";
-        statusTextEl.className = "status-text bad";
-      } else if (allCorrect) {
-        statusTextEl.textContent = "Snyggt! Alla ord är rätt.";
-        statusTextEl.className = "status-text good";
-      } else {
-        statusTextEl.textContent = "Något är fel eller saknas. Fortsätt prova!";
-        statusTextEl.className = "status-text bad";
       }
     }
-    function revealAnswers() {
-      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
-      activeCells.forEach(cell => {
-        const input = cell.querySelector("input");
-        input.value = cell.dataset.answer;
-        cell.classList.remove("wrong");
-        cell.classList.add("correct");
-      });
-      statusTextEl.textContent = "Facit visas nu.";
-      statusTextEl.className = "status-text good";
-    }
-    function resetGrid() {
-      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
-      activeCells.forEach(cell => {
-        const input = cell.querySelector("input");
-        input.value = "";
-        cell.classList.remove("correct", "wrong");
-      });
-      statusTextEl.textContent = "";
-      statusTextEl.className = "status-text";
-      const firstInput = gridEl.querySelector(".cell:not(.block) input");
-      if (firstInput) firstInput.focus();
-    }
-    document.getElementById("checkBtn").addEventListener("click", checkAnswers);
-    document.getElementById("revealBtn").addEventListener("click", revealAnswers);
-    document.getElementById("resetBtn").addEventListener("click", resetGrid);
-    buildGrid();
-  </script>
+  }
+}
+
+init();
+
+window.addEventListener('load', () => {
+  const b = document.getElementById('facitBtn');
+  if (b) b.textContent = 'Facit';
+});
+</script>
 </body>
 </html>
