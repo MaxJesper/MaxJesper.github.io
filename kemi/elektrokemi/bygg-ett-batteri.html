@@ -28,6 +28,8 @@
       --bridge-dark:#8f98a3;
       --minus:#1f5fa8;
       --plus:#c03a2b;
+      --lamp-ray:#f7b500;
+      --lamp-ray-soft:#ffd84d;
     }
 
     *{ box-sizing:border-box; }
@@ -42,14 +44,14 @@
     }
 
     main{
-      max-width:1200px;
+      max-width:1400px;
       margin:0 auto;
-      padding:0 1rem 2rem;
+      padding:0 1rem 1.5rem;
     }
 
     .page-title{
-      margin: 0 0 1rem;
-      padding-top: 0.8rem;
+      margin:0 0 0.8rem;
+      padding-top:0.7rem;
     }
 
     .page-title h1{
@@ -59,24 +61,29 @@
     }
 
     .page-title p{
-      margin:0.25rem 0 0;
+      margin:0.2rem 0 0;
       color:var(--muted);
       font-weight:600;
     }
 
-    .intro-card,
-    .info-card,
-    .game-card,
-    .question-card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      box-shadow:0 10px 26px rgba(30,60,90,0.06);
+    .top-row{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:1rem;
+      align-items:start;
+      margin-bottom:0.8rem;
     }
 
-    .intro-card{
-      padding:1rem 1.1rem;
-      margin-bottom:1rem;
+    .intro-inline{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:0 10px 26px rgba(30,60,90,0.06);
+      padding:0.8rem 1rem;
+      line-height:1.45;
+      min-height:48px;
+      display:flex;
+      align-items:center;
     }
 
     .layout{
@@ -84,6 +91,14 @@
       grid-template-columns:320px minmax(0,1fr);
       gap:1rem;
       align-items:start;
+    }
+
+    .info-card,
+    .game-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:0 10px 26px rgba(30,60,90,0.06);
     }
 
     .info-card{
@@ -166,11 +181,11 @@
     }
 
     .task-header{
-      margin-bottom: 0.9rem;
-      padding: 0.9rem 1rem;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, #fbfdff, #f3f8fd);
+      margin-bottom:0.9rem;
+      padding:0.9rem 1rem;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, #fbfdff, #f3f8fd);
     }
 
     .task-header-top{
@@ -226,10 +241,17 @@
       background:linear-gradient(180deg, #ffffff, #f7fbff);
     }
 
+    .board-layout{
+      display:grid;
+      grid-template-columns:minmax(680px, 1fr) 340px;
+      gap:1rem;
+      align-items:start;
+    }
+
     .diagram-wrap{
       border:1px solid var(--border);
       border-radius:16px;
-      padding:1rem;
+      padding:0.9rem;
       background:#fafcff;
       overflow-x:auto;
     }
@@ -237,8 +259,126 @@
     .diagram{
       position:relative;
       width:860px;
-      height:560px;
+      height:555px;
       margin:0 auto;
+    }
+
+    .side-panel{
+      display:grid;
+      gap:1rem;
+    }
+
+    .parts-panel,
+    .question-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:1rem;
+    }
+
+    .parts-panel h3,
+    .question-card h3{
+      margin:0 0 0.7rem;
+      font-size:1.05rem;
+    }
+
+    .parts-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:0.7rem;
+    }
+
+    .part{
+      min-height:74px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+      padding:0.75rem 0.7rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:700;
+      cursor:pointer;
+      user-select:none;
+      transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .part:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 18px rgba(0,0,0,0.07);
+      border-color:#b8cbe0;
+    }
+
+    .part.selected{
+      outline:3px solid rgba(31,95,168,0.18);
+      border-color:var(--accent);
+      background:#f4f8fd;
+    }
+
+    .part.disabled{
+      opacity:0.45;
+      cursor:default;
+      transform:none;
+      box-shadow:none;
+    }
+
+    .question-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .answer-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:0.7rem;
+      margin-top:0.8rem;
+    }
+
+    .answer-btn{
+      border:1px solid #c8d5e3;
+      background:#fff;
+      border-radius:12px;
+      padding:0.75rem 0.95rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .answer-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 5px 14px rgba(0,0,0,0.06);
+      border-color:#9eb7d0;
+    }
+
+    .feedback{
+      margin-top:1rem;
+      border-radius:14px;
+      padding:0.9rem 1rem;
+      font-weight:700;
+      line-height:1.4;
+      display:none;
+    }
+
+    .feedback.show{ display:block; }
+
+    .feedback.good{
+      background:#eefaf1;
+      border:1px solid #bfe0c7;
+      color:var(--good);
+    }
+
+    .feedback.bad{
+      background:#fff4f4;
+      border:1px solid #e6bcbc;
+      color:var(--bad);
+    }
+
+    .mini-explain{
+      margin-top:0.55rem;
+      font-weight:500;
+      color:#334155;
     }
 
     .pole-chip{
@@ -304,31 +444,19 @@
       transition:opacity 0.2s ease;
       border-top:2px solid rgba(255,255,255,0.7);
       z-index:2;
+      color:#243342;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:0 1rem;
+      font-size:1.05rem;
     }
 
     .solution.active{ opacity:1; }
     .solution.left{ background:#ececec; }
     .solution.right{ background:#7fd0ef; }
-
-    .solution-label{
-      position:absolute;
-      left:50%;
-      bottom:46px;
-      transform:translateX(-50%);
-      min-width:100px;
-      text-align:center;
-      font-size:0.95rem;
-      color:#333;
-      background:rgba(255,255,255,0.9);
-      padding:0.12rem 0.4rem;
-      border-radius:6px;
-      z-index:4;
-      display:none;
-    }
-
-    .solution-label.show{
-      display:block;
-    }
 
     .electrode-slot{
       position:absolute;
@@ -366,7 +494,7 @@
       align-items:flex-start;
       justify-content:center;
       padding-top:0.55rem;
-      font-size:1.25rem;
+      font-size:1.35rem;
       font-weight:900;
       position:relative;
       color:#2b2b2b;
@@ -404,13 +532,13 @@
     .metal-label{
       position:absolute;
       left:50%;
-      top:76px;
+      top:70px;
       transform:translateX(-50%);
       min-width:72px;
       text-align:center;
-      font-size:0.95rem;
+      font-size:1rem;
       color:#333;
-      background:rgba(255,255,255,0.9);
+      background:rgba(255,255,255,0.92);
       padding:0.12rem 0.35rem;
       border-radius:6px;
       z-index:6;
@@ -421,7 +549,7 @@
       display:block;
     }
 
-    /* Yttre krets: sammanhängande elektrod -> upp -> lampa -> ner -> elektrod */
+    /* Sluten yttre krets */
     .wire-left-up,
     .wire-right-up,
     .wire-top-left,
@@ -445,14 +573,14 @@
       left:179px;
       top:104px;
       width:5px;
-      height:86px;
+      height:128px;
     }
 
     .wire-right-up{
       left:679px;
       top:104px;
       width:5px;
-      height:86px;
+      height:128px;
     }
 
     .wire-top-left{
@@ -487,7 +615,7 @@
       text-align:center;
       padding:0.4rem;
       transition:transform 0.15s ease, background 0.15s ease;
-      z-index:6;
+      z-index:7;
     }
 
     .lamp-zone:hover{ transform:translateY(-1px); }
@@ -515,6 +643,52 @@
     .lamp-zone.active .lamp-placeholder{ display:none; }
     .lamp-zone.active .lamp-icon{ display:flex; }
 
+    .lamp-rays{
+      position:absolute;
+      inset:-22px;
+      display:none;
+      pointer-events:none;
+    }
+
+    .lamp-zone.active .lamp-rays{
+      display:block;
+    }
+
+    .ray{
+      position:absolute;
+      width:4px;
+      height:18px;
+      border-radius:999px;
+      background:linear-gradient(180deg, var(--lamp-ray), var(--lamp-ray-soft));
+      left:50%;
+      top:50%;
+      transform-origin:center -12px;
+      opacity:0;
+    }
+
+    .lamp-zone.on-dim .ray{
+      opacity:0.45;
+    }
+
+    .lamp-zone.on-medium .ray{
+      opacity:0.8;
+      box-shadow:0 0 8px rgba(255, 216, 77, 0.7);
+    }
+
+    .lamp-zone.on-strong .ray{
+      opacity:1;
+      box-shadow:0 0 12px rgba(255, 181, 0, 0.95), 0 0 18px rgba(255, 216, 77, 0.8);
+    }
+
+    .ray.r1{ transform:translate(-50%, -50%) rotate(0deg); }
+    .ray.r2{ transform:translate(-50%, -50%) rotate(45deg); }
+    .ray.r3{ transform:translate(-50%, -50%) rotate(90deg); }
+    .ray.r4{ transform:translate(-50%, -50%) rotate(135deg); }
+    .ray.r5{ transform:translate(-50%, -50%) rotate(180deg); }
+    .ray.r6{ transform:translate(-50%, -50%) rotate(225deg); }
+    .ray.r7{ transform:translate(-50%, -50%) rotate(270deg); }
+    .ray.r8{ transform:translate(-50%, -50%) rotate(315deg); }
+
     .lamp-zone.on-dim .lamp-icon{
       filter:none;
       opacity:0.95;
@@ -535,7 +709,7 @@
 
     .lamp-rating{
       position:absolute;
-      top:86px;
+      top:206px;
       left:50%;
       transform:translateX(-50%);
       font-size:0.8rem;
@@ -545,18 +719,20 @@
       padding:0.15rem 0.45rem;
       display:none;
       white-space:nowrap;
+      z-index:8;
     }
 
-    .lamp-zone.active .lamp-rating{
+    .lamp-zone.active + .lamp-rating,
+    .lamp-rating.show{
       display:block;
     }
 
-    /* Saltbro som faktiskt går ner i vätskan */
+    /* Bredare saltbro */
     .bridge-click{
       position:absolute;
-      left:275px;
+      left:255px;
       top:118px;
-      width:310px;
+      width:350px;
       height:255px;
       cursor:pointer;
       border:2px dashed #b9c5d2;
@@ -615,21 +791,21 @@
     }
 
     .bridge-top{
-      left:66px;
+      left:86px;
       top:34px;
       width:178px;
       height:24px;
     }
 
     .bridge-left{
-      left:66px;
+      left:36px;
       top:34px;
       width:24px;
       height:196px;
     }
 
     .bridge-right{
-      right:66px;
+      right:36px;
       top:34px;
       width:24px;
       height:196px;
@@ -645,142 +821,34 @@
     }
 
     .bridge-inner-top{
-      left:76px;
+      left:96px;
       top:39px;
       width:158px;
       height:9px;
     }
 
     .bridge-inner-left{
-      left:71px;
+      left:41px;
       top:44px;
       width:8px;
       height:178px;
     }
 
     .bridge-inner-right{
-      right:71px;
+      right:41px;
       top:44px;
       width:8px;
       height:178px;
     }
 
-    .parts-panel{
-      margin-top:1rem;
-      border-top:1px solid var(--border);
-      padding-top:1rem;
-    }
+    @media (max-width:1200px){
+      .board-layout{
+        grid-template-columns:1fr;
+      }
 
-    .parts-panel h3{
-      margin:0 0 0.75rem;
-      font-size:1.05rem;
-    }
-
-    .parts-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
-      gap:0.7rem;
-    }
-
-    .part{
-      min-height:74px;
-      border:1px solid var(--border);
-      border-radius:14px;
-      background:#fff;
-      padding:0.75rem 0.7rem;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      font-weight:700;
-      cursor:pointer;
-      user-select:none;
-      transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-
-    .part:hover{
-      transform:translateY(-2px);
-      box-shadow:0 8px 18px rgba(0,0,0,0.07);
-      border-color:#b8cbe0;
-    }
-
-    .part.selected{
-      outline:3px solid rgba(31,95,168,0.18);
-      border-color:var(--accent);
-      background:#f4f8fd;
-    }
-
-    .part.disabled{
-      opacity:0.45;
-      cursor:default;
-      transform:none;
-      box-shadow:none;
-    }
-
-    .question-card{
-      margin-top:1rem;
-      padding:1rem;
-    }
-
-    .question-card h3{
-      margin:0 0 0.35rem;
-    }
-
-    .question-card p{
-      margin:0;
-      color:var(--muted);
-    }
-
-    .answer-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:0.7rem;
-      margin-top:0.8rem;
-    }
-
-    .answer-btn{
-      border:1px solid #c8d5e3;
-      background:#fff;
-      border-radius:12px;
-      padding:0.75rem 0.95rem;
-      font-weight:700;
-      cursor:pointer;
-      transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-
-    .answer-btn:hover{
-      transform:translateY(-1px);
-      box-shadow:0 5px 14px rgba(0,0,0,0.06);
-      border-color:#9eb7d0;
-    }
-
-    .feedback{
-      margin-top:1rem;
-      border-radius:14px;
-      padding:0.9rem 1rem;
-      font-weight:700;
-      line-height:1.4;
-      display:none;
-    }
-
-    .feedback.show{ display:block; }
-
-    .feedback.good{
-      background:#eefaf1;
-      border:1px solid #bfe0c7;
-      color:var(--good);
-    }
-
-    .feedback.bad{
-      background:#fff4f4;
-      border:1px solid #e6bcbc;
-      color:var(--bad);
-    }
-
-    .mini-explain{
-      margin-top:0.55rem;
-      font-weight:500;
-      color:#334155;
+      .parts-grid{
+        grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+      }
     }
 
     @media (max-width:960px){
@@ -790,6 +858,10 @@
 
       .info-card{
         position:static;
+      }
+
+      .top-row{
+        grid-template-columns:1fr;
       }
 
       .page-title h1{
@@ -808,20 +880,22 @@
       <p>Elektrokemi</p>
     </section>
 
-    <p><a href="./larande-spel.html" class="subject-btn">← Tillbaka</a></p>
+    <div class="top-row">
+      <p style="margin:0;">
+        <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+      </p>
 
-    <section class="intro-card">
-      <p>
+      <div class="intro-inline">
         Bygg först kända galvaniska element, gå sedan vidare till mer verklighetsnära batterier
         och därefter enkla experimentbatterier. Välj rätt delar, koppla hela kretsen och svara sedan på frågan.
-      </p>
-    </section>
+      </div>
+    </div>
 
     <section class="layout">
       <aside class="info-card">
         <h2>Så spelar du</h2>
         <p>
-          Klicka först på en del längst ner och klicka sedan på rätt plats i figuren.
+          Klicka först på en del och klicka sedan på rätt plats i figuren.
           När batteriet är färdigbyggt svarar du på frågan och kontrollerar resultatet.
         </p>
 
@@ -861,69 +935,82 @@
         </div>
 
         <div class="battery-board">
-          <div class="diagram-wrap">
-            <div class="diagram">
-              <div class="pole-chip left">− pol</div>
-              <div class="pole-chip right">+ pol</div>
+          <div class="board-layout">
+            <div class="diagram-wrap">
+              <div class="diagram">
+                <div class="pole-chip left">− pol</div>
+                <div class="pole-chip right">+ pol</div>
 
-              <div class="wire-left-up" id="wireLeftUp"></div>
-              <div class="wire-top-left" id="wireTopLeft"></div>
-              <div class="wire-top-right" id="wireTopRight"></div>
-              <div class="wire-right-up" id="wireRightUp"></div>
+                <div class="wire-left-up" id="wireLeftUp"></div>
+                <div class="wire-top-left" id="wireTopLeft"></div>
+                <div class="wire-top-right" id="wireTopRight"></div>
+                <div class="wire-right-up" id="wireRightUp"></div>
 
-              <div class="lamp-zone" id="lampZone">
-                <span class="lamp-placeholder">Klicka här för vald lampa</span>
-                <span class="lamp-icon">💡</span>
+                <div class="lamp-zone" id="lampZone">
+                  <span class="lamp-placeholder">Klicka här för vald lampa</span>
+                  <span class="lamp-icon">💡</span>
+                  <div class="lamp-rays">
+                    <span class="ray r1"></span>
+                    <span class="ray r2"></span>
+                    <span class="ray r3"></span>
+                    <span class="ray r4"></span>
+                    <span class="ray r5"></span>
+                    <span class="ray r6"></span>
+                    <span class="ray r7"></span>
+                    <span class="ray r8"></span>
+                  </div>
+                </div>
+
                 <span class="lamp-rating" id="lampRatingText">–</span>
-              </div>
 
-              <div class="bridge-click" id="bridgeZone">
-                <span class="bridge-placeholder">Klicka här för saltbro</span>
-                <div class="saltbridge">
-                  <div class="bridge-label">Saltbro</div>
-                  <div class="bridge-top"></div>
-                  <div class="bridge-left"></div>
-                  <div class="bridge-right"></div>
-                  <div class="bridge-inner-top"></div>
-                  <div class="bridge-inner-left"></div>
-                  <div class="bridge-inner-right"></div>
+                <div class="bridge-click" id="bridgeZone">
+                  <span class="bridge-placeholder">Klicka här för saltbro</span>
+                  <div class="saltbridge">
+                    <div class="bridge-label">Saltbro</div>
+                    <div class="bridge-top"></div>
+                    <div class="bridge-left"></div>
+                    <div class="bridge-right"></div>
+                    <div class="bridge-inner-top"></div>
+                    <div class="bridge-inner-left"></div>
+                    <div class="bridge-inner-right"></div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="cell left" id="leftCell">
-                <div class="beaker"></div>
-                <div class="solution left" id="leftSolution"></div>
-                <div class="solution-label" id="leftSolutionLabel"></div>
-                <div class="metal-label" id="leftMetalLabel"></div>
-                <div class="electrode-slot" id="leftMetalSlot">
-                  <div class="slot-placeholder">Klicka här för metall</div>
+                <div class="cell left" id="leftCell">
+                  <div class="beaker"></div>
+                  <div class="solution left" id="leftSolution"></div>
+                  <div class="metal-label" id="leftMetalLabel"></div>
+                  <div class="electrode-slot" id="leftMetalSlot">
+                    <div class="slot-placeholder">Klicka här för metall</div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="cell right" id="rightCell">
-                <div class="beaker"></div>
-                <div class="solution right" id="rightSolution"></div>
-                <div class="solution-label" id="rightSolutionLabel"></div>
-                <div class="metal-label" id="rightMetalLabel"></div>
-                <div class="electrode-slot" id="rightMetalSlot">
-                  <div class="slot-placeholder">Klicka här för metall</div>
+                <div class="cell right" id="rightCell">
+                  <div class="beaker"></div>
+                  <div class="solution right" id="rightSolution"></div>
+                  <div class="metal-label" id="rightMetalLabel"></div>
+                  <div class="electrode-slot" id="rightMetalSlot">
+                    <div class="slot-placeholder">Klicka här för metall</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="parts-panel">
-            <h3>Delar att använda</h3>
-            <div class="parts-grid" id="partsGrid"></div>
+            <div class="side-panel">
+              <div class="parts-panel">
+                <h3>Delar att använda</h3>
+                <div class="parts-grid" id="partsGrid"></div>
+              </div>
+
+              <section class="question-card">
+                <h3>Fråga</h3>
+                <p id="questionText">Bygg klart batteriet först, och svara sedan på frågan.</p>
+                <div class="answer-row" id="answerRow"></div>
+                <div class="feedback" id="feedbackBox"></div>
+              </section>
+            </div>
           </div>
         </div>
-
-        <section class="question-card">
-          <h3>Fråga</h3>
-          <p id="questionText">Bygg klart batteriet först, och svara sedan på frågan.</p>
-          <div class="answer-row" id="answerRow"></div>
-          <div class="feedback" id="feedbackBox"></div>
-        </section>
       </section>
     </section>
   </main>
@@ -1084,8 +1171,6 @@
     const rightSolution = document.getElementById("rightSolution");
     const leftMetalLabel = document.getElementById("leftMetalLabel");
     const rightMetalLabel = document.getElementById("rightMetalLabel");
-    const leftSolutionLabel = document.getElementById("leftSolutionLabel");
-    const rightSolutionLabel = document.getElementById("rightSolutionLabel");
     const bridgeZone = document.getElementById("bridgeZone");
     const lampZone = document.getElementById("lampZone");
     const lampRatingText = document.getElementById("lampRatingText");
@@ -1211,21 +1296,19 @@
 
       leftSolution.classList.remove("active");
       rightSolution.classList.remove("active");
+      leftSolution.textContent = "";
+      rightSolution.textContent = "";
 
       leftMetalLabel.classList.remove("show");
       rightMetalLabel.classList.remove("show");
-      leftSolutionLabel.classList.remove("show");
-      rightSolutionLabel.classList.remove("show");
-
       leftMetalLabel.textContent = "";
       rightMetalLabel.textContent = "";
-      leftSolutionLabel.textContent = "";
-      rightSolutionLabel.textContent = "";
 
       bridgeZone.classList.remove("active");
 
       lampZone.className = "lamp-zone";
       lampRatingText.textContent = "–";
+      lampRatingText.classList.remove("show");
 
       wireLeftUp.classList.remove("active");
       wireTopLeft.classList.remove("active");
@@ -1301,11 +1384,8 @@
       markPartUsed(selectedPart, true);
 
       const solutionEl = side === "leftSolution" ? leftSolution : rightSolution;
-      const labelEl = side === "leftSolution" ? leftSolutionLabel : rightSolutionLabel;
-
       solutionEl.classList.add("active");
-      labelEl.textContent = solutionInfo[selectedPart].label;
-      labelEl.classList.add("show");
+      solutionEl.textContent = solutionInfo[selectedPart].label;
 
       setSelectedPart(null);
     }
@@ -1330,6 +1410,7 @@
       markPartUsed(selectedPart, true);
       lampZone.className = "lamp-zone active";
       lampRatingText.textContent = lampInfo[selectedPart].label;
+      lampRatingText.classList.add("show");
 
       wireLeftUp.classList.add("active");
       wireTopLeft.classList.add("active");
