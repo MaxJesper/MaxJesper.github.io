@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korsord – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    .page-wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .crossword-intro{
+      margin-bottom: 1rem;
+    }
+
+    .crossword-actions{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1rem 0 1.25rem 0;
+    }
+
+    .crossword-btn{
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .crossword-btn.secondary{
+      background: #fff;
+      color: #111;
+    }
+
+    .crossword-layout{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 1000px){
+      .crossword-layout{
+        grid-template-columns: minmax(320px, 520px) 1fr;
+        align-items: start;
+      }
+    }
+
+    .crossword-board-wrap{
+      background: #fff;
+      border: 1px solid #d8e0ea;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      overflow-x: auto;
+    }
+
+    .crossword-grid{
+      display: grid;
+      gap: 2px;
+      background: #cfd8e3;
+      width: max-content;
+      padding: 2px;
+      border-radius: 10px;
+    }
+
+    .cell{
+      position: relative;
+      width: 38px;
+      height: 38px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+
+    .cell.block{
+      background: #2f3b4a;
+    }
+
+    .cell input{
+      width: 100%;
+      height: 100%;
+      border: none;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      outline: none;
+      background: #fff;
+      color: #111;
+      box-sizing: border-box;
+    }
+
+    .cell input:focus{
+      background: #fff7d6;
+      box-shadow: inset 0 0 0 2px #d97706;
+    }
+
+    .cell.correct input{
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .cell.wrong input{
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .cell .number{
+      position: absolute;
+      top: 1px;
+      left: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #555;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .clues-wrap{
+      background: #fff;
+      border: 1px solid #d8e0ea;
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .clues-wrap h2{
+      margin-top: 0;
+      margin-bottom: 0.8rem;
+      font-size: 1.2rem;
+    }
+
+    .clue-columns{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px){
+      .clue-columns{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .clue-group h3{
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .clue-group ol{
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .clue-group li{
+      margin-bottom: 0.55rem;
+      line-height: 1.35;
+    }
+
+    .status-text{
+      margin-top: 0.8rem;
+      font-weight: 700;
+      min-height: 1.5rem;
+    }
+
+    .status-text.good{
+      color: #166534;
+    }
+
+    .status-text.bad{
+      color: #991b1b;
+    }
+
+    .legend{
+      margin-top: 1rem;
+      font-size: 14px;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Korsord</h1>
+    <p>Elektrokemi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="page-wrap">
+    <p>
+      <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+    </p>
+
+    <section class="crossword-intro">
+      <p>
+        Träna viktiga ord inom elektrokemi. Skriv med stora eller små bokstäver – programmet rättar ändå.
+      </p>
+    </section>
+
+    <div class="crossword-actions">
+      <button class="crossword-btn" type="button" id="checkBtn">Rätta</button>
+      <button class="crossword-btn secondary" type="button" id="revealBtn">Visa facit</button>
+      <button class="crossword-btn secondary" type="button" id="resetBtn">Börja om</button>
+    </div>
+
+    <section class="crossword-layout">
+      <div class="crossword-board-wrap">
+        <div id="crosswordGrid" class="crossword-grid" aria-label="Korsord"></div>
+        <div id="statusText" class="status-text" aria-live="polite"></div>
+        <div class="legend">
+          Tips: Klicka i en ruta och skriv bokstaven. Alla ord i detta korsord är hopkopplade.
+        </div>
+      </div>
+
+      <aside class="clues-wrap">
+        <h2>Ledtrådar</h2>
+        <div class="clue-columns">
+          <section class="clue-group">
+            <h3>Vågrätt</h3>
+            <ol id="acrossClues"></ol>
+          </section>
+          <section class="clue-group">
+            <h3>Lodrätt</h3>
+            <ol id="downClues"></ol>
+          </section>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+
+  <script>
+    const WORDS = [
+      {
+        answer: "ELEKTROKEMI",
+        clue: "Läran om kemiska reaktioner där elektroner flyttas.",
+        row: 7,
+        col: 2,
+        dir: "across"
+      },
+      {
+        answer: "KATOD",
+        clue: "Den elektrod där reduktion sker.",
+        row: 5,
+        col: 6,
+        dir: "down"
+      },
+      {
+        answer: "ANOD",
+        clue: "Den elektrod där oxidation sker.",
+        row: 5,
+        col: 8,
+        dir: "down"
+      },
+      {
+        answer: "BATTERI",
+        clue: "Består av ett eller flera galvaniska element.",
+        row: 3,
+        col: 10,
+        dir: "down"
+      },
+      {
+        answer: "JONER",
+        clue: "Laddade partiklar i en elektrolyt.",
+        row: 3,
+        col: 7,
+        dir: "down"
+      },
+      {
+        answer: "REDOX",
+        clue: "Typ av reaktion där oxidation och reduktion hör ihop.",
+        row: 6,
+        col: 4,
+        dir: "down"
+      },
+      {
+        answer: "KORROSION",
+        clue: "När metaller angrips och återgår mot jonform.",
+        row: 1,
+        col: 12,
+        dir: "down"
+      },
+      {
+        answer: "ELEKTROLYS",
+        clue: "När elektrisk energi driver en kemisk reaktion.",
+        row: 7,
+        col: 2,
+        dir: "down"
+      },
+      {
+        answer: "PLUSPOL",
+        clue: "I ett galvaniskt element är detta den pol som tar emot elektroner.",
+        row: 6,
+        col: 3,
+        dir: "down"
+      },
+      {
+        answer: "MINUSPOL",
+        clue: "I ett galvaniskt element lämnar elektroner denna pol.",
+        row: 7,
+        col: 11,
+        dir: "down"
+      }
+    ];
+
+    const ROWS = 17;
+    const COLS = 15;
+
+    const gridEl = document.getElementById("crosswordGrid");
+    const acrossCluesEl = document.getElementById("acrossClues");
+    const downCluesEl = document.getElementById("downClues");
+    const statusTextEl = document.getElementById("statusText");
+
+    const cells = new Map(); // key => { letter, starts[] }
+
+    function key(r, c) {
+      return `${r},${c}`;
+    }
+
+    function addWordToMap(word) {
+      for (let i = 0; i < word.answer.length; i++) {
+        const r = word.row + (word.dir === "down" ? i : 0);
+        const c = word.col + (word.dir === "across" ? i : 0);
+
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) {
+          throw new Error(`Ordet ${word.answer} går utanför rutnätet.`);
+        }
+
+        const k = key(r, c);
+        const existing = cells.get(k);
+
+        if (existing) {
+          if (existing.letter !== word.answer[i]) {
+            throw new Error(`Bokstavskrock i ${r},${c} mellan ${existing.letter} och ${word.answer[i]}.`);
+          }
+        } else {
+          cells.set(k, { letter: word.answer[i], starts: [] });
+        }
+      }
+    }
+
+    function markStartsAndNumbers() {
+      let number = 1;
+      const numberMap = new Map();
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const k = key(r, c);
+          if (!cells.has(k)) continue;
+
+          const startsAcross = WORDS.find(w => w.row === r && w.col === c && w.dir === "across");
+          const startsDown = WORDS.find(w => w.row === r && w.col === c && w.dir === "down");
+
+          if (startsAcross || startsDown) {
+            numberMap.set(k, number);
+
+            if (startsAcross) startsAcross.number = number;
+            if (startsDown) startsDown.number = number;
+
+            number++;
+          }
+        }
+      }
+
+      return numberMap;
+    }
+
+    function verifyConnected() {
+      const occupied = [...cells.keys()];
+      if (occupied.length === 0) return true;
+
+      const visited = new Set();
+      const queue = [occupied[0]];
+      visited.add(occupied[0]);
+
+      while (queue.length) {
+        const current = queue.shift();
+        const [r, c] = current.split(",").map(Number);
+        const neighbors = [
+          [r - 1, c],
+          [r + 1, c],
+          [r, c - 1],
+          [r, c + 1]
+        ];
+
+        for (const [nr, nc] of neighbors) {
+          const nk = key(nr, nc);
+          if (cells.has(nk) && !visited.has(nk)) {
+            visited.add(nk);
+            queue.push(nk);
+          }
+        }
+      }
+
+      if (visited.size !== occupied.length) {
+        throw new Error("Korsordet är inte sammanhängande. Någon del ligger utanför de andra.");
+      }
+
+      return true;
+    }
+
+    function normalizeInput(str) {
+      return String(str || "")
+        .trim()
+        .toUpperCase()
+        .replace(/Å/g, "A")
+        .replace(/Ä/g, "A")
+        .replace(/Ö/g, "O");
+    }
+
+    function buildGrid() {
+      WORDS.forEach(addWordToMap);
+      verifyConnected();
+      const numberMap = markStartsAndNumbers();
+
+      gridEl.style.gridTemplateColumns = `repeat(${COLS}, 38px)`;
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const k = key(r, c);
+          const cell = document.createElement("div");
+
+          if (!cells.has(k)) {
+            cell.className = "cell block";
+            gridEl.appendChild(cell);
+            continue;
+          }
+
+          cell.className = "cell";
+          cell.dataset.row = r;
+          cell.dataset.col = c;
+          cell.dataset.answer = cells.get(k).letter;
+
+          if (numberMap.has(k)) {
+            const num = document.createElement("div");
+            num.className = "number";
+            num.textContent = numberMap.get(k);
+            cell.appendChild(num);
+          }
+
+          const input = document.createElement("input");
+          input.maxLength = 1;
+          input.autocomplete = "off";
+          input.spellcheck = false;
+          input.setAttribute("aria-label", `Ruta ${r + 1}, ${c + 1}`);
+          input.addEventListener("input", (e) => {
+            e.target.value = normalizeInput(e.target.value).slice(0, 1);
+            cell.classList.remove("correct", "wrong");
+            moveToNextCell(r, c);
+          });
+
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !e.target.value) {
+              moveToPreviousCell(r, c);
+            }
+          });
+
+          cell.appendChild(input);
+          gridEl.appendChild(cell);
+        }
+      }
+
+      renderClues();
+    }
+
+    function getCell(r, c) {
+      return gridEl.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+    }
+
+    function moveToNextCell(r, c) {
+      for (let nc = c + 1; nc < COLS; nc++) {
+        const next = getCell(r, nc);
+        if (next) {
+          const input = next.querySelector("input");
+          if (input) {
+            input.focus();
+            return;
+          }
+        }
+      }
+
+      for (let nr = r + 1; nr < ROWS; nr++) {
+        for (let nc = 0; nc < COLS; nc++) {
+          const next = getCell(nr, nc);
+          if (next) {
+            const input = next.querySelector("input");
+            if (input) {
+              input.focus();
+              return;
+            }
+          }
+        }
+      }
+    }
+
+    function moveToPreviousCell(r, c) {
+      for (let nc = c - 1; nc >= 0; nc--) {
+        const prev = getCell(r, nc);
+        if (prev) {
+          const input = prev.querySelector("input");
+          if (input) {
+            input.focus();
+            return;
+          }
+        }
+      }
+
+      for (let nr = r - 1; nr >= 0; nr--) {
+        for (let nc = COLS - 1; nc >= 0; nc--) {
+          const prev = getCell(nr, nc);
+          if (prev) {
+            const input = prev.querySelector("input");
+            if (input) {
+              input.focus();
+              return;
+            }
+          }
+        }
+      }
+    }
+
+    function renderClues() {
+      const across = WORDS.filter(w => w.dir === "across").sort((a, b) => a.number - b.number);
+      const down = WORDS.filter(w => w.dir === "down").sort((a, b) => a.number - b.number);
+
+      acrossCluesEl.innerHTML = across
+        .map(w => `<li value="${w.number}"><strong>${w.number}.</strong> ${w.clue}</li>`)
+        .join("");
+
+      downCluesEl.innerHTML = down
+        .map(w => `<li value="${w.number}"><strong>${w.number}.</strong> ${w.clue}</li>`)
+        .join("");
+    }
+
+    function checkAnswers() {
+      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
+      let allCorrect = true;
+      let filledCount = 0;
+
+      activeCells.forEach(cell => {
+        const input = cell.querySelector("input");
+        const guess = normalizeInput(input.value);
+        const answer = normalizeInput(cell.dataset.answer);
+
+        cell.classList.remove("correct", "wrong");
+
+        if (guess) filledCount++;
+
+        if (!guess) {
+          allCorrect = false;
+          return;
+        }
+
+        if (guess === answer) {
+          cell.classList.add("correct");
+        } else {
+          cell.classList.add("wrong");
+          allCorrect = false;
+        }
+      });
+
+      if (filledCount === 0) {
+        statusTextEl.textContent = "Du har inte fyllt i något ännu.";
+        statusTextEl.className = "status-text bad";
+      } else if (allCorrect) {
+        statusTextEl.textContent = "Snyggt! Alla ord är rätt.";
+        statusTextEl.className = "status-text good";
+      } else {
+        statusTextEl.textContent = "Något är fel eller saknas. Fortsätt prova!";
+        statusTextEl.className = "status-text bad";
+      }
+    }
+
+    function revealAnswers() {
+      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
+
+      activeCells.forEach(cell => {
+        const input = cell.querySelector("input");
+        input.value = cell.dataset.answer;
+        cell.classList.remove("wrong");
+        cell.classList.add("correct");
+      });
+
+      statusTextEl.textContent = "Facit visas nu.";
+      statusTextEl.className = "status-text good";
+    }
+
+    function resetGrid() {
+      const activeCells = [...gridEl.querySelectorAll(".cell:not(.block)")];
+
+      activeCells.forEach(cell => {
+        const input = cell.querySelector("input");
+        input.value = "";
+        cell.classList.remove("correct", "wrong");
+      });
+
+      statusTextEl.textContent = "";
+      statusTextEl.className = "status-text";
+
+      const firstInput = gridEl.querySelector(".cell:not(.block) input");
+      if (firstInput) firstInput.focus();
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", checkAnswers);
+    document.getElementById("revealBtn").addEventListener("click", revealAnswers);
+    document.getElementById("resetBtn").addEventListener("click", resetGrid);
+
+    buildGrid();
+  </script>
+</body>
+</html>
