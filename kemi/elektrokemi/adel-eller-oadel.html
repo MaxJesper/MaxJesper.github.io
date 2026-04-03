@@ -213,6 +213,12 @@
       transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease, background .15s ease;
     }
 
+    .metal-card.symbol{
+      min-width: 72px;
+      font-size: 1.1rem;
+      padding: 14px 10px;
+    }
+
     .metal-card:hover{
       transform: translateY(-1px);
       box-shadow: 0 7px 16px rgba(0,0,0,.12);
@@ -237,7 +243,6 @@
       100% { transform: translateX(0); }
     }
 
-    /* Level 1 */
     .zones{
       display: grid;
       grid-template-columns: 1fr;
@@ -289,49 +294,46 @@
       min-height: 80px;
     }
 
-    /* Level 2 */
     .series-board{
       display: grid;
+      grid-template-columns: repeat(11, minmax(72px, 1fr));
       gap: 10px;
       margin-top: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
     }
 
     .series-slot{
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 12px;
-      align-items: center;
-      min-height: 66px;
+      min-height: 110px;
       border: 2px dashed #d1d5db;
       border-radius: 14px;
-      padding: 10px 12px;
+      padding: 8px;
       background: #fff;
       transition: border-color .2s ease, transform .15s ease, background .15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .series-slot.active-drop{
       border-color: #111;
-      transform: scale(1.01);
+      transform: scale(1.02);
       background: #fffbeb;
     }
 
-    .series-label{
-      font-weight: 800;
-      color: #444;
-    }
-
     .series-target{
-      min-height: 42px;
+      width: 100%;
+      min-height: 88px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      justify-content: center;
     }
 
-    @media (max-width: 700px){
-      .series-slot{
-        grid-template-columns: 1fr;
-      }
+    .series-slot .metal-card{
+      min-width: 100%;
+      width: 100%;
+      min-height: 88px;
+      margin: 0;
     }
 
     .hidden{
@@ -481,35 +483,33 @@
       }
     };
 
-    // Level 1: ädel / oädel enligt spänningsserien i skolversion
     const LEVEL1_ITEMS = [
-      { metal: "Guld", category: "adel" },
-      { metal: "Silver", category: "adel" },
-      { metal: "Koppar", category: "adel" },
-      { metal: "Platina", category: "adel" },
+      { name: "Guld", symbol: "Au", category: "adel" },
+      { name: "Silver", symbol: "Ag", category: "adel" },
+      { name: "Koppar", symbol: "Cu", category: "adel" },
+      { name: "Platina", symbol: "Pt", category: "adel" },
 
-      { metal: "Magnesium", category: "oadel" },
-      { metal: "Aluminium", category: "oadel" },
-      { metal: "Zink", category: "oadel" },
-      { metal: "Järn", category: "oadel" },
-      { metal: "Nickel", category: "oadel" },
-      { metal: "Tenn", category: "oadel" },
-      { metal: "Bly", category: "oadel" }
+      { name: "Magnesium", symbol: "Mg", category: "oadel" },
+      { name: "Aluminium", symbol: "Al", category: "oadel" },
+      { name: "Zink", symbol: "Zn", category: "oadel" },
+      { name: "Järn", symbol: "Fe", category: "oadel" },
+      { name: "Nickel", symbol: "Ni", category: "oadel" },
+      { name: "Tenn", symbol: "Sn", category: "oadel" },
+      { name: "Bly", symbol: "Pb", category: "oadel" }
     ];
 
-    // Level 2: ordning från mest oädel till mest ädel
     const LEVEL2_ORDER = [
-      "Magnesium",
-      "Aluminium",
-      "Zink",
-      "Järn",
-      "Nickel",
-      "Tenn",
-      "Bly",
-      "Koppar",
-      "Silver",
-      "Platina",
-      "Guld"
+      { name: "Guld", symbol: "Au" },
+      { name: "Platina", symbol: "Pt" },
+      { name: "Silver", symbol: "Ag" },
+      { name: "Koppar", symbol: "Cu" },
+      { name: "Bly", symbol: "Pb" },
+      { name: "Tenn", symbol: "Sn" },
+      { name: "Nickel", symbol: "Ni" },
+      { name: "Järn", symbol: "Fe" },
+      { name: "Zink", symbol: "Zn" },
+      { name: "Aluminium", symbol: "Al" },
+      { name: "Magnesium", symbol: "Mg" }
     ];
 
     const poolGrid = document.getElementById('poolGrid');
@@ -669,7 +669,8 @@
       } else {
         goalBox.innerHTML = `
           <strong>Utmaning för Level 2</strong><br>
-          Sortera metallerna i rätt ordning enligt <strong>spänningsserien</strong>: från mest oädel till mest ädel.
+          Ordna metallerna från <strong>mest ädel till mest oädel</strong>.<br>
+          <strong>Au</strong> ska längst till vänster och <strong>Mg</strong> längst till höger.
         `;
       }
     }
@@ -679,12 +680,16 @@
       feedback.className = `feedback ${good ? 'good' : 'bad'}`;
     }
 
-    function createCard(item){
+    function createCard(item, useSymbol = false){
       const card = document.createElement('div');
       card.className = 'metal-card';
-      card.textContent = item.metal || item;
+      if (useSymbol) card.classList.add('symbol');
+
+      card.textContent = useSymbol ? item.symbol : item.name;
+      card.title = item.name;
       card.draggable = true;
-      card.dataset.metal = item.metal || item;
+      card.dataset.name = item.name;
+      card.dataset.symbol = item.symbol;
 
       if (item.category) card.dataset.category = item.category;
       if (item.orderIndex !== undefined) card.dataset.orderIndex = item.orderIndex;
@@ -719,13 +724,13 @@
         correctCount++;
         remaining--;
 
-        setFeedback(`${card.dataset.metal} placerades rätt.`, true);
+        setFeedback(`${card.dataset.name} placerades rätt.`, true);
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
 
         mistakes++;
-        setFeedback(`${card.dataset.metal} hör inte hemma där. Försök igen.`, false);
+        setFeedback(`${card.dataset.name} hör inte hemma där. Försök igen.`, false);
 
         setTimeout(() => card.classList.remove('incorrect'), 350);
       }
@@ -739,8 +744,15 @@
 
     function handleLevel2Drop(card, slotIndex){
       if (levelFinished) return;
+
       const correct = Number(card.dataset.orderIndex) === slotIndex;
       const slot = seriesBoard.querySelector(`.series-slot[data-slot-index="${slotIndex}"] .series-target`);
+
+      if (!slot) return;
+      if (slot.children.length > 0) {
+        setFeedback('Där ligger redan ett kort. Välj en tom plats.', false);
+        return;
+      }
 
       if (correct){
         card.classList.remove('incorrect');
@@ -753,12 +765,12 @@
         correctCount++;
         remaining--;
 
-        setFeedback(`${card.dataset.metal} placerades på rätt plats i spänningsserien.`, true);
+        setFeedback(`${card.dataset.name} lades på rätt plats i spänningsserien.`, true);
       } else {
         card.classList.remove('correct');
         card.classList.add('incorrect');
         mistakes++;
-        setFeedback(`${card.dataset.metal} ligger inte på rätt plats i serien. Försök igen.`, false);
+        setFeedback(`${card.dataset.name} ligger inte rätt i ordningen. Försök igen.`, false);
         setTimeout(() => card.classList.remove('incorrect'), 350);
       }
 
@@ -794,14 +806,11 @@
 
     function setupSeriesBoard(){
       seriesBoard.innerHTML = '';
-      LEVEL2_ORDER.forEach((metal, index) => {
+      LEVEL2_ORDER.forEach((item, index) => {
         const slot = document.createElement('div');
         slot.className = 'series-slot';
         slot.dataset.slotIndex = index;
-        slot.innerHTML = `
-          <div class="series-label">${index + 1}. plats</div>
-          <div class="series-target"></div>
-        `;
+        slot.innerHTML = `<div class="series-target"></div>`;
 
         slot.addEventListener('dragover', (e) => {
           if (currentLevel !== 2) return;
@@ -839,10 +848,10 @@
 
         const items = shuffle(LEVEL1_ITEMS);
         items.forEach(item => {
-          const card = createCard(item);
+          const card = createCard(item, false);
           card.addEventListener('click', () => {
             startTimerIfNeeded();
-            const choice = window.prompt(`Var hör ${card.dataset.metal} hemma?\nSkriv: ädel eller oädel`);
+            const choice = window.prompt(`Var hör ${card.dataset.name} hemma?\nSkriv: ädel eller oädel`);
             if (!choice) return;
             const normalized = choice.trim().toLowerCase();
             if (normalized === 'ädel' || normalized === 'adel'){
@@ -863,23 +872,25 @@
         setupSeriesBoard();
 
         const items = shuffle(
-          LEVEL2_ORDER.map((metal, index) => ({
-            metal,
+          LEVEL2_ORDER.map((item, index) => ({
+            ...item,
             orderIndex: index
           }))
         );
 
         items.forEach(item => {
-          const card = createCard(item);
+          const card = createCard(item, true);
           card.addEventListener('click', () => {
             startTimerIfNeeded();
-            const raw = window.prompt(`Vilken plats har ${card.dataset.metal} i spänningsserien?\nSkriv en siffra 1–11`);
+            const raw = window.prompt(`Vilken position i raden ska ${card.dataset.name} ha?\nSkriv en siffra 1–11 där 1 = längst till vänster.`);
             if (!raw) return;
+
             const n = Number(raw.trim());
             if (!Number.isInteger(n) || n < 1 || n > LEVEL2_ORDER.length){
               setFeedback(`Skriv en siffra mellan 1 och ${LEVEL2_ORDER.length}.`, false);
               return;
             }
+
             handleLevel2Drop(card, n - 1);
           });
           poolGrid.appendChild(card);
@@ -921,7 +932,7 @@
       } else {
         updateInfo();
         winTitle.textContent = '🏆 Snyggt!';
-        winText.innerHTML = `Du klarade <strong>Level 2</strong> och ordnade metallerna i rätt ordning enligt spänningsserien.<br><br>Total poäng: <strong>${score}</strong>.`;
+        winText.innerHTML = `Du klarade <strong>Level 2</strong> och ordnade metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br><br>Total poäng: <strong>${score}</strong>.`;
       }
 
       winEl.classList.add('open');
