@@ -20,8 +20,13 @@
     body{
       margin: 24px;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 20% 10%, #fff8ef 0%, #fdfbf7 40%, #fbfcff 100%);
       color: #111;
+      background:
+        radial-gradient(900px 480px at 8% 8%, rgba(255,215,0,.16) 0%, rgba(255,215,0,0) 48%),
+        radial-gradient(700px 420px at 92% 14%, rgba(192,192,192,.24) 0%, rgba(192,192,192,0) 52%),
+        radial-gradient(600px 360px at 18% 88%, rgba(184,115,51,.18) 0%, rgba(184,115,51,0) 48%),
+        linear-gradient(135deg, #fffaf2 0%, #f8fbff 38%, #f4f7fb 100%);
+      background-attachment: fixed;
     }
 
     .layout{
@@ -32,16 +37,18 @@
     }
 
     @media (min-width: 980px){
-      .layout{ grid-template-columns: 300px 1fr; }
+      .layout{ grid-template-columns: 320px 1fr; }
     }
 
     .panel{
-      border: 1px solid rgba(0,0,0,.12);
-      border-radius: 12px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,.84);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+      border: 1px solid rgba(148,163,184,.22);
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(8px);
+      box-shadow:
+        0 12px 30px rgba(15,23,42,.08),
+        inset 0 1px 0 rgba(255,255,255,.75);
     }
 
     .side-actions{ display: grid; gap: 10px; }
@@ -214,7 +221,7 @@
       padding: 14px;
       border: 1px solid #e5e7eb;
       border-radius: 14px;
-      background: #fff;
+      background: rgba(255,255,255,.88);
     }
 
     .cards-pool h3{
@@ -232,10 +239,13 @@
     .metal-card{
       min-width: 110px;
       padding: 12px 14px;
-      border-radius: 12px;
-      border: 2px solid #a16207;
-      background: #fffbeb;
-      box-shadow: 0 4px 10px rgba(0,0,0,.08);
+      border-radius: 14px;
+      border: 2px solid #b7791f;
+      background:
+        linear-gradient(180deg, #fff8dc 0%, #ffe9a8 100%);
+      box-shadow:
+        0 6px 14px rgba(0,0,0,.08),
+        inset 0 1px 0 rgba(255,255,255,.6);
       text-align: center;
       font-weight: 800;
       cursor: pointer;
@@ -246,7 +256,8 @@
 
     .metal-card.symbol{
       min-width: 72px;
-      font-size: 1.1rem;
+      font-size: 1.22rem;
+      letter-spacing: .02em;
       padding: 14px 10px;
     }
 
@@ -400,6 +411,127 @@
       margin: 0;
     }
 
+    .level3-wrap{
+      margin-top: 12px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .challenge-box{
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: rgba(255,255,255,.92);
+      padding: 14px;
+    }
+
+    .challenge-label{
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .challenge-card-holder{
+      min-height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .challenge-card-holder .metal-card{
+      min-width: 84px;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.32rem;
+    }
+
+    .insert-board{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: rgba(255,255,255,.92);
+    }
+
+    .insert-gap{
+      width: 34px;
+      height: 84px;
+      border-radius: 10px;
+      border: 2px dashed #cbd5e1;
+      background: linear-gradient(180deg, #f8fafc, #eef2f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: #64748b;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+
+    .insert-gap:hover{
+      transform: scale(1.05);
+    }
+
+    .insert-gap.active-next{
+      border-color: #111;
+      background: #fffbeb;
+      box-shadow: 0 0 0 4px rgba(250,204,21,.18);
+      color: #111;
+    }
+
+    .insert-gap.wrong{
+      border-color: #dc2626;
+      background: #fee2e2;
+      color: #b91c1c;
+      animation: shake .25s ease;
+    }
+
+    .insert-chip{
+      min-width: 72px;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 8px;
+      border-radius: 14px;
+      border: 2px solid #b7791f;
+      background: linear-gradient(180deg, #fff8dc 0%, #ffe9a8 100%);
+      box-shadow: 0 6px 14px rgba(0,0,0,.08), inset 0 1px 0 rgba(255,255,255,.6);
+      font-weight: 800;
+      font-size: 1.15rem;
+      position: relative;
+    }
+
+    .insert-chip.fixed{
+      opacity: .96;
+    }
+
+    .slot-success{
+      animation: slotPulse .38s ease;
+    }
+
+    @keyframes slotPulse{
+      0%   { transform: scale(1); box-shadow: 0 0 0 rgba(34,197,94,0); }
+      45%  { transform: scale(1.06); box-shadow: 0 0 0 6px rgba(34,197,94,.16); }
+      100% { transform: scale(1); box-shadow: 0 0 0 rgba(34,197,94,0); }
+    }
+
+    .fly-card{
+      position: fixed;
+      z-index: 2000;
+      pointer-events: none;
+      margin: 0;
+      transform-origin: center center;
+    }
+
     .hidden{
       display: none !important;
     }
@@ -422,7 +554,7 @@
       padding: 18px;
       border-radius: 16px;
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       box-shadow: 0 20px 40px rgba(0,0,0,.25);
       text-align: center;
     }
@@ -474,7 +606,7 @@
 
     <main class="panel">
       <h2 class="game-title">Ädel eller oädel?</h2>
-      <p class="game-subtitle">Level 1: klicka på en metall och placera den som ädel eller oädel. Level 2: klicka på metallerna i rätt ordning så placeras de automatiskt.</p>
+      <p class="game-subtitle" id="subtitle"></p>
 
       <div class="status-row">
         <span class="badge" id="difficultyBadge">Nybörjare</span>
@@ -502,7 +634,18 @@
         <div class="series-board" id="seriesBoard"></div>
       </div>
 
-      <section class="cards-pool">
+      <div id="level3Area" class="hidden">
+        <div class="level3-wrap">
+          <div class="challenge-box">
+            <div class="challenge-label">Nästa metall att skjuta in</div>
+            <div class="challenge-card-holder" id="challengeCardHolder"></div>
+          </div>
+
+          <div class="insert-board" id="insertBoard"></div>
+        </div>
+      </div>
+
+      <section class="cards-pool" id="poolSection">
         <h3>Metallkort</h3>
         <div class="pool-grid" id="poolGrid"></div>
       </section>
@@ -517,7 +660,7 @@
       <p id="winText">Du klarade nivån.</p>
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <button class="btn" type="button" id="playAgainBtn">Spela samma nivå igen</button>
-        <button class="btn" type="button" id="continueBtn" style="display:none;">Fortsätt till Level 2</button>
+        <button class="btn" type="button" id="continueBtn" style="display:none;">Fortsätt</button>
         <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
       </div>
     </div>
@@ -559,13 +702,48 @@
       { name: "Magnesium", symbol: "Mg" }
     ];
 
+    // Full, förenklad skolserie från mest ädel till mest oädel
+    const FINAL_SERIES = [
+      { name: "Guld", symbol: "Au" },
+      { name: "Platina", symbol: "Pt" },
+      { name: "Palladium", symbol: "Pd" },
+      { name: "Silver", symbol: "Ag" },
+      { name: "Kvicksilver", symbol: "Hg" },
+      { name: "Koppar", symbol: "Cu" },
+      { name: "Bly", symbol: "Pb" },
+      { name: "Tenn", symbol: "Sn" },
+      { name: "Nickel", symbol: "Ni" },
+      { name: "Kobolt", symbol: "Co" },
+      { name: "Kadmium", symbol: "Cd" },
+      { name: "Järn", symbol: "Fe" },
+      { name: "Krom", symbol: "Cr" },
+      { name: "Zink", symbol: "Zn" },
+      { name: "Mangan", symbol: "Mn" },
+      { name: "Aluminium", symbol: "Al" },
+      { name: "Magnesium", symbol: "Mg" },
+      { name: "Natrium", symbol: "Na" },
+      { name: "Kalcium", symbol: "Ca" },
+      { name: "Kalium", symbol: "K" },
+      { name: "Litium", symbol: "Li" }
+    ];
+
+    const LEVEL3_CHALLENGES = FINAL_SERIES.filter(
+      item => !LEVEL2_ORDER.some(base => base.symbol === item.symbol)
+    );
+
+    const FINAL_INDEX = Object.fromEntries(FINAL_SERIES.map((item, i) => [item.symbol, i]));
+
     const poolGrid = document.getElementById('poolGrid');
+    const poolSection = document.getElementById('poolSection');
     const adelCards = document.getElementById('adelCards');
     const oadelCards = document.getElementById('oadelCards');
     const feedback = document.getElementById('feedback');
     const level1Area = document.getElementById('level1Area');
     const level2Area = document.getElementById('level2Area');
+    const level3Area = document.getElementById('level3Area');
     const seriesBoard = document.getElementById('seriesBoard');
+    const insertBoard = document.getElementById('insertBoard');
+    const challengeCardHolder = document.getElementById('challengeCardHolder');
 
     const scoreEl = document.getElementById('score');
     const correctCountEl = document.getElementById('correctCount');
@@ -579,6 +757,7 @@
     const goalBox = document.getElementById('goalBox');
     const difficultyGrid = document.getElementById('difficultyGrid');
     const hoverInfoText = document.getElementById('hoverInfoText');
+    const subtitle = document.getElementById('subtitle');
 
     const winEl = document.getElementById('win-message');
     const winTitle = document.getElementById('winTitle');
@@ -592,6 +771,7 @@
     let mistakes = 0;
     let remaining = 0;
     let level2Unlocked = false;
+    let level3Unlocked = false;
 
     let timerRunning = false;
     let startTs = 0;
@@ -600,6 +780,11 @@
 
     let selectedCard = null;
     let level2NextIndex = 0;
+
+    let currentSeries = [];
+    let challengeQueue = [];
+    let currentChallenge = null;
+    let currentChallengeEl = null;
 
     function formatTime(ms){
       const total = Math.max(0, ms);
@@ -702,57 +887,28 @@
       });
     }
 
-    function updateSeriesNextHighlight(){
-      const slots = [...seriesBoard.querySelectorAll('.series-slot')];
-      slots.forEach((slot, idx) => {
-        slot.classList.toggle('active-next', currentLevel === 2 && idx === level2NextIndex && slot.querySelector('.series-target').children.length === 0);
-      });
-    }
-
-    function updateInfo(){
-      const cfg = currentConfig();
-      scoreEl.textContent = score;
-      correctCountEl.textContent = correctCount;
-      mistakesEl.textContent = mistakes;
-      remainingCountEl.textContent = remaining;
-      currentLevelLabel.textContent = currentLevel;
-      difficultyBadge.textContent = cfg.label;
-      levelBadge.textContent = `Level ${currentLevel}`;
-
-      if (currentLevel === 1) {
-        goalBox.innerHTML = `
-          <strong>Utmaning för Level 1</strong><br>
-          Klicka på en metall och placera den som <strong>ädel</strong> eller <strong>oädel</strong> inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
-        `;
-      } else {
-        const next = LEVEL2_ORDER[level2NextIndex];
-        goalBox.innerHTML = `
-          <strong>Utmaning för Level 2</strong><br>
-          Klicka på nästa rätt metall i spänningsserien från <strong>mest ädel till mest oädel</strong>.<br>
-          Nästa plats gäller just nu: <strong>${next ? next.symbol : "klar"}</strong>
-        `;
-      }
-
-      updateSeriesNextHighlight();
-    }
-
     function setFeedback(text, good){
       feedback.textContent = text;
       feedback.className = `feedback ${good ? 'good' : 'bad'}`;
     }
 
-    function setInfoCard(card){
-      if (!card) {
+    function setInfoCard(itemOrCard){
+      if (!itemOrCard) {
         hoverInfoText.textContent = "Inget kort valt ännu";
         return;
       }
-      hoverInfoText.textContent = `${card.dataset.symbol} = ${card.dataset.name}`;
+
+      if (itemOrCard.dataset) {
+        hoverInfoText.textContent = `${itemOrCard.dataset.symbol} = ${itemOrCard.dataset.name}`;
+      } else {
+        hoverInfoText.textContent = `${itemOrCard.symbol} = ${itemOrCard.name}`;
+      }
     }
 
     function clearSelectedCard(){
       if (selectedCard) selectedCard.classList.remove('selected');
       selectedCard = null;
-      setInfoCard(null);
+      if (currentLevel !== 3) setInfoCard(null);
     }
 
     function selectCard(card){
@@ -807,6 +963,8 @@
         if (currentLevel === 2) {
           startTimerIfNeeded();
           handleLevel2Click(card);
+        } else if (currentLevel === 3) {
+          // inget poolkort i nivå 3
         } else {
           selectCard(card);
         }
@@ -815,12 +973,96 @@
       return card;
     }
 
+    function animateCardToTarget(cardEl, targetEl, onDone) {
+      const from = cardEl.getBoundingClientRect();
+      const to = targetEl.getBoundingClientRect();
+
+      const ghost = cardEl.cloneNode(true);
+      ghost.classList.add('fly-card');
+      ghost.classList.remove('selected', 'correct', 'incorrect');
+
+      ghost.style.left = `${from.left}px`;
+      ghost.style.top = `${from.top}px`;
+      ghost.style.width = `${from.width}px`;
+      ghost.style.height = `${from.height}px`;
+
+      document.body.appendChild(ghost);
+
+      const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+      const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+
+      ghost.animate(
+        [
+          { transform: 'translate(0px, 0px) scale(1)', offset: 0 },
+          { transform: `translate(${dx * 0.5}px, ${dy * 0.5 - 70}px) scale(1.06)`, offset: 0.55 },
+          { transform: `translate(${dx}px, ${dy}px) scale(0.98)`, offset: 1 }
+        ],
+        {
+          duration: 480,
+          easing: 'cubic-bezier(.2,.8,.2,1)',
+          fill: 'forwards'
+        }
+      ).onfinish = () => {
+        ghost.remove();
+        if (typeof onDone === 'function') onDone();
+      };
+    }
+
     function getHoveredPoolCard(){
       return [...poolGrid.querySelectorAll('.metal-card')].find(c => c.matches(':hover'));
     }
 
     function getActiveCardForDrop(){
       return getHoveredPoolCard() || selectedCard;
+    }
+
+    function updateSeriesNextHighlight(){
+      const slots = [...seriesBoard.querySelectorAll('.series-slot')];
+      slots.forEach((slot, idx) => {
+        slot.classList.toggle('active-next', currentLevel === 2 && idx === level2NextIndex && slot.querySelector('.series-target').children.length === 0);
+      });
+    }
+
+    function updateInfo(){
+      const cfg = currentConfig();
+      scoreEl.textContent = score;
+      correctCountEl.textContent = correctCount;
+      mistakesEl.textContent = mistakes;
+      remainingCountEl.textContent = remaining;
+      currentLevelLabel.textContent = currentLevel;
+      difficultyBadge.textContent = cfg.label;
+      levelBadge.textContent = `Level ${currentLevel}`;
+
+      if (currentLevel === 1) {
+        subtitle.textContent = "Klicka på en metall och placera den som ädel eller oädel.";
+        goalBox.innerHTML = `
+          <strong>Utmaning för Level 1</strong><br>
+          Klicka på en metall och placera den som <strong>ädel</strong> eller <strong>oädel</strong> inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
+        `;
+      } else if (currentLevel === 2) {
+        const next = LEVEL2_ORDER[level2NextIndex];
+        subtitle.innerHTML = next
+          ? `Klicka på <strong>rätt nästa metall</strong> i spänningsserien. Nästa plats gäller <strong>${next.symbol}</strong>.`
+          : `Bra jobbat! Serien är komplett.`;
+
+        goalBox.innerHTML = `
+          <strong>Utmaning för Level 2</strong><br>
+          Klicka fram metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br>
+          <strong>Au</strong> ska längst till vänster och <strong>Mg</strong> längst till höger.
+        `;
+      } else {
+        subtitle.innerHTML = currentChallenge
+          ? `Nu kommer en <strong>ny metall</strong>. Klicka på rätt lucka där <strong>${currentChallenge.symbol}</strong> ska in i serien.`
+          : `Bra jobbat! Du har skjutit in alla nya metaller.`;
+
+        goalBox.innerHTML = `
+          <strong>Utmaning för Level 3</strong><br>
+          Serien är nästan klar. En ny metall kommer en i taget. Klicka på <strong>rätt lucka</strong> där metallen ska skjutas in.
+        `;
+      }
+
+      updateSeriesNextHighlight();
+      updateInsertGapHighlight();
     }
 
     function handleLevel1Drop(card, category){
@@ -862,12 +1104,19 @@
       if (!expected) return;
 
       if (card.dataset.symbol === expected.symbol){
-        const slot = seriesBoard.querySelector(`.series-slot[data-slot-index="${level2NextIndex}"] .series-target`);
-        card.classList.remove('incorrect', 'selected');
-        card.classList.add('correct');
-        slot.appendChild(card);
-        card.draggable = false;
-        card.style.cursor = 'default';
+        const slotWrap = seriesBoard.querySelector(`.series-slot[data-slot-index="${level2NextIndex}"]`);
+        const slot = slotWrap.querySelector('.series-target');
+
+        animateCardToTarget(card, slotWrap, () => {
+          card.classList.remove('incorrect', 'selected');
+          card.classList.add('correct');
+          slot.appendChild(card);
+          card.draggable = false;
+          card.style.cursor = 'default';
+
+          slotWrap.classList.add('slot-success');
+          setTimeout(() => slotWrap.classList.remove('slot-success'), 420);
+        });
 
         score += currentConfig().correctPoints;
         correctCount++;
@@ -880,7 +1129,7 @@
         updateInfo();
 
         if (remaining === 0){
-          finishLevel();
+          setTimeout(() => finishLevel(), 520);
         }
       } else {
         markWrong(card, `Fel metall. Nästa rätta metall är inte ${card.dataset.symbol}.`);
@@ -926,6 +1175,124 @@
       updateSeriesNextHighlight();
     }
 
+    // ---------- LEVEL 3 ----------
+
+    function computeCorrectGapIndex(challenge){
+      const challengePos = FINAL_INDEX[challenge.symbol];
+      let countBefore = 0;
+      for (const item of currentSeries) {
+        if (FINAL_INDEX[item.symbol] < challengePos) countBefore++;
+      }
+      return countBefore;
+    }
+
+    function updateInsertGapHighlight(){
+      if (currentLevel !== 3) return;
+      const correctGap = currentChallenge ? computeCorrectGapIndex(currentChallenge) : -1;
+      [...insertBoard.querySelectorAll('.insert-gap')].forEach((gap, idx) => {
+        gap.classList.toggle('active-next', idx === correctGap);
+      });
+    }
+
+    function renderLevel3Challenge(){
+      challengeCardHolder.innerHTML = '';
+      currentChallengeEl = null;
+
+      if (!currentChallenge) {
+        challengeCardHolder.innerHTML = `<div class="big" style="font-size:20px;font-weight:800;">Alla extrametaller är klara!</div>`;
+        setInfoCard(null);
+        return;
+      }
+
+      const card = createCard(currentChallenge, true);
+      card.classList.add('symbol');
+      currentChallengeEl = card;
+
+      card.addEventListener('click', () => {
+        setInfoCard(currentChallenge);
+      });
+
+      challengeCardHolder.appendChild(card);
+      setInfoCard(currentChallenge);
+    }
+
+    function renderLevel3Board(){
+      insertBoard.innerHTML = '';
+
+      for (let i = 0; i <= currentSeries.length; i++) {
+        const gap = document.createElement('div');
+        gap.className = 'insert-gap';
+        gap.dataset.gapIndex = i;
+        gap.textContent = '+';
+
+        gap.addEventListener('click', () => {
+          if (currentLevel !== 3 || !currentChallenge || levelFinished) return;
+          startTimerIfNeeded();
+          handleLevel3GapClick(i, gap);
+        });
+
+        insertBoard.appendChild(gap);
+
+        if (i < currentSeries.length) {
+          const chip = document.createElement('div');
+          chip.className = 'insert-chip fixed';
+          chip.textContent = currentSeries[i].symbol;
+          chip.title = currentSeries[i].name;
+
+          chip.addEventListener('mouseenter', () => setInfoCard(currentSeries[i]));
+          chip.addEventListener('click', () => setInfoCard(currentSeries[i]));
+
+          insertBoard.appendChild(chip);
+        }
+      }
+
+      updateInsertGapHighlight();
+    }
+
+    function handleLevel3GapClick(gapIndex, gapEl){
+      if (!currentChallenge) return;
+
+      const correctGap = computeCorrectGapIndex(currentChallenge);
+
+      if (gapIndex === correctGap) {
+        const challenge = currentChallenge;
+
+        animateCardToTarget(currentChallengeEl, gapEl, () => {
+          currentSeries.splice(gapIndex, 0, challenge);
+
+          gapEl.classList.add('slot-success');
+          setTimeout(() => gapEl.classList.remove('slot-success'), 420);
+
+          score += currentConfig().correctPoints;
+          correctCount++;
+          remaining--;
+
+          setFeedback(`${challenge.name} sköts in på rätt plats i serien.`, true);
+
+          currentChallenge = challengeQueue.shift() || null;
+          renderLevel3Board();
+          renderLevel3Challenge();
+          updateInfo();
+
+          if (remaining === 0) {
+            setTimeout(() => finishLevel(), 520);
+          }
+        });
+      } else {
+        gapEl.classList.add('wrong');
+        mistakes++;
+        setFeedback(`${currentChallenge.name} ska inte in där. Försök igen.`, false);
+        updateInfo();
+        setTimeout(() => gapEl.classList.remove('wrong'), 350);
+      }
+    }
+
+    function initLevel3State(){
+      currentSeries = LEVEL2_ORDER.map(item => ({ ...item }));
+      challengeQueue = LEVEL3_CHALLENGES.map(item => ({ ...item }));
+      currentChallenge = challengeQueue.shift() || null;
+    }
+
     function fillBoard(){
       poolGrid.innerHTML = '';
       adelCards.innerHTML = '';
@@ -935,16 +1302,20 @@
       clearSelectedCard();
 
       if (currentLevel === 1){
+        poolSection.classList.remove('hidden');
         level1Area.classList.remove('hidden');
         level2Area.classList.add('hidden');
+        level3Area.classList.add('hidden');
 
         const items = shuffle(LEVEL1_ITEMS);
         items.forEach(item => poolGrid.appendChild(createCard(item, false)));
 
         remaining = items.length;
-      } else {
+      } else if (currentLevel === 2) {
+        poolSection.classList.remove('hidden');
         level1Area.classList.add('hidden');
         level2Area.classList.remove('hidden');
+        level3Area.classList.add('hidden');
         setupSeriesBoard();
         level2NextIndex = 0;
 
@@ -958,6 +1329,17 @@
         items.forEach(item => poolGrid.appendChild(createCard(item, true)));
 
         remaining = items.length;
+      } else {
+        poolSection.classList.add('hidden');
+        level1Area.classList.add('hidden');
+        level2Area.classList.add('hidden');
+        level3Area.classList.remove('hidden');
+
+        initLevel3State();
+        renderLevel3Board();
+        renderLevel3Challenge();
+
+        remaining = LEVEL3_CHALLENGES.length;
       }
 
       updateInfo();
@@ -984,16 +1366,26 @@
         updateInfo();
 
         continueBtn.style.display = 'inline-flex';
+        continueBtn.textContent = 'Fortsätt till Level 2';
         winTitle.textContent = '🚀 Level 2 upplåst!';
         winText.innerHTML = `Du klarade <strong>Level 1</strong> på tiden <strong>${timerEl.textContent}</strong> med <strong>${mistakes}</strong> fel.<br><br>Du fick <strong>+${cfg.unlockBonus} bonuspoäng</strong> och kan nu gå vidare till spänningsserien.`;
       } else if (currentLevel === 1){
         updateInfo();
         winTitle.textContent = '👏 Level 1 klar!';
         winText.innerHTML = `Du klarade Level 1, men för att låsa upp Level 2 behöver du klara tiden och hålla dig inom tillåtet antal fel.`;
+      } else if (currentLevel === 2) {
+        level3Unlocked = true;
+        score += Math.round(cfg.unlockBonus * 1.2);
+        updateInfo();
+
+        continueBtn.style.display = 'inline-flex';
+        continueBtn.textContent = 'Fortsätt till Level 3';
+        winTitle.textContent = '⚡ Level 3 upplåst!';
+        winText.innerHTML = `Du klarade <strong>Level 2</strong> och klickade fram metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br><br>Nu är det dags att <strong>skjuta in nya metaller</strong> på rätt plats i serien.`;
       } else {
         updateInfo();
-        winTitle.textContent = '🏆 Snyggt!';
-        winText.innerHTML = `Du klarade <strong>Level 2</strong> och klickade fram metallerna i rätt ordning från <strong>mest ädel till mest oädel</strong>.<br><br>Total poäng: <strong>${score}</strong>.`;
+        winTitle.textContent = '🏆 Mästarjobb!';
+        winText.innerHTML = `Du klarade <strong>Level 3</strong> och sköt in alla nya metaller på rätt plats i serien.<br><br>Total poäng: <strong>${score}</strong>.`;
       }
 
       winEl.classList.add('open');
@@ -1022,6 +1414,7 @@
       continueBtn.style.display = 'none';
       currentLevel = 1;
       level2Unlocked = false;
+      level3Unlocked = false;
       score = 0;
       levelFinished = false;
       correctCount = 0;
@@ -1030,11 +1423,18 @@
       fillBoard();
     }
 
-    function continueToLevel2(){
-      if (!level2Unlocked) return;
+    function continueToNextLevel(){
       hideWin();
       continueBtn.style.display = 'none';
-      currentLevel = 2;
+
+      if (currentLevel === 1 && level2Unlocked) {
+        currentLevel = 2;
+      } else if (currentLevel === 2 && level3Unlocked) {
+        currentLevel = 3;
+      } else {
+        return;
+      }
+
       levelFinished = false;
       correctCount = 0;
       mistakes = 0;
@@ -1046,7 +1446,7 @@
     document.getElementById('restartFullBtn').addEventListener('click', restartFromBeginning);
     document.getElementById('playAgainBtn').addEventListener('click', resetLevel);
     document.getElementById('closeWinBtn').addEventListener('click', hideWin);
-    continueBtn.addEventListener('click', continueToLevel2);
+    continueBtn.addEventListener('click', continueToNextLevel);
 
     window.addEventListener('load', () => {
       renderDifficultyButtons();
