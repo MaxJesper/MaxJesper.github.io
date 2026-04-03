@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li {
+      margin-bottom: 0.45rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Lärande spel</h1>
+    <p>Elektrokemi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <section class="page-intro">
+      <p>
+        Här hittar du lärande spel och övningar som hjälper dig att träna
+        begrepp och samband inom elektrokemi på ett aktivt och roligt sätt.
+      </p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>Begreppskort</h2>
+        <p>
+          Para ihop begrepp och förklaringar inom metaller, batterier,
+          korrosion och elektrolys.
+        </p>
+        <ul>
+          <li><a href="./begreppskort.html">Öppna begreppskort</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <h2>Fler spel senare</h2>
+        <p>
+          Här kan fler spel läggas till efter hand, till exempel sortering,
+          reaktionsspel och övningar med batterier och elektrolys.
+        </p>
+        <ul>
+          <li><a href="#">Kommer senare</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Tips</summary>
+        <ul>
+          <li>Börja med att träna de viktigaste begreppen först.</li>
+          <li>Spela gärna flera korta omgångar i stället för en lång.</li>
+          <li>När du fastnar: säg begreppet högt och försök förklara det med egna ord.</li>
+          <li>Koppla gärna spelen till vardagliga exempel som batterier, rost och metallföremål.</li>
+        </ul>
+      </details>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
