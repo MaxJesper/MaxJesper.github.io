@@ -13,7 +13,7 @@
 
     .resource-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 1rem;
       margin-top: 1rem;
     }
@@ -21,20 +21,39 @@
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
     }
 
     .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.2rem;
+      margin: 0;
+      font-size: 1.15rem;
     }
 
     .resource-box p {
-      margin-top: 0;
+      margin: 0;
       color: #444;
+      line-height: 1.35;
+    }
+
+    .resource-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border: 2px dashed #bfc9d6;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f8fafc, #eef3f8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #667085;
+      font-weight: 700;
+      text-align: center;
+      padding: 0.75rem;
+      box-sizing: border-box;
     }
 
     .resource-box ul {
@@ -44,7 +63,7 @@
     }
 
     .resource-box li {
-      margin-bottom: 0.7rem;
+      margin: 0;
     }
 
     .resource-box a {
@@ -100,22 +119,45 @@
 
     <section class="resource-grid">
       <article class="resource-box">
-        <h2>Begreppskort</h2>
-        <p>
-          Para ihop begrepp och förklaringar inom metaller, batterier,
-          korrosion och elektrolys.
-        </p>
+        <div class="resource-thumb">Bild för Begrepp</div>
+        <h2>Begrepp</h2>
+        <p>Para ihop begrepp och förklaringar inom metaller, batterier, korrosion och elektrolys.</p>
         <ul>
           <li><a href="./begreppskort.html">Öppna begreppskort</a></li>
         </ul>
       </article>
 
       <article class="resource-box">
-        <h2>Fler spel senare</h2>
-        <p>
-          Här kan fler spel läggas till efter hand, till exempel sortering,
-          reaktionsspel och övningar med batterier och elektrolys.
-        </p>
+        <div class="resource-thumb">Bild för Ädel eller oädel</div>
+        <h2>Ädel eller oädel</h2>
+        <p>Sortera metaller efter om de är ädla eller oädla och träna på spänningsserien.</p>
+        <ul>
+          <li><a href="./adel-eller-oadel.html">Öppna spelet</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <div class="resource-thumb">Bild för Bygg ett batteri</div>
+        <h2>Bygg ett batteri</h2>
+        <p>Träna på hur minuspol, pluspol, elektrolyt och elektronflöde hör ihop i ett galvaniskt element.</p>
+        <ul>
+          <li><a href="#">Kommer snart</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <div class="resource-thumb">Bild för Korsord</div>
+        <h2>Korsord</h2>
+        <p>Träna centrala ord och begrepp inom elektrokemi i ett korsord.</p>
+        <ul>
+          <li><a href="#">Kommer snart</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <div class="resource-thumb">Bild för Redoxreaktioner</div>
+        <h2>Redoxreaktioner</h2>
+        <p>Träna på vad som oxideras, vad som reduceras och hur elektroner flyttas i reaktioner.</p>
         <ul>
           <li><a href="#">Kommer senare</a></li>
         </ul>
@@ -126,10 +168,10 @@
       <details>
         <summary>Tips</summary>
         <ul>
-          <li>Börja med att träna de viktigaste begreppen först.</li>
-          <li>Spela gärna flera korta omgångar i stället för en lång.</li>
-          <li>När du fastnar: säg begreppet högt och försök förklara det med egna ord.</li>
-          <li>Koppla gärna spelen till vardagliga exempel som batterier, rost och metallföremål.</li>
+          <li>Börja med begrepp och fortsätt sedan till spel där du måste använda kunskaperna aktivt.</li>
+          <li>Koppla gärna spelen till vardagliga exempel som batterier, rost, metallföremål och återvinning.</li>
+          <li>När du fastnar: försök säga högt vad metallen eller reaktionen gör med elektronerna.</li>
+          <li>Träna hellre flera korta omgångar än en enda lång.</li>
         </ul>
       </details>
     </section>
