@@ -18,7 +18,7 @@
   @media (min-width: 980px) { .layout { grid-template-columns: 420px 1fr; align-items: start; } }
 
   .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
-  .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; }
+  .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; background: #fff; }
   .clue-box h2 { margin: 0 0 8px; font-size: 16px; }
   ol { margin: 0; padding-left: 18px; }
   li { margin: 6px 0; line-height: 1.25; }
@@ -33,7 +33,7 @@
   button:active { transform: translateY(1px); }
   button:disabled { opacity: .55; cursor: not-allowed; }
 
-  .status { margin-top: 8px; font-size: 14px; color: #222; }
+  .status { margin-top: 8px; font-size: 14px; color: #222; min-height: 20px; }
   .note { font-size: 13px; color: #333; margin-top: 6px; }
 
   .grid-wrap { display: grid; justify-content: center; overflow-x: auto; }
@@ -104,6 +104,85 @@
     min-width: 72px;
   }
 
+  .celebration {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    background: rgba(0,0,0,0.35);
+    z-index: 9999;
+  }
+
+  .celebration.show {
+    display: grid;
+  }
+
+  .celebration-box {
+    position: relative;
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 24px 20px;
+    width: min(92vw, 420px);
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+    z-index: 2;
+    animation: popIn 420ms cubic-bezier(.2,.9,.2,1.15);
+    transform-origin: center center;
+  }
+
+  .celebration-box h2 {
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+
+  .celebration-box p {
+    margin: 0 0 16px;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .celebration-emoji {
+    font-size: 42px;
+    margin-bottom: 8px;
+  }
+
+  .confetti-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    opacity: 0.95;
+    animation: confettiFall 2600ms linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(720deg); }
+  }
+
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.72);
+    }
+    65% {
+      opacity: 1;
+      transform: scale(1.06);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   .print-only { display: none; }
 
   @media print {
@@ -111,7 +190,7 @@
     @page { size: A4; margin: 12mm; }
     body { margin: 0; }
 
-    .hamburger, #side-menu, .top-actions, .controls, .note, #status { display: none !important; }
+    .hamburger, #side-menu, .top-actions, .controls, .note, #status, .celebration { display: none !important; }
 
     h1 { font-size: 18px; margin: 0 0 4px; }
     .subtitle { margin: 0 0 8px; font-size: 12px; color: #111; }
@@ -190,7 +269,7 @@
           </div>
           <div id="status" class="status"></div>
           <div class="note">
-            Rensa senaste = rensar ordet du senast skrev i. Facit = visar/döljer facit för senaste ordet om det innehåller fel.
+            Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för senaste ordet om det innehåller fel.
           </div>
         </div>
       </div>
@@ -208,6 +287,16 @@
     </div>
   </div>
 
+  <div id="celebration" class="celebration" aria-hidden="true">
+    <div class="celebration-box">
+      <div class="celebration-emoji">🎉</div>
+      <h2>Du klarade det!</h2>
+      <p>Bra gjort! Hela korsordet är rätt.</p>
+      <button type="button" id="closeCelebrationBtn" class="secondary">Stäng</button>
+    </div>
+    <div id="confettiLayer" class="confetti-layer"></div>
+  </div>
+
   <script src="/js/menu.js"></script>
 
 <script>
@@ -219,8 +308,14 @@ const gridSolEl = document.getElementById('grid-solution');
 const statusEl = document.getElementById('status');
 const clearWordBtn = document.getElementById('clearWordBtn');
 const facitBtn = document.getElementById('facitBtn');
+const celebrationEl = document.getElementById('celebration');
+const confettiLayerEl = document.getElementById('confettiLayer');
+const closeCelebrationBtn = document.getElementById('closeCelebrationBtn');
 
 facitBtn.textContent = 'Facit';
+
+let isAutoMoving = false;
+let celebrationShown = false;
 
 function normalizeChar(ch) {
   if (!ch) return '';
@@ -343,7 +438,55 @@ function markWrong(r,c){
   if (sol && val !== sol) cell.classList.add('wrong');
 }
 
+function isPuzzleCompleteAndCorrect() {
+  for (let r = 0; r < DATA.rows; r++) {
+    for (let c = 0; c < DATA.cols; c++) {
+      if (!isEditable(r,c)) continue;
+      const inp = getInput(r,c);
+      const val = inp ? normalizeChar(inp.value) : '';
+      const sol = DATA.solution[r][c] || '';
+      if (!val || val !== sol) return false;
+    }
+  }
+  return true;
+}
+
+function launchConfetti() {
+  if (!confettiLayerEl) return;
+  confettiLayerEl.innerHTML = '';
+
+  const pieces = 80;
+  for (let i = 0; i < pieces; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${Math.random() * 350}ms`;
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    piece.style.background = `hsl(${Math.floor(Math.random() * 360)}, 85%, 60%)`;
+    confettiLayerEl.appendChild(piece);
+  }
+
+  setTimeout(() => {
+    confettiLayerEl.innerHTML = '';
+  }, 3100);
+}
+
+function showCelebration() {
+  if (celebrationShown) return;
+  celebrationShown = true;
+  statusEl.textContent = 'Du klarade det! Bra gjort!';
+  if (celebrationEl) celebrationEl.classList.add('show');
+  launchConfetti();
+}
+
+function hideCelebration() {
+  if (celebrationEl) celebrationEl.classList.remove('show');
+}
+
 function refreshAllWrong(){
+  let filled = 0;
+  let anyWrong = false;
+
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (!isEditable(r,c)) continue;
@@ -353,9 +496,32 @@ function refreshAllWrong(){
       const inp = getInput(r,c);
       const val = inp ? normalizeChar(inp.value) : '';
       if (!val) continue;
+      filled++;
       const sol = DATA.solution[r][c];
-      if (sol && val !== sol) cell.classList.add('wrong');
+      if (sol && val !== sol) {
+        cell.classList.add('wrong');
+        anyWrong = true;
+      }
     }
+  }
+
+  if (filled === 0) {
+    statusEl.textContent = '';
+    celebrationShown = false;
+    hideCelebration();
+    return;
+  }
+
+  if (!anyWrong && isPuzzleCompleteAndCorrect()) {
+    showCelebration();
+  } else if (anyWrong) {
+    statusEl.textContent = 'Någon bokstav är fel. Fortsätt prova!';
+    celebrationShown = false;
+    hideCelebration();
+  } else {
+    statusEl.textContent = '';
+    celebrationShown = false;
+    hideCelebration();
   }
 }
 
@@ -373,7 +539,7 @@ function hideFacit(){
   facitBackup = new Map();
   facitBtn.textContent = 'Facit';
   refreshAllWrong();
-  statusEl.textContent = '';
+  if (statusEl.textContent === 'Facit visas för senaste ordet.') statusEl.textContent = '';
 }
 
 function showFacitForLastWord(){
@@ -431,6 +597,10 @@ function clearAll(){
   }
   refreshAllWrong();
   statusEl.textContent = '';
+  lastTypedWordId = null;
+  clearWordBtn.disabled = true;
+  celebrationShown = false;
+  hideCelebration();
 }
 
 function clearLastWord(){
@@ -460,16 +630,45 @@ function focusStep(r,c,dr,dc){
 }
 
 function prevEditable(r,c){
-  for (let cc=c-1; cc>=0; cc--){
-    if (isEditable(r,cc)) return getInput(r,cc);
-    if (isBlack(r,cc)) break;
-  }
-  for (let rr=r; rr>=0; rr--){
-    for (let cc=(rr===r?c-1:DATA.cols-1); cc>=0; cc--){
-      if (isEditable(rr,cc)) return getInput(rr,cc);
+  if (activeDir === 'down') {
+    let rr = r - 1;
+    while (rr >= 0 && isEditable(rr,c)) {
+      const inp = getInput(rr,c);
+      if (inp) return inp;
+      rr--;
+    }
+  } else {
+    let cc = c - 1;
+    while (cc >= 0 && isEditable(r,cc)) {
+      const inp = getInput(r,cc);
+      if (inp) return inp;
+      cc--;
     }
   }
   return null;
+}
+
+function advanceToNextCell(r, c, dir) {
+  let rr = r;
+  let cc = c;
+
+  while (true) {
+    if (dir === 'down') rr++;
+    else cc++;
+
+    if (rr < 0 || rr >= DATA.rows || cc < 0 || cc >= DATA.cols) return null;
+    if (!isEditable(rr, cc)) return null;
+
+    const next = getInput(rr, cc);
+    if (!next) return null;
+
+    const val = normalizeChar(next.value);
+    const sol = DATA.solution[rr][cc] || '';
+
+    if (!val) return next;
+    if (val === sol) continue;
+    return next;
+  }
 }
 
 function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
@@ -501,7 +700,10 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
           inp.dataset.c = c;
 
           inp.addEventListener('focus', () => {
-            activeDir = null;
+            if (!isAutoMoving) {
+              activeDir = null;
+            }
+            setTimeout(() => inp.select(), 0);
           });
 
           inp.addEventListener('input', (e) => {
@@ -517,14 +719,15 @@ function buildGrid(targetEl, {withInputs, fillSolution, idPrefix}) {
             markWrong(r,c);
 
             if (v) {
-              if (activeDir === 'down') {
-                const next = (r+1 < DATA.rows && isEditable(r+1, c)) ? getInput(r+1, c) : null;
-                if (next) next.focus();
-              } else {
-                const next = (c+1 < DATA.cols && isEditable(r, c+1)) ? getInput(r, c+1) : null;
-                if (next) next.focus();
+              const next = advanceToNextCell(r, c, activeDir);
+              if (next) {
+                isAutoMoving = true;
+                next.focus();
+                isAutoMoving = false;
               }
             }
+
+            refreshAllWrong();
           });
 
           inp.addEventListener('keydown', (e) => {
@@ -569,14 +772,26 @@ function init(){
   document.getElementById('clearWordBtn').addEventListener('click', clearLastWord);
   document.getElementById('facitBtn').addEventListener('click', toggleFacit);
 
+  if (closeCelebrationBtn) {
+    closeCelebrationBtn.addEventListener('click', hideCelebration);
+  }
+
+  if (celebrationEl) {
+    celebrationEl.addEventListener('click', (e) => {
+      if (e.target === celebrationEl) hideCelebration();
+    });
+  }
+
   document.getElementById('facitBtn').textContent = 'Facit';
 
   for (let r=0; r<DATA.rows; r++){
     for (let c=0; c<DATA.cols; c++){
       if (isEditable(r,c)){
         const i = getInput(r,c);
-        if (i) i.focus();
-        return;
+        if (i) {
+          i.focus();
+          return;
+        }
       }
     }
   }
