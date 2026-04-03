@@ -702,7 +702,6 @@
       { name: "Magnesium", symbol: "Mg" }
     ];
 
-    // Full, förenklad skolserie från mest ädel till mest oädel
     const FINAL_SERIES = [
       { name: "Guld", symbol: "Au" },
       { name: "Platina", symbol: "Pt" },
@@ -964,7 +963,6 @@
           startTimerIfNeeded();
           handleLevel2Click(card);
         } else if (currentLevel === 3) {
-          // inget poolkort i nivå 3
         } else {
           selectCard(card);
         }
@@ -1023,6 +1021,11 @@
       });
     }
 
+    function updateInsertGapHighlight(){
+      const gaps = [...insertBoard.querySelectorAll('.insert-gap')];
+      gaps.forEach(gap => gap.classList.remove('active-next'));
+    }
+
     function updateInfo(){
       const cfg = currentConfig();
       scoreEl.textContent = score;
@@ -1052,12 +1055,12 @@
         `;
       } else {
         subtitle.innerHTML = currentChallenge
-          ? `Nu kommer en <strong>ny metall</strong>. Klicka på rätt lucka där <strong>${currentChallenge.symbol}</strong> ska in i serien.`
+          ? `Nu kommer en <strong>ny metall</strong>. Klicka på den lucka där <strong>${currentChallenge.symbol}</strong> ska in i serien.`
           : `Bra jobbat! Du har skjutit in alla nya metaller.`;
 
         goalBox.innerHTML = `
           <strong>Utmaning för Level 3</strong><br>
-          Serien är nästan klar. En ny metall kommer en i taget. Klicka på <strong>rätt lucka</strong> där metallen ska skjutas in.
+          Serien är nästan klar. En ny metall kommer en i taget. Klicka på den <strong>lucka du tror är rätt</strong> där metallen ska skjutas in.
         `;
       }
 
@@ -1175,8 +1178,6 @@
       updateSeriesNextHighlight();
     }
 
-    // ---------- LEVEL 3 ----------
-
     function computeCorrectGapIndex(challenge){
       const challengePos = FINAL_INDEX[challenge.symbol];
       let countBefore = 0;
@@ -1184,14 +1185,6 @@
         if (FINAL_INDEX[item.symbol] < challengePos) countBefore++;
       }
       return countBefore;
-    }
-
-    function updateInsertGapHighlight(){
-      if (currentLevel !== 3) return;
-      const correctGap = currentChallenge ? computeCorrectGapIndex(currentChallenge) : -1;
-      [...insertBoard.querySelectorAll('.insert-gap')].forEach((gap, idx) => {
-        gap.classList.toggle('active-next', idx === correctGap);
-      });
     }
 
     function renderLevel3Challenge(){
