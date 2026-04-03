@@ -220,7 +220,7 @@
         <div id="crosswordGrid" class="crossword-grid" aria-label="Korsord"></div>
         <div id="statusText" class="status-text" aria-live="polite"></div>
         <div class="legend">
-          Tips: Klicka i en ruta och skriv bokstaven. Alla ord i detta korsord är hopkopplade.
+          Tips: Klicka i en ruta och skriv bokstaven. Alla ord i detta korsord är hopkopplade och inga ord ligger parallellt.
         </div>
       </div>
 
@@ -243,80 +243,61 @@
   <script src="/js/menu.js"></script>
 
   <script>
+    // En lodrät huvudstam + vågräta ord som korsar den.
+    // Raderna med vågräta ord är medvetet separerade för att undvika parallell-läggning.
     const WORDS = [
       {
         answer: "ELEKTROKEMI",
         clue: "Läran om kemiska reaktioner där elektroner flyttas.",
-        row: 7,
-        col: 2,
+        row: 2,
+        col: 8,
+        dir: "down"
+      },
+      {
+        answer: "EDEL",
+        clue: "Motsats till oädel.",
+        row: 2,
+        col: 8,
+        dir: "across"
+      },
+      {
+        answer: "REDOX",
+        clue: "Typ av reaktion där oxidation och reduktion hör ihop.",
+        row: 4,
+        col: 7,
         dir: "across"
       },
       {
         answer: "KATOD",
         clue: "Den elektrod där reduktion sker.",
-        row: 5,
+        row: 6,
         col: 6,
-        dir: "down"
+        dir: "across"
       },
       {
         answer: "ANOD",
         clue: "Den elektrod där oxidation sker.",
-        row: 5,
-        col: 8,
-        dir: "down"
-      },
-      {
-        answer: "BATTERI",
-        clue: "Består av ett eller flera galvaniska element.",
-        row: 3,
-        col: 10,
-        dir: "down"
+        row: 8,
+        col: 6,
+        dir: "across"
       },
       {
         answer: "JONER",
         clue: "Laddade partiklar i en elektrolyt.",
-        row: 3,
-        col: 7,
-        dir: "down"
+        row: 10,
+        col: 5,
+        dir: "across"
       },
       {
-        answer: "REDOX",
-        clue: "Typ av reaktion där oxidation och reduktion hör ihop.",
-        row: 6,
-        col: 4,
-        dir: "down"
-      },
-      {
-        answer: "KORROSION",
-        clue: "När metaller angrips och återgår mot jonform.",
-        row: 1,
-        col: 12,
-        dir: "down"
-      },
-      {
-        answer: "ELEKTROLYS",
-        clue: "När elektrisk energi driver en kemisk reaktion.",
-        row: 7,
+        answer: "BATTERI",
+        clue: "Består av ett eller flera galvaniska element.",
+        row: 12,
         col: 2,
-        dir: "down"
-      },
-      {
-        answer: "PLUSPOL",
-        clue: "I ett galvaniskt element är detta den pol som tar emot elektroner.",
-        row: 6,
-        col: 3,
-        dir: "down"
-      },
-      {
-        answer: "MINUSPOL",
-        clue: "I ett galvaniskt element lämnar elektroner denna pol.",
-        row: 7,
-        col: 11,
-        dir: "down"
+        dir: "across"
       }
     ];
 
-    const ROWS = 17;
+    const ROWS = 15;
     const COLS = 15;
 
     const gridEl = document.getElementById("crosswordGrid");
@@ -324,10 +305,19 @@
     const downCluesEl = document.getElementById("downClues");
     const statusTextEl = document.getElementById("statusText");
 
-    const cells = new Map(); // key => { letter, starts[] }
+    const cells = new Map();
 
     function key(r, c) {
       return `${r},${c}`;
+    }
+
+    function normalizeInput(str) {
+      return String(str || "")
+        .trim()
+        .toUpperCase()
+        .replace(/Å/g, "A")
+        .replace(/Ä/g, "A")
+        .replace(/Ö/g, "O");
     }
 
     function addWordToMap(word) {
@@ -346,36 +336,72 @@
           if (existing.letter !== word.answer[i]) {
             throw new Error(`Bokstavskrock i ${r},${c} mellan ${existing.letter} och ${word.answer[i]}.`);
           }
+          existing.words.push(word);
         } else {
-          cells.set(k, { letter: word.answer[i], starts: [] });
+          cells.set(k, { letter: word.answer[i], words: [word] });
         }
       }
     }
 
-    function markStartsAndNumbers() {
-      let number = 1;
-      const numberMap = new Map();
+    function isCellOccupied(r, c) {
+      return cells.has(key(r, c));
+    }
 
-      for (let r = 0; r < ROWS; r++) {
-        for (let c = 0; c < COLS; c++) {
-          const k = key(r, c);
-          if (!cells.has(k)) continue;
+    function isPartOfWord(word, r, c) {
+      for (let i = 0; i < word.answer.length; i++) {
+        const wr = word.row + (word.dir === "down" ? i : 0);
+        const wc = word.col + (word.dir === "across" ? i : 0);
+        if (wr === r && wc === c) return true;
+      }
+      return false;
+    }
 
-          const startsAcross = WORDS.find(w => w.row === r && w.col === c && w.dir === "across");
-          const startsDown = WORDS.find(w => w.row === r && w.col === c && w.dir === "down");
+    function verifyNoParallelOrTouching() {
+      for (const word of WORDS) {
+        const len = word.answer.length;
 
-          if (startsAcross || startsDown) {
-            numberMap.set(k, number);
+        if (word.dir === "across") {
+          const beforeC = word.col - 1;
+          const afterC = word.col + len;
 
-            if (startsAcross) startsAcross.number = number;
-            if (startsDown) startsDown.number = number;
+          if (isCellOccupied(word.row, beforeC) || isCellOccupied(word.row, afterC)) {
+            throw new Error(`Ordet ${word.answer} nuddar ett annat ord vid änden.`);
+          }
 
-            number++;
+          for (let i = 0; i < len; i++) {
+            const r = word.row;
+            const c = word.col + i;
+            const cellData = cells.get(key(r, c));
+            const isCrossing = cellData.words.length > 1;
+
+            if (!isCrossing) {
+              if (isCellOccupied(r - 1, c) || isCellOccupied(r + 1, c)) {
+                throw new Error(`Ordet ${word.answer} ligger parallellt eller nuddar ett annat ord.`);
+              }
+            }
+          }
+        } else {
+          const beforeR = word.row - 1;
+          const afterR = word.row + len;
+
+          if (isCellOccupied(beforeR, word.col) || isCellOccupied(afterR, word.col)) {
+            throw new Error(`Ordet ${word.answer} nuddar ett annat ord vid änden.`);
+          }
+
+          for (let i = 0; i < len; i++) {
+            const r = word.row + i;
+            const c = word.col;
+            const cellData = cells.get(key(r, c));
+            const isCrossing = cellData.words.length > 1;
+
+            if (!isCrossing) {
+              if (isCellOccupied(r, c - 1) || isCellOccupied(r, c + 1)) {
+                throw new Error(`Ordet ${word.answer} ligger parallellt eller nuddar ett annat ord.`);
+              }
+            }
           }
         }
       }
-
-      return numberMap;
     }
 
     function verifyConnected() {
@@ -389,6 +415,7 @@
       while (queue.length) {
         const current = queue.shift();
         const [r, c] = current.split(",").map(Number);
+
         const neighbors = [
           [r - 1, c],
           [r + 1, c],
@@ -412,20 +439,36 @@
       return true;
     }
 
-    function normalizeInput(str) {
-      return String(str || "")
-        .trim()
-        .toUpperCase()
-        .replace(/Å/g, "A")
-        .replace(/Ä/g, "A")
-        .replace(/Ö/g, "O");
+    function markStartsAndNumbers() {
+      let number = 1;
+      const numberMap = new Map();
+
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const k = key(r, c);
+          if (!cells.has(k)) continue;
+
+          const startsAcross = WORDS.find(w => w.row === r && w.col === c && w.dir === "across");
+          const startsDown = WORDS.find(w => w.row === r && w.col === c && w.dir === "down");
+
+          if (startsAcross || startsDown) {
+            numberMap.set(k, number);
+            if (startsAcross) startsAcross.number = number;
+            if (startsDown) startsDown.number = number;
+            number++;
+          }
+        }
+      }
+
+      return numberMap;
     }
 
     function buildGrid() {
       WORDS.forEach(addWordToMap);
+      verifyNoParallelOrTouching();
       verifyConnected();
-      const numberMap = markStartsAndNumbers();
 
+      const numberMap = markStartsAndNumbers();
       gridEl.style.gridTemplateColumns = `repeat(${COLS}, 38px)`;
 
       for (let r = 0; r < ROWS; r++) {
@@ -456,6 +499,7 @@
           input.autocomplete = "off";
           input.spellcheck = false;
           input.setAttribute("aria-label", `Ruta ${r + 1}, ${c + 1}`);
+
           input.addEventListener("input", (e) => {
             e.target.value = normalizeInput(e.target.value).slice(0, 1);
             cell.classList.remove("correct", "wrong");
