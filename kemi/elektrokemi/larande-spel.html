@@ -27,6 +27,12 @@
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .resource-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
     .resource-box h2 {
@@ -40,20 +46,28 @@
       line-height: 1.35;
     }
 
+    .resource-thumb-link {
+      display: block;
+      text-decoration: none;
+    }
+
     .resource-thumb {
       width: 100%;
       aspect-ratio: 16 / 10;
-      border: 2px dashed #bfc9d6;
+      border: 1px solid #cfd8e3;
       border-radius: 12px;
-      background: linear-gradient(135deg, #f8fafc, #eef3f8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #667085;
-      font-weight: 700;
-      text-align: center;
-      padding: 0.75rem;
-      box-sizing: border-box;
+      object-fit: cover;
+      display: block;
+      background: #f5f7fa;
+    }
+
+    .resource-title-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .resource-title-link:hover h2 {
+      text-decoration: underline;
     }
 
     .resource-box ul {
@@ -119,8 +133,12 @@
 
     <section class="resource-grid">
       <article class="resource-box">
-        <div class="resource-thumb">Bild för Begrepp</div>
-        <h2>Begrepp</h2>
+        <a class="resource-thumb-link" href="./begreppskort.html">
+          <img src="./begrepp-elektrokemi.png" alt="Begrepp – elektrokemi" class="resource-thumb">
+        </a>
+        <a class="resource-title-link" href="./begreppskort.html">
+          <h2>Begrepp</h2>
+        </a>
         <p>Para ihop begrepp och förklaringar inom metaller, batterier, korrosion och elektrolys.</p>
         <ul>
           <li><a href="./begreppskort.html">Öppna begreppskort</a></li>
@@ -128,8 +146,12 @@
       </article>
 
       <article class="resource-box">
-        <div class="resource-thumb">Bild för Ädel eller oädel</div>
-        <h2>Ädel eller oädel</h2>
+        <a class="resource-thumb-link" href="./adel-eller-oadel.html">
+          <img src="./adelelleroadel.png" alt="Ädel eller oädel" class="resource-thumb">
+        </a>
+        <a class="resource-title-link" href="./adel-eller-oadel.html">
+          <h2>Ädel eller oädel</h2>
+        </a>
         <p>Sortera metaller efter om de är ädla eller oädla och träna på spänningsserien.</p>
         <ul>
           <li><a href="./adel-eller-oadel.html">Öppna spelet</a></li>
@@ -137,8 +159,12 @@
       </article>
 
       <article class="resource-box">
-        <div class="resource-thumb">Bild för Bygg ett batteri</div>
-        <h2>Bygg ett batteri</h2>
+        <a class="resource-thumb-link" href="#">
+          <img src="./byggettbatteri.png" alt="Bygg ett batteri" class="resource-thumb">
+        </a>
+        <a class="resource-title-link" href="#">
+          <h2>Bygg ett batteri</h2>
+        </a>
         <p>Träna på hur minuspol, pluspol, elektrolyt och elektronflöde hör ihop i ett galvaniskt element.</p>
         <ul>
           <li><a href="#">Kommer snart</a></li>
@@ -146,8 +172,12 @@
       </article>
 
       <article class="resource-box">
-        <div class="resource-thumb">Bild för Korsord</div>
-        <h2>Korsord</h2>
+        <a class="resource-thumb-link" href="#">
+          <img src="./korsord-elektrokemi.png" alt="Korsord – elektrokemi" class="resource-thumb">
+        </a>
+        <a class="resource-title-link" href="#">
+          <h2>Korsord</h2>
+        </a>
         <p>Träna centrala ord och begrepp inom elektrokemi i ett korsord.</p>
         <ul>
           <li><a href="#">Kommer snart</a></li>
@@ -155,7 +185,9 @@
       </article>
 
       <article class="resource-box">
-        <div class="resource-thumb">Bild för Redoxreaktioner</div>
+        <div class="resource-thumb" style="display:flex;align-items:center;justify-content:center;color:#667085;font-weight:700;">
+          Bild kommer senare
+        </div>
         <h2>Redoxreaktioner</h2>
         <p>Träna på vad som oxideras, vad som reduceras och hur elektroner flyttas i reaktioner.</p>
         <ul>
