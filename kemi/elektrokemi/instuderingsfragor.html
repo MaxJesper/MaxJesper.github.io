@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+</head>
+
+<body>
+  <header class="kemi-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>Elektrokemi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="study-info" role="note" aria-label="Tips för tangentbord">
+      <strong>TIPS:</strong> Klicka på en fråga för att visa eller dölja svaret.
+      Använd <strong>piltangenter ↑/↓</strong> för att gå mellan frågor och tryck <strong>mellanslag</strong> eller <strong>Enter</strong> för att visa eller dölja svar.
+    </div>
+
+    <div class="study-actions">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <a href="./instuderingsfragor-print-elev.html" target="_blank" rel="noopener"
+         class="subject-btn print-green">🖨️ Utskrift – elev</a>
+      <a href="./instuderingsfragor-print-larare.html" target="_blank" rel="noopener"
+         class="subject-btn print-green">🖨️ Utskrift – lärare</a>
+    </div>
+
+    <div id="study-container" aria-live="polite"></div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "./data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "interactive"
+    });
+  </script>
+</body>
+</html>
