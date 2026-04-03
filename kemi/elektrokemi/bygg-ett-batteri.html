@@ -18,10 +18,10 @@
       --accent:#1f5fa8;
       --soft:#eef4fb;
       --slot:#f8fafc;
-      --metal:#d9dde3;
       --wire:#8a5a2b;
-      --lamp-off:#d7dbe2;
       --lamp-on:#ffd84d;
+      --plus:#c43d2f;
+      --minus:#1f5fa8;
     }
 
     body{
@@ -136,12 +136,44 @@
       background: linear-gradient(180deg, #ffffff, #f7fbff);
     }
 
+    .polarity-row{
+      display: grid;
+      grid-template-columns: 1fr 160px 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .pole-label{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border-radius: 999px;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-size: 1rem;
+    }
+
+    .pole-label.minus{
+      color: var(--minus);
+      background: #eef5ff;
+      border-color: #bfd3f2;
+    }
+
+    .pole-label.plus{
+      color: var(--plus);
+      background: #fff1ef;
+      border-color: #efc4be;
+    }
+
     .battery-scene{
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       gap: 1rem;
       align-items: end;
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
     }
 
     .beaker{
@@ -149,99 +181,78 @@
       border: 3px solid #9bc0e5;
       border-top: 8px solid #7eb0dd;
       border-radius: 0 0 22px 22px;
-      min-height: 290px;
+      min-height: 310px;
       position: relative;
       overflow: hidden;
       box-shadow: inset 0 -25px 40px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .beaker:hover{
+      transform: translateY(-2px);
+      box-shadow: inset 0 -25px 40px rgba(0,0,0,0.04), 0 8px 18px rgba(0,0,0,0.06);
     }
 
     .beaker-label{
       position: absolute;
-      top: 10px;
+      top: 12px;
       left: 12px;
       right: 12px;
       text-align: center;
       font-weight: 700;
       color: #27557b;
       font-size: 1rem;
+      z-index: 3;
     }
 
-    .liquid{
+    .electrode-area{
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 48%;
-      background: linear-gradient(180deg, rgba(111, 188, 255, 0.35), rgba(88, 165, 233, 0.55));
-      border-top: 2px solid rgba(255,255,255,0.65);
+      inset: 48px 14px 18px 14px;
       display: flex;
-      align-items: start;
+      align-items: flex-end;
       justify-content: center;
-      padding-top: 0.8rem;
-      color: #19476a;
-      font-weight: 700;
-      opacity: 0;
-      transition: opacity 0.2s ease;
+      z-index: 2;
     }
 
-    .liquid.active{
-      opacity: 1;
-    }
-
-    .electrode-slot{
-      position: absolute;
-      top: 52px;
-      bottom: 58px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 88px;
-      background: var(--slot);
+    .electrode-frame{
+      width: 92px;
+      height: 215px;
       border: 2px dashed #aac0d7;
       border-radius: 14px;
+      background: rgba(255,255,255,0.35);
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding-top: 12px;
+      padding-top: 8px;
+      position: relative;
     }
 
-    .electrode-slot.correct{
+    .electrode-frame.correct{
       border-color: #77b88a;
       background: #f1fbf4;
     }
 
-    .electrode-slot.wrong{
+    .electrode-frame.wrong{
       border-color: #d38a8a;
       background: #fff5f5;
     }
 
-    .slot-title{
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      text-align: center;
-      font-size: 0.92rem;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
     .electrode{
-      width: 68px;
-      min-height: 130px;
+      width: 72px;
+      height: 185px;
       border-radius: 10px;
       border: 2px solid #8d98a5;
-      background:
-        linear-gradient(180deg, #eef1f5 0%, #b8c0cb 100%);
       box-shadow: inset 0 0 10px rgba(255,255,255,0.55);
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+      padding-top: 0.6rem;
       text-align: center;
-      padding: 0.4rem;
-      font-weight: 800;
+      font-weight: 900;
+      font-size: 1.3rem;
       color: #25303a;
-      cursor: grab;
-      user-select: none;
+      position: relative;
     }
 
     .electrode[data-metal="zink"]{
@@ -262,18 +273,63 @@
       background: linear-gradient(180deg, #f2f3f6, #c8ccd2);
     }
 
+    .metal-name{
+      position: absolute;
+      bottom: 8px;
+      left: 6px;
+      right: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .empty-slot-text{
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      text-align: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .liquid{
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 48%;
+      background: linear-gradient(180deg, rgba(111, 188, 255, 0.35), rgba(88, 165, 233, 0.55));
+      border-top: 2px solid rgba(255,255,255,0.65);
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      padding-top: 0.8rem;
+      color: #19476a;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 1;
+    }
+
+    .liquid.active{
+      opacity: 1;
+    }
+
     .center-stack{
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: end;
       gap: 0.8rem;
-      min-width: 210px;
+      min-width: 160px;
     }
 
     .lamp{
-      width: 94px;
-      height: 94px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
       border: 4px solid #8e98a6;
       background:
@@ -310,8 +366,9 @@
       transform: scale(1.06);
     }
 
-    .wire-zone{
-      width: 120px;
+    .wire-zone,
+    .saltbridge-zone{
+      width: 130px;
       min-height: 56px;
       border-radius: 14px;
       border: 2px dashed #b69469;
@@ -323,11 +380,34 @@
       padding: 0.5rem;
       font-weight: 700;
       color: #7b582d;
+      cursor: pointer;
+    }
+
+    .saltbridge-zone{
+      width: 180px;
+      min-height: 66px;
+      border-color: #8fa7c3;
+      color: #3a5678;
+      background: #f5f9ff;
+    }
+
+    .wire-zone.active,
+    .saltbridge-zone.active{
+      border-style: solid;
     }
 
     .wire-zone.active{
-      border-style: solid;
       background: #fdf1df;
+    }
+
+    .saltbridge-zone.active{
+      background: #eaf3ff;
+    }
+
+    .bridge-row{
+      display: flex;
+      justify-content: center;
+      margin: 0.4rem 0 1rem;
     }
 
     .wire-paths{
@@ -338,15 +418,25 @@
       margin-top: 0.6rem;
     }
 
-    .wire-line{
+    .wire-line,
+    .bridge-line{
       height: 12px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #bd8553, #8a5a2b);
       opacity: 0.22;
       transition: opacity 0.2s ease;
     }
 
-    .wire-line.active{
+    .wire-line{
+      background: linear-gradient(180deg, #bd8553, #8a5a2b);
+    }
+
+    .bridge-line{
+      background: linear-gradient(180deg, #b8cbe3, #7f99b8);
+      height: 14px;
+    }
+
+    .wire-line.active,
+    .bridge-line.active{
       opacity: 1;
     }
 
@@ -528,9 +618,10 @@
     }
 
     @media (max-width: 720px){
-      .battery-scene{
+      .polarity-row,
+      .battery-scene,
+      .wire-paths{
         grid-template-columns: 1fr;
-        gap: 0.8rem;
       }
 
       .center-stack{
@@ -538,11 +629,8 @@
         min-width: 0;
       }
 
-      .wire-paths{
-        grid-template-columns: 1fr;
-      }
-
-      .wire-line{
+      .wire-line,
+      .bridge-line{
         height: 10px;
       }
     }
@@ -565,8 +653,9 @@
 
     <section class="intro-card">
       <p>
-        Bygg ett fungerande batteri genom att välja rätt metaller och rätt delar.
-        Tänk på vilken metall som lättast lämnar ifrån sig elektroner och åt vilket håll elektronerna går i ledningen.
+        Bygg ett fungerande batteri genom att välja rätt metaller och lägga till
+        elektrolyt, saltbrygga och sladd. Tänk på vilken metall som lämnar ifrån sig
+        elektroner och åt vilket håll elektronerna går i ledningen.
       </p>
     </section>
 
@@ -574,8 +663,8 @@
       <aside class="info-card">
         <h2>Så spelar du</h2>
         <p>
-          Klicka först på en del i rutan nedan. Klicka sedan på platsen där du vill lägga den.
-          När allt verkar klart kan du kontrollera om batteriet fungerar.
+          Klicka först på en del i rutan nedan. Klicka sedan på den plats där du vill lägga den.
+          Hela bägaren är klickbar när du placerar en metall. När bygget verkar klart kan du kontrollera batteriet.
         </p>
 
         <div class="tool-list">
@@ -584,12 +673,12 @@
             Bygg ett galvaniskt element som får lampan att lysa.
           </div>
           <div class="tool">
-            <strong>Du behöver tänka på</strong>
-            Vilken metall är oädlare? Var går elektronerna? Vad behövs för att kretsen ska bli komplett?
+            <strong>Du behöver</strong>
+            Två metaller, elektrolyt i båda bägare, en saltbrygga och en sladd mellan polerna.
           </div>
           <div class="tool">
             <strong>Tips</strong>
-            I ett vanligt skolexempel lämnar zink gärna ifrån sig elektroner, medan koppar är ädlare.
+            Den oädlare metallen blir minuspol. Elektroner går i sladden från minuspol till pluspol.
           </div>
         </div>
 
@@ -607,15 +696,24 @@
       <section class="game-card">
         <div class="status-row">
           <div class="level-badge">🔋 Byggläge</div>
-          <div class="small-note">Placera två metaller, elektrolyt och sladd. Svara sedan på elektronfrågan.</div>
+          <div class="small-note">Placera metall, elektrolyt, saltbrygga och sladd. Svara sedan på frågan.</div>
         </div>
 
         <div class="battery-board">
+
+          <div class="polarity-row">
+            <div class="pole-label minus" id="leftPoleLabel">− pol</div>
+            <div></div>
+            <div class="pole-label plus" id="rightPoleLabel">+ pol</div>
+          </div>
+
           <div class="battery-scene">
             <div class="beaker" id="leftBeaker" data-slot="leftMetal">
               <div class="beaker-label">Vänster halvcell</div>
-              <div class="electrode-slot" id="leftMetalSlot">
-                <div class="slot-title">Klicka här för metall</div>
+              <div class="electrode-area" id="leftElectrodeArea">
+                <div class="electrode-frame" id="leftMetalSlot">
+                  <div class="empty-slot-text">Klicka i bägaren för metall</div>
+                </div>
               </div>
               <div class="liquid" id="leftLiquid">Elektrolyt</div>
             </div>
@@ -623,13 +721,15 @@
             <div class="center-stack">
               <div class="lamp" id="lamp" aria-label="lampa"></div>
               <div class="wire-zone" id="wireZone">Klicka här för sladd</div>
-              <div class="drop-hint">Lampan lyser bara om batteriet är rätt byggt.</div>
+              <div class="drop-hint">Sladden förbinder minuspol och pluspol.</div>
             </div>
 
             <div class="beaker" id="rightBeaker" data-slot="rightMetal">
               <div class="beaker-label">Höger halvcell</div>
-              <div class="electrode-slot" id="rightMetalSlot">
-                <div class="slot-title">Klicka här för metall</div>
+              <div class="electrode-area" id="rightElectrodeArea">
+                <div class="electrode-frame" id="rightMetalSlot">
+                  <div class="empty-slot-text">Klicka i bägaren för metall</div>
+                </div>
               </div>
               <div class="liquid" id="rightLiquid">Elektrolyt</div>
             </div>
@@ -639,6 +739,16 @@
             <div class="wire-line" id="wireLeft"></div>
             <div></div>
             <div class="wire-line" id="wireRight"></div>
+          </div>
+
+          <div class="bridge-row">
+            <div class="saltbridge-zone" id="saltBridgeZone">Klicka här för saltbrygga</div>
+          </div>
+
+          <div class="wire-paths">
+            <div class="bridge-line" id="bridgeLeft"></div>
+            <div></div>
+            <div class="bridge-line" id="bridgeRight"></div>
           </div>
 
           <div class="parts-panel">
@@ -659,6 +769,13 @@
 
   <script src="/js/menu.js"></script>
   <script>
+    const metalInfo = {
+      zink: { symbol: "Zn", name: "Zink" },
+      koppar: { symbol: "Cu", name: "Koppar" },
+      silver: { symbol: "Ag", name: "Silver" },
+      magnesium: { symbol: "Mg", name: "Magnesium" }
+    };
+
     const tasks = [
       {
         id: 1,
@@ -716,21 +833,31 @@
     const rightMetalSlot = document.getElementById("rightMetalSlot");
     const leftLiquid = document.getElementById("leftLiquid");
     const rightLiquid = document.getElementById("rightLiquid");
+    const leftBeaker = document.getElementById("leftBeaker");
+    const rightBeaker = document.getElementById("rightBeaker");
     const wireZone = document.getElementById("wireZone");
+    const saltBridgeZone = document.getElementById("saltBridgeZone");
     const wireLeft = document.getElementById("wireLeft");
     const wireRight = document.getElementById("wireRight");
+    const bridgeLeft = document.getElementById("bridgeLeft");
+    const bridgeRight = document.getElementById("bridgeRight");
     const lamp = document.getElementById("lamp");
     const taskText = document.getElementById("taskText");
     const questionText = document.getElementById("questionText");
     const answerRow = document.getElementById("answerRow");
     const feedbackBox = document.getElementById("feedbackBox");
+    const leftPoleLabel = document.getElementById("leftPoleLabel");
+    const rightPoleLabel = document.getElementById("rightPoleLabel");
 
     function createElectrodeElement(metal){
-      const div = document.createElement("div");
-      div.className = "electrode";
-      div.dataset.metal = metal;
-      div.textContent = metal.charAt(0).toUpperCase() + metal.slice(1);
-      return div;
+      const wrapper = document.createElement("div");
+      wrapper.className = "electrode";
+      wrapper.dataset.metal = metal;
+      wrapper.innerHTML = `
+        <div>${metalInfo[metal].symbol}</div>
+        <div class="metal-name">${metalInfo[metal].name}</div>
+      `;
+      return wrapper;
     }
 
     function shuffle(array){
@@ -754,9 +881,10 @@
       const parts = [
         ...currentTask.metals.map(metal => ({
           id: metal,
-          label: metal.charAt(0).toUpperCase() + metal.slice(1)
+          label: metalInfo[metal].name + " (" + metalInfo[metal].symbol + ")"
         })),
         { id: "electrolyte", label: "Elektrolyt" },
+        { id: "saltbridge", label: "Saltbrygga" },
         { id: "wire", label: "Sladd + lampa" }
       ];
 
@@ -784,27 +912,39 @@
       }
     }
 
+    function renderEmptySlot(slot){
+      slot.innerHTML = `<div class="empty-slot-text">Klicka i bägaren för metall</div>`;
+    }
+
     function resetBoard(){
       state = {
         leftMetal: null,
         rightMetal: null,
         electrolyte: false,
+        saltbridge: false,
         wire: false,
         answered: false
       };
 
-      leftMetalSlot.innerHTML = '<div class="slot-title">Klicka här för metall</div>';
-      rightMetalSlot.innerHTML = '<div class="slot-title">Klicka här för metall</div>';
-      leftMetalSlot.className = "electrode-slot";
-      rightMetalSlot.className = "electrode-slot";
+      renderEmptySlot(leftMetalSlot);
+      renderEmptySlot(rightMetalSlot);
+
+      leftMetalSlot.className = "electrode-frame";
+      rightMetalSlot.className = "electrode-frame";
 
       leftLiquid.classList.remove("active");
       rightLiquid.classList.remove("active");
+
+      saltBridgeZone.textContent = "Klicka här för saltbrygga";
+      saltBridgeZone.classList.remove("active");
+      bridgeLeft.classList.remove("active");
+      bridgeRight.classList.remove("active");
 
       wireZone.textContent = "Klicka här för sladd";
       wireZone.classList.remove("active");
       wireLeft.classList.remove("active");
       wireRight.classList.remove("active");
+
       lamp.classList.remove("on");
 
       feedbackBox.className = "feedback";
@@ -821,6 +961,8 @@
         <strong>Dagens uppgift:</strong><br>
         ${task.prompt}
       `;
+      leftPoleLabel.textContent = "− pol";
+      rightPoleLabel.textContent = "+ pol";
       resetBoard();
     }
 
@@ -859,6 +1001,17 @@
       setSelectedPart(null);
     }
 
+    function placeSaltBridge(){
+      if(selectedPart !== "saltbridge") return;
+      state.saltbridge = true;
+      saltBridgeZone.textContent = "Saltbrygga på plats";
+      saltBridgeZone.classList.add("active");
+      bridgeLeft.classList.add("active");
+      bridgeRight.classList.add("active");
+      markPartUsed("saltbridge", true);
+      setSelectedPart(null);
+    }
+
     function placeWire(){
       if(selectedPart !== "wire") return;
       state.wire = true;
@@ -889,7 +1042,7 @@
     }
 
     function allPartsPlaced(){
-      return state.leftMetal && state.rightMetal && state.electrolyte && state.wire;
+      return state.leftMetal && state.rightMetal && state.electrolyte && state.saltbridge && state.wire;
     }
 
     function checkBattery(chosenAnswer = null){
@@ -897,6 +1050,7 @@
         state.leftMetal === currentTask.correctLeft &&
         state.rightMetal === currentTask.correctRight &&
         state.electrolyte &&
+        state.saltbridge &&
         state.wire;
 
       leftMetalSlot.classList.remove("correct", "wrong");
@@ -914,7 +1068,7 @@
         showFeedback(
           false,
           "Batteriet är inte färdigbyggt ännu.",
-          "Du behöver två metaller, elektrolyt och en sladd med lampa för att få en komplett krets."
+          "Du behöver två metaller, elektrolyt, saltbrygga och en sladd med lampa för att få ett fungerande galvaniskt element."
         );
         return;
       }
@@ -942,13 +1096,13 @@
         showFeedback(
           false,
           "Svaret på frågan var rätt, men batteriet är inte rätt byggt.",
-          "Tänk på vilken metall som är oädlare och vilken som ska vara pluspol respektive minuspol."
+          "Tänk på vilken metall som är oädlare, vilken som ska vara minuspol och att både saltbrygga och sladd måste finnas."
         );
       } else if(correctBuild && !answerCorrect){
         lamp.classList.remove("on");
         showFeedback(
           false,
-          "Batteriet är rätt byggt, men riktningen eller rollen blev fel i frågan.",
+          "Batteriet är rätt byggt, men svaret på frågan blev fel.",
           currentTask.explain
         );
       } else {
@@ -969,15 +1123,24 @@
       `;
     }
 
-    leftMetalSlot.addEventListener("click", () => placeMetal("leftMetal"));
-    rightMetalSlot.addEventListener("click", () => placeMetal("rightMetal"));
-    leftBeaker.addEventListener("click", (e) => {
-      if(e.target === leftBeaker || e.target === leftLiquid) placeElectrolyte();
+    leftBeaker.addEventListener("click", () => {
+      if(selectedPart === "electrolyte"){
+        placeElectrolyte();
+      } else {
+        placeMetal("leftMetal");
+      }
     });
-    rightBeaker.addEventListener("click", (e) => {
-      if(e.target === rightBeaker || e.target === rightLiquid) placeElectrolyte();
+
+    rightBeaker.addEventListener("click", () => {
+      if(selectedPart === "electrolyte"){
+        placeElectrolyte();
+      } else {
+        placeMetal("rightMetal");
+      }
     });
+
     wireZone.addEventListener("click", placeWire);
+    saltBridgeZone.addEventListener("click", placeSaltBridge);
 
     document.getElementById("checkBtn").addEventListener("click", () => checkBattery());
     document.getElementById("resetBtn").addEventListener("click", resetBoard);
