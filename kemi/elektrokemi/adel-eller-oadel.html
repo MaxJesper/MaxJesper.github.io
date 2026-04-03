@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ädel eller oädel? – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #fff8ef 0%, #fdfbf7 40%, #fbfcff 100%);
+      color: #111;
+    }
+
+    .layout{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (min-width: 980px){
+      .layout{ grid-template-columns: 300px 1fr; }
+    }
+
+    .panel{
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.84);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+    }
+
+    .side-actions{ display: grid; gap: 10px; }
+
+    .btn{
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .btn.secondary{
+      background: #fff;
+      color: #111;
+    }
+
+    .stats{
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    .stats span{ font-variant-numeric: tabular-nums; }
+
+    .choice-grid{
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice-btn{
+      border: 2px solid #d4d4d8;
+      background: #fff;
+      color: #111;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .choice-btn small{
+      display: block;
+      margin-top: 4px;
+      color: #444;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .choice-btn.active{
+      border-color: #b45309;
+      background: #fffbeb;
+      box-shadow: 0 0 0 3px rgba(180,83,9,.12);
+    }
+
+    .game-title{
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+
+    .game-subtitle{
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .status-row{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #f3f4f6;
+      color: #111;
+      border: 1px solid #d4d4d8;
+    }
+
+    .countdown.good{
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
+
+    .countdown.warn{
+      background: #fef3c7;
+      border-color: #fcd34d;
+      color: #92400e;
+    }
+
+    .countdown.danger{
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+
+    .zones{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 760px){
+      .zones{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .zone{
+      min-height: 220px;
+      border: 2px dashed #d1d5db;
+      border-radius: 16px;
+      padding: 12px;
+      background: #fff;
+      transition: background .2s ease, border-color .2s ease, transform .15s ease;
+    }
+
+    .zone h3{
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .zone p{
+      margin: 0 0 10px;
+      color: #444;
+      font-size: 14px;
+    }
+
+    .zone.adel{
+      background: #fefce8;
+    }
+
+    .zone.oadel{
+      background: #eff6ff;
+    }
+
+    .zone.active-drop{
+      border-color: #111;
+      transform: scale(1.01);
+    }
+
+    .zone-cards{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      min-height: 80px;
+    }
+
+    .cards-pool{
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .cards-pool h3{
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .pool-grid{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      min-height: 60px;
+    }
+
+    .metal-card{
+      min-width: 110px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid #a16207;
+      background: #fffbeb;
+      box-shadow: 0 4px 10px rgba(0,0,0,.08);
+      text-align: center;
+      font-weight: 800;
+      cursor: grab;
+      user-select: none;
+      transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+    }
+
+    .metal-card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(0,0,0,.12);
+    }
+
+    .metal-card.correct{
+      background: #dcfce7;
+      border-color: #15803d;
+    }
+
+    .metal-card.incorrect{
+      background: #fee2e2;
+      border-color: #dc2626;
+      animation: shake .25s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-3px); }
+      100% { transform: translateX(0); }
+    }
+
+    .feedback{
+      margin-top: 14px;
+      min-height: 28px;
+      font-weight: 700;
+    }
+
+    .feedback.good{ color: #166534; }
+    .feedback.bad{ color: #b91c1c; }
+
+    .goal-box{
+      border: 1px dashed rgba(0,0,0,.18);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.7);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .goal-box strong{
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    #win-message{
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1200;
+    }
+
+    #win-message.open{ display: flex; }
+
+    .win-card{
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      text-align: center;
+    }
+
+    .win-card h2{
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .win-card p{
+      margin: 0 0 14px;
+    }
+  </style>
+</head>
+<body>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="side-actions">
+        <a href="/kemi/elektrokemi/larande-spel.html" class="subject-btn">← Tillbaka</a>
+
+        <div>
+          <div style="font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#333;margin-bottom:4px;">Välj svårighet</div>
+          <div class="choice-grid" id="difficultyGrid"></div>
+        </div>
+
+        <button class="btn" type="button" id="resetBtn">Starta om nivå</button>
+        <button class="btn secondary" type="button" id="restartFullBtn">Starta från början</button>
+
+        <div class="stats" aria-live="polite">
+          <div>Nivå: <span id="currentLevelLabel">1</span></div>
+          <div>Poäng: <span id="score">0</span></div>
+          <div>Rätt: <span id="correctCount">0</span></div>
+          <div>Fel: <span id="mistakes">0</span></div>
+          <div>Kvar: <span id="remainingCount">0</span></div>
+          <div>Tid: <span id="timer">00:00.0</span></div>
+        </div>
+
+        <div class="goal-box" id="goalBox"></div>
+      </div>
+    </aside>
+
+    <main class="panel">
+      <h2 class="game-title">Ädel eller oädel?</h2>
+      <p class="game-subtitle">Sortera metallerna till rätt grupp. Du kan dra korten eller klicka på dem.</p>
+
+      <div class="status-row">
+        <span class="badge" id="difficultyBadge">Nybörjare</span>
+        <span class="badge" id="levelBadge">Level 1</span>
+        <span class="badge countdown good" id="countdownBadge">Tid kvar: --</span>
+      </div>
+
+      <div class="zones">
+        <section class="zone adel" id="adelZone" data-category="adel">
+          <h3>Ädel</h3>
+          <p>Metaller som reagerar mindre lätt.</p>
+          <div class="zone-cards" id="adelCards"></div>
+        </section>
+
+        <section class="zone oadel" id="oadelZone" data-category="oadel">
+          <h3>Oädel</h3>
+          <p>Metaller som lättare lämnar ifrån sig elektroner.</p>
+          <div class="zone-cards" id="oadelCards"></div>
+        </section>
+      </div>
+
+      <section class="cards-pool">
+        <h3>Metallkort</h3>
+        <div class="pool-grid" id="poolGrid"></div>
+      </section>
+
+      <div class="feedback" id="feedback"></div>
+    </main>
+  </div>
+
+  <div id="win-message" role="dialog" aria-modal="true" aria-label="Nivå klar">
+    <div class="win-card">
+      <h2 id="winTitle">Snyggt jobbat!</h2>
+      <p id="winText">Du klarade nivån.</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" type="button" id="playAgainBtn">Spela samma nivå igen</button>
+        <button class="btn" type="button" id="continueBtn" style="display:none;">Fortsätt till Level 2</button>
+        <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    const DIFFICULTIES = {
+      beginner: {
+        label: "Nybörjare",
+        timeLimitSec: 180,
+        maxMistakes: 3,
+        correctPoints: 10,
+        clearBonus: 40,
+        unlockBonus: 60
+      },
+      normal: {
+        label: "Van spelare",
+        timeLimitSec: 100,
+        maxMistakes: 2,
+        correctPoints: 12,
+        clearBonus: 60,
+        unlockBonus: 100
+      },
+      master: {
+        label: "Rutinerad mästare",
+        timeLimitSec: 70,
+        maxMistakes: 0,
+        correctPoints: 15,
+        clearBonus: 90,
+        unlockBonus: 150
+      }
+    };
+
+    const LEVELS = {
+      1: [
+        { metal: "Guld", category: "adel" },
+        { metal: "Silver", category: "adel" },
+        { metal: "Koppar", category: "adel" },
+        { metal: "Platina", category: "adel" },
+        { metal: "Järn", category: "oadel" },
+        { metal: "Zink", category: "oadel" },
+        { metal: "Magnesium", category: "oadel" },
+        { metal: "Aluminium", category: "oadel" }
+      ],
+      2: [
+        { metal: "Bly", category: "adel" },
+        { metal: "Tenn", category: "adel" },
+        { metal: "Nickel", category: "oadel" },
+        { metal: "Titan", category: "oadel" },
+        { metal: "Litium", category: "oadel" },
+        { metal: "Krom", category: "oadel" },
+        { metal: "Koppar", category: "adel" },
+        { metal: "Magnesium", category: "oadel" }
+      ]
+    };
+
+    const poolGrid = document.getElementById('poolGrid');
+    const adelCards = document.getElementById('adelCards');
+    const oadelCards = document.getElementById('oadelCards');
+    const feedback = document.getElementById('feedback');
+
+    const scoreEl = document.getElementById('score');
+    const correctCountEl = document.getElementById('correctCount');
+    const mistakesEl = document.getElementById('mistakes');
+    const remainingCountEl = document.getElementById('remainingCount');
+    const timerEl = document.getElementById('timer');
+    const currentLevelLabel = document.getElementById('currentLevelLabel');
+    const difficultyBadge = document.getElementById('difficultyBadge');
+    const levelBadge = document.getElementById('levelBadge');
+    const countdownBadge = document.getElementById('countdownBadge');
+    const goalBox = document.getElementById('goalBox');
+    const difficultyGrid = document.getElementById('difficultyGrid');
+
+    const winEl = document.getElementById('win-message');
+    const winTitle = document.getElementById('winTitle');
+    const winText = document.getElementById('winText');
+    const continueBtn = document.getElementById('continueBtn');
+
+    let currentLevel = 1;
+    let currentDifficultyKey = 'beginner';
+    let score = 0;
+    let correctCount = 0;
+    let mistakes = 0;
+    let remaining = 0;
+    let level2Unlocked = false;
+
+    let timerRunning = false;
+    let startTs = 0;
+    let rafId = 0;
+    let levelFinished = false;
+
+    function formatTime(ms){
+      const total = Math.max(0, ms);
+      const minutes = Math.floor(total / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const tenths = Math.floor((total % 1000) / 100);
+      return `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}.${tenths}`;
+    }
+
+    function formatPlainTime(totalSec){
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${min}:${String(sec).padStart(2,'0')}`;
+    }
+
+    function currentConfig(){
+      return DIFFICULTIES[currentDifficultyKey];
+    }
+
+    function currentItems(){
+      return LEVELS[currentLevel].map(item => ({ ...item }));
+    }
+
+    function shuffle(arr){
+      for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function elapsedMs(){
+      if (!timerRunning) return 0;
+      return performance.now() - startTs;
+    }
+
+    function remainingMs(){
+      const cfg = currentConfig();
+      return Math.max(0, cfg.timeLimitSec * 1000 - elapsedMs());
+    }
+
+    function tick(){
+      if (!timerRunning) return;
+
+      const elapsed = elapsedMs();
+      timerEl.textContent = formatTime(elapsed);
+
+      const remain = remainingMs();
+      const remainSec = remain / 1000;
+      countdownBadge.textContent = `Tid kvar: ${formatTime(remain)}`;
+
+      countdownBadge.classList.remove('good','warn','danger');
+      if (remainSec > 45) countdownBadge.classList.add('good');
+      else if (remainSec > 20) countdownBadge.classList.add('warn');
+      else countdownBadge.classList.add('danger');
+
+      if (remain <= 0 && !levelFinished){
+        timerRunning = false;
+        cancelAnimationFrame(rafId);
+        failByTime();
+        return;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startTimerIfNeeded(){
+      if (timerRunning || levelFinished) return;
+      timerRunning = true;
+      startTs = performance.now();
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopTimer(){
+      timerRunning = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function resetTimer(){
+      stopTimer();
+      timerEl.textContent = "00:00.0";
+      countdownBadge.textContent = "Tid kvar: --";
+      countdownBadge.classList.remove('warn','danger');
+      countdownBadge.classList.add('good');
+    }
+
+    function renderDifficultyButtons(){
+      difficultyGrid.innerHTML = '';
+      Object.entries(DIFFICULTIES).forEach(([key, cfg]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice-btn';
+        btn.innerHTML = `${cfg.label}<small>${formatPlainTime(cfg.timeLimitSec)} • max ${cfg.maxMistakes} fel</small>`;
+        if (key === currentDifficultyKey) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          currentDifficultyKey = key;
+          renderDifficultyButtons();
+          restartFromBeginning();
+        });
+        difficultyGrid.appendChild(btn);
+      });
+    }
+
+    function updateInfo(){
+      const cfg = currentConfig();
+      scoreEl.textContent = score;
+      correctCountEl.textContent = correctCount;
+      mistakesEl.textContent = mistakes;
+      remainingCountEl.textContent = remaining;
+      currentLevelLabel.textContent = currentLevel;
+      difficultyBadge.textContent = cfg.label;
+      levelBadge.textContent = `Level ${currentLevel}`;
+
+      goalBox.innerHTML = `
+        <strong>Utmaning för Level 1</strong><br>
+        Sortera alla metaller rätt inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
+      `;
+    }
+
+    function createCard(item){
+      const card = document.createElement('div');
+      card.className = 'metal-card';
+      card.textContent = item.metal;
+      card.draggable = true;
+      card.dataset.category = item.category;
+      card.dataset.metal = item.metal;
+
+      card.addEventListener('dragstart', () => {
+        startTimerIfNeeded();
+        card.classList.remove('incorrect');
+      });
+
+      card.addEventListener('click', () => {
+        startTimerIfNeeded();
+        quickChoose(card);
+      });
+
+      return card;
+    }
+
+    function quickChoose(card){
+      const choice = window.prompt(`Var hör ${card.dataset.metal} hemma?\nSkriv: ädel eller oädel`);
+      if (!choice) return;
+
+      const normalized = choice.trim().toLowerCase();
+      if (normalized === 'ädel' || normalized === 'adel'){
+        handleDrop(card, 'adel');
+      } else if (normalized === 'oädel' || normalized === 'oadel'){
+        handleDrop(card, 'oadel');
+      } else {
+        setFeedback('Skriv bara: ädel eller oädel.', false);
+      }
+    }
+
+    function setFeedback(text, good){
+      feedback.textContent = text;
+      feedback.className = `feedback ${good ? 'good' : 'bad'}`;
+    }
+
+    function handleDrop(card, category){
+      if (levelFinished) return;
+      const correct = card.dataset.category === category;
+
+      if (correct){
+        card.classList.remove('incorrect');
+        card.classList.add('correct');
+
+        const target = category === 'adel' ? adelCards : oadelCards;
+        target.appendChild(card);
+
+        card.draggable = false;
+        card.style.cursor = 'default';
+
+        score += currentConfig().correctPoints;
+        correctCount++;
+        remaining--;
+
+        setFeedback(`${card.dataset.metal} placerades rätt.`, true);
+      } else {
+        card.classList.remove('correct');
+        card.classList.add('incorrect');
+
+        mistakes++;
+        setFeedback(`${card.dataset.metal} hör inte hemma där. Försök igen.`, false);
+
+        setTimeout(() => card.classList.remove('incorrect'), 350);
+      }
+
+      updateInfo();
+
+      if (remaining === 0){
+        finishLevel();
+      }
+    }
+
+    function setupZones(){
+      [document.getElementById('adelZone'), document.getElementById('oadelZone')].forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('active-drop');
+        });
+
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('active-drop');
+        });
+
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('active-drop');
+
+          const dragged = document.querySelector('.metal-card:hover') || document.activeElement;
+          const hovered = [...poolGrid.querySelectorAll('.metal-card')].find(c => c.matches(':hover'));
+          const active = hovered || dragged;
+          if (!active || !active.classList.contains('metal-card')) return;
+
+          handleDrop(active, zone.dataset.category);
+        });
+      });
+    }
+
+    function fillBoard(){
+      poolGrid.innerHTML = '';
+      adelCards.innerHTML = '';
+      oadelCards.innerHTML = '';
+      feedback.textContent = '';
+      feedback.className = 'feedback';
+
+      const items = shuffle(currentItems());
+      items.forEach(item => poolGrid.appendChild(createCard(item)));
+
+      remaining = items.length;
+      updateInfo();
+    }
+
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    function finishLevel(){
+      levelFinished = true;
+      stopTimer();
+
+      const cfg = currentConfig();
+      const withinTime = elapsedMs() <= cfg.timeLimitSec * 1000;
+      const withinMistakes = mistakes <= cfg.maxMistakes;
+
+      score += cfg.clearBonus;
+      continueBtn.style.display = 'none';
+
+      if (currentLevel === 1 && withinTime && withinMistakes){
+        level2Unlocked = true;
+        score += cfg.unlockBonus;
+        updateInfo();
+
+        continueBtn.style.display = 'inline-flex';
+        winTitle.textContent = '🚀 Level 2 upplåst!';
+        winText.innerHTML = `Du sorterade allt rätt på tiden <strong>${timerEl.textContent}</strong> med <strong>${mistakes}</strong> fel.<br><br>Du fick <strong>+${cfg.unlockBonus} bonuspoäng</strong> och kan nu gå vidare.`;
+      } else if (currentLevel === 1){
+        updateInfo();
+        winTitle.textContent = '👏 Level 1 klar!';
+        winText.innerHTML = `Du klarade Level 1, men för att låsa upp Level 2 behöver du klara tiden och hålla dig inom tillåtet antal fel.`;
+      } else {
+        updateInfo();
+        winTitle.textContent = '🏆 Snyggt!';
+        winText.innerHTML = `Du klarade Level 2 på tiden <strong>${timerEl.textContent}</strong> med <strong>${mistakes}</strong> fel.<br><br>Total poäng: <strong>${score}</strong>.`;
+      }
+
+      winEl.classList.add('open');
+    }
+
+    function failByTime(){
+      levelFinished = true;
+      continueBtn.style.display = 'none';
+      winTitle.textContent = '⏰ Tiden är slut!';
+      winText.innerHTML = `Tiden tog slut på Level ${currentLevel}. Du kan försöka igen på samma nivå eller börja om från början.`;
+      winEl.classList.add('open');
+    }
+
+    function resetLevel(){
+      hideWin();
+      continueBtn.style.display = 'none';
+      levelFinished = false;
+      correctCount = 0;
+      mistakes = 0;
+      resetTimer();
+      fillBoard();
+    }
+
+    function restartFromBeginning(){
+      hideWin();
+      continueBtn.style.display = 'none';
+      currentLevel = 1;
+      level2Unlocked = false;
+      score = 0;
+      levelFinished = false;
+      correctCount = 0;
+      mistakes = 0;
+      resetTimer();
+      fillBoard();
+    }
+
+    function continueToLevel2(){
+      if (!level2Unlocked) return;
+      hideWin();
+      continueBtn.style.display = 'none';
+      currentLevel = 2;
+      levelFinished = false;
+      correctCount = 0;
+      mistakes = 0;
+      resetTimer();
+      fillBoard();
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      currentLevel = level2Unlocked ? currentLevel : 1;
+      resetLevel();
+    });
+
+    document.getElementById('restartFullBtn').addEventListener('click', restartFromBeginning);
+    document.getElementById('playAgainBtn').addEventListener('click', resetLevel);
+    document.getElementById('closeWinBtn').addEventListener('click', hideWin);
+    continueBtn.addEventListener('click', continueToLevel2);
+
+    window.addEventListener('load', () => {
+      renderDifficultyButtons();
+      setupZones();
+      restartFromBeginning();
+    });
+  </script>
+</body>
+</html>
