@@ -1282,7 +1282,7 @@
 
     function initLevel3State(){
       currentSeries = LEVEL2_ORDER.map(item => ({ ...item }));
-      challengeQueue = LEVEL3_CHALLENGES.map(item => ({ ...item }));
+      challengeQueue = shuffle(LEVEL3_CHALLENGES).map(item => ({ ...item }));
       currentChallenge = challengeQueue.shift() || null;
     }
 
