@@ -913,6 +913,12 @@
       .page-title h1{
         font-size:1.7rem;
       }
+      .electrode-symbol{
+        font-size: 1.45rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-top: 2px;
+      }   
     }
   </style>
 </head>
@@ -1239,16 +1245,15 @@
     const hintBox = document.getElementById("hintBox");
 
     function createElectrodeElement(metal){
-      const div = document.createElement("div");
-      div.className = "electrode";
-      div.dataset.metal = metal;
-      div.innerHTML = `
-        <div>${metalInfo[metal].symbol}</div>
-        <div class="metal-name">${metalInfo[metal].name}</div>
-      `;
-      return div;
-    }
-
+        const div = document.createElement("div");
+        div.className = "electrode";
+        div.dataset.metal = metal;
+        div.innerHTML = `
+          <div class="electrode-symbol">${metalInfo[metal].symbol}</div>
+          <div class="metal-name">${metalInfo[metal].name}</div>
+        `;
+        return div;
+      }
     function shuffle(array){
       const arr = [...array];
       for(let i = arr.length - 1; i > 0; i--){
@@ -1359,11 +1364,6 @@
       leftSolution.textContent = "";
       rightSolution.textContent = "";
 
-      leftMetalLabel.classList.remove("show");
-      rightMetalLabel.classList.remove("show");
-      leftMetalLabel.textContent = "";
-      rightMetalLabel.textContent = "";
-
       bridgeZone.classList.remove("active");
 
       lampZone.className = "lamp-zone";
@@ -1421,10 +1421,6 @@
       const slot = side === "leftMetal" ? leftMetalSlot : rightMetalSlot;
       slot.innerHTML = "";
       slot.appendChild(createElectrodeElement(selectedPart));
-
-      const label = side === "leftMetal" ? leftMetalLabel : rightMetalLabel;
-      label.textContent = metalInfo[selectedPart].label;
-      label.classList.add("show");
 
       setSelectedPart(null);
     }
