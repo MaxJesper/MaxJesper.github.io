@@ -248,7 +248,7 @@
 
     .board-layout{
       display:grid;
-      grid-template-columns:1020px 340px;
+      grid-template-columns:860px 340px;
       grid-template-areas:
         "diagram parts"
         "question parts";
@@ -526,6 +526,19 @@
       z-index:5;
     }
 
+    .electrode-symbol{
+      position:absolute;
+      top:10px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:7;
+      font-size:1.45rem;
+      font-weight:900;
+      line-height:1;
+      color:inherit;
+      pointer-events:none;
+    }
+
     .electrode[data-metal="zink"]{ background:linear-gradient(180deg, #eceff3, var(--zn)); }
     .electrode[data-metal="koppar"]{ background:linear-gradient(180deg, #efb18d, var(--cu)); color:#351a09; }
     .electrode[data-metal="silver"]{ background:linear-gradient(180deg, #f3f5f8, var(--ag)); }
@@ -554,26 +567,6 @@
       font-size:0.92rem;
       color:var(--muted);
       font-weight:600;
-    }
-
-    .metal-label{
-      position:absolute;
-      left:50%;
-      top:70px;
-      transform:translateX(-50%);
-      min-width:72px;
-      text-align:center;
-      font-size:1rem;
-      color:#333;
-      background:rgba(255,255,255,0.92);
-      padding:0.12rem 0.35rem;
-      border-radius:6px;
-      z-index:6;
-      display:none;
-    }
-
-    .metal-label.show{
-      display:block;
     }
 
     .wire-left-up,
@@ -913,29 +906,6 @@
       .page-title h1{
         font-size:1.7rem;
       }
-      .electrode-symbol{
-        font-size: 1.45rem;
-        font-weight: 900;
-        line-height: 1;
-        margin-top: 2px;
-      }
-
-      .electrode{
-        position: relative;
-      }
-      
-      .electrode-symbol{
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 7;
-        font-size: 1.45rem;
-        font-weight: 900;
-        line-height: 1;
-        color: inherit;
-      }
-      
     }
   </style>
 </head>
@@ -1048,7 +1018,6 @@
                 <div class="cell left" id="leftCell">
                   <div class="beaker"></div>
                   <div class="solution left" id="leftSolution"></div>
-                  <div class="metal-label" id="leftMetalLabel"></div>
                   <div class="electrode-slot" id="leftMetalSlot">
                     <div class="slot-placeholder">Klicka här för metall</div>
                   </div>
@@ -1057,7 +1026,6 @@
                 <div class="cell right" id="rightCell">
                   <div class="beaker"></div>
                   <div class="solution right" id="rightSolution"></div>
-                  <div class="metal-label" id="rightMetalLabel"></div>
                   <div class="electrode-slot" id="rightMetalSlot">
                     <div class="slot-placeholder">Klicka här för metall</div>
                   </div>
@@ -1116,7 +1084,7 @@
         category: "Känt element",
         title: "Daniells element",
         voltage: 1.10,
-        correctLamp: "lamp15",
+        correctLamp: "lamp08",
         metals: ["zink", "koppar", "silver", "jarn", "bly"],
         solutions: ["znso4", "cuso4", "agno3", "feso4"],
         correctLeftMetal: "zink",
@@ -1242,8 +1210,6 @@
     const rightMetalSlot = document.getElementById("rightMetalSlot");
     const leftSolution = document.getElementById("leftSolution");
     const rightSolution = document.getElementById("rightSolution");
-    const leftMetalLabel = document.getElementById("leftMetalLabel");
-    const rightMetalLabel = document.getElementById("rightMetalLabel");
     const bridgeZone = document.getElementById("bridgeZone");
     const lampZone = document.getElementById("lampZone");
     const lampRatingText = document.getElementById("lampRatingText");
@@ -1262,15 +1228,16 @@
     const hintBox = document.getElementById("hintBox");
 
     function createElectrodeElement(metal){
-        const div = document.createElement("div");
-        div.className = "electrode";
-        div.dataset.metal = metal;
-        div.innerHTML = `
-          <div class="electrode-symbol">${metalInfo[metal].symbol}</div>
-          <div class="metal-name">${metalInfo[metal].name}</div>
-        `;
-        return div;
-      }
+      const div = document.createElement("div");
+      div.className = "electrode";
+      div.dataset.metal = metal;
+      div.innerHTML = `
+        <div class="electrode-symbol">${metalInfo[metal].symbol}</div>
+        <div class="metal-name">${metalInfo[metal].name}</div>
+      `;
+      return div;
+    }
+
     function shuffle(array){
       const arr = [...array];
       for(let i = arr.length - 1; i > 0; i--){
