@@ -34,6 +34,7 @@
       --lamp-ray:#f7b500;
       --lamp-ray-soft:#ffd84d;
       --broken:#444;
+      --col-gap: 1rem;
     }
 
     *{ box-sizing:border-box; }
@@ -93,7 +94,7 @@
     .layout{
       display:grid;
       grid-template-columns:320px minmax(0,1fr);
-      gap:1rem;
+      gap:var(--col-gap);
       align-items:start;
     }
 
@@ -248,12 +249,17 @@
     .board-layout{
       display:grid;
       grid-template-columns:860px 340px;
-      gap:1rem;
+      grid-template-areas:
+        "diagram parts"
+        "question parts";
+      column-gap: var(--col-gap);
+      row-gap: 1rem;
       align-items:start;
       justify-content:start;
     }
 
     .diagram-wrap{
+      grid-area: diagram;
       width:860px;
       border:1px solid var(--border);
       border-radius:16px;
@@ -261,6 +267,7 @@
       background:#fafcff;
       overflow-x:auto;
       overflow-y:hidden;
+      align-self:start;
     }
 
     .diagram{
@@ -270,15 +277,21 @@
       margin:0 auto;
     }
 
-    .side-panel{
+    .parts-panel{
+      grid-area: parts;
       width:340px;
-      display:grid;
-      gap:1rem;
       align-self:start;
+      margin-top:0;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:1rem;
     }
 
-    .parts-panel,
     .question-card{
+      grid-area: question;
+      width:860px;
+      align-self:start;
       background:#fff;
       border:1px solid var(--border);
       border-radius:16px;
@@ -814,9 +827,9 @@
     }
 
     .bridge-top{
-      left:86px;
+      left:66px;
       top:70px;
-      width:218px;
+      width:258px;
       height:24px;
     }
 
@@ -844,9 +857,9 @@
     }
 
     .bridge-inner-top{
-      left:96px;
+      left:76px;
       top:75px;
-      width:198px;
+      width:238px;
       height:9px;
     }
 
@@ -867,13 +880,15 @@
     @media (max-width:1320px){
       .board-layout{
         grid-template-columns:1fr;
+        grid-template-areas:
+          "diagram"
+          "parts"
+          "question";
       }
 
-      .diagram-wrap{
-        width:100%;
-      }
-
-      .side-panel{
+      .diagram-wrap,
+      .question-card,
+      .parts-panel{
         width:100%;
       }
 
@@ -1027,19 +1042,17 @@
               </div>
             </div>
 
-            <div class="side-panel">
-              <div class="parts-panel">
-                <h3>Delar att använda</h3>
-                <div class="parts-grid" id="partsGrid"></div>
-              </div>
-
-              <section class="question-card">
-                <h3>Fråga</h3>
-                <p id="questionText">Bygg klart batteriet först, och svara sedan på frågan.</p>
-                <div class="answer-row" id="answerRow"></div>
-                <div class="feedback" id="feedbackBox"></div>
-              </section>
+            <div class="parts-panel">
+              <h3>Delar att använda</h3>
+              <div class="parts-grid" id="partsGrid"></div>
             </div>
+
+            <section class="question-card">
+              <h3>Fråga</h3>
+              <p id="questionText">Bygg klart batteriet först, och svara sedan på frågan.</p>
+              <div class="answer-row" id="answerRow"></div>
+              <div class="feedback" id="feedbackBox"></div>
+            </section>
           </div>
         </div>
       </section>
@@ -1661,10 +1674,12 @@
 
       if(targetBuildCorrect && answerCorrect && state.lamp === currentTask.correctLamp){
         resetWrongStreak();
+
         if (currentTask.voltage >= 2.3) {
           lampZone.classList.remove("on-dim", "on-medium");
           lampZone.classList.add("on-strong");
         }
+
         showFeedback(
           true,
           `Rätt! Batteriet fungerar. Spänningen blir ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V.`,
