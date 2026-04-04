@@ -1391,63 +1391,34 @@
         loadTask(currentTaskIndex - 1);
       }
     }
-
+    
     function placeMetal(side){
       if(!selectedPart) return;
       if(!currentTask.metals.includes(selectedPart)) return;
     
+      const chosenMetal = selectedPart;
       const otherSide = side === "leftMetal" ? "rightMetal" : "leftMetal";
-      if(state[otherSide] === selectedPart) return;
+    
+      if(state[otherSide] === chosenMetal) return;
     
       if(state[side]){
         markPartUsed(state[side], false);
       }
     
-      state[side] = selectedPart;
-      markPartUsed(selectedPart, true);
+      state[side] = chosenMetal;
+      markPartUsed(chosenMetal, true);
     
       const slot = side === "leftMetal" ? leftMetalSlot : rightMetalSlot;
-    
       slot.innerHTML = `
-        <div class="electrode" data-metal="${selectedPart}">
-          <div class="electrode-symbol-fixed">${metalInfo[selectedPart].symbol}</div>
-          <div class="metal-name">${metalInfo[selectedPart].name}</div>
+        <div class="electrode" data-metal="${chosenMetal}">
+          <div class="electrode-symbol-fixed">${metalInfo[chosenMetal].symbol}</div>
+          <div class="metal-name">${metalInfo[chosenMetal].name}</div>
         </div>
       `;
     
       setSelectedPart(null);
     }
-
-    function placeSolution(side){
-      if(!selectedPart) return;
-      if(!currentTask.solutions.includes(selectedPart)) return;
-
-      if(currentTask.solutions.length > 1){
-        const otherSide = side === "leftSolution" ? "rightSolution" : "leftSolution";
-        if(state[otherSide] === selectedPart) return;
-      }
-
-      if(state[side]){
-        markPartUsed(state[side], false);
-      }
-
-      state[side] = selectedPart;
-      markPartUsed(selectedPart, true);
-
-      const solutionEl = side === "leftSolution" ? leftSolution : rightSolution;
-      solutionEl.classList.add("active");
-      solutionEl.textContent = solutionInfo[selectedPart].label;
-
-      setSelectedPart(null);
-    }
-
-    function placeBridge(){
-      if(selectedPart !== "saltbridge") return;
-      state.saltbridge = true;
-      bridgeZone.classList.add("active");
-      markPartUsed("saltbridge", true);
-      setSelectedPart(null);
-    }
+ 
 
     function placeLamp(){
       if(!selectedPart) return;
