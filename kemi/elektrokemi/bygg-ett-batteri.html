@@ -558,6 +558,10 @@
       opacity:0.95;
     }
 
+    .electrode{
+      position: relative;
+    }
+    
     .electrode-symbol-fixed{
       position:absolute;
       top:10px;
@@ -1418,7 +1422,34 @@
     
       setSelectedPart(null);
     }
- 
+     function placeSolution(side){
+      if(!selectedPart) return;
+      if(!currentTask.solutions.includes(selectedPart)) return;
+    
+      const chosenSolution = selectedPart;
+      const onlyOneSolutionType = currentTask.solutions.length === 1;
+    
+      if(!onlyOneSolutionType){
+        const otherSide = side === "leftSolution" ? "rightSolution" : "leftSolution";
+        if(state[otherSide] === chosenSolution) return;
+      }
+    
+      if(state[side] && state[side] !== chosenSolution){
+        markPartUsed(state[side], false);
+      }
+    
+      state[side] = chosenSolution;
+    
+      if(!onlyOneSolutionType){
+        markPartUsed(chosenSolution, true);
+      }
+    
+      const solutionEl = side === "leftSolution" ? leftSolution : rightSolution;
+      solutionEl.classList.add("active");
+      solutionEl.textContent = solutionInfo[chosenSolution].label;
+    
+      setSelectedPart(null);
+    }
 
     function placeLamp(){
       if(!selectedPart) return;
