@@ -1,0 +1,184 @@
+{
+  "sections": [
+    {
+      "title": "Del 1. Grundbegrepp",
+      "questions": [
+        {
+          "q": "Vad är elektrisk ström och vilken enhet mäts den i?",
+          "a": "Elektrisk ström är elektroner som rör sig i en ledning. Den mäts i ampere (A).",
+          "lines": 3
+        },
+        {
+          "q": "Vad är elektrisk spänning och vilken enhet mäts den i?",
+          "a": "Elektrisk spänning är skillnaden i laddning mellan två poler och det som pressar fram elektronerna i ledningen. Den mäts i volt (V).",
+          "lines": 3
+        },
+        {
+          "q": "Vad händer med strömmen i en krets om resistansen ökar, om spänningen är oförändrad?",
+          "a": "Strömmen minskar om resistansen ökar, när spänningen är oförändrad.",
+          "lines": 2
+        },
+        {
+          "q": "Vad menas med att ett ämne är en isolator? Ge minst två exempel.",
+          "a": "En isolator är ett material som inte leder elektrisk ström bra. Exempel är plast, gummi, glas och porslin.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Del 2. Kryssfrågor",
+      "questions": [
+        {
+          "q": "Vilka påståenden om spänning är sanna?",
+          "a": "Rätta svar: Spänning mäts i enheten volt. Spänning är skillnaden i laddning mellan den positiva och den negativa polen.",
+          "lines": 4
+        },
+        {
+          "q": "Du gnuggar en ballong mot ditt hår. Hårstråna står upp och dras mot ballongen. Förklara kort varför detta händer.",
+          "a": "Hårstråna får samma typ av laddning och stöter bort varandra, samtidigt som ballongen får motsatt laddning och därför drar till sig hårstråna.",
+          "lines": 4
+        },
+        {
+          "q": "Motståndet i en metalltråd ökar om tråden görs längre eller tunnare. Förklara varför.",
+          "a": "Elektronerna får svårare att ta sig fram om tråden är längre eller tunnare. Därför ökar resistansen.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Del 3. Kopplingar och elsäkerhet",
+      "questions": [
+        {
+          "q": "Förklara skillnaden mellan seriekoppling och parallellkoppling av lampor.",
+          "a": "I en seriekoppling går strömmen genom alla lampor i samma väg. Om en lampa går sönder bryts hela kretsen och alla slocknar. I en parallellkoppling finns flera grenar, så om en lampa går sönder kan de andra fortsätta lysa.",
+          "lines": 6
+        },
+        {
+          "q": "Varför kan strömmen brytas om många apparater används samtidigt i samma uttag eller grenuttag?",
+          "a": "Om för många apparater används samtidigt kan strömmen bli för hög i ledningen. Då löser säkringen eller automatsäkringen ut för att förhindra överhettning och brand.",
+          "lines": 5
+        },
+        {
+          "q": "Ge exempel på två sätt att öka elsäkerheten i ett hem och förklara kort varför de hjälper.",
+          "a": "Exempel: säkringar som bryter strömmen om den blir för hög, jordfelsbrytare som bryter strömmen om den går fel väg, petsäkra uttag som skyddar barn, och skyddsjordning som leder felström till jord.",
+          "lines": 6
+        },
+        {
+          "q": "Varför är elektriska apparater i närheten av vatten extra farliga?",
+          "a": "Vatten innehåller ofta salter och leder därför ström. Då kan ström lättare gå genom kroppen om man rör vid en elektrisk apparat nära vatten.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Del 4. Ohms lag",
+      "questions": [
+        {
+          "q": "I en enkel krets är spänningen 20 V och resistansen 5 Ω. Beräkna strömstyrkan. Visa hur du räknar.",
+          "a": "Ohms lag: I = U / R. I = 20 / 5 = 4 A. Svar: strömstyrkan är 4 A.",
+          "lines": 5
+        },
+        {
+          "q": "I en krets finns ett motstånd kopplat till spänningen 230 V. Strömstyrkan är 5 A. Beräkna resistansen. Visa hur du räknar.",
+          "a": "Ohms lag: R = U / I. R = 230 / 5 = 46 Ω. Svar: resistansen är 46 Ω.",
+          "lines": 5
+        },
+        {
+          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω seriekopplas?",
+          "a": "40 Ω + 40 Ω = 80 Ω.",
+          "lines": 2
+        },
+        {
+          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω parallellkopplas?",
+          "a": "Den totala resistansen blir 20 Ω.",
+          "lines": 2
+        }
+      ]
+    },
+    {
+      "title": "Del 5. Magneter och elektromagnetism",
+      "questions": [
+        {
+          "q": "Beskriv hur två stavmagneter påverkar varandra när olika poler riktas mot varandra, och när lika poler riktas mot varandra.",
+          "a": "Olika poler dras mot varandra. Lika poler stöter bort varandra.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är det som gör att ett ämne är magnetiskt?",
+          "a": "Ett ämne är magnetiskt när många små magnetiska områden i ämnet är ordnade åt samma håll.",
+          "lines": 3
+        },
+        {
+          "q": "Vad händer om du delar en stavmagnet i två delar?",
+          "a": "Då får du två nya magneter. Varje del får både nordpol och sydpol.",
+          "lines": 3
+        },
+        {
+          "q": "Förklara vad en elektromagnet är och nämn två fördelar jämfört med en vanlig magnet.",
+          "a": "En elektromagnet är en spole, ofta med järnkärna, som blir magnetisk när det går ström genom den. Fördelar: den kan slås av och på, och dess styrka kan ändras genom att man ändrar strömmen eller antalet varv.",
+          "lines": 6
+        },
+        {
+          "q": "Vad upptäckte Hans Christian Ørsted?",
+          "a": "Han upptäckte att en strömförande ledning skapar ett magnetfält, vilket han såg när en kompassnål påverkades av strömmen.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Del 6. Induktion, motor, generator och transformator",
+      "questions": [
+        {
+          "q": "Beskriv vad som behövs för att skapa elektricitet genom induktion.",
+          "a": "Det krävs att ett magnetfält förändras i förhållande till en ledning eller spole, till exempel genom att en magnet rör sig in och ut ur en spole eller att spolen rör sig i ett magnetfält.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara kort hur en elmotor fungerar.",
+          "a": "I en elmotor påverkar magnetfält varandra. En elektromagnet vrider sig i ett magnetfält när strömmen är på, och då omvandlas elektrisk energi till rörelse.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara kort hur en generator fungerar.",
+          "a": "I en generator rör sig en spole eller magnet i förhållande till ett magnetfält. Då induceras elektrisk ström. Generatorn omvandlar rörelse till elektrisk energi.",
+          "lines": 5
+        },
+        {
+          "q": "Vad är det som är gemensamt för en elmotor och en generator, och vad är skillnaden?",
+          "a": "Båda bygger på spolar och magnetfält. Skillnaden är att en motor använder elektrisk energi för att skapa rörelse, medan en generator använder rörelse för att skapa elektrisk energi.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara hur en transformator fungerar på enkel nivå.",
+          "a": "Växelström i primärspolen skapar ett förändrat magnetfält i järnkärnan. Det magnetfältet inducerar en spänning i sekundärspolen. Antalet varv avgör om spänningen höjs eller sänks.",
+          "lines": 6
+        },
+        {
+          "q": "Varför fungerar en transformator inte med vanlig likström?",
+          "a": "För att det krävs ett förändrat magnetfält för att inducera spänning i den andra spolen. Likström ger inte ett ständigt förändrat magnetfält.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Del 7. Resonemang",
+      "questions": [
+        {
+          "q": "Ålen använder jordens magnetfält för att orientera sig. Förklara varför en elkabel på havsbotten kan störa detta.",
+          "a": "En strömförande kabel skapar ett magnetfält runt sig. Det magnetfältet kan störa ålens orientering efter jordens magnetfält.",
+          "lines": 4
+        },
+        {
+          "q": "Förklara varför plast är ett bra material i en strömbrytarknapp.",
+          "a": "Plast är en isolator och leder inte ström. Därför kan man trycka på knappen utan att få ström genom kroppen.",
+          "lines": 3
+        },
+        {
+          "q": "Förklara varför två 1,5 V-batterier måste seriekopplas för att driva en 3 V-lampa med full styrka.",
+          "a": "Vid seriekoppling adderas spänningen: 1,5 V + 1,5 V = 3,0 V. Vid parallellkoppling blir spänningen fortfarande 1,5 V och lampan får för låg spänning.",
+          "lines": 5
+        }
+      ]
+    }
+  ]
+}
