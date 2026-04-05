@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppskort: El, magnetism och induktion</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, #eef8ff 0%, #f3fbff 40%, #f8fcff 100%);
+      color: #111;
+    }
+
+    .layout{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (min-width: 980px){
+      .layout{ grid-template-columns: 300px 1fr; }
+    }
+
+    .panel{
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(2,6,23,.08);
+    }
+
+    .side-actions{ display: grid; gap: 10px; }
+
+    .stats{
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .stats span{ font-variant-numeric: tabular-nums; }
+
+    .btn{
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      user-select: none;
+    }
+
+    .btn.secondary{
+      background: #fff;
+      color: #111;
+    }
+
+    .btn:active{ transform: translateY(1px); }
+
+    .game-title{
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+
+    .game-subtitle{
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .section-label{
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .difficulty-grid{
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr;
+    }
+
+    .choice-btn{
+      border: 2px solid #d4d4d8;
+      background: #fff;
+      color: #111;
+      border-radius: 10px;
+      padding: 10px 10px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .choice-btn small{
+      display: block;
+      margin-top: 4px;
+      color: #444;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .choice-btn.active{
+      border-color: #0369a1;
+      background: #f0f9ff;
+      box-shadow: 0 0 0 3px rgba(3,105,161,.12);
+    }
+
+    .goal-box{
+      border: 1px dashed rgba(0,0,0,.18);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.7);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .goal-box strong{
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    :root{
+      --card-border: #0369a1;
+      --card-bg: #f0f9ff;
+      --card-selected: #111;
+      --cell-gap: 12px;
+    }
+
+    #game-grid{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--cell-gap);
+    }
+
+    @media (max-width: 980px){
+      #game-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px){
+      #game-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .card-wrap{
+      aspect-ratio: 1 / 1;
+      max-width: 210px;
+      width: 100%;
+      margin-inline: auto;
+      transition: opacity .25s ease, transform .25s ease;
+      position: relative;
+    }
+
+    .card{
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      background: var(--card-bg);
+      color: #111;
+      padding: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.10);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.22;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(0,0,0,.12);
+    }
+
+    .card.term{
+      background: #e0f2fe;
+    }
+
+    .card.def{
+      background: #f0f9ff;
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    .card.selected{
+      outline: 4px solid var(--card-selected);
+      outline-offset: 2px;
+    }
+
+    .card.success{
+      animation: successFlash .45s ease 1;
+      border-color: #15803d;
+      box-shadow: 0 0 0 4px rgba(34,197,94,.18), 0 0 24px rgba(34,197,94,.35);
+      background: #dcfce7;
+    }
+
+    @keyframes successFlash {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.04); }
+      60%  { transform: scale(1.01); }
+      100% { transform: scale(1); }
+    }
+
+    .matched{
+      visibility: hidden;
+      opacity: 0;
+      transform: scale(.90);
+      transition: visibility 0s .3s, opacity .3s linear, transform .3s ease;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: #f3f4f6;
+      color: #111;
+      border: 1px solid #d4d4d8;
+    }
+
+    .status-row{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .countdown.good{
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
+
+    .countdown.warn{
+      background: #fef3c7;
+      border-color: #fcd34d;
+      color: #92400e;
+    }
+
+    .countdown.danger{
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
+
+    .found-panel{
+      margin-top: 18px;
+      border-top: 1px dashed rgba(0,0,0,.18);
+      padding-top: 14px;
+    }
+
+    .found-header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .found-title{
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .found-subtitle{
+      font-size: 13px;
+      color: #444;
+      margin: 0;
+    }
+
+    .found-list{
+      display: grid;
+      gap: 10px;
+    }
+
+    .found-empty{
+      color: #444;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .found-pair{
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 10px;
+      align-items: stretch;
+      border: 1px solid rgba(0,0,0,.10);
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(255,255,255,.75);
+    }
+
+    .found-card{
+      border: 2px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #e0f2fe;
+      font-weight: 800;
+      line-height: 1.2;
+      min-height: 74px;
+    }
+
+    .found-card.def{
+      background: #f0f9ff;
+      font-weight: 650;
+    }
+
+    @media (max-width: 740px){
+      .found-pair{
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .note{
+      font-size: 13px;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    .unlock-box{
+      margin-top: 10px;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8f9fb;
+    }
+
+    .unlock-box strong{
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .unlock-box.unlocked{
+      background: #ecfdf5;
+      border-color: #86efac;
+    }
+
+    #win-message{
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1200;
+    }
+
+    #win-message.open{ display: flex; }
+
+    .win-card{
+      background: #fff;
+      padding: 18px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      text-align: center;
+    }
+
+    .win-card h2{
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .win-card p{
+      margin: 0 0 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="side-actions">
+        <a href="/fysik/magnetism-induktion/larande-spel.html" class="subject-btn">← Tillbaka</a>
+
+        <div>
+          <div class="section-label">Välj svårighet</div>
+          <div class="difficulty-grid" id="difficultyGrid"></div>
+        </div>
+
+        <button class="btn" type="button" id="resetBtn">Starta om nivå</button>
+        <button class="btn secondary" type="button" id="restartFullBtn">Starta från början</button>
+
+        <div class="stats" aria-live="polite">
+          <div>Nivå: <span id="currentLevelLabel">1</span></div>
+          <div>Omgång: <span id="currentRoundLabel">1 / 2</span></div>
+          <div>Poäng: <span id="score">0</span></div>
+          <div>Försök: <span id="moves">0</span></div>
+          <div>Fel: <span id="mistakes">0</span></div>
+          <div>Par kvar: <span id="pairs-left">6</span></div>
+          <div>Tid: <span id="timer">00:00.0</span></div>
+        </div>
+
+        <div class="goal-box" id="goalBox"></div>
+
+        <div class="unlock-box" id="unlockBox">
+          <strong>Level 2 är låst</strong>
+          Klara Level 1 enligt målen ovan för att låsa upp nästa nivå.
+        </div>
+
+        <div class="note" id="tipsText">
+          Du startar genom att klicka på begreppskorten.
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel">
+      <h2 class="game-title">Begreppskort: El, magnetism och induktion</h2>
+      <p class="game-subtitle" id="subtitle">Du startar genom att klicka på begreppskorten.</p>
+
+      <div class="status-row">
+        <span class="badge" id="difficultyBadge">Nybörjare</span>
+        <span class="badge" id="levelBadge">Level 1</span>
+        <span class="badge" id="roundBadge">Omgång 1 av 2</span>
+        <span class="badge countdown good" id="countdownBadge">Tid kvar: --</span>
+      </div>
+
+      <div id="game-grid" aria-label="Begreppskort"></div>
+
+      <section class="found-panel">
+        <div class="found-header">
+          <div>
+            <h3 class="found-title">Hittade par</h3>
+            <p class="found-subtitle">Bra för repetition när du spelar.</p>
+          </div>
+        </div>
+        <div id="foundList" class="found-list">
+          <div class="found-empty" id="foundEmpty">Inga par hittade ännu.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="win-message" role="dialog" aria-modal="true" aria-label="Meddelande efter nivå">
+    <div class="win-card">
+      <h2 id="winTitle">🎉 Snyggt jobbat!</h2>
+      <p id="winText">Du klarade nivån.</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" type="button" id="playAgainBtn">Spela samma nivå igen</button>
+        <button class="btn" type="button" id="continueLevel2Btn" style="display:none;">Fortsätt till Level 2</button>
+        <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/menu.js"></script>
+
+  <script>
+    const DIFFICULTIES = {
+      beginner: {
+        label: "Nybörjare",
+        timeLimitSec: 180,
+        maxMistakes: 2,
+        pairPoints: 10,
+        roundBonus: 30,
+        levelClearBonus: 40,
+        unlockBonus: 60,
+        level2PairPoints: 14,
+        level2RoundBonus: 40,
+        level2ClearBonus: 70
+      },
+      normal: {
+        label: "Van spelare",
+        timeLimitSec: 90,
+        maxMistakes: 1,
+        pairPoints: 12,
+        roundBonus: 35,
+        levelClearBonus: 60,
+        unlockBonus: 100,
+        level2PairPoints: 16,
+        level2RoundBonus: 50,
+        level2ClearBonus: 90
+      },
+      master: {
+        label: "Rutinerad mästare",
+        timeLimitSec: 60,
+        maxMistakes: 0,
+        pairPoints: 15,
+        roundBonus: 45,
+        levelClearBonus: 90,
+        unlockBonus: 150,
+        level2PairPoints: 20,
+        level2RoundBonus: 60,
+        level2ClearBonus: 120
+      }
+    };
+
+    const ROUND_SIZE = 6;
+    const JSON_PATH = "./data/begreppskort.json";
+
+    const grid = document.getElementById('game-grid');
+    const movesEl = document.getElementById('moves');
+    const mistakesEl = document.getElementById('mistakes');
+    const pairsLeftEl = document.getElementById('pairs-left');
+    const timerEl = document.getElementById('timer');
+    const scoreEl = document.getElementById('score');
+
+    const foundList = document.getElementById('foundList');
+    const foundEmpty = document.getElementById('foundEmpty');
+
+    const goalBox = document.getElementById('goalBox');
+    const difficultyGrid = document.getElementById('difficultyGrid');
+    const difficultyBadge = document.getElementById('difficultyBadge');
+    const levelBadge = document.getElementById('levelBadge');
+    const roundBadge = document.getElementById('roundBadge');
+    const countdownBadge = document.getElementById('countdownBadge');
+    const subtitle = document.getElementById('subtitle');
+    const currentLevelLabel = document.getElementById('currentLevelLabel');
+    const currentRoundLabel = document.getElementById('currentRoundLabel');
+    const unlockBox = document.getElementById('unlockBox');
+
+    const winEl = document.getElementById('win-message');
+    const winTitle = document.getElementById('winTitle');
+    const winTextEl = document.getElementById('winText');
+    const continueLevel2Btn = document.getElementById('continueLevel2Btn');
+
+    let GAME_DATA = null;
+
+    let picked = [];
+    let moves = 0;
+    let mistakes = 0;
+    let pairsLeft = 0;
+    let lockBoard = false;
+
+    let currentLevel = 1;
+    let roundIndex = 0;
+    let currentDifficultyKey = 'beginner';
+    let score = 0;
+    let level2Unlocked = false;
+
+    let timerRunning = false;
+    let startTs = 0;
+    let rafId = 0;
+    let levelFinished = false;
+    let pausedForPopup = false;
+
+    async function loadGameData() {
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Kunde inte läsa ${JSON_PATH} (${res.status})`);
+      GAME_DATA = await res.json();
+    }
+
+    function getLevelData(level) {
+      if (!GAME_DATA || !GAME_DATA.levels) return [];
+      return Array.isArray(GAME_DATA.levels[String(level)]) ? GAME_DATA.levels[String(level)] : [];
+    }
+
+    function formatTime(ms){
+      const total = Math.max(0, ms);
+      const minutes = Math.floor(total / 60000);
+      const seconds = Math.floor((total % 60000) / 1000);
+      const tenths  = Math.floor((total % 1000) / 100);
+      const mm = String(minutes).padStart(2,'0');
+      const ss = String(seconds).padStart(2,'0');
+      return `${mm}:${ss}.${tenths}`;
+    }
+
+    function formatPlainTime(totalSec){
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${min}:${String(sec).padStart(2,'0')}`;
+    }
+
+    function elapsedMs(){
+      if (!timerRunning) return 0;
+      return performance.now() - startTs;
+    }
+
+    function remainingMs(){
+      const cfg = DIFFICULTIES[currentDifficultyKey];
+      return Math.max(0, cfg.timeLimitSec * 1000 - elapsedMs());
+    }
+
+    function tick(){
+      if (!timerRunning) return;
+
+      const elapsed = elapsedMs();
+      timerEl.textContent = formatTime(elapsed);
+
+      const remain = remainingMs();
+      const remainSec = remain / 1000;
+      countdownBadge.textContent = `Tid kvar: ${formatTime(remain)}`;
+
+      countdownBadge.classList.remove('good','warn','danger');
+      if (remainSec > 45) countdownBadge.classList.add('good');
+      else if (remainSec > 20) countdownBadge.classList.add('warn');
+      else countdownBadge.classList.add('danger');
+
+      if (remain <= 0 && !levelFinished && !pausedForPopup){
+        timerRunning = false;
+        cancelAnimationFrame(rafId);
+        failLevelByTime();
+        return;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startTimerIfNeeded(){
+      if (timerRunning || levelFinished || pausedForPopup) return;
+      timerRunning = true;
+      startTs = performance.now();
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopTimer(){
+      timerRunning = false;
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function resetTimer(){
+      stopTimer();
+      timerEl.textContent = "00:00.0";
+      countdownBadge.textContent = "Tid kvar: --";
+      countdownBadge.classList.remove('warn','danger');
+      countdownBadge.classList.add('good');
+    }
+
+    function shuffle(arr){
+      for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function getRoundVocabulary(level, roundIdx){
+      const all = getLevelData(level);
+      const start = roundIdx * ROUND_SIZE;
+      return all.slice(start, start + ROUND_SIZE);
+    }
+
+    function currentVocabulary(){
+      return getRoundVocabulary(currentLevel, roundIndex);
+    }
+
+    function currentConfig(){
+      return DIFFICULTIES[currentDifficultyKey];
+    }
+
+    function pairScore(){
+      const cfg = currentConfig();
+      return currentLevel === 1 ? cfg.pairPoints : cfg.level2PairPoints;
+    }
+
+    function roundBonus(){
+      const cfg = currentConfig();
+      return currentLevel === 1 ? cfg.roundBonus : cfg.level2RoundBonus;
+    }
+
+    function createGameData(vocabulary){
+      const gameData = [];
+      vocabulary.forEach((item, idx) => {
+        gameData.push({ id: `t-${currentLevel}-${roundIndex}-${idx}`, type: 'term', content: item.term, matchId: idx });
+        gameData.push({ id: `d-${currentLevel}-${roundIndex}-${idx}`, type: 'def', content: item.def, matchId: idx });
+      });
+      return shuffle(gameData);
+    }
+
+    function createCard(data){
+      const outer = document.createElement('div');
+      outer.className = 'card-wrap';
+
+      outer.innerHTML = `
+        <div class="card ${data.type}"
+             data-id="${data.id}"
+             data-type="${data.type}"
+             data-match-id="${data.matchId}">
+          ${escapeHtml(data.content)}
+        </div>
+      `;
+
+      const card = outer.querySelector('.card');
+      card.addEventListener('click', () => onCardClick(card, outer));
+      return outer;
+    }
+
+    function onCardClick(card, outer){
+      if (lockBoard || levelFinished || pausedForPopup) return;
+      if (outer.classList.contains('matched')) return;
+      if (card.classList.contains('selected')) return;
+      if (picked.length === 2) return;
+
+      startTimerIfNeeded();
+
+      card.classList.add('selected');
+      picked.push(card);
+
+      if (picked.length === 2) checkMatch();
+    }
+
+    function addFoundPair(pair){
+      foundEmpty.style.display = 'none';
+      const row = document.createElement('div');
+      row.className = 'found-pair';
+      row.innerHTML = `
+        <div class="found-card">${escapeHtml(pair.term)}</div>
+        <div class="found-card def">${escapeHtml(pair.def)}</div>
+      `;
+      foundList.appendChild(row);
+    }
+
+    function clearFoundPairs(){
+      foundList.innerHTML = '';
+      foundEmpty.style.display = 'block';
+      foundList.appendChild(foundEmpty);
+    }
+
+    function updateScore(){
+      scoreEl.textContent = score;
+    }
+
+    function updateSideInfo(){
+      const cfg = currentConfig();
+
+      difficultyBadge.textContent = cfg.label;
+      levelBadge.textContent = `Level ${currentLevel}`;
+      roundBadge.textContent = `Omgång ${roundIndex + 1} av 2`;
+      currentLevelLabel.textContent = currentLevel;
+      currentRoundLabel.textContent = `${roundIndex + 1} / 2`;
+
+      subtitle.textContent = "Du startar genom att klicka på begreppskorten.";
+
+      goalBox.innerHTML = `
+        <strong>Utmaning för Level 1</strong><br>
+        Svårighet: <strong>${cfg.label}</strong><br>
+        Klara hela Level 1 inom <strong>${formatPlainTime(cfg.timeLimitSec)}</strong> och med högst <strong>${cfg.maxMistakes}</strong> fel för att låsa upp Level 2.
+      `;
+
+      if (level2Unlocked) {
+        unlockBox.classList.add('unlocked');
+        unlockBox.innerHTML = `
+          <strong>Level 2 är upplåst 🎉</strong>
+          Tryck <strong>Starta om nivå</strong> eller använd knappen i rutan när spelet säger till.
+        `;
+      } else {
+        unlockBox.classList.remove('unlocked');
+        unlockBox.innerHTML = `
+          <strong>Level 2 är låst</strong>
+          Klara Level 1 enligt målen ovan för att låsa upp nästa nivå.
+        `;
+      }
+    }
+
+    function checkMatch(){
+      lockBoard = true;
+      moves++;
+      movesEl.textContent = moves;
+
+      const [c1, c2] = picked;
+      const m1 = c1.getAttribute('data-match-id');
+      const m2 = c2.getAttribute('data-match-id');
+      const t1 = c1.getAttribute('data-type');
+      const t2 = c2.getAttribute('data-type');
+
+      const wrap1 = c1.parentElement;
+      const wrap2 = c2.parentElement;
+
+      const isMatch = (m1 === m2) && (t1 !== t2);
+
+      if (isMatch){
+        const pairData = currentVocabulary()[Number(m1)];
+
+        c1.classList.add('success');
+        c2.classList.add('success');
+
+        score += pairScore();
+        updateScore();
+
+        setTimeout(() => {
+          wrap1.classList.add('matched');
+          wrap2.classList.add('matched');
+
+          addFoundPair(pairData);
+
+          pairsLeft--;
+          pairsLeftEl.textContent = pairsLeft;
+
+          c1.classList.remove('selected','success');
+          c2.classList.remove('selected','success');
+          picked = [];
+          lockBoard = false;
+
+          if (pairsLeft === 0) finishRoundOrLevel();
+        }, 420);
+      } else {
+        mistakes++;
+        mistakesEl.textContent = mistakes;
+
+        setTimeout(() => {
+          c1.classList.remove('selected');
+          c2.classList.remove('selected');
+          picked = [];
+          lockBoard = false;
+        }, 520);
+      }
+    }
+
+    function showQuickMessage(title, html, duration = 1300){
+      pausedForPopup = true;
+      lockBoard = true;
+      continueLevel2Btn.style.display = 'none';
+
+      winTitle.textContent = title;
+      winTextEl.innerHTML = html;
+      winEl.classList.add('open');
+
+      setTimeout(() => {
+        hideWin();
+        pausedForPopup = false;
+        lockBoard = false;
+      }, duration);
+    }
+
+    function finishRoundOrLevel(){
+      if (roundIndex === 0) {
+        score += roundBonus();
+        updateScore();
+
+        showQuickMessage(
+          "✨ Omgång klar!",
+          `Du klarade omgång 1 och får <strong>+${roundBonus()}</strong> bonuspoäng.<br><br>Nu laddas nästa 6 par.`,
+          1400
+        );
+
+        setTimeout(() => {
+          roundIndex = 1;
+          loadCurrentRoundBoard();
+          updateSideInfo();
+        }, 1450);
+
+        return;
+      }
+
+      finishLevel();
+    }
+
+    function finishLevel(){
+      levelFinished = true;
+      stopTimer();
+
+      const cfg = currentConfig();
+      const elapsed = elapsedMs();
+      const withinTime = elapsed <= cfg.timeLimitSec * 1000;
+      const withinMistakes = mistakes <= cfg.maxMistakes;
+      const finalTime = timerEl.textContent;
+
+      if (currentLevel === 1) {
+        score += cfg.levelClearBonus;
+
+        if (withinTime && withinMistakes) {
+          level2Unlocked = true;
+          score += cfg.unlockBonus;
+
+          updateScore();
+          updateSideInfo();
+
+          continueLevel2Btn.style.display = 'inline-flex';
+
+          winTitle.textContent = "🚀 Level 2 upplåst!";
+          winTextEl.innerHTML = `
+            Du klarade <strong>Level 1</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
+            Du fick <strong>+${cfg.unlockBonus} bonuspoäng</strong> för att låsa upp nästa nivå.
+          `;
+        } else {
+          continueLevel2Btn.style.display = 'none';
+
+          updateScore();
+          updateSideInfo();
+
+          winTitle.textContent = "👏 Level 1 klar!";
+          winTextEl.innerHTML = `
+            Du klarade Level 1 på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
+            För att låsa upp Level 2 behöver du klara tiden och hålla dig inom tillåtet antal fel.
+          `;
+        }
+      } else {
+        continueLevel2Btn.style.display = 'none';
+
+        score += cfg.level2ClearBonus;
+        updateScore();
+
+        winTitle.textContent = "🏆 Mästarjobb!";
+        winTextEl.innerHTML = `
+          Du klarade <strong>Level 2</strong> på tiden <strong>${finalTime}</strong> med <strong>${mistakes}</strong> fel.<br><br>
+          Total poäng: <strong>${score}</strong>.
+        `;
+      }
+
+      winEl.classList.add('open');
+    }
+
+    function failLevelByTime(){
+      levelFinished = true;
+      lockBoard = true;
+      stopTimer();
+      continueLevel2Btn.style.display = 'none';
+
+      winTitle.textContent = "⏰ Tiden är slut!";
+      winTextEl.innerHTML = `
+        Tiden tog slut på <strong>Level ${currentLevel}</strong>.<br><br>
+        Du kan försöka igen på samma nivå. Dina poäng är fortfarande <strong>${score}</strong>.
+      `;
+      winEl.classList.add('open');
+    }
+
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    function loadCurrentRoundBoard(){
+      grid.innerHTML = '';
+      picked = [];
+      lockBoard = false;
+
+      const vocab = currentVocabulary();
+      pairsLeft = vocab.length;
+      pairsLeftEl.textContent = pairsLeft;
+
+      const data = createGameData(vocab);
+      data.forEach(item => grid.appendChild(createCard(item)));
+    }
+
+    function resetGame(){
+      hideWin();
+      continueLevel2Btn.style.display = 'none';
+
+      currentLevel = level2Unlocked ? 2 : 1;
+      roundIndex = 0;
+      moves = 0;
+      mistakes = 0;
+      movesEl.textContent = moves;
+      mistakesEl.textContent = mistakes;
+
+      picked = [];
+      lockBoard = false;
+      levelFinished = false;
+      pausedForPopup = false;
+
+      resetTimer();
+      clearFoundPairs();
+
+      loadCurrentRoundBoard();
+      updateSideInfo();
+    }
+
+    function restartFromBeginning(){
+      hideWin();
+      continueLevel2Btn.style.display = 'none';
+
+      level2Unlocked = false;
+      currentLevel = 1;
+      roundIndex = 0;
+      score = 0;
+      updateScore();
+
+      moves = 0;
+      mistakes = 0;
+      movesEl.textContent = moves;
+      mistakesEl.textContent = mistakes;
+
+      picked = [];
+      lockBoard = false;
+      levelFinished = false;
+      pausedForPopup = false;
+
+      resetTimer();
+      clearFoundPairs();
+
+      loadCurrentRoundBoard();
+      updateSideInfo();
+    }
+
+    function continueToLevel2(){
+      hideWin();
+      continueLevel2Btn.style.display = 'none';
+      if (!level2Unlocked) return;
+
+      currentLevel = 2;
+      roundIndex = 0;
+      moves = 0;
+      mistakes = 0;
+      movesEl.textContent = moves;
+      mistakesEl.textContent = mistakes;
+
+      picked = [];
+      lockBoard = false;
+      levelFinished = false;
+      pausedForPopup = false;
+
+      resetTimer();
+      clearFoundPairs();
+
+      loadCurrentRoundBoard();
+      updateSideInfo();
+    }
+
+    function renderDifficultyButtons(){
+      difficultyGrid.innerHTML = '';
+
+      Object.entries(DIFFICULTIES).forEach(([key, cfg]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice-btn';
+        btn.innerHTML = `
+          ${cfg.label}
+          <small>${formatPlainTime(cfg.timeLimitSec)} • max ${cfg.maxMistakes} fel</small>
+        `;
+        btn.addEventListener('click', () => {
+          currentDifficultyKey = key;
+          renderDifficultyButtons();
+          restartFromBeginning();
+        });
+
+        if (key === currentDifficultyKey) btn.classList.add('active');
+        difficultyGrid.appendChild(btn);
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetGame);
+    document.getElementById('restartFullBtn').addEventListener('click', restartFromBeginning);
+    document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+    document.getElementById('closeWinBtn').addEventListener('click', hideWin);
+    continueLevel2Btn.addEventListener('click', continueToLevel2);
+
+    window.addEventListener('load', async () => {
+      try {
+        await loadGameData();
+        renderDifficultyButtons();
+        restartFromBeginning();
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = `<p>Det gick inte att ladda begreppskorten.</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
