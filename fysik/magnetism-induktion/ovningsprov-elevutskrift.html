@@ -3,40 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Övningsprov elevutskrift – El, magnetism och induktion</title>
+  <title>Övningsprov – El, magnetism och induktion (Utskrift)</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/ovningsprov.css" />
+  <link rel="stylesheet" href="/css/prov.css" />
 </head>
+
 <body>
   <header class="fysik-header">
-    <h1>Övningsprov – elevutskrift</h1>
+    <h1>Övningsprov</h1>
     <p>El, magnetism och induktion</p>
   </header>
 
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
-
   <main>
-    <div class="prov-actions">
-      <a href="./ovningsprov.html" class="subject-btn">← Tillbaka till övningsprov</a>
-      <button class="subject-btn print-green" type="button" onclick="window.print()">Skriv ut</button>
-    </div>
-
     <div class="print-note">
-      <span class="print-field">
+      <div class="print-field">
         <span class="print-label">Namn:</span>
         <span class="print-line print-line-name"></span>
-      </span>
-      <span class="print-field">
+      </div>
+      <div class="print-field">
         <span class="print-label">Klass:</span>
         <span class="print-line print-line-class"></span>
-      </span>
+      </div>
     </div>
 
-    <section id="prov-container"></section>
+    <div id="prov-container"></div>
   </main>
 
-  <script src="/js/menu.js"></script>
   <script src="/js/render-prov.js"></script>
   <script>
     renderProv({
@@ -44,6 +36,16 @@
       mountId: "prov-container",
       mode: "print-exam"
     });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
   </script>
 </body>
 </html>
