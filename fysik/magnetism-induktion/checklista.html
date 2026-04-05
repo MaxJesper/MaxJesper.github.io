@@ -17,22 +17,40 @@
   <nav id="side-menu"></nav>
 
   <main>
-    <div class="top-actions" style="margin-bottom: 1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+    <p class="checklist-intro">
+      Använd checklistan för att se vad du behöver kunna inför arbetsområdet.
+      Arbeta steg för steg och markera det du känner dig säker på.
+    </p>
+
+    <div class="checklist-actions">
       <a href="./index.html" class="subject-btn">← Tillbaka</a>
-      <button class="subject-btn" onclick="window.print()">Skriv ut</button>
+      <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
+      <button id="expand-all-btn" class="checklist-btn" type="button">Visa alla</button>
+      <button id="collapse-all-btn" class="checklist-btn" type="button">Fäll ihop alla</button>
     </div>
 
-    <section class="intro-box" style="background:#f8f9fb; border:1px solid #d8e0ea; border-radius:12px; padding:1rem; margin-bottom:1.25rem;">
-      <p style="margin:0;">
-        Använd checklistan för att se vad du behöver kunna inför arbetsområdet.
-        Du behöver inte kunna allt direkt. Arbeta steg för steg och markera det du känner dig säker på.
-      </p>
-    </section>
-
     <section id="checklista-container"></section>
+
+    <section class="checklist-reflection">
+      <h2>Reflektion</h2>
+      <div class="write-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
   </main>
 
   <script src="/js/menu.js"></script>
   <script src="/js/render-checklista.js"></script>
+  <script>
+    renderChecklist({
+      jsonPath: "./data/checklista.json",
+      mountId: "checklista-container",
+      expandAllBtnId: "expand-all-btn",
+      collapseAllBtnId: "collapse-all-btn"
+    });
+  </script>
 </body>
 </html>
