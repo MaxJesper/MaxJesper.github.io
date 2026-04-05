@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instuderingsfrågor – El, magnetism och induktion</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/instuderingsfragor.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
 </head>
+
 <body>
   <header class="fysik-header">
     <h1>Instuderingsfrågor</h1>
@@ -17,29 +18,20 @@
   <nav id="side-menu"></nav>
 
   <main>
-    <div class="study-info">
-      Här kan du träna på begrepp, förklaringar och resonemang inom elektricitet,
-      magnetism och induktion. Skriv gärna egna svar först och öppna sedan facit för att jämföra.
+    <div class="study-info" role="note" aria-label="Tips för tangentbord">
+      <strong>TIPS:</strong> Klicka på en fråga för att visa eller dölja svaret.
+      Använd <strong>piltangenter ↑/↓</strong> för att gå mellan frågor och tryck <strong>mellanslag</strong> eller <strong>Enter</strong> för att visa eller dölja svar.
     </div>
 
     <div class="study-actions">
-      <a href="./index.html" class="subject-btn">← Tillbaka</a>
-      <a href="./instuderingsfragor-elevutskrift.html" class="subject-btn print-green">Skriv ut elevversion</a>
-      <a href="./instuderingsfragor-lararutskrift.html" class="subject-btn print-green">Skriv ut lärarversion</a>
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <a href="./instuderingsfragor-elevutskrift.html" target="_blank" rel="noopener"
+         class="subject-btn print-green">🖨️ Utskrift – elev</a>
+      <a href="./instuderingsfragor-lararutskrift.html" target="_blank" rel="noopener"
+         class="subject-btn print-green">🖨️ Utskrift – lärare</a>
     </div>
 
-    <div class="print-note">
-      <span class="print-field">
-        <span class="print-label">Namn:</span>
-        <span class="print-line print-line-name"></span>
-      </span>
-      <span class="print-field">
-        <span class="print-label">Klass:</span>
-        <span class="print-line print-line-class"></span>
-      </span>
-    </div>
-
-    <section id="study-container"></section>
+    <div id="study-container" aria-live="polite"></div>
   </main>
 
   <script src="/js/menu.js"></script>
