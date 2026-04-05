@@ -1,50 +1,45 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Övningsprov – El, magnetism och induktion</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/ovningsprov.css" />
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/prov.css">
 </head>
+
 <body>
-  <header class="fysik-header">
-    <h1>Övningsprov</h1>
-    <p>El, magnetism och induktion</p>
-  </header>
 
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
+<header class="fysik-header">
+  <h1>Övningsprov</h1>
+  <p>El, magnetism och induktion</p>
+</header>
 
-  <main>
-    <div class="prov-actions">
-      <a href="./index.html" class="subject-btn">← Tillbaka</a>
-      <a href="./ovningsprov-elevutskrift.html" class="subject-btn print-green">Skriv ut elevversion</a>
-      <a href="./facit.html" class="subject-btn print-green">Visa facit</a>
-    </div>
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
 
-    <div class="print-note">
-      <span class="print-field">
-        <span class="print-label">Namn:</span>
-        <span class="print-line print-line-name"></span>
-      </span>
-      <span class="print-field">
-        <span class="print-label">Klass:</span>
-        <span class="print-line print-line-class"></span>
-      </span>
-    </div>
+<main>
 
-    <section id="prov-container"></section>
-  </main>
+  <div class="prov-actions">
+    <a href="./" class="subject-btn">← Tillbaka</a>
+    <a href="./ovningsprov-elevutskrift.html" target="_blank" rel="noopener"
+       class="subject-btn print-green">🖨️ Skriv ut prov</a>
+    <a href="./facit.html" class="subject-btn print-green">✅ Visa facit</a>
+  </div>
 
-  <script src="/js/menu.js"></script>
-  <script src="/js/render-prov.js"></script>
-  <script>
-    renderProv({
-      jsonPath: "./data/ovningsprov.json",
-      mountId: "prov-container",
-      mode: "exam"
-    });
-  </script>
+  <div id="prov-container"></div>
+
+</main>
+
+<script src="/js/menu.js"></script>
+<script src="/js/render-prov.js"></script>
+<script>
+  renderProv({
+    jsonPath: "./data/ovningsprov.json",
+    mountId: "prov-container",
+    mode: "exam"
+  });
+</script>
+
 </body>
 </html>
