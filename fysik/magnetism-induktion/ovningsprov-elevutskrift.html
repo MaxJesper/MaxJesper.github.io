@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Övningsprov elevutskrift – El, magnetism och induktion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/ovningsprov.css" />
+</head>
+<body>
+  <header class="fysik-header">
+    <h1>Övningsprov – elevutskrift</h1>
+    <p>El, magnetism och induktion</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="prov-actions">
+      <a href="./ovningsprov.html" class="subject-btn">← Tillbaka till övningsprov</a>
+      <button class="subject-btn print-green" type="button" onclick="window.print()">Skriv ut</button>
+    </div>
+
+    <div class="print-note">
+      <span class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </span>
+      <span class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </span>
+    </div>
+
+    <section id="prov-container"></section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-ovningsprov.js"></script>
+  <script>
+    renderProv({
+      jsonPath: "./data/ovningsprov.json",
+      mountId: "prov-container",
+      mode: "print-exam"
+    });
+  </script>
+</body>
+</html>
