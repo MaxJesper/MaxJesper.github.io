@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklista – El, magnetism och induktion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/checklista.css" />
+</head>
+<body>
+  <header class="fysik-header">
+    <h1>Checklista</h1>
+    <p>El, magnetism och induktion</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="top-actions" style="margin-bottom: 1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+      <a href="./index.html" class="subject-btn">← Tillbaka</a>
+      <button class="subject-btn" onclick="window.print()">Skriv ut</button>
+    </div>
+
+    <section class="intro-box" style="background:#f8f9fb; border:1px solid #d8e0ea; border-radius:12px; padding:1rem; margin-bottom:1.25rem;">
+      <p style="margin:0;">
+        Använd checklistan för att se vad du behöver kunna inför arbetsområdet.
+        Du behöver inte kunna allt direkt. Arbeta steg för steg och markera det du känner dig säker på.
+      </p>
+    </section>
+
+    <section id="checklista-container"></section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-checklista.js"></script>
+</body>
+</html>
