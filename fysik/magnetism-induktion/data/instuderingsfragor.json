@@ -1,0 +1,464 @@
+{
+  "groups": [
+    {
+      "title": "Elektricitetens grunder",
+      "items": [
+        {
+          "q": "Vad är elektrisk ström och vilken enhet mäts den i?",
+          "a": "Elektrisk ström är elektroner som rör sig i en ledning. Den mäts i ampere (A).",
+          "lines": 3
+        },
+        {
+          "q": "Vad är elektrisk spänning och vilken enhet mäts den i?",
+          "a": "Elektrisk spänning är skillnaden i laddning mellan två poler och det som pressar fram elektronerna i ledningen. Den mäts i volt (V).",
+          "lines": 3
+        },
+        {
+          "q": "Vad består en atom av?",
+          "a": "En atom består av en atomkärna och elektroner.",
+          "lines": 2
+        },
+        {
+          "q": "Vilken laddning har atomkärnan och vilken laddning har elektronen?",
+          "a": "Atomkärnan är positivt laddad och elektronen är negativt laddad.",
+          "lines": 2
+        },
+        {
+          "q": "Var kommer elektronerna ifrån när det går ström i en ledning?",
+          "a": "De finns redan i ledningen hela tiden. Spänningen pressar dem att röra sig.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är det som pressar fram elektronerna i ledningen?",
+          "a": "Det är spänningen från batteriet eller elnätet som pressar fram elektronerna.",
+          "lines": 2
+        },
+        {
+          "q": "Vad är skillnaden mellan likström och växelström?",
+          "a": "Likström går åt samma håll hela tiden, till exempel från ett batteri. Växelström byter riktning hela tiden, som i vägguttaget.",
+          "lines": 4
+        },
+        {
+          "q": "Vilken sorts ström får man från ett batteri och vilken sorts ström får man från ett vägguttag?",
+          "a": "Från ett batteri får man likström. Från ett vägguttag får man växelström.",
+          "lines": 2
+        }
+      ]
+    },
+    {
+      "title": "Ledare, isolatorer och resistans",
+      "items": [
+        {
+          "q": "Vad menas med att ett ämne är en ledare?",
+          "a": "En ledare är ett material där elektroner lätt kan röra sig, så att elektrisk ström kan passera. Metaller är bra ledare.",
+          "lines": 3
+        },
+        {
+          "q": "Vad menas med att ett ämne är en isolator?",
+          "a": "En isolator är ett material som inte leder elektrisk ström bra, till exempel plast, gummi, glas eller porslin.",
+          "lines": 3
+        },
+        {
+          "q": "Ge exempel på två ämnen som leder ström och två som inte leder ström.",
+          "a": "Exempel på ledare är koppar och silver. Exempel på isolatorer är plast och gummi.",
+          "lines": 3
+        },
+        {
+          "q": "Vad betyder resistans?",
+          "a": "Resistans betyder motstånd mot elektrisk ström.",
+          "lines": 2
+        },
+        {
+          "q": "Vilken enhet har resistans?",
+          "a": "Resistans mäts i ohm (Ω).",
+          "lines": 2
+        },
+        {
+          "q": "Hur ska en ledare vara gjord för att ha liten resistans?",
+          "a": "Den ska vara kort, tjock och gjord av ett ämne som leder ström bra, till exempel koppar eller silver.",
+          "lines": 3
+        },
+        {
+          "q": "Hur påverkas resistansen om en metalltråd blir längre eller tunnare?",
+          "a": "Resistansen ökar om tråden blir längre eller tunnare.",
+          "lines": 2
+        },
+        {
+          "q": "Hur påverkas resistansen om en ledning blir varm?",
+          "a": "Resistansen ökar när ledningen blir varm.",
+          "lines": 2
+        },
+        {
+          "q": "Vad används ett motstånd, en resistor, till i en krets?",
+          "a": "En resistor används för att minska strömmen i en krets.",
+          "lines": 2
+        },
+        {
+          "q": "Vad menas med supraledning?",
+          "a": "Supraledning betyder att en ledare har nästan ingen resistans alls, så att strömmen kan gå mycket lätt. Det sker vid mycket låga temperaturer.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Kopplingar och kopplingsscheman",
+      "items": [
+        {
+          "q": "Vad är skillnaden mellan en öppen och en sluten krets?",
+          "a": "I en sluten krets kan strömmen gå runt hela kretsen. I en öppen krets är kretsen bruten, så att strömmen inte kan gå fram.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är en kortslutning?",
+          "a": "En kortslutning är när strömmen tar en alltför lätt väg förbi till exempel en lampa eller annan komponent. Då kan strömmen bli farligt stor.",
+          "lines": 4
+        },
+        {
+          "q": "Vad är skillnaden mellan seriekoppling och parallellkoppling av lampor?",
+          "a": "I en seriekoppling går strömmen genom alla lampor i samma väg. I en parallellkoppling finns flera vägar och varje lampa är kopplad i sin egen gren.",
+          "lines": 4
+        },
+        {
+          "q": "Vad händer i en seriekoppling om en lampa skruvas ur eller går sönder?",
+          "a": "Då bryts hela kretsen och alla lamporna slocknar.",
+          "lines": 2
+        },
+        {
+          "q": "Vad händer i en parallellkoppling om en lampa skruvas ur eller går sönder?",
+          "a": "De andra lamporna fortsätter att lysa, eftersom deras kretsar fortfarande är slutna.",
+          "lines": 2
+        },
+        {
+          "q": "Hur ska två batterier kopplas om man vill få högre spänning?",
+          "a": "De ska seriekopplas.",
+          "lines": 2
+        },
+        {
+          "q": "Hur ska två batterier kopplas om man vill att de ska räcka längre?",
+          "a": "De ska parallellkopplas.",
+          "lines": 2
+        },
+        {
+          "q": "Förklara varför två 1,5 V-batterier måste seriekopplas för att driva en 3 V-lampa med full styrka.",
+          "a": "Vid seriekoppling adderas spänningen: 1,5 V + 1,5 V = 3,0 V. Vid parallellkoppling blir spänningen fortfarande 1,5 V, och då får lampan för låg spänning.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Elsäkerhet",
+      "items": [
+        {
+          "q": "Vilka två vanliga typer av olyckor kan el orsaka?",
+          "a": "El kan orsaka brand och personskador.",
+          "lines": 2
+        },
+        {
+          "q": "Varför kan ledningar bli farligt varma?",
+          "a": "När det går ström i en ledning utvecklas värme. Om strömmen blir för hög kan ledningen bli så varm att isoleringen skadas eller börjar brinna.",
+          "lines": 4
+        },
+        {
+          "q": "Vad gör en säkring?",
+          "a": "En säkring bryter strömmen om strömstyrkan blir för hög, så att ledningarna inte överhettas.",
+          "lines": 3
+        },
+        {
+          "q": "Vad gör en jordfelsbrytare?",
+          "a": "En jordfelsbrytare bryter strömmen snabbt om strömmen går fel väg, till exempel genom en apparats hölje eller genom en människa till jord.",
+          "lines": 4
+        },
+        {
+          "q": "Vad är skyddsjordning?",
+          "a": "Skyddsjordning betyder att apparatens hölje är kopplat till jord genom en jordledning. Om höljet blir strömförande leds strömmen till jord i stället för genom en människa.",
+          "lines": 4
+        },
+        {
+          "q": "Hur känner man igen jordledningen i en sladd?",
+          "a": "Jordledningen är gulgrön.",
+          "lines": 2
+        },
+        {
+          "q": "Varför är elektriska apparater nära vatten extra farliga?",
+          "a": "Vatten innehåller ofta salter och leder därför elektrisk ström. Då kan ström lättare gå genom kroppen om man rör vid apparaten.",
+          "lines": 4
+        },
+        {
+          "q": "Ge exempel på hur man kan öka elsäkerheten i ett hem.",
+          "a": "Man kan ha säkringar, jordfelsbrytare, petsäkra uttag, skyddsjordade apparater och undvika att överbelasta uttag och grenkontakter.",
+          "lines": 4
+        },
+        {
+          "q": "Vad betyder CE-märkning på en elektrisk apparat?",
+          "a": "Det betyder att tillverkaren intygar att apparaten uppfyller europeiska säkerhetsregler.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Magneter och magnetfält",
+      "items": [
+        {
+          "q": "Vilka poler har en magnet?",
+          "a": "En magnet har en nordpol och en sydpol.",
+          "lines": 2
+        },
+        {
+          "q": "Vad händer när två olika magnetpoler närmar sig varandra?",
+          "a": "De dras mot varandra.",
+          "lines": 2
+        },
+        {
+          "q": "Vad händer när två lika magnetpoler närmar sig varandra?",
+          "a": "De stöter bort varandra.",
+          "lines": 2
+        },
+        {
+          "q": "Vad är ett magnetfält?",
+          "a": "Ett magnetfält är området runt en magnet där magnetiska krafter verkar.",
+          "lines": 3
+        },
+        {
+          "q": "I vilken riktning brukar man rita en magnets fältlinjer?",
+          "a": "Man ritar dem från nordpol till sydpol.",
+          "lines": 2
+        },
+        {
+          "q": "Vilka ämnen dras ofta till en magnet?",
+          "a": "Järn och nickel är vanliga exempel. Även kobolt kan dras till magneter.",
+          "lines": 3
+        },
+        {
+          "q": "Vad händer om man delar en stavmagnet i två delar?",
+          "a": "Man får två nya magneter, och varje del får både en nordpol och en sydpol.",
+          "lines": 3
+        },
+        {
+          "q": "Vad gör att ett ämne är magnetiskt?",
+          "a": "Magnetism uppstår när många små magnetiska områden i ämnet är ordnade åt samma håll.",
+          "lines": 3
+        },
+        {
+          "q": "Hur kan magnetism förstöras?",
+          "a": "Magnetismen kan förstöras om man värmer magneten eller slår hårt på den, eftersom ordningen i de små magneterna störs.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Elektromagnetism och elektromagneter",
+      "items": [
+        {
+          "q": "Vad upptäckte Hans Christian Ørsted?",
+          "a": "Ørsted upptäckte att en strömförande ledning skapar ett magnetfält. Han såg att en kompassnål rörde sig när strömmen slogs på.",
+          "lines": 4
+        },
+        {
+          "q": "Vad menas med elektromagnetism?",
+          "a": "Elektromagnetism betyder att elektrisk ström skapar magnetfält.",
+          "lines": 2
+        },
+        {
+          "q": "Hur ser magnetfältet runt en rak ledning ut när det går ström i den?",
+          "a": "Magnetfältet går i cirklar runt ledningen.",
+          "lines": 2
+        },
+        {
+          "q": "Vad är en elektromagnet?",
+          "a": "En elektromagnet är en spole som blir magnetisk när det går ström genom den, ofta med en järnkärna som förstärker magnetfältet.",
+          "lines": 4
+        },
+        {
+          "q": "Vilka delar har en elektromagnet?",
+          "a": "Den har en spole och ofta en järnkärna.",
+          "lines": 2
+        },
+        {
+          "q": "Hur kan man göra en elektromagnet starkare?",
+          "a": "Man kan öka strömmen, göra spolen med fler varv och använda en järnkärna.",
+          "lines": 3
+        },
+        {
+          "q": "Vilka fördelar har en elektromagnet jämfört med en vanlig magnet?",
+          "a": "Den kan slås av och på, och dess styrka kan ändras genom att man ändrar strömmen eller antalet varv.",
+          "lines": 4
+        },
+        {
+          "q": "Ge exempel på hur elektromagneter används.",
+          "a": "De används till exempel i skrotkranar, elmotorer, ringklockor och reläer.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Elmotorer, generatorer och induktion",
+      "items": [
+        {
+          "q": "Vad gör en elektrisk motor?",
+          "a": "En elektrisk motor omvandlar elektrisk ström till rörelse.",
+          "lines": 2
+        },
+        {
+          "q": "Vad gör en generator?",
+          "a": "En generator omvandlar rörelse till elektrisk ström.",
+          "lines": 2
+        },
+        {
+          "q": "Vad visade Faraday i sina experiment?",
+          "a": "Faraday visade att ett förändrat magnetfält kan skapa elektrisk ström.",
+          "lines": 3
+        },
+        {
+          "q": "Vad betyder induktion?",
+          "a": "Induktion betyder att magnetiska kraftlinjer som rör sig tvärs över en ledning skapar elektrisk ström i ledningen.",
+          "lines": 4
+        },
+        {
+          "q": "Vad krävs för att induktion ska uppstå mellan en magnet och en spole?",
+          "a": "Det måste finnas en rörelse eller förändring så att magnetfältet ändras i förhållande till spolen.",
+          "lines": 3
+        },
+        {
+          "q": "Hur kan man få större induktionsström?",
+          "a": "Man kan använda en starkare magnet, fler varv i spolen och öka hastigheten på rörelsen.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är det som är gemensamt för en elmotor och en generator, och vad är skillnaden?",
+          "a": "Båda bygger på magnetfält och spolar. Skillnaden är att en elmotor använder el för att skapa rörelse, medan en generator använder rörelse för att skapa el.",
+          "lines": 5
+        },
+        {
+          "q": "Beskriv kort hur en cykeldynamo fungerar.",
+          "a": "En cykeldynamo är en liten generator. När hjulet driver dynamon uppstår rörelse mellan magnet och spole, och då induceras en ström som kan driva lampan.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Transformatorn",
+      "items": [
+        {
+          "q": "Vad används en transformator till?",
+          "a": "En transformator används för att höja eller sänka spänningen på växelström.",
+          "lines": 3
+        },
+        {
+          "q": "Vilka delar består en transformator av?",
+          "a": "Den består av två spolar och en järnkärna.",
+          "lines": 2
+        },
+        {
+          "q": "Vad gör primärspolen i en transformator?",
+          "a": "Primärspolen skapar ett varierande magnetfält i järnkärnan när växelström går genom den.",
+          "lines": 3
+        },
+        {
+          "q": "Vad gör sekundärspolen i en transformator?",
+          "a": "Sekundärspolen får en inducerad spänning av det varierande magnetfältet.",
+          "lines": 3
+        },
+        {
+          "q": "Varför fungerar en transformator inte med vanlig likström?",
+          "a": "För att det krävs ett förändrat magnetfält för att inducera spänning i den andra spolen. Likström ger inte ett ständigt förändrat magnetfält.",
+          "lines": 4
+        },
+        {
+          "q": "Varför behövs en transformator i en mobilladdare?",
+          "a": "För att vägguttagets höga spänning måste sänkas till en mycket lägre spänning som passar mobilen.",
+          "lines": 3
+        },
+        {
+          "q": "Vad måste man dessutom göra med nätspänningen i en laddare, förutom att transformera ner den?",
+          "a": "Man måste också likrikta strömmen, alltså göra om växelströmmen till likström.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Ohms lag och beräkningar",
+      "items": [
+        {
+          "q": "Vad betyder bokstäverna U, I och R i Ohms lag?",
+          "a": "U står för spänning, I står för strömstyrka och R står för resistans.",
+          "lines": 3
+        },
+        {
+          "q": "Vilka enheter har U, I och R?",
+          "a": "U mäts i volt (V), I i ampere (A) och R i ohm (Ω).",
+          "lines": 3
+        },
+        {
+          "q": "Hur lyder Ohms lag?",
+          "a": "Ohms lag lyder: U = R · I.",
+          "lines": 2
+        },
+        {
+          "q": "Hur räknar man ut strömstyrkan om man vet spänning och resistans?",
+          "a": "Man använder formeln I = U / R.",
+          "lines": 2
+        },
+        {
+          "q": "Hur räknar man ut resistansen om man vet spänning och strömstyrka?",
+          "a": "Man använder formeln R = U / I.",
+          "lines": 2
+        },
+        {
+          "q": "Beräkna strömstyrkan om spänningen är 20 V och resistansen är 5 Ω.",
+          "a": "I = U / R = 20 / 5 = 4 A.",
+          "lines": 4
+        },
+        {
+          "q": "Beräkna resistansen om spänningen är 230 V och strömstyrkan är 5 A.",
+          "a": "R = U / I = 230 / 5 = 46 Ω.",
+          "lines": 4
+        },
+        {
+          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω seriekopplas?",
+          "a": "40 Ω + 40 Ω = 80 Ω.",
+          "lines": 2
+        },
+        {
+          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω parallellkopplas?",
+          "a": "Den totala resistansen blir 20 Ω.",
+          "lines": 2
+        }
+      ]
+    },
+    {
+      "title": "Förklara och resonera",
+      "items": [
+        {
+          "q": "Förklara varför plast är ett bra material i en strömbrytarknapp.",
+          "a": "Plast är en isolator och leder därför inte ström. Det gör att man kan ta i knappen utan att få ström genom kroppen.",
+          "lines": 4
+        },
+        {
+          "q": "Förklara varför det inte 'finns lite ström kvar i ledningarna' när elen stängs av i ett hus.",
+          "a": "Elektronerna finns kvar i ledningarna, men utan spänning pressas de inte fram. Därför går ingen ström när elnätets spänning stängs av.",
+          "lines": 4
+        },
+        {
+          "q": "Förklara varför ålar kunde komma ur kurs när en elkabel på Östersjöns botten togs i bruk.",
+          "a": "En strömförande kabel skapar ett magnetfält runt sig. Det magnetfältet kan störa ålens orientering efter jordens magnetfält.",
+          "lines": 4
+        },
+        {
+          "q": "Förklara hur en elmotor fungerar på enkel nivå.",
+          "a": "I en elmotor finns två magnetfält som påverkar varandra. Den rörliga delen är en elektromagnet som vrider sig så länge strömmen är på, och då skapas rörelse.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara hur en generator fungerar på enkel nivå.",
+          "a": "I en generator rör sig en spole eller en magnet i förhållande till ett magnetfält. Då ändras magnetfältet genom spolen och elektrisk ström induceras.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara hur en transformator fungerar på enkel nivå.",
+          "a": "Växelström i den första spolen skapar ett förändrat magnetfält i järnkärnan. Det magnetfältet inducerar en ny spänning i den andra spolen. Hur många varv spolarna har avgör om spänningen höjs eller sänks.",
+          "lines": 6
+        }
+      ]
+    }
+  ]
+}
