@@ -3,37 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instuderingsfrågor elevutskrift – El, magnetism och induktion</title>
+  <title>Instuderingsfrågor – El, magnetism och induktion (Elev)</title>
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/instuderingsfragor.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
 </head>
+
 <body>
   <header class="fysik-header">
-    <h1>Instuderingsfrågor – elevutskrift</h1>
-    <p>El, magnetism och induktion</p>
+    <h1>Instuderingsfrågor</h1>
+    <p>El, magnetism och induktion – elev</p>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
   <main>
-    <div class="study-actions">
-      <a href="./instuderingsfragor.html" class="subject-btn">← Tillbaka till instuderingsfrågor</a>
-      <button class="subject-btn print-green" type="button" onclick="window.print()">Skriv ut</button>
-    </div>
-
     <div class="print-note">
-      <span class="print-field">
+      <div class="print-field">
         <span class="print-label">Namn:</span>
         <span class="print-line print-line-name"></span>
-      </span>
-      <span class="print-field">
+      </div>
+      <div class="print-field">
         <span class="print-label">Klass:</span>
         <span class="print-line print-line-class"></span>
-      </span>
+      </div>
     </div>
 
-    <section id="study-container"></section>
+    <div id="study-container"></div>
   </main>
 
   <script src="/js/menu.js"></script>
@@ -43,6 +39,22 @@
       jsonPath: "./data/instuderingsfragor.json",
       mountId: "study-container",
       mode: "print-student"
+    });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+
+      setTimeout(() => {
+        try { window.close(); } catch (e) {}
+      }, 2500);
+
+      window.print();
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(autoPrintAndClose, 350);
     });
   </script>
 </body>
