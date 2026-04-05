@@ -39,17 +39,35 @@
       </span>
     </div>
 
-    <section id="study-container"></section>
+    <section id="study-container">
+      <p>Laddar instuderingsfrågor…</p>
+    </section>
   </main>
 
   <script src="/js/menu.js"></script>
   <script src="/js/render-instuderingsfragor.js"></script>
   <script>
-    renderStudySet({
-      jsonPath: "./data/instuderingsfragor.json",
-      mountId: "study-container",
-      mode: "interactive"
-    });
+    console.log("renderStudySet:", typeof renderStudySet);
+
+    fetch("./data/instuderingsfragor.json", { cache: "no-store" })
+      .then(r => {
+        console.log("instuderingsfragor.json status:", r.status);
+        if (!r.ok) throw new Error("Kunde inte läsa JSON-filen.");
+        return r.json();
+      })
+      .then(data => {
+        console.log("instuderingsfragor.json loaded:", data);
+        renderStudySet({
+          jsonPath: "./data/instuderingsfragor.json",
+          mountId: "study-container",
+          mode: "interactive"
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById("study-container").innerHTML =
+          `<p>Fel vid laddning av instuderingsfrågor: ${err.message}</p>`;
+      });
   </script>
 </body>
 </html>
