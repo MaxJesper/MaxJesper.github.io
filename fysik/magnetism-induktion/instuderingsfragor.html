@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – El, magnetism och induktion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instuderingsfragor.css" />
+</head>
+<body>
+  <header class="fysik-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>El, magnetism och induktion</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="study-info">
+      Här kan du träna på begrepp, förklaringar och resonemang inom elektricitet,
+      magnetism och induktion. Skriv gärna egna svar först och öppna sedan facit för att jämföra.
+    </div>
+
+    <div class="study-actions">
+      <a href="./index.html" class="subject-btn">← Tillbaka</a>
+      <a href="./instuderingsfragor-elevutskrift.html" class="subject-btn print-green">Skriv ut elevversion</a>
+      <a href="./instuderingsfragor-lararutskrift.html" class="subject-btn print-green">Skriv ut lärarversion</a>
+    </div>
+
+    <div class="print-note">
+      <span class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </span>
+      <span class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </span>
+    </div>
+
+    <section id="study-container"></section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-instuderingsfragor.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "./data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "interactive"
+    });
+  </script>
+</body>
+</html>
