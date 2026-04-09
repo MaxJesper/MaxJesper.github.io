@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syra eller bas? – Syror och baser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    #side-menu { pointer-events: none; }
+    #side-menu.open { pointer-events: auto; }
+
+    .hamburger{
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1001;
+    }
+
+    body{
+      margin: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #111;
+      background:
+        radial-gradient(900px 480px at 8% 8%, rgba(255,245,210,.95), rgba(255,255,255,0) 60%),
+        radial-gradient(700px 380px at 92% 10%, rgba(219,234,254,.95), rgba(255,255,255,0) 58%),
+        linear-gradient(180deg, #fffef8 0%, #f8fafc 100%);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+
+    @media (max-width: 980px){
+      .layout{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.08);
+    }
+
+    .game-title{
+      margin: 0 0 4px;
+      font-size: 30px;
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .subtitle{
+      margin: 0 0 14px;
+      color: #374151;
+      font-size: 14px;
+    }
+
+    .section-label{
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    .side-stack{ display:grid; gap:12px; }
+
+    .btn{
+      border: 1px solid #111827;
+      background: #111827;
+      color: #fff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn.secondary{
+      background: #fff;
+      color: #111827;
+    }
+
+    .difficulty-grid{
+      display:grid;
+      gap:8px;
+    }
+
+    .choice-btn{
+      border: 2px solid #d1d5db;
+      background: #fff;
+      color: #111;
+      border-radius: 12px;
+      padding: 10px 12px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .choice-btn small{
+      display:block;
+      margin-top:4px;
+      color:#4b5563;
+      font-weight:600;
+      font-size:12px;
+    }
+
+    .choice-btn.active{
+      border-color:#0284c7;
+      background:#f0f9ff;
+      box-shadow:0 0 0 3px rgba(2,132,199,.12);
+    }
+
+    .stats{
+      display:grid;
+      gap:6px;
+      font-weight:700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .goal-box, .info-box{
+      border: 1px dashed rgba(0,0,0,.18);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,.75);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .goal-box strong, .info-box strong{
+      display:inline-block;
+      margin-bottom:4px;
+    }
+
+    .badge-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:14px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid #d1d5db;
+      background:#f3f4f6;
+      color:#111827;
+    }
+
+    .progress{
+      height: 12px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress > div{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      transition: width .25s ease;
+    }
+
+    .play-area{
+      display:grid;
+      gap:18px;
+    }
+
+    .drag-bank{
+      min-height: 130px;
+      border: 2px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(248,250,252,.9);
+    }
+
+    .drag-bank h3{
+      margin:0 0 10px;
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .cards{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .item-card{
+      background: #fff;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 12px 14px;
+      min-width: 120px;
+      text-align: center;
+      font-weight: 800;
+      box-shadow: 0 3px 10px rgba(0,0,0,.06);
+      cursor: grab;
+      user-select: none;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+
+    .item-card:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.10);
+      border-color: #94a3b8;
+    }
+
+    .item-card.dragging{
+      opacity: .65;
+      transform: rotate(2deg) scale(1.03);
+      cursor: grabbing;
+    }
+
+    .zones{
+      display:grid;
+      gap:14px;
+    }
+
+    .zones.level1{
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 860px){
+      .zones.level1{ grid-template-columns: 1fr; }
+    }
+
+    .drop-zone{
+      min-height: 220px;
+      border-radius: 18px;
+      padding: 12px;
+      border: 3px dashed rgba(0,0,0,.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+    }
+
+    .drop-zone h3{
+      margin:0 0 8px;
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .drop-zone p{
+      margin:0 0 12px;
+      color:#374151;
+      font-size:14px;
+    }
+
+    .drop-zone .cards{
+      min-height: 120px;
+      align-content:flex-start;
+    }
+
+    .zone-sur{
+      background: linear-gradient(180deg, #fff7bf 0%, #fff3a3 100%);
+    }
+
+    .zone-neutral{
+      background: linear-gradient(180deg, #dcfce7 0%, #bbf7d0 100%);
+    }
+
+    .zone-bas{
+      background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
+    }
+
+    .drop-zone.over{
+      outline: 4px solid rgba(17,24,39,.18);
+      outline-offset: -4px;
+    }
+
+    .drop-zone.correct-flash{
+      animation: correctFlash .35s ease;
+    }
+
+    .drop-zone.wrong-flash{
+      animation: wrongFlash .35s ease;
+    }
+
+    @keyframes correctFlash {
+      0% { box-shadow: 0 0 0 0 rgba(34,197,94,.0); }
+      50% { box-shadow: 0 0 0 8px rgba(34,197,94,.22); }
+      100% { box-shadow: 0 0 0 0 rgba(34,197,94,.0); }
+    }
+
+    @keyframes wrongFlash {
+      0% { box-shadow: 0 0 0 0 rgba(239,68,68,.0); }
+      50% { box-shadow: 0 0 0 8px rgba(239,68,68,.22); }
+      100% { box-shadow: 0 0 0 0 rgba(239,68,68,.0); }
+    }
+
+    .feedback{
+      min-height: 28px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .feedback.good{ color: #166534; }
+    .feedback.bad{ color: #b91c1c; }
+
+    .ph-board{
+      display:grid;
+      gap:14px;
+    }
+
+    .ph-scale{
+      display:grid;
+      grid-template-columns: repeat(15, minmax(44px, 1fr));
+      gap:8px;
+      align-items:stretch;
+    }
+
+    @media (max-width: 1050px){
+      .ph-scale{
+        grid-template-columns: repeat(5, minmax(44px, 1fr));
+      }
+    }
+
+    .ph-slot{
+      min-height: 100px;
+      border-radius: 14px;
+      border: 2px dashed rgba(0,0,0,.16);
+      padding: 8px 6px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-start;
+      text-align:center;
+    }
+
+    .ph-slot .num{
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .ph-slot .label{
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+      min-height: 28px;
+    }
+
+    .ph-slot .drop-mini{
+      width: 100%;
+      min-height: 48px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+
+    .ph-slot.over{
+      outline: 4px solid rgba(17,24,39,.16);
+      outline-offset: -4px;
+    }
+
+    .ph-item{
+      min-width: 100px;
+    }
+
+    .slot-0, .slot-1, .slot-2, .slot-3 { background: #fee2e2; }
+    .slot-4, .slot-5, .slot-6 { background: #fef3c7; }
+    .slot-7 { background: #dcfce7; }
+    .slot-8, .slot-9, .slot-10 { background: #dbeafe; }
+    .slot-11, .slot-12, .slot-13, .slot-14 { background: #c7d2fe; }
+
+    .mini-note{
+      font-size: 13px;
+      color:#374151;
+    }
+
+    #win-message{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.48);
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:1200;
+    }
+
+    #win-message.open{ display:flex; }
+
+    .win-card{
+      width:100%;
+      max-width:520px;
+      background:#fff;
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 20px 40px rgba(0,0,0,.24);
+      text-align:center;
+    }
+
+    .win-card h2{
+      margin:0 0 8px;
+      font-size:24px;
+      font-weight:900;
+    }
+
+    .win-card p{
+      margin:0 0 14px;
+      line-height:1.45;
+    }
+  </style>
+</head>
+<body>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <div class="layout">
+    <aside class="panel">
+      <div class="side-stack">
+        <a href="/kemi/syror-och-baser/larande-spel.html" class="subject-btn">← Tillbaka</a>
+
+        <div>
+          <div class="section-label">Välj svårighet</div>
+          <div class="difficulty-grid" id="difficultyGrid"></div>
+        </div>
+
+        <button class="btn" id="resetBtn" type="button">Starta om nivå</button>
+        <button class="btn secondary" id="restartBtn" type="button">Starta från början</button>
+
+        <div class="stats" aria-live="polite">
+          <div>Nivå: <span id="levelLabel">1</span></div>
+          <div>Poäng: <span id="scoreLabel">0</span></div>
+          <div>Rätt: <span id="correctLabel">0</span></div>
+          <div>Fel: <span id="wrongLabel">0</span></div>
+          <div>Kvar: <span id="leftLabel">0</span></div>
+        </div>
+
+        <div class="goal-box" id="goalBox"></div>
+
+        <div class="info-box" id="infoBox">
+          <strong>Så spelar du</strong><br>
+          Dra varje ämne till rätt ruta. I nivå 2 placerar du ämnet på rätt pH-värde.
+        </div>
+
+        <div>
+          <strong>Framsteg</strong>
+          <div class="progress"><div id="progressBar"></div></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel">
+      <h1 class="game-title">Syra eller bas?</h1>
+      <p class="subtitle" id="subtitle">
+        Sortera vardagliga ämnen som sura, neutrala eller basiska. I nivå 2 placerar du dem på pH-skalan.
+      </p>
+
+      <div class="badge-row">
+        <span class="badge" id="difficultyBadge">Nybörjare</span>
+        <span class="badge" id="modeBadge">Level 1</span>
+      </div>
+
+      <div class="play-area">
+        <section class="drag-bank">
+          <h3 id="bankTitle">Dra ämnen till rätt ruta</h3>
+          <div class="cards" id="bank"></div>
+        </section>
+
+        <div class="feedback" id="feedback">Börja genom att dra ett kort.</div>
+
+        <section id="level1Board">
+          <div class="zones level1">
+            <div class="drop-zone zone-sur" data-zone="sur">
+              <h3>Sur</h3>
+              <p>pH under 7</p>
+              <div class="cards"></div>
+            </div>
+
+            <div class="drop-zone zone-neutral" data-zone="neutral">
+              <h3>Neutral</h3>
+              <p>pH 7</p>
+              <div class="cards"></div>
+            </div>
+
+            <div class="drop-zone zone-bas" data-zone="bas">
+              <h3>Basisk</h3>
+              <p>pH över 7</p>
+              <div class="cards"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="level2Board" style="display:none;">
+          <div class="ph-board">
+            <div class="mini-note">
+              Placera varje ämne på den plats på pH-skalan som passar bäst.
+            </div>
+            <div class="ph-scale" id="phScale"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div id="win-message" role="dialog" aria-modal="true" aria-label="Spelmeddelande">
+    <div class="win-card">
+      <h2 id="winTitle">Bra jobbat!</h2>
+      <p id="winText">Du klarade nivån.</p>
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn" type="button" id="playAgainBtn">Spela igen</button>
+        <button class="btn" type="button" id="nextLevelBtn" style="display:none;">Fortsätt till nivå 2</button>
+        <button class="btn secondary" type="button" id="closeWinBtn">Stäng</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    const DIFFICULTIES = {
+      beginner: { label: "Nybörjare" },
+      normal:   { label: "Van spelare" },
+      master:   { label: "Rutinerad mästare" }
+    };
+
+    const ITEMS = [
+      { name: "Citron", zone: "sur", ph: 2, hint: "Innehåller citronsyra." },
+      { name: "Tandkräm", zone: "bas", ph: 9, hint: "Motverkar syror i munnen." },
+      { name: "Filmjölk", zone: "sur", ph: 4, hint: "Innehåller mjölksyra." },
+      { name: "Diskmedel", zone: "bas", ph: 10, hint: "Löser fett bättre i basisk miljö." },
+      { name: "Ättika", zone: "sur", ph: 3, hint: "Innehåller ättiksyra." },
+      { name: "Äpple", zone: "sur", ph: 4, hint: "Frukt innehåller syror, bland annat äppelsyra." },
+      { name: "Lutfisk", zone: "bas", ph: 11, hint: "Behandlas med lut och blir basisk." },
+      { name: "Tvål", zone: "bas", ph: 10, hint: "Känns ofta hal eller tvålaktig." },
+      { name: "Kranvatten", zone: "bas", ph: 8, hint: "Ofta ungefär neutralt till svagt basiskt." },
+      { name: "Avjonat vatten", zone: "neutral", ph: 7, hint: "Används som neutral jämförelse här." }
+    ];
+
+    const PH_LABELS = {
+      0: "Mycket surt",
+      1: "Mycket surt",
+      2: "Surt",
+      3: "Surt",
+      4: "Svagt surt",
+      5: "Svagt surt",
+      6: "Nära neutralt",
+      7: "Neutralt",
+      8: "Svagt basiskt",
+      9: "Basiskt",
+      10: "Basiskt",
+      11: "Starkt basiskt",
+      12: "Starkt basiskt",
+      13: "Mycket basiskt",
+      14: "Mycket basiskt"
+    };
+
+    const bank = document.getElementById('bank');
+    const feedback = document.getElementById('feedback');
+    const level1Board = document.getElementById('level1Board');
+    const level2Board = document.getElementById('level2Board');
+    const phScale = document.getElementById('phScale');
+
+    const levelLabel = document.getElementById('levelLabel');
+    const scoreLabel = document.getElementById('scoreLabel');
+    const correctLabel = document.getElementById('correctLabel');
+    const wrongLabel = document.getElementById('wrongLabel');
+    const leftLabel = document.getElementById('leftLabel');
+    const difficultyBadge = document.getElementById('difficultyBadge');
+    const modeBadge = document.getElementById('modeBadge');
+    const progressBar = document.getElementById('progressBar');
+    const goalBox = document.getElementById('goalBox');
+
+    const winEl = document.getElementById('win-message');
+    const winTitle = document.getElementById('winTitle');
+    const winText = document.getElementById('winText');
+    const nextLevelBtn = document.getElementById('nextLevelBtn');
+
+    let difficultyKey = 'beginner';
+    let currentLevel = 1;
+    let score = 0;
+    let correct = 0;
+    let wrong = 0;
+    let remaining = 0;
+    let level2Unlocked = false;
+
+    function shuffle(arr){
+      const copy = [...arr];
+      for(let i = copy.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function updateStats(){
+      levelLabel.textContent = currentLevel;
+      scoreLabel.textContent = score;
+      correctLabel.textContent = correct;
+      wrongLabel.textContent = wrong;
+      leftLabel.textContent = remaining;
+      difficultyBadge.textContent = DIFFICULTIES[difficultyKey].label;
+      modeBadge.textContent = `Level ${currentLevel}`;
+
+      const total = ITEMS.length;
+      const placed = total - remaining;
+      progressBar.style.width = `${(placed / total) * 100}%`;
+
+      if(currentLevel === 1){
+        goalBox.innerHTML = `
+          <strong>Nivå 1</strong><br>
+          Dra varje ämne till rätt grupp: <strong>Sur</strong>, <strong>Neutral</strong> eller <strong>Basisk</strong>.
+        `;
+      } else {
+        goalBox.innerHTML = `
+          <strong>Nivå 2</strong><br>
+          Placera varje ämne på rätt plats på pH-skalan.
+        `;
+      }
+    }
+
+    function setFeedback(text, type=''){
+      feedback.textContent = text;
+      feedback.className = 'feedback';
+      if(type) feedback.classList.add(type);
+    }
+
+    function createCard(item, extraClass=''){
+      const card = document.createElement('div');
+      card.className = `item-card ${extraClass}`.trim();
+      card.textContent = item.name;
+      card.draggable = true;
+      card.dataset.name = item.name;
+      card.addEventListener('dragstart', onDragStart);
+      card.addEventListener('dragend', onDragEnd);
+      return card;
+    }
+
+    function onDragStart(e){
+      e.dataTransfer.setData('text/plain', e.target.dataset.name);
+      e.target.classList.add('dragging');
+    }
+
+    function onDragEnd(e){
+      e.target.classList.remove('dragging');
+    }
+
+    function getItemByName(name){
+      return ITEMS.find(item => item.name === name);
+    }
+
+    function clearBoards(){
+      bank.innerHTML = '';
+      document.querySelectorAll('.drop-zone .cards').forEach(el => el.innerHTML = '');
+      phScale.innerHTML = '';
+    }
+
+    function setupDropZone(zoneEl, onDropFn){
+      zoneEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zoneEl.classList.add('over');
+      });
+
+      zoneEl.addEventListener('dragleave', () => {
+        zoneEl.classList.remove('over');
+      });
+
+      zoneEl.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zoneEl.classList.remove('over');
+        const name = e.dataTransfer.getData('text/plain');
+        onDropFn(name, zoneEl);
+      });
+    }
+
+    function removeCardFromBank(name){
+      const card = [...bank.children].find(el => el.dataset.name === name);
+      if(card) card.remove();
+    }
+
+    function markZone(zoneEl, ok){
+      zoneEl.classList.remove('correct-flash', 'wrong-flash');
+      void zoneEl.offsetWidth;
+      zoneEl.classList.add(ok ? 'correct-flash' : 'wrong-flash');
+    }
+
+    function checkLevelComplete(){
+      if(remaining > 0) return;
+
+      if(currentLevel === 1){
+        level2Unlocked = true;
+        nextLevelBtn.style.display = 'inline-flex';
+        winTitle.textContent = '🎉 Nivå 1 klar!';
+        winText.innerHTML = `Du sorterade alla ämnen rätt eller lärde dig genom försöken.<br><br>Nu kan du gå vidare till <strong>nivå 2</strong> och placera dem på pH-skalan.`;
+      } else {
+        nextLevelBtn.style.display = 'none';
+        winTitle.textContent = '🏆 Snyggt jobbat!';
+        winText.innerHTML = `Du klarade nivå 2 och placerade ämnena på pH-skalan.<br><br>Total poäng: <strong>${score}</strong>.`;
+      }
+
+      winEl.classList.add('open');
+    }
+
+    function handleLevel1Drop(name, zoneEl){
+      const item = getItemByName(name);
+      if(!item) return;
+
+      const chosenZone = zoneEl.dataset.zone;
+      if(item.zone === chosenZone){
+        removeCardFromBank(name);
+        zoneEl.querySelector('.cards').appendChild(createCard(item));
+        const placedCard = zoneEl.querySelector('.cards').lastElementChild;
+        placedCard.draggable = false;
+        placedCard.style.cursor = 'default';
+
+        markZone(zoneEl, true);
+        remaining--;
+        correct++;
+        score += 10;
+        setFeedback(`Rätt! ${item.name} hör till ${chosenZone === 'sur' ? 'sur' : chosenZone === 'neutral' ? 'neutral' : 'basisk'} lösning.`, 'good');
+      } else {
+        wrong++;
+        score = Math.max(0, score - 2);
+        markZone(zoneEl, false);
+        setFeedback(`Inte riktigt. ${item.hint}`, 'bad');
+      }
+
+      updateStats();
+      checkLevelComplete();
+    }
+
+    function createPHSlots(){
+      for(let i = 0; i <= 14; i++){
+        const slot = document.createElement('div');
+        slot.className = `ph-slot slot-${i}`;
+        slot.dataset.ph = String(i);
+        slot.innerHTML = `
+          <div class="num">${i}</div>
+          <div class="label">${PH_LABELS[i]}</div>
+          <div class="drop-mini"></div>
+        `;
+        setupDropZone(slot, handleLevel2Drop);
+        phScale.appendChild(slot);
+      }
+    }
+
+    function handleLevel2Drop(name, slotEl){
+      const item = getItemByName(name);
+      if(!item) return;
+
+      const targetPH = Number(slotEl.dataset.ph);
+      if(item.ph === targetPH){
+        removeCardFromBank(name);
+        const card = createCard(item, 'ph-item');
+        card.draggable = false;
+        card.style.cursor = 'default';
+        slotEl.querySelector('.drop-mini').appendChild(card);
+
+        slotEl.classList.remove('wrong-flash');
+        void slotEl.offsetWidth;
+        slotEl.classList.add('correct-flash');
+
+        remaining--;
+        correct++;
+        score += 14;
+        setFeedback(`Rätt! ${item.name} passar bäst kring pH ${item.ph}.`, 'good');
+      } else {
+        wrong++;
+        score = Math.max(0, score - 3);
+        slotEl.classList.remove('correct-flash');
+        void slotEl.offsetWidth;
+        slotEl.classList.add('wrong-flash');
+        setFeedback(`Inte riktigt. ${item.name} ligger närmare pH ${item.ph}.`, 'bad');
+      }
+
+      updateStats();
+      checkLevelComplete();
+    }
+
+    function renderBank(){
+      bank.innerHTML = '';
+      shuffle(ITEMS).forEach(item => bank.appendChild(createCard(item)));
+    }
+
+    function setupLevel1(){
+      clearBoards();
+      level1Board.style.display = '';
+      level2Board.style.display = 'none';
+      remaining = ITEMS.length;
+
+      renderBank();
+
+      document.querySelectorAll('.drop-zone').forEach(zone => {
+        setupDropZone(zone, handleLevel1Drop);
+      });
+
+      setFeedback('Börja genom att dra ett kort.', '');
+      updateStats();
+    }
+
+    function setupLevel2(){
+      clearBoards();
+      level1Board.style.display = 'none';
+      level2Board.style.display = '';
+      remaining = ITEMS.length;
+
+      renderBank();
+      createPHSlots();
+
+      setFeedback('Placera varje ämne på rätt plats på pH-skalan.', '');
+      updateStats();
+    }
+
+    function startLevel(level){
+      currentLevel = level;
+      correct = 0;
+      wrong = 0;
+
+      if(level === 1) setupLevel1();
+      else setupLevel2();
+    }
+
+    function restartFromBeginning(){
+      score = 0;
+      level2Unlocked = false;
+      startLevel(1);
+    }
+
+    function resetCurrentLevel(){
+      startLevel(currentLevel);
+    }
+
+    function renderDifficultyButtons(){
+      const wrap = document.getElementById('difficultyGrid');
+      wrap.innerHTML = '';
+
+      Object.entries(DIFFICULTIES).forEach(([key, cfg]) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'choice-btn';
+        btn.innerHTML = `${cfg.label}<small>Välj nivåtempo själv</small>`;
+        if(key === difficultyKey) btn.classList.add('active');
+
+        btn.addEventListener('click', () => {
+          difficultyKey = key;
+          renderDifficultyButtons();
+          restartFromBeginning();
+        });
+
+        wrap.appendChild(btn);
+      });
+    }
+
+    function hideWin(){
+      winEl.classList.remove('open');
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetCurrentLevel);
+    document.getElementById('restartBtn').addEventListener('click', restartFromBeginning);
+    document.getElementById('playAgainBtn').addEventListener('click', () => {
+      hideWin();
+      resetCurrentLevel();
+    });
+    document.getElementById('closeWinBtn').addEventListener('click', hideWin);
+    nextLevelBtn.addEventListener('click', () => {
+      hideWin();
+      if(level2Unlocked) startLevel(2);
+    });
+
+    window.addEventListener('load', () => {
+      renderDifficultyButtons();
+      restartFromBeginning();
+    });
+  </script>
+</body>
+</html>
