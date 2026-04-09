@@ -367,3 +367,27 @@ button.subject-btn:focus-visible,
   background: #cfe3ff;
   border: 1px solid #b7d1ff;
 }
+
+.info-box{
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 18px 22px;
+  background: #f8fbff;
+  border: 1px solid #cfe0f5;
+  border-left: 6px solid #2d6cdf;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.info-box h2{
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+  color: #163a70;
+}
+
+.info-box p{
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #222;
+}
