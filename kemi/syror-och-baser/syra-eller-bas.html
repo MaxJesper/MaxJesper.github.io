@@ -759,7 +759,7 @@
       if(!item) return;
 
       const targetPH = Number(slotEl.dataset.ph);
-      if(item.ph === targetPH){
+      if (Math.abs(item.ph - targetPH) <= 1) {
         removeCardFromBank(name);
         const card = createCard(item, 'ph-item');
         card.draggable = false;
