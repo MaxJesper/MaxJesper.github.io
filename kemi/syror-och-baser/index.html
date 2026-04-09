@@ -1,36 +1,94 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syror & Baser – Kemi</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syror och baser – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .page-intro { margin-bottom: 1.5rem; }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; }
+    .resource-box p { margin-top: 0; color: #444; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+  </style>
 </head>
-
 <body>
 
 <header class="kemi-header">
-  <h1>Syror & Baser</h1>
+  <h1>Syror och baser</h1>
   <p>Jesper Tordsson</p>
 </header>
 
 <button class="hamburger" onclick="toggleMenu()">☰</button>
-
 <nav id="side-menu"></nav>
 
 <main>
-  <p>
-    Välj material:
-  </p>
+  <section class="page-intro">
+    <p>
+      Här hittar du material om syror, baser, indikatorer, pH-skalan,
+      joner och hur syror och baser används i vardagen och industrin.
+    </p>
+  </section>
 
-  <!-- Exempel: länkar senare -->
-  <ul>
-    <li><a href="#">Genomgång</a></li>
-    <li><a href="#">Övningar</a></li>
-    <li><a href="#">Filmer</a></li>
-  </ul>
+  <section class="resource-grid">
+    <article class="resource-box">
+      <h2>För elever</h2>
+      <p>Material för att träna inför prov och bygga förståelse.</p>
+      <ul>
+        <li><a href="./checklista.html">Checklista</a></li>
+        <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+        <li><a href="./ovningsprov.html">Övningsprov</a></li>
+      </ul>
+    </article>
+    <article class="resource-box">
+      <h2>För lektioner / läraren</h2>
+      <p>Övrigt material som kan användas i undervisningen.</p>
+      <ul>
+        <li><a href="./facit.html">Facit till övningsprovet</a></li>
+      </ul>
+    </article>
+  </section>
 
-  <p>
+  <section class="study-tips">
+    <details>
+      <summary>Inläsningstips</summary>
+      <ul>
+        <li>Börja med att lära dig vad surt, basiskt och neutralt innebär och hur det hänger ihop med pH-skalan.</li>
+        <li>Träna på de tre starka syrorna: namn, formel, egenskaper och användningsområden.</li>
+        <li>Lär dig vilken jon som alltid finns i syror (H⁺) och i baser (OH⁻).</li>
+        <li>Öva på att skilja starka från svaga syror samt koncentrerade från utspädda lösningar.</li>
+        <li>Koppla innehållet till vardagen: tandkräm, rengöringsmedel, mat, inläggning, magsyra.</li>
+        <li>Träna på indikatorer – lackmuspapper, BTB och fenolftalein med deras färger.</li>
+      </ul>
+    </details>
+  </section>
+
+  <p style="margin-top: 1.5rem;">
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
   </p>
 </main>
