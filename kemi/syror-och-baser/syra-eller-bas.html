@@ -757,23 +757,30 @@
     function handleLevel2Drop(name, slotEl){
       const item = getItemByName(name);
       if(!item) return;
-
+    
       const targetPH = Number(slotEl.dataset.ph);
-      if (Math.abs(item.ph - targetPH) <= 1) {
+      const closeEnough = Math.abs(item.ph - targetPH) <= 1;
+    
+      if(closeEnough){
         removeCardFromBank(name);
         const card = createCard(item, 'ph-item');
         card.draggable = false;
         card.style.cursor = 'default';
         slotEl.querySelector('.drop-mini').appendChild(card);
-
+    
         slotEl.classList.remove('wrong-flash');
         void slotEl.offsetWidth;
         slotEl.classList.add('correct-flash');
-
+    
         remaining--;
         correct++;
         score += 14;
-        setFeedback(`Rätt! ${item.name} passar bäst kring pH ${item.ph}.`, 'good');
+    
+        if (item.ph === targetPH) {
+          setFeedback(`Rätt! ${item.name} passar bäst kring pH ${item.ph}.`, 'good');
+        } else {
+          setFeedback(`Bra! ${item.name} ligger ungefär kring pH ${item.ph}.`, 'good');
+        }
       } else {
         wrong++;
         score = Math.max(0, score - 3);
@@ -782,7 +789,7 @@
         slotEl.classList.add('wrong-flash');
         setFeedback(`Inte riktigt. ${item.name} ligger närmare pH ${item.ph}.`, 'bad');
       }
-
+    
       updateStats();
       checkLevelComplete();
     }
