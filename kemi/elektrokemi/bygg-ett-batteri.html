@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bygg ett batteri – Elektrokemi</title>
   <link rel="stylesheet" href="/css/style.css" />
-
   <style>
     :root{
       --card:#ffffff;
@@ -36,9 +35,7 @@
       --broken:#444;
       --col-gap: 24px;
     }
-
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
       color:var(--text);
@@ -47,30 +44,25 @@
         linear-gradient(180deg, #f9fbfe 0%, #eef4f9 100%);
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
-
     main{
       max-width:1440px;
       margin:0 auto;
       padding:0 1rem 1.5rem;
     }
-
     .page-title{
       margin:0 0 0.8rem;
       padding-top:0.7rem;
     }
-
     .page-title h1{
       margin:0;
       font-size:2rem;
       line-height:1.1;
     }
-
     .page-title p{
       margin:0.2rem 0 0;
       color:var(--muted);
       font-weight:600;
     }
-
     .top-row{
       display:grid;
       grid-template-columns:auto 1fr;
@@ -78,7 +70,6 @@
       align-items:start;
       margin-bottom:0.8rem;
     }
-
     .intro-inline{
       background:var(--card);
       border:1px solid var(--border);
@@ -90,14 +81,12 @@
       display:flex;
       align-items:center;
     }
-
     .layout{
       display:grid;
       grid-template-columns:320px minmax(0,1fr);
       gap:var(--col-gap);
       align-items:start;
     }
-
     .info-card,
     .game-card{
       background:var(--card);
@@ -105,48 +94,40 @@
       border-radius:16px;
       box-shadow:0 10px 26px rgba(30,60,90,0.06);
     }
-
     .info-card{
       padding:1rem;
       position:sticky;
       top:1rem;
     }
-
     .info-card h2{
       margin-top:0;
       font-size:1.1rem;
     }
-
     .info-card p{
       color:var(--muted);
       line-height:1.45;
     }
-
     .tool-list{
       display:grid;
       gap:0.65rem;
       margin:1rem 0 1rem;
     }
-
     .tool{
       border:1px solid var(--border);
       border-radius:12px;
       padding:0.8rem 0.9rem;
       background:linear-gradient(180deg, #fff, #f8fbff);
     }
-
     .tool strong{
       display:block;
       margin-bottom:0.15rem;
     }
-
     .controls{
       display:flex;
       flex-wrap:wrap;
       gap:0.6rem;
       margin-top:0.9rem;
     }
-
     .primary-btn,
     .secondary-btn{
       border-radius:999px;
@@ -158,19 +139,16 @@
       gap:0.45rem;
       cursor:pointer;
     }
-
     .primary-btn{
       background:#1f5fa8;
       color:#fff;
       border:none;
     }
-
     .secondary-btn{
       background:#eaf1f8;
       color:#23476d;
       border:1px solid #cbd9e8;
     }
-
     .legend{
       margin-top:1rem;
       padding:0.85rem 1rem;
@@ -180,11 +158,9 @@
       color:#44515f;
       line-height:1.45;
     }
-
     .game-card{
       padding:1rem;
     }
-
     .task-header{
       margin-bottom:0.9rem;
       padding:0.9rem 1rem;
@@ -192,7 +168,6 @@
       border:1px solid var(--border);
       background:linear-gradient(180deg, #fbfdff, #f3f8fd);
     }
-
     .task-header-top{
       display:flex;
       flex-wrap:wrap;
@@ -201,7 +176,6 @@
       justify-content:space-between;
       margin-bottom:0.45rem;
     }
-
     .task-badge{
       display:inline-flex;
       align-items:center;
@@ -212,18 +186,15 @@
       border:1px solid #c9d8ea;
       font-weight:700;
     }
-
     .task-progress{
       color:var(--muted);
       font-size:0.95rem;
       font-weight:600;
     }
-
     .task-text{
       margin:0;
       line-height:1.45;
     }
-
     .hint-box{
       display:none;
       margin-top:0.8rem;
@@ -234,18 +205,15 @@
       color:var(--hint);
       line-height:1.45;
     }
-
     .hint-box.show{
       display:block;
     }
-
     .battery-board{
       border:1px solid var(--border);
       border-radius:18px;
       padding:1rem;
       background:linear-gradient(180deg, #ffffff, #f7fbff);
     }
-
     .board-layout{
       display:grid;
       grid-template-columns:860px 340px;
@@ -257,7 +225,6 @@
       align-items:start;
       justify-content:start;
     }
-
     .diagram-wrap{
       grid-area: diagram;
       width:860px;
@@ -269,14 +236,12 @@
       overflow-y:hidden;
       align-self:start;
     }
-
     .diagram{
       position:relative;
       width:860px;
       height:555px;
       margin:0 auto;
     }
-
     .parts-panel{
       grid-area: parts;
       width:340px;
@@ -287,7 +252,6 @@
       border-radius:16px;
       padding:1rem;
     }
-
     .question-card{
       grid-area: question;
       width:860px;
@@ -297,19 +261,16 @@
       border-radius:16px;
       padding:1rem;
     }
-
     .parts-panel h3,
     .question-card h3{
       margin:0 0 0.7rem;
       font-size:1.05rem;
     }
-
     .parts-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:0.7rem;
     }
-
     .part{
       min-height:82px;
       border:1px solid var(--border);
@@ -327,39 +288,33 @@
       user-select:none;
       transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
-
     .part:hover{
       transform:translateY(-2px);
       box-shadow:0 8px 18px rgba(0,0,0,0.07);
       border-color:#b8cbe0;
     }
-
     .part.selected{
       outline:3px solid rgba(31,95,168,0.18);
       border-color:var(--accent);
       background:#f4f8fd;
     }
-
     .part.disabled{
       opacity:0.45;
       cursor:default;
       transform:none;
       box-shadow:none;
     }
-
     .question-card p{
       margin:0;
       color:var(--muted);
       line-height:1.45;
     }
-
     .answer-row{
       display:flex;
       flex-wrap:wrap;
       gap:0.7rem;
       margin-top:0.8rem;
     }
-
     .answer-btn{
       border:1px solid #c8d5e3;
       background:#fff;
@@ -369,13 +324,11 @@
       cursor:pointer;
       transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
-
     .answer-btn:hover{
       transform:translateY(-1px);
       box-shadow:0 5px 14px rgba(0,0,0,0.06);
       border-color:#9eb7d0;
     }
-
     .feedback{
       margin-top:1rem;
       border-radius:14px;
@@ -384,27 +337,22 @@
       line-height:1.4;
       display:none;
     }
-
     .feedback.show{ display:block; }
-
     .feedback.good{
       background:#eefaf1;
       border:1px solid #bfe0c7;
       color:var(--good);
     }
-
     .feedback.bad{
       background:#fff4f4;
       border:1px solid #e6bcbc;
       color:var(--bad);
     }
-
     .mini-explain{
       margin-top:0.55rem;
       font-weight:500;
       color:#334155;
     }
-
     .pole-chip{
       position:absolute;
       top:112px;
@@ -417,21 +365,18 @@
       background:#fff;
       z-index:6;
     }
-
     .pole-chip.left{
       left:126px;
       color:var(--minus);
       background:#eef5ff;
       border-color:#bfd3f2;
     }
-
     .pole-chip.right{
       left:650px;
       color:var(--plus);
       background:#fff1ef;
       border-color:#efc4be;
     }
-
     .cell{
       position:absolute;
       bottom:82px;
@@ -440,14 +385,11 @@
       cursor:pointer;
       transition:transform 0.15s ease;
     }
-
     .cell:hover{
       transform:translateY(-2px);
     }
-
     .cell.left{ left:70px; }
     .cell.right{ right:70px; }
-
     .beaker{
       position:absolute;
       inset:0;
@@ -457,7 +399,6 @@
       background:linear-gradient(180deg, rgba(255,255,255,0.7), rgba(245,245,245,0.45));
       z-index:1;
     }
-
     .solution{
       position:absolute;
       left:0;
@@ -471,17 +412,15 @@
       color:#243342;
       font-weight:800;
       display:flex;
-      align-items:center;
+      align-items:flex-end;
       justify-content:center;
       text-align:center;
-      padding:0 1rem;
-      font-size:1.05rem;
+      padding:0 0.5rem 10px;
+      font-size:0.95rem;
     }
-
     .solution.active{ opacity:1; }
     .solution.left{ background:#ececec; }
     .solution.right{ background:#7fd0ef; }
-
     .electrode-slot{
       position:absolute;
       left:50%;
@@ -498,17 +437,14 @@
       padding-top:6px;
       z-index:4;
     }
-
     .electrode-slot.correct{
       border-color:#7ab98c;
       background:#f1fbf4;
     }
-
     .electrode-slot.wrong{
       border-color:#d28a8a;
       background:#fff5f5;
     }
-
     .electrode{
       width:60px;
       height:160px;
@@ -525,7 +461,6 @@
       box-shadow:inset 0 0 10px rgba(255,255,255,0.35);
       z-index:5;
     }
-
     .electrode-symbol{
       position:absolute;
       top:10px;
@@ -538,7 +473,6 @@
       color:inherit;
       pointer-events:none;
     }
-
     .electrode[data-metal="zink"]{ background:linear-gradient(180deg, #eceff3, var(--zn)); }
     .electrode[data-metal="koppar"]{ background:linear-gradient(180deg, #efb18d, var(--cu)); color:#351a09; }
     .electrode[data-metal="silver"]{ background:linear-gradient(180deg, #f3f5f8, var(--ag)); }
@@ -546,7 +480,6 @@
     .electrode[data-metal="jarn"]{ background:linear-gradient(180deg, #b0b5bd, var(--fe)); color:#fff; }
     .electrode[data-metal="aluminium"]{ background:linear-gradient(180deg, #e5eaf0, var(--al)); }
     .electrode[data-metal="bly"]{ background:linear-gradient(180deg, #9aa0a9, var(--pb)); color:#fff; }
-
     .metal-name{
       position:absolute;
       bottom:6px;
@@ -557,7 +490,6 @@
       font-weight:700;
       opacity:0.95;
     }
-
     .electrode-symbol-fixed{
       position:absolute;
       top:10px;
@@ -570,7 +502,6 @@
       color:inherit;
       pointer-events:none;
     }
-    
     .slot-placeholder{
       position:absolute;
       left:8px;
@@ -581,7 +512,6 @@
       color:var(--muted);
       font-weight:600;
     }
-
     .wire-left-up,
     .wire-right-up,
     .wire-top-left,
@@ -593,42 +523,36 @@
       transition:opacity 0.2s ease;
       z-index:4;
     }
-
     .wire-left-up.active,
     .wire-right-up.active,
     .wire-top-left.active,
     .wire-top-right.active{
       opacity:1;
     }
-
     .wire-left-up{
       left:179px;
       top:104px;
       width:5px;
       height:142px;
     }
-
     .wire-right-up{
       left:679px;
       top:104px;
       width:5px;
       height:142px;
     }
-
     .wire-top-left{
       left:181px;
       top:102px;
       width:210px;
       height:5px;
     }
-
     .wire-top-right{
       left:469px;
       top:102px;
       width:210px;
       height:5px;
     }
-
     .lamp-zone{
       position:absolute;
       left:390px;
@@ -649,24 +573,20 @@
       transition:transform 0.15s ease, background 0.15s ease;
       z-index:7;
     }
-
     .lamp-zone:hover{ transform:translateY(-1px); }
     .lamp-zone.active{
       border-style:solid;
       background:#fdf1df;
     }
-
     .lamp-zone.broken{
       background:#eceff3;
       border-color:#8e98a3;
       color:var(--broken);
     }
-
     .lamp-placeholder{
       font-size:0.8rem;
       line-height:1.15;
     }
-
     .lamp-icon{
       display:none;
       font-size:2rem;
@@ -677,21 +597,17 @@
       filter:grayscale(1);
       opacity:0.7;
     }
-
     .lamp-zone.active .lamp-placeholder{ display:none; }
     .lamp-zone.active .lamp-icon{ display:flex; }
-
     .lamp-rays{
       position:absolute;
       inset:-22px;
       display:none;
       pointer-events:none;
     }
-
     .lamp-zone.active .lamp-rays{
       display:block;
     }
-
     .ray{
       position:absolute;
       width:4px;
@@ -703,21 +619,17 @@
       transform-origin:center -12px;
       opacity:0;
     }
-
     .lamp-zone.on-dim .ray{
       opacity:0.45;
     }
-
     .lamp-zone.on-medium .ray{
       opacity:0.8;
       box-shadow:0 0 8px rgba(255, 216, 77, 0.7);
     }
-
     .lamp-zone.on-strong .ray{
       opacity:1;
       box-shadow:0 0 12px rgba(255, 181, 0, 0.95), 0 0 18px rgba(255, 216, 77, 0.8);
     }
-
     .ray.r1{ transform:translate(-50%, -50%) rotate(0deg); }
     .ray.r2{ transform:translate(-50%, -50%) rotate(45deg); }
     .ray.r3{ transform:translate(-50%, -50%) rotate(90deg); }
@@ -726,50 +638,44 @@
     .ray.r6{ transform:translate(-50%, -50%) rotate(225deg); }
     .ray.r7{ transform:translate(-50%, -50%) rotate(270deg); }
     .ray.r8{ transform:translate(-50%, -50%) rotate(315deg); }
-
     .lamp-zone.on-dim .lamp-icon{
       filter:none;
       opacity:0.95;
       text-shadow:0 0 8px rgba(239,226,167,0.7);
     }
-
     .lamp-zone.on-medium .lamp-icon{
       filter:none;
       opacity:1;
       text-shadow:0 0 12px rgba(255,216,77,0.8);
     }
-
     .lamp-zone.on-strong .lamp-icon{
       filter:none;
       opacity:1;
       text-shadow:0 0 18px rgba(255,159,28,0.95), 0 0 26px rgba(255,216,77,0.8);
     }
-
     .lamp-zone.broken .lamp-icon{
       filter:grayscale(1);
       opacity:0.85;
       text-shadow:none;
     }
-
     .lamp-rating{
       position:absolute;
-      top:232px;
-      left:50%;
+      top:150px;
+      left:430px;
       transform:translateX(-50%);
       font-size:0.8rem;
       background:#fff;
       border:1px solid var(--border);
       border-radius:999px;
-      padding:0.15rem 0.45rem;
+      padding:0.15rem 0.5rem;
       display:none;
       white-space:nowrap;
-      z-index:8;
+      z-index:10;
+      box-shadow:0 1px 4px rgba(0,0,0,0.10);
     }
-
     .lamp-rating.show{
       display:block;
     }
-
     .bridge-click{
       position:absolute;
       left:235px;
@@ -790,14 +696,11 @@
       transition:transform 0.15s ease, background 0.15s ease;
       z-index:3;
     }
-
     .bridge-click:hover{ transform:translateY(-1px); }
-
     .bridge-click.active{
       border-style:solid;
       background:rgba(236,243,252,0.45);
     }
-
     .saltbridge{
       position:absolute;
       left:0;
@@ -807,10 +710,8 @@
       display:none;
       pointer-events:none;
     }
-
     .bridge-click.active .saltbridge{ display:block; }
     .bridge-click.active .bridge-placeholder{ display:none; }
-
     .bridge-label{
       position:absolute;
       left:50%;
@@ -822,7 +723,6 @@
       font-size:0.95rem;
       z-index:8;
     }
-
     .bridge-top,
     .bridge-left,
     .bridge-right{
@@ -831,28 +731,24 @@
       border-radius:10px;
       z-index:4;
     }
-
     .bridge-top{
       left:34px;
       top:55px;
       width:320px;
       height:24px;
     }
-
     .bridge-left{
       left:26px;
       top:70px;
       width:24px;
       height:196px;
     }
-
     .bridge-right{
       right:26px;
       top:70px;
       width:24px;
       height:196px;
     }
-
     .bridge-inner-top,
     .bridge-inner-left,
     .bridge-inner-right{
@@ -861,30 +757,24 @@
       border-radius:8px;
       z-index:5;
     }
-
     .bridge-inner-top{
       left:76px;
       top:75px;
       width:238px;
       height:9px;
     }
-
     .bridge-inner-left{
       left:31px;
       top:80px;
       width:8px;
       height:178px;
     }
-
     .bridge-inner-right{
       right:31px;
       top:80px;
       width:8px;
       height:178px;
     }
-
-
-    
     @media (max-width:1320px){
       .board-layout{
         grid-template-columns:1fr;
@@ -893,31 +783,25 @@
           "parts"
           "question";
       }
-
       .diagram-wrap,
       .question-card,
       .parts-panel{
         width:100%;
       }
-
       .parts-grid{
         grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
       }
     }
-
     @media (max-width:960px){
       .layout{
         grid-template-columns:1fr;
       }
-
       .info-card{
         position:static;
       }
-
       .top-row{
         grid-template-columns:1fr;
       }
-
       .page-title h1{
         font-size:1.7rem;
       }
@@ -927,32 +811,28 @@
 <body>
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
-
   <main>
     <section class="page-title">
       <h1>Bygg ett batteri</h1>
       <p>Elektrokemi</p>
     </section>
-
     <div class="top-row">
       <p style="margin:0;">
         <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
       </p>
-
       <div class="intro-inline">
         Bygg först kända galvaniska element, gå sedan vidare till mer verklighetsnära batterier
         och därefter enkla experimentbatterier. Välj rätt delar, koppla hela kretsen och svara sedan på frågan.
       </div>
     </div>
-
     <section class="layout">
       <aside class="info-card">
         <h2>Så spelar du</h2>
         <p>
-          Klicka först på en del och klicka sedan på rätt plats i figuren.
+          Klicka först på en del i listan till höger och klicka sedan på rätt plats i figuren.
+          Metaller placeras i kärlen, lösningar i botten på kärlen, saltbron i mitten och lampan i toppen.
           När batteriet är färdigbyggt svarar du på frågan och kontrollerar resultatet.
         </p>
-
         <div class="tool-list">
           <div class="tool">
             <strong>Mål</strong>
@@ -967,17 +847,14 @@
             Efter flera fel i rad får du en hjälpruta.
           </div>
         </div>
-
         <div class="controls">
           <button class="primary-btn" id="checkBtn">✔ Kontrollera</button>
           <button class="secondary-btn" id="resetBtn">↺ Börja om</button>
           <button class="secondary-btn" id="prevTaskBtn">← Föregående</button>
           <button class="secondary-btn" id="nextTaskBtn">Nästa →</button>
         </div>
-
         <div class="legend" id="metaText">Uppgift laddas...</div>
       </aside>
-
       <section class="game-card">
         <div class="task-header">
           <div class="task-header-top">
@@ -987,19 +864,16 @@
           <p class="task-text" id="taskText">Uppgift laddas...</p>
           <div class="hint-box" id="hintBox"></div>
         </div>
-
         <div class="battery-board">
           <div class="board-layout">
             <div class="diagram-wrap">
               <div class="diagram">
                 <div class="pole-chip left">− pol</div>
                 <div class="pole-chip right">+ pol</div>
-
                 <div class="wire-left-up" id="wireLeftUp"></div>
                 <div class="wire-top-left" id="wireTopLeft"></div>
                 <div class="wire-top-right" id="wireTopRight"></div>
                 <div class="wire-right-up" id="wireRightUp"></div>
-
                 <div class="lamp-zone" id="lampZone">
                   <span class="lamp-placeholder">Klicka här för vald lampa</span>
                   <span class="lamp-icon" id="lampIcon">💡</span>
@@ -1014,9 +888,7 @@
                     <span class="ray r8"></span>
                   </div>
                 </div>
-
                 <span class="lamp-rating" id="lampRatingText">–</span>
-
                 <div class="bridge-click" id="bridgeZone">
                   <span class="bridge-placeholder">Klicka här för saltbro</span>
                   <div class="saltbridge">
@@ -1029,7 +901,6 @@
                     <div class="bridge-inner-right"></div>
                   </div>
                 </div>
-
                 <div class="cell left" id="leftCell">
                   <div class="beaker"></div>
                   <div class="solution left" id="leftSolution"></div>
@@ -1037,7 +908,6 @@
                     <div class="slot-placeholder">Klicka här för metall</div>
                   </div>
                 </div>
-
                 <div class="cell right" id="rightCell">
                   <div class="beaker"></div>
                   <div class="solution right" id="rightSolution"></div>
@@ -1047,12 +917,10 @@
                 </div>
               </div>
             </div>
-
             <div class="parts-panel">
               <h3>Delar att använda</h3>
               <div class="parts-grid" id="partsGrid"></div>
             </div>
-
             <section class="question-card">
               <h3>Fråga</h3>
               <p id="questionText">Bygg klart batteriet först, och svara sedan på frågan.</p>
@@ -1064,36 +932,35 @@
       </section>
     </section>
   </main>
-
   <script src="/js/menu.js"></script>
   <script>
+    /* =========================================================
+       DATA
+       ========================================================= */
     const metalInfo = {
-      zink:      { symbol: "Zn", name: "Zink", label: "Zn(s)", e0: -0.76 },
-      koppar:    { symbol: "Cu", name: "Koppar", label: "Cu(s)", e0: 0.34 },
-      silver:    { symbol: "Ag", name: "Silver", label: "Ag(s)", e0: 0.80 },
+      zink:      { symbol: "Zn", name: "Zink",      label: "Zn(s)", e0: -0.76 },
+      koppar:    { symbol: "Cu", name: "Koppar",    label: "Cu(s)", e0:  0.34 },
+      silver:    { symbol: "Ag", name: "Silver",    label: "Ag(s)", e0:  0.80 },
       magnesium: { symbol: "Mg", name: "Magnesium", label: "Mg(s)", e0: -2.37 },
-      jarn:      { symbol: "Fe", name: "Järn", label: "Fe(s)", e0: -0.44 },
+      jarn:      { symbol: "Fe", name: "Järn",      label: "Fe(s)", e0: -0.44 },
       aluminium: { symbol: "Al", name: "Aluminium", label: "Al(s)", e0: -1.66 },
-      bly:       { symbol: "Pb", name: "Bly", label: "Pb(s)", e0: -0.13 }
+      bly:       { symbol: "Pb", name: "Bly",       label: "Pb(s)", e0: -0.13 }
     };
-
     const solutionInfo = {
-      znso4:       { label: "ZnSO₄(aq)", name: "Zinksulfat", metal: "zink" },
-      cuso4:       { label: "CuSO₄(aq)", name: "Kopparsulfat", metal: "koppar" },
-      agno3:       { label: "AgNO₃(aq)", name: "Silvernitrat", metal: "silver" },
-      mgso4:       { label: "MgSO₄(aq)", name: "Magnesiumsulfat", metal: "magnesium" },
-      feso4:       { label: "FeSO₄(aq)", name: "Järnsulfat", metal: "jarn" },
-      pbno3:       { label: "Pb(NO₃)₂(aq)", name: "Blynitrat", metal: "bly" },
-      citronsyra:  { label: "Citronsyra", name: "Citronsyra", metal: null },
-      potatissaft: { label: "Potatisvätska", name: "Potatisvätska", metal: null }
+      znso4:       { label: "ZnSO₄(aq)",      name: "Zinksulfat",       metal: "zink"      },
+      cuso4:       { label: "CuSO₄(aq)",      name: "Kopparsulfat",     metal: "koppar"    },
+      agno3:       { label: "AgNO₃(aq)",      name: "Silvernitrat",     metal: "silver"    },
+      mgso4:       { label: "MgSO₄(aq)",      name: "Magnesiumsulfat",  metal: "magnesium" },
+      feso4:       { label: "FeSO₄(aq)",      name: "Järnsulfat",       metal: "jarn"      },
+      pbno3:       { label: "Pb(NO₃)₂(aq)",   name: "Blynitrat",        metal: "bly"       },
+      citronsyra:  { label: "Citronsyra",     name: "Citronsyra",       metal: null        },
+      potatissaft: { label: "Potatisvätska",  name: "Potatisvätska",    metal: null        }
     };
-
     const lampInfo = {
       lamp08: { label: "0,8 V-lampa", rating: 0.8 },
       lamp15: { label: "1,5 V-lampa", rating: 1.5 },
       lamp25: { label: "2,5 V-lampa", rating: 2.5 }
     };
-
     const tasks = [
       {
         category: "Känt element",
@@ -1172,7 +1039,7 @@
         correctRightMetal: "koppar",
         correctLeftSolution: "citronsyra",
         correctRightSolution: "citronsyra",
-        prompt: "Bygg en förenklad modell av ett citronbatteri som ger ungefär 1,0 V.",
+        prompt: "Bygg en förenklad modell av ett citronbatteri som ger ungefär 1,0 V. OBS: samma elektrolyt används i båda kärlen.",
         question: "Varför passar inte en stark lampa så bra här?",
         answers: [
           "För att spänningen är ganska låg",
@@ -1183,7 +1050,7 @@
         explain: "Ett enkelt experimentbatteri ger låg spänning och liten ström. Därför passar en liten lampa bättre.",
         hints: [
           "Experimentbatterier ger ofta lägre spänning än klassiska galvaniska element.",
-          "Här används samma elektrolyt på båda sidorna.",
+          "Här används samma elektrolyt på båda sidorna – välj den tillgängliga lösningen för båda kärlen.",
           "Titta på vilken av lamporna som kräver lägst spänning."
         ]
       },
@@ -1198,7 +1065,7 @@
         correctRightMetal: "koppar",
         correctLeftSolution: "potatissaft",
         correctRightSolution: "potatissaft",
-        prompt: "Bygg en förenklad modell av ett potatisbatteri som ger ungefär 0,90 V.",
+        prompt: "Bygg en förenklad modell av ett potatisbatteri som ger ungefär 0,90 V. OBS: samma elektrolyt används i båda kärlen.",
         question: "Vilken metall blir minuspol i denna modell?",
         answers: ["Zink", "Koppar", "Saltbro"],
         correctAnswer: "Zink",
@@ -1211,6 +1078,9 @@
       }
     ];
 
+    /* =========================================================
+       STATE
+       ========================================================= */
     let currentTaskIndex = 0;
     let currentTask = tasks[currentTaskIndex];
     let selectedPart = null;
@@ -1218,107 +1088,78 @@
     let wrongStreak = 0;
     let brokenLampTimeout = null;
 
-    const partsGrid = document.getElementById("partsGrid");
-    const leftCell = document.getElementById("leftCell");
-    const rightCell = document.getElementById("rightCell");
-    const leftMetalSlot = document.getElementById("leftMetalSlot");
-    const rightMetalSlot = document.getElementById("rightMetalSlot");
-    const leftSolution = document.getElementById("leftSolution");
-    const rightSolution = document.getElementById("rightSolution");
-    const bridgeZone = document.getElementById("bridgeZone");
-    const lampZone = document.getElementById("lampZone");
-    const lampRatingText = document.getElementById("lampRatingText");
-    const lampIcon = document.getElementById("lampIcon");
-    const wireLeftUp = document.getElementById("wireLeftUp");
-    const wireTopLeft = document.getElementById("wireTopLeft");
-    const wireTopRight = document.getElementById("wireTopRight");
-    const wireRightUp = document.getElementById("wireRightUp");
-    const taskText = document.getElementById("taskText");
-    const metaText = document.getElementById("metaText");
-    const categoryBadge = document.getElementById("categoryBadge");
-    const progressText = document.getElementById("progressText");
-    const questionText = document.getElementById("questionText");
-    const answerRow = document.getElementById("answerRow");
-    const feedbackBox = document.getElementById("feedbackBox");
-    const hintBox = document.getElementById("hintBox");
+    /* =========================================================
+       DOM REFERENCES
+       ========================================================= */
+    const partsGrid        = document.getElementById("partsGrid");
+    const leftCell         = document.getElementById("leftCell");
+    const rightCell        = document.getElementById("rightCell");
+    const leftMetalSlot    = document.getElementById("leftMetalSlot");
+    const rightMetalSlot   = document.getElementById("rightMetalSlot");
+    const leftSolutionEl   = document.getElementById("leftSolution");
+    const rightSolutionEl  = document.getElementById("rightSolution");
+    const bridgeZone       = document.getElementById("bridgeZone");
+    const lampZone         = document.getElementById("lampZone");
+    const lampRatingText   = document.getElementById("lampRatingText");
+    const lampIcon         = document.getElementById("lampIcon");
+    const wireLeftUp       = document.getElementById("wireLeftUp");
+    const wireTopLeft      = document.getElementById("wireTopLeft");
+    const wireTopRight     = document.getElementById("wireTopRight");
+    const wireRightUp      = document.getElementById("wireRightUp");
+    const taskText         = document.getElementById("taskText");
+    const metaText         = document.getElementById("metaText");
+    const categoryBadge    = document.getElementById("categoryBadge");
+    const progressText     = document.getElementById("progressText");
+    const questionText     = document.getElementById("questionText");
+    const answerRow        = document.getElementById("answerRow");
+    const feedbackBox      = document.getElementById("feedbackBox");
+    const hintBox          = document.getElementById("hintBox");
 
-    function shuffle(array){
+    /* =========================================================
+       HELPERS
+       ========================================================= */
+    function shuffle(array) {
       const arr = [...array];
-      for(let i = arr.length - 1; i > 0; i--){
+      for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
       return arr;
     }
 
-    function setSelectedPart(partId){
+    function setSelectedPart(partId) {
       selectedPart = partId;
       document.querySelectorAll(".part").forEach(btn => {
         btn.classList.toggle("selected", btn.dataset.part === partId);
       });
     }
 
-    function renderParts(){
-      partsGrid.innerHTML = "";
-
-      const solutionParts = currentTask.solutions.map(sol => ({
-        id: sol,
-        label: solutionInfo[sol].name
-      }));
-
-      const parts = [
-        ...currentTask.metals.map(metal => ({
-          id: metal,
-          label: `${metalInfo[metal].name} (${metalInfo[metal].symbol})`
-        })),
-        ...solutionParts,
-        { id: "saltbridge", label: "Saltbro" },
-        { id: "lamp08", label: "0,8 V-lampa" },
-        { id: "lamp15", label: "1,5 V-lampa" },
-        { id: "lamp25", label: "2,5 V-lampa" }
-      ];
-
-      parts.forEach(part => {
-        const btn = document.createElement("button");
-        btn.className = "part";
-        btn.type = "button";
-        btn.dataset.part = part.id;
-        btn.textContent = part.label;
-        btn.addEventListener("click", () => {
-          if(btn.classList.contains("disabled")) return;
-          setSelectedPart(part.id);
-        });
-        partsGrid.appendChild(btn);
-      });
-    }
-
-    function markPartUsed(partId, used){
+    function markPartUsed(partId, used) {
       const el = document.querySelector(`.part[data-part="${partId}"]`);
-      if(!el) return;
+      if (!el) return;
       el.classList.toggle("disabled", used);
-
-      if(used && selectedPart === partId){
+      if (used && selectedPart === partId) {
         selectedPart = null;
         el.classList.remove("selected");
       }
     }
 
-    function renderEmptySlot(slot){
+    function renderEmptySlot(slot) {
       slot.innerHTML = `<div class="slot-placeholder">Klicka här för metall</div>`;
     }
 
-    function updateMeta(){
+    function updateMeta() {
       currentTask = tasks[currentTaskIndex];
       categoryBadge.textContent = `🔋 ${currentTask.category}`;
-      progressText.textContent = `${currentTaskIndex + 1} / ${tasks.length}`;
-      taskText.textContent = currentTask.prompt;
+      progressText.textContent  = `${currentTaskIndex + 1} / ${tasks.length}`;
+      taskText.textContent      = currentTask.prompt;
       metaText.innerHTML = `
         <strong>${currentTask.title}</strong><br>
         Målcellen ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V
       `;
     }
 
-    function clearLampState(){
+    function clearLampState() {
       lampZone.classList.remove("on-dim", "on-medium", "on-strong", "broken");
       lampIcon.textContent = "💡";
       if (brokenLampTimeout) {
@@ -1327,30 +1168,29 @@
       }
     }
 
-    function resetBoard(){
+    function resetBoard() {
       state = {
-        leftMetal: null,
-        rightMetal: null,
-        leftSolution: null,
+        leftMetal:     null,
+        rightMetal:    null,
+        leftSolution:  null,
         rightSolution: null,
-        saltbridge: false,
-        lamp: null,
-        answered: false
+        saltbridge:    false,
+        lamp:          null,
+        answered:      false
       };
-
       wrongStreak = 0;
       hintBox.classList.remove("show");
       hintBox.innerHTML = "";
 
       renderEmptySlot(leftMetalSlot);
       renderEmptySlot(rightMetalSlot);
-      leftMetalSlot.className = "electrode-slot";
+      leftMetalSlot.className  = "electrode-slot";
       rightMetalSlot.className = "electrode-slot";
 
-      leftSolution.classList.remove("active");
-      rightSolution.classList.remove("active");
-      leftSolution.textContent = "";
-      rightSolution.textContent = "";
+      leftSolutionEl.classList.remove("active");
+      rightSolutionEl.classList.remove("active");
+      leftSolutionEl.textContent  = "";
+      rightSolutionEl.textContent = "";
 
       bridgeZone.classList.remove("active");
 
@@ -1367,47 +1207,75 @@
 
       feedbackBox.className = "feedback";
       feedbackBox.innerHTML = "";
-
       questionText.textContent = currentTask.question;
+
       renderParts();
       renderAnswers();
     }
 
-    function loadTask(index){
+    function renderParts() {
+      partsGrid.innerHTML = "";
+      const solutionParts = currentTask.solutions.map(sol => ({
+        id: sol, label: solutionInfo[sol].name
+      }));
+      const parts = [
+        ...currentTask.metals.map(metal => ({
+          id: metal, label: `${metalInfo[metal].name} (${metalInfo[metal].symbol})`
+        })),
+        ...solutionParts,
+        { id: "saltbridge", label: "Saltbro"    },
+        { id: "lamp08",     label: "0,8 V-lampa" },
+        { id: "lamp15",     label: "1,5 V-lampa" },
+        { id: "lamp25",     label: "2,5 V-lampa" }
+      ];
+      parts.forEach(part => {
+        const btn = document.createElement("button");
+        btn.className      = "part";
+        btn.type           = "button";
+        btn.dataset.part   = part.id;
+        btn.textContent    = part.label;
+        btn.addEventListener("click", () => {
+          if (btn.classList.contains("disabled")) return;
+          setSelectedPart(part.id);
+        });
+        partsGrid.appendChild(btn);
+      });
+    }
+
+    function loadTask(index) {
       currentTaskIndex = Math.max(0, Math.min(tasks.length - 1, index));
       currentTask = tasks[currentTaskIndex];
       updateMeta();
       resetBoard();
     }
 
-    function nextTask(){
-      if(currentTaskIndex < tasks.length - 1){
-        loadTask(currentTaskIndex + 1);
-      }
+    function nextTask() {
+      if (currentTaskIndex < tasks.length - 1) loadTask(currentTaskIndex + 1);
     }
 
-    function prevTask(){
-      if(currentTaskIndex > 0){
-        loadTask(currentTaskIndex - 1);
-      }
+    function prevTask() {
+      if (currentTaskIndex > 0) loadTask(currentTaskIndex - 1);
     }
-    
-    function placeMetal(side){
-      if(!selectedPart) return;
-      if(!currentTask.metals.includes(selectedPart)) return;
-    
+
+    /* =========================================================
+       PLACE METAL
+       ========================================================= */
+    function placeMetal(side) {
+      if (!selectedPart) return;
+      if (!currentTask.metals.includes(selectedPart)) return;
+
       const chosenMetal = selectedPart;
-      const otherSide = side === "leftMetal" ? "rightMetal" : "leftMetal";
-    
-      if(state[otherSide] === chosenMetal) return;
-    
-      if(state[side]){
-        markPartUsed(state[side], false);
-      }
-    
+      const otherSide   = side === "leftMetal" ? "rightMetal" : "leftMetal";
+
+      // Don't allow same metal on both sides
+      if (state[otherSide] === chosenMetal) return;
+
+      // Re-enable previously placed metal on this side
+      if (state[side]) markPartUsed(state[side], false);
+
       state[side] = chosenMetal;
       markPartUsed(chosenMetal, true);
-    
+
       const slot = side === "leftMetal" ? leftMetalSlot : rightMetalSlot;
       slot.innerHTML = `
         <div class="electrode" data-metal="${chosenMetal}">
@@ -1415,21 +1283,67 @@
           <div class="metal-name">${metalInfo[chosenMetal].name}</div>
         </div>
       `;
-    
       setSelectedPart(null);
     }
- 
 
-    function placeLamp(){
-      if(!selectedPart) return;
-      if(!selectedPart.startsWith("lamp")) return;
+    /* =========================================================
+       PLACE SOLUTION  ← TILLAGD
+       ========================================================= */
+    function placeSolution(side) {
+      if (!selectedPart) return;
+      if (!currentTask.solutions.includes(selectedPart)) return;
 
-      if(state.lamp){
-        markPartUsed(state.lamp, false);
+      const chosenSolution = selectedPart;
+      const otherKey       = side === "leftSolution" ? "rightSolution" : "leftSolution";
+
+      // Re-enable old solution for this side (if different and not used on other side)
+      if (state[side] && state[side] !== chosenSolution) {
+        if (state[otherKey] !== state[side]) {
+          markPartUsed(state[side], false);
+        }
       }
+
+      state[side] = chosenSolution;
+
+      // For experimental tasks (single solution), the same part can go on both sides
+      const singleSolutionTask = currentTask.solutions.length === 1;
+      if (!singleSolutionTask) {
+        markPartUsed(chosenSolution, true);
+      }
+
+      // Update visual
+      const solutionEl = side === "leftSolution" ? leftSolutionEl : rightSolutionEl;
+      solutionEl.textContent = solutionInfo[chosenSolution].label;
+      solutionEl.classList.add("active");
+
+      setSelectedPart(null);
+    }
+
+    /* =========================================================
+       PLACE BRIDGE  ← TILLAGD
+       ========================================================= */
+    function placeBridge() {
+      if (!selectedPart || selectedPart !== "saltbridge") return;
+
+      state.saltbridge = true;
+      markPartUsed("saltbridge", true);
+      bridgeZone.classList.add("active");
+
+      setSelectedPart(null);
+    }
+
+    /* =========================================================
+       PLACE LAMP
+       ========================================================= */
+    function placeLamp() {
+      if (!selectedPart) return;
+      if (!selectedPart.startsWith("lamp")) return;
+
+      if (state.lamp) markPartUsed(state.lamp, false);
 
       state.lamp = selectedPart;
       markPartUsed(selectedPart, true);
+
       lampZone.className = "lamp-zone active";
       lampIcon.textContent = "💡";
       lampRatingText.textContent = lampInfo[selectedPart].label;
@@ -1443,14 +1357,16 @@
       setSelectedPart(null);
     }
 
-    function renderAnswers(){
+    /* =========================================================
+       ANSWERS
+       ========================================================= */
+    function renderAnswers() {
       answerRow.innerHTML = "";
       const shuffledAnswers = shuffle(currentTask.answers);
-
       shuffledAnswers.forEach(answer => {
         const btn = document.createElement("button");
         btn.className = "answer-btn";
-        btn.type = "button";
+        btn.type      = "button";
         btn.textContent = answer;
         btn.addEventListener("click", () => {
           state.answered = true;
@@ -1461,50 +1377,54 @@
       });
     }
 
-    function allPartsPlaced(){
+    /* =========================================================
+       VALIDATION HELPERS
+       ========================================================= */
+    function allPartsPlaced() {
       return (
-        state.leftMetal &&
-        state.rightMetal &&
+        state.leftMetal    &&
+        state.rightMetal   &&
         state.leftSolution &&
         state.rightSolution &&
-        state.saltbridge &&
+        state.saltbridge   &&
         state.lamp
       );
     }
 
-    function buildIsCorrect(){
+    function buildIsCorrect() {
       return (
-        state.leftMetal === currentTask.correctLeftMetal &&
-        state.rightMetal === currentTask.correctRightMetal &&
-        state.leftSolution === currentTask.correctLeftSolution &&
-        state.rightSolution === currentTask.correctRightSolution &&
+        state.leftMetal       === currentTask.correctLeftMetal    &&
+        state.rightMetal      === currentTask.correctRightMetal   &&
+        state.leftSolution    === currentTask.correctLeftSolution &&
+        state.rightSolution   === currentTask.correctRightSolution &&
         state.saltbridge
       );
     }
 
-    function incrementWrongStreak(){
+    function incrementWrongStreak() {
       wrongStreak += 1;
-      if(wrongStreak >= 3){
+      if (wrongStreak >= 3) {
         const hintList = currentTask.hints || [];
-        let hintText = hintList[Math.min(wrongStreak - 3, hintList.length - 1)];
-        if(!hintText) hintText = "Fundera på vilken metall som är oädlare och hur kretsen måste slutas.";
+        let hintText   = hintList[Math.min(wrongStreak - 3, hintList.length - 1)];
+        if (!hintText) hintText = "Fundera på vilken metall som är oädlare och hur kretsen måste slutas.";
         hintBox.innerHTML = `<strong>Hjälp:</strong> ${hintText}`;
         hintBox.classList.add("show");
       }
     }
 
-    function resetWrongStreak(){
+    function resetWrongStreak() {
       wrongStreak = 0;
       hintBox.classList.remove("show");
       hintBox.innerHTML = "";
     }
 
-    function showFeedback(isGood, title, text){
+    function showFeedback(isGood, title, text) {
       feedbackBox.className = "feedback show " + (isGood ? "good" : "bad");
       feedbackBox.innerHTML = `${title}<div class="mini-explain">${text}</div>`;
     }
 
-    function lampBehavior(voltage, lampId){
+    function lampBehavior(voltage, lampId) {
+      if (!lampId || !lampInfo[lampId]) return "too_low";
       const lampV = lampInfo[lampId].rating;
       if (voltage < lampV - 0.25) return "too_low";
       if (voltage > lampV + 0.75) return "too_high";
@@ -1513,35 +1433,35 @@
       return "works";
     }
 
-    function computeStudentCellVoltage(){
-      const leftMetal = state.leftMetal ? metalInfo[state.leftMetal] : null;
+    function computeStudentCellVoltage() {
+      const leftMetal  = state.leftMetal  ? metalInfo[state.leftMetal]  : null;
       const rightMetal = state.rightMetal ? metalInfo[state.rightMetal] : null;
-      const leftSol = state.leftSolution ? solutionInfo[state.leftSolution] : null;
-      const rightSol = state.rightSolution ? solutionInfo[state.rightSolution] : null;
+      const leftSol    = state.leftSolution  ? solutionInfo[state.leftSolution]  : null;
+      const rightSol   = state.rightSolution ? solutionInfo[state.rightSolution] : null;
 
       if (!leftMetal || !rightMetal || !leftSol || !rightSol) {
-        return { valid:false, voltage:null, reason:"missing_parts" };
+        return { valid: false, voltage: null, reason: "missing_parts" };
       }
 
       const bothSpecial = (leftSol.metal === null && rightSol.metal === null);
       const standardLike =
-        leftSol.metal === state.leftMetal &&
+        leftSol.metal  === state.leftMetal &&
         rightSol.metal === state.rightMetal;
 
       if (bothSpecial) {
         const estimated = Math.max(0, Math.abs(metalInfo[state.rightMetal].e0 - metalInfo[state.leftMetal].e0) * 0.55);
-        return { valid:true, voltage:Math.round(estimated * 100) / 100, experimental:true };
+        return { valid: true, voltage: Math.round(estimated * 100) / 100, experimental: true };
       }
 
       if (!standardLike) {
-        return { valid:false, voltage:null, reason:"wrong_solutions" };
+        return { valid: false, voltage: null, reason: "wrong_solutions" };
       }
 
       const voltage = Math.abs(rightMetal.e0 - leftMetal.e0);
-      return { valid:true, voltage:Math.round(voltage * 100) / 100, experimental:false };
+      return { valid: true, voltage: Math.round(voltage * 100) / 100, experimental: false };
     }
 
-    function showBrokenLamp(){
+    function showBrokenLamp() {
       clearLampState();
       lampZone.classList.add("broken");
       lampZone.classList.add("on-strong");
@@ -1551,33 +1471,31 @@
       }, 550);
     }
 
-    function checkBattery(chosenAnswer = null){
+    /* =========================================================
+       CHECK
+       ========================================================= */
+    function checkBattery(chosenAnswer = null) {
       const targetBuildCorrect = buildIsCorrect();
-      const builtCell = computeStudentCellVoltage();
+      const builtCell          = computeStudentCellVoltage();
 
       leftMetalSlot.classList.remove("correct", "wrong");
       rightMetalSlot.classList.remove("correct", "wrong");
-
-      if(state.leftMetal){
-        leftMetalSlot.classList.add(state.leftMetal === currentTask.correctLeftMetal ? "correct" : "wrong");
-      }
-      if(state.rightMetal){
-        rightMetalSlot.classList.add(state.rightMetal === currentTask.correctRightMetal ? "correct" : "wrong");
-      }
+      if (state.leftMetal)  leftMetalSlot.classList.add(state.leftMetal  === currentTask.correctLeftMetal  ? "correct" : "wrong");
+      if (state.rightMetal) rightMetalSlot.classList.add(state.rightMetal === currentTask.correctRightMetal ? "correct" : "wrong");
 
       clearLampState();
 
-      if(!allPartsPlaced()){
+      if (!allPartsPlaced()) {
         incrementWrongStreak();
         showFeedback(
           false,
           "Batteriet är inte färdigbyggt ännu.",
-          "Du behöver två elektroder, elektrolyt i båda kärlen, saltbro och en vald lampa."
+          "Du behöver placera: metall i vänster kärl, metall i höger kärl, elektrolyt i båda kärlen, saltbro och en lampa."
         );
         return;
       }
 
-      if(!chosenAnswer){
+      if (!chosenAnswer) {
         incrementWrongStreak();
         showFeedback(
           false,
@@ -1589,13 +1507,13 @@
 
       const answerCorrect = chosenAnswer === currentTask.correctAnswer;
 
-      if(!builtCell.valid){
+      if (!builtCell.valid) {
         incrementWrongStreak();
         showFeedback(
           false,
           "Kretsen är byggd, men denna cell fungerar inte som tänkt.",
           builtCell.reason === "wrong_solutions"
-            ? "Metall och elektrolyt passar inte ihop i båda kärlen. För ett galvaniskt element behöver varje metall normalt sin motsvarande jonlösning."
+            ? "Metall och elektrolyt passar inte ihop. För ett galvaniskt element behöver varje metall normalt sin motsvarande jonlösning."
             : "Det saknas något i cellen."
         );
         return;
@@ -1603,11 +1521,13 @@
 
       const behavior = lampBehavior(builtCell.voltage, state.lamp);
 
+      const lampLabel = (state.lamp && lampInfo[state.lamp]) ? lampInfo[state.lamp].label : "vald lampa";
+
       if (behavior === "too_low") {
         showFeedback(
           false,
-          `Kretsen är sluten, men spänningen räcker inte för att lampan ska lysa.`,
-          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V, vilket är för lite för ${lampInfo[state.lamp].label}.`
+          "Kretsen är sluten, men spänningen räcker inte för att lampan ska lysa.",
+          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V, vilket är för lite för ${lampLabel}.`
         );
         incrementWrongStreak();
         return;
@@ -1617,29 +1537,26 @@
         showBrokenLamp();
         showFeedback(
           false,
-          `Lampan får för hög spänning och går sönder.`,
-          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V. Det är för mycket för ${lampInfo[state.lamp].label}.`
+          "Lampan får för hög spänning och går sönder.",
+          `Den cell du byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V. Det är för mycket för ${lampLabel}.`
         );
         incrementWrongStreak();
         return;
       }
 
-      if (behavior === "dim") {
-        lampZone.classList.add("on-dim");
-      } else if (behavior === "good") {
+      // Lamp lights up – show glow
+      if (behavior === "good") {
         lampZone.classList.add("on-medium");
       } else {
         lampZone.classList.add("on-dim");
       }
 
-      if(targetBuildCorrect && answerCorrect && state.lamp === currentTask.correctLamp){
+      if (targetBuildCorrect && answerCorrect && state.lamp === currentTask.correctLamp) {
         resetWrongStreak();
-
         if (currentTask.voltage >= 2.3) {
           lampZone.classList.remove("on-dim", "on-medium");
           lampZone.classList.add("on-strong");
         }
-
         showFeedback(
           true,
           `Rätt! Batteriet fungerar. Spänningen blir ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V.`,
@@ -1650,34 +1567,26 @@
 
       incrementWrongStreak();
 
-      if(!targetBuildCorrect){
-        const base = `Den cell du faktiskt byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V.`;
-        const extra =
-          behavior === "good" || behavior === "dim" || behavior === "works"
-            ? " Lampan kan därför lysa, men det är inte den cell som uppgiften efterfrågade."
-            : "";
-        showFeedback(
-          false,
-          "Detta var inte rätt cell för uppgiften.",
-          base + extra
-        );
+      if (!targetBuildCorrect) {
+        const base  = `Den cell du faktiskt byggde ger ungefär ${builtCell.voltage.toFixed(2).replace(".", ",")} V.`;
+        const extra = (behavior === "good" || behavior === "dim" || behavior === "works")
+          ? " Lampan kan lysa, men det är inte den cell uppgiften efterfrågade."
+          : "";
+        showFeedback(false, "Detta var inte rätt cell för uppgiften.", base + extra);
         return;
       }
 
-      if(targetBuildCorrect && !answerCorrect){
-        showFeedback(
-          false,
-          "Batteriet är rätt byggt, men svaret på frågan blev fel.",
-          currentTask.explain
-        );
+      if (targetBuildCorrect && !answerCorrect) {
+        showFeedback(false, "Batteriet är rätt byggt, men svaret på frågan blev fel.", currentTask.explain);
         return;
       }
 
-      if(targetBuildCorrect && answerCorrect && state.lamp !== currentTask.correctLamp){
+      if (targetBuildCorrect && answerCorrect && state.lamp !== currentTask.correctLamp) {
+        const correctLampLabel = lampInfo[currentTask.correctLamp] ? lampInfo[currentTask.correctLamp].label : currentTask.correctLamp;
         showFeedback(
           false,
           "Cellen och svaret är rätt, men lampan är inte bäst vald.",
-          `Den rätta cellen ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V. Din valda lampa fungerar ${behavior === "dim" ? "svagt" : "delvis"}, men den mest passande lampan här är ${lampInfo[currentTask.correctLamp].label}.`
+          `Den rätta cellen ger ungefär ${currentTask.voltage.toFixed(2).replace(".", ",")} V. Den mest passande lampan är ${correctLampLabel}.`
         );
         return;
       }
@@ -1689,18 +1598,23 @@
       );
     }
 
+    /* =========================================================
+       EVENT LISTENERS
+       ========================================================= */
     leftCell.addEventListener("click", () => {
-      if(selectedPart && currentTask.metals.includes(selectedPart)){
+      if (!selectedPart) return;
+      if (currentTask.metals.includes(selectedPart)) {
         placeMetal("leftMetal");
-      } else if(selectedPart && currentTask.solutions.includes(selectedPart)){
+      } else if (currentTask.solutions.includes(selectedPart)) {
         placeSolution("leftSolution");
       }
     });
 
     rightCell.addEventListener("click", () => {
-      if(selectedPart && currentTask.metals.includes(selectedPart)){
+      if (!selectedPart) return;
+      if (currentTask.metals.includes(selectedPart)) {
         placeMetal("rightMetal");
-      } else if(selectedPart && currentTask.solutions.includes(selectedPart)){
+      } else if (currentTask.solutions.includes(selectedPart)) {
         placeSolution("rightSolution");
       }
     });
@@ -1713,6 +1627,9 @@
     document.getElementById("prevTaskBtn").addEventListener("click", prevTask);
     document.getElementById("nextTaskBtn").addEventListener("click", nextTask);
 
+    /* =========================================================
+       INIT
+       ========================================================= */
     loadTask(0);
   </script>
 </body>
