@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Hjärta, blod och lungor</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .page-intro { margin-bottom: 1.5rem; }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .resource-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .resource-thumb-link { display: block; text-decoration: none; }
+    .resource-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      object-fit: contain;
+      display: block;
+      background: #f5f7fa;
+      padding: 6px;
+      box-sizing: border-box;
+    }
+    .resource-title-link { text-decoration: none; color: inherit; }
+    .resource-title-link h2 { margin: 0; font-size: 1.15rem; }
+    .resource-title-link:hover h2 { text-decoration: underline; }
+    .resource-box p { margin: 0; color: #444; line-height: 1.35; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin: 0; }
+    .resource-box ul a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+  </style>
+</head>
+<body>
+
+<header class="biologi-header">
+  <h1>Lärande spel</h1>
+  <p>Hjärta, blod och lungor</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>
+    <a href="./" class="subject-btn">← Tillbaka</a>
+  </p>
+
+  <section class="page-intro">
+    <p>
+      Här hittar du lärande spel och övningar som hjälper dig att träna
+      begrepp och samband inom hjärta, blod och lungor på ett aktivt sätt.
+    </p>
+  </section>
+
+  <section class="resource-grid">
+
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./begreppskort.html">
+        <img src="/images/biologi/hjarta-blod-lungor/begrepp.png"
+             alt="Begreppskort – hjärta, blod och lungor" class="resource-thumb">
+      </a>
+      <a class="resource-title-link" href="./begreppskort.html">
+        <h2>Begreppskort</h2>
+      </a>
+      <p>Träna ord och begrepp som hjärtkammare, förmak, artär, ven, kapillär, plasma och gasutbyte.</p>
+      <ul>
+        <li><a href="./begreppskort.html">Öppna begreppskort</a></li>
+      </ul>
+    </article>
+
+    <!-- Fler spel läggs till här efterhand -->
+
+  </section>
+
+  <section class="study-tips">
+    <details>
+      <summary>Tips</summary>
+      <ul>
+        <li>Börja gärna med begreppskorten för att befästa de viktigaste termerna.</li>
+        <li>Tänk på blodets väg – följ det runt i både lilla och stora kretsloppet.</li>
+        <li>Träna hellre flera korta omgångar än en enda lång.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
