@@ -15,7 +15,13 @@
   .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
 
   .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 980px) { .layout { grid-template-columns: 420px 1fr; align-items: start; } }
+  @media (min-width: 980px) {
+  .layout {
+    grid-template-columns: 420px max-content;
+    align-items: start;
+    gap: 6px;
+  }
+}
 
   .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; background: #fff; }
