@@ -40,9 +40,21 @@
     }
 
     .flow-grid {
-      min-width: 1120px;
+      min-width: 1320px;
       display: grid;
-      grid-template-columns: 120px 110px 46px 130px 46px 130px 46px 110px 46px 130px 46px 130px 46px 110px 46px 130px 46px 130px 46px 110px 140px;
+      grid-template-columns:
+        120px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px 42px
+        118px
+        140px;
       align-items: center;
       gap: 0;
       margin: 0.5rem 0 0.75rem;
@@ -288,25 +300,36 @@
     <div class="flow-board">
       <div class="flow-grid">
         <div class="side-label">Från kroppen</div>
+
         <div class="slot" data-index="0">Klicka här</div>
         <div class="arrow blue">→</div>
+
         <div class="slot" data-index="1">Klicka här</div>
         <div class="arrow blue">→</div>
+
         <div class="slot" data-index="2">Klicka här</div>
         <div class="arrow blue">→</div>
+
         <div class="slot" data-index="3">Klicka här</div>
         <div class="arrow blue">→</div>
+
         <div class="slot" data-index="4">Klicka här</div>
         <div class="arrow red">→</div>
+
         <div class="slot" data-index="5">Klicka här</div>
         <div class="arrow red">→</div>
+
         <div class="slot" data-index="6">Klicka här</div>
         <div class="arrow red">→</div>
+
         <div class="slot" data-index="7">Klicka här</div>
         <div class="arrow red">→</div>
+
         <div class="slot" data-index="8">Klicka här</div>
         <div class="arrow red">→</div>
+
         <div class="slot" data-index="9">Klicka här</div>
+
         <div class="side-label">Ut i kroppen</div>
       </div>
     </div>
@@ -357,6 +380,16 @@
     "Kroppen"
   ];
 
+  function shuffle(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  let bankWords = shuffle(correctOrder);
   let placed = new Array(correctOrder.length).fill("");
   let selectedWord = null;
   let celebrationShown = false;
@@ -370,20 +403,15 @@
   function renderWordBank() {
     wordBank.innerHTML = "";
 
-    correctOrder.forEach(word => {
+    bankWords.forEach(word => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "word-btn";
       btn.textContent = word;
 
       const isUsed = placed.includes(word);
-      if (isUsed) {
-        btn.classList.add("used");
-      }
-
-      if (selectedWord === word) {
-        btn.classList.add("selected");
-      }
+      if (isUsed) btn.classList.add("used");
+      if (selectedWord === word) btn.classList.add("selected");
 
       btn.addEventListener("click", () => {
         if (isUsed) return;
@@ -399,9 +427,6 @@
   function updateSlotSelection() {
     slots.forEach(slot => {
       slot.classList.remove("selected-target");
-      if (selectedWord && !slot.textContent.trim()) {
-        slot.classList.add("selected-target");
-      }
       if (selectedWord && slot.textContent === "Klicka här") {
         slot.classList.add("selected-target");
       }
@@ -421,11 +446,7 @@
 
   function placeWordInSlot(index) {
     if (!selectedWord) return;
-
-    const currentWord = placed[index];
-    if (currentWord) {
-      return;
-    }
+    if (placed[index]) return;
 
     placed[index] = selectedWord;
     selectedWord = null;
@@ -436,6 +457,7 @@
 
   function clearAll() {
     placed = new Array(correctOrder.length).fill("");
+    bankWords = shuffle(correctOrder);
     selectedWord = null;
     celebrationShown = false;
     hideCelebration();
@@ -445,13 +467,13 @@
   }
 
   function showHint() {
-    const firstEmpty = placed.findIndex(v => !v);
-    if (firstEmpty === -1) {
-      statusEl.textContent = "Allt är redan ifyllt. Kontrollera ditt svar.";
+    const firstWrongOrEmpty = placed.findIndex((value, index) => value !== correctOrder[index]);
+    if (firstWrongOrEmpty === -1) {
+      statusEl.textContent = "Allt verkar redan vara rätt.";
       return;
     }
 
-    statusEl.textContent = `Ledtråd: På plats ${firstEmpty + 1} ska blodet först till eller genom "${correctOrder[firstEmpty]}".`;
+    statusEl.textContent = `Ledtråd: På plats ${firstWrongOrEmpty + 1} ska "${correctOrder[firstWrongOrEmpty]}" stå.`;
   }
 
   function checkAnswers() {
