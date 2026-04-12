@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blodets väg – Hjärta, blod och lungor</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .game-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .intro-card,
+    .game-card,
+    .word-bank,
+    .help-card {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      margin-bottom: 1rem;
+    }
+
+    .intro-card p,
+    .help-card p {
+      margin: 0.4rem 0;
+      line-height: 1.45;
+      color: #333;
+    }
+
+    .flow-board {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .flow-grid {
+      min-width: 1120px;
+      display: grid;
+      grid-template-columns: 120px 110px 46px 130px 46px 130px 46px 110px 46px 130px 46px 130px 46px 110px 46px 130px 46px 130px 46px 110px 140px;
+      align-items: center;
+      gap: 0;
+      margin: 0.5rem 0 0.75rem;
+    }
+
+    .side-label {
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      color: #1f2937;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      user-select: none;
+    }
+
+    .arrow.blue { color: #2267b5; }
+    .arrow.red { color: #c73636; }
+
+    .slot {
+      min-height: 74px;
+      border: 2px dashed #b8c2cf;
+      border-radius: 14px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.5rem;
+      font-weight: 700;
+      color: #6b7280;
+      cursor: pointer;
+      transition: 0.15s ease;
+      line-height: 1.2;
+    }
+
+    .slot:hover {
+      background: #eef5fb;
+      border-color: #8aaed6;
+    }
+
+    .slot.filled {
+      color: #111;
+      border-style: solid;
+      background: #fff;
+    }
+
+    .slot.correct {
+      background: #e8f7ea;
+      border-color: #4caf50;
+      color: #165b1c;
+    }
+
+    .slot.wrong {
+      background: #fdecec;
+      border-color: #cf3f3f;
+      color: #8a1f1f;
+    }
+
+    .slot.selected-target {
+      outline: 3px solid #7aa7d9;
+      outline-offset: 2px;
+    }
+
+    .zone-title {
+      font-size: 1.1rem;
+      margin: 0 0 0.8rem;
+      font-weight: 800;
+      color: #1f2937;
+    }
+
+    .word-bank-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .word-btn {
+      border: 1px solid #c7d2de;
+      background: #fff;
+      color: #111;
+      border-radius: 999px;
+      padding: 0.65rem 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .word-btn:hover {
+      background: #f4f8fc;
+      transform: translateY(-1px);
+    }
+
+    .word-btn.selected {
+      background: #1d4f91;
+      color: #fff;
+      border-color: #1d4f91;
+      box-shadow: 0 0 0 3px rgba(29,79,145,0.18);
+    }
+
+    .word-btn.used {
+      opacity: 0.45;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .controls button {
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .controls button.secondary {
+      background: #fff;
+      color: #111;
+    }
+
+    .status {
+      min-height: 1.5rem;
+      margin-top: 0.9rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.4rem;
+      font-size: 0.96rem;
+      color: #374151;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.blue { background: #2267b5; }
+    .dot.red { background: #c73636; }
+
+    .mini-note {
+      color: #4b5563;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(0,0,0,0.35);
+      z-index: 9999;
+    }
+
+    .celebration.show {
+      display: grid;
+    }
+
+    .celebration-box {
+      background: #fff;
+      border-radius: 18px;
+      padding: 28px 24px 20px;
+      width: min(92vw, 420px);
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.22);
+    }
+
+    .celebration-box h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .celebration-box p {
+      margin: 0 0 16px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .celebration-emoji {
+      font-size: 42px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .intro-card,
+      .game-card,
+      .word-bank,
+      .help-card {
+        padding: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="biologi-header">
+  <h1>Blodets väg</h1>
+  <p>Hjärta, blod och lungor</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main class="game-wrap">
+  <p>
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+  </p>
+
+  <section class="intro-card">
+    <p><strong>Uppgift:</strong> Placera begreppen i rätt ordning så att blodets väg genom kroppen blir korrekt.</p>
+    <p>Klicka först på en etikett nedanför och klicka sedan på den ruta där den ska ligga.</p>
+    <div class="legend">
+      <span><i class="dot blue"></i> Syrefattigt blod</span>
+      <span><i class="dot red"></i> Syrerikt blod</span>
+    </div>
+  </section>
+
+  <section class="game-card">
+    <h2 class="zone-title">Blodets väg</h2>
+
+    <div class="flow-board">
+      <div class="flow-grid">
+        <div class="side-label">Från kroppen</div>
+        <div class="slot" data-index="0">Klicka här</div>
+        <div class="arrow blue">→</div>
+        <div class="slot" data-index="1">Klicka här</div>
+        <div class="arrow blue">→</div>
+        <div class="slot" data-index="2">Klicka här</div>
+        <div class="arrow blue">→</div>
+        <div class="slot" data-index="3">Klicka här</div>
+        <div class="arrow blue">→</div>
+        <div class="slot" data-index="4">Klicka här</div>
+        <div class="arrow red">→</div>
+        <div class="slot" data-index="5">Klicka här</div>
+        <div class="arrow red">→</div>
+        <div class="slot" data-index="6">Klicka här</div>
+        <div class="arrow red">→</div>
+        <div class="slot" data-index="7">Klicka här</div>
+        <div class="arrow red">→</div>
+        <div class="slot" data-index="8">Klicka här</div>
+        <div class="arrow red">→</div>
+        <div class="slot" data-index="9">Klicka här</div>
+        <div class="side-label">Ut i kroppen</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="checkBtn" type="button">Kontrollera</button>
+      <button id="clearBtn" type="button" class="secondary">Rensa</button>
+      <button id="hintBtn" type="button" class="secondary">Ledtråd</button>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div class="mini-note">Tips: Börja med vad blodet passerar direkt när det kommer från kroppen.</div>
+  </section>
+
+  <section class="word-bank">
+    <h2 class="zone-title">Begrepp att placera ut</h2>
+    <div id="wordBank" class="word-bank-buttons"></div>
+  </section>
+
+  <section class="help-card">
+    <h2 class="zone-title">Vad tränar du här?</h2>
+    <p>Du tränar blodets väg genom lilla och stora kretsloppet.</p>
+    <p>Spelet hjälper dig särskilt att skilja på <strong>hålven</strong>, <strong>lungartär</strong>, <strong>lungven</strong> och <strong>aorta</strong>, samt på <strong>förmak</strong> och <strong>kammare</strong>.</p>
+  </section>
+</main>
+
+<div id="celebration" class="celebration" aria-hidden="true">
+  <div class="celebration-box">
+    <div class="celebration-emoji">🎉</div>
+    <h2>Du klarade det!</h2>
+    <p>Blodets väg är helt rätt.</p>
+    <button type="button" id="closeCelebrationBtn" class="subject-btn">Stäng</button>
+  </div>
+</div>
+
+<script src="/js/menu.js"></script>
+<script>
+  const correctOrder = [
+    "Hålven",
+    "Höger förmak",
+    "Höger kammare",
+    "Lungartär",
+    "Lungor",
+    "Lungven",
+    "Vänster förmak",
+    "Vänster kammare",
+    "Aorta",
+    "Kroppen"
+  ];
+
+  let placed = new Array(correctOrder.length).fill("");
+  let selectedWord = null;
+  let celebrationShown = false;
+
+  const wordBank = document.getElementById("wordBank");
+  const slots = [...document.querySelectorAll(".slot")];
+  const statusEl = document.getElementById("status");
+  const celebrationEl = document.getElementById("celebration");
+  const closeCelebrationBtn = document.getElementById("closeCelebrationBtn");
+
+  function renderWordBank() {
+    wordBank.innerHTML = "";
+
+    correctOrder.forEach(word => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "word-btn";
+      btn.textContent = word;
+
+      const isUsed = placed.includes(word);
+      if (isUsed) {
+        btn.classList.add("used");
+      }
+
+      if (selectedWord === word) {
+        btn.classList.add("selected");
+      }
+
+      btn.addEventListener("click", () => {
+        if (isUsed) return;
+        selectedWord = selectedWord === word ? null : word;
+        renderWordBank();
+        updateSlotSelection();
+      });
+
+      wordBank.appendChild(btn);
+    });
+  }
+
+  function updateSlotSelection() {
+    slots.forEach(slot => {
+      slot.classList.remove("selected-target");
+      if (selectedWord && !slot.textContent.trim()) {
+        slot.classList.add("selected-target");
+      }
+      if (selectedWord && slot.textContent === "Klicka här") {
+        slot.classList.add("selected-target");
+      }
+    });
+  }
+
+  function renderSlots() {
+    slots.forEach((slot, index) => {
+      slot.classList.remove("correct", "wrong");
+      const value = placed[index];
+      slot.textContent = value || "Klicka här";
+      if (value) slot.classList.add("filled");
+      else slot.classList.remove("filled");
+    });
+    updateSlotSelection();
+  }
+
+  function placeWordInSlot(index) {
+    if (!selectedWord) return;
+
+    const currentWord = placed[index];
+    if (currentWord) {
+      return;
+    }
+
+    placed[index] = selectedWord;
+    selectedWord = null;
+    renderSlots();
+    renderWordBank();
+    statusEl.textContent = "";
+  }
+
+  function clearAll() {
+    placed = new Array(correctOrder.length).fill("");
+    selectedWord = null;
+    celebrationShown = false;
+    hideCelebration();
+    statusEl.textContent = "";
+    renderSlots();
+    renderWordBank();
+  }
+
+  function showHint() {
+    const firstEmpty = placed.findIndex(v => !v);
+    if (firstEmpty === -1) {
+      statusEl.textContent = "Allt är redan ifyllt. Kontrollera ditt svar.";
+      return;
+    }
+
+    statusEl.textContent = `Ledtråd: På plats ${firstEmpty + 1} ska blodet först till eller genom "${correctOrder[firstEmpty]}".`;
+  }
+
+  function checkAnswers() {
+    let filledCount = 0;
+    let correctCount = 0;
+
+    slots.forEach((slot, index) => {
+      slot.classList.remove("correct", "wrong");
+      const value = placed[index];
+
+      if (!value) return;
+      filledCount++;
+
+      if (value === correctOrder[index]) {
+        slot.classList.add("correct");
+        correctCount++;
+      } else {
+        slot.classList.add("wrong");
+      }
+    });
+
+    if (filledCount < correctOrder.length) {
+      statusEl.textContent = `Du har fyllt i ${filledCount} av ${correctOrder.length} rutor.`;
+      celebrationShown = false;
+      hideCelebration();
+      return;
+    }
+
+    if (correctCount === correctOrder.length) {
+      statusEl.textContent = "Snyggt! Hela blodets väg är rätt.";
+      showCelebration();
+    } else {
+      statusEl.textContent = `Du har ${correctCount} av ${correctOrder.length} rätt. De röda rutorna behöver ändras.`;
+      celebrationShown = false;
+      hideCelebration();
+    }
+  }
+
+  function showCelebration() {
+    if (celebrationShown) return;
+    celebrationShown = true;
+    celebrationEl.classList.add("show");
+  }
+
+  function hideCelebration() {
+    celebrationEl.classList.remove("show");
+  }
+
+  slots.forEach((slot, index) => {
+    slot.addEventListener("click", () => {
+      if (!selectedWord) {
+        if (placed[index]) {
+          const returnedWord = placed[index];
+          placed[index] = "";
+          selectedWord = returnedWord;
+          renderSlots();
+          renderWordBank();
+        }
+        return;
+      }
+
+      placeWordInSlot(index);
+    });
+  });
+
+  document.getElementById("checkBtn").addEventListener("click", checkAnswers);
+  document.getElementById("clearBtn").addEventListener("click", clearAll);
+  document.getElementById("hintBtn").addEventListener("click", showHint);
+
+  closeCelebrationBtn.addEventListener("click", hideCelebration);
+  celebrationEl.addEventListener("click", (e) => {
+    if (e.target === celebrationEl) hideCelebration();
+  });
+
+  renderSlots();
+  renderWordBank();
+</script>
+</body>
+</html>
