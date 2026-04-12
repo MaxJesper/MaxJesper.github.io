@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="/css/style.css" />
   <style>
     .page-intro { margin-bottom: 1.5rem; }
+
     .resource-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 280px));
       gap: 1rem;
       margin-top: 1rem;
     }
+
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
@@ -24,11 +26,17 @@
       gap: 0.8rem;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+
     .resource-box:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     }
-    .resource-thumb-link { display: block; text-decoration: none; }
+
+    .resource-thumb-link {
+      display: block;
+      text-decoration: none;
+    }
+
     .resource-thumb {
       width: 100%;
       aspect-ratio: 16 / 10;
@@ -40,13 +48,43 @@
       padding: 6px;
       box-sizing: border-box;
     }
-    .resource-title-link { text-decoration: none; color: inherit; }
-    .resource-title-link h2 { margin: 0; font-size: 1.15rem; }
-    .resource-title-link:hover h2 { text-decoration: underline; }
-    .resource-box p { margin: 0; color: #444; line-height: 1.35; }
-    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
-    .resource-box li { margin: 0; }
-    .resource-box ul a { display: inline-block; text-decoration: none; font-weight: 600; }
+
+    .resource-title-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .resource-title-link h2 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .resource-title-link:hover h2 {
+      text-decoration: underline;
+    }
+
+    .resource-box p {
+      margin: 0;
+      color: #444;
+      line-height: 1.35;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin: 0;
+    }
+
+    .resource-box ul a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
     .study-tips {
       margin-top: 1.5rem;
       background: #f8f9fb;
@@ -54,9 +92,20 @@
       border-radius: 12px;
       padding: 1rem;
     }
-    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
-    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
-    .study-tips li { margin-bottom: 0.45rem; }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li {
+      margin-bottom: 0.45rem;
+    }
   </style>
 </head>
 <body>
@@ -97,7 +146,61 @@
       </ul>
     </article>
 
-    <!-- Fler spel läggs till här efterhand -->
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./blodets-vag.html">
+        <img src="/images/biologi/blod/blodets-vag.png"
+             alt="Blodets väg – hjärta, blod och lungor" class="resource-thumb">
+      </a>
+      <a class="resource-title-link" href="./blodets-vag.html">
+        <h2>Blodets väg</h2>
+      </a>
+      <p>Följ blodets väg genom hjärtat, lungorna och kroppen i rätt ordning.</p>
+      <ul>
+        <li><a href="./blodets-vag.html">Öppna Blodets väg</a></li>
+      </ul>
+    </article>
+
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./bygg-blodet.html">
+        <img src="/images/biologi/blod/bygg-blodet.png"
+             alt="Bygg blodet – hjärta, blod och lungor" class="resource-thumb">
+      </a>
+      <a class="resource-title-link" href="./bygg-blodet.html">
+        <h2>Bygg blodet</h2>
+      </a>
+      <p>Lär dig vad blodet består av och vilken uppgift röda blodkroppar, vita blodkroppar, blodplättar och plasma har.</p>
+      <ul>
+        <li><a href="./bygg-blodet.html">Öppna Bygg blodet</a></li>
+      </ul>
+    </article>
+
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./gasutbytet.html">
+        <img src="/images/biologi/blod/gasutbytet.png"
+             alt="Gasutbytet – hjärta, blod och lungor" class="resource-thumb">
+      </a>
+      <a class="resource-title-link" href="./gasutbytet.html">
+        <h2>Gasutbytet</h2>
+      </a>
+      <p>Träna på hur syre och koldioxid rör sig mellan lungblåsor och blod i samband med andningen.</p>
+      <ul>
+        <li><a href="./gasutbytet.html">Öppna Gasutbytet</a></li>
+      </ul>
+    </article>
+
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./korsord.html">
+        <img src="/images/biologi/blod/korsord.png"
+             alt="Korsord – hjärta, blod och lungor" class="resource-thumb">
+      </a>
+      <a class="resource-title-link" href="./korsord.html">
+        <h2>Korsord</h2>
+      </a>
+      <p>Repetera viktiga ord och begrepp inom hjärta, blod och lungor i ett korsord.</p>
+      <ul>
+        <li><a href="./korsord.html">Öppna korsord</a></li>
+      </ul>
+    </article>
 
   </section>
 
@@ -106,8 +209,10 @@
       <summary>Tips</summary>
       <ul>
         <li>Börja gärna med begreppskorten för att befästa de viktigaste termerna.</li>
-        <li>Tänk på blodets väg – följ det runt i både lilla och stora kretsloppet.</li>
-        <li>Träna hellre flera korta omgångar än en enda lång.</li>
+        <li>Fortsätt med Blodets väg för att träna ordningen i lilla och stora kretsloppet.</li>
+        <li>Bygg blodet hjälper dig att minnas blodets olika delar och deras uppgifter.</li>
+        <li>Gasutbytet tränar riktningen för syre och koldioxid mellan alveoler och blod.</li>
+        <li>Avsluta gärna med korsordet som repetition.</li>
       </ul>
     </details>
   </section>
