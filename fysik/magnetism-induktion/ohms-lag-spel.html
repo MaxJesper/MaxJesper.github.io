@@ -629,9 +629,8 @@ function drawCircuit(){
     /* PARALLEL */
     parts.push(svgBattery(lx,ty,by,cs.U));
     parts.push(L(lx,by,rx,by));
-    parts.push(L(rx,ty,rx,by));
+    // No separate right-rail wire — last branch closes the circuit at rx
 
-    // Fuse on top left, then straight wire to rx
     let topStart=lx;
     if(cs.fuse.A!=null){
       const fcx=lx+70;
@@ -639,11 +638,12 @@ function drawCircuit(){
       parts.push(svgFuseH(fcx,ty,cs.fuseBlown));
       topStart=fcx+26;
     }
-    // FIX: connect topStart directly to rx (no +20 gap)
     parts.push(L(topStart,ty,rx,ty));
 
     const bCount=cs.branchInfo.length;
-    const branchXs=bCount===0?[]:bCount===1?[340]:bCount===2?[255,430]:[200,370,540];
+    // Last branch always at rx=610, replacing the right-rail wire
+    const branchXs=bCount===0?[]:bCount===1?[610]:bCount===2?[355,610]:[215,415,610];
+    if(bCount===0) parts.push(L(rx,ty,rx,by)); // empty circuit: close right side
     const cy=(ty+by)/2;
 
     branchXs.forEach((bx,i)=>{
