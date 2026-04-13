@@ -1,0 +1,998 @@
+<\!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ohms lag – Lärande spel – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #eef3f9; }
+    .game-wrap { max-width: 1360px; margin: 0 auto; padding: 0 18px 40px; }
+    .back-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin:14px 0 12px; }
+    .level-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .lvl-chip {
+      padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.88rem;
+      background:#fff; border:2px solid #d2dfe9; color:#3b5470;
+      cursor:pointer; transition:all .2s;
+    }
+    .lvl-chip:hover { border-color:#7ab5e8; background:#eef6ff; }
+    .lvl-chip.active { background:#dceeff; border-color:#5ba3e0; color:#0e3d6a; box-shadow:0 3px 10px rgba(45,111,183,.18); }
+    .lvl-chip.done { background:#e3f7ec; border-color:#72c897; color:#0e5530; }
+    .game-grid { display:grid; grid-template-columns:370px 1fr 300px; gap:16px; align-items:start; }
+    @media(max-width:1140px){ .game-grid{grid-template-columns:1fr 1fr;} .comp-panel{grid-column:span 2;} }
+    @media(max-width:700px){ .game-grid{grid-template-columns:1fr;} .comp-panel{grid-column:span 1;} }
+    .panel { background:#fff; border:1px solid #d8e5f0; border-radius:18px; padding:18px; box-shadow:0 6px 22px rgba(18,46,82,.07); }
+    .panel h2 { margin:0 0 14px; font-size:1.1rem; color:#163b5a; }
+    .task-type-badge { display:inline-block; padding:5px 12px; border-radius:999px; background:#e4f0fb; color:#174f7d; font-size:0.88rem; font-weight:700; margin-bottom:10px; }
+    .task-text { font-size:1.05rem; line-height:1.6; color:#192e40; margin-bottom:14px; }
+    .step-info { font-size:0.92rem; font-weight:700; color:#4a5f6e; background:#f0f6fc; border:1px solid #c0d8ef; border-radius:10px; padding:8px 12px; margin-bottom:10px; }
+    .mcq-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:8px; margin-bottom:12px; }
+    .mcq-btn { padding:11px 10px; border:2px solid #d2dfe9; border-radius:12px; background:#f7fbff; color:#1d456d; font-size:0.97rem; font-weight:600; cursor:pointer; transition:all .15s; text-align:center; }
+    .mcq-btn:hover { border-color:#7ab5e8; background:#e8f4ff; transform:translateY(-1px); }
+    .mcq-btn.selected { border-color:#2d6fb7; background:#d9eeff; color:#0d3f73; }
+    .mcq-btn.correct { border-color:#198754; background:#e0f5ea; color:#0a4a28; }
+    .mcq-btn.wrong { border-color:#c93b3b; background:#ffeaea; color:#7a1616; }
+    .num-row { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+    .num-input { width:110px; padding:11px 12px; border:2px solid #d2dfe9; border-radius:12px; font-size:1.05rem; font-family:inherit; color:#102236; background:#fff; transition:border-color .15s; }
+    .num-input:focus { outline:none; border-color:#5ba3e0; }
+    .unit-tag { font-weight:700; color:#3a5c7a; font-size:1.05rem; }
+    .build-hint { padding:10px 14px; border-radius:12px; background:#f0f6fc; border:1px dashed #9fc4e4; color:#2a4f6e; font-size:0.95rem; margin-bottom:12px; }
+    .action-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+    .btn-check { padding:10px 18px; border:none; border-radius:12px; background:linear-gradient(180deg,#2e7ec0 0%,#215f94 100%); color:#fff; font-weight:700; font-size:0.97rem; cursor:pointer; box-shadow:0 6px 16px rgba(33,95,148,.22); transition:transform .12s,box-shadow .12s; }
+    .btn-check:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(33,95,148,.3); }
+    .btn-next,.btn-hint,.btn-reset { padding:10px 14px; border:none; border-radius:12px; font-weight:600; font-size:0.94rem; cursor:pointer; transition:transform .12s; }
+    .btn-next  { background:#e4f0fb; color:#1a4f7c; }
+    .btn-hint  { background:#fff7e6; color:#7a5a00; }
+    .btn-reset { background:#ffeaea; color:#7a1616; }
+    .btn-next:hover,.btn-hint:hover,.btn-reset:hover { transform:translateY(-1px); }
+    .feedback { padding:11px 14px; border-radius:14px; font-size:0.96rem; font-weight:600; min-height:44px; line-height:1.4; transition:all .25s; }
+    .fb-neutral { background:#f4f7fb; color:#42607c; }
+    .fb-ok      { background:#e0f5ea; color:#0a4a28; border:1px solid #8dd3a8; }
+    .fb-bad     { background:#ffeaea; color:#7a1616; border:1px solid #e8a0a0; }
+    .fb-hint    { background:#fff7e6; color:#7a5000; border:1px solid #f2c97e; }
+    .score-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:14px; }
+    .score-box { background:#f5f9fd; border:1px solid #d5e4f0; border-radius:12px; padding:10px 8px; text-align:center; }
+    .score-box span { display:block; font-size:0.8rem; color:#5a7898; margin-bottom:2px; }
+    .score-box strong { font-size:1.3rem; color:#163b5a; }
+    .ohm-triangle { text-align:center; margin-top:14px; }
+    .ohm-triangle svg { max-width:120px; }
+    .circuit-controls { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .ctrl-group { display:flex; flex-direction:column; gap:4px; }
+    .ctrl-group label { font-size:0.83rem; font-weight:700; color:#3a5c7a; }
+    .ctrl-select { padding:8px 10px; border:1px solid #c8d8e8; border-radius:10px; font-family:inherit; font-size:0.92rem; background:#f6faff; color:#102236; cursor:pointer; }
+    .svg-wrap { background:linear-gradient(180deg,#f8fbff 0%,#edf4fb 100%); border:1px solid #d0e2f0; border-radius:16px; padding:6px 4px; overflow:visible; }
+    .svg-wrap svg { display:block; width:100%; }
+    .circ-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+    .c-stat { background:#f4f9fd; border:1px solid #d5e4f0; border-radius:14px; padding:10px; }
+    .c-stat-label { font-size:0.82rem; color:#4f6d87; margin-bottom:4px; }
+    .c-stat strong { font-size:1.25rem; color:#163b5a; }
+    .fuse-ok   { color:#198754; }
+    .fuse-blow { color:#c93b3b; }
+    .fuse-none { color:#8899a8; }
+    .calc-box { margin-top:12px; padding:10px 14px; border-radius:12px; background:#f8fafc; border:1px solid #d0e0ef; font-size:0.92rem; line-height:2; color:#1d3e5a; }
+    .calc-box .cl { display:block; }
+    .calc-box .cl.sub { color:#5a7898; font-size:0.88rem; padding-left:12px; }
+    .slot-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .slot-label { width:60px; font-weight:700; font-size:0.9rem; color:#3a5c7a; }
+    .slot-select { flex:1; padding:8px 10px; border:1px solid #c8d8e8; border-radius:10px; font-family:inherit; font-size:0.88rem; background:#f6faff; color:#102236; }
+    .legend-list { list-style:none; padding:0; margin:0; }
+    .legend-list li { display:flex; justify-content:space-between; padding:6px 10px; border-radius:10px; background:#f6faff; border:1px solid #daeaf5; margin-bottom:6px; font-size:0.9rem; }
+    .legend-list li strong { color:#1d456d; }
+    .mini-formula { margin-top:10px; padding:10px 12px; border-radius:12px; background:#f0f5fc; border:1px solid #ccdcee; font-size:0.93rem; line-height:1.7; color:#1d3e5a; }
+    .mini-formula strong { color:#163b5a; }
+    .start-overlay { position:fixed; inset:0; background:rgba(10,30,55,0.72); display:flex; align-items:center; justify-content:center; z-index:200; padding:20px; }
+    .start-card { background:#fff; border-radius:24px; padding:36px 40px; max-width:520px; width:100%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+    .start-card h2 { font-size:1.7rem; color:#163b5a; margin:0 0 12px; }
+    .start-card p  { color:#3a5c7a; line-height:1.6; margin-bottom:20px; }
+    .btn-start { display:inline-block; padding:14px 32px; border:none; border-radius:14px; background:linear-gradient(180deg,#2e7ec0 0%,#195f96 100%); color:#fff; font-size:1.1rem; font-weight:800; cursor:pointer; box-shadow:0 8px 24px rgba(25,95,150,.3); transition:transform .15s; }
+    .btn-start:hover { transform:translateY(-2px); }
+    .complete-banner { display:none; padding:14px 18px; border-radius:16px; background:linear-gradient(135deg,#1a7a46,#27a558); color:#fff; font-weight:700; font-size:1rem; text-align:center; margin-bottom:14px; box-shadow:0 6px 18px rgba(20,120,65,.25); }
+  </style>
+</head>
+<body>
+<button class="hamburger" onclick="toggleMenu()">&#9776;</button>
+<nav id="side-menu"></nav>
+<header class="fysik-header">
+  <h1>Ohms lag</h1>
+  <p>F&#228;ladsg&#229;rden</p>
+</header>
+
+<div class="game-wrap">
+  <div class="back-row">
+    <a href="/fysik/magnetism-induktion/index.html" class="subject-btn">&#8592; Tillbaka till El, magnetism och induktion</a>
+    <button class="btn-reset" id="resetBtn">&#8635; B&#246;rja om spelet</button>
+  </div>
+
+  <div class="level-bar" id="levelBar"></div>
+
+  <div class="complete-banner" id="completeBanner">
+    &#127881; Grattis\! Du har klarat alla sex niv&#229;er\! Topp betyg: <span id="finalScore"></span> po&#228;ng.
+  </div>
+
+  <div class="game-grid">
+
+    <\!-- LEFT: task panel -->
+    <section class="panel task-panel">
+      <h2>Uppgift</h2>
+      <div class="task-type-badge" id="taskBadge">&#8211;</div>
+      <div class="task-text" id="taskText">Tryck p&#229; <strong>Starta</strong> nedan f&#246;r att b&#246;rja.</div>
+      <div id="stepInfo" class="step-info" style="display:none;"></div>
+      <div id="answerArea"></div>
+      <div class="action-row">
+        <button class="btn-check" id="checkBtn">Kontrollera</button>
+        <button class="btn-next"  id="nextBtn">N&#228;sta uppgift</button>
+        <button class="btn-hint"  id="hintBtn">Ledt&#229;d</button>
+      </div>
+      <div class="feedback fb-neutral" id="feedback">L&#228;s uppgiften och svara.</div>
+      <div class="score-grid">
+        <div class="score-box"><span>Niv&#229;</span><strong id="sLevel">1</strong></div>
+        <div class="score-box"><span>Po&#228;ng</span><strong id="sScore">0</strong></div>
+        <div class="score-box"><span>R&#228;tt i rad</span><strong id="sStreak">0</strong></div>
+        <div class="score-box"><span>Klara</span><strong id="sSolved">0</strong></div>
+      </div>
+      <div class="ohm-triangle">
+        <svg viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="triGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#dceeff"/><stop offset="100%" stop-color="#c8e0f8"/>
+          </linearGradient></defs>
+          <polygon points="75,6 146,124 4,124" fill="url(#triGrad)" stroke="#5ba3e0" stroke-width="2.5" stroke-linejoin="round"/>
+          <line x1="4" y1="82" x2="146" y2="82" stroke="#5ba3e0" stroke-width="2"/>
+          <text x="75" y="72" text-anchor="middle" font-size="28" font-weight="800" fill="#163b5a" font-family="system-ui">U</text>
+          <text x="42" y="114" text-anchor="middle" font-size="22" font-weight="700" fill="#163b5a" font-family="system-ui">I</text>
+          <text x="75" y="114" text-anchor="middle" font-size="16" fill="#7aa8c8" font-family="system-ui">&#215;</text>
+          <text x="108" y="114" text-anchor="middle" font-size="22" font-weight="700" fill="#163b5a" font-family="system-ui">R</text>
+          <text x="75" y="128" text-anchor="middle" font-size="9" fill="#4e7a9a" font-family="system-ui">T&#228;ck det du s&#246;ker</text>
+        </svg>
+      </div>
+    </section>
+
+    <\!-- CENTRE: circuit builder -->
+    <section class="panel">
+      <h2>Byggyta</h2>
+      <div class="circuit-controls">
+        <div class="ctrl-group">
+          <label for="batSel">Batteri</label>
+          <select class="ctrl-select" id="batSel">
+            <option value="1.5">1,5 V</option>
+            <option value="4.5">4,5 V</option>
+          </select>
+        </div>
+        <div class="ctrl-group">
+          <label for="modeSel">Koppling</label>
+          <select class="ctrl-select" id="modeSel">
+            <option value="series">Seriekoppling</option>
+            <option value="parallel">Parallellkoppling</option>
+          </select>
+        </div>
+        <div class="ctrl-group" style="justify-content:flex-end">
+          <label>&nbsp;</label>
+          <button class="btn-hint" id="clearCircBtn" style="align-self:flex-end">T&#246;m kretsen</button>
+        </div>
+      </div>
+      <div class="svg-wrap">
+        <svg id="circSVG" viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" style="min-height:220px"></svg>
+      </div>
+      <div class="circ-stats" id="circStats">
+        <div class="c-stat">
+          <div class="c-stat-label">Total resistans</div>
+          <strong id="cR">&#8211;</strong>
+        </div>
+        <div class="c-stat">
+          <div class="c-stat-label">Str&#246;m i kretsen</div>
+          <strong id="cI">&#8211;</strong>
+        </div>
+        <div class="c-stat">
+          <div class="c-stat-label">S&#228;kring</div>
+          <strong id="cFuse" class="fuse-none">Ingen</strong>
+        </div>
+      </div>
+      <div id="branchStats" style="display:none; margin-top:10px; font-size:0.9rem; color:#3a5c7a; line-height:1.8;"></div>
+      <div class="calc-box" id="calcBox" style="display:none;"></div>
+    </section>
+
+    <\!-- RIGHT: components -->
+    <aside class="panel comp-panel">
+      <h2>Komponenter</h2>
+      <div style="margin-bottom:14px;">
+        <div class="slot-row"><span class="slot-label">S&#228;kring</span><select class="slot-select" id="fuseSel"></select></div>
+        <div class="slot-row"><span class="slot-label">Plats 1</span><select class="slot-select" id="s1"></select></div>
+        <div class="slot-row"><span class="slot-label">Plats 2</span><select class="slot-select" id="s2"></select></div>
+        <div class="slot-row"><span class="slot-label">Plats 3</span><select class="slot-select" id="s3"></select></div>
+      </div>
+      <ul class="legend-list">
+        <li><span>Lampa 1,5 V &middot; 0,30 A</span><strong>5 &#937;</strong></li>
+        <li><span>Lampa 3,5 V &middot; 0,30 A</span><strong>12 &#937;</strong></li>
+        <li><span>Motst&#229;nd</span><strong>1&#8211;10 &#937;</strong></li>
+        <li><span>S&#228;kring</span><strong>0,30 A / 0,50 A</strong></li>
+      </ul>
+      <div class="mini-formula">
+        <strong>U = R &middot; I</strong><br>
+        Str&#246;m <strong>I</strong> &#8211; ampere <strong>A</strong><br>
+        Sp&#228;nning <strong>U</strong> &#8211; volt <strong>V</strong><br>
+        Resistans <strong>R</strong> &#8211; ohm <strong>&#937;</strong><br>
+        Serie: R<sub>tot</sub> = R<sub>1</sub> + R<sub>2</sub> + &#8230;<br>
+        Parallell: 1/R<sub>tot</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &#8230;
+      </div>
+    </aside>
+  </div><\!-- /game-grid -->
+</div><\!-- /game-wrap -->
+
+<\!-- Start overlay -->
+<div class="start-overlay" id="startOverlay">
+  <div class="start-card">
+    <h2>&#9889; Ohms lag &#8211; l&#228;rande spel</h2>
+    <p>Tr&#228;na begrepp, symboler och enheter &#8212; r&#228;kna ut resistans, str&#246;m och sp&#228;nning &#8212; och bygg serie- och parallellkopplingar.</p>
+    <p style="font-size:0.9rem; color:#5a7898; margin-bottom:24px;">6 niv&#229;er &nbsp;&middot;&nbsp; Direkt &#229;terkoppling &nbsp;&middot;&nbsp; Kretssimulator</p>
+    <button class="btn-start" id="startBtn">Starta spelet</button>
+  </div>
+</div>
+
+<script src="/js/menu.js"></script>
+<script>
+/* ── DATA ─────────────────────────────────────────────────── */
+const COMPS = {
+  none:  { label:'Tom plats',         type:'none',     ohm:null },
+  lamp15:{ label:'Lampa 1,5V · 5Ω',  type:'lamp',     ohm:5,  vRat:1.5, aRat:0.30 },
+  lamp35:{ label:'Lampa 3,5V · 12Ω', type:'lamp',     ohm:12, vRat:3.5, aRat:0.30 },
+  r1:    { label:'Motstånd 1Ω',       type:'resistor', ohm:1  },
+  r2:    { label:'Motstånd 2Ω',       type:'resistor', ohm:2  },
+  r3:    { label:'Motstånd 3Ω',       type:'resistor', ohm:3  },
+  r5:    { label:'Motstånd 5Ω',       type:'resistor', ohm:5  },
+  r10:   { label:'Motstånd 10Ω',      type:'resistor', ohm:10 },
+};
+const FUSES = {
+  none:{ label:'Ingen säkring', A:null },
+  f03: { label:'Säkring 0,30A', A:0.30 },
+  f05: { label:'Säkring 0,50A', A:0.50 },
+};
+const LVL_NAMES = [
+  '1 · Begrepp & symboler',
+  '2 · Lampans resistans',
+  '3 · Seriekoppling',
+  '4 · Parallellkoppling',
+  '5 · Bygg en krets',
+  '6 · Klurigheter',
+];
+const ADVANCE = { 1:5, 2:3, 3:3, 4:3, 5:3, 6:2 };
+const BLOW_THRESH = 0.50;
+
+const TASKS = {
+  1:[
+    { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>I</strong>?',
+      mode:'mcq', opts:['Ström','Spänning','Resistans'], ans:'Ström',
+      fb:'Rätt\! <strong>I</strong> står för ström (intensitet). Ström mäts i ampere (A).' },
+    { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>U</strong>?',
+      mode:'mcq', opts:['Spänning','Ström','Resistans'], ans:'Spänning',
+      fb:'Rätt\! <strong>U</strong> står för spänning. Spänning mäts i volt (V).' },
+    { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>R</strong>?',
+      mode:'mcq', opts:['Resistans','Ström','Spänning'], ans:'Resistans',
+      fb:'Rätt\! <strong>R</strong> står för resistans. Resistans mäts i ohm (Ω).' },
+    { badge:'Enhet', q:'I vilken enhet mäts <strong>ström</strong>?',
+      mode:'mcq', opts:['Ampere (A)','Volt (V)','Ohm (Ω)'], ans:'Ampere (A)',
+      fb:'Rätt\! Ström mäts i ampere, förkortat <strong>A</strong>.' },
+    { badge:'Enhet', q:'I vilken enhet mäts <strong>spänning</strong>?',
+      mode:'mcq', opts:['Volt (V)','Ampere (A)','Ohm (Ω)'], ans:'Volt (V)',
+      fb:'Rätt\! Spänning mäts i volt, förkortat <strong>V</strong>.' },
+    { badge:'Enhet', q:'I vilken enhet mäts <strong>resistans</strong>?',
+      mode:'mcq', opts:['Ohm (Ω)','Volt (V)','Ampere (A)'], ans:'Ohm (Ω)',
+      fb:'Rätt\! Resistans mäts i ohm, förkortat <strong>Ω</strong>.' },
+    { badge:'Symbol', q:'En lampa är märkt <strong>1,5 V · 0,30 A</strong>. Vad betyder 1,5 V?',
+      mode:'mcq', opts:['Lampans spänning','Lampans ström','Lampans resistans'], ans:'Lampans spänning',
+      fb:'Rätt\! 1,5 V är märkspänningen – den spänning lampan är konstruerad för.' },
+    { badge:'Symbol', q:'En lampa är märkt <strong>1,5 V · 0,30 A</strong>. Vad betyder 0,30 A?',
+      mode:'mcq', opts:['Lampans ström','Lampans spänning','Lampans resistans'], ans:'Lampans ström',
+      fb:'Rätt\! 0,30 A är märkströmmen – den ström som flödar genom lampan vid märkspänningen.' },
+  ],
+  2:[
+    { badge:'Beräkning', q:'En lampa märkt <strong>1,5 V · 0,30 A</strong>. Beräkna lampans resistans.',
+      mode:'numeric', ans:5, unit:'Ω',
+      hint:'Använd R = U / I. Dela spänningen med strömmen.',
+      fb:'Rätt\! R = 1,5 V / 0,30 A = <strong>5 Ω</strong>. Lampa A har alltid resistansen 5 Ω i spelet.' },
+    { badge:'Beräkning', q:'En lampa märkt <strong>3,5 V · 0,30 A</strong>. Beräkna lampans resistans. Avrunda till heltal.',
+      mode:'numeric', ans:12, unit:'Ω', tol:0.5,
+      hint:'R = U / I = 3,5 / 0,30 ≈ 11,67 Ω. Avrundat: 12 Ω.',
+      fb:'Rätt\! R ≈ 3,5 / 0,30 ≈ <strong>12 Ω</strong>. Lampa B har resistansen 12 Ω i spelet.' },
+    { badge:'Beräkning', q:'En krets har spänning <strong>4,5 V</strong> och ström <strong>0,90 A</strong>. Beräkna resistansen.',
+      mode:'numeric', ans:5, unit:'Ω',
+      hint:'R = U / I.',
+      fb:'Rätt\! R = 4,5 / 0,90 = <strong>5 Ω</strong>.' },
+    { badge:'Beräkning', q:'En krets har resistans <strong>12 Ω</strong> och ström <strong>0,375 A</strong>. Beräkna spänningen.',
+      mode:'numeric', ans:4.5, unit:'V',
+      hint:'U = R × I.',
+      fb:'Rätt\! U = 12 × 0,375 = <strong>4,5 V</strong>.' },
+    { badge:'Beräkning', q:'Kretsen har spänning <strong>1,5 V</strong> och resistans <strong>5 Ω</strong>. Beräkna strömmen.',
+      mode:'numeric', ans:0.30, unit:'A',
+      hint:'I = U / R.',
+      fb:'Rätt\! I = 1,5 / 5 = <strong>0,30 A</strong> — exakt märkströmmen för lampa A.' },
+  ],
+  3:[
+    { badge:'Serie · R', q:'Två lampor (5 Ω vardera) kopplas i <strong>serie</strong>. Vad blir total resistans?',
+      mode:'numeric', ans:10, unit:'Ω',
+      hint:'I seriekoppling adderas motstånden: R_tot = R_1 + R_2.',
+      fb:'Rätt\! R_tot = 5 + 5 = <strong>10 Ω</strong>.' },
+    { badge:'Serie · R', q:'En lampa (5 Ω) och ett motstånd (10 Ω) i <strong>serie</strong>. Total resistans?',
+      mode:'numeric', ans:15, unit:'Ω',
+      hint:'R_tot = R_1 + R_2.',
+      fb:'Rätt\! R_tot = 5 + 10 = <strong>15 Ω</strong>.' },
+    { badge:'Serie · I', q:'Batteri <strong>4,5 V</strong>, två lampor (5 Ω + 5 Ω) i <strong>serie</strong>. Hur stor ström flödar?',
+      mode:'numeric', ans:0.45, unit:'A',
+      hint:'Beräkna R_tot = 10 Ω, sedan I = U / R.',
+      fb:'Rätt\! R_tot = 10 Ω, I = 4,5 / 10 = <strong>0,45 A</strong>.' },
+    { badge:'Serie · I', q:'Batteri <strong>4,5 V</strong>, lampa 12 Ω + motstånd 3 Ω i <strong>serie</strong>. Hur stor ström flödar?',
+      mode:'numeric', ans:0.30, unit:'A',
+      hint:'R_tot = 12 + 3 = 15 Ω. Sedan I = U / R.',
+      fb:'Rätt\! R_tot = 15 Ω, I = 4,5 / 15 = <strong>0,30 A</strong> — exakt lampans märkström\!' },
+    { badge:'Serie · I', q:'Batteri <strong>1,5 V</strong>, en lampa (5 Ω) och ett motstånd (10 Ω) i <strong>serie</strong>. Hur stor ström?',
+      mode:'numeric', ans:0.10, unit:'A',
+      hint:'R_tot = 15 Ω. I = U / R.',
+      fb:'Rätt\! I = 1,5 / 15 = <strong>0,10 A</strong>.' },
+  ],
+  4:[
+    { badge:'Parallell · R', q:'Två lampor (5 Ω vardera) kopplas <strong>parallellt</strong>. Vad blir total resistans?',
+      mode:'numeric', ans:2.5, unit:'Ω',
+      hint:'1/R_tot = 1/5 + 1/5 = 2/5. Alltså R_tot = 5/2 = 2,5 Ω.',
+      fb:'Rätt\! Två lika motstånd parallellt ger halva resistansen: 5/2 = <strong>2,5 Ω</strong>.' },
+    { badge:'Parallell · R', q:'Två lampor (12 Ω vardera) kopplas <strong>parallellt</strong>. Vad blir total resistans?',
+      mode:'numeric', ans:6, unit:'Ω',
+      hint:'Två lika motstånd parallellt ger halva resistansen.',
+      fb:'Rätt\! 12 / 2 = <strong>6 Ω</strong>.' },
+    { badge:'Parallell · I', q:'Batteri <strong>4,5 V</strong>, två 5 Ω-lampor <strong>parallellt</strong>. Hur stor total ström?',
+      mode:'numeric', ans:1.8, unit:'A',
+      hint:'R_tot = 2,5 Ω. Sedan I = U / R_tot.',
+      fb:'Rätt\! I = 4,5 / 2,5 = <strong>1,8 A</strong>.' },
+    { badge:'Parallell · I', q:'Batteri <strong>4,5 V</strong>, två 12 Ω-lampor <strong>parallellt</strong>. Hur stor total ström?',
+      mode:'numeric', ans:0.75, unit:'A',
+      hint:'R_tot = 6 Ω. I = U / R.',
+      fb:'Rätt\! I = 4,5 / 6 = <strong>0,75 A</strong>.' },
+    { badge:'Jämförelse', q:'En 5 Ω-lampa och en 10 Ω-lampa kopplas <strong>parallellt</strong>. Vad händer med total resistansen?',
+      mode:'mcq', opts:['Den blir mindre än varje enskilt motstånd','Den blir lika med det minsta motståndet','Den adderas precis som i serie'],
+      ans:'Den blir mindre än varje enskilt motstånd',
+      fb:'Rätt\! Parallellkoppling sänker alltid total resistansen under det minsta enskilda motståndet.' },
+  ],
+  5:[
+    { badge:'Bygguppdrag', q:'Bygg en <strong>seriekoppling</strong> med batteri 4,5 V som ger ström <strong>0,30 A</strong>.',
+      mode:'build', hint:'Du behöver en total resistans på R = U/I = 4,5/0,30 = 15 Ω. Försök med lampa 12 Ω + motstånd 3 Ω.',
+      check(cs){ return cs.mode==='series' && near(cs.U,4.5) && cs.I\!==null && near(cs.I,0.30); },
+      fb:'Rätt\! Du byggde en seriekrets med R_tot = 15 Ω som ger exakt 0,30 A med 4,5 V.' },
+    { badge:'Bygguppdrag', q:'Bygg en krets med batteri 1,5 V och <strong>en 5 Ω-lampa</strong> som ger lampans märkström 0,30 A.',
+      mode:'build', hint:'Sätt lampan ensam i serie med 1,5 V-batteriet.',
+      check(cs){ const k=cs.slots.map(s=>s.key); return near(cs.U,1.5) && cs.I\!==null && near(cs.I,0.30) && k.includes('lamp15'); },
+      fb:'Rätt\! Lampa 1,5V märkström 0,30A lyser med rätt ström vid 1,5 V.' },
+    { badge:'Bygguppdrag', q:'Bygg en krets där <strong>säkringen 0,30 A går sönder</strong>. Använd batteri 4,5 V.',
+      mode:'build', hint:'Säkringen går sönder om strömmen överstiger 0,30 A. Välj komponenter som ger stor ström.',
+      check(cs){ return near(cs.U,4.5) && cs.fuse.A===0.30 && cs.fuseBlown; },
+      fb:'Rätt\! En hög ström (mer än 0,30 A) fick säkringen att gå sönder.' },
+    { badge:'Bygguppdrag', q:'Bygg en <strong>parallellkoppling</strong> med <em>två</em> 5 Ω-lampor och batteri 4,5 V.',
+      mode:'build', hint:'Välj "parallellkoppling", lägg lamp15 i plats 1 och lamp15 i plats 2. R_tot ska bli 2,5 Ω.',
+      check(cs){ const k=cs.slots.map(s=>s.key); return cs.mode==='parallel' && near(cs.U,4.5) && k.filter(x=>x==='lamp15').length>=2; },
+      fb:'Rätt\! Två 5 Ω-lampor parallellt ger R_tot = 2,5 Ω och total ström 1,8 A.' },
+    { badge:'Bygguppdrag', q:'Bygg en krets (valfri koppling, batteri 4,5 V) där säkringen <strong>0,50 A håller</strong>.',
+      mode:'build', hint:'Strömmen måste vara ≤ 0,50 A. Det kräver R_tot ≥ 9 Ω.',
+      check(cs){ return near(cs.U,4.5) && cs.fuse.A===0.50 && \!cs.fuseBlown && cs.I\!==null && cs.I<=0.50+0.01; },
+      fb:'Rätt\! Strömmen är ≤ 0,50 A, säkringen håller.' },
+  ],
+  6:[
+    { badge:'Klurigheter', mode:'multistep',
+      setup(){ setCircuit('4.5','series','lamp35','r3','none','none'); },
+      q:'Batteri 4,5 V, <strong>seriekoppling</strong>: Lampa B (12 Ω) + Motstånd (3 Ω).',
+      steps:[
+        { q:'Steg 1 av 4 – Vad är den totala resistansen?', ans:15, unit:'Ω', hint:'R_tot = 12 + 3 = 15 Ω' },
+        { q:'Steg 2 av 4 – Hur stor ström flödar i kretsen?', ans:0.30, unit:'A', tol:0.02, hint:'I = U/R = 4,5/15 = 0,30 A' },
+        { q:'Steg 3 av 4 – Hur stor spänning faller över lampan?', ans:3.6, unit:'V', tol:0.05, hint:'U_lampa = I × R_lampa = 0,30 × 12 = 3,6 V' },
+        { q:'Steg 4 av 4 – Hur stor spänning faller över motståndet?', ans:0.9, unit:'V', tol:0.05, hint:'U_mot = I × R_mot = 0,30 × 3 = 0,9 V' },
+      ]
+    },
+    { badge:'Klurigheter', mode:'multistep',
+      setup(){ setCircuit('4.5','parallel','lamp15','lamp15','none','f05'); },
+      q:'Batteri 4,5 V, <strong>parallellkoppling</strong>: två Lampa A (5 Ω) + säkring 0,50 A.',
+      steps:[
+        { q:'Steg 1 av 3 – Hur stor ström flödar i varje gren?', ans:0.9, unit:'A', tol:0.02, hint:'I_gren = U / R_gren = 4,5 / 5 = 0,9 A' },
+        { q:'Steg 2 av 3 – Vad är den totala resistansen?', ans:2.5, unit:'Ω', tol:0.05, hint:'1/R_tot = 1/5 + 1/5 = 2/5, R_tot = 2,5 Ω' },
+        { q:'Steg 3 av 3 – Hur stor är den totala strömmen?', ans:1.8, unit:'A', tol:0.05, hint:'I_tot = U / R_tot = 4,5 / 2,5 = 1,8 A (säkringen går sönder\!)' },
+      ]
+    },
+    { badge:'Klurigheter', mode:'multistep',
+      setup(){ setCircuit('1.5','parallel','lamp15','r10','none','none'); },
+      q:'Batteri 1,5 V, <strong>parallellkoppling</strong>: Lampa A (5 Ω) och Motstånd 10 Ω.',
+      steps:[
+        { q:'Steg 1 av 3 – Hur stor ström flödar genom lampan?', ans:0.30, unit:'A', tol:0.02, hint:'I_lampa = U / R_lampa = 1,5 / 5 = 0,30 A' },
+        { q:'Steg 2 av 3 – Hur stor ström flödar genom motståndet?', ans:0.15, unit:'A', tol:0.02, hint:'I_mot = U / R_mot = 1,5 / 10 = 0,15 A' },
+        { q:'Steg 3 av 3 – Hur stor är den totala strömmen?', ans:0.45, unit:'A', tol:0.02, hint:'I_tot = 0,30 + 0,15 = 0,45 A' },
+      ]
+    },
+    { badge:'Klurigheter', mode:'multistep',
+      setup(){ setCircuit('4.5','series','lamp15','lamp15','none','none'); },
+      q:'Batteri 4,5 V, <strong>seriekoppling</strong>: två Lampa A (5 Ω vardera).',
+      steps:[
+        { q:'Steg 1 av 3 – Vad är den totala resistansen?', ans:10, unit:'Ω', hint:'R_tot = 5 + 5 = 10 Ω' },
+        { q:'Steg 2 av 3 – Hur stor ström flödar?', ans:0.45, unit:'A', tol:0.02, hint:'I = U / R_tot = 4,5 / 10 = 0,45 A' },
+        { q:'Steg 3 av 3 – Hur stor spänning faller över varje lampa?', ans:2.25, unit:'V', tol:0.05, hint:'U_lampa = I × R = 0,45 × 5 = 2,25 V' },
+      ]
+    },
+  ],
+};
+
+/* ── HELPERS ─────────────────────────────────────────────── */
+function near(a,b,eps=0.04){ return Math.abs(a-b)<=eps; }
+function fmt(n){ if(n==null||\!isFinite(n))return '–'; return String(Math.round(n*1000)/1000).replace('.',','); }
+function fmtV(v){ return String(v).replace('.',','); }
+
+function setCircuit(bat,mode,s1,s2,s3,fuse){
+  document.getElementById('batSel').value=bat;
+  document.getElementById('modeSel').value=mode;
+  document.getElementById('s1').value=s1;
+  document.getElementById('s2').value=s2;
+  document.getElementById('s3').value=s3;
+  document.getElementById('fuseSel').value=fuse;
+  drawCircuit();
+}
+
+function lampState(I){
+  if(I==null||\!isFinite(I)) return 'off';
+  if(I>BLOW_THRESH) return 'blown';
+  if(I>=0.25) return 'bright';
+  if(I>=0.05) return 'dim';
+  return 'off';
+}
+
+/* ── CIRCUIT PHYSICS ──────────────────────────────────────── */
+function circuitState(){
+  const U    = parseFloat(document.getElementById('batSel').value);
+  const mode = document.getElementById('modeSel').value;
+  const fuse = FUSES[document.getElementById('fuseSel').value];
+  const keys = ['s1','s2','s3'].map(id=>document.getElementById(id).value);
+  const slots = keys.map(k=>({key:k,...COMPS[k]}));
+  const active = slots.filter(s=>s.type\!=='none');
+
+  let Rtot=null, I=null, branchInfo=[];
+
+  if(active.length>0){
+    if(mode==='series'){
+      Rtot = active.reduce((s,c)=>s+c.ohm,0);
+      const Iraw = Rtot>0 ? U/Rtot : null;
+      branchInfo = active.map(c=>({comp:c, I:Iraw, state: c.type==='lamp' ? lampState(Iraw) : 'ok'}));
+      // Blown lamp breaks series circuit
+      if(branchInfo.some(b=>b.state==='blown')){
+        I = null;
+        branchInfo = branchInfo.map(b=>({...b, I:null, state: b.state==='blown' ? 'blown' : 'off'}));
+      } else {
+        I = Iraw;
+      }
+    } else {
+      // Parallel: each branch independent, blown branches removed
+      let bInfo = active.map(c=>{ const bI=U/c.ohm; return {comp:c, I:bI, state: c.type==='lamp' ? lampState(bI) : 'ok'}; });
+      branchInfo = bInfo;
+      const good = bInfo.filter(b=>b.state\!=='blown');
+      if(good.length>0){
+        Rtot = 1/good.reduce((s,b)=>s+1/b.comp.ohm,0);
+        I = good.reduce((s,b)=>s+b.I,0);
+      }
+    }
+  }
+
+  const fuseBlown = fuse.A\!=null && I\!=null && I > fuse.A+1e-9;
+  const blown = fuseBlown;
+  return { U, mode, fuse, slots, active, Rtot, I, blown, fuseBlown, branchInfo };
+}
+
+/* ── SVG HELPERS ──────────────────────────────────────────── */
+const WC='#244a73', SW=3;
+function L(x1,y1,x2,y2,c=WC,w=SW){
+  return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+}
+
+function svgBattery(cx,y1,y2,voltage){
+  const cy=(y1+y2)/2, lp=cy-18, sp=cy+18;
+  return [
+    L(cx,y1,cx,lp-2),
+    `<line x1="${cx-14}" y1="${lp}" x2="${cx+14}" y2="${lp}" stroke="${WC}" stroke-width="3.5" stroke-linecap="round"/>`,
+    `<line x1="${cx-9}"  y1="${sp}" x2="${cx+9}"  y2="${sp}" stroke="${WC}" stroke-width="2"   stroke-linecap="round"/>`,
+    L(cx,sp+2,cx,y2),
+    `<text x="${cx+18}" y="${lp+5}" font-size="13" font-weight="800" fill="#1a7a46" font-family="system-ui">+</text>`,
+    `<text x="${cx+18}" y="${sp+5}" font-size="13" font-weight="800" fill="#c03030" font-family="system-ui">−</text>`,
+    `<text x="${cx-20}" y="${cy+5}" text-anchor="end" font-size="13" font-weight="700" fill="${WC}" font-family="system-ui">${fmtV(voltage)} V</text>`,
+  ].join('');
+}
+
+function svgResistorH(cx,cy,ohm){
+  const hw=40,hh=13;
+  return [
+    `<rect x="${cx-hw}" y="${cy-hh}" width="${hw*2}" height="${hh*2}" rx="5" fill="#fffaf0" stroke="#c49a30" stroke-width="2"/>`,
+    `<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#7a5a00" font-family="system-ui">${ohm} Ω</text>`,
+  ].join('');
+}
+
+function svgResistorV(cx,cy,ohm){
+  const hw=13,hh=40;
+  return [
+    `<rect x="${cx-hw}" y="${cy-hh}" width="${hw*2}" height="${hh*2}" rx="5" fill="#fffaf0" stroke="#c49a30" stroke-width="2"/>`,
+    `<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#7a5a00" font-family="system-ui" transform="rotate(-90,${cx},${cy})">${ohm} Ω</text>`,
+  ].join('');
+}
+
+function svgLampH(cx,cy,ohm,state){
+  const r=20, isBlown=state==='blown', isOn=state==='bright'||state==='dim';
+  const glow = state==='bright' ? `<circle cx="${cx}" cy="${cy}" r="${r+12}" fill="rgba(255,215,60,0.32)" stroke="none"/>` :
+               state==='dim'    ? `<circle cx="${cx}" cy="${cy}" r="${r+7}"  fill="rgba(255,215,60,0.14)" stroke="none"/>` : '';
+  const fill = isBlown ? '#fff0f0' : isOn ? '#fffbe8' : '#fcf7ff';
+  const sc   = isBlown ? '#c03030' : '#8a5fcc';
+  const xMark = isBlown
+    ? `<line x1="${cx-9}" y1="${cy-9}" x2="${cx-2}" y2="${cy-2}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx+2}" y1="${cy+2}" x2="${cx+9}" y2="${cy+9}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx+9}" y1="${cy-9}" x2="${cx+2}" y2="${cy-2}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx-2}" y1="${cy+2}" x2="${cx-9}" y2="${cy+9}" stroke="${sc}" stroke-width="2.2"/>`
+    : `<line x1="${cx-10}" y1="${cy-10}" x2="${cx+10}" y2="${cy+10}" stroke="${sc}" stroke-width="2"/>
+       <line x1="${cx+10}" y1="${cy-10}" x2="${cx-10}" y2="${cy+10}" stroke="${sc}" stroke-width="2"/>`;
+  return [
+    glow,
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${sc}" stroke-width="2"/>`,
+    xMark,
+    isBlown
+      ? `<text x="${cx}" y="${cy+r+13}" text-anchor="middle" font-size="9" fill="#c03030" font-family="system-ui">TRASIG</text>`
+      : `<text x="${cx}" y="${cy+r+13}" text-anchor="middle" font-size="9" fill="#5a3a8a" font-family="system-ui">${ohm} Ω</text>`,
+  ].join('');
+}
+
+function svgLampV(cx,cy,ohm,state){
+  const r=20, isBlown=state==='blown', isOn=state==='bright'||state==='dim';
+  const glow = state==='bright' ? `<circle cx="${cx}" cy="${cy}" r="${r+12}" fill="rgba(255,215,60,0.32)" stroke="none"/>` :
+               state==='dim'    ? `<circle cx="${cx}" cy="${cy}" r="${r+7}"  fill="rgba(255,215,60,0.14)" stroke="none"/>` : '';
+  const fill = isBlown ? '#fff0f0' : isOn ? '#fffbe8' : '#fcf7ff';
+  const sc   = isBlown ? '#c03030' : '#8a5fcc';
+  const xMark = isBlown
+    ? `<line x1="${cx-9}" y1="${cy-9}" x2="${cx-2}" y2="${cy-2}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx+2}" y1="${cy+2}" x2="${cx+9}" y2="${cy+9}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx+9}" y1="${cy-9}" x2="${cx+2}" y2="${cy-2}" stroke="${sc}" stroke-width="2.2"/>
+       <line x1="${cx-2}" y1="${cy+2}" x2="${cx-9}" y2="${cy+9}" stroke="${sc}" stroke-width="2.2"/>`
+    : `<line x1="${cx-10}" y1="${cy-10}" x2="${cx+10}" y2="${cy+10}" stroke="${sc}" stroke-width="2"/>
+       <line x1="${cx+10}" y1="${cy-10}" x2="${cx-10}" y2="${cy+10}" stroke="${sc}" stroke-width="2"/>`;
+  return [
+    glow,
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" stroke="${sc}" stroke-width="2"/>`,
+    xMark,
+    isBlown
+      ? `<text x="${cx+r+4}" y="${cy+4}" text-anchor="start" font-size="9" fill="#c03030" font-family="system-ui">TRASIG</text>`
+      : `<text x="${cx+r+4}" y="${cy+4}" text-anchor="start" font-size="9" fill="#5a3a8a" font-family="system-ui">${ohm} Ω</text>`,
+  ].join('');
+}
+
+function svgFuseH(cx,cy,isBlown){
+  const hw=26,hh=11;
+  const fill=isBlown?'#fff0f0':'#fff7f0', stroke=isBlown?'#c03030':'#cc5500';
+  const inside = isBlown
+    ? `<line x1="${cx-12}" y1="${cy-4}" x2="${cx-4}" y2="${cy+4}" stroke="${stroke}" stroke-width="1.5"/>
+       <line x1="${cx+4}"  y1="${cy-4}" x2="${cx+12}" y2="${cy+4}" stroke="${stroke}" stroke-width="1.5"/>`
+    : `<path d="M ${cx-12},${cy} Q ${cx-4},${cy-6} ${cx},${cy} Q ${cx+4},${cy+6} ${cx+12},${cy}" fill="none" stroke="${stroke}" stroke-width="1.5"/>`;
+  return [
+    `<rect x="${cx-hw}" y="${cy-hh}" width="${hw*2}" height="${hh*2}" rx="4" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`,
+    inside,
+    `<text x="${cx}" y="${cy+hh+13}" text-anchor="middle" font-size="9" fill="${stroke}" font-family="system-ui">${isBlown?'TRASIG':'Säkring'}</text>`,
+  ].join('');
+}
+
+function currentDots(pathD,current,id){
+  if(\!current||current<=0) return '';
+  const speed=Math.min(Math.max(1/current,0.4),5);
+  const n=Math.min(Math.round(current/0.3)+1,6);
+  let out=`<path id="${id}" d="${pathD}" fill="none" stroke="none"/>`;
+  for(let i=0;i<n;i++){
+    const delay=-(i*speed/n);
+    out+=`<circle r="4.5" fill="#4dabf7" opacity="0.82"><animateMotion dur="${speed.toFixed(2)}s" repeatCount="indefinite" begin="${delay.toFixed(2)}s"><mpath href="#${id}"/></animateMotion></circle>`;
+  }
+  return out;
+}
+
+/* ── DRAW CIRCUIT ─────────────────────────────────────────── */
+function drawCircuit(){
+  const cs=circuitState();
+  const svg=document.getElementById('circSVG');
+  const lx=70,rx=610,ty=40,by=220;
+  const parts=[];
+
+  if(cs.mode==='series'){
+    parts.push(svgBattery(lx,ty,by,cs.U));
+    parts.push(L(rx,ty,rx,by));
+    parts.push(L(lx,by,rx,by));
+
+    const items=[];
+    if(cs.fuse.A\!=null) items.push({t:'fuse',blown:cs.fuseBlown});
+    cs.branchInfo.forEach(b=>items.push({t:'comp',b}));
+
+    if(items.length===0){
+      parts.push(L(lx,ty,rx,ty));
+    } else {
+      const margin=60, usable=rx-lx-margin*2;
+      const step=usable/(items.length+1);
+      let prevX=lx;
+      items.forEach((item,i)=>{
+        const cx=lx+margin+step*(i+1);
+        const halfW=item.t==='fuse'?26:(item.b&&item.b.comp.type==='lamp'?20:40);
+        parts.push(L(prevX,ty,cx-halfW,ty));
+        if(item.t==='fuse'){
+          parts.push(svgFuseH(cx,ty,item.blown));
+        } else if(item.b.comp.type==='lamp'){
+          parts.push(svgLampH(cx,ty,item.b.comp.ohm,item.b.state));
+        } else {
+          parts.push(svgResistorH(cx,ty,item.b.comp.ohm));
+        }
+        prevX=cx+halfW;
+      });
+      parts.push(L(prevX,ty,rx,ty));
+    }
+
+    if(cs.I&&\!cs.fuseBlown){
+      parts.push(currentDots(`M ${lx},${ty} L ${rx},${ty} L ${rx},${by} L ${lx},${by} Z`,cs.I,'serPath'));
+    }
+
+  } else {
+    /* PARALLEL */
+    parts.push(svgBattery(lx,ty,by,cs.U));
+    parts.push(L(lx,by,rx,by));
+    parts.push(L(rx,ty,rx,by));
+
+    // Fuse on top left, then straight wire to rx
+    let topStart=lx;
+    if(cs.fuse.A\!=null){
+      const fcx=lx+70;
+      parts.push(L(lx,ty,fcx-26,ty));
+      parts.push(svgFuseH(fcx,ty,cs.fuseBlown));
+      topStart=fcx+26;
+    }
+    // FIX: connect topStart directly to rx (no +20 gap)
+    parts.push(L(topStart,ty,rx,ty));
+
+    const bCount=cs.branchInfo.length;
+    const branchXs=bCount===0?[]:bCount===1?[340]:bCount===2?[255,430]:[200,370,540];
+    const cy=(ty+by)/2;
+
+    branchXs.forEach((bx,i)=>{
+      const b=cs.branchInfo[i];
+      if(b.comp.type==='lamp'){
+        parts.push(L(bx,ty,bx,cy-20));
+        parts.push(svgLampV(bx,cy,b.comp.ohm,b.state));
+        parts.push(L(bx,cy+20,bx,by));
+      } else if(b.comp.type==='resistor'){
+        parts.push(L(bx,ty,bx,cy-40));
+        parts.push(svgResistorV(bx,cy,b.comp.ohm));
+        parts.push(L(bx,cy+40,bx,by));
+      }
+    });
+
+    if(cs.I&&\!cs.fuseBlown){
+      branchXs.forEach((bx,i)=>{
+        const b=cs.branchInfo[i];
+        if(b.state\!=='blown'){
+          parts.push(currentDots(`M ${bx},${ty} L ${bx},${by} L ${lx},${by} L ${lx},${ty} L ${bx},${ty}`,b.I,`parP${i}`));
+        }
+      });
+    }
+  }
+
+  svg.innerHTML=parts.join('');
+  updateStats(cs);
+}
+
+/* ── STATS & CALC BOX ─────────────────────────────────────── */
+function updateStats(cs){
+  document.getElementById('cR').textContent = cs.Rtot ? fmt(cs.Rtot)+' Ω' : '–';
+  document.getElementById('cI').textContent = cs.I    ? fmt(cs.I)+' A' : '–';
+  const fe=document.getElementById('cFuse');
+  fe.className='';
+  if(\!cs.fuse.A){ fe.textContent='Ingen'; fe.className='fuse-none'; }
+  else if(cs.fuseBlown){ fe.textContent=fmt(cs.fuse.A)+' A – TRASIG'; fe.className='fuse-blow'; }
+  else { fe.textContent=fmt(cs.fuse.A)+' A – håller'; fe.className='fuse-ok'; }
+
+  // Branch stats (parallel)
+  const bd=document.getElementById('branchStats');
+  if(cs.mode==='parallel'&&cs.branchInfo.length>1&&\!cs.fuseBlown){
+    bd.style.display='block';
+    bd.innerHTML='<strong>Grenströmmar:</strong> '+cs.branchInfo.map((b,i)=>
+      `Gren ${i+1}: ${b.state==='blown'?'<span style="color:#c03030">TRASIG</span>':fmt(b.I)+' A'}`
+    ).join(' &nbsp;|&nbsp; ');
+  } else { bd.style.display='none'; }
+
+  renderCalcBox(cs);
+}
+
+function renderCalcBox(cs){
+  const box=document.getElementById('calcBox');
+  if(\!cs.active.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='block';
+  let h='';
+  if(cs.mode==='series'){
+    const rParts=cs.branchInfo.map(b=>b.comp.ohm+' Ω').join(' + ');
+    h+=`<span class="cl"><strong>R<sub>tot</sub></strong> = ${rParts} = <strong>${fmt(cs.Rtot)} Ω</strong></span>`;
+    h+=`<span class="cl"><strong>I</strong> = U / R = ${fmtV(cs.U)} V / ${fmt(cs.Rtot)} Ω = <strong>${cs.I?fmt(cs.I)+' A':'– (trasig lampa)'}</strong></span>`;
+    if(cs.I&&cs.branchInfo.length>1){
+      cs.branchInfo.forEach((b,i)=>{
+        const Uc=cs.I*b.comp.ohm;
+        h+=`<span class="cl sub">U<sub>${i+1}</sub> = ${fmt(cs.I)} A × ${b.comp.ohm} Ω = <strong>${fmt(Uc)} V</strong></span>`;
+      });
+    }
+  } else {
+    const good=cs.branchInfo.filter(b=>b.state\!=='blown');
+    if(good.length){
+      const inv=good.map(b=>`1/${b.comp.ohm}`).join(' + ');
+      const invVal=fmt(good.reduce((s,b)=>s+1/b.comp.ohm,0));
+      h+=`<span class="cl">1/R<sub>tot</sub> = ${inv} = ${invVal} Ω⁻¹ &rArr; <strong>R<sub>tot</sub> = ${fmt(cs.Rtot)} Ω</strong></span>`;
+      h+=`<span class="cl"><strong>I<sub>tot</sub></strong> = ${fmtV(cs.U)} V / ${fmt(cs.Rtot)} Ω = <strong>${fmt(cs.I)} A</strong></span>`;
+    }
+    cs.branchInfo.forEach((b,i)=>{
+      const blown=b.state==='blown';
+      h+=`<span class="cl sub">I<sub>gren ${i+1}</sub> = ${fmtV(cs.U)} V / ${b.comp.ohm} Ω = <strong>${fmt(b.I)} A</strong>${blown?' TRASIG':''}</span>`;
+    });
+  }
+  box.innerHTML=h;
+}
+
+/* ── STATE ────────────────────────────────────────────────── */
+const S={
+  started:false, score:0, streak:0, solved:0,
+  level:1, perLevel:{1:0,2:0,3:0,4:0,5:0,6:0},
+  task:null, complete:false,
+  msStep:0,
+};
+
+/* ── POPULATE SELECTS ─────────────────────────────────────── */
+function fillSelect(el,map){
+  el.innerHTML=Object.entries(map).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('');
+}
+fillSelect(document.getElementById('fuseSel'),FUSES);
+['s1','s2','s3'].forEach(id=>fillSelect(document.getElementById(id),COMPS));
+
+/* ── HUD ──────────────────────────────────────────────────── */
+function updateHUD(){
+  document.getElementById('sLevel').textContent  = S.level<=6?S.level:6;
+  document.getElementById('sScore').textContent  = S.score;
+  document.getElementById('sStreak').textContent = S.streak;
+  document.getElementById('sSolved').textContent = S.solved;
+  renderLevelBar();
+}
+
+function renderLevelBar(){
+  const bar=document.getElementById('levelBar');
+  bar.innerHTML=LVL_NAMES.map((name,i)=>{
+    const lv=i+1;
+    let cls='lvl-chip';
+    if(lv<S.level||S.complete) cls+=' done';
+    else if(lv===S.level&&S.started) cls+=' active';
+    return `<button class="${cls}" onclick="jumpToLevel(${lv})">${name}</button>`;
+  }).join('');
+}
+
+function jumpToLevel(lv){
+  if(\!S.started) return;
+  S.level=lv; S.perLevel[lv]=0; S.complete=false; S.msStep=0;
+  document.getElementById('completeBanner').style.display='none';
+  showCircStats(true);
+  updateHUD();
+  nextTask();
+}
+
+function showCircStats(visible){
+  document.getElementById('circStats').style.display=visible?'grid':'none';
+  const cb=document.getElementById('calcBox');
+  if(\!visible) cb.style.display='none';
+}
+
+/* ── FEEDBACK ─────────────────────────────────────────────── */
+function setFb(html,type='neutral'){
+  const el=document.getElementById('feedback');
+  el.className='feedback fb-'+type;
+  el.innerHTML=html;
+}
+
+/* ── ANSWER AREA ──────────────────────────────────────────── */
+let _selectedMCQ=null;
+
+function renderAnswerArea(task,stepQ){
+  const area=document.getElementById('answerArea');
+  _selectedMCQ=null;
+  const t=stepQ||task;
+  const mode=t.mode||task.mode;
+  if(mode==='mcq'){
+    area.innerHTML=`<div class="mcq-grid" id="mcqGrid"></div>`;
+    const grid=document.getElementById('mcqGrid');
+    (t.opts||task.opts).forEach(opt=>{
+      const btn=document.createElement('button');
+      btn.className='mcq-btn'; btn.textContent=opt; btn.dataset.val=opt;
+      btn.addEventListener('click',()=>{
+        grid.querySelectorAll('.mcq-btn').forEach(b=>b.classList.remove('selected'));
+        btn.classList.add('selected'); _selectedMCQ=opt;
+      });
+      grid.appendChild(btn);
+    });
+  } else if(mode==='numeric'){
+    const unit=(t.unit||'');
+    area.innerHTML=`<div class="num-row"><input class="num-input" id="numInput" type="text" placeholder="0,00" autocomplete="off"/><span class="unit-tag">${unit}</span></div>`;
+    document.getElementById('numInput').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('checkBtn').click(); });
+    setTimeout(()=>document.getElementById('numInput')?.focus(),50);
+  } else {
+    area.innerHTML=`<div class="build-hint">Bygg kretsen på byggytan och tryck sedan på <strong>Kontrollera</strong>.</div>`;
+  }
+}
+
+/* ── TASK LOGIC ───────────────────────────────────────────── */
+function pickTask(){
+  const pool=TASKS[S.level];
+  let t; do{ t=pool[Math.floor(Math.random()*pool.length)]; }while(pool.length>1&&t===S.task);
+  S.task=t; S.msStep=0;
+}
+
+function showTask(){
+  if(\!S.task) return;
+  document.getElementById('taskBadge').textContent=S.task.badge||'Uppgift';
+  document.getElementById('taskText').innerHTML=S.task.q;
+
+  if(S.task.mode==='multistep'){
+    showCircStats(false);
+    if(S.task.setup) S.task.setup();
+    showStep(0);
+  } else {
+    showCircStats(true);
+    document.getElementById('stepInfo').style.display='none';
+    renderAnswerArea(S.task);
+    setFb('Läs uppgiften och svara.','neutral');
+  }
+}
+
+function showStep(idx){
+  const step=S.task.steps[idx];
+  const si=document.getElementById('stepInfo');
+  si.style.display='block';
+  si.textContent=step.q;
+  renderAnswerArea(S.task,{...step, mode:step.mode||'numeric'});
+  setFb(`Steg ${idx+1} av ${S.task.steps.length} – ange ditt svar nedan.`,'neutral');
+}
+
+function nextTask(){
+  if(\!S.started||S.complete) return;
+  pickTask();
+  showTask();
+}
+
+function checkAnswer(){
+  if(\!S.started||S.complete||\!S.task) return;
+  const task=S.task;
+
+  if(task.mode==='multistep'){
+    checkStep(); return;
+  }
+
+  let correct=false;
+  if(task.mode==='mcq'){
+    if(\!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
+    correct=_selectedMCQ===task.ans;
+    document.querySelectorAll('.mcq-btn').forEach(b=>{
+      if(b.dataset.val===task.ans) b.classList.add('correct');
+      else if(b.dataset.val===_selectedMCQ&&\!correct) b.classList.add('wrong');
+    });
+  } else if(task.mode==='numeric'){
+    const raw=(document.getElementById('numInput')?.value||'').replace(',','.').replace(/[^0-9.\-]/g,'');
+    const val=parseFloat(raw);
+    correct=\!isNaN(val)&&near(val,task.ans,task.tol??0.04);
+  } else {
+    correct=task.check(circuitState());
+  }
+
+  if(correct){
+    S.score++; S.streak++; S.solved++;
+    S.perLevel[S.level]=(S.perLevel[S.level]||0)+1;
+    setFb(task.fb||'Rätt\! Bra jobbat.','ok');
+    advanceLevel();
+  } else {
+    S.streak=0;
+    const hint=task.hint?' '+task.hint:'';
+    const ans=task.mode==='numeric'?` Rätt svar: ${fmt(task.ans)} ${task.unit||''}.`:'';
+    setFb(`Inte riktigt.${hint}${ans}`,'bad');
+  }
+  updateHUD();
+}
+
+function checkStep(){
+  const step=S.task.steps[S.msStep];
+  let correct=false;
+  if((step.mode||'numeric')==='mcq'){
+    if(\!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
+    correct=_selectedMCQ===step.ans;
+    document.querySelectorAll('.mcq-btn').forEach(b=>{
+      if(b.dataset.val===step.ans) b.classList.add('correct');
+      else if(b.dataset.val===_selectedMCQ&&\!correct) b.classList.add('wrong');
+    });
+  } else {
+    const raw=(document.getElementById('numInput')?.value||'').replace(',','.').replace(/[^0-9.\-]/g,'');
+    const val=parseFloat(raw);
+    correct=\!isNaN(val)&&near(val,step.ans,step.tol??0.04);
+  }
+
+  if(correct){
+    S.score++; S.streak++;
+    S.msStep++;
+    if(S.msStep>=S.task.steps.length){
+      // All steps done
+      S.solved++; S.perLevel[S.level]=(S.perLevel[S.level]||0)+1;
+      showCircStats(true);
+      document.getElementById('stepInfo').style.display='none';
+      setFb('&#127881; Alla steg klara\! Kretsen och beräkningarna visas nu.','ok');
+      advanceLevel();
+    } else {
+      setFb('✓ Rätt\! Nästa steg…','ok');
+      setTimeout(()=>showStep(S.msStep),700);
+    }
+  } else {
+    S.streak=0;
+    setFb(`Inte riktigt. ${step.hint||''}`,'bad');
+  }
+  updateHUD();
+}
+
+function advanceLevel(){
+  if(S.perLevel[S.level]>=(ADVANCE[S.level]||3)){
+    if(S.level<6){
+      S.level++;
+      setFb('&#127881; Rätt\! Du avancerar till nästa nivå\!','ok');
+    } else {
+      S.complete=true;
+      document.getElementById('completeBanner').style.display='block';
+      document.getElementById('finalScore').textContent=S.score;
+      setFb('&#127942; Du har klarat alla nivåer\! Fantastiskt\!','ok');
+    }
+  }
+}
+
+function showHint(){
+  if(\!S.task) return;
+  const t=S.task;
+  if(t.mode==='multistep'){
+    const step=t.steps[S.msStep];
+    if(step&&step.hint) setFb(step.hint,'hint');
+    else setFb('Titta på formeln i triangeln.','hint');
+  } else if(t.hint) setFb(t.hint,'hint');
+  else if(t.mode==='build') setFb('Titta på komponentlistan och använd byggytan.','hint');
+  else setFb('Kontrollera formeln i triangeln.','hint');
+}
+
+/* ── START / RESET ────────────────────────────────────────── */
+function startGame(){
+  S.started=true; S.score=0; S.streak=0; S.solved=0;
+  S.level=1; S.perLevel={1:0,2:0,3:0,4:0,5:0,6:0}; S.complete=false; S.msStep=0;
+  document.getElementById('completeBanner').style.display='none';
+  document.getElementById('startOverlay').style.display='none';
+  showCircStats(true);
+  updateHUD(); nextTask();
+}
+
+function resetGame(){
+  S.started=false; S.task=null; S.complete=false; S.msStep=0;
+  document.getElementById('startOverlay').style.display='flex';
+  document.getElementById('completeBanner').style.display='none';
+  document.getElementById('taskBadge').textContent='–';
+  document.getElementById('taskText').innerHTML='Tryck på <strong>Starta</strong> för att börja.';
+  document.getElementById('answerArea').innerHTML='';
+  document.getElementById('stepInfo').style.display='none';
+  setFb('Spelet är återställt.','neutral');
+  Object.assign(S,{score:0,streak:0,solved:0,level:1,perLevel:{1:0,2:0,3:0,4:0,5:0,6:0}});
+  updateHUD();
+}
+
+/* ── EVENT LISTENERS ──────────────────────────────────────── */
+document.getElementById('startBtn').addEventListener('click',startGame);
+document.getElementById('resetBtn').addEventListener('click',resetGame);
+document.getElementById('checkBtn').addEventListener('click',checkAnswer);
+document.getElementById('nextBtn').addEventListener('click',nextTask);
+document.getElementById('hintBtn').addEventListener('click',showHint);
+['batSel','modeSel','fuseSel','s1','s2','s3'].forEach(id=>{
+  document.getElementById(id).addEventListener('change',drawCircuit);
+});
+document.getElementById('clearCircBtn').addEventListener('click',()=>{
+  ['fuseSel','s1','s2','s3'].forEach(id=>{ document.getElementById(id).value='none'; });
+  drawCircuit();
+});
+
+/* ── INIT ─────────────────────────────────────────────────── */
+renderLevelBar();
+drawCircuit();
+</script>
+</body>
+</html>

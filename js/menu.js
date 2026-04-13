@@ -56,8 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><a href="/fysik/universum/">Universum</a></li>
           <li><a href="/fysik/ljud/">Ljud</a></li>
           <li><a href="/fysik/ljus/">Ljus</a></li>
-          <li><a href="/fysik/magnetism-induktion/">Magnetism & induktion</a></li>
-          <li><a href="/fysik/el-och-magnetism/">El & Ohms lag</a></li>
+          <li><a href="/fysik/magnetism-induktion/">El, magnetism & induktion</a></li>
           <li><a href="/fysik/arbete-energi-effekt/">Arbete, Energi & Effekt</a></li>
           <li><a href="/fysik/atomfysik/">Atomfysik</a></li>
         </ul>
