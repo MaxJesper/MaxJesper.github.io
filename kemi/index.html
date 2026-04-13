@@ -1,69 +1,100 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kemi</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <!-- Valfritt: favicon -->
-  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
     main {
       font-size: 1.2em;
     }
 
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
   </style>
 </head>
-
-<header class="kemi-header">
-  <h1>Kemi</h1>
-  <p>Fäladsgården</p>
-</header>
-
-  
 <body>
 
-<!-- Hamburger-knapp -->
-<button class="hamburger" onclick="toggleMenu()">☰</button>
+  <header class="kemi-header">
+    <h1>Kemi</h1>
+    <p>Fäladsgården</p>
+  </header>
 
-<!-- Sidomeny -->
-<nav id="side-menu">
-  <ul class="menu-main">
-    <li>
-      <span onclick="toggleSubmenu(this)">Biologi ➕</span>
-      <ul class="submenu">
-        <li><a href="/biologi/index.html">Översikt</a></li>
-        
-      </ul>
-    </li>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-    <li>
-      <span onclick="toggleSubmenu(this)">Kemi ➕</span>
-      <ul class="submenu">
-        <li><a href="/kemi/index.html">Översikt</a></li>
-      </ul>
-    </li>
+  <main>
+    <section class="page-intro">
+      <p>Välj ett område nedan för att komma åt material.</p>
+    </section>
 
-    <li>
-      <span onclick="toggleSubmenu(this)">Fysik ➕</span>
-      <ul class="submenu">
-        <li><a href="/fysik/index.html">Översikt</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>Områden</h2>
+        <p>Klicka på ett område för att komma åt material.</p>
+        <ul>
+          <li><a href="/kemi/atomer/index.html">Atomer & Molekyler</a></li>
+          <li><a href="/kemi/periodiska-systemet/index.html">Periodiska systemet</a></li>
+          <li><a href="/kemi/jonforeningar/index.html">Jonföreningar</a></li>
+          <li><a href="/kemi/kolforeningar/index.html">Kolföreningar</a></li>
+          <li><a href="/kemi/separationsprocesser/index.html">Separationsprocesser</a></li>
+          <li><a href="/kemi/syror-och-baser/index.html">Syror och baser</a></li>
+          <li><a href="/kemi/matens-kemi/index.html">Matens kemi</a></li>
+          <li><a href="/kemi/elektrokemi/index.html">Elektrokemi</a></li>
+        </ul>
+      </article>
+    </section>
 
-<!-- Tillbaka-knapp -->
-<p><a href="/index.html" class="subject-btn">← Tillbaka till huvudsidan</a></p>
+    <p style="margin-top: 1.5rem;">
+      <a href="/index.html" class="subject-btn">← Tillbaka till startsidan</a>
+    </p>
+  </main>
 
-<main>
-  <p>Välj material:</p>
-  <ul>
-    <li><a href="ovningar.html">Övningar</a></li>
-    <li><a href="prov.html">Prov</a></li>
-  </ul>
-</main>
-
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
 </body>
 </html>

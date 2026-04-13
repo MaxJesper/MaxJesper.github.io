@@ -1,63 +1,101 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fysik</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <!-- Valfritt: favicon -->
-  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
     main {
       font-size: 1.2em;
     }
 
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
   </style>
 </head>
-
-<header class="fysik-header">
-  <h1>Fysik</h1>
-  <p>Fäladsgården</p>
-</header>
- 
 <body>
-<!-- Hamburger-knapp -->
-<button class="hamburger" onclick="toggleMenu()">☰</button>
 
-<!-- Sidomeny -->
-<nav id="side-menu">
-  <ul class="menu-main">
-    <li>
-      <span onclick="toggleSubmenu(this)">Biologi ➕</span>
-      <ul class="submenu">
-        <li><a href="/biologi/index.html">Översikt</a></li>
-        
-      </ul>
-    </li>
+  <header class="fysik-header">
+    <h1>Fysik</h1>
+    <p>Fäladsgården</p>
+  </header>
 
-    <li>
-      <span onclick="toggleSubmenu(this)">Kemi ➕</span>
-      <ul class="submenu">
-        <li><a href="/kemi/index.html">Översikt</a></li>
-      </ul>
-    </li>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-    <li>
-      <span onclick="toggleSubmenu(this)">Fysik ➕</span>
-      <ul class="submenu">
-        <li><a href="/fysik/index.html">Översikt</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+  <main>
+    <section class="page-intro">
+      <p>Välj ett område nedan för att komma åt material.</p>
+    </section>
 
-<!-- Tillbaka-knapp -->
-<p><a href="/index.html" class="subject-btn">← Tillbaka till huvudsidan</a></p>
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>Områden</h2>
+        <p>Klicka på ett område för att komma åt material.</p>
+        <ul>
+          <li><a href="/fysik/kraft-och-rorelse/index.html">Kraft och rörelse</a></li>
+          <li><a href="/fysik/arbete-energi-effekt/index.html">Arbete, energi & effekt</a></li>
+          <li><a href="/fysik/tryck/index.html">Tryck</a></li>
+          <li><a href="/fysik/ljud/index.html">Ljud</a></li>
+          <li><a href="/fysik/ljus/index.html">Ljus</a></li>
+          <li><a href="/fysik/materia/index.html">Materia</a></li>
+          <li><a href="/fysik/magnetism-induktion/index.html">Magnetism & induktion</a></li>
+          <li><a href="/fysik/atomfysik/index.html">Atomfysik</a></li>
+          <li><a href="/fysik/universum/index.html">Universum</a></li>
+        </ul>
+      </article>
+    </section>
 
-<main>
+    <p style="margin-top: 1.5rem;">
+      <a href="/index.html" class="subject-btn">← Tillbaka till startsidan</a>
+    </p>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
 </body>
 </html>
-

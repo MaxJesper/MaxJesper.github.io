@@ -1,32 +1,103 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Biologi</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <!-- Valfritt: favicon -->
-  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
     main {
       font-size: 1.2em;
     }
 
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
-<nav id="side-menu"></nav>
+  <header class="biologi-header">
+    <h1>Biologi</h1>
+    <p>Fäladsgården</p>
+  </header>
 
-<header class="biologi-header">
-  <h1>Biologi</h1>
-  <p>Fäladsgården</p>
-</header>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<main>
+  <main>
+    <section class="page-intro">
+      <p>Välj ett område nedan för att komma åt material.</p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>Områden</h2>
+        <p>Klicka på ett område för att komma åt material.</p>
+        <ul>
+          <li><a href="/biologi/hjarta-blod-lungor/index.html">Hjärtat, blodet & lungorna</a></li>
+          <li><a href="/biologi/immunologi/index.html">Immunologi</a></li>
+          <li><a href="/biologi/infektionssjukdomar/index.html">Infektionssjukdomar</a></li>
+          <li><a href="/biologi/matspjalkningen/index.html">Matspjälkningen</a></li>
+          <li><a href="/biologi/sinnena/index.html">Sinnena</a></li>
+          <li><a href="/biologi/vad-ar-liv/index.html">Vad är liv?</a></li>
+          <li><a href="/biologi/ekologi/index.html">Ekologi</a></li>
+          <li><a href="/biologi/Sex-och-relationer/index.html">Sex och relationer</a></li>
+          <li><a href="/biologi/evolution/index.html">Evolution</a></li>
+          <li><a href="/biologi/nervsystemet/index.html">Nervsystemet</a></li>
+          <li><a href="/biologi/genetik/index.html">Genetik</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="/index.html" class="subject-btn">← Tillbaka till startsidan</a>
+    </p>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
 </body>
 </html>

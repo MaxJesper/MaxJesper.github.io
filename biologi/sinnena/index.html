@@ -3,11 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biologi - Sinnena</title>
+  <title>Sinnena – Biologi</title>
   <link rel="stylesheet" href="/css/style.css">
   <!-- Valfritt: favicon -->
   <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
   <style>
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.35rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
     main {
       font-size: 1.2em;
     }
@@ -25,8 +71,22 @@
 </header> 
 
 <main>
-  <p><a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a></p>
-</main>
+    <section class="page-intro">
+      <p>Här hittar du material om synen, hörseln, lukt, smak, känsel och hur sinnesorganen samverkar med hjärnan.</p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>För elever</h2>
+        <p>Material för att träna inför prov och bygga förståelse.</p>
+        <p style="color:#888; font-style:italic;">Material kommer snart.</p>
+      </article>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+    </p>
+  </main>
 
 <script src="/js/menu.js"></script>
 </body>
