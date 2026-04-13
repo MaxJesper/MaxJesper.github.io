@@ -1,4 +1,4 @@
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
   <meta charset="UTF-8" />
@@ -107,12 +107,12 @@
   <div class="level-bar" id="levelBar"></div>
 
   <div class="complete-banner" id="completeBanner">
-    &#127881; Grattis\! Du har klarat alla sex niv&#229;er\! Topp betyg: <span id="finalScore"></span> po&#228;ng.
+    &#127881; Grattis! Du har klarat alla sex niv&#229;er! Topp betyg: <span id="finalScore"></span> po&#228;ng.
   </div>
 
   <div class="game-grid">
 
-    <\!-- LEFT: task panel -->
+    <!-- LEFT: task panel -->
     <section class="panel task-panel">
       <h2>Uppgift</h2>
       <div class="task-type-badge" id="taskBadge">&#8211;</div>
@@ -147,7 +147,7 @@
       </div>
     </section>
 
-    <\!-- CENTRE: circuit builder -->
+    <!-- CENTRE: circuit builder -->
     <section class="panel">
       <h2>Byggyta</h2>
       <div class="circuit-controls">
@@ -191,7 +191,7 @@
       <div class="calc-box" id="calcBox" style="display:none;"></div>
     </section>
 
-    <\!-- RIGHT: components -->
+    <!-- RIGHT: components -->
     <aside class="panel comp-panel">
       <h2>Komponenter</h2>
       <div style="margin-bottom:14px;">
@@ -215,10 +215,10 @@
         Parallell: 1/R<sub>tot</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub> + &#8230;
       </div>
     </aside>
-  </div><\!-- /game-grid -->
-</div><\!-- /game-wrap -->
+  </div><!-- /game-grid -->
+</div><!-- /game-wrap -->
 
-<\!-- Start overlay -->
+<!-- Start overlay -->
 <div class="start-overlay" id="startOverlay">
   <div class="start-card">
     <h2>&#9889; Ohms lag &#8211; l&#228;rande spel</h2>
@@ -261,116 +261,116 @@ const TASKS = {
   1:[
     { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>I</strong>?',
       mode:'mcq', opts:['Ström','Spänning','Resistans'], ans:'Ström',
-      fb:'Rätt\! <strong>I</strong> står för ström (intensitet). Ström mäts i ampere (A).' },
+      fb:'Rätt! <strong>I</strong> står för ström (intensitet). Ström mäts i ampere (A).' },
     { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>U</strong>?',
       mode:'mcq', opts:['Spänning','Ström','Resistans'], ans:'Spänning',
-      fb:'Rätt\! <strong>U</strong> står för spänning. Spänning mäts i volt (V).' },
+      fb:'Rätt! <strong>U</strong> står för spänning. Spänning mäts i volt (V).' },
     { badge:'Begrepp', q:'Vilken storhet betecknas med symbolen <strong>R</strong>?',
       mode:'mcq', opts:['Resistans','Ström','Spänning'], ans:'Resistans',
-      fb:'Rätt\! <strong>R</strong> står för resistans. Resistans mäts i ohm (Ω).' },
+      fb:'Rätt! <strong>R</strong> står för resistans. Resistans mäts i ohm (Ω).' },
     { badge:'Enhet', q:'I vilken enhet mäts <strong>ström</strong>?',
       mode:'mcq', opts:['Ampere (A)','Volt (V)','Ohm (Ω)'], ans:'Ampere (A)',
-      fb:'Rätt\! Ström mäts i ampere, förkortat <strong>A</strong>.' },
+      fb:'Rätt! Ström mäts i ampere, förkortat <strong>A</strong>.' },
     { badge:'Enhet', q:'I vilken enhet mäts <strong>spänning</strong>?',
       mode:'mcq', opts:['Volt (V)','Ampere (A)','Ohm (Ω)'], ans:'Volt (V)',
-      fb:'Rätt\! Spänning mäts i volt, förkortat <strong>V</strong>.' },
+      fb:'Rätt! Spänning mäts i volt, förkortat <strong>V</strong>.' },
     { badge:'Enhet', q:'I vilken enhet mäts <strong>resistans</strong>?',
       mode:'mcq', opts:['Ohm (Ω)','Volt (V)','Ampere (A)'], ans:'Ohm (Ω)',
-      fb:'Rätt\! Resistans mäts i ohm, förkortat <strong>Ω</strong>.' },
+      fb:'Rätt! Resistans mäts i ohm, förkortat <strong>Ω</strong>.' },
     { badge:'Symbol', q:'En lampa är märkt <strong>1,5 V · 0,30 A</strong>. Vad betyder 1,5 V?',
       mode:'mcq', opts:['Lampans spänning','Lampans ström','Lampans resistans'], ans:'Lampans spänning',
-      fb:'Rätt\! 1,5 V är märkspänningen – den spänning lampan är konstruerad för.' },
+      fb:'Rätt! 1,5 V är märkspänningen – den spänning lampan är konstruerad för.' },
     { badge:'Symbol', q:'En lampa är märkt <strong>1,5 V · 0,30 A</strong>. Vad betyder 0,30 A?',
       mode:'mcq', opts:['Lampans ström','Lampans spänning','Lampans resistans'], ans:'Lampans ström',
-      fb:'Rätt\! 0,30 A är märkströmmen – den ström som flödar genom lampan vid märkspänningen.' },
+      fb:'Rätt! 0,30 A är märkströmmen – den ström som flödar genom lampan vid märkspänningen.' },
   ],
   2:[
     { badge:'Beräkning', q:'En lampa märkt <strong>1,5 V · 0,30 A</strong>. Beräkna lampans resistans.',
       mode:'numeric', ans:5, unit:'Ω',
       hint:'Använd R = U / I. Dela spänningen med strömmen.',
-      fb:'Rätt\! R = 1,5 V / 0,30 A = <strong>5 Ω</strong>. Lampa A har alltid resistansen 5 Ω i spelet.' },
+      fb:'Rätt! R = 1,5 V / 0,30 A = <strong>5 Ω</strong>. Lampa A har alltid resistansen 5 Ω i spelet.' },
     { badge:'Beräkning', q:'En lampa märkt <strong>3,5 V · 0,30 A</strong>. Beräkna lampans resistans. Avrunda till heltal.',
       mode:'numeric', ans:12, unit:'Ω', tol:0.5,
       hint:'R = U / I = 3,5 / 0,30 ≈ 11,67 Ω. Avrundat: 12 Ω.',
-      fb:'Rätt\! R ≈ 3,5 / 0,30 ≈ <strong>12 Ω</strong>. Lampa B har resistansen 12 Ω i spelet.' },
+      fb:'Rätt! R ≈ 3,5 / 0,30 ≈ <strong>12 Ω</strong>. Lampa B har resistansen 12 Ω i spelet.' },
     { badge:'Beräkning', q:'En krets har spänning <strong>4,5 V</strong> och ström <strong>0,90 A</strong>. Beräkna resistansen.',
       mode:'numeric', ans:5, unit:'Ω',
       hint:'R = U / I.',
-      fb:'Rätt\! R = 4,5 / 0,90 = <strong>5 Ω</strong>.' },
+      fb:'Rätt! R = 4,5 / 0,90 = <strong>5 Ω</strong>.' },
     { badge:'Beräkning', q:'En krets har resistans <strong>12 Ω</strong> och ström <strong>0,375 A</strong>. Beräkna spänningen.',
       mode:'numeric', ans:4.5, unit:'V',
       hint:'U = R × I.',
-      fb:'Rätt\! U = 12 × 0,375 = <strong>4,5 V</strong>.' },
+      fb:'Rätt! U = 12 × 0,375 = <strong>4,5 V</strong>.' },
     { badge:'Beräkning', q:'Kretsen har spänning <strong>1,5 V</strong> och resistans <strong>5 Ω</strong>. Beräkna strömmen.',
       mode:'numeric', ans:0.30, unit:'A',
       hint:'I = U / R.',
-      fb:'Rätt\! I = 1,5 / 5 = <strong>0,30 A</strong> — exakt märkströmmen för lampa A.' },
+      fb:'Rätt! I = 1,5 / 5 = <strong>0,30 A</strong> — exakt märkströmmen för lampa A.' },
   ],
   3:[
     { badge:'Serie · R', q:'Två lampor (5 Ω vardera) kopplas i <strong>serie</strong>. Vad blir total resistans?',
       mode:'numeric', ans:10, unit:'Ω',
       hint:'I seriekoppling adderas motstånden: R_tot = R_1 + R_2.',
-      fb:'Rätt\! R_tot = 5 + 5 = <strong>10 Ω</strong>.' },
+      fb:'Rätt! R_tot = 5 + 5 = <strong>10 Ω</strong>.' },
     { badge:'Serie · R', q:'En lampa (5 Ω) och ett motstånd (10 Ω) i <strong>serie</strong>. Total resistans?',
       mode:'numeric', ans:15, unit:'Ω',
       hint:'R_tot = R_1 + R_2.',
-      fb:'Rätt\! R_tot = 5 + 10 = <strong>15 Ω</strong>.' },
+      fb:'Rätt! R_tot = 5 + 10 = <strong>15 Ω</strong>.' },
     { badge:'Serie · I', q:'Batteri <strong>4,5 V</strong>, två lampor (5 Ω + 5 Ω) i <strong>serie</strong>. Hur stor ström flödar?',
       mode:'numeric', ans:0.45, unit:'A',
       hint:'Beräkna R_tot = 10 Ω, sedan I = U / R.',
-      fb:'Rätt\! R_tot = 10 Ω, I = 4,5 / 10 = <strong>0,45 A</strong>.' },
+      fb:'Rätt! R_tot = 10 Ω, I = 4,5 / 10 = <strong>0,45 A</strong>.' },
     { badge:'Serie · I', q:'Batteri <strong>4,5 V</strong>, lampa 12 Ω + motstånd 3 Ω i <strong>serie</strong>. Hur stor ström flödar?',
       mode:'numeric', ans:0.30, unit:'A',
       hint:'R_tot = 12 + 3 = 15 Ω. Sedan I = U / R.',
-      fb:'Rätt\! R_tot = 15 Ω, I = 4,5 / 15 = <strong>0,30 A</strong> — exakt lampans märkström\!' },
+      fb:'Rätt! R_tot = 15 Ω, I = 4,5 / 15 = <strong>0,30 A</strong> — exakt lampans märkström!' },
     { badge:'Serie · I', q:'Batteri <strong>1,5 V</strong>, en lampa (5 Ω) och ett motstånd (10 Ω) i <strong>serie</strong>. Hur stor ström?',
       mode:'numeric', ans:0.10, unit:'A',
       hint:'R_tot = 15 Ω. I = U / R.',
-      fb:'Rätt\! I = 1,5 / 15 = <strong>0,10 A</strong>.' },
+      fb:'Rätt! I = 1,5 / 15 = <strong>0,10 A</strong>.' },
   ],
   4:[
     { badge:'Parallell · R', q:'Två lampor (5 Ω vardera) kopplas <strong>parallellt</strong>. Vad blir total resistans?',
       mode:'numeric', ans:2.5, unit:'Ω',
       hint:'1/R_tot = 1/5 + 1/5 = 2/5. Alltså R_tot = 5/2 = 2,5 Ω.',
-      fb:'Rätt\! Två lika motstånd parallellt ger halva resistansen: 5/2 = <strong>2,5 Ω</strong>.' },
+      fb:'Rätt! Två lika motstånd parallellt ger halva resistansen: 5/2 = <strong>2,5 Ω</strong>.' },
     { badge:'Parallell · R', q:'Två lampor (12 Ω vardera) kopplas <strong>parallellt</strong>. Vad blir total resistans?',
       mode:'numeric', ans:6, unit:'Ω',
       hint:'Två lika motstånd parallellt ger halva resistansen.',
-      fb:'Rätt\! 12 / 2 = <strong>6 Ω</strong>.' },
+      fb:'Rätt! 12 / 2 = <strong>6 Ω</strong>.' },
     { badge:'Parallell · I', q:'Batteri <strong>4,5 V</strong>, två 5 Ω-lampor <strong>parallellt</strong>. Hur stor total ström?',
       mode:'numeric', ans:1.8, unit:'A',
       hint:'R_tot = 2,5 Ω. Sedan I = U / R_tot.',
-      fb:'Rätt\! I = 4,5 / 2,5 = <strong>1,8 A</strong>.' },
+      fb:'Rätt! I = 4,5 / 2,5 = <strong>1,8 A</strong>.' },
     { badge:'Parallell · I', q:'Batteri <strong>4,5 V</strong>, två 12 Ω-lampor <strong>parallellt</strong>. Hur stor total ström?',
       mode:'numeric', ans:0.75, unit:'A',
       hint:'R_tot = 6 Ω. I = U / R.',
-      fb:'Rätt\! I = 4,5 / 6 = <strong>0,75 A</strong>.' },
+      fb:'Rätt! I = 4,5 / 6 = <strong>0,75 A</strong>.' },
     { badge:'Jämförelse', q:'En 5 Ω-lampa och en 10 Ω-lampa kopplas <strong>parallellt</strong>. Vad händer med total resistansen?',
       mode:'mcq', opts:['Den blir mindre än varje enskilt motstånd','Den blir lika med det minsta motståndet','Den adderas precis som i serie'],
       ans:'Den blir mindre än varje enskilt motstånd',
-      fb:'Rätt\! Parallellkoppling sänker alltid total resistansen under det minsta enskilda motståndet.' },
+      fb:'Rätt! Parallellkoppling sänker alltid total resistansen under det minsta enskilda motståndet.' },
   ],
   5:[
     { badge:'Bygguppdrag', q:'Bygg en <strong>seriekoppling</strong> med batteri 4,5 V som ger ström <strong>0,30 A</strong>.',
       mode:'build', hint:'Du behöver en total resistans på R = U/I = 4,5/0,30 = 15 Ω. Försök med lampa 12 Ω + motstånd 3 Ω.',
-      check(cs){ return cs.mode==='series' && near(cs.U,4.5) && cs.I\!==null && near(cs.I,0.30); },
-      fb:'Rätt\! Du byggde en seriekrets med R_tot = 15 Ω som ger exakt 0,30 A med 4,5 V.' },
+      check(cs){ return cs.mode==='series' && near(cs.U,4.5) && cs.I!==null && near(cs.I,0.30); },
+      fb:'Rätt! Du byggde en seriekrets med R_tot = 15 Ω som ger exakt 0,30 A med 4,5 V.' },
     { badge:'Bygguppdrag', q:'Bygg en krets med batteri 1,5 V och <strong>en 5 Ω-lampa</strong> som ger lampans märkström 0,30 A.',
       mode:'build', hint:'Sätt lampan ensam i serie med 1,5 V-batteriet.',
-      check(cs){ const k=cs.slots.map(s=>s.key); return near(cs.U,1.5) && cs.I\!==null && near(cs.I,0.30) && k.includes('lamp15'); },
-      fb:'Rätt\! Lampa 1,5V märkström 0,30A lyser med rätt ström vid 1,5 V.' },
+      check(cs){ const k=cs.slots.map(s=>s.key); return near(cs.U,1.5) && cs.I!==null && near(cs.I,0.30) && k.includes('lamp15'); },
+      fb:'Rätt! Lampa 1,5V märkström 0,30A lyser med rätt ström vid 1,5 V.' },
     { badge:'Bygguppdrag', q:'Bygg en krets där <strong>säkringen 0,30 A går sönder</strong>. Använd batteri 4,5 V.',
       mode:'build', hint:'Säkringen går sönder om strömmen överstiger 0,30 A. Välj komponenter som ger stor ström.',
       check(cs){ return near(cs.U,4.5) && cs.fuse.A===0.30 && cs.fuseBlown; },
-      fb:'Rätt\! En hög ström (mer än 0,30 A) fick säkringen att gå sönder.' },
+      fb:'Rätt! En hög ström (mer än 0,30 A) fick säkringen att gå sönder.' },
     { badge:'Bygguppdrag', q:'Bygg en <strong>parallellkoppling</strong> med <em>två</em> 5 Ω-lampor och batteri 4,5 V.',
       mode:'build', hint:'Välj "parallellkoppling", lägg lamp15 i plats 1 och lamp15 i plats 2. R_tot ska bli 2,5 Ω.',
       check(cs){ const k=cs.slots.map(s=>s.key); return cs.mode==='parallel' && near(cs.U,4.5) && k.filter(x=>x==='lamp15').length>=2; },
-      fb:'Rätt\! Två 5 Ω-lampor parallellt ger R_tot = 2,5 Ω och total ström 1,8 A.' },
+      fb:'Rätt! Två 5 Ω-lampor parallellt ger R_tot = 2,5 Ω och total ström 1,8 A.' },
     { badge:'Bygguppdrag', q:'Bygg en krets (valfri koppling, batteri 4,5 V) där säkringen <strong>0,50 A håller</strong>.',
       mode:'build', hint:'Strömmen måste vara ≤ 0,50 A. Det kräver R_tot ≥ 9 Ω.',
-      check(cs){ return near(cs.U,4.5) && cs.fuse.A===0.50 && \!cs.fuseBlown && cs.I\!==null && cs.I<=0.50+0.01; },
-      fb:'Rätt\! Strömmen är ≤ 0,50 A, säkringen håller.' },
+      check(cs){ return near(cs.U,4.5) && cs.fuse.A===0.50 && !cs.fuseBlown && cs.I!==null && cs.I<=0.50+0.01; },
+      fb:'Rätt! Strömmen är ≤ 0,50 A, säkringen håller.' },
   ],
   6:[
     { badge:'Klurigheter', mode:'multistep',
@@ -389,7 +389,7 @@ const TASKS = {
       steps:[
         { q:'Steg 1 av 3 – Hur stor ström flödar i varje gren?', ans:0.9, unit:'A', tol:0.02, hint:'I_gren = U / R_gren = 4,5 / 5 = 0,9 A' },
         { q:'Steg 2 av 3 – Vad är den totala resistansen?', ans:2.5, unit:'Ω', tol:0.05, hint:'1/R_tot = 1/5 + 1/5 = 2/5, R_tot = 2,5 Ω' },
-        { q:'Steg 3 av 3 – Hur stor är den totala strömmen?', ans:1.8, unit:'A', tol:0.05, hint:'I_tot = U / R_tot = 4,5 / 2,5 = 1,8 A (säkringen går sönder\!)' },
+        { q:'Steg 3 av 3 – Hur stor är den totala strömmen?', ans:1.8, unit:'A', tol:0.05, hint:'I_tot = U / R_tot = 4,5 / 2,5 = 1,8 A (säkringen går sönder!)' },
       ]
     },
     { badge:'Klurigheter', mode:'multistep',
@@ -415,7 +415,7 @@ const TASKS = {
 
 /* ── HELPERS ─────────────────────────────────────────────── */
 function near(a,b,eps=0.04){ return Math.abs(a-b)<=eps; }
-function fmt(n){ if(n==null||\!isFinite(n))return '–'; return String(Math.round(n*1000)/1000).replace('.',','); }
+function fmt(n){ if(n==null||!isFinite(n))return '–'; return String(Math.round(n*1000)/1000).replace('.',','); }
 function fmtV(v){ return String(v).replace('.',','); }
 
 function setCircuit(bat,mode,s1,s2,s3,fuse){
@@ -429,7 +429,7 @@ function setCircuit(bat,mode,s1,s2,s3,fuse){
 }
 
 function lampState(I){
-  if(I==null||\!isFinite(I)) return 'off';
+  if(I==null||!isFinite(I)) return 'off';
   if(I>BLOW_THRESH) return 'blown';
   if(I>=0.25) return 'bright';
   if(I>=0.05) return 'dim';
@@ -443,7 +443,7 @@ function circuitState(){
   const fuse = FUSES[document.getElementById('fuseSel').value];
   const keys = ['s1','s2','s3'].map(id=>document.getElementById(id).value);
   const slots = keys.map(k=>({key:k,...COMPS[k]}));
-  const active = slots.filter(s=>s.type\!=='none');
+  const active = slots.filter(s=>s.type!=='none');
 
   let Rtot=null, I=null, branchInfo=[];
 
@@ -463,7 +463,7 @@ function circuitState(){
       // Parallel: each branch independent, blown branches removed
       let bInfo = active.map(c=>{ const bI=U/c.ohm; return {comp:c, I:bI, state: c.type==='lamp' ? lampState(bI) : 'ok'}; });
       branchInfo = bInfo;
-      const good = bInfo.filter(b=>b.state\!=='blown');
+      const good = bInfo.filter(b=>b.state!=='blown');
       if(good.length>0){
         Rtot = 1/good.reduce((s,b)=>s+1/b.comp.ohm,0);
         I = good.reduce((s,b)=>s+b.I,0);
@@ -471,7 +471,7 @@ function circuitState(){
     }
   }
 
-  const fuseBlown = fuse.A\!=null && I\!=null && I > fuse.A+1e-9;
+  const fuseBlown = fuse.A!=null && I!=null && I > fuse.A+1e-9;
   const blown = fuseBlown;
   return { U, mode, fuse, slots, active, Rtot, I, blown, fuseBlown, branchInfo };
 }
@@ -572,7 +572,7 @@ function svgFuseH(cx,cy,isBlown){
 }
 
 function currentDots(pathD,current,id){
-  if(\!current||current<=0) return '';
+  if(!current||current<=0) return '';
   const speed=Math.min(Math.max(1/current,0.4),5);
   const n=Math.min(Math.round(current/0.3)+1,6);
   let out=`<path id="${id}" d="${pathD}" fill="none" stroke="none"/>`;
@@ -596,7 +596,7 @@ function drawCircuit(){
     parts.push(L(lx,by,rx,by));
 
     const items=[];
-    if(cs.fuse.A\!=null) items.push({t:'fuse',blown:cs.fuseBlown});
+    if(cs.fuse.A!=null) items.push({t:'fuse',blown:cs.fuseBlown});
     cs.branchInfo.forEach(b=>items.push({t:'comp',b}));
 
     if(items.length===0){
@@ -621,7 +621,7 @@ function drawCircuit(){
       parts.push(L(prevX,ty,rx,ty));
     }
 
-    if(cs.I&&\!cs.fuseBlown){
+    if(cs.I&&!cs.fuseBlown){
       parts.push(currentDots(`M ${lx},${ty} L ${rx},${ty} L ${rx},${by} L ${lx},${by} Z`,cs.I,'serPath'));
     }
 
@@ -633,7 +633,7 @@ function drawCircuit(){
 
     // Fuse on top left, then straight wire to rx
     let topStart=lx;
-    if(cs.fuse.A\!=null){
+    if(cs.fuse.A!=null){
       const fcx=lx+70;
       parts.push(L(lx,ty,fcx-26,ty));
       parts.push(svgFuseH(fcx,ty,cs.fuseBlown));
@@ -659,10 +659,10 @@ function drawCircuit(){
       }
     });
 
-    if(cs.I&&\!cs.fuseBlown){
+    if(cs.I&&!cs.fuseBlown){
       branchXs.forEach((bx,i)=>{
         const b=cs.branchInfo[i];
-        if(b.state\!=='blown'){
+        if(b.state!=='blown'){
           parts.push(currentDots(`M ${bx},${ty} L ${bx},${by} L ${lx},${by} L ${lx},${ty} L ${bx},${ty}`,b.I,`parP${i}`));
         }
       });
@@ -679,13 +679,13 @@ function updateStats(cs){
   document.getElementById('cI').textContent = cs.I    ? fmt(cs.I)+' A' : '–';
   const fe=document.getElementById('cFuse');
   fe.className='';
-  if(\!cs.fuse.A){ fe.textContent='Ingen'; fe.className='fuse-none'; }
+  if(!cs.fuse.A){ fe.textContent='Ingen'; fe.className='fuse-none'; }
   else if(cs.fuseBlown){ fe.textContent=fmt(cs.fuse.A)+' A – TRASIG'; fe.className='fuse-blow'; }
   else { fe.textContent=fmt(cs.fuse.A)+' A – håller'; fe.className='fuse-ok'; }
 
   // Branch stats (parallel)
   const bd=document.getElementById('branchStats');
-  if(cs.mode==='parallel'&&cs.branchInfo.length>1&&\!cs.fuseBlown){
+  if(cs.mode==='parallel'&&cs.branchInfo.length>1&&!cs.fuseBlown){
     bd.style.display='block';
     bd.innerHTML='<strong>Grenströmmar:</strong> '+cs.branchInfo.map((b,i)=>
       `Gren ${i+1}: ${b.state==='blown'?'<span style="color:#c03030">TRASIG</span>':fmt(b.I)+' A'}`
@@ -697,7 +697,7 @@ function updateStats(cs){
 
 function renderCalcBox(cs){
   const box=document.getElementById('calcBox');
-  if(\!cs.active.length){ box.style.display='none'; box.innerHTML=''; return; }
+  if(!cs.active.length){ box.style.display='none'; box.innerHTML=''; return; }
   box.style.display='block';
   let h='';
   if(cs.mode==='series'){
@@ -711,7 +711,7 @@ function renderCalcBox(cs){
       });
     }
   } else {
-    const good=cs.branchInfo.filter(b=>b.state\!=='blown');
+    const good=cs.branchInfo.filter(b=>b.state!=='blown');
     if(good.length){
       const inv=good.map(b=>`1/${b.comp.ohm}`).join(' + ');
       const invVal=fmt(good.reduce((s,b)=>s+1/b.comp.ohm,0));
@@ -762,7 +762,7 @@ function renderLevelBar(){
 }
 
 function jumpToLevel(lv){
-  if(\!S.started) return;
+  if(!S.started) return;
   S.level=lv; S.perLevel[lv]=0; S.complete=false; S.msStep=0;
   document.getElementById('completeBanner').style.display='none';
   showCircStats(true);
@@ -773,7 +773,7 @@ function jumpToLevel(lv){
 function showCircStats(visible){
   document.getElementById('circStats').style.display=visible?'grid':'none';
   const cb=document.getElementById('calcBox');
-  if(\!visible) cb.style.display='none';
+  if(!visible) cb.style.display='none';
 }
 
 /* ── FEEDBACK ─────────────────────────────────────────────── */
@@ -821,7 +821,7 @@ function pickTask(){
 }
 
 function showTask(){
-  if(\!S.task) return;
+  if(!S.task) return;
   document.getElementById('taskBadge').textContent=S.task.badge||'Uppgift';
   document.getElementById('taskText').innerHTML=S.task.q;
 
@@ -847,13 +847,13 @@ function showStep(idx){
 }
 
 function nextTask(){
-  if(\!S.started||S.complete) return;
+  if(!S.started||S.complete) return;
   pickTask();
   showTask();
 }
 
 function checkAnswer(){
-  if(\!S.started||S.complete||\!S.task) return;
+  if(!S.started||S.complete||!S.task) return;
   const task=S.task;
 
   if(task.mode==='multistep'){
@@ -862,16 +862,16 @@ function checkAnswer(){
 
   let correct=false;
   if(task.mode==='mcq'){
-    if(\!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
+    if(!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
     correct=_selectedMCQ===task.ans;
     document.querySelectorAll('.mcq-btn').forEach(b=>{
       if(b.dataset.val===task.ans) b.classList.add('correct');
-      else if(b.dataset.val===_selectedMCQ&&\!correct) b.classList.add('wrong');
+      else if(b.dataset.val===_selectedMCQ&&!correct) b.classList.add('wrong');
     });
   } else if(task.mode==='numeric'){
     const raw=(document.getElementById('numInput')?.value||'').replace(',','.').replace(/[^0-9.\-]/g,'');
     const val=parseFloat(raw);
-    correct=\!isNaN(val)&&near(val,task.ans,task.tol??0.04);
+    correct=!isNaN(val)&&near(val,task.ans,task.tol??0.04);
   } else {
     correct=task.check(circuitState());
   }
@@ -879,7 +879,7 @@ function checkAnswer(){
   if(correct){
     S.score++; S.streak++; S.solved++;
     S.perLevel[S.level]=(S.perLevel[S.level]||0)+1;
-    setFb(task.fb||'Rätt\! Bra jobbat.','ok');
+    setFb(task.fb||'Rätt! Bra jobbat.','ok');
     advanceLevel();
   } else {
     S.streak=0;
@@ -894,16 +894,16 @@ function checkStep(){
   const step=S.task.steps[S.msStep];
   let correct=false;
   if((step.mode||'numeric')==='mcq'){
-    if(\!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
+    if(!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
     correct=_selectedMCQ===step.ans;
     document.querySelectorAll('.mcq-btn').forEach(b=>{
       if(b.dataset.val===step.ans) b.classList.add('correct');
-      else if(b.dataset.val===_selectedMCQ&&\!correct) b.classList.add('wrong');
+      else if(b.dataset.val===_selectedMCQ&&!correct) b.classList.add('wrong');
     });
   } else {
     const raw=(document.getElementById('numInput')?.value||'').replace(',','.').replace(/[^0-9.\-]/g,'');
     const val=parseFloat(raw);
-    correct=\!isNaN(val)&&near(val,step.ans,step.tol??0.04);
+    correct=!isNaN(val)&&near(val,step.ans,step.tol??0.04);
   }
 
   if(correct){
@@ -914,10 +914,10 @@ function checkStep(){
       S.solved++; S.perLevel[S.level]=(S.perLevel[S.level]||0)+1;
       showCircStats(true);
       document.getElementById('stepInfo').style.display='none';
-      setFb('&#127881; Alla steg klara\! Kretsen och beräkningarna visas nu.','ok');
+      setFb('&#127881; Alla steg klara! Kretsen och beräkningarna visas nu.','ok');
       advanceLevel();
     } else {
-      setFb('✓ Rätt\! Nästa steg…','ok');
+      setFb('✓ Rätt! Nästa steg…','ok');
       setTimeout(()=>showStep(S.msStep),700);
     }
   } else {
@@ -931,18 +931,18 @@ function advanceLevel(){
   if(S.perLevel[S.level]>=(ADVANCE[S.level]||3)){
     if(S.level<6){
       S.level++;
-      setFb('&#127881; Rätt\! Du avancerar till nästa nivå\!','ok');
+      setFb('&#127881; Rätt! Du avancerar till nästa nivå!','ok');
     } else {
       S.complete=true;
       document.getElementById('completeBanner').style.display='block';
       document.getElementById('finalScore').textContent=S.score;
-      setFb('&#127942; Du har klarat alla nivåer\! Fantastiskt\!','ok');
+      setFb('&#127942; Du har klarat alla nivåer! Fantastiskt!','ok');
     }
   }
 }
 
 function showHint(){
-  if(\!S.task) return;
+  if(!S.task) return;
   const t=S.task;
   if(t.mode==='multistep'){
     const step=t.steps[S.msStep];
