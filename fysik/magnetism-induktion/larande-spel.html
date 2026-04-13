@@ -39,11 +39,15 @@
     .game-image {
       width: 100%;
       aspect-ratio: 16 / 9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
       background: linear-gradient(135deg, #dfefff, #cfe3ff);
-      font-size: 2.4rem;
+    }
+
+    .game-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
 
     .game-body {
@@ -103,7 +107,9 @@
 
     <section class="games-grid">
       <a class="game-card" href="./begreppskort.html">
-        <div class="game-image">🧠</div>
+        <div class="game-image">
+          <img src="/images/magnetism-induktion/begreppskort.png" alt="Begreppskort – El, magnetism och induktion">
+        </div>
         <div class="game-body">
           <h2>Begreppskort</h2>
           <p>Träna viktiga ord och begrepp inom el, magnetism och induktion.</p>
@@ -111,7 +117,9 @@
       </a>
 
       <a class="game-card" href="./korsord.html">
-        <div class="game-image">🧩</div>
+        <div class="game-image">
+          <img src="/images/magnetism-induktion/Korsord.png" alt="Korsord – El, magnetism och induktion">
+        </div>
         <div class="game-body">
           <h2>Korsord</h2>
           <p>Lös ett korsord med centrala ord från arbetsområdet.</p>
@@ -119,7 +127,9 @@
       </a>
 
       <a class="game-card" href="./ohms-lag-spel.html">
-        <div class="game-image">⚡</div>
+        <div class="game-image">
+          <img src="/images/magnetism-induktion/Ohms-lag.png" alt="Ohms lag – lärande spel">
+        </div>
         <div class="game-body">
           <h2>Ohms lag – lärande spel</h2>
           <p>Träna begrepp, räkna med Ohms lag och bygg serie- och parallellkopplingar i kretssimulator.</p>
