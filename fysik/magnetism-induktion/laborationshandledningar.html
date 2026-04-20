@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laborationshandledningar – El, magnetism och induktion</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink-muted: #4a4a6a;
+    --ink-light: #8a8aaa;
+    --rule: #c8c8e0;
+    --accent: #2e4a8a;
+    --accent-light: #e8edf8;
+    --accent-mid: #6a85c0;
+    --bg: #faf9f6;
+    --paper: #ffffff;
+    --line-h: 10mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    padding: 2rem;
+  }
+
+  .cover-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .cover-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 2rem;
+  }
+
+  .cover-title {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 2.4rem;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+
+  .cover-subtitle {
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+    margin-bottom: 3rem;
+    font-weight: 400;
+  }
+
+  .cover-toc {
+    list-style: none;
+    text-align: left;
+    max-width: 480px;
+    width: 100%;
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+
+  .cover-toc li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+  }
+
+  .cover-toc li .num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 2rem;
+  }
+
+  .lab-sheet {
+    background: var(--paper);
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 4rem;
+    padding: 18mm 18mm 15mm;
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .lab-sheet::before {
+    content: '';
+    position: absolute;
+    left: 22mm;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #f0e8e8;
+    opacity: 0.8;
+  }
+
+  .sheet-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 6mm;
+    padding-bottom: 4mm;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .sheet-category {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 3px;
+  }
+
+  .sheet-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .sheet-num {
+    font-family: 'Source Serif 4', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--accent-light);
+    line-height: 1;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .name-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 6mm;
+    margin-bottom: 5mm;
+  }
+
+  .field-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1mm;
+  }
+
+  .field-line {
+    border-bottom: 1px solid var(--ink);
+    height: 7mm;
+    width: 100%;
+  }
+
+  .section {
+    margin-bottom: 5mm;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2mm;
+  }
+
+  .section-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .section-text {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.55;
+    padding-left: 26px;
+  }
+
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1mm 8mm;
+    padding-left: 26px;
+  }
+
+  .equip-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    padding: 1mm 0;
+  }
+
+  .equip-check {
+    width: 12px;
+    height: 12px;
+    border: 1.5px solid var(--accent-mid);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .steps-list {
+    padding-left: 26px;
+    counter-reset: step;
+  }
+
+  .step {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 2mm;
+    counter-increment: step;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  .step-num {
+    min-width: 18px;
+    height: 18px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .write-lines {
+    padding-left: 26px;
+  }
+
+  .wline {
+    border-bottom: 1px solid var(--rule);
+    height: var(--line-h);
+    margin-bottom: 0;
+  }
+
+  .obs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: 26px;
+    font-size: 0.78rem;
+    width: calc(100% - 26px);
+  }
+
+  .obs-table th {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 3mm 3mm;
+    border: 1px solid var(--rule);
+    text-align: left;
+  }
+
+  .obs-table td {
+    border: 1px solid var(--rule);
+    padding: 0;
+    height: var(--line-h);
+  }
+
+  .obs-table td.label-cell {
+    padding: 2mm 3mm;
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    background: #fafafa;
+    width: 45%;
+  }
+
+  .obs-table tr:nth-child(even) td.label-cell {
+    background: #f5f5fa;
+  }
+
+  .conclusion-box {
+    border: 1.5px solid var(--accent);
+    border-radius: 4px;
+    margin-left: 26px;
+    padding: 3mm;
+    background: var(--accent-light);
+  }
+
+  .conclusion-prompt {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 2mm;
+  }
+
+  .conc-lines .wline {
+    border-bottom: 1px solid var(--accent-mid);
+    opacity: 0.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 4mm 0;
+  }
+
+  /* Baksida (sida 2) – bild som hör till laborationen */
+  .lab-image-page {
+    background: var(--paper);
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 4rem;
+    padding: 18mm;
+    border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 4mm;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 6mm;
+    gap: 1rem;
+  }
+
+  .image-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+  }
+
+  .image-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .lab-figure {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .lab-figure img {
+    max-width: 100%;
+    max-height: 230mm;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+  }
+
+  .lab-figure figcaption {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    text-align: center;
+    font-style: italic;
+    max-width: 150mm;
+    line-height: 1.5;
+  }
+
+  .back-hint {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: var(--ink-light);
+    text-align: center;
+    margin-top: 6mm;
+    font-style: italic;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .cover-page { page-break-after: always; }
+    .lab-sheet {
+      page-break-after: always;
+      border: none;
+      margin: 0;
+      box-shadow: none;
+      padding: 15mm 18mm 12mm;
+    }
+    .lab-sheet::before { display: none; }
+    .lab-image-page {
+      page-break-after: always;
+      page-break-inside: avoid;
+      border: none;
+      margin: 0;
+      padding: 15mm 18mm;
+      min-height: auto;
+      height: 100vh;
+    }
+    .lab-figure img { max-height: 220mm; }
+    .back-hint { display: none; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page no-print">
+  <svg class="cover-icon" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="40" cy="40" r="38" stroke="#2e4a8a" stroke-width="2" fill="#e8edf8"/>
+    <path d="M40 20 C30 20 22 28 22 38 C22 52 40 62 40 62 C40 62 58 52 58 38 C58 28 50 20 40 20Z" stroke="#2e4a8a" stroke-width="2" fill="none"/>
+    <circle cx="40" cy="38" r="5" fill="#2e4a8a"/>
+    <line x1="40" y1="24" x2="40" y2="30" stroke="#2e4a8a" stroke-width="2"/>
+    <line x1="40" y1="46" x2="40" y2="52" stroke="#2e4a8a" stroke-width="2"/>
+    <line x1="26" y1="38" x2="32" y2="38" stroke="#2e4a8a" stroke-width="2"/>
+    <line x1="48" y1="38" x2="54" y2="38" stroke="#2e4a8a" stroke-width="2"/>
+  </svg>
+  <div class="cover-title">El, magnetism<br>och induktion</div>
+  <div class="cover-subtitle">Laborationshandledningar · Fysik</div>
+  <ul class="cover-toc">
+    <li><span class="num">1</span> Induktion – galvanometer</li>
+    <li><span class="num">2</span> Induktion – amperemeter (växelström, 30 mA)</li>
+    <li><span class="num">3</span> Induktion – spolar och lysdiod</li>
+    <li><span class="num">4</span> Elektromagnet</li>
+    <li><span class="num">5</span> Elmotor</li>
+    <li><span class="num">6</span> Transformator</li>
+  </ul>
+</div>
+
+<!-- SHEET 1: Induktion – galvanometer -->
+<div class="lab-sheet" id="lab-1">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Induktion</div>
+      <div class="sheet-title">Spole och galvanometer</div>
+    </div>
+    <div class="sheet-num">1</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Vad händer när en stavmagnet förs in i och ut ur en spole som är kopplad till en galvanometer? Hur påverkas utslaget av magnetens rörelse och riktning?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>Spole, 600 varv / 0,75 A</div>
+      <div class="equip-item"><div class="equip-check"></div>Stavmagnet</div>
+      <div class="equip-item"><div class="equip-check"></div>Galvanometer</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Koppla spolen till galvanometern med kablarna.</span></div>
+      <div class="step"><span class="step-num">2</span><span>Håll stavmagneten stilla inuti spolen. Notera galvanometerns visare.</span></div>
+      <div class="step"><span class="step-num">3</span><span>För snabbt in stavmagneten i spolen. Notera vad som händer.</span></div>
+      <div class="step"><span class="step-num">4</span><span>Dra ut stavmagneten ur spolen. Notera vad som händer.</span></div>
+      <div class="step"><span class="step-num">5</span><span>Upprepa men vänd magneten – för nu in sydpolen. Jämför utslaget.</span></div>
+      <div class="step"><span class="step-num">6</span><span>Variera hastigheten: för in magneten långsamt respektive snabbt.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer</span>
+    </div>
+    <table class="obs-table">
+      <tr>
+        <th style="width:45%">Situation</th>
+        <th>Galvanometerns utslag</th>
+      </tr>
+      <tr><td class="label-cell">Magneten stilla i spolen</td><td></td></tr>
+      <tr><td class="label-cell">Nordpol förs in – långsamt</td><td></td></tr>
+      <tr><td class="label-cell">Nordpol förs in – snabbt</td><td></td></tr>
+      <tr><td class="label-cell">Nordpol dras ut</td><td></td></tr>
+      <tr><td class="label-cell">Sydpol förs in</td><td></td></tr>
+      <tr><td class="label-cell">Sydpol dras ut</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Slutsats</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Vad kan du dra för slutsatser om induktion utifrån dina observationer?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 1: bild till laboration 1 -->
+<div class="lab-image-page" id="lab-1-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 1 · Baksida</span>
+    <span class="image-title">Spole och galvanometer</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/induktion-galvanometer.png"
+         alt="Spole kopplad till galvanometer med stavmagnet" />
+    <figcaption>Uppställning: spole (600 varv), stavmagnet och galvanometer.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 1 (dubbelsidig utskrift).</div>
+</div>
+
+<!-- SHEET 2: Induktion – amperemeter -->
+<div class="lab-sheet" id="lab-2">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Induktion</div>
+      <div class="sheet-title">Spole och amperemeter (växelström, 30 mA)</div>
+    </div>
+    <div class="sheet-num">2</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Kan man mäta den inducerade strömmen i milliampere när en stavmagnet förs fram och tillbaka i en spole? Hur påverkar rörelsehastighetens strömvärdet?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>Spole, 600 varv / 0,75 A</div>
+      <div class="equip-item"><div class="equip-check"></div>Stavmagnet</div>
+      <div class="equip-item"><div class="equip-check"></div>Amperemeter, inställd på växelström max 30 mA</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Koppla spolen till amperemetern. Kontrollera att mätaren är inställd på växelström (AC) och max 30 mA.</span></div>
+      <div class="step"><span class="step-num">2</span><span>Håll stavmagneten stilla inuti spolen. Vad visar mätaren?</span></div>
+      <div class="step"><span class="step-num">3</span><span>För stavmagneten långsamt fram och tillbaka i spolen i jämn takt. Läs av strömmen.</span></div>
+      <div class="step"><span class="step-num">4</span><span>Öka hastigheten – för magneten snabbt fram och tillbaka. Läs av strömmen. Kan du nå upp mot 10 mA?</span></div>
+      <div class="step"><span class="step-num">5</span><span>Pröva en mellanhastighet. Jämför alla tre mätningar.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer</span>
+    </div>
+    <table class="obs-table">
+      <tr>
+        <th style="width:40%">Situation</th>
+        <th>Ström (mA)</th>
+        <th>Kommentar</th>
+      </tr>
+      <tr><td class="label-cell">Magneten stilla</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Fram och tillbaka – långsamt</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Fram och tillbaka – mellanhastighet</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Fram och tillbaka – snabbt</td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Slutsats</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Vilket samband finns mellan magnetens hastighet och den inducerade strömmen? Varför mäter vi växelström och inte likström här?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 2: bild till laboration 2 -->
+<div class="lab-image-page" id="lab-2-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 2 · Baksida</span>
+    <span class="image-title">Spole och amperemeter</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/induktion-ampermeter.png"
+         alt="Spole kopplad till amperemeter inställd på växelström" />
+    <figcaption>Spole kopplad till amperemeter inställd på växelström, max 30 mA.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 2 (dubbelsidig utskrift).</div>
+</div>
+
+<!-- SHEET 3: Induktion – lysdiod -->
+<div class="lab-sheet" id="lab-3">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Induktion</div>
+      <div class="sheet-title">Spolar och lysdiod</div>
+    </div>
+    <div class="sheet-num">3</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Kan rörelseenergi inducera tillräcklig spänning för att tända en lysdiod? Spelar antalet varv i spolen någon roll? En lysdiod släpper bara igenom ström i en riktning – hur påverkar det experimentet?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>Spole, 600 varv / 0,75 A</div>
+      <div class="equip-item"><div class="equip-check"></div>Spole, 12 000 varv / 0,1 A</div>
+      <div class="equip-item"><div class="equip-check"></div>Stavmagnet</div>
+      <div class="equip-item"><div class="equip-check"></div>Lysdiod (LED)</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande – del 1: 600-varv-spolen</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Koppla 600-varv-spolen till lysdioden.</span></div>
+      <div class="step"><span class="step-num">2</span><span>Dra ut stavmagneten snabbt ur spolen med nordpolen vänd inåt. Lyser dioden?</span></div>
+      <div class="step"><span class="step-num">3</span><span>Vänd stavmagneten så att sydpolen vänds inåt. Dra ut snabbt igen. Lyser dioden nu?</span></div>
+      <div class="step"><span class="step-num">4</span><span>Notera dina observationer i tabellen nedan.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande – del 2: 12 000-varv-spolen</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">5</span><span>Byt till 12 000-varv-spolen, koppla till samma lysdiod.</span></div>
+      <div class="step"><span class="step-num">6</span><span>Dra ut stavmagneten snabbt med nordpolen vänd inåt. Lyser dioden?</span></div>
+      <div class="step"><span class="step-num">7</span><span>Vänd stavmagneten (sydpol inåt) och dra ut snabbt igen. Lyser dioden nu?</span></div>
+      <div class="step"><span class="step-num">8</span><span>Pröva med den riktning som fungerade men variera hastigheten. Finns det en minsta hastighet?</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer</span>
+    </div>
+    <table class="obs-table">
+      <tr>
+        <th style="width:50%">Situation</th>
+        <th>Dioden lyser?</th>
+      </tr>
+      <tr><td class="label-cell">600 varv – nordpol inåt, dra ut snabbt</td><td></td></tr>
+      <tr><td class="label-cell">600 varv – sydpol inåt, dra ut snabbt</td><td></td></tr>
+      <tr><td class="label-cell">12 000 varv – nordpol inåt, dra ut snabbt</td><td></td></tr>
+      <tr><td class="label-cell">12 000 varv – sydpol inåt, dra ut snabbt</td><td></td></tr>
+      <tr><td class="label-cell">12 000 varv – rätt riktning, långsamt</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Slutsats</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Varför fungerade bara en av spolarna? Varför spelar magnetens riktning roll? Vad säger det om hur en lysdiod fungerar?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 3: bild till laboration 3 -->
+<div class="lab-image-page" id="lab-3-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 3 · Baksida</span>
+    <span class="image-title">Spolar och lysdiod</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/diod-spole.png"
+         alt="Spole kopplad till lysdiod" />
+    <figcaption>Spole kopplad till lysdiod – dioden leder bara ström i en riktning.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 3 (dubbelsidig utskrift).</div>
+</div>
+
+<!-- SHEET 4: Elektromagnet -->
+<div class="lab-sheet" id="lab-4">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Elektromagnet</div>
+      <div class="sheet-title">Spolar på järnkärna</div>
+    </div>
+    <div class="sheet-num">4</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Hur starkt är magnetfältet när två spolar kopplas till ett litet 9 V-batteri på en U-formad järnkärna? Vilken roll spelar oket – och varför är spolarna kopplade som de är?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>2× spole, 600 varv / 0,75 A</div>
+      <div class="equip-item"><div class="equip-check"></div>U-formad järnkärna med ok</div>
+      <div class="equip-item"><div class="equip-check"></div>9 V batteri</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Trä spolarna på järnkärnans två ben. Koppla dem i serie till 9 V-batteriet.</span></div>
+      <div class="step"><span class="step-num">2</span><span>Håll oket nära järnkärnan och slå på strömmen. Vad känner du? Hur hårt sitter oket?</span></div>
+      <div class="step"><span class="step-num">3</span><span>Försök dra loss oket medan strömmen är på. Notera hur mycket kraft som krävs.</span></div>
+      <div class="step"><span class="step-num">4</span><span>Bryt strömmen. Vad händer med oket nu?</span></div>
+      <div class="step"><span class="step-num">5</span><span>Slå på strömmen igen men ta bort oket. Känns magnetfältet lika starkt om du håller ett järnföremål nära? Jämför med och utan ok.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer</span>
+    </div>
+    <div class="write-lines">
+      <div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      <div class="wline"></div><div class="wline"></div><div class="wline"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Frågor att fundera på</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Magnetismen går runt i järnkärnan som en slinga. Varför måste strömriktningen ändras mellan de två spolarna för att magnetfältet ska gå "runt" rätt? Vad skulle hända om båda spolarna magnetiserades åt samma håll?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" style="margin-top: 3mm;">
+    <div class="conclusion-box" style="background: #f5f7fc;">
+      <div class="conclusion-prompt" style="color: var(--ink-muted);">Vad påverkar en elektromagnets styrka? Lista minst tre faktorer:</div>
+      <div class="write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 4: bild till laboration 4 -->
+<div class="lab-image-page" id="lab-4-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 4 · Baksida</span>
+    <span class="image-title">Elektromagnet</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/elektromagnet-batteri.png"
+         alt="Två spolar på U-formad järnkärna kopplade till 9 V-batteri" />
+    <figcaption>Två spolar (600 varv) på U-formad järnkärna med ok, kopplade till 9 V-batteri.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 4 (dubbelsidig utskrift).</div>
+</div>
+
+<!-- SHEET 5: Elmotor -->
+<div class="lab-sheet" id="lab-5">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Elmotor</div>
+      <div class="sheet-title">Roterande spole i magnetfält</div>
+    </div>
+    <div class="sheet-num">5</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Hur omvandlar en elmotor elektrisk energi till rörelseenergi? Vilka delar i motorn samverkar för att åstadkomma rotation?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>Elmotor (demonstrationsmodell)</div>
+      <div class="equip-item"><div class="equip-check"></div>Spänningskub (inställd på G, likström)</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Koppla elmotorn till spänningskuben (inställd på G, likström).</span></div>
+      <div class="step"><span class="step-num">2</span><span>Starta strömmen och observera vad som roterar.</span></div>
+      <div class="step"><span class="step-num">3</span><span>Identifiera motorns delar: svänghjul, släpkontakt, roterande spole, drivhjul och fastmagneter.</span></div>
+      <div class="step"><span class="step-num">4</span><span>Rita eller beskriv nedan hur de olika delarna sitter i förhållande till varandra.</span></div>
+      <div class="step"><span class="step-num">5</span><span>Förklara i ord varför spolen börjar rotera när ström flödar.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h12M3 13h8" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Skiss / ritning av motorn</span>
+    </div>
+    <div style="padding-left: 26px; border: 1px solid var(--rule); height: 40mm; border-radius: 4px; margin-bottom: 3mm;"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer</span>
+    </div>
+    <div class="write-lines">
+      <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Slutsats</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Förklara principen bakom elmotorn: hur skapar elektrisk energi rotation?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 5: bild till laboration 5 -->
+<div class="lab-image-page" id="lab-5-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 5 · Baksida</span>
+    <span class="image-title">Elmotor</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/Elmotor.png"
+         alt="Demonstrationsmodell av elmotor" />
+    <figcaption>Demonstrationsmodell: roterande spole i magnetfält mellan fastmagneter.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 5 (dubbelsidig utskrift).</div>
+</div>
+
+<!-- SHEET 6: Transformator -->
+<div class="lab-sheet" id="lab-6">
+  <div class="sheet-header">
+    <div>
+      <div class="sheet-category">Transformator</div>
+      <div class="sheet-title">Spänningsomvandling med spolar</div>
+    </div>
+    <div class="sheet-num">6</div>
+  </div>
+
+  <div class="name-row">
+    <div><div class="field-label">Namn</div><div class="field-line"></div></div>
+    <div><div class="field-label">Klass</div><div class="field-line"></div></div>
+    <div><div class="field-label">Datum</div><div class="field-line"></div></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Syfte &amp; frågeställning</span>
+    </div>
+    <div class="section-text">
+      Hur fungerar en transformator? Vilka faktorer avgör om den sekundära spolen tar emot mer eller mindre energi? Krävs det växelström – och varför?
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#2e4a8a" stroke-width="1.2"/><path d="M6 4V3M12 4V3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="section-label">Utrustning</span>
+    </div>
+    <div class="equipment-grid">
+      <div class="equip-item"><div class="equip-check"></div>Spänningskub (inst. E, växelström)</div>
+      <div class="equip-item"><div class="equip-check"></div>2× spole 300 varv / 1,6 A</div>
+      <div class="equip-item"><div class="equip-check"></div>1× spole 600 varv / 0,75 A</div>
+      <div class="equip-item"><div class="equip-check"></div>Järnkärna med ok</div>
+      <div class="equip-item"><div class="equip-check"></div>Lampa 6 V</div>
+      <div class="equip-item"><div class="equip-check"></div>Kopplingskablar</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M4 14 L4 6 L9 3 L14 6 L14 14" stroke="#2e4a8a" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 14v-4h4v4" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Genomförande</span>
+    </div>
+    <div class="steps-list">
+      <div class="step"><span class="step-num">1</span><span>Sätt ihop transformatorn: primärspole (300 v) + järnkärna med ok + sekundärspole (300 v) kopplad till 6 V-lampan. Koppla primärspolen till spänningskuben (E, växelström). Grundinställning – lampan lyser (referens).</span></div>
+      <div class="step"><span class="step-num">2</span><span>Byt till likström. Observera lampan. Byt tillbaka till växelström.</span></div>
+      <div class="step"><span class="step-num">3</span><span>Ta av oket medan strömmen är på. Observera lampan. Sätt på oket igen.</span></div>
+      <div class="step"><span class="step-num">4</span><span>Byt sekundärspolen (300 v) mot 600-varv-spolen – med ok. Observera.</span></div>
+      <div class="step"><span class="step-num">5</span><span>Upprepa steg 4 men ta bort oket. Observera.</span></div>
+      <div class="step"><span class="step-num">6</span><span>Byt plats på primär- och sekundärspolen (300 v + 300 v). Med ok – observera. Utan ok – observera.</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M3 14L7 8L11 11L15 5" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="section-label">Observationer – rangordning av ljusstyrka</span>
+    </div>
+    <table class="obs-table">
+      <tr>
+        <th style="width:48%">Inställning</th>
+        <th>Lampan lyser</th>
+        <th>Rang (1=minst)</th>
+      </tr>
+      <tr><td class="label-cell">Grundinställning (växelström, ok, 300+300 v)</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Likström (allt annat lika)</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Utan ok (växelström, 300+300 v)</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Sekundär 600 v – med ok</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Sekundär 600 v – utan ok</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Bytta spolar, med ok</td><td></td><td></td></tr>
+      <tr><td class="label-cell">Bytta spolar, utan ok</td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <svg class="section-icon" viewBox="0 0 18 18" fill="none"><path d="M9 3v3M9 12v3M3 9h3M12 9h3" stroke="#2e4a8a" stroke-width="1.2" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#2e4a8a" stroke-width="1.2"/></svg>
+      <span class="section-label">Slutsats</span>
+    </div>
+    <div class="conclusion-box">
+      <div class="conclusion-prompt">Varför fungerar transformatorn bara med växelström? Vad är okts roll? Vad händer när man ändrar antalet varv?</div>
+      <div class="conc-lines write-lines">
+        <div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div><div class="wline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BACK 6: bild till laboration 6 -->
+<div class="lab-image-page" id="lab-6-back">
+  <div class="image-header">
+    <span class="image-label">Laboration 6 · Baksida</span>
+    <span class="image-title">Transformator</span>
+  </div>
+  <figure class="lab-figure">
+    <img src="/images/fysik/magnetism-induktion/transformator.png"
+         alt="Transformator med primär- och sekundärspole på järnkärna" />
+    <figcaption>Primär- och sekundärspole på gemensam järnkärna med ok, 6 V-lampa på sekundärsidan.</figcaption>
+  </figure>
+  <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 6 (dubbelsidig utskrift).</div>
+</div>
+
+<div class="no-print" style="text-align:center; padding: 2rem; color: #8a8aaa; font-size: 0.85rem;">
+  <p><strong>Utskrift:</strong> Använd dubbelsidig utskrift (<em>Skriv ut på båda sidor · Vänd på långa kanten</em>) i skrivardialogen. Varje laboration blir då ett uppslag med protokoll på framsidan och bild på baksidan.</p>
+  <p><button onclick="window.print()" style="background:#2e4a8a;color:#fff;border:none;border-radius:6px;padding:0.5rem 1rem;font-weight:600;cursor:pointer;font-size:0.9rem;">🖨️ Skriv ut nu</button> &nbsp; eller öppna skrivardialogen med Ctrl+P / Cmd+P.</p>
+</div>
+
+<script>
+  // Om sidan öppnas med ?print=1 – utlös skrivardialogen automatiskt när bilderna laddats
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('print') === '1') {
+      window.addEventListener('load', function () {
+        // Vänta tills alla bilder är laddade så baksidorna ser korrekta ut i utskriften
+        var images = Array.prototype.slice.call(document.images);
+        var pending = images.filter(function (img) { return !img.complete; });
+        if (pending.length === 0) {
+          setTimeout(function () { window.print(); }, 200);
+          return;
+        }
+        var remaining = pending.length;
+        pending.forEach(function (img) {
+          var done = function () { if (--remaining === 0) setTimeout(function () { window.print(); }, 200); };
+          img.addEventListener('load', done);
+          img.addEventListener('error', done);
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

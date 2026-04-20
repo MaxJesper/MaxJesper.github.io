@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationer – El, magnetism och induktion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.15em;
+    }
+
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .lab-card {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .lab-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .lab-card a.lab-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .lab-card .lab-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #f4f6fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .lab-card .lab-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lab-card .lab-body {
+      padding: 1rem 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-grow: 1;
+    }
+
+    .lab-card .lab-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+    }
+
+    .lab-card h2 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #1a1a2e;
+    }
+
+    .lab-card p {
+      margin: 0;
+      color: #444;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .print-all {
+      margin-top: 1.75rem;
+      padding: 1rem 1.1rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+    }
+
+    .print-all p {
+      margin: 0 0 0.5rem 0;
+    }
+
+    .print-all .print-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1rem;
+      background: #2e4a8a;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    .print-btn:hover {
+      background: #253d73;
+    }
+
+    .print-btn.secondary {
+      background: #fff;
+      color: #2e4a8a;
+      border: 1px solid #2e4a8a;
+    }
+
+    .print-btn.secondary:hover {
+      background: #eef2fa;
+    }
+
+    .print-tip {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 0.75rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Laborationer</h1>
+    <p>El, magnetism och induktion</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <section class="page-intro">
+      <p>
+        Sex laborationer om induktion, elektromagneter, elmotor och transformator.
+        Klicka på en laboration för att öppna handledningen – där finns syfte,
+        utrustning, genomförande, plats för observationer och slutsats.
+      </p>
+    </section>
+
+    <section class="lab-grid">
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-1">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/induktion-galvanometer.png"
+                 alt="Spole kopplad till galvanometer med stavmagnet" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 1 · Induktion</span>
+            <h2>Spole och galvanometer</h2>
+            <p>Undersök vad som händer när en stavmagnet förs in i och ut ur en spole.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-2">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/induktion-ampermeter.png"
+                 alt="Spole kopplad till amperemeter" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 2 · Induktion</span>
+            <h2>Spole och amperemeter</h2>
+            <p>Mät den inducerade växelströmmen i mA och se hur hastigheten påverkar.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-3">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/diod-spole.png"
+                 alt="Spole kopplad till lysdiod" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 3 · Induktion</span>
+            <h2>Spolar och lysdiod</h2>
+            <p>Kan rörelseenergi tända en lysdiod? Jämför 600 och 12 000 varv.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-4">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/elektromagnet-batteri.png"
+                 alt="Elektromagnet med U-formad järnkärna och batteri" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 4 · Elektromagnet</span>
+            <h2>Spolar på järnkärna</h2>
+            <p>Bygg en elektromagnet med två spolar, järnkärna och 9 V-batteri.</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-5">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/Elmotor.png"
+                 alt="Demonstrationsmodell av elmotor" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 5 · Elmotor</span>
+            <h2>Roterande spole i magnetfält</h2>
+            <p>Hur omvandlar en elmotor elektrisk energi till rörelseenergi?</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="lab-card">
+        <a class="lab-link" href="./laborationshandledningar.html#lab-6">
+          <div class="lab-image">
+            <img src="/images/fysik/magnetism-induktion/transformator.png"
+                 alt="Transformator med två spolar på järnkärna" />
+          </div>
+          <div class="lab-body">
+            <span class="lab-num">Laboration 6 · Transformator</span>
+            <h2>Spänningsomvandling med spolar</h2>
+            <p>Undersök hur antal varv, oket och växel- kontra likström påverkar.</p>
+          </div>
+        </a>
+      </article>
+
+    </section>
+
+    <section class="print-all">
+      <p><strong>Skriv ut alla laborationshandledningar</strong></p>
+      <p>Varje laboration blir ett uppslag: protokoll på framsidan och relevant bild på baksidan.</p>
+      <div class="print-btns">
+        <a href="./laborationshandledningar.html?print=1" target="_blank" rel="noopener" class="print-btn">🖨️ Skriv ut alla handledningar</a>
+        <a href="./laborationshandledningar.html" target="_blank" rel="noopener" class="print-btn secondary">📄 Öppna för förhandsgranskning</a>
+      </div>
+      <p class="print-tip">Tips: välj <strong>Skriv ut på båda sidor · Vänd på långa kanten</strong> i skrivardialogen för dubbelsidig utskrift.</p>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
