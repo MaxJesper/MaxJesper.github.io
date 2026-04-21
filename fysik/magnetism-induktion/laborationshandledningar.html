@@ -414,33 +414,107 @@
     font-style: italic;
   }
 
+  .print-fab {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .print-fab button {
+    background: #2e4a8a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .print-fab button:hover {
+    background: #253d73;
+  }
+
+  .print-fab a {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1rem;
+    background: #fff;
+    color: #2e4a8a;
+    border: 1px solid #2e4a8a;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .print-fab a:hover {
+    background: #eef2fa;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
   @media print {
-    body { background: white; padding: 0; }
-    .cover-page { page-break-after: always; }
+    html, body { background: white; padding: 0; margin: 0; }
+    .cover-page { display: none; }
     .lab-sheet {
       page-break-after: always;
+      page-break-inside: avoid;
+      break-after: page;
+      break-inside: avoid;
       border: none;
       margin: 0;
       box-shadow: none;
-      padding: 15mm 18mm 12mm;
+      padding: 14mm 16mm 10mm;
+      min-height: 0;
+      height: auto;
+      max-width: none;
+      width: 100%;
     }
     .lab-sheet::before { display: none; }
     .lab-image-page {
       page-break-after: always;
       page-break-inside: avoid;
+      break-after: page;
+      break-inside: avoid;
       border: none;
       margin: 0;
-      padding: 15mm 18mm;
-      min-height: auto;
-      height: 100vh;
+      padding: 14mm 16mm 10mm;
+      min-height: 0;
+      height: auto;
+      max-width: none;
+      width: 100%;
+      display: block;
     }
-    .lab-figure img { max-height: 130mm; }
+    /* Sista sidan ska inte orsaka en extra tom sida */
+    .lab-image-page:last-of-type,
+    .lab-sheet:last-of-type {
+      page-break-after: auto;
+      break-after: auto;
+    }
+    .lab-figure img { max-height: 125mm; }
     .back-hint { display: none; }
-    .no-print { display: none; }
+    .no-print { display: none !important; }
   }
 </style>
 </head>
 <body>
+
+<!-- Flytande utskriftsknapp (övre vänstra hörnet, syns ej vid utskrift) -->
+<div class="print-fab no-print">
+  <button onclick="window.print()" title="Skriv ut alla laborationshandledningar">🖨️ Skriv ut</button>
+  <a href="./laborationer.html" title="Tillbaka till laborationslistan">← Tillbaka</a>
+</div>
 
 <!-- COVER PAGE -->
 <div class="cover-page no-print">
@@ -1106,8 +1180,8 @@
 </div>
 
 <div class="no-print" style="text-align:center; padding: 2rem; color: #8a8aaa; font-size: 0.85rem;">
-  <p><strong>Utskrift:</strong> Använd dubbelsidig utskrift (<em>Skriv ut på båda sidor · Vänd på långa kanten</em>) i skrivardialogen. Varje laboration blir då ett uppslag med protokoll på framsidan och bild på baksidan.</p>
-  <p><button onclick="window.print()" style="background:#2e4a8a;color:#fff;border:none;border-radius:6px;padding:0.5rem 1rem;font-weight:600;cursor:pointer;font-size:0.9rem;">🖨️ Skriv ut nu</button> &nbsp; eller öppna skrivardialogen med Ctrl+P / Cmd+P.</p>
+  <p><strong>Utskrift:</strong> Använd dubbelsidig utskrift (<em>Skriv ut på båda sidor · Vänd på långa kanten</em>) i skrivardialogen. Varje laboration blir då ett uppslag – protokoll på framsidan, bild och slutsats på baksidan.</p>
+  <p>Använd knappen uppe i vänstra hörnet eller Ctrl+P / Cmd+P.</p>
 </div>
 
 <script>
