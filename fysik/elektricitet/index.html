@@ -81,21 +81,33 @@
 
     .role-toggle {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.5rem;
       justify-content: flex-end;
-      margin-bottom: 0.75rem;
-      font-size: 0.85rem;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: #eef3fb;
+      border: 1px solid #b9cde6;
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
     .role-toggle button {
-      background: #f4f6fa;
-      border: 1px solid #d8e0ea;
+      background: #fff;
+      border: 1px solid #b9cde6;
       border-radius: 999px;
-      padding: 0.3rem 0.8rem;
-      color: #555;
+      padding: 0.45rem 1.1rem;
+      color: #2e4a8a;
       cursor: pointer;
-      font-size: 0.82rem;
+      font-size: 1rem;
+      font-weight: 600;
       font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover {
+      background: #dce7f5;
     }
 
     .role-toggle button.active {
@@ -106,8 +118,9 @@
 
     .role-toggle span {
       align-self: center;
-      color: #888;
-      font-size: 0.8rem;
+      color: #2e4a8a;
+      font-size: 0.95rem;
+      font-weight: 600;
       margin-right: 0.3rem;
     }
 
@@ -152,28 +165,16 @@
 
     <section class="resource-grid">
       <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
+        <h2>Material</h2>
+        <p>Allt material för området. Utskrifter görs från varje sida via deras egen Skriv ut-knapp.</p>
         <ul>
           <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
           <li><a href="./checklista.html">Checklista</a></li>
           <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
           <li><a href="./ovningsprov.html">Övningsprov</a></li>
-          <li><a href="./larande-spel.html">Lärande spel</a></li>
-        </ul>
-      </article>
-
-      <article class="resource-box">
-        <h2>För lektioner / läraren</h2>
-        <p>Snabbåtkomst till laborationer, lärarmaterial och utskriftsversioner.</p>
-        <ul>
-          <li><a href="./laborationer.html">Laborationer</a></li>
-          <li><a href="./laborationshandledningar.html">Laborationshandledningar (utskrift)</a></li>
           <li><a href="./facit.html">Facit till övningsprovet</a></li>
-          <li><a href="./facit-print.html">Facit (utskrift)</a></li>
-          <li><a href="./ovningsprov-elevutskrift.html">Övningsprov (elevutskrift)</a></li>
-          <li><a href="./instuderingsfragor-elevutskrift.html">Instuderingsfrågor (elevutskrift)</a></li>
-          <li><a href="./instuderingsfragor-lararutskrift.html">Instuderingsfrågor (lärarutskrift med facit)</a></li>
+          <li><a href="./larande-spel.html">Lärande spel</a></li>
+          <li><a href="./laborationer.html">Laborationer</a></li>
         </ul>
       </article>
     </section>
