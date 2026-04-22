@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("side-menu");
 
+  // ====== Gör hamburgerknappen tydligare (ikon + "Meny"-text) ======
+  const hamburger = document.querySelector(".hamburger");
+  if (hamburger) {
+    hamburger.setAttribute("aria-label", "Öppna meny");
+    hamburger.setAttribute("aria-controls", "side-menu");
+    hamburger.innerHTML =
+      '<span class="hamburger-icon" aria-hidden="true">☰</span>' +
+      '<span class="hamburger-label">Meny</span>';
+  }
+
   // ====== Bygg menyinnehåll ======
   menu.innerHTML = `
     <ul class="menu-main">
