@@ -56,7 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <li><a href="/fysik/universum/">Universum</a></li>
           <li><a href="/fysik/ljud/">Ljud</a></li>
           <li><a href="/fysik/ljus/">Ljus</a></li>
-          <li><a href="/fysik/magnetism-induktion/">El, magnetism & induktion</a></li>
+          <li><a href="/fysik/elektricitet/">El & Ohms lag</a></li>
+          <li><a href="/fysik/magnetism-induktion/">Magnetism & induktion</a></li>
           <li><a href="/fysik/arbete-energi-effekt/">Arbete, Energi & Effekt</a></li>
           <li><a href="/fysik/atomfysik/">Atomfysik</a></li>
         </ul>
@@ -64,6 +65,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </ul>
   `;
+
+  // ====== Bygg gemensam site-footer ======
+  if (!document.querySelector("footer.site-footer")) {
+    const footer = document.createElement("footer");
+    footer.className = "site-footer";
+    footer.innerHTML = `
+      <div class="footer-inner">
+        <p>
+          © 2026 Jesper Tordsson ·
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.sv"
+             rel="license" target="_blank" title="Creative Commons – Erkännande-IckeKommersiell-DelaLika 4.0">
+            Licens: CC BY-NC-SA 4.0
+          </a>
+        </p>
+        <p class="footer-sub">
+          Fri att använda och anpassa i undervisning. Ej tillåten för kommersiella syften.
+        </p>
+      </div>
+    `;
+    document.body.appendChild(footer);
+  }
 
   // ====== Endast en undermeny öppen ======
   const toggles = document.querySelectorAll(".menu-toggle");
