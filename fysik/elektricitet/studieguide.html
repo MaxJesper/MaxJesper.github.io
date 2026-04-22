@@ -215,7 +215,7 @@
     </section>
 
     <!-- ========== MILSTOLPE 1 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m1">
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Elektrisk ström – vad rör sig i en ledare</span>
@@ -232,7 +232,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 2 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m2">
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Spänning – drivkraften i kretsen</span>
@@ -248,7 +248,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 3 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m3">
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Ledare och isolatorer</span>
@@ -264,7 +264,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 4 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m4">
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Resistans och enheten ohm</span>
@@ -280,7 +280,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 5 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m5">
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Ohms lag: U = R · I</span>
@@ -306,7 +306,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 6 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m6">
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Serie- och parallellkoppling av lampor</span>
@@ -322,7 +322,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 7 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m7">
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Serie- och parallellkoppling av batterier</span>
@@ -338,7 +338,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 8 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m8">
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Kopplingsscheman</span>
@@ -354,7 +354,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 9 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m9">
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Effekt och energi i elektriska apparater</span>
@@ -370,7 +370,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 10 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m10">
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Elsäkerhet – säkring och jordfelsbrytare</span>
@@ -386,7 +386,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 11 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m11">
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Risker och regler i hemmet</span>
@@ -402,7 +402,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 12 ========== -->
-    <details class="milestone stub">
+    <details class="milestone stub" id="m12">
       <summary>
         <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Elektricitet i samhället</span>
@@ -420,5 +420,27 @@
   </main>
 
   <script src="/js/menu.js"></script>
+  <script>
+    // Öppna och scrolla till den milstolpe som URL-hashen pekar på (t.ex. #m5)
+    (function () {
+      function openFromHash() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", openFromHash);
+      } else {
+        openFromHash();
+      }
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
 </body>
 </html>

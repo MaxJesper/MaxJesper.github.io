@@ -217,7 +217,7 @@
     <!-- Studieguide: alla 15 milstolpar ifyllda i TEFY-stil. -->
 
     <!-- ========== MILSTOLPE 1 ========== -->
-    <details class="milestone" open>
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Permanenta magneter</span>
@@ -267,7 +267,7 @@
 
     <!-- ========== MILSTOLPE 2–8 – STUBBAR ========== -->
     <!-- ========== MILSTOLPE 2 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m2">
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Magnetfält och fältlinjer</span>
@@ -309,7 +309,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 3 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m3">
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Jorden som magnet och kompassen</span>
@@ -347,7 +347,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 4 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m4">
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Magnetfält kring en elektrisk ledare</span>
@@ -389,7 +389,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 5 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m5">
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Spolar</span>
@@ -431,7 +431,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 6 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m6">
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Elektromagneter</span>
@@ -477,7 +477,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 7 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m7">
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Ledare i magnetfält – kraften</span>
@@ -517,7 +517,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 8 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m8">
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Elektriska motorer</span>
@@ -557,7 +557,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 9 – IFYLLD ========== -->
-    <details class="milestone" open>
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Induktion</span>
@@ -610,7 +610,7 @@
 
     <!-- ========== MILSTOLPE 10, 11 – STUBBAR ========== -->
     <!-- ========== MILSTOLPE 10 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m10">
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Generator och växelström</span>
@@ -654,7 +654,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 11 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m11">
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Likström och växelström</span>
@@ -696,7 +696,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 12 – IFYLLD ========== -->
-    <details class="milestone" open>
+    <details class="milestone" id="m12" open>
       <summary>
         <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Transformatorn</span>
@@ -748,7 +748,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 13 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m13">
       <summary>
         <span class="m-num">Milstolpe 13</span>
         <span class="m-title">Elektrisk energi och effekt</span>
@@ -798,7 +798,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 14 – IFYLLD ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m14">
       <summary>
         <span class="m-num">Milstolpe 14</span>
         <span class="m-title">Från kraftverk till elapparat</span>
@@ -842,7 +842,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 15 – IFYLLD (samhällskoppling) ========== -->
-    <details class="milestone">
+    <details class="milestone" id="m15">
       <summary>
         <span class="m-num">Milstolpe 15</span>
         <span class="m-title">Magnetism och induktion i samhället</span>
@@ -895,5 +895,28 @@
   </main>
 
   <script src="/js/menu.js"></script>
+  <script>
+    // Öppna och scrolla till den milstolpe som URL-hashen pekar på (t.ex. #m7)
+    (function () {
+      function openFromHash() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        // Låt webbläsaren scrolla – men försäkra oss om att den är synlig.
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", openFromHash);
+      } else {
+        openFromHash();
+      }
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
 </body>
 </html>
