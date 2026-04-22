@@ -1,0 +1,83 @@
+# robots.txt för MaxJesper.github.io
+#
+# Sajten är ett läromedel för högstadiet, upphovsrättsligt skyddat
+# och licensierat under CC BY-NC-SA 4.0. Sajten välkomnar vanliga
+# sökmotorers indexering men ber AI-tränings-crawlers att avstå.
+
+# Kända AI-tränings- och LLM-crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Perplexity-User
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: DuckAssistBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: MistralAI-User
+Disallow: /
+
+# Vanliga sökmotorer välkomnas
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Standardregel: övriga är välkomna att indexera
+User-agent: *
+Allow: /

@@ -391,3 +391,42 @@ button.subject-btn:focus-visible,
   font-size: 1.3rem;
   color: #222;
 }
+
+/* ================ SITE FOOTER (licens) ================ */
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.25rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fb;
+  color: #555;
+  font-size: 0.82rem;
+}
+
+.site-footer .footer-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.site-footer a {
+  color: #2e4a8a;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.site-footer .footer-sub {
+  font-size: 0.78rem;
+  color: #777;
+}
+
+@media print {
+  .site-footer { display: none !important; }
+}

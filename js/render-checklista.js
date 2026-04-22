@@ -31,6 +31,10 @@ async function renderChecklist({ jsonPath, mountId, expandAllBtnId, collapseAllB
         `;
       }).join("");
 
+      const noteHtml = sec.note
+        ? `<p class="checklist-section-note">${escapeHtml(sec.note)}</p>`
+        : "";
+
       return `
         <section class="checklist-section">
           <button class="checklist-section-header" type="button" aria-expanded="false" data-target="${sid}">
@@ -38,6 +42,7 @@ async function renderChecklist({ jsonPath, mountId, expandAllBtnId, collapseAllB
             <span class="checklist-section-toggle">+</span>
           </button>
           <div class="checklist-section-body" id="${sid}" hidden>
+            ${noteHtml}
             ${itemsHtml}
           </div>
         </section>
