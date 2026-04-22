@@ -7,25 +7,87 @@
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>
+    /* === Områdesfärg (D) === */
+    body.area-magnetism {
+      --area: #2e4a8a;
+      --area-strong: #1e3466;
+      --area-soft: #eef3fb;
+      --area-border: #b9cde6;
+      --area-hover: #dce7f5;
+    }
+
+    body.area-electricity {
+      --area: #c2410c;
+      --area-strong: #9a3412;
+      --area-soft: #fff4ea;
+      --area-border: #f6c79a;
+      --area-hover: #ffe3c9;
+    }
+
     main {
       font-size: 1.2em;
     }
 
+    /* === Områdeslayout: material till vänster, bildpanel till höger === */
+    .area-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
 
-    .page-intro {
-      margin-bottom: 1.5rem;
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+        align-items: start;
+      }
+    }
+
+    .area-main {
+      min-width: 0;
+    }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .area-hero-image figcaption {
+      font-size: 1rem;
+      color: #1f2937;
+      margin-top: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .area-hero-image figcaption a {
+      color: var(--area-strong);
+      font-weight: 600;
     }
 
     .resource-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -35,6 +97,7 @@
       margin-top: 0;
       margin-bottom: 0.75rem;
       font-size: 1.2rem;
+      color: var(--area-strong);
     }
 
     .resource-box p {
@@ -87,8 +150,8 @@
       align-items: center;
       margin: 0 0 1rem auto;
       padding: 0.5rem 0.75rem;
-      background: #eef3fb;
-      border: 1px solid #b9cde6;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
       border-radius: 999px;
       width: fit-content;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -96,10 +159,10 @@
 
     .role-toggle button {
       background: #fff;
-      border: 1px solid #b9cde6;
+      border: 1px solid var(--area-border);
       border-radius: 999px;
       padding: 0.45rem 1.1rem;
-      color: #2e4a8a;
+      color: var(--area-strong);
       cursor: pointer;
       font-size: 1rem;
       font-weight: 600;
@@ -108,21 +171,92 @@
     }
 
     .role-toggle button:hover {
-      background: #dce7f5;
+      background: var(--area-hover);
     }
 
     .role-toggle button.active {
-      background: #2e4a8a;
+      background: var(--area);
       color: #fff;
-      border-color: #2e4a8a;
+      border-color: var(--area);
     }
 
     .role-toggle span {
       align-self: center;
-      color: #2e4a8a;
+      color: var(--area-strong);
       font-size: 0.95rem;
       font-weight: 600;
       margin-right: 0.3rem;
+    }
+
+    /* === Milstolpe-roadmap (E) === */
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li {
+      margin: 0;
+    }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
     }
 
     /* Lärare-ordning: lärarkortet överst */
@@ -136,7 +270,7 @@
     }
   </style>
 </head>
-<body>
+<body class="area-magnetism">
 
   <header class="fysik-header">
     <h1>Magnetism och induktion</h1>
@@ -151,15 +285,6 @@
     <a href="/fysik/index.html" class="subject-btn">Tillbaka till Fysik</a>
     <a href="/fysik/arbete-energi-effekt/" class="subject-btn">Nästa område →</a>
   </p>
-    <section class="page-intro">
-      <p>
-        Här hittar du material om magneter och magnetfält, jordens magnetism,
-        elektromagneter, elmotorer, generatorer, transformatorer, induktion
-        samt hur elnätet hänger ihop. Elektricitetens grunder och Ohms lag
-        behandlas i föregående område,
-        <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.
-      </p>
-    </section>
 
     <div class="role-toggle">
       <span>Jag är:</span>
@@ -167,25 +292,63 @@
       <button type="button" id="role-larare">Lärare</button>
     </div>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>Material för elever</h2>
-        <ul>
-          <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
-          <li><a href="./checklista.html">Checklista</a></li>
-          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
-          <li><a href="./ovningsprov.html">Övningsprov</a></li>
-          <li><a href="./facit.html">Facit till övningsprovet</a></li>
-          <li><a href="./larande-spel.html">Lärande spel</a></li>
-        </ul>
-      </article>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+            </ul>
+          </article>
 
-      <article class="resource-box">
-        <h2>Material för läraren</h2>
-        <ul>
-          <li><a href="./laborationer.html">Laborationer</a></li>
-        </ul>
-      </article>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./laborationer.html">Laborationer</a></li>
+            </ul>
+          </article>
+        </section>
+      </div>
+
+      <figure class="area-hero-image">
+        <img src="/images/fysik/magnetism-induktion/introduktion.png"
+             alt="Översikt av området: stavmagnet, spole, galvanometer, elektromagnet, elmotor, generator och kraftledningar" />
+        <figcaption>
+          Här möter du magneter och magnetfält, jordens magnetism,
+          elektromagneter, elmotorer, generatorer, transformatorer, induktion
+          och hur elnätet hänger ihop. Elektricitetens grunder och Ohms lag
+          behandlas i föregående område,
+          <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Permanenta magneter</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Magnetfält och fältlinjer</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Jorden som magnet och kompassen</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Magnetfält kring en elektrisk ledare</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Spolar</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Elektromagneter</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Ledare i magnetfält – kraften</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Elektriska motorer</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Induktion</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Generator och växelström</a></li>
+        <li><a href="./studieguide.html#m11"><span class="m-num-chip">11</span>Likström och växelström</a></li>
+        <li><a href="./studieguide.html#m12"><span class="m-num-chip">12</span>Transformatorn</a></li>
+        <li><a href="./studieguide.html#m13"><span class="m-num-chip">13</span>Elektrisk energi och effekt</a></li>
+        <li><a href="./studieguide.html#m14"><span class="m-num-chip">14</span>Från kraftverk till elapparat</a></li>
+        <li><a href="./studieguide.html#m15"><span class="m-num-chip">15</span>Magnetism och induktion i samhället</a></li>
+      </ul>
     </section>
 
     <section class="study-tips">
