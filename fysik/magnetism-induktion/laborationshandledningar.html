@@ -459,6 +459,69 @@
     background: #eef2fa;
   }
 
+  /* ===== Skärm-filtrering: när body[data-print-only="lab-N"] visas endast den laborationen ===== */
+  body[data-print-only] .cover-page {
+    display: none;
+  }
+  body[data-print-only] .lab-sheet,
+  body[data-print-only] .lab-image-page {
+    display: none;
+  }
+  body[data-print-only="lab-1"] #lab-1,
+  body[data-print-only="lab-1"] #lab-1-back,
+  body[data-print-only="lab-2"] #lab-2,
+  body[data-print-only="lab-2"] #lab-2-back,
+  body[data-print-only="lab-3"] #lab-3,
+  body[data-print-only="lab-3"] #lab-3-back,
+  body[data-print-only="lab-4"] #lab-4,
+  body[data-print-only="lab-4"] #lab-4-back,
+  body[data-print-only="lab-5"] #lab-5,
+  body[data-print-only="lab-5"] #lab-5-back,
+  body[data-print-only="lab-6"] #lab-6,
+  body[data-print-only="lab-6"] #lab-6-back {
+    display: block;
+  }
+
+  /* Infobanner som bara syns på skärmen när filtrering är aktiv */
+  .lab-filter-info {
+    max-width: 210mm;
+    margin: 0 auto 1.5rem;
+    padding: 0.9rem 1.1rem;
+    background: #eef3fb;
+    border: 1px solid #b9cde6;
+    border-left: 4px solid #2e4a8a;
+    border-radius: 10px;
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    display: none;
+  }
+
+  body[data-print-only] .lab-filter-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+
+  .lab-filter-info strong {
+    color: #2e4a8a;
+  }
+
+  .lab-filter-info a {
+    color: #2e4a8a;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #2e4a8a;
+    border-radius: 6px;
+    padding: 0.35rem 0.8rem;
+    background: #fff;
+  }
+
+  .lab-filter-info a:hover {
+    background: #dce7f5;
+  }
+
   @page {
     size: A4;
     margin: 0;
@@ -539,6 +602,15 @@
 <div class="print-fab no-print">
   <button id="print-btn" onclick="window.print()" title="Skriv ut">🖨️ Skriv ut</button>
   <a href="./laborationer.html" title="Tillbaka till laborationslistan">← Tillbaka</a>
+</div>
+
+<!-- Infobanner som syns på skärmen när man filtrerar till en enskild laboration -->
+<div class="lab-filter-info no-print" id="lab-filter-info" role="status">
+  <span>
+    Du ser just nu <strong id="lab-filter-label">en laboration</strong>.
+    Klicka <strong>Skriv ut</strong> i vänstra hörnet för att skriva ut endast denna.
+  </span>
+  <a href="./laborationshandledningar.html" id="lab-filter-showall">Visa alla sex →</a>
 </div>
 
 <!-- COVER PAGE -->
@@ -1213,15 +1285,29 @@
   // Hash-filtrering av utskrift: om URL innehåller #lab-N skrivs bara den laborationen ut.
   // Utan hash (eller vid ?print=1 från listsidan) skrivs alla sex laborationer ut.
   (function () {
+    var LAB_TITLES = {
+      '1': 'Laboration 1 – Spole och galvanometer',
+      '2': 'Laboration 2 – Induktion med amperemeter',
+      '3': 'Laboration 3 – Spolar och lysdiod',
+      '4': 'Laboration 4 – Elektromagnet',
+      '5': 'Laboration 5 – Elmotor',
+      '6': 'Laboration 6 – Transformator'
+    };
     function applyPrintFilter() {
       var match = window.location.hash.match(/^#lab-([1-6])$/);
       var btn = document.getElementById('print-btn');
+      var label = document.getElementById('lab-filter-label');
       if (match) {
-        document.body.setAttribute('data-print-only', 'lab-' + match[1]);
+        var n = match[1];
+        document.body.setAttribute('data-print-only', 'lab-' + n);
         if (btn) {
-          btn.textContent = '🖨️ Skriv ut laboration ' + match[1];
-          btn.title = 'Skriv ut endast laboration ' + match[1] + ' (2 sidor)';
+          btn.textContent = '🖨️ Skriv ut laboration ' + n;
+          btn.title = 'Skriv ut endast laboration ' + n + ' (2 sidor)';
         }
+        if (label) {
+          label.textContent = LAB_TITLES[n] || ('laboration ' + n);
+        }
+        window.scrollTo(0, 0);
       } else {
         document.body.removeAttribute('data-print-only');
         if (btn) {
