@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laborationshandledningar – El, magnetism och induktion</title>
+<title>Laborationshandledningar – Magnetism och induktion</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -505,6 +505,31 @@
     .lab-figure img { max-height: 125mm; }
     .back-hint { display: none; }
     .no-print { display: none !important; }
+
+    /* Hash-filtrering: vid body[data-print-only="lab-N"] skrivs bara den labben ut */
+    body[data-print-only] .lab-sheet,
+    body[data-print-only] .lab-image-page {
+      display: none !important;
+    }
+    body[data-print-only="lab-1"] #lab-1,
+    body[data-print-only="lab-1"] #lab-1-back,
+    body[data-print-only="lab-2"] #lab-2,
+    body[data-print-only="lab-2"] #lab-2-back,
+    body[data-print-only="lab-3"] #lab-3,
+    body[data-print-only="lab-3"] #lab-3-back,
+    body[data-print-only="lab-4"] #lab-4,
+    body[data-print-only="lab-4"] #lab-4-back,
+    body[data-print-only="lab-5"] #lab-5,
+    body[data-print-only="lab-5"] #lab-5-back,
+    body[data-print-only="lab-6"] #lab-6,
+    body[data-print-only="lab-6"] #lab-6-back {
+      display: block !important;
+    }
+    /* När filtrering är aktiv – ingen extra sidbrytning efter baksidan */
+    body[data-print-only] .lab-image-page {
+      page-break-after: auto !important;
+      break-after: auto !important;
+    }
   }
 </style>
 </head>
@@ -512,7 +537,7 @@
 
 <!-- Flytande utskriftsknapp (övre vänstra hörnet, syns ej vid utskrift) -->
 <div class="print-fab no-print">
-  <button onclick="window.print()" title="Skriv ut alla laborationshandledningar">🖨️ Skriv ut</button>
+  <button id="print-btn" onclick="window.print()" title="Skriv ut">🖨️ Skriv ut</button>
   <a href="./laborationer.html" title="Tillbaka till laborationslistan">← Tillbaka</a>
 </div>
 
@@ -527,7 +552,7 @@
     <line x1="26" y1="38" x2="32" y2="38" stroke="#2e4a8a" stroke-width="2"/>
     <line x1="48" y1="38" x2="54" y2="38" stroke="#2e4a8a" stroke-width="2"/>
   </svg>
-  <div class="cover-title">El, magnetism<br>och induktion</div>
+  <div class="cover-title">Magnetism<br>och induktion</div>
   <div class="cover-subtitle">Laborationshandledningar · Fysik</div>
   <ul class="cover-toc">
     <li><span class="num">1</span> Induktion – galvanometer</li>
@@ -1185,12 +1210,39 @@
 </div>
 
 <script>
-  // Om sidan öppnas med ?print=1 – utlös skrivardialogen automatiskt när bilderna laddats
+  // Hash-filtrering av utskrift: om URL innehåller #lab-N skrivs bara den laborationen ut.
+  // Utan hash (eller vid ?print=1 från listsidan) skrivs alla sex laborationer ut.
   (function () {
+    function applyPrintFilter() {
+      var match = window.location.hash.match(/^#lab-([1-6])$/);
+      var btn = document.getElementById('print-btn');
+      if (match) {
+        document.body.setAttribute('data-print-only', 'lab-' + match[1]);
+        if (btn) {
+          btn.textContent = '🖨️ Skriv ut laboration ' + match[1];
+          btn.title = 'Skriv ut endast laboration ' + match[1] + ' (2 sidor)';
+        }
+      } else {
+        document.body.removeAttribute('data-print-only');
+        if (btn) {
+          btn.textContent = '🖨️ Skriv ut alla';
+          btn.title = 'Skriv ut alla sex laborationshandledningar';
+        }
+      }
+    }
+    // Första körningen – vid DOMContentLoaded så body är tillgänglig.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyPrintFilter);
+    } else {
+      applyPrintFilter();
+    }
+    // Uppdatera om eleven klickar vidare till en annan laboration utan att ladda om sidan.
+    window.addEventListener('hashchange', applyPrintFilter);
+
+    // Auto-print vid ?print=1 – utlöses när bilderna är färdigladdade.
     var params = new URLSearchParams(window.location.search);
     if (params.get('print') === '1') {
       window.addEventListener('load', function () {
-        // Vänta tills alla bilder är laddade så baksidorna ser korrekta ut i utskriften
         var images = Array.prototype.slice.call(document.images);
         var pending = images.filter(function (img) { return !img.complete; });
         if (pending.length === 0) {

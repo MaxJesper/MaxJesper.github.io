@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Magnetism och induktion</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p {
+      margin: 0.35rem 0;
+    }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #2e4a8a;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before {
+      transform: rotate(90deg);
+    }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term {
+      color: #1a1a2e;
+    }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: center;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #eef4fa;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen::before {
+      content: "★ Fördjupning ";
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .milestone.stub .m-body {
+      color: #777;
+      font-style: italic;
+    }
+
+    .milestone.stub .m-body p {
+      margin: 0.35rem 0;
+    }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Studieguide</h1>
+    <p>Magnetism och induktion</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar, spel eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Stjärnmärkt material (★) är fördjupning för den som vill komma längre.</p>
+    </section>
+
+    <!-- Studieguide: alla 15 milstolpar ifyllda i TEFY-stil. -->
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" open>
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Permanenta magneter</span>
+      </summary>
+      <div class="m-body">
+        <p>Vissa järnmineral har varit kända som magnetiska i tusentals år. Ett föremål som av sig självt drar till sig järn kallas en <strong class="term">permanent magnet</strong>. En magnet har alltid två ändar som beter sig olika: en <strong class="term">nordpol</strong> och en <strong class="term">sydpol</strong>.</p>
+
+        <p>Om man för två magneter mot varandra märker man att <strong class="term">lika poler stöter bort varandra</strong> och <strong class="term">olika poler dras till varandra</strong>. Nord mot nord repellerar, nord mot syd attraherar. Detta är grundregeln för all magnetism.</p>
+
+        <p>Inte alla metaller är magnetiska. Magneter drar till sig <strong class="term">järn, nickel och kobolt</strong>. Andra vanliga metaller som koppar, aluminium och silver påverkas inte. Ett stålföremål kan själv bli magnetiskt om man stryker det flera gånger åt samma håll med en annan magnet – då blir det <strong class="term">magnetiserat</strong>.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Schematisk bild av stavmagnet med nordpol och sydpol" />
+          <figcaption>En stavmagnet har en nordpol och en sydpol. Järnföremål dras mot polerna.</figcaption>
+        </figure>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En permanent magnet har alltid två poler, nord och syd. Lika poler stöter bort varandra, olika poler drar sig till varandra. Magneter påverkar bara järn, nickel och kobolt.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om magneter i checklistan
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor
+          </a>
+        </div>
+
+        <div class="deepen">
+          <p><strong>Varför är just järn, nickel och kobolt magnetiska?</strong></p>
+          <p>Svaret finns hos elektronerna själva. Varje elektron bär en liten inbyggd magnetism som kallas <em>spinn</em> – elektronen beter sig som en mikroskopisk stavmagnet. I de flesta ämnen pekar elektronernas spinn åt olika håll och tar ut varandras magnetism, så att ämnet utåt sett blir omagnetiskt.</p>
+          <p>I järn, nickel och kobolt är det annorlunda. Atomerna har en förmåga att tvinga sina elektronspinn att peka åt samma håll inom små områden som kallas <em>domäner</em>. I ett ostört stålstycke pekar olika domäner åt olika håll, så att ämnet sammantaget verkar omagnetiskt – men materialet är fortfarande <em>magnetiserbart</em>. När man stryker det upprepade gånger med en yttre magnet roteras domänerna tills flertalet pekar åt samma håll, och deras sammanlagda magnetfält blir det vi mäter som föremålets magnetism.</p>
+          <p>Om man värmer upp ett magnetiskt föremål över en viss gräns – <em>Curie-temperaturen</em>, cirka 770 °C för järn – skakas ordningen isär och domänerna tappar sin riktning. Föremålet blir omagnetiskt igen, och förblir så även när det svalnar, om man inte magnetiserar det på nytt.</p>
+          <p><strong>Hur tillverkar man då en stavmagnet från början?</strong> För enklare stålmagneter räcker det att stryka upprepade gånger med en annan magnet, så att domänerna vrids lite i taget tills flertalet pekar åt samma håll. Industriellt används i stället en kort men mycket stark magnetisk puls från en elektromagnet, oftast driven av en kondensator som urladdas på bråkdelen av en sekund. Pulsen är så kraftig att den roterar samtliga domäner på en gång. Denna typ av magnetisering sker vid rumstemperatur.</p>
+          <p>En annan metod bygger på Curie-temperaturen. Om man kyler ett ferromagnetiskt material genom sin Curie-punkt medan det befinner sig i ett yttre magnetfält, låser domänerna in sig i fältets riktning just när materialet går från omagnetiskt till magnetiskt. Resultatet blir en mycket stabil magnetisering. Metoden används sällan industriellt, men den förekommer i naturen i stor skala: när heta lavaströmmar svalnar genom sin Curie-punkt fångas det dåvarande jordmagnetfältet i bergarten och bevaras där. Genom att mäta den inlåsta magnetiseringen i stenar från olika tidsåldrar har geologer kunnat visa att kontinenterna rör sig, och att jordens magnetiska poler då och då byter plats.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2–8 – STUBBAR ========== -->
+    <!-- ========== MILSTOLPE 2 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Magnetfält och fältlinjer</span>
+      </summary>
+      <div class="m-body">
+        <p>Runt varje magnet finns ett område där magneten påverkar järn och andra magneter. Området kallas magnetens <strong class="term">magnetfält</strong>. Fältet går att mäta, men det är osynligt för ögat.</p>
+
+        <p>För att göra fältet synligt kan man strö järnfilspån kring en stavmagnet. Spånen ordnar sig i böjda linjer som går från nordpolen till sydpolen. Linjerna kallas <strong class="term">magnetiska fältlinjer</strong>. Där linjerna ligger tätt är fältet starkt, och där de ligger glest är fältet svagt. Fältet är starkast alldeles intill polerna.</p>
+
+        <p>Fältlinjer har en bestämd riktning. Man har bestämt att de utanför magneten går <strong class="term">från nord till syd</strong>, och inuti magneten från syd tillbaka till nord. Fältlinjer möts aldrig och korsar aldrig varandra. De bildar alltid slutna slingor.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Fältlinjer kring en stavmagnet, från nordpolen i en båge till sydpolen" />
+          <figcaption>Fältlinjerna löper från nordpolen utåt och böjer sig tillbaka mot sydpolen. Tätheten visar fältstyrkan.</figcaption>
+        </figure>
+
+        <p>Två magneter bredvid varandra ger ett sammansatt fält. Vid två <em>olika</em> poler som står mot varandra går linjerna i en rak bunt från nord till syd – fältet däremellan är nästan homogent. Vid två <em>lika</em> poler trycks linjerna isär och böjer av åt sidorna, vilket visar att polerna stöter bort varandra.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Ett magnetfält är området runt en magnet där magnetiska krafter verkar. Fältet beskrivs med fältlinjer som går från nord till syd utanför magneten, är tätare där fältet är starkare och korsar aldrig varandra.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om fältlinjer i checklistan
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om magnetfält
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Jorden som magnet och kompassen</span>
+      </summary>
+      <div class="m-body">
+        <p>Jorden har ett eget magnetfält som sträcker sig långt ut i rymden. I praktiken beter sig jorden som en mycket stor stavmagnet där ena polen ligger nära Nordpolen och den andra nära Sydpolen. Detta fält är det som gör kompassen möjlig.</p>
+
+        <p>En <strong class="term">kompass</strong> är en liten stavmagnet som kan snurra fritt på en spets. När magneten hänger fritt vrids den av jordens magnetfält så att dess ena ände pekar ungefär mot norr. Denna ände kallas kompassens <strong class="term">nordpol</strong>.</p>
+
+        <p>Eftersom olika poler drar till varandra måste det jorden har uppe i norr fysikaliskt sett vara en <em>sydpol</em>. Den geografiska Nordpolen är alltså, i magnetiskt avseende, en magnetisk sydpol. Historiskt har man ändå valt att kalla den för "magnetisk nordpol", vilket kan kännas förvirrande. Det viktiga att komma ihåg är att <strong class="term">kompassnålens nordpol pekar mot norr</strong>.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Jorden med magnetfältslinjer som bildar slingor mellan magnetiska poler" />
+          <figcaption>Jordens magnetfält liknar en stor stavmagnets. Kompassnålen ställer in sig efter fältet.</figcaption>
+        </figure>
+
+        <p>Jordens magnetfält är inte helt stabilt. Polerna förflyttar sig långsamt, och mätningar i lavabergarter visar att fältet dessutom har vänt riktning många gånger genom jordens historia. Fältet skyddar oss dessutom mot laddade partiklar från solen – när dessa träffar fältet böjs de av mot polerna, vilket vi ibland ser som <em>norrsken</em>.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Jorden har ett magnetfält som liknar en stor stavmagnets. En kompass är en liten fritt upphängd stavmagnet vars nordpol pekar ungefär mot geografiska norr. Fältet skyddar jorden mot solvind och är synligt som norrsken.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om kompassen i checklistan
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om jordens magnetfält
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Magnetfält kring en elektrisk ledare</span>
+      </summary>
+      <div class="m-body">
+        <p>Hittills har magnetfält kommit från permanenta magneter. Men magnetism uppstår också av en helt annan anledning: <strong class="term">en elektrisk ström ger alltid upphov till ett magnetfält</strong>. Upptäckten gjordes av dansken Hans Christian Ørsted år 1820.</p>
+
+        <p>Om man håller en kompass nära en rak koppartråd och sedan kopplar tråden till ett batteri, vrider kompassnålen sig så snart strömmen går. När strömmen stängs av återtar nålen sitt gamla läge. Kompassen reagerar alltså inte på tråden i sig utan på <em>strömmen</em>.</p>
+
+        <p>Fältlinjerna runt en rak strömförande ledare bildar <strong class="term">slutna cirklar</strong> runt tråden. Vänder man strömriktningen vänder sig kompassnålen också – fältets riktning är beroende av strömriktningen. En enkel regel: griper man tråden med höger hand så att tummen pekar i strömmens riktning, så pekar de krökta fingrarna i fältlinjernas riktning. Detta kallas <strong class="term">högerhandsregeln</strong>.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Kompass nära strömförande tråd vrider sig när strömmen går" />
+          <figcaption>En ström genom en rak tråd bildar cirkulära magnetfältslinjer runt tråden. Fältets riktning följer högerhandsregeln.</figcaption>
+        </figure>
+
+        <p>Fältet är starkast nära tråden och avtar snabbt med avståndet. En <em>enda</em> tråd ger därför ett ganska svagt fält. I nästa milstolpe ska vi se hur man förstärker fältet genom att linda tråden till en <em>spole</em>.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En elektrisk ström ger alltid upphov till ett magnetfält runt ledaren. Fältlinjerna bildar cirklar kring tråden, och deras riktning ges av högerhandsregeln. Fältet är starkast nära tråden och avtar med avståndet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-2">
+            <span class="n-label">Laborera</span>
+            Lab 2 · Ström och kompass
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om Ørsted i checklistan
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om ström och magnetfält
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Spolar</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">spole</strong> är en tråd som lindats i många varv runt samma axel. Varje enskilt varv skapar ett svagt cirkulärt magnetfält när ström flyter, precis som den raka ledaren i förra milstolpen. Poängen med spolen är att <strong class="term">alla varvens fält lägger sig i samma riktning</strong> inuti spolen och summeras.</p>
+
+        <p>Resultatet är att fältet inuti en strömförande spole blir betydligt starkare än kring en enskild tråd, och att fältet utanför spolen liknar det kring en stavmagnet. Spolen får en <strong class="term">nordände</strong> och en <strong class="term">sydände</strong>, precis som en riktig stavmagnet. Vilken ände som blir nord avgörs av strömriktningen: griper man spolen med höger hand så att fingrarna pekar i strömmens riktning, pekar tummen mot spolens nordände.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/spolar.png" alt="Spole med strömflöde och magnetfält i samma riktning genom alla varv" />
+          <figcaption>Alla varvens magnetfält pekar åt samma håll inuti spolen. Spolen får en nord- och en sydände.</figcaption>
+        </figure>
+
+        <p>Fältstyrkan hos en spole beror på tre saker: <strong class="term">antalet varv</strong>, <strong class="term">strömmen</strong> genom tråden, och <strong class="term">hur kompakt</strong> spolen är lindad. Fler varv ger starkare fält vid samma ström. Dubbel ström ger dubbelt fält. En tätt lindad kort spole ger starkare fält än en gles och lång.</p>
+
+        <p>Utan järnkärna är fältet fortfarande relativt svagt. I nästa milstolpe ska vi se att ett järnstycke inuti spolen förstärker fältet kraftigt – då har vi byggt en elektromagnet.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En spole är en tråd lindad i många varv. Strömmen genom alla varv skapar ett gemensamt magnetfält som summeras inuti spolen. Spolen får en nord- och en sydände, och fältstyrkan växer med antalet varv och med strömmen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-3">
+            <span class="n-label">Laborera</span>
+            Lab 3 · Spolar och lysdiod
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om spolar i checklistan
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om spolar
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Elektromagneter</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">elektromagnet</strong> är en spole med en kärna av mjukjärn. Så länge ström går genom spolen fungerar den som en vanlig magnet, med en nord- och en sydände. När strömmen stängs av försvinner magnetismen nästan helt. Det är själva poängen: en elektromagnet är en magnet som <strong class="term">kan slås på och av</strong>.</p>
+
+        <p>Järnkärnan spelar en avgörande roll. Spolens relativt svaga magnetfält vrider järnets egna domäner så att de pekar åt samma håll (jämför milstolpe 1). Järnets samlade magnetism läggs ovanpå spolens eget fält, och fältstyrkan kan därmed bli mångdubbelt större än utan kärna. När strömmen bryts tappar domänerna snabbt sin ordning igen, eftersom mjukjärn inte håller kvar magnetismen.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/elektromagnet-batteri.png" alt="Elektromagnet kopplad till batteri som drar till sig järnspik" />
+          <figcaption>En spole med järnkärna kopplas till ett batteri. Så länge strömmen går fungerar den som en magnet.</figcaption>
+        </figure>
+
+        <p>Elektromagneter används överallt där man behöver en styrbar magnet: i skrotupphämtningsmagneter på bilskrotar, i relän och brytare, i högtalare, i magnetlås och i MR-kamerorna på sjukhus. De används också inuti elmotorer och generatorer – som vi strax ska se.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En elektromagnet är en spole med järnkärna. Den är magnetisk endast när ström går. Järnkärnan förstärker spolens fält kraftigt genom att ämnets egna magnetiska domäner följer fältet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-4">
+            <span class="n-label">Laborera</span>
+            Lab 4 · Elektromagnet
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om elektromagneter
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om elektromagneter
+          </a>
+        </div>
+
+        <div class="deepen">
+          <p><strong>Varför just mjukjärn och inte härdat stål?</strong></p>
+          <p>I en elektromagnet vill man att järnkärnan ska bli starkt magnetisk när strömmen går, och <em>helt</em> omagnetisk när strömmen bryts. Mjukjärn är ett järn som är renat från kol och inte härdat. Det har lätt att följa ett yttre magnetfält – domänerna vrids lätt med fältet – men det håller också lätt med när fältet försvinner, så att domänerna slumpas ut igen. Härdat stål, som används i permanenta magneter, vrider däremot sina domäner trögt: de sitter kvar och ger en kvardröjande magnetisering som förhindrar snabb på- och avkoppling.</p>
+          <p>Vid riktigt höga frekvenser, t.ex. inuti en transformator, räcker inte ens mjukjärn. Då använder man i stället <em>laminerat</em> järn, som är en stapel av tunna järnplåtar isolerade från varandra. Skälet är att ett massivt järnblock skulle drabbas av <em>virvelströmmar</em> – induktionsströmmar som rör sig i cirklar inuti järnet och värmer upp det. Det kommer vi tillbaka till i milstolpe 12.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 7 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Ledare i magnetfält – kraften</span>
+      </summary>
+      <div class="m-body">
+        <p>En strömförande ledare skapar själv ett magnetfält (milstolpe 4). Om ledaren samtidigt befinner sig <em>i</em> ett yttre magnetfält, samverkar de två fälten. Resultatet blir en <strong class="term">kraft på ledaren</strong> som försöker skuffa den åt sidan. Detta är grundprincipen bakom varje elmotor.</p>
+
+        <p>Kraften blir störst när ledaren ligger <strong class="term">tvärs</strong> mot fältlinjerna, och försvinner när ledaren ligger <em>längs</em> fältet. Riktningen på kraften är vinkelrät både mot strömmen och mot fältet – man kan hitta den med en <strong class="term">vänsterhandsregel</strong>: pek-, lång- och tumme i tre räta vinklar, där pekfingret pekar i fältets riktning (N→S), långfingret i strömriktningen, och tummen då visar kraften.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Strömförande tråd mellan magnetpolerna, kraften verkar uppåt" />
+          <figcaption>En ledare som bär ström mellan en nord- och en sydpol påverkas av en kraft vinkelrätt mot både ström och fält.</figcaption>
+        </figure>
+
+        <p>Kraften växer med <strong class="term">strömmens storlek</strong>, med <strong class="term">magnetfältets styrka</strong> och med <strong class="term">ledarens längd</strong> inne i fältet. Vänder man strömmen vänder sig kraften. Vänder man magneterna så att nord och syd byter plats, vänder sig kraften också. Vänder man båda samtidigt pekar kraften åt samma håll som förut.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En strömförande ledare i ett magnetfält påverkas av en kraft. Kraften är vinkelrät mot både ström och fält och kan hittas med vänsterhandsregeln. Den växer med ström, fältstyrka och ledarens längd.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-5">
+            <span class="n-label">Laborera</span>
+            Lab 5 · Kraft på ledare
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om kraften
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om ledare och kraft
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 8 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Elektriska motorer</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">elmotor</strong> omvandlar elektrisk energi till rörelseenergi. Principen bygger direkt på förra milstolpen: en strömförande ledare i ett magnetfält påverkas av en kraft. Stoppar man in en rektangulär slinga av ledartråd mellan två magnetpoler och skickar ström genom slingan, verkar en kraft uppåt på den ena sidan av slingan och en kraft nedåt på den andra. Slingan vrider sig därmed ett halvt varv.</p>
+
+        <p>För att rotationen ska fortsätta måste strömriktningen vändas varje halvt varv, så att kraften alltid drar slingan åt samma håll. Detta sköts av en <strong class="term">kommutator</strong> – en uppdelad metallring på axeln där två kolborstar släpar mot. När slingan vridit ett halvt varv byter kontakten sida, och strömmen i slingan vänder riktning. Slingan får en ny knuff i samma rotationsriktning.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/Elmotor.png" alt="Enkel elmotor med slinga mellan polerna, kommutator och kolborstar" />
+          <figcaption>En slinga mellan magnetpolerna vrider sig av kraften. Kommutatorn vänder strömmen var halvvarv så rotationen inte stannar.</figcaption>
+        </figure>
+
+        <p>I praktiska motorer ersätter man den enkla slingan med en lindad spole runt en järnkärna (en <strong class="term">rotor</strong>) och de permanenta magneterna med kraftfulla elektromagneter (en <strong class="term">stator</strong>). Det ger större vridmoment och gör motorn starkare. I leksaksmotorer och bilens startmotor finns permanenta magneter kvar. Stora industrimotorer använder nästan uteslutande elektromagneter.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En elmotor utnyttjar kraften på en strömförande ledare i ett magnetfält. En kommutator vänder strömmen var halvvarv så att rotorn fortsätter snurra åt samma håll. Elmotorn omvandlar elektrisk energi till rörelseenergi.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om elmotorn
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om elmotorn
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 9 – IFYLLD ========== -->
+    <details class="milestone" open>
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Induktion</span>
+      </summary>
+      <div class="m-body">
+        <p>Hittills har vi sett att en <strong class="term">elektrisk ström</strong> kan ge upphov till ett magnetfält. Det omvända är också sant: ett magnetfält kan ge upphov till en elektrisk ström. Detta kallas <strong class="term">induktion</strong>.</p>
+
+        <p>För att induktion ska uppstå räcker det inte med att magnetfältet finns där – det måste <em>ändras</em>. Om man för en stavmagnet in i en spole som är kopplad till en känslig strömmätare (en galvanometer) slår mätaren ut åt ena hållet. När magneten står stilla visar mätaren noll, även om magneten fortfarande är inne i spolen. När magneten dras ut slår mätaren åt andra hållet.</p>
+
+        <p>Det som spolen reagerar på är alltså <em>förändringen</em> av magnetfältet, inte fältet i sig. Spänningen som uppstår i spolen kallas <strong class="term">induktionsspänning</strong>, och strömmen som driver kallas <strong class="term">inducerad ström</strong>.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/induktion-galvanometer.png" alt="Spole kopplad till galvanometer med stavmagnet" />
+          <figcaption>När stavmagneten förs in i eller ut ur spolen inducerar magnetfältets förändring en spänning i spolen.</figcaption>
+        </figure>
+
+        <p>Samma sak händer om man håller magneten stilla och i stället rör spolen, eller om man låter en ledare <strong class="term">skära magnetfältslinjer</strong>. Det viktiga är alltid att det är <em>relativ rörelse</em> mellan ledare och fält, eller någon annan förändring av fältets styrka.</p>
+
+        <p>Varför händer det här? I koppartråden finns ett <strong class="term">hav av fria elektroner</strong>, som alla är negativt laddade. När magnetfältet genom tråden förändras utövar fältet en kraft på varje elektrons <em>elektriska laddning</em>. Kraften riktas längs tråden och driver elektronerna i en bestämd riktning. Det är denna riktade rörelse vi mäter som en <strong class="term">inducerad ström</strong>, och spänningen som driver den kallas induktionsspänning. När magnetfältet slutar ändras försvinner kraften omedelbart, och strömmen likaså.</p>
+
+        <p>Ju snabbare magnetfältet ändras, desto större blir kraften på elektronerna – och desto större blir induktionsspänningen. Det är därför det hjälper att föra magneten snabbt, eller att ha många varv på spolen: då skär fler elektroner fler fältlinjer per sekund.</p>
+
+        <div class="fact-box">
+          <strong>Definition</strong>
+          Induktionsspänning uppkommer när magnetfältet genom en spole ändras, eller när en ledare rör sig så att den skär fältlinjerna i ett magnetfält. Fältets förändring utövar en kraft på de fria elektronerna i ledaren och driver dem som en ström.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-1">
+            <span class="n-label">Laborera</span>
+            Lab 1 · Spole och galvanometer
+          </a>
+          <a href="./laborationer.html#lab-3">
+            <span class="n-label">Laborera</span>
+            Lab 3 · Spolar och lysdiod
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om induktion
+          </a>
+        </div>
+
+        <div class="deepen">
+          <p><strong>Är det inte elektronernas egen magnetism som driver strömmen?</strong></p>
+          <p>Det är en naturlig tanke, särskilt efter att ha läst om ferromagnetism vid milstolpe 1. Varje elektron <em>har</em> en inbyggd magnetism (spinn). Men den effekten är så liten att den inte spelar någon praktisk roll för induktion i en koppartråd – koppar är inte ens magnetiskt. Det som ger induktion är i stället elektronens <em>elektriska laddning</em>. Ett magnetfält som förändras i tid skapar nämligen ett <em>elektriskt</em> fält runt sig, och det är det elektriska fältet som skuffar de laddade elektronerna längs tråden.</p>
+          <p>Sambandet mellan ett ändrat magnetfält och det elektriska fält det skapar beskrivs matematiskt av <em>Faradays induktionslag</em>, en av de fyra ekvationer som tillsammans beskriver all klassisk elektromagnetism. Dessa ekvationer – <em>Maxwells ekvationer</em> – formulerades på 1860-talet och visade sig dessutom förutsäga att ljus självt är en elektromagnetisk våg.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 10, 11 – STUBBAR ========== -->
+    <!-- ========== MILSTOLPE 10 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Generator och växelström</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">generator</strong> är en elmotor som körs baklänges. I stället för att mata in elektrisk energi och få ut rotation, matar man in rotation och får ut elektrisk energi. Generatorn är den vanligaste källan till el i samhället – i vattenkraftverk, vindkraftverk, kärnkraftverk och i en bils växelströmsgenerator.</p>
+
+        <p>Principen är induktion (milstolpe 9). Inuti generatorn snurrar en spole mellan magnetpolerna – eller, lika gärna, magneten snurrar inuti spolen. Spolen ser då ett magnetfält som ständigt ändras, och den ändringen inducerar en spänning. Så länge rotationen fortgår inducerar generatorn ström.</p>
+
+        <p>När spolen vridit ett halvt varv pekar dess normal åt motsatt håll i magnetfältet. Det innebär att den inducerade spänningen också vänder riktning varje halvt varv. Spänningen växlar alltså riktning regelbundet. Den strömmen som blir följden kallas <strong class="term">växelström</strong> (på engelska AC, alternating current).</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/induktion-ampermeter.png" alt="Generator där en spole snurrar mellan magnetpoler och matar en amperemeter" />
+          <figcaption>När spolen roterar i magnetfältet växlar den inducerade spänningen riktning varje halvt varv.</figcaption>
+        </figure>
+
+        <p>I det svenska elnätet växlar spänningen riktning <strong class="term">50 gånger i sekunden</strong>. Frekvensen 50 Hz är bestämd av hur fort generatorerna i våra kraftverk snurrar. I USA och Japan används 60 Hz i stället. Att frekvensen är låst till rotationshastigheten gör att alla generatorer i ett nät måste arbeta <em>i takt</em> med varandra, annars går det inte att koppla ihop dem.</p>
+
+        <p>Om man behöver <strong class="term">likström</strong> (som i ett batteri) ur en generator kan man bygga in en kommutator som vänder utgången varje halvt varv – då pekar strömmen alltid åt samma håll utifrån sett. Men i praktiken levereras el nästan alltid som växelström, eftersom det är nödvändigt för att transformatorer ska fungera (milstolpe 12).</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En generator omvandlar rörelseenergi till elektrisk energi genom induktion. När spolen roterar i magnetfältet växlar den inducerade spänningen riktning varje halvt varv. Detta är växelström. I svenska nätet är frekvensen 50 Hz.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om generatorn
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om generator och växelström
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 11 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Likström och växelström</span>
+      </summary>
+      <div class="m-body">
+        <p>Elektrisk ström finns i två grundformer. I en ström av <strong class="term">likström</strong> (DC, direct current) flyter elektronerna ständigt åt samma håll. Ett batteri ger likström. I en ström av <strong class="term">växelström</strong> (AC, alternating current) byter elektronerna riktning regelbundet. Ur ett vägguttag kommer växelström.</p>
+
+        <p>Ritar man upp spänningen över tid blir likström en rak, oförändrad linje över nolla, medan växelström blir en sinusformad kurva som oscillerar mellan ett positivt och ett negativt toppvärde. I svenska nätet är toppvärdet cirka 325 V, medan det <em>effektiva värdet</em> – det som används i beräkningar – är 230 V. Nollgenomgångarna sker 100 gånger i sekunden (två per period vid 50 Hz).</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Diagram: rak linje för likström, sinuskurva för växelström" />
+          <figcaption>Likström är konstant. Växelström oscillerar kring noll enligt en sinusfunktion.</figcaption>
+        </figure>
+
+        <p>Valet mellan lik- och växelström är inte godtyckligt. Växelström går att transformera – man kan höja eller sänka spänningen med en transformator (milstolpe 12). Det är avgörande för eltransport över långa avstånd. Likström går inte att transformera på det enkla sättet, men har andra fördelar: batterier levererar bara likström, elektronik fungerar på likström, och de allra längsta kraftledningarna (t.ex. kablar under havet) byggs i dag som <em>högspänd likström</em> eftersom förlusterna över mycket långa avstånd blir mindre där.</p>
+
+        <p>I en vanlig bostad kommer växelström in via ett tredelat system: <strong class="term">fas, nolla och jord</strong>. Nollan ligger nära jordens potential, fasen pendlar mellan +325 V och −325 V, och jorden är kopplad till en metallpinne i marken som skyddsåtgärd om något går sönder. Skillnaden mellan fas och nolla ger de 230 V som apparaterna använder.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Likström flyter alltid åt samma håll (batterier, elektronik). Växelström byter riktning regelbundet (vägguttag, 50 Hz i Sverige). Växelström kan transformeras upp och ned, vilket är nödvändigt för eltransport över långa avstånd.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om lik- och växelström
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om lik- och växelström
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 12 – IFYLLD ========== -->
+    <details class="milestone" open>
+      <summary>
+        <span class="m-num">Milstolpe 12</span>
+        <span class="m-title">Transformatorn</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">transformator</strong> används för att ändra en växelspänning till en högre eller lägre växelspänning. Den bygger direkt vidare på induktion: ändrar man magnetfältet genom en spole uppstår en inducerad spänning i spolen.</p>
+
+        <p>En transformator består av två spolar på en gemensam järnkärna. Den ena spolen, <strong class="term">primärspolen</strong>, kopplas till en växelspänningskälla. Växelströmmen skapar ett magnetfält som hela tiden ändrar riktning. Järnkärnan leder fältet vidare in i den andra spolen, <strong class="term">sekundärspolen</strong>, där magnetfältets ändring inducerar en ny växelspänning.</p>
+
+        <p>Förhållandet mellan spänningarna bestäms av <strong class="term">antalet varv</strong> på de två spolarna. Har sekundärspolen fler varv än primärspolen blir sekundärspänningen högre (<em>uppspänning</em>). Har den färre varv blir spänningen lägre (<em>nedspänning</em>). Transformatorer i mobilladdare trappar t.ex. ned 230 V till några få volt likspänning.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/transformator.png" alt="Transformator med primärspole, sekundärspole och järnkärna" />
+          <figcaption>Primärspolen matas med växelspänning. Järnkärnan leder magnetfältet till sekundärspolen där en ny spänning induceras.</figcaption>
+        </figure>
+
+        <p>En viktig begränsning: transformatorn fungerar <em>bara med växelspänning</em>. Kopplar man primärspolen till ett batteri får man en inducerad spänning bara i det ögonblick strömmen slås på eller av – sedan är magnetfältet konstant och ingen induktion sker.</p>
+
+        <p>När spänningen ändras via en transformator ändras också strömmen, fast i motsatt riktning. Höjer man spänningen tio gånger på sekundärsidan så minskar strömmen tio gånger. Det beror på att <strong class="term">den effekt som matas in måste komma ut igen</strong> – en transformator kan inte skapa energi, bara fördela den annorlunda mellan spänning och ström. Effekten är produkten av spänning och ström, och den ska vara (nästan) densamma på båda sidor. En mobilladdare som trappar ned 230 V till ungefär 5 V ger alltså cirka 46 gånger så stor ström ut som den tar in.</p>
+
+        <div class="fact-box">
+          <strong>Två samband</strong>
+          Spänningarna förhåller sig som antalet varv i spolarna: fler varv på sekundärsidan ger högre spänning. Strömmarna förhåller sig omvänt: högre spänning ut ger lägre ström ut. Den sammanlagda effekten (spänning × ström) bevaras.
+        </div>
+
+        <div class="next-steps">
+          <a href="./laborationer.html#lab-6">
+            <span class="n-label">Laborera</span>
+            Lab 6 · Transformator
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om transformator
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <div class="deepen">
+          <p><strong>Varför skickas el vid så hög spänning i kraftledningar?</strong></p>
+          <p>Från ett svenskt kärnkraftverk eller vattenkraftverk transporteras elen ut i stamnätet vid upp till 400 000 V. Det låter skrämmande högt, och det är farligt – men den höga spänningen har en mycket god anledning.</p>
+          <p>När ström flyter genom en lång kraftledning värms ledningen upp. Ledningen har nämligen ett litet elektriskt motstånd, en så kallad <em>resistans</em>. När ström passerar genom ett motstånd utvecklas värme, och den värmen är bortkastad energi. Hur mycket? Effektförlusten växer med <em>strömmen i kvadrat</em>: halverar man strömmen, så minskar värmeförlusten till en fjärdedel.</p>
+          <p>Här kommer transformatorn in. Samma mängd elektrisk energi kan överföras antingen med hög spänning och låg ström, eller med låg spänning och hög ström – eftersom effekten är produkten av dem båda. Valet är enkelt: höj spänningen så mycket det går, så att strömmen blir liten, och därmed värmeförlusten liten. I varje stad och bostadsområde står sedan transformatorer som stegvis trappar ned spänningen igen, tills den är nere på de 230 V som kommer ur uttaget i hemmet.</p>
+          <p>Hela den moderna elförsörjningen är alltså byggd på en enkel kombination: <em>växelspänning</em> som möjliggör transformatorer, och <em>transformatorer</em> som möjliggör effektiv el-transport över långa avstånd. Utan växelspänning hade det inte gått att bygga ett nationellt elnät på det sätt vi gjort.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 13 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 13</span>
+        <span class="m-title">Elektrisk energi och effekt</span>
+      </summary>
+      <div class="m-body">
+        <p>När en elektrisk apparat är inkopplad och påslagen omvandlar den <strong class="term">elektrisk energi</strong> till något annat: värme i en spis, ljus i en lampa, rörelseenergi i en motor, ljud i en högtalare. Mängden energi som omvandlas varje sekund kallas apparatens <strong class="term">effekt</strong> och mäts i <strong class="term">watt</strong> (W).</p>
+
+        <p>Effekten beror på två saker: hur hög spänningen är och hur stor strömmen är. Sambandet är enkelt:</p>
+        <p style="text-align:center; font-size:1.05em;"><strong>P = U · I</strong></p>
+        <p>där <em>P</em> är effekten i watt, <em>U</em> spänningen i volt och <em>I</em> strömmen i ampere. En apparat som drar 0,5 A vid 230 V har effekten 115 W.</p>
+
+        <p>Energin som förbrukas totalt beror på hur länge apparaten är igång. Energi är effekt multiplicerat med tid:</p>
+        <p style="text-align:center; font-size:1.05em;"><strong>W = P · t</strong></p>
+        <p>Elbolagen mäter energi i <strong class="term">kilowattimmar</strong> (kWh). En kilowattimme är den energi en 1 000 W-apparat förbrukar på en timme. En induktionshäll på 2 000 W som går i en halvtimme förbrukar 1 kWh. Priset per kWh varierar, men är oftast några kronor.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Tabell över vanliga apparaters effekt: lampa, dator, kylskåp, spis" />
+          <figcaption>Vanliga hushållsapparater har effekter från några watt till flera tusen watt.</figcaption>
+        </figure>
+
+        <p>I apparater med hög effekt går det en stor ström. Det är därför uttag för spis och tumlare har tjockare ledningar och egna säkringar: en spis på 6 000 W drar vid 230 V nära 26 ampere, och tunna ledningar skulle bli mycket varma av en sådan ström.</p>
+
+        <div class="fact-box">
+          <strong>Samband</strong>
+          Effekt: P = U · I (watt = volt · ampere). Energi: W = P · t. Energi mäts praktiskt i kilowattimmar. Apparater med hög effekt drar stor ström och kräver grövre ledningar.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om effekt och energi
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Ohms lag-spel och begreppskort
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Räkneuppgifter om effekt
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 14 – IFYLLD ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 14</span>
+        <span class="m-title">Från kraftverk till elapparat</span>
+      </summary>
+      <div class="m-body">
+        <p>Vägen från kraftverket till vägguttaget går genom flera led. I varje led spelar en av begreppen du redan lärt dig en huvudroll: generator, transformator, växelström.</p>
+
+        <p>Det börjar i ett <strong class="term">kraftverk</strong> där rörelseenergi driver en generator. I vattenkraftverk är det fallande vatten, i vindkraftverk är det vinden, i kärnkraftverk och fossila kraftverk är det ånga under tryck som snurrar en turbin. Generatorn omvandlar rotationen till växelspänning, oftast vid något tiotal kV.</p>
+
+        <p>Direkt vid kraftverket står en <strong class="term">uppstegringstransformator</strong> som höjer spänningen till 220 000 eller 400 000 V. Skälet är att effektförlusten i ledningen växer med strömmen i kvadrat (P = R · I²) – vid samma effekt blir förlusten mycket mindre om strömmen är liten och spänningen hög. Denna högspänning skickas ut i <strong class="term">stamnätet</strong>, de stora stolparna med flera parallella linor som syns långs landsvägarna.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Kedja: kraftverk → uppstegring → stamnät → regionnät → lokalnät → hushåll" />
+          <figcaption>Spänningen höjs för transport och sänks stegvis i transformatorstationer innan den når hushållet.</figcaption>
+        </figure>
+
+        <p>Utanför varje stad eller bostadsområde står <strong class="term">nedstegringstransformatorer</strong> som stegvis sänker spänningen, först till regionnätets 40–130 kV och sedan till lokalnätets 10–20 kV. I slutet av raden, oftast i en låda vid kanten av bostadsområdet eller i en nätstation, sänks spänningen till de <strong class="term">230/400 V</strong> som kommer in i fastigheten. Där delas fasen upp i enskilda kretsar, var och en skyddad av en egen säkring.</p>
+
+        <p>Från hushållets elcentral går tre ledare till varje uttag: <strong class="term">fas</strong> (230 V växelspänning), <strong class="term">nolla</strong> (som är nära jordens potential) och <strong class="term">skyddsjord</strong> (kopplad till en jordlina i marken). Skyddsjorden fyller en säkerhetsfunktion: blir ett metallhölje spänningssatt genom ett fel går strömmen direkt till jord, och jordfelsbrytaren löser ut på några tusendels sekunder.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          El från kraftverket transporteras vid mycket hög spänning (upp till 400 kV) för att minska värmeförluster i ledningarna. Nedstegringstransformatorer sänker spänningen stegvis till 230 V i hushållet. Varje uttag har fas, nolla och skyddsjord.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om elnätet
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om kraftverk till apparat
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 15 – IFYLLD (samhällskoppling) ========== -->
+    <details class="milestone">
+      <summary>
+        <span class="m-num">Milstolpe 15</span>
+        <span class="m-title">Magnetism och induktion i samhället</span>
+      </summary>
+      <div class="m-body">
+        <p>Magnetism och induktion är inte bara en fysikalisk kuriositet – de är två av grundvalarna för hela det moderna samhället. Nästan all el du använder har någon gång varit ett magnetfält som ändrats: i generatorn i kraftverket, i transformatorn vid varje steg i nätet, i motorn i en buss eller en borrmaskin.</p>
+
+        <p>Tre stora användningsområden står ut. Det första är <strong class="term">elproduktion och eldistribution</strong>, som vi redan beskrivit. Det andra är <strong class="term">transport och motorer</strong> – från elbilen och tågets dragmotorer till kylskåpets kompressor och borrmaskinens kuggväxel. Det tredje är <strong class="term">information och kommunikation</strong> – hårddiskar, högtalare, mikrofoner, MR-kameror och induktiva laddare använder alla magnetism eller induktion på något sätt.</p>
+
+        <p>Beslut om energikällor, elnät, transporter och infrastruktur rör vid både <em>samhälle</em>, <em>miljö</em> och <em>individ</em>. Kol- och gaskraft ger koldioxid och bidrar till klimatförändringen. Vattenkraft är förnybar men påverkar vattendragens ekosystem. Vindkraft är koldioxidfri men tar mark i anspråk och påverkar landskapet. Kärnkraft har låga utsläpp men lämnar avfall som måste förvaras säkert under mycket lång tid. Solkraft är ren men producerar ojämnt över året och över dygnet.</p>
+
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Olika elkällor: vattenkraft, vindkraft, kärnkraft, solkraft" />
+          <figcaption>Alla större elkällor använder samma grundidé – en generator som omvandlar rotation till el. Skillnaderna ligger i vad som driver rotationen.</figcaption>
+        </figure>
+
+        <p>För individen är säkerheten central. Elolyckor i hemmet beror oftast på felaktiga installationer, slitna sladdar eller på att vatten och el kommer för nära varandra. Jordfelsbrytare, säkringar och skyddsjord har byggts in i elsystemet just för att skydda människor. Också för att ta vara på energi finns regler och vanor: att inte ha apparater i standby-läge onödigt länge, att välja apparater med låg effektförbrukning, att släcka när man går ut ur ett rum.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Magnetism och induktion ligger bakom elproduktion, transport och stora delar av informationstekniken. Valet av energikälla påverkar både klimat, ekosystem och landskap. Säkerhetsutrustning i hemmet skyddar individen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Punkter om samhällskopplingen
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Resonera-uppgifter
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <div class="deepen">
+          <p><strong>Varför inte bara använda det billigaste energislaget?</strong></p>
+          <p>Om man enbart tittar på kostnaden per kilowattimme i dag framstår vissa energislag som billigare än andra. Men priset säger inte hela sanningen. Ett energislag kan vara billigt att bygga men dyrt att hålla igång, eller billigt att producera men dyrt att transportera eftersom kraftverket ligger långt från konsumenten. Sol- och vindkraft är ojämna över tid: en molnig vindstilla dag produceras nästan ingenting, och den el som ska täcka upp måste komma från en annan källa. I praktiken behöver varje elsystem en blandning där olika källor kompletterar varandra. Därför handlar energidebatten sällan om en enda "bästa" lösning utan om vilken sammansättning av källor som ger både låg klimatpåverkan, tillräcklig effekt vid rätt tidpunkt, rimlig kostnad och rimlig miljöpåverkan lokalt.</p>
+          <p>Ett begrepp som ofta dyker upp är <em>effekt</em> jämfört med <em>energi</em>. Sverige har en stor mängd vattenkraft som kan leverera mycket energi över ett år, men en enskild vinterkväll när alla lagar mat och kör värmepumpen måste elnätet också kunna leverera tillräcklig <em>effekt</em> just då. Därför handlar diskussionen om nya kraftverk inte bara om kilowattimmar per år, utan också om hur mycket maximal effekt nätet klarar att leverera under dygnets och årets topptimmar.</p>
+
+          <p style="margin-top:1rem;"><strong>Induktion som skyddsteknik – jordfelsbrytaren</strong></p>
+          <p>En modern jordfelsbrytare utnyttjar induktion på ett elegant sätt. Fas och nolla i en elkabel går genom en liten ringkärna av järn. Om strömmen in genom fasen är lika stor som strömmen tillbaka genom nollan – vilket den ska vara – så skapar de båda ledarna magnetfält som tar ut varandra exakt. En tredje liten detektorspole runt samma kärna ser då ingen fältändring och ingen induktionsspänning uppstår. Men om en del av strömmen går vilse, t.ex. genom en människa till jord, blir strömmarna i fas och nolla plötsligt olika stora. Då uppstår en nettoändring av magnetfältet i kärnan, detektorspolen inducerar en liten spänning, och en elektronisk krets slår till en relä som bryter strömmen på bråkdelen av en sekund. Mekanismen är alltså ren induktion, använd som en säkerhetsvakt mellan apparaten och dig.</p>
+        </div>
+      </div>
+    </details>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
