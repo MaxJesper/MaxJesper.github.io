@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elektricitet och Ohms lag – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.2em;
+    }
+
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .resource-box p {
+      margin-top: 0;
+      color: #444;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin-bottom: 0.7rem;
+    }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li {
+      margin-bottom: 0.45rem;
+    }
+
+    .role-toggle {
+      display: flex;
+      gap: 0.4rem;
+      justify-content: flex-end;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .role-toggle button {
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      color: #555;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-family: inherit;
+    }
+
+    .role-toggle button.active {
+      background: #2e4a8a;
+      color: #fff;
+      border-color: #2e4a8a;
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: #888;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    /* Lärare-ordning: lärarkortet överst */
+    body[data-role="larare"] .resource-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[data-role="larare"] .resource-grid article:last-child {
+      order: -1;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Elektricitet och Ohms lag</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+    <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
+    <a href="/fysik/magnetism-induktion/" class="subject-btn">Nästa område →</a>
+  </p>
+    <section class="page-intro">
+      <p>
+        Här hittar du material om elektrisk ström, spänning, resistans,
+        ledare och isolatorer, Ohms lag, serie- och parallellkopplingar,
+        kopplingsscheman, effekt och energi samt elsäkerhet i hemmet.
+      </p>
+    </section>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <h2>För elever</h2>
+        <p>Material för att träna inför prov och bygga förståelse.</p>
+        <ul>
+          <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+          <li><a href="./checklista.html">Checklista</a></li>
+          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+          <li><a href="./ovningsprov.html">Övningsprov</a></li>
+          <li><a href="./larande-spel.html">Lärande spel</a></li>
+          <li><a href="./laborationer.html">Laborationer</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <h2>För lektioner / läraren</h2>
+        <p>Snabbåtkomst till utskriftsversioner och lärarmaterial.</p>
+        <ul>
+          <li><a href="./laborationshandledningar.html">Laborationshandledningar (utskrift)</a></li>
+          <li><a href="./facit.html">Facit till övningsprovet</a></li>
+          <li><a href="./facit-print.html">Facit (utskrift)</a></li>
+          <li><a href="./ovningsprov-elevutskrift.html">Övningsprov (elevutskrift)</a></li>
+          <li><a href="./instuderingsfragor-elevutskrift.html">Instuderingsfrågor (elevutskrift)</a></li>
+          <li><a href="./instuderingsfragor-lararutskrift.html">Instuderingsfrågor (lärarutskrift med facit)</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Inläsningstips</summary>
+        <ul>
+          <li>Börja med att säkert skilja <strong>ström</strong>, <strong>spänning</strong> och <strong>resistans</strong> åt.</li>
+          <li>Lär dig vad som skiljer en <strong>ledare</strong> från en <strong>isolator</strong> och varför metaller leder ström.</li>
+          <li>Träna på <strong>Ohms lag</strong> i alla tre former: U = R · I, I = U / R och R = U / I.</li>
+          <li>Jämför <strong>serie-</strong> och <strong>parallellkopplingar</strong> – både för lampor och för batterier.</li>
+          <li>Öva på att läsa och rita enkla <strong>kopplingsscheman</strong> med de vanligaste symbolerna.</li>
+          <li>Förstå sambandet <strong>P = U · I</strong> och vad en kilowattimme är.</li>
+          <li>Repetera <strong>elsäkerhet</strong>: säkring, jordfelsbrytare, skyddsjord och risker nära vatten.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
+    (function () {
+      var STORE_KEY = "mj.role";
+      var btnElev = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+
+      // Ladda senaste val
+      try {
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
+
+      btnElev.addEventListener("click", function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
+</body>
+</html>

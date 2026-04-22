@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Elektricitet och Ohms lag – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    .games-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .game-card {
+      display: block;
+      background: linear-gradient(135deg, #f7faff, #eef4ff);
+      border: 1px solid #d8e0ea;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      text-decoration: none;
+    }
+
+    .game-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: linear-gradient(135deg, #dfefff, #cfe3ff);
+    }
+
+    .game-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .game-body {
+      padding: 1rem;
+    }
+
+    .game-body h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.15rem;
+    }
+
+    .game-body p {
+      margin: 0;
+      color: #444;
+    }
+
+    .cross-area {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .cross-area h2 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      font-size: 1.1rem;
+    }
+
+    .cross-area ul {
+      margin: 0.5rem 0 0 1.2rem;
+    }
+
+    .cross-area li {
+      margin-bottom: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Lärande spel</h1>
+    <p>Elektricitet och Ohms lag</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <section class="games-intro">
+      <p>
+        Här hittar du spel och interaktiva övningar som hjälper dig att träna
+        begrepp, kopplingar och Ohms lag på ett roligare sätt.
+      </p>
+    </section>
+
+    <section class="games-grid">
+      <a class="game-card" href="./ohms-lag-spel.html">
+        <div class="game-image">
+          <img src="/images/magnetism-induktion/Ohms-lag.png" alt="Ohms lag – lärande spel">
+        </div>
+        <div class="game-body">
+          <h2>Ohms lag – lärande spel</h2>
+          <p>Träna begrepp, räkna med Ohms lag och bygg serie- och parallellkopplingar i kretssimulator.</p>
+        </div>
+      </a>
+    </section>
+
+    <section class="cross-area">
+      <h2>Spel i närliggande områden</h2>
+      <ul>
+        <li><a href="/fysik/magnetism-induktion/larande-spel.html">Lärande spel i Magnetism och induktion</a> – begreppskort, korsord och fler spel kopplade till magneter, elektromagneter och induktion.</li>
+      </ul>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="./index.html" class="subject-btn">← Tillbaka</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>

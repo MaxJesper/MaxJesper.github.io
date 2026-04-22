@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Elektricitet och Ohms lag</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p {
+      margin: 0.35rem 0;
+    }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #2e4a8a;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before {
+      transform: rotate(90deg);
+    }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term {
+      color: #1a1a2e;
+    }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: center;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #eef4fa;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen::before {
+      content: "★ Fördjupning ";
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .milestone.stub .m-body {
+      color: #777;
+      font-style: italic;
+    }
+
+    .milestone.stub .m-body p {
+      margin: 0.35rem 0;
+    }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Studieguide</h1>
+    <p>Elektricitet och Ohms lag</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar, spel eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Stjärnmärkt material (★) är fördjupning för den som vill komma längre.</p>
+    </section>
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Elektrisk ström – vad rör sig i en ledare</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska texten förklara vad en <strong class="term">elektrisk ström</strong> är: ett riktat flöde av laddningar (i metaller: fria elektroner) genom en ledare. Strömstyrka mäts i <strong class="term">ampere (A)</strong>. Begreppen <em>konventionell strömriktning</em> och <em>elektronflöde</em> introduceras.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om ström i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span> Begreppskort</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Instuderingsfrågor</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Spänning – drivkraften i kretsen</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska förklara <strong class="term">spänning (U)</strong> som den energi per laddning som driver fram strömmen. Enheten är <strong class="term">volt (V)</strong>. Exempel: batteri 1,5 V, bilbatteri 12 V, vägguttag 230 V.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om spänning i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span> Begreppskort</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Ledare och isolatorer</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska skillnaden mellan <strong class="term">ledare</strong> och <strong class="term">isolator</strong> förklaras. Metaller leder ström eftersom de har fria elektroner. Plast, gummi, glas och torr luft är goda isolatorer. Halvledare nämns kort som en mellanform.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om ledare i checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Instuderingsfrågor</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Resistans och enheten ohm</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska beskriva <strong class="term">resistans (R)</strong> som ledarens motstånd mot strömmen. Enheten är <strong class="term">ohm (Ω)</strong>. Resistansen beror på materialet, ledarens längd, tjocklek och temperatur. Längre och tunnare ledare har högre resistans. Varm metall har högre resistans än kall.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om resistans i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span> Begreppskort</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Ohms lag: U = R · I</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska sambandet mellan spänning, ström och resistans införas: <strong class="term">U = R · I</strong>. Formeln skrivs om till <em>I = U / R</em> och <em>R = U / I</em>. Typiska räkneexempel: hitta strömmen genom en 10 Ω-lampa vid 6 V, osv.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om Ohms lag i checklistan</a>
+          <a href="./ohms-lag-spel.html"><span class="n-label">Träna</span> Ohms lag – spel</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Räkneuppgifter</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Serie- och parallellkoppling av lampor</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska jämföra <strong class="term">seriekoppling</strong> (strömmen går genom lamporna efter varandra, alla slocknar om en går sönder) med <strong class="term">parallellkoppling</strong> (varje lampa har en egen slinga, de andra lyser vidare om en går sönder). Koppling av julgransbelysning och hemmets lampor som exempel.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om kopplingar i checklistan</a>
+          <a href="./laborationer.html"><span class="n-label">Laborera</span> Koppla lampor</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 7 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Serie- och parallellkoppling av batterier</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska två batterier kopplas på två sätt. Vid <strong class="term">seriekoppling</strong> adderas spänningarna (två 1,5 V-batterier ger 3 V) men strömmen begränsas som ett batteri. Vid <strong class="term">parallellkoppling</strong> står spänningen kvar (1,5 V) men batterierna räcker dubbelt så länge.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om batterier i checklistan</a>
+          <a href="./laborationer.html"><span class="n-label">Laborera</span> Koppla batterier</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 8 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Kopplingsscheman</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska introducera de vanligaste symbolerna: <strong class="term">batteri</strong>, <strong class="term">lampa</strong>, <strong class="term">strömbrytare</strong>, <strong class="term">motstånd</strong>, <strong class="term">amperemeter</strong> och <strong class="term">voltmeter</strong>. Amperemetern seriekopplas med kretsen, voltmetern parallellkopplas över komponenten man mäter.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om scheman i checklistan</a>
+          <a href="./laborationer.html"><span class="n-label">Laborera</span> Rita och koppla</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 9 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Effekt och energi i elektriska apparater</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska begreppen <strong class="term">effekt (P = U · I)</strong> i watt och <strong class="term">energi (W = P · t)</strong> i kilowattimmar (kWh) införas. Elräkning som vardagsexempel. Varför en vattenkokare på 2000 W drar mer än en lampa på 40 W.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om effekt i checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Räkna på apparater</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 10 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Elsäkerhet – säkring och jordfelsbrytare</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska förklara varför en <strong class="term">säkring</strong> bryter strömmen när den blir för stor (överhettning, brandrisk) och hur en <strong class="term">jordfelsbrytare</strong> löser ut vid minsta läckström till jord. <strong class="term">Skyddsjord</strong> som tredje ledare förklaras.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om elsäkerhet i checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Säkerhetsfrågor</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 11 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Risker och regler i hemmet</span>
+      </summary>
+      <div class="m-body">
+        <p>Här ska farliga situationer tas upp: el och vatten, skadade sladdar, överbelastade grenuttag och varför inte allt får kopplas in var som helst. <strong class="term">CE-märkning</strong> som kvalitetsstämpel för att apparaten är testad mot EU-krav.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om hemmet i checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span> Vardagsexempel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 12 ========== -->
+    <details class="milestone stub">
+      <summary>
+        <span class="m-num">Milstolpe 12</span>
+        <span class="m-title">Elektricitet i samhället</span>
+      </summary>
+      <div class="m-body">
+        <p>Texten ska koppla elförbrukningen till vardagen och miljön: vad använder vi mest el till, skillnaden mellan <strong class="term">effekt</strong> (W vid en given tidpunkt) och <strong class="term">energi</strong> (kWh per år), och varför det är rimligt att fundera över hur elen produceras. Leder vidare till nästa område, <em>Magnetism och induktion</em>, där elproduktionen behandlas.</p>
+
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om samhället i checklistan</a>
+          <a href="/fysik/magnetism-induktion/"><span class="n-label">Nästa område</span> Magnetism och induktion</a>
+        </div>
+      </div>
+    </details>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
