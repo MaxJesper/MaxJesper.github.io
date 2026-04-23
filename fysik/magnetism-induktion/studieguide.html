@@ -322,8 +322,8 @@
         <p>Eftersom olika poler drar till varandra måste det jorden har uppe i norr fysikaliskt sett vara en <em>sydpol</em>. Den geografiska Nordpolen är alltså, i magnetiskt avseende, en magnetisk sydpol. Historiskt har man ändå valt att kalla den för "magnetisk nordpol", vilket kan kännas förvirrande. Det viktiga att komma ihåg är att <strong class="term">kompassnålens nordpol pekar mot norr</strong>.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Jorden med magnetfältslinjer som bildar slingor mellan magnetiska poler" />
-          <figcaption>Jordens magnetfält liknar en stor stavmagnets. Kompassnålen ställer in sig efter fältet.</figcaption>
+          <img src="/images/fysik/magnetism-induktion/kompass.png" alt="Kompass vars nål pekar mot norr" />
+          <figcaption>En kompass är en liten fritt upphängd stavmagnet. Nålen riktar in sig efter jordens magnetfält och pekar mot norr.</figcaption>
         </figure>
 
         <p>Jordens magnetfält är inte helt stabilt. Polerna förflyttar sig långsamt, och mätningar i lavabergarter visar att fältet dessutom har vänt riktning många gånger genom jordens historia. Fältet skyddar oss dessutom mot laddade partiklar från solen – när dessa träffar fältet böjs de av mot polerna, vilket vi ibland ser som <em>norrsken</em>.</p>
@@ -360,7 +360,7 @@
         <p>Fältlinjerna runt en rak strömförande ledare bildar <strong class="term">slutna cirklar</strong> runt tråden. Vänder man strömriktningen vänder sig kompassnålen också – fältets riktning är beroende av strömriktningen. En enkel regel: griper man tråden med höger hand så att tummen pekar i strömmens riktning, så pekar de krökta fingrarna i fältlinjernas riktning. Detta kallas <strong class="term">högerhandsregeln</strong>.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Kompass nära strömförande tråd vrider sig när strömmen går" />
+          <img src="/images/fysik/magnetism-induktion/magnetfalt-kring-ledare.png" alt="Cirkulära magnetfältslinjer runt en strömförande ledare" />
           <figcaption>En ström genom en rak tråd bildar cirkulära magnetfältslinjer runt tråden. Fältets riktning följer högerhandsregeln.</figcaption>
         </figure>
 
@@ -488,7 +488,7 @@
         <p>Kraften blir störst när ledaren ligger <strong class="term">tvärs</strong> mot fältlinjerna, och försvinner när ledaren ligger <em>längs</em> fältet. Riktningen på kraften är vinkelrät både mot strömmen och mot fältet – man kan hitta den med en <strong class="term">vänsterhandsregel</strong>: pek-, lång- och tumme i tre räta vinklar, där pekfingret pekar i fältets riktning (N→S), långfingret i strömriktningen, och tummen då visar kraften.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Strömförande tråd mellan magnetpolerna, kraften verkar uppåt" />
+          <img src="/images/fysik/magnetism-induktion/strom-magnetfalt-kraft.png" alt="Strömförande tråd mellan magnetpolerna med kraft vinkelrät mot ström och fält" />
           <figcaption>En ledare som bär ström mellan en nord- och en sydpol påverkas av en kraft vinkelrätt mot både ström och fält.</figcaption>
         </figure>
 
@@ -527,10 +527,20 @@
 
         <p>För att rotationen ska fortsätta måste strömriktningen vändas varje halvt varv, så att kraften alltid drar slingan åt samma håll. Detta sköts av en <strong class="term">kommutator</strong> – en uppdelad metallring på axeln där två kolborstar släpar mot. När slingan vridit ett halvt varv byter kontakten sida, och strömmen i slingan vänder riktning. Slingan får en ny knuff i samma rotationsriktning.</p>
 
-        <figure>
-          <img src="/images/fysik/magnetism-induktion/Elmotor.png" alt="Enkel elmotor med slinga mellan polerna, kommutator och kolborstar" />
-          <figcaption>En slinga mellan magnetpolerna vrider sig av kraften. Kommutatorn vänder strömmen var halvvarv så rotationen inte stannar.</figcaption>
-        </figure>
+        <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin:0.9rem 0;">
+          <figure style="flex:1 1 140px; margin:0; text-align:center;">
+            <img src="/images/fysik/magnetism-induktion/Elmotor.png" alt="Stor elmotor med en enda lindning runt rotorn" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #e4e4e4;" />
+            <figcaption style="font-size:0.88rem; color:#555; margin-top:0.3rem; font-style:italic;">Den stora elmotorn har en enda lindning. Enkelt att studera hur slingan vrids i magnetfältet.</figcaption>
+          </figure>
+          <figure style="flex:1 1 140px; margin:0; text-align:center;">
+            <img src="/images/fysik/magnetism-induktion/elmotor-liten.png" alt="Liten elmotor med många täta lindningar" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #e4e4e4;" />
+            <figcaption style="font-size:0.88rem; color:#555; margin-top:0.3rem; font-style:italic;">Den lilla elmotorn har många täta lindningar – fler varv ger större vridmoment och jämnare rotation.</figcaption>
+          </figure>
+          <figure style="flex:1 1 140px; margin:0; text-align:center;">
+            <img src="/images/fysik/magnetism-induktion/enkel-elmotor.png" alt="Riktigt enkel elmotor av grundläggande hobbytyp" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #e4e4e4;" />
+            <figcaption style="font-size:0.88rem; color:#555; margin-top:0.3rem; font-style:italic;">En riktigt enkel motor – grundprincipen i sin mest avskalade form.</figcaption>
+          </figure>
+        </div>
 
         <p>I praktiska motorer ersätter man den enkla slingan med en lindad spole runt en järnkärna (en <strong class="term">rotor</strong>) och de permanenta magneterna med kraftfulla elektromagneter (en <strong class="term">stator</strong>). Det ger större vridmoment och gör motorn starkare. I leksaksmotorer och bilens startmotor finns permanenta magneter kvar. Stora industrimotorer använder nästan uteslutande elektromagneter.</p>
 
@@ -623,7 +633,7 @@
         <p>När spolen vridit ett halvt varv pekar dess normal åt motsatt håll i magnetfältet. Det innebär att den inducerade spänningen också vänder riktning varje halvt varv. Spänningen växlar alltså riktning regelbundet. Den strömmen som blir följden kallas <strong class="term">växelström</strong> (på engelska AC, alternating current).</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/induktion-ampermeter.png" alt="Generator där en spole snurrar mellan magnetpoler och matar en amperemeter" />
+          <img src="/images/fysik/magnetism-induktion/dynamo-generator.png" alt="Dynamo och generator som omvandlar rörelseenergi till elektrisk energi" />
           <figcaption>När spolen roterar i magnetfältet växlar den inducerade spänningen riktning varje halvt varv.</figcaption>
         </figure>
 
@@ -855,7 +865,7 @@
         <p>Beslut om energikällor, elnät, transporter och infrastruktur rör vid både <em>samhälle</em>, <em>miljö</em> och <em>individ</em>. Kol- och gaskraft ger koldioxid och bidrar till klimatförändringen. Vattenkraft är förnybar men påverkar vattendragens ekosystem. Vindkraft är koldioxidfri men tar mark i anspråk och påverkar landskapet. Kärnkraft har låga utsläpp men lämnar avfall som måste förvaras säkert under mycket lång tid. Solkraft är ren men producerar ojämnt över året och över dygnet.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Olika elkällor: vattenkraft, vindkraft, kärnkraft, solkraft" />
+          <img src="/images/fysik/magnetism-induktion/samhallet.png" alt="Magnetism och induktion i samhället – elproduktion, transport och kommunikation" />
           <figcaption>Alla större elkällor använder samma grundidé – en generator som omvandlar rotation till el. Skillnaderna ligger i vad som driver rotationen.</figcaption>
         </figure>
 
