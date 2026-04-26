@@ -40,7 +40,7 @@
       cursor: pointer;
       padding: 1rem 1.1rem;
       display: flex;
-      align-items: baseline;
+      align-items: center;
       gap: 0.75rem;
       font-weight: 600;
       color: #1a1a2e;
@@ -73,6 +73,61 @@
 
     .milestone .m-title {
       font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .listen-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: none;
+      border: 1px solid #c8d5e8;
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.88rem;
+      color: #2e4a8a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: inherit;
+      font-weight: 600;
+      transition: background 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+
+    .listen-btn:hover {
+      background: #eef3fb;
+      border-color: #2e4a8a;
+    }
+
+    .listen-btn.playing {
+      background: #2e4a8a;
+      color: #fff;
+      border-color: #2e4a8a;
+    }
+
+    .deepen > summary {
+      display: flex;
+      align-items: center;
+    }
+
+    .deepen > summary .listen-btn {
+      margin-left: auto;
+      color: #a37a00;
+      border-color: #d4b870;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.55rem;
+    }
+
+    .deepen > summary .listen-btn:hover {
+      background: #fdf6e3;
+      border-color: #a37a00;
+    }
+
+    .deepen > summary .listen-btn.playing {
+      background: #a37a00;
+      color: #fff;
+      border-color: #a37a00;
     }
 
     .milestone .m-body {
@@ -240,6 +295,11 @@
 
         <p>Om man för två magneter mot varandra märker man att <strong class="term">lika poler stöter bort varandra</strong> och <strong class="term">olika poler dras till varandra</strong>. Nord mot nord repellerar, nord mot syd attraherar. Detta är grundregeln för all magnetism.</p>
 
+        <figure>
+          <img src="/images/fysik/magnetism-induktion/nord-mot-syd.png" alt="Två stavmagneter: lika poler stöter bort varandra, olika poler drar till varandra" />
+          <figcaption><strong>Grundregeln för magneter</strong> – lika poler repellerar, olika poler attraherar.</figcaption>
+        </figure>
+
         <p>Inte alla metaller är magnetiska. Magneter drar till sig <strong class="term">järn, nickel och kobolt</strong>. Andra vanliga metaller som koppar, aluminium och silver påverkas inte. Ett stålföremål kan själv bli magnetiskt om man stryker det flera gånger åt samma håll med en annan magnet – då blir det <strong class="term">magnetiserat</strong>.</p>
 
         <div class="fact-box">
@@ -273,7 +333,7 @@
       </div>
     </details>
 
-    <!-- ========== MILSTOLPE 2–8 – STUBBAR ========== -->
+    <!-- ========== MILSTOLPE 2–7 ========== -->
     <!-- ========== MILSTOLPE 2 – IFYLLD ========== -->
     <details class="milestone" id="m2">
       <summary>
@@ -678,7 +738,7 @@
         <p>Ritar man upp spänningen över tid blir likström en rak, oförändrad linje över nolla, medan växelström blir en sinusformad kurva som oscillerar mellan ett positivt och ett negativt toppvärde. I svenska nätet är toppvärdet cirka 325 V, medan det <em>effektiva värdet</em> – det som används i beräkningar – är 230 V. Nollgenomgångarna sker 100 gånger i sekunden (två per period vid 50 Hz).</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Diagram: rak linje för likström, sinuskurva för växelström" />
+          <img src="/images/fysik/magnetism-induktion/likstrom-vaxelstrom.png" alt="Diagram: rak linje för likström, sinuskurva för växelström" />
           <figcaption><strong>Likström och växelström</strong> – likström är konstant, växelström oscillerar kring noll som en sinusfunktion.</figcaption>
         </figure>
 
@@ -778,7 +838,7 @@
         <p>Elbolagen mäter energi i <strong class="term">kilowattimmar</strong> (kWh). En kilowattimme är den energi en 1 000 W-apparat förbrukar på en timme. En induktionshäll på 2 000 W som går i en halvtimme förbrukar 1 kWh. Priset per kWh varierar, men är oftast några kronor.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Tabell över vanliga apparaters effekt: lampa, dator, kylskåp, spis" />
+          <img src="/images/fysik/magnetism-induktion/effekt-apparater.png" alt="Tabell över vanliga apparaters effekt: lampa, dator, kylskåp, spis" />
           <figcaption><strong>Effekter i hemmet</strong> – vanliga hushållsapparater har effekter från några watt till flera tusen watt.</figcaption>
         </figure>
 
@@ -824,7 +884,7 @@
         <p>Direkt vid kraftverket står en <strong class="term">uppstegringstransformator</strong> som höjer spänningen till 220 000 eller 400 000 V. Skälet är att effektförlusten i ledningen växer med strömmen i kvadrat (P = R · I²) – vid samma effekt blir förlusten mycket mindre om strömmen är liten och spänningen hög. Denna högspänning skickas ut i <strong class="term">stamnätet</strong>, de stora stolparna med flera parallella linor som syns långs landsvägarna.</p>
 
         <figure>
-          <img src="/images/fysik/magnetism-induktion/begrepp.png" alt="Kedja: kraftverk → uppstegring → stamnät → regionnät → lokalnät → hushåll" />
+          <img src="/images/fysik/magnetism-induktion/fran-krafverk-till-elapparat.png" alt="Kedja: kraftverk → uppstegring → stamnät → regionnät → lokalnät → hushåll" />
           <figcaption><strong>Elnätet</strong> – spänningen höjs för transport och sänks stegvis i transformatorstationer innan den når hushållet.</figcaption>
         </figure>
 
@@ -910,6 +970,108 @@
   </main>
 
   <script src="/js/menu.js"></script>
+  <script>
+    // ===== Lyssna-funktion med Web Speech API =====
+    (function () {
+      if (!window.speechSynthesis) return; // stöds ej i denna webbläsare
+
+      var currentBtn = null;
+      var synth = window.speechSynthesis;
+
+      function getSwedishVoice() {
+        var voices = synth.getVoices();
+        return voices.find(function (v) { return v.lang.startsWith('sv'); }) || null;
+      }
+
+      function extractText(root, removeSelectors) {
+        var clone = root.cloneNode(true);
+        removeSelectors.forEach(function (sel) {
+          clone.querySelectorAll(sel).forEach(function (el) { el.remove(); });
+        });
+        return (clone.innerText || clone.textContent)
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function getMilestoneText(milestone) {
+        var body = milestone.querySelector('.m-body');
+        return extractText(body, ['.next-steps', '.deepen']);
+      }
+
+      function getDeepenText(deepen) {
+        // Läs rubriken + innehållet i fördjupningen
+        return extractText(deepen, ['.listen-btn']);
+      }
+
+      function stopSpeech() {
+        synth.cancel();
+        if (currentBtn) {
+          currentBtn.classList.remove('playing');
+          currentBtn.innerHTML = '&#128264; Lyssna';
+          currentBtn = null;
+        }
+      }
+
+
+      function makeListenButton(details, getText) {
+        var summary = details.querySelector(':scope > summary');
+        if (!summary) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'listen-btn';
+        btn.innerHTML = '&#128264; Lyssna';
+        btn.title = 'Lyssna på texten';
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          // Öppna om stängd
+          if (!details.open) details.open = true;
+          if (currentBtn === btn) { stopSpeech(); return; }
+          stopSpeech();
+
+          var text = getText();
+          if (!text) return;
+
+          var utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'sv-SE';
+          utterance.rate = 0.92;
+          var voice = getSwedishVoice();
+          if (voice) utterance.voice = voice;
+          utterance.onend = function () {
+            if (currentBtn === btn) {
+              btn.classList.remove('playing');
+              btn.innerHTML = '&#128264; Lyssna';
+              currentBtn = null;
+            }
+          };
+          btn.classList.add('playing');
+          btn.innerHTML = '&#9646;&#9646; Stoppa';
+          currentBtn = btn;
+          synth.speak(utterance);
+        });
+        summary.appendChild(btn);
+      }
+
+      // Lägg till knappar i milstolpar och fördjupningar
+      function addListenButtons() {
+        document.querySelectorAll('details.milestone').forEach(function (milestone) {
+          makeListenButton(milestone, function () { return getMilestoneText(milestone); });
+        });
+        document.querySelectorAll('details.deepen').forEach(function (deepen) {
+          makeListenButton(deepen, function () { return getDeepenText(deepen); });
+        });
+      }
+
+      // Röster laddas asynkront i vissa webbläsare
+      if (synth.getVoices().length > 0) {
+        addListenButtons();
+      } else {
+        synth.addEventListener('voiceschanged', addListenButtons);
+      }
+
+      // Stoppa uppläsning om sidan lämnas
+      window.addEventListener('beforeunload', function () { synth.cancel(); });
+    })();
+  </script>
   <script>
     function toggleAllMilestones() {
       var milestones = document.querySelectorAll('details.milestone');
