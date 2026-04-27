@@ -1051,18 +1051,28 @@
         currentBtn = btn;
 
         var audio = new Audio(path);
-        audio.addEventListener('canplaythrough', function () {
-          currentAudio = audio;
-          audio.play();
-        }, { once: true });
-        audio.addEventListener('ended', function () { onDone(btn); }, { once: true });
-        audio.addEventListener('error', function () {
-          // Mp3 saknas – fall tillbaka på TTS
-          currentAudio = null;
-          if (currentBtn !== btn) return;
-          playWithTTS(getText(), btn);
-        }, { once: true });
-        audio.load();
+        currentAudio = audio;
+        audio.onended = function () { onDone(btn); };
+
+        // play() måste anropas direkt i klick-händelsen (iOS-krav).
+        // Returnerar ett Promise i moderna webbläsare.
+        var p = audio.play();
+        if (p !== undefined) {
+          p.catch(function (err) {
+            currentAudio = null;
+            if (currentBtn !== btn) return;
+            // AbortError = vi stoppade manuellt, inget fel
+            if (err.name === 'AbortError') { onDone(btn); return; }
+            // Filen saknas eller kan inte spelas – fall tillbaka på TTS
+            playWithTTS(getText(), btn);
+          });
+        } else {
+          // Äldre webbläsare utan Promise-stöd
+          audio.onerror = function () {
+            currentAudio = null;
+            if (currentBtn === btn) playWithTTS(getText(), btn);
+          };
+        }
       }
 
       // ── Skapa en knapp och lägg till i summary ─────────────────────────────
