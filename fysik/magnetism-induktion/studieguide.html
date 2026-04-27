@@ -259,6 +259,38 @@
       main { font-size: 1.05em; }
       .milestone .m-title { font-size: 1rem; }
     }
+
+    /* === Swipe-navigering: scroll-marginal och toast === */
+    details.milestone,
+    details.deepen {
+      scroll-margin-top: 0.75rem;
+    }
+
+    .swipe-toast {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(30, 52, 102, 0.9);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+      white-space: nowrap;
+      max-width: 85vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .swipe-toast.visible {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -1144,6 +1176,95 @@
         openFromHash();
       }
       window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script>
+    // ── Swipe-navigering för mobil ──────────────────────────────────────────
+    (function () {
+      var touchStartX = 0, touchStartY = 0;
+      var SWIPE_MIN = 55;   // minsta px i x-led för att räknas som svep
+      var navList = null;
+
+      // Bygg en platt lista: milstolpar i ordning, med fördjupningar inbakade direkt efter sin milstolpe
+      function buildNavList() {
+        var list = [];
+        document.querySelectorAll('details.milestone').forEach(function (m) {
+          list.push({ el: m, type: 'milestone', parent: null });
+          m.querySelectorAll(':scope .deepen').forEach(function (d) {
+            list.push({ el: d, type: 'deepen', parent: m });
+          });
+        });
+        return list;
+      }
+
+      function getNavList() {
+        if (!navList) navList = buildNavList();
+        return navList;
+      }
+
+      // Det objekt vars mittpunkt ligger närmast mitten av skärmen
+      function getCurrentIndex() {
+        var list = getNavList();
+        var cy = window.innerHeight / 2;
+        var best = 0, bestDist = Infinity;
+        list.forEach(function (item, i) {
+          var rect = item.el.getBoundingClientRect();
+          var mid = (rect.top + rect.bottom) / 2;
+          var dist = Math.abs(mid - cy);
+          if (dist < bestDist) { bestDist = dist; best = i; }
+        });
+        return best;
+      }
+
+      // Rubrik att visa i toasten
+      function getLabel(item) {
+        var summary = item.el.querySelector(':scope > summary');
+        if (!summary) return '';
+        var clone = summary.cloneNode(true);
+        clone.querySelectorAll('.listen-btn, .m-num-chip').forEach(function (el) { el.remove(); });
+        var text = (clone.innerText || clone.textContent).trim();
+        return item.type === 'deepen' ? '★ ' + text : text;
+      }
+
+      // Toast
+      var toastEl = null, toastTimer = null;
+      function showToast(msg) {
+        if (!toastEl) {
+          toastEl = document.createElement('div');
+          toastEl.className = 'swipe-toast';
+          document.body.appendChild(toastEl);
+        }
+        clearTimeout(toastTimer);
+        toastEl.textContent = msg;
+        toastEl.classList.add('visible');
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove('visible');
+        }, 1800);
+      }
+
+      function navigateTo(index) {
+        var list = getNavList();
+        if (index < 0 || index >= list.length) return;
+        var item = list[index];
+        if (item.parent) item.parent.open = true;
+        item.el.open = true;
+        item.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast(getLabel(item));
+      }
+
+      document.addEventListener('touchstart', function (e) {
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
+      }, { passive: true });
+
+      document.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        var dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) < SWIPE_MIN) return;                  // för kort
+        if (Math.abs(dy) > Math.abs(dx) * 0.75) return;        // för vertikalt (= scrollning)
+        var idx = getCurrentIndex();
+        navigateTo(dx < 0 ? idx + 1 : idx - 1);               // vänster = fram, höger = bakåt
+      }, { passive: true });
     })();
   </script>
 </body>
