@@ -971,14 +971,17 @@
 
   <script src="/js/menu.js"></script>
   <script>
-    // ===== Lyssna-funktion med Web Speech API =====
+    // ===== Lyssna-funktion: mp3 i första hand, TTS som reserv =====
     (function () {
-      if (!window.speechSynthesis) return; // stöds ej i denna webbläsare
+      var AUDIO_BASE = '/images/fysik/magnetism-induktion/audio/';
+      var currentBtn  = null;
+      var currentAudio = null;
+      var synth = window.speechSynthesis || null;
 
-      var currentBtn = null;
-      var synth = window.speechSynthesis;
+      // ── Hjälpfunktioner ────────────────────────────────────────────────────
 
       function getSwedishVoice() {
+        if (!synth) return null;
         var voices = synth.getVoices();
         return voices.find(function (v) { return v.lang.startsWith('sv'); }) || null;
       }
@@ -988,23 +991,34 @@
         removeSelectors.forEach(function (sel) {
           clone.querySelectorAll(sel).forEach(function (el) { el.remove(); });
         });
-        return (clone.innerText || clone.textContent)
-          .replace(/\s+/g, ' ')
-          .trim();
+        return (clone.innerText || clone.textContent).replace(/\s+/g, ' ').trim();
       }
 
       function getMilestoneText(milestone) {
-        var body = milestone.querySelector('.m-body');
-        return extractText(body, ['.next-steps', '.deepen']);
+        return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen']);
       }
 
       function getDeepenText(deepen) {
-        // Läs rubriken + innehållet i fördjupningen
         return extractText(deepen, ['.listen-btn']);
       }
 
-      function stopSpeech() {
-        synth.cancel();
+      // Returnerar mp3-sökväg för en milstolpe eller fördjupning
+      function audioPath(details, isDeepen) {
+        var milestoneEl = isDeepen ? details.closest('details.milestone') : details;
+        if (!milestoneEl) return null;
+        var id = milestoneEl.id; // "m1", "m2" …
+        return AUDIO_BASE + id + (isDeepen ? '-fordj' : '') + '.mp3';
+      }
+
+      // ── Stoppa allt som spelas ─────────────────────────────────────────────
+
+      function stopAll() {
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          currentAudio = null;
+        }
+        if (synth) synth.cancel();
         if (currentBtn) {
           currentBtn.classList.remove('playing');
           currentBtn.innerHTML = '&#128264; Lyssna';
@@ -1012,8 +1026,48 @@
         }
       }
 
+      // ── Starta uppspelning ─────────────────────────────────────────────────
 
-      function makeListenButton(details, getText) {
+      function onDone(btn) {
+        btn.classList.remove('playing');
+        btn.innerHTML = '&#128264; Lyssna';
+        if (currentBtn === btn) { currentBtn = null; currentAudio = null; }
+      }
+
+      function playWithTTS(text, btn) {
+        if (!synth) { onDone(btn); return; }
+        var utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'sv-SE';
+        utt.rate = 0.92;
+        var voice = getSwedishVoice();
+        if (voice) utt.voice = voice;
+        utt.onend = function () { onDone(btn); };
+        synth.speak(utt);
+      }
+
+      function startPlayback(path, getText, btn) {
+        btn.classList.add('playing');
+        btn.innerHTML = '&#9646;&#9646; Stoppa';
+        currentBtn = btn;
+
+        var audio = new Audio(path);
+        audio.addEventListener('canplaythrough', function () {
+          currentAudio = audio;
+          audio.play();
+        }, { once: true });
+        audio.addEventListener('ended', function () { onDone(btn); }, { once: true });
+        audio.addEventListener('error', function () {
+          // Mp3 saknas – fall tillbaka på TTS
+          currentAudio = null;
+          if (currentBtn !== btn) return;
+          playWithTTS(getText(), btn);
+        }, { once: true });
+        audio.load();
+      }
+
+      // ── Skapa en knapp och lägg till i summary ─────────────────────────────
+
+      function makeListenButton(details, isDeepen, getText) {
         var summary = details.querySelector(':scope > summary');
         if (!summary) return;
         var btn = document.createElement('button');
@@ -1023,53 +1077,31 @@
         btn.title = 'Lyssna på texten';
         btn.addEventListener('click', function (e) {
           e.stopPropagation();
-          // Öppna om stängd
           if (!details.open) details.open = true;
-          if (currentBtn === btn) { stopSpeech(); return; }
-          stopSpeech();
-
-          var text = getText();
-          if (!text) return;
-
-          var utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'sv-SE';
-          utterance.rate = 0.92;
-          var voice = getSwedishVoice();
-          if (voice) utterance.voice = voice;
-          utterance.onend = function () {
-            if (currentBtn === btn) {
-              btn.classList.remove('playing');
-              btn.innerHTML = '&#128264; Lyssna';
-              currentBtn = null;
-            }
-          };
-          btn.classList.add('playing');
-          btn.innerHTML = '&#9646;&#9646; Stoppa';
-          currentBtn = btn;
-          synth.speak(utterance);
+          if (currentBtn === btn) { stopAll(); return; }
+          stopAll();
+          startPlayback(audioPath(details, isDeepen), getText, btn);
         });
         summary.appendChild(btn);
       }
 
-      // Lägg till knappar i milstolpar och fördjupningar
       function addListenButtons() {
-        document.querySelectorAll('details.milestone').forEach(function (milestone) {
-          makeListenButton(milestone, function () { return getMilestoneText(milestone); });
+        document.querySelectorAll('details.milestone').forEach(function (m) {
+          makeListenButton(m, false, function () { return getMilestoneText(m); });
         });
-        document.querySelectorAll('details.deepen').forEach(function (deepen) {
-          makeListenButton(deepen, function () { return getDeepenText(deepen); });
+        document.querySelectorAll('details.deepen').forEach(function (d) {
+          makeListenButton(d, true, function () { return getDeepenText(d); });
         });
       }
 
-      // Röster laddas asynkront i vissa webbläsare
-      if (synth.getVoices().length > 0) {
-        addListenButtons();
-      } else {
+      // Röster kan laddas asynkront i vissa webbläsare
+      if (synth && synth.getVoices().length === 0) {
         synth.addEventListener('voiceschanged', addListenButtons);
+      } else {
+        addListenButtons();
       }
 
-      // Stoppa uppläsning om sidan lämnas
-      window.addEventListener('beforeunload', function () { synth.cancel(); });
+      window.addEventListener('beforeunload', stopAll);
     })();
   </script>
   <script>
