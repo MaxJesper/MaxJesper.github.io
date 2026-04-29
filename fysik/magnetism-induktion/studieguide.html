@@ -260,6 +260,97 @@
       .milestone .m-title { font-size: 1rem; }
     }
 
+    /* ── Coach ─────────────────────────────────────────────────────── */
+    .coach-box {
+      background: #fff8f0;
+      border: 1px solid #f0c080;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.9rem;
+      display: none;
+    }
+    .coach-box.coach-visible {
+      display: block;
+    }
+    .coach-header {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.5rem;
+    }
+    .coach-box p {
+      margin: 0.4rem 0;
+      line-height: 1.55;
+      color: #1a1a2e;
+    }
+    .coach-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .coach-links a {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      background: #fef3c7;
+      border: 1px solid #f0c040;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #92400e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.12s;
+    }
+    .coach-links a:hover { background: #fde68a; }
+
+    /* Toggle-switch */
+    .coach-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2e4a8a;
+      user-select: none;
+    }
+    .coach-toggle {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex-shrink: 0;
+    }
+    .coach-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .coach-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .coach-slider::before {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .coach-toggle input:checked + .coach-slider { background: #F59E0B; }
+    .coach-toggle input:checked + .coach-slider::before { transform: translateX(19px); }
+
     /* === Swipe-navigering: scroll-marginal och toast === */
     details.milestone,
     details.deepen {
@@ -307,6 +398,13 @@
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
       <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f4f6fa; border:1px solid #d8e0ea; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Öppna alla</button>
+      <label class="coach-toggle-wrap" title="Slå på coachen för vägledning längs vägen">
+        <span>Coach</span>
+        <span class="coach-toggle">
+          <input type="checkbox" id="coach-toggle-cb" onchange="toggleCoach(this.checked)">
+          <span class="coach-slider"></span>
+        </span>
+      </label>
     </p>
 
     <section class="guide-intro">
@@ -1265,6 +1363,88 @@
         var idx = getCurrentIndex();
         navigateTo(dx < 0 ? idx + 1 : idx - 1);               // vänster = fram, höger = bakåt
       }, { passive: true });
+    })();
+  </script>
+  <script>
+    // ── Coach ─────────────────────────────────────────────────────────────────
+    (function () {
+      var STORAGE_KEY = 'magnetism-coach-enabled';
+
+      var coachData = [
+        {
+          afterId: 'm3',
+          id: 'coach-after-m3',
+          header: 'Coach – dags att öva!',
+          text: 'Du har nu läst klart de tre första milstolparna om magneter och magnetfält. Det är ett bra läge att testa vad du minns innan du går vidare.',
+          links: [
+            { href: './instuderingsfragor.html', label: 'Magneter och magnetfält' }
+          ]
+        },
+        {
+          afterId: 'm8',
+          id: 'coach-after-m8',
+          header: 'Coach – halvvägs, bra jobbat!',
+          text: 'Du har nu gått igenom elektromagnetism, spolar, elektromagneter, elmotorer och induktion. Testa dig själv på frågorna innan du fortsätter med transformatorn.',
+          links: [
+            { href: './instuderingsfragor.html', label: 'Elektromagnetism och elektromagneter' },
+            { href: './instuderingsfragor.html', label: 'Elmotorer, generatorer och induktion' }
+          ]
+        },
+        {
+          afterId: 'm12',
+          id: 'coach-after-m12',
+          header: 'Coach – hela kapitlet klart!',
+          text: 'Snyggt jobbat – du har nu gått igenom alla 12 milstolpar! Nu är det dags att visa vad du kan. Gå igenom resonemangsfrågor och gör sedan övningsprovet.',
+          links: [
+            { href: './instuderingsfragor.html', label: 'Förklara och resonera' },
+            { href: './ovningsprov.html', label: 'Övningsprovet' }
+          ]
+        }
+      ];
+
+      function buildCoachBox(data) {
+        var div = document.createElement('div');
+        div.className = 'coach-box';
+        div.id = data.id;
+        var linksHtml = data.links.map(function (l) {
+          return '<a href="' + l.href + '">' + l.label + '</a>';
+        }).join('');
+        div.innerHTML =
+          '<div class="coach-header">' + data.header + '</div>' +
+          '<p>' + data.text + '</p>' +
+          '<div class="coach-links">' + linksHtml + '</div>';
+        return div;
+      }
+
+      function insertCoachBoxes() {
+        coachData.forEach(function (data) {
+          if (document.getElementById(data.id)) return; // redan inlagd
+          var anchor = document.getElementById(data.afterId);
+          if (!anchor) return;
+          var box = buildCoachBox(data);
+          anchor.parentNode.insertBefore(box, anchor.nextSibling);
+        });
+      }
+
+      function applyCoachState(enabled) {
+        document.querySelectorAll('.coach-box').forEach(function (el) {
+          el.classList.toggle('coach-visible', enabled);
+        });
+        var cb = document.getElementById('coach-toggle-cb');
+        if (cb) cb.checked = !!enabled;
+        try { localStorage.setItem(STORAGE_KEY, enabled ? '1' : '0'); } catch (e) {}
+      }
+
+      window.toggleCoach = function (enabled) {
+        applyCoachState(enabled);
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        insertCoachBoxes();
+        var saved = '';
+        try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+        applyCoachState(saved === '1');
+      });
     })();
   </script>
 </body>

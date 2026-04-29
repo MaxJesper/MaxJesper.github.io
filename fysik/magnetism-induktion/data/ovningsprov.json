@@ -1,102 +1,7 @@
 {
   "sections": [
     {
-      "title": "Del 1. Grundbegrepp",
-      "questions": [
-        {
-          "q": "Vad är elektrisk ström och vilken enhet mäts den i?",
-          "a": "Elektrisk ström är elektroner som rör sig i en ledning. Den mäts i ampere (A).",
-          "lines": 3
-        },
-        {
-          "q": "Vad är elektrisk spänning och vilken enhet mäts den i?",
-          "a": "Elektrisk spänning är skillnaden i laddning mellan två poler och det som pressar fram elektronerna i ledningen. Den mäts i volt (V).",
-          "lines": 3
-        },
-        {
-          "q": "Vad händer med strömmen i en krets om resistansen ökar, om spänningen är oförändrad?",
-          "a": "Strömmen minskar om resistansen ökar, när spänningen är oförändrad.",
-          "lines": 2
-        },
-        {
-          "q": "Vad menas med att ett ämne är en isolator? Ge minst två exempel.",
-          "a": "En isolator är ett material som inte leder elektrisk ström bra. Exempel är plast, gummi, glas och porslin.",
-          "lines": 3
-        }
-      ]
-    },
-    {
-      "title": "Del 2. Kryssfrågor",
-      "questions": [
-        {
-          "q": "Vilka påståenden om spänning är sanna?",
-          "a": "Rätta svar: Spänning mäts i enheten volt. Spänning är skillnaden i laddning mellan den positiva och den negativa polen.",
-          "lines": 4
-        },
-        {
-          "q": "Du gnuggar en ballong mot ditt hår. Hårstråna står upp och dras mot ballongen. Förklara kort varför detta händer.",
-          "a": "Hårstråna får samma typ av laddning och stöter bort varandra, samtidigt som ballongen får motsatt laddning och därför drar till sig hårstråna.",
-          "lines": 4
-        },
-        {
-          "q": "Motståndet i en metalltråd ökar om tråden görs längre eller tunnare. Förklara varför.",
-          "a": "Elektronerna får svårare att ta sig fram om tråden är längre eller tunnare. Därför ökar resistansen.",
-          "lines": 3
-        }
-      ]
-    },
-    {
-      "title": "Del 3. Kopplingar och elsäkerhet",
-      "questions": [
-        {
-          "q": "Förklara skillnaden mellan seriekoppling och parallellkoppling av lampor.",
-          "a": "I en seriekoppling går strömmen genom alla lampor i samma väg. Om en lampa går sönder bryts hela kretsen och alla slocknar. I en parallellkoppling finns flera grenar, så om en lampa går sönder kan de andra fortsätta lysa.",
-          "lines": 6
-        },
-        {
-          "q": "Varför kan strömmen brytas om många apparater används samtidigt i samma uttag eller grenuttag?",
-          "a": "Om för många apparater används samtidigt kan strömmen bli för hög i ledningen. Då löser säkringen eller automatsäkringen ut för att förhindra överhettning och brand.",
-          "lines": 5
-        },
-        {
-          "q": "Ge exempel på två sätt att öka elsäkerheten i ett hem och förklara kort varför de hjälper.",
-          "a": "Exempel: säkringar som bryter strömmen om den blir för hög, jordfelsbrytare som bryter strömmen om den går fel väg, petsäkra uttag som skyddar barn, och skyddsjordning som leder felström till jord.",
-          "lines": 6
-        },
-        {
-          "q": "Varför är elektriska apparater i närheten av vatten extra farliga?",
-          "a": "Vatten innehåller ofta salter och leder därför ström. Då kan ström lättare gå genom kroppen om man rör vid en elektrisk apparat nära vatten.",
-          "lines": 4
-        }
-      ]
-    },
-    {
-      "title": "Del 4. Ohms lag",
-      "questions": [
-        {
-          "q": "I en enkel krets är spänningen 20 V och resistansen 5 Ω. Beräkna strömstyrkan. Visa hur du räknar.",
-          "a": "Ohms lag: I = U / R. I = 20 / 5 = 4 A. Svar: strömstyrkan är 4 A.",
-          "lines": 5
-        },
-        {
-          "q": "I en krets finns ett motstånd kopplat till spänningen 230 V. Strömstyrkan är 5 A. Beräkna resistansen. Visa hur du räknar.",
-          "a": "Ohms lag: R = U / I. R = 230 / 5 = 46 Ω. Svar: resistansen är 46 Ω.",
-          "lines": 5
-        },
-        {
-          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω seriekopplas?",
-          "a": "40 Ω + 40 Ω = 80 Ω.",
-          "lines": 2
-        },
-        {
-          "q": "Vad blir den totala resistansen om två resistorer på 40 Ω parallellkopplas?",
-          "a": "Den totala resistansen blir 20 Ω.",
-          "lines": 2
-        }
-      ]
-    },
-    {
-      "title": "Del 5. Magneter och elektromagnetism",
+      "title": "Del 1. Magneter och magnetfält",
       "questions": [
         {
           "q": "Beskriv hur två stavmagneter påverkar varandra när olika poler riktas mot varandra, och när lika poler riktas mot varandra.",
@@ -104,79 +9,94 @@
           "lines": 3
         },
         {
-          "q": "Vad är det som gör att ett ämne är magnetiskt?",
-          "a": "Ett ämne är magnetiskt när många små magnetiska områden i ämnet är ordnade åt samma håll.",
-          "lines": 3
-        },
-        {
           "q": "Vad händer om du delar en stavmagnet i två delar?",
-          "a": "Då får du två nya magneter. Varje del får både nordpol och sydpol.",
+          "a": "Du får två nya magneter. Varje del får både en nordpol och en sydpol.",
           "lines": 3
         },
         {
-          "q": "Förklara vad en elektromagnet är och nämn två fördelar jämfört med en vanlig magnet.",
-          "a": "En elektromagnet är en spole, ofta med järnkärna, som blir magnetisk när det går ström genom den. Fördelar: den kan slås av och på, och dess styrka kan ändras genom att man ändrar strömmen eller antalet varv.",
-          "lines": 6
+          "q": "Beskriv med egna ord hur en kompass fungerar och varför nålens nordpol pekar mot geografiska norr.",
+          "a": "Kompassen har en liten magnet som kan rotera fritt. Jordens magnetfält påverkar nålen så att nordpolen pekar mot geografiskt norr. Det beror på att jordens magnetfält i norr fysikaliskt är en sydpol, och olika poler dras till varandra.",
+          "lines": 5
         },
         {
-          "q": "Vad upptäckte Hans Christian Ørsted?",
-          "a": "Han upptäckte att en strömförande ledning skapar ett magnetfält, vilket han såg när en kompassnål påverkades av strömmen.",
+          "q": "Hur kan man visa att ett magnetfält finns utan att direkt känna på magneten? Beskriv en metod.",
+          "a": "Man kan lägga järnfilspån på ett papper ovanför magneten. Filspånen ordnar sig längs fältlinjerna och gör fältet synligt.",
           "lines": 4
         }
       ]
     },
     {
-      "title": "Del 6. Induktion, motor, generator och transformator",
+      "title": "Del 2. Elektromagnetism, spolar och elektromagneter",
       "questions": [
         {
-          "q": "Beskriv vad som behövs för att skapa elektricitet genom induktion.",
-          "a": "Det krävs att ett magnetfält förändras i förhållande till en ledning eller spole, till exempel genom att en magnet rör sig in och ut ur en spole eller att spolen rör sig i ett magnetfält.",
-          "lines": 5
+          "q": "Naturvetenskapliga upptäckter har lett till viktiga tillämpningar. Koppla ihop varje upptäckt (1–3) med rätt tillämpning (A–C).\n\n1. Ørsted visade att ström skapar ett magnetfält.\n2. Faraday visade att ett rörligt magnetfält skapar ström.\n3. En spole med järnkärna förstärker ett magnetfält starkt.\n\nA. Generatorer som producerar el i kraftverk.\nB. Elektromagneter i skrotkranar och reläer.\nC. Elmotorer i dammsugare och elbilar.",
+          "a": "1 – C (ström skapar magnetfält → elmotor). 2 – A (rörligt magnetfält skapar ström → generator). 3 – B (spole med järnkärna → elektromagnet).",
+          "lines": 4
         },
         {
-          "q": "Förklara kort hur en elmotor fungerar.",
-          "a": "I en elmotor påverkar magnetfält varandra. En elektromagnet vrider sig i ett magnetfält när strömmen är på, och då omvandlas elektrisk energi till rörelse.",
-          "lines": 5
-        },
-        {
-          "q": "Förklara kort hur en generator fungerar.",
-          "a": "I en generator rör sig en spole eller magnet i förhållande till ett magnetfält. Då induceras elektrisk ström. Generatorn omvandlar rörelse till elektrisk energi.",
-          "lines": 5
-        },
-        {
-          "q": "Vad är det som är gemensamt för en elmotor och en generator, och vad är skillnaden?",
-          "a": "Båda bygger på spolar och magnetfält. Skillnaden är att en motor använder elektrisk energi för att skapa rörelse, medan en generator använder rörelse för att skapa elektrisk energi.",
-          "lines": 5
-        },
-        {
-          "q": "Förklara hur en transformator fungerar på enkel nivå.",
-          "a": "Växelström i primärspolen skapar ett förändrat magnetfält i järnkärnan. Det magnetfältet inducerar en spänning i sekundärspolen. Antalet varv avgör om spänningen höjs eller sänks.",
+          "q": "Förklara vad en elektromagnet är och ge två fördelar jämfört med en permanent magnet.",
+          "a": "En elektromagnet är en spole, ofta med järnkärna, som blir magnetisk när det går ström genom den. Fördelar: den kan slås av och på, och styrkan kan ändras genom att ändra strömmen eller antalet varv.",
           "lines": 6
         },
         {
-          "q": "Varför fungerar en transformator inte med vanlig likström?",
-          "a": "För att det krävs ett förändrat magnetfält för att inducera spänning i den andra spolen. Likström ger inte ett ständigt förändrat magnetfält.",
-          "lines": 4
+          "q": "En elmotor och en generator är varandras motsatser. Förklara vad de har gemensamt och vad som skiljer dem åt.",
+          "a": "Båda bygger på samspelet mellan magnetfält och spolar. En elmotor omvandlar elektrisk energi till rörelseenergi. En generator omvandlar rörelseenergi till elektrisk energi – den är alltså en elmotor som körs baklänges.",
+          "lines": 5
         }
       ]
     },
     {
-      "title": "Del 7. Resonemang",
+      "title": "Del 3. Induktion och generator",
       "questions": [
         {
-          "q": "Ålen använder jordens magnetfält för att orientera sig. Förklara varför en elkabel på havsbotten kan störa detta.",
-          "a": "En strömförande kabel skapar ett magnetfält runt sig. Det magnetfältet kan störa ålens orientering efter jordens magnetfält.",
-          "lines": 4
-        },
-        {
-          "q": "Förklara varför plast är ett bra material i en strömbrytarknapp.",
-          "a": "Plast är en isolator och leder inte ström. Därför kan man trycka på knappen utan att få ström genom kroppen.",
-          "lines": 3
-        },
-        {
-          "q": "Förklara varför två 1,5 V-batterier måste seriekopplas för att driva en 3 V-lampa med full styrka.",
-          "a": "Vid seriekoppling adderas spänningen: 1,5 V + 1,5 V = 3,0 V. Vid parallellkoppling blir spänningen fortfarande 1,5 V och lampan får för låg spänning.",
+          "q": "Beskriv vad som behövs för att induktion ska uppstå. Vad händer om magneten ligger still i spolen?",
+          "a": "Det krävs att magnetfältet förändras i förhållande till spolen, antingen genom att magneten rör sig eller att spolen rör sig. Om magneten ligger still induceras ingen ström.",
           "lines": 5
+        },
+        {
+          "q": "En cykeldynamo är en liten generator. Förklara hur den producerar el som lyser lampan.",
+          "a": "När hjulet driver dynamon roterar en magnet inuti en spole. Det rörliga magnetfältet inducerar en växelspänning i spolen, och den spänningen driver lampan.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara varför generatorer i kraftverk producerar växelström och inte likström.",
+          "a": "I en generator roterar en spole i ett magnetfält. När spolen vrider sig byter den riktning i förhållande till fältet, vilket gör att den inducerade strömmen byter riktning med varje halvt varv. Resultatet är växelström.",
+          "lines": 5
+        }
+      ]
+    },
+    {
+      "title": "Del 4. Transformatorn och elnätet",
+      "questions": [
+        {
+          "q": "Förklara hur en transformator fungerar och varför den inte fungerar med likström.",
+          "a": "Växelström i primärspolen skapar ett ständigt förändrat magnetfält i järnkärnan. Det inducerar en spänning i sekundärspolen. Med likström ändras inte magnetfältet, och då uppstår ingen inducerad spänning.",
+          "lines": 6
+        },
+        {
+          "q": "Beskriv kedjan från kraftverk till elapparat i hemmet. Varför används mycket hög spänning vid långdistanstransport av el?",
+          "a": "El produceras i kraftverket, spänningen höjs i en uppstegringstransformator och leds via stamnätet. Nära bostäder sänks spänningen i en nedstegringstransformator till 230 V. Hög spänning vid transport minskar energiförlusterna i ledningarna, eftersom strömmen blir låg när spänningen är hög.",
+          "lines": 7
+        }
+      ]
+    },
+    {
+      "title": "Del 5. Resonera och ta ställning",
+      "questions": [
+        {
+          "q": "Ålar orienterar sig med hjälp av jordens magnetfält när de vandrar i havet. Elkablar på havsbotten kan störa detta.\n\nResonera kring varför en elkabel stör ålens orientering, och förklara en möjlig konsekvens av detta i två led.",
+          "a": "En strömförande kabel skapar ett magnetfält runt sig som blandas ihop med jordens magnetfält. Ålen kan inte längre avgöra rätt riktning och kan komma ur kurs. Det kan leda till att ålen inte hittar tillbaka till sina lekplatser, vilket på sikt kan påverka ålbeståndet negativt.",
+          "lines": 6
+        },
+        {
+          "q": "Många länder bygger ut vindkraft för att minska användningen av fossila bränslen. Vindkraftverk använder generatorer för att producera el.\n\nTa ställning: är vindkraft ett bra val för Sverige? Formulera två resonemang i två led som talar för vindkraft och ett resonemang i två led som talar emot. Använd naturvetenskapliga begrepp.",
+          "a": "För: Vindkraft använder rörelseenergi från vinden för att driva generatorer, vilket ger el utan koldioxidutsläpp. Det minskar klimatpåverkan jämfört med förbränning av fossila bränslen. / Vinden är en förnybar energikälla som inte tar slut, vilket ger en mer långsiktig och oberoende energiförsörjning. Emot: Vinden blåser inte alltid, vilket gör att produktionen varierar. Det kräver antingen energilagring eller reservkraft, som kan ge ökad miljöpåverkan.",
+          "lines": 10
+        },
+        {
+          "q": "Ge exempel på tre olika sätt som magnetism och induktion används i det moderna samhället. Förklara kort hur fysiken fungerar i varje fall.",
+          "a": "Exempel: 1. Elmotorer i elbilar – ström i en spole skapar ett magnetfält som ger rörelse. 2. Generatorer i kraftverk – rotation driver en spole i ett magnetfält och inducerar växelström. 3. Transformatorer i elnätet – induktion höjer och sänker spänningen för effektiv eltransport.",
+          "lines": 8
         }
       ]
     }
