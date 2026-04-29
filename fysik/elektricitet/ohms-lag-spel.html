@@ -80,6 +80,35 @@
       color: #163b5a;
     }
     /* ── Task panel ──────────────────────────────────────── */
+    .task-panel {
+      background: linear-gradient(160deg, #fffbe8 0%, #fff8d6 100%);
+      border-color: #f0c840;
+      border-left: 4px solid #e6a800;
+      box-shadow: 0 6px 22px rgba(200,140,0,.13);
+    }
+    .task-panel h2 {
+      color: #7a5000;
+    }
+    /* Info-banner */
+    .game-info {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: #fff8e1;
+      border: 1px solid #f0d060;
+      border-left: 4px solid #e6a800;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 14px;
+      font-size: 0.93rem;
+      color: #4a3800;
+      line-height: 1.55;
+    }
+    .game-info-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
     .task-type-badge {
       display: inline-block;
       padding: 5px 12px;
@@ -396,6 +425,17 @@
 
   <!-- Level progress bar -->
   <div class="level-bar" id="levelBar"></div>
+
+  <!-- Info banner -->
+  <div class="game-info">
+    <span class="game-info-icon">👈</span>
+    <div>
+      <strong>Så här spelar du:</strong> Spelet är i två delar.
+      Börja alltid med <strong>uppgiftsrutan till vänster</strong> — läs frågan och svara där.
+      I nivå 5 används även <strong>byggytan i mitten</strong> för att koppla egna kretsar.
+      Komponenter och formler finns i panelen till höger.
+    </div>
+  </div>
 
   <!-- Complete banner -->
   <div class="complete-banner" id="completeBanner">
