@@ -306,6 +306,59 @@
     }
     .coach-links a:hover { background: #fde68a; }
 
+    /* Coach inline frågor */
+    .coach-questions {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .coach-q-card {
+      background: #fffbf2;
+      border: 1px solid #f0c080;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .coach-q-btn {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    .coach-q-btn:hover { background: #fef3c7; }
+    .coach-q-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: #b45309;
+      text-transform: uppercase;
+      min-width: 4.5rem;
+    }
+    .coach-q-text { flex: 1; }
+    .coach-q-answer {
+      padding: 0.5rem 0.8rem 0.6rem 1.4rem;
+      background: #fef9ec;
+      border-top: 1px solid #f0d090;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .coach-a-label {
+      font-weight: 600;
+      color: #b45309;
+      margin-right: 0.3rem;
+    }
+
     /* Toggle-switch */
     .coach-toggle-wrap {
       display: flex;
@@ -860,48 +913,6 @@
     <details class="milestone" id="m10">
       <summary>
         <span class="m-num">Milstolpe 10</span>
-        <span class="m-title">Likström och växelström</span>
-      </summary>
-      <div class="m-body">
-        <p>Elektrisk ström finns i två grundformer. I en ström av <strong class="term">likström</strong> (DC, direct current) flyter elektronerna ständigt åt samma håll. Ett batteri ger likström. I en ström av <strong class="term">växelström</strong> (AC, alternating current) byter elektronerna riktning regelbundet. Ur ett vägguttag kommer växelström.</p>
-
-        <p>Ritar man upp spänningen över tid blir likström en rak, oförändrad linje över nolla, medan växelström blir en sinusformad kurva som oscillerar mellan ett positivt och ett negativt toppvärde. I svenska nätet är toppvärdet cirka 325 V, medan det <em>effektiva värdet</em> – det som används i beräkningar – är 230 V. Nollgenomgångarna sker 100 gånger i sekunden (två per period vid 50 Hz).</p>
-
-        <figure>
-          <img src="/images/fysik/magnetism-induktion/likstrom-vaxelstrom.png" alt="Diagram: rak linje för likström, sinuskurva för växelström" />
-          <figcaption><strong>Likström och växelström</strong> – likström är konstant, växelström oscillerar kring noll som en sinusfunktion.</figcaption>
-        </figure>
-
-        <p>Valet mellan lik- och växelström är inte godtyckligt. Växelström går att transformera – man kan höja eller sänka spänningen med en transformator (milstolpe 11). Det är avgörande för eltransport över långa avstånd. Likström går inte att transformera på det enkla sättet, men har andra fördelar: batterier levererar bara likström, elektronik fungerar på likström, och de allra längsta kraftledningarna (t.ex. kablar under havet) byggs i dag som <em>högspänd likström</em> eftersom förlusterna över mycket långa avstånd blir mindre där.</p>
-
-        <p>I en vanlig bostad kommer växelström in via ett tredelat system: <strong class="term">fas, nolla och jord</strong>. Nollan ligger nära jordens potential, fasen pendlar mellan +325 V och −325 V, och jorden är kopplad till en metallpinne i marken som skyddsåtgärd om något går sönder. Skillnaden mellan fas och nolla ger de 230 V som apparaterna använder.</p>
-
-        <div class="fact-box">
-          <strong>Sammanfattning</strong>
-          Likström flyter alltid åt samma håll (batterier, elektronik). Växelström byter riktning regelbundet (vägguttag, 50 Hz i Sverige). Växelström kan transformeras upp och ned, vilket är nödvändigt för eltransport över långa avstånd.
-        </div>
-
-        <div class="next-steps">
-          <a href="./checklista.html">
-            <span class="n-label">Kontrollera</span>
-            Punkter om lik- och växelström
-          </a>
-          <a href="./instuderingsfragor.html">
-            <span class="n-label">Öva</span>
-            Frågor om lik- och växelström
-          </a>
-          <a href="./larande-spel.html">
-            <span class="n-label">Träna</span>
-            Begreppskort
-          </a>
-        </div>
-      </div>
-    </details>
-
-    <!-- ========== MILSTOLPE 11 – IFYLLD ========== -->
-    <details class="milestone" id="m11">
-      <summary>
-        <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Transformatorn</span>
       </summary>
       <div class="m-body">
@@ -950,60 +961,10 @@
       </div>
     </details>
 
-    <!-- ========== MILSTOLPE 12 – IFYLLD ========== -->
-    <details class="milestone" id="m12">
+    <!-- ========== MILSTOLPE 11 – IFYLLD ========== -->
+    <details class="milestone" id="m11">
       <summary>
-        <span class="m-num">Milstolpe 12</span>
-        <span class="m-title">Elektrisk energi och effekt</span>
-      </summary>
-      <div class="m-body">
-        <p>När en elektrisk apparat är inkopplad och påslagen omvandlar den <strong class="term">elektrisk energi</strong> till något annat: värme i en spis, ljus i en lampa, rörelseenergi i en motor, ljud i en högtalare. Mängden energi som omvandlas varje sekund kallas apparatens <strong class="term">effekt</strong> och mäts i <strong class="term">watt</strong> (W).</p>
-
-        <p>Effekten beror på två saker: hur hög spänningen är och hur stor strömmen är. Sambandet är enkelt:</p>
-        <p style="text-align:center; font-size:1.05em;"><strong>P = U · I</strong></p>
-        <p>där <em>P</em> är effekten i watt, <em>U</em> spänningen i volt och <em>I</em> strömmen i ampere. En apparat som drar 0,5 A vid 230 V har effekten 115 W.</p>
-
-        <p>Energin som förbrukas totalt beror på hur länge apparaten är igång. Energi är effekt multiplicerat med tid:</p>
-        <p style="text-align:center; font-size:1.05em;"><strong>W = P · t</strong></p>
-        <p>Elbolagen mäter energi i <strong class="term">kilowattimmar</strong> (kWh). En kilowattimme är den energi en 1 000 W-apparat förbrukar på en timme. En induktionshäll på 2 000 W som går i en halvtimme förbrukar 1 kWh. Priset per kWh varierar, men är oftast några kronor.</p>
-
-        <figure>
-          <img src="/images/fysik/magnetism-induktion/effekt-apparater.png" alt="Tabell över vanliga apparaters effekt: lampa, dator, kylskåp, spis" />
-          <figcaption><strong>Effekter i hemmet</strong> – vanliga hushållsapparater har effekter från några watt till flera tusen watt.</figcaption>
-        </figure>
-
-        <p>I apparater med hög effekt går det en stor ström. Det är därför uttag för spis och tumlare har tjockare ledningar och egna säkringar: en spis på 6 000 W drar vid 230 V nära 26 ampere, och tunna ledningar skulle bli mycket varma av en sådan ström.</p>
-
-        <div class="fact-box">
-          <strong>Samband</strong>
-          Effekt: P = U · I (watt = volt · ampere). Energi: W = P · t. Energi mäts praktiskt i kilowattimmar. Apparater med hög effekt drar stor ström och kräver grövre ledningar.
-        </div>
-
-        <div class="next-steps">
-          <a href="./checklista.html">
-            <span class="n-label">Kontrollera</span>
-            Punkter om effekt och energi
-          </a>
-          <a href="./larande-spel.html">
-            <span class="n-label">Träna</span>
-            Ohms lag-spel och begreppskort
-          </a>
-          <a href="./instuderingsfragor.html">
-            <span class="n-label">Öva</span>
-            Räkneuppgifter om effekt
-          </a>
-          <a href="./ovningsprov.html">
-            <span class="n-label">Testa</span>
-            Övningsprov
-          </a>
-        </div>
-      </div>
-    </details>
-
-    <!-- ========== MILSTOLPE 13 – IFYLLD ========== -->
-    <details class="milestone" id="m13">
-      <summary>
-        <span class="m-num">Milstolpe 13</span>
+        <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Från kraftverk till elapparat</span>
       </summary>
       <div class="m-body">
@@ -1044,10 +1005,10 @@
       </div>
     </details>
 
-    <!-- ========== MILSTOLPE 14 – IFYLLD (samhällskoppling) ========== -->
-    <details class="milestone" id="m14">
+    <!-- ========== MILSTOLPE 12 – IFYLLD (samhällskoppling) ========== -->
+    <details class="milestone" id="m12">
       <summary>
-        <span class="m-num">Milstolpe 14</span>
+        <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Magnetism och induktion i samhället</span>
       </summary>
       <div class="m-body">
@@ -1369,59 +1330,103 @@
     // ── Coach ─────────────────────────────────────────────────────────────────
     (function () {
       var STORAGE_KEY = 'magnetism-coach-enabled';
+      var COACH_JSON  = './data/instuderingsfragor.json';
 
+      // Frågenummer som visas inline i varje coachbox (globala nummer 1–38)
+      // Grupp 0 (Magneter): Q1–Q9
+      // Grupp 1 (Elektromagnetism): Q10–Q17
+      // Grupp 2 (Elmotorer/induktion): Q18–Q25
+      // Grupp 3 (Transformatorn): Q26–Q32
+      // Grupp 4 (Förklara och resonera): Q33–Q38
       var coachData = [
         {
           afterId: 'm3',
           id: 'coach-after-m3',
           header: 'Coach – dags att öva!',
-          text: 'Du har nu läst klart de tre första milstolparna om magneter och magnetfält. Det är ett bra läge att testa vad du minns innan du går vidare.',
-          links: [
-            { href: './instuderingsfragor.html', label: 'Magneter och magnetfält' }
-          ]
+          text: 'Du har nu läst klart de tre första milstolparna om magneter och magnetfält. Klicka på frågorna nedan och testa vad du minns innan du fortsätter:',
+          questionNums: [2, 4, 5, 7, 8, 9]
         },
         {
           afterId: 'm8',
           id: 'coach-after-m8',
           header: 'Coach – halvvägs, bra jobbat!',
-          text: 'Du har nu gått igenom elektromagnetism, spolar, elektromagneter, elmotorer och induktion. Testa dig själv på frågorna innan du fortsätter med transformatorn.',
-          links: [
-            { href: './instuderingsfragor.html', label: 'Elektromagnetism och elektromagneter' },
-            { href: './instuderingsfragor.html', label: 'Elmotorer, generatorer och induktion' }
-          ]
+          text: 'Du har nu gått igenom elektromagnetism, elektromagneter, elmotorer och induktion. Testa dig på dessa frågor innan du fortsätter:',
+          questionNums: [11, 14, 16, 19, 21, 25]
         },
         {
           afterId: 'm12',
           id: 'coach-after-m12',
           header: 'Coach – hela kapitlet klart!',
-          text: 'Snyggt jobbat – du har nu gått igenom alla 12 milstolpar! Nu är det dags att visa vad du kan. Gå igenom resonemangsfrågor och gör sedan övningsprovet.',
-          links: [
-            { href: './instuderingsfragor.html', label: 'Förklara och resonera' },
-            { href: './ovningsprov.html', label: 'Övningsprovet' }
-          ]
+          text: 'Snyggt jobbat – alla 12 milstolpar klara! Testa resonemangsfrågor och gör sedan övningsprovet:',
+          questionNums: [27, 30, 32, 33, 35, 38],
+          extraLink: { href: './ovningsprov.html', label: '→ Gå till övningsprovet' }
         }
       ];
 
-      function buildCoachBox(data) {
+      function buildFlatQuestions(groups) {
+        var flat = [];
+        (groups || []).forEach(function (g) {
+          (g.items || []).forEach(function (it) {
+            if (it.type === 'figure') return;
+            flat.push({ num: flat.length + 1, q: it.q || '', a: it.a || '' });
+          });
+        });
+        return flat;
+      }
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      function buildCoachBox(data, flatQ) {
         var div = document.createElement('div');
         div.className = 'coach-box';
         div.id = data.id;
-        var linksHtml = data.links.map(function (l) {
-          return '<a href="' + l.href + '">' + l.label + '</a>';
-        }).join('');
+
+        var questionsHtml = '';
+        if (flatQ && data.questionNums) {
+          questionsHtml = data.questionNums.map(function (n) {
+            var item = flatQ[n - 1];
+            if (!item) return '';
+            var aid = 'cq-' + data.id + '-' + n + '-a';
+            return '<div class="coach-q-card">' +
+              '<button class="coach-q-btn" type="button" aria-expanded="false"' +
+              ' aria-controls="' + aid + '"' +
+              ' onclick="var a=document.getElementById(\'' + aid + '\');' +
+              'var e=this.getAttribute(\'aria-expanded\')==\'true\';' +
+              'this.setAttribute(\'aria-expanded\',e?\'false\':\'true\');' +
+              'if(a)a.hidden=e;">' +
+              '<span class="coach-q-num">Fråga ' + n + '</span>' +
+              '<span class="coach-q-text">' + esc(item.q) + '</span>' +
+              '</button>' +
+              '<div class="coach-q-answer" id="' + aid + '" hidden>' +
+              '<span class="coach-a-label">Svar:</span> ' + esc(item.a) +
+              '</div>' +
+              '</div>';
+          }).join('');
+        }
+
+        var extraLinkHtml = data.extraLink
+          ? '<div class="coach-links"><a href="' + data.extraLink.href + '">' +
+            data.extraLink.label + '</a></div>'
+          : '';
+
         div.innerHTML =
           '<div class="coach-header">' + data.header + '</div>' +
           '<p>' + data.text + '</p>' +
-          '<div class="coach-links">' + linksHtml + '</div>';
+          '<div class="coach-questions">' + questionsHtml + '</div>' +
+          extraLinkHtml;
         return div;
       }
 
-      function insertCoachBoxes() {
+      function insertCoachBoxes(flatQ) {
         coachData.forEach(function (data) {
-          if (document.getElementById(data.id)) return; // redan inlagd
+          if (document.getElementById(data.id)) return;
           var anchor = document.getElementById(data.afterId);
           if (!anchor) return;
-          var box = buildCoachBox(data);
+          var box = buildCoachBox(data, flatQ);
           anchor.parentNode.insertBefore(box, anchor.nextSibling);
         });
       }
@@ -1440,10 +1445,22 @@
       };
 
       document.addEventListener('DOMContentLoaded', function () {
-        insertCoachBoxes();
-        var saved = '';
-        try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
-        applyCoachState(saved === '1');
+        fetch(COACH_JSON, { cache: 'no-store' })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            var flatQ = buildFlatQuestions(data.groups);
+            insertCoachBoxes(flatQ);
+            var saved = '';
+            try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+            applyCoachState(saved === '1');
+          })
+          .catch(function (err) {
+            console.warn('Coach: kunde inte ladda instuderingsfrågor', err);
+            insertCoachBoxes(null);
+            var saved = '';
+            try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+            applyCoachState(saved === '1');
+          });
       });
     })();
   </script>

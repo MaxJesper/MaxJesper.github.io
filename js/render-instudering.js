@@ -20,6 +20,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
         return;
       }
 
+      let globalQNum = 0;
       mount.innerHTML = groups.map((g, gi) => {
         const title = g.title || `Del ${gi + 1}`;
         const items = Array.isArray(g.items) ? g.items : [];
@@ -39,6 +40,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
 
           const q = it.q || "";
           const a = it.a || "";
+          const qNum = ++globalQNum;
           const qid = `q-${gi}-${ii}`; // stabil id i detta JSON
           const answerStorageKey = `${storageKeyBase}::${qid}`;
 
@@ -47,7 +49,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
               <div class="study-card">
                 <button class="study-q" type="button" id="${qid}"
                         aria-expanded="false" aria-controls="${qid}-a">
-                  <span class="study-q-label">Fråga</span>
+                  <span class="study-q-label">Fråga ${qNum}</span>
                   <span class="study-q-text">${escapeHtml(q)}</span>
                 </button>
 
@@ -72,7 +74,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
           if (mode === "print-teacher") {
             return `
               <div class="print-item">
-                <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
+                <div class="print-q"><span class="tag">Fråga ${qNum}:</span> ${escapeHtml(q)}</div>
                 <div class="print-a"><span class="tag">Facit:</span> ${escapeHtml(a)}</div>
               </div>
             `;
@@ -83,7 +85,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
           if (saved && saved.trim().length > 0) {
             return `
               <div class="print-item">
-                <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
+                <div class="print-q"><span class="tag">Fråga ${qNum}:</span> ${escapeHtml(q)}</div>
                 <div class="print-student-answer">
                   ${escapeHtml(saved).replaceAll("\n", "<br>")}
                 </div>
@@ -94,7 +96,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
             const linesHtml = Array.from({ length: lines }).map(() => `<div class="line"></div>`).join("");
             return `
               <div class="print-item">
-                <div class="print-q"><span class="tag">Fråga:</span> ${escapeHtml(q)}</div>
+                <div class="print-q"><span class="tag">Fråga ${qNum}:</span> ${escapeHtml(q)}</div>
                 <div class="print-lines">${linesHtml}</div>
               </div>
             `;
