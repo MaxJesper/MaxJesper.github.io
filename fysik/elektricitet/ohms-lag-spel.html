@@ -147,7 +147,20 @@
     .mcq-btn:hover { border-color: #7ab5e8; background: #e8f4ff; transform: translateY(-1px); }
     .mcq-btn.selected { border-color: #2d6fb7; background: #d9eeff; color: #0d3f73; }
     .mcq-btn.correct { border-color: #198754; background: #e0f5ea; color: #0a4a28; }
-    .mcq-btn.wrong { border-color: #c93b3b; background: #ffeaea; color: #7a1616; }
+    .mcq-btn.wrong   { border-color: #c93b3b; background: #ffeaea; color: #7a1616; }
+    .mcq-btn { position: relative; }
+    .mcq-btn.correct::after {
+      content: "✓";
+      position: absolute; top: 50%; right: 10px;
+      transform: translateY(-50%);
+      font-size: 1.15rem; font-weight: 900; color: #198754;
+    }
+    .mcq-btn.wrong::after {
+      content: "✗";
+      position: absolute; top: 50%; right: 10px;
+      transform: translateY(-50%);
+      font-size: 1.15rem; font-weight: 900; color: #c93b3b;
+    }
     /* Numeric input */
     .num-row {
       display: flex;
@@ -1080,9 +1093,11 @@ function renderAnswerArea(task){
       const btn=document.createElement('button');
       btn.className='mcq-btn'; btn.textContent=opt; btn.dataset.val=opt;
       btn.addEventListener('click',()=>{
-        grid.querySelectorAll('.mcq-btn').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
+        // Ignorera klick om rätt svar redan hittats eller knappen redan är fel-markerad
+        if(grid.querySelector('.correct')) return;
+        if(btn.classList.contains('wrong')) return;
         _selectedMCQ=opt;
+        checkAnswer();
       });
       grid.appendChild(btn);
     });
@@ -1117,6 +1132,8 @@ function showTask(){
   document.getElementById('taskText').innerHTML    = S.task.q;
   renderAnswerArea(S.task);
   setFb('Läs uppgiften och svara.','neutral');
+  // Dölj Kontrollera för flervalsfrågor – de kontrolleras automatiskt vid klick
+  document.getElementById('checkBtn').style.display = S.task.mode==='mcq' ? 'none' : '';
 }
 
 function nextTask(){
@@ -1131,13 +1148,20 @@ function checkAnswer(){
   let correct=false;
 
   if(task.mode==='mcq'){
-    if(!_selectedMCQ){ setFb('Välj ett svarsalternativ.','hint'); return; }
+    if(!_selectedMCQ){ return; }
     correct = _selectedMCQ===task.ans;
-    // Mark buttons
-    document.querySelectorAll('.mcq-btn').forEach(b=>{
-      if(b.dataset.val===task.ans) b.classList.add('correct');
-      else if(b.dataset.val===_selectedMCQ && !correct) b.classList.add('wrong');
-    });
+    if(correct){
+      // Markera rätt knapp grön, gråa ut övriga
+      document.querySelectorAll('.mcq-btn').forEach(b=>{
+        if(b.dataset.val===task.ans) b.classList.add('correct');
+        else b.style.opacity='0.45';
+      });
+    } else {
+      // Markera bara den klickade knappen röd – övriga förblir klickbara
+      document.querySelectorAll('.mcq-btn').forEach(b=>{
+        if(b.dataset.val===_selectedMCQ) b.classList.add('wrong');
+      });
+    }
   } else if(task.mode==='numeric'){
     const raw=(document.getElementById('numInput')?.value||'').replace(',','.').replace(/[^0-9.\-]/g,'');
     const val=parseFloat(raw);
@@ -1167,9 +1191,13 @@ function checkAnswer(){
     }
   } else {
     S.streak=0;
-    const hint = task.hint ? ' ' + task.hint : '';
-    const ans  = task.mode==='numeric' ? ` Rätt svar: ${fmt(task.ans)} ${task.unit||''}.` : '';
-    setFb(`Inte riktigt.${hint}${ans}`,'bad');
+    if(task.mode==='mcq'){
+      setFb('Fel – försök igen!','bad');
+    } else {
+      const hint = task.hint ? ' ' + task.hint : '';
+      const ans  = task.mode==='numeric' ? ` Rätt svar: ${fmt(task.ans)} ${task.unit||''}.` : '';
+      setFb(`Inte riktigt.${hint}${ans}`,'bad');
+    }
   }
   updateHUD();
 }
