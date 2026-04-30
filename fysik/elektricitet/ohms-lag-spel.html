@@ -39,6 +39,14 @@
       border: 2px solid #d2dfe9;
       color: #3b5470;
       transition: all .2s;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .lvl-chip:hover {
+      background: #e8f2ff;
+      border-color: #7ab5e8;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(45,111,183,.15);
     }
     .lvl-chip.active {
       background: #dceeff;
@@ -50,6 +58,9 @@
       background: #e3f7ec;
       border-color: #72c897;
       color: #0e5530;
+    }
+    .lvl-chip.done:hover {
+      background: #c8f0da;
     }
     /* ── 3-column grid ───────────────────────────────────── */
     .game-grid {
@@ -1065,8 +1076,18 @@ function renderLevelBar(){
     let cls='lvl-chip';
     if(lv<S.level||S.complete) cls+=' done';
     else if(lv===S.level&&S.started) cls+=' active';
-    return `<div class="${cls}">${name}</div>`;
+    return `<button type="button" class="${cls}" onclick="jumpToLevel(${lv})" title="Hoppa till nivå ${lv}">${name}</button>`;
   }).join('');
+}
+
+function jumpToLevel(lv){
+  S.started=true; S.complete=false;
+  S.score=0; S.streak=0; S.solved=0;
+  S.level=lv; S.perLevel={1:0,2:0,3:0,4:0,5:0};
+  document.getElementById('completeBanner').style.display='none';
+  document.getElementById('startOverlay').style.display='none';
+  updateHUD();
+  nextTask();
 }
 
 /* ═══════════════════════════════════════════════════════════
