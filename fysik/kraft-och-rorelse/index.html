@@ -7,40 +7,100 @@
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>
-    main {
-      font-size: 1.2em;
+    body.area-kraft {
+      --area: #2e4a8a;
+      --area-strong: #1e3466;
+      --area-soft: #eef3fb;
+      --area-border: #b9cde6;
+      --area-hover: #dce7f5;
     }
 
+    main { font-size: 1.2em; }
 
-    .page-intro {
-      margin-bottom: 1.5rem;
+    .area-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: 300px 1fr;
+        align-items: start;
+      }
+    }
+
+    .area-main { min-width: 0; }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .area-hero-image figcaption {
+      font-size: 1rem;
+      color: #1f2937;
+      margin-top: 0.9rem;
+      line-height: 1.55;
+    }
+
+    @media (min-width: 960px) {
+      .area-hero-image {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .area-hero-image img {
+        flex: 1 1 0;
+        width: auto;
+        max-width: 65%;
+      }
+      .area-hero-image figcaption {
+        flex: 0 0 35%;
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
     }
 
     .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
 
     .resource-box h2 {
       margin-top: 0;
       margin-bottom: 0.75rem;
       font-size: 1.2rem;
+      color: var(--area-strong);
     }
 
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
+    .resource-box p { margin-top: 0; color: #444; }
 
     .resource-box ul {
       list-style: none;
@@ -48,14 +108,122 @@
       margin: 0;
     }
 
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
+    .resource-box li { margin-bottom: 0.7rem; }
 
     .resource-box a {
       display: inline-block;
       text-decoration: none;
       font-weight: 600;
+    }
+
+    .role-toggle {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .role-toggle button {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      color: var(--area-strong);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover { background: var(--area-hover); }
+
+    .role-toggle button.active {
+      background: var(--area);
+      color: #fff;
+      border-color: var(--area);
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: var(--area-strong);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li { margin: 0; }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
     }
 
     .study-tips {
@@ -72,16 +240,14 @@
       margin-bottom: 0.5rem;
     }
 
-    .study-tips ul {
-      margin: 0.75rem 0 0 1.2rem;
-    }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
 
-    .study-tips li {
-      margin-bottom: 0.45rem;
-    }
+    /* Lärare-ordning: lärarkortet överst */
+    body[data-role="larare"] .resource-grid article:last-child { order: -1; }
   </style>
 </head>
-<body>
+<body class="area-kraft">
 
   <header class="fysik-header">
     <h1>Krafter och rörelse</h1>
@@ -91,53 +257,123 @@
   <nav id="side-menu"></nav>
 
   <main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
-    <a href="/fysik/tryck/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>
-        Här hittar du material för att träna på krafter, rörelse, tyngdkraft,
-        friktion och Newtons lagar.
-      </p>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
+      <a href="/fysik/tryck/" class="subject-btn">Nästa område →</a>
+    </p>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
+
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide – 14 milstolpar</strong></a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+              <li><a href="./gungbrada.html">Gungbrädesimulatorn</a></li>
+            </ul>
+          </article>
+
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+              <li><a href="./facit-print.html">Facit – utskrift</a></li>
+              <li><a href="./ovningsprov-print.html">Övningsprov – elevutskrift</a></li>
+              <li><a href="./instuderingsfragor-print-elev.html">Instuderingsfrågor – elevutskrift</a></li>
+              <li><a href="./instuderingsfragor-print-larare.html">Instuderingsfrågor med facit – lärarutskrift</a></li>
+            </ul>
+          </article>
+
+        </section>
+      </div>
+
+      <figure class="area-hero-image">
+        <img src="/images/fysik/kraft-och-rorelse/begrepp.png"
+             alt="Begrepp inom krafter och rörelse: kraft, newton, friktion, tyngdpunkt, hävstång" />
+        <figcaption>
+          Här möter du krafter och hur de påverkar rörelse, tyngdkraft,
+          gravitation, friktion, tröghet, Newtons lagar, hävstänger,
+          vridmoment och enkla maskiner.
+        </figcaption>
+      </figure>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <ul>
-          <li><a href="./checklista.html">Checklista</a></li>
-          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
-          <li><a href="./ovningsprov.html">Övningsprov</a></li>
-          <li><a href="./larande-spel.html">Lärande spel</a></li>
-        </ul>
-      </article>
-
-      <article class="resource-box">
-        <h2>För lektioner / läraren</h2>
-        <p>Övrigt material som kan användas i undervisningen.</p>
-        <ul>
-          <li><a href="./facit.html">Facit till övningsprovet</a></li>
-        </ul>
-      </article>
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vad är en kraft?</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Krafter mäts i newton</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Tyngdkraft och gravitation</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Krafter som samverkar och motverkar</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Tröghet och rörelse</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Kraft och acceleration – F = m · a</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Fritt fall och Galilei</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Friktion</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Tyngdpunkt och jämvikt</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Stabilitet och stödyta</a></li>
+        <li><a href="./studieguide.html#m11"><span class="m-num-chip">11</span>Hävstänger</a></li>
+        <li><a href="./studieguide.html#m12"><span class="m-num-chip">12</span>Vridmoment</a></li>
+        <li><a href="./studieguide.html#m13"><span class="m-num-chip">13</span>Enkla maskiner</a></li>
+        <li><a href="./studieguide.html#m14"><span class="m-num-chip">14</span>Krafter i samhället</a></li>
+      </ul>
     </section>
 
     <section class="study-tips">
       <details>
         <summary>Inläsningstips</summary>
         <ul>
-          <li>Börja med att träna på de viktigaste begreppen: kraft, rörelse, hastighet, acceleration, friktion och tyngdkraft.</li>
-          <li>Rita gärna enkla bilder med pilar för att visa vilka krafter som verkar.</li>
-          <li>Fundera på skillnaden mellan att något står stilla, rör sig med jämn fart eller ändrar fart.</li>
-          <li>Träna på vardagliga exempel, till exempel cyklar, bilar, bollar och föremål som faller.</li>
-          <li>Säg svaren högt med egna ord. Då märker du bättre vad du kan och vad du behöver träna mer på.</li>
-          <li>Dela upp pluggandet i kortare pass i stället för att försöka göra allt på en gång.</li>
+          <li>Börja med studieguiden – följ milstolparna i ordning. Varje milstolpe avslutas med övningslänkar du kan klicka direkt vidare till.</li>
+          <li>Träna på formeln F = m × g (tyngdkraft) och F = m · a (acceleration) tills du kan använda dem åt alla håll.</li>
+          <li>Rita kraftpilar – det hjälper dig se vilka krafter som samverkar och om det råder jämvikt.</li>
+          <li>Kom ihåg: massa mäts i kg, kraft mäts i N. Håll dessa isär.</li>
+          <li>Träna på vridmoment med gungbrädesimulatorn – du ser direkt om hävstången är i jämvikt.</li>
+          <li>Koppla ihop friktion, hävstänger och enkla maskiner med vardagsexempel: cykel, skottkärra, ramp till lastbil.</li>
         </ul>
       </details>
     </section>
   </main>
 
   <script src="/js/menu.js"></script>
+  <script>
+    // ===== Rolltoggel: elev (standard) / lärare =====
+    (function () {
+      var STORE_KEY = "mj.role";
+      var btnElev = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+
+      try {
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
+
+      btnElev.addEventListener("click", function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
 </body>
 </html>

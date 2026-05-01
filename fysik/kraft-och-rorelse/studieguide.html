@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Krafter och rörelse</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #2e4a8a;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: center;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #eef4fa;
+      border-left: 4px solid #2e4a8a;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #2e4a8a;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Coach ────────────────────────────────────────────────── */
+    .coach-box {
+      background: #fff8f0;
+      border: 1px solid #f0c080;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.9rem;
+      display: none;
+    }
+    .coach-box.coach-visible { display: block; }
+    .coach-header {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.5rem;
+    }
+    .coach-box p { margin: 0.4rem 0; line-height: 1.55; color: #1a1a2e; }
+    .coach-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .coach-links a {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      background: #fef3c7;
+      border: 1px solid #f0c040;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #92400e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.12s;
+    }
+    .coach-links a:hover { background: #fde68a; }
+
+    .coach-questions {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .coach-q-card {
+      background: #fffbf2;
+      border: 1px solid #f0c080;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .coach-q-btn {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    .coach-q-btn:hover { background: #fef3c7; }
+    .coach-q-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: #b45309;
+      text-transform: uppercase;
+      min-width: 4.5rem;
+    }
+    .coach-q-text { flex: 1; }
+    .coach-q-answer {
+      padding: 0.5rem 0.8rem 0.6rem 1.4rem;
+      background: #fef9ec;
+      border-top: 1px solid #f0d090;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .coach-a-label { font-weight: 600; color: #b45309; margin-right: 0.3rem; }
+
+    /* Toggle-switch */
+    .coach-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2e4a8a;
+      user-select: none;
+    }
+    .coach-toggle {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex-shrink: 0;
+    }
+    .coach-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .coach-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .coach-slider::before {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .coach-toggle input:checked + .coach-slider { background: #F59E0B; }
+    .coach-toggle input:checked + .coach-slider::before { transform: translateX(19px); }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Studieguide</h1>
+    <p>Krafter och rörelse</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f4f6fa; border:1px solid #d8e0ea; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Öppna alla</button>
+      <label class="coach-toggle-wrap" title="Slå på coachen för vägledning längs vägen">
+        <span>Coach</span>
+        <span class="coach-toggle">
+          <input type="checkbox" id="coach-toggle-cb" onchange="toggleCoach(this.checked)">
+          <span class="coach-slider"></span>
+        </span>
+      </label>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar, spel eller laborationer.</p>
+      <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Fördjupningar (★) är klickbara och fälls ut – de innehåller gymnasienivå-material och är inte nödvändiga för grundkursen.</p>
+    </section>
+
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Vad är en kraft?</span>
+      </summary>
+      <div class="m-body">
+        <p>Du använder krafter varje dag utan att tänka på det. När du trycker in ett häftstift, cyklar mot vinden eller lyfter en väska – varje gång är en kraft inblandad. En <strong class="term">kraft</strong> är en påverkan som kan ändra ett föremåls fart, riktning eller form, eller hålla ihop materia.</p>
+
+        <p>Krafter kan ha mycket olika ursprung: muskler, motorer, vinden, magneter eller jordens gravitation. Det de har gemensamt är att de kan beskrivas med tre egenskaper: <strong class="term">storlek</strong>, <strong class="term">riktning</strong> och <strong class="term">angreppspunkt</strong> – det vill säga var på föremålet kraften verkar.</p>
+
+        <p>I figurer ritar man krafter som <strong class="term">kraftpilar</strong>. Pilens riktning visar åt vilket håll kraften verkar, och pilens längd är proportionell mot kraftens storlek. Det är ett enkelt sätt att visa flera krafter på ett föremål samtidigt och se hur de samverkar.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En kraft kan ändra fart, riktning eller form – och den har alltid storlek, riktning och angreppspunkt. Krafter ritas som pilar i figurer.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Vad krafter är och vad de gör
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om krafter och kraftpilar
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Krafter och Newtons tre rörelselagar</summary>
+          <p>Isaac Newton (1642–1727) formulerade tre lagar som beskriver hur krafter och rörelse hänger ihop. Dessa lagar gäller fortfarande som en mycket god approximation för alla föremål vi möter i vardagen.</p>
+          <p><strong>Newtons första lag</strong> (tröghetens lag) säger att ett föremål som inte påverkas av någon nettokraft antingen förblir i vila eller rör sig rakt fram med konstant fart. Ordet <em>nettokraft</em> är nyckeln: det räcker inte att en kraft verkar – det är summan av alla krafter som avgör.</p>
+          <p><strong>Newtons andra lag</strong> kopplar kraft, massa och acceleration: F = m · a. En stor kraft på en liten massa ger stor acceleration; en stor massa kräver stor kraft för att accelereras.</p>
+          <p><strong>Newtons tredje lag</strong> säger att varje kraft har en lika stor motkraft i motsatt riktning. Trycker du mot väggen trycker väggen tillbaka med exakt samma kraft – annars skulle väggen röra sig (eller du inte stanna).</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M1 -->
+    <div class="coach-box" id="coach-m1">
+      <div class="coach-header">🎓 Coach – Milstolpe 1</div>
+      <p>Tre saker avgör hur en kraft påverkar ett föremål. Kan du nämna dem?</p>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Ge tre exempel på föremål eller situationer där krafter förekommer.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Till exempel: lyftkranen som lyfter en båt, ishockeyklubbans träff mot pucken, vinden som driver ett flygplan. (Egna exempel godkänns – poängen är att kraften ändrar rörelse, form eller håller ihop något.)
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad visar pilens längd när man ritar en kraftpil?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Pilens längd är proportionell mot kraftens storlek – en längre pil betyder en större kraft.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Krafter mäts i newton</span>
+      </summary>
+      <div class="m-body">
+        <p>Precis som massa mäts i kilogram mäts krafter i en enhet som heter <strong class="term">newton</strong>, förkortat <strong class="term">N</strong>. Enheten är uppkallad efter Isaac Newton, en av historiens mest betydelsefulla fysiker.</p>
+
+        <p>Hur stor är egentligen 1 newton? Om du håller ett litet stenblock i handen känner du tyngden dra neråt – det är jordens dragningskraft. En massa på ungefär 100 gram har en tyngd på 1 N. Det är alltså inte en speciellt stor kraft: ett äpple väger ungefär 1–1,5 N.</p>
+
+        <p>För att mäta en kraft används en <strong class="term">dynamometer</strong> (kraftmätare). Den består av en spiralfjäder inuti ett skyddsrör av plast eller metall. När en kraft verkar på dynamometern sträcks fjädern, och kraftens storlek kan avläsas direkt på skalan. Ju kraftigare fjäder, desto större kraft kan mätas – en dynamometer märkt "0–10 N" har ett mätområde på tio newton.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Krafter mäts i newton (N). 100 g massa motsvarar ungefär 1 N i tyngd. En dynamometer är ett instrument med spiralfjäder för att mäta krafter.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Enheten newton och dynamometern
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om kraftmätning
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort om krafter
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M2 -->
+    <div class="coach-box" id="coach-m2">
+      <div class="coach-header">🎓 Coach – Milstolpe 2</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad kallas instrumentet man använder för att mäta krafter?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Dynamometer (kraftmätare). Den fungerar med en spiralfjäder som sträcks ut av kraften.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Hur stor tyngd (i newton) har en massa på 500 gram?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> 5 N. (100 g = 1 N, alltså 500 g = 5 N.)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Tyngdkraft och gravitation</span>
+      </summary>
+      <div class="m-body">
+        <p>Om du håller en sten och sedan släpper den faller den rakt ner. Det beror på att jorden drar i stenen med en kraft som kallas <strong class="term">tyngdkraft</strong>. Tyngdkraften är alltid riktad rakt nedåt, mot jordens medelpunkt – oavsett var på jordklotet man befinner sig.</p>
+
+        <p>Tyngdkraften är ett specialfall av ett allmännare fenomen: <strong class="term">gravitation</strong>. Gravitation är en dragningskraft som verkar mellan alla föremål med massa, på hela jorden och i hela universum. Ju större massa ett föremål har, desto kraftigare gravitationsfält skapar det. Det är därför månen hålls kvar i sin bana runt jorden – jordens gravitation drar i månen hela tiden.</p>
+
+        <p>Notera skillnaden mellan <strong class="term">massa</strong> och <strong class="term">tyngd</strong>: massa mäts i kilogram (kg) och anger hur mycket materia ett föremål innehåller – den ändras inte om du åker till månen. Tyngd däremot är en kraft som mäts i newton (N) och beror på vilken gravitationskraft som verkar. På månen är tyngdkraften ungefär 1/6 av den på jorden, så ett föremål med massan 60 kg väger bara 100 N på månen mot 600 N på jorden.</p>
+
+        <p>Sambandet mellan massa och tyngdkraft på jordens yta är enkelt: <strong class="term">F = m × g</strong>, där g ≈ 10 N/kg (jordens gravitationskonstant). En massa på 1 kg har alltså tyngden 10 N.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Tyngdkraft är jordens dragningskraft på ett föremål, alltid riktad nedåt. Gravitation är en allmän dragningskraft mellan alla massor. Massa mäts i kg; tyngd mäts i N. Sambandet är F = m × g, med g ≈ 10 N/kg på jordytan.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Tyngd, massa och gravitation
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Beräkningar med F = m × g
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Tyngden på olika höjd och avståndets roll</summary>
+          <p>Gravitationskraften minskar med kvadraten på avståndet – om avståndet fördubblas minskar kraften till en fjärdedel. Det är Newtons gravitationslag: F = G · m₁ · m₂ / r², där G är gravitationskonstanten (6,674 × 10⁻¹¹ Nm²/kg²), m₁ och m₂ är massorna och r är avståndet mellan dem.</p>
+          <p>I praktiken märks skillnaden lite redan på låg höjd. På 3 000 km höjd över jordytan väger 1 kg ungefär 7 N i stället för 10 N. På 12 000 km höjd är tyngden nere i ca 2,3 N. En raket som lyfter från marken tappar alltså gradvis i tyngd ju högre upp den kommer – utan att massan ändras det minsta.</p>
+          <p>I jordbana (som rymdstationen ISS, ca 400 km höjd) är gravitationen fortfarande 90 % av den på markytan. Astronauterna känner sig ändå "tyngdlösa" – det är för att de och stationen faller runt jorden i samma bana. Det kallas fritt fall eller viktlöshet, och är inte avsaknad av gravitation utan avsaknad av normalkraft.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M3 -->
+    <div class="coach-box" id="coach-m3">
+      <div class="coach-header">🎓 Coach – Milstolpe 3</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är skillnaden mellan massa och tyngd?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Massa (kg) anger hur mycket materia som finns och ändras inte – tyngd (N) är kraften som gravitationen drar med och varierar beroende på var i universum man befinner sig.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Hur stor tyngd har en pojke med massan 40 kg?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> F = m × g = 40 × 10 = 400 N.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför väger du mindre på månen än på jorden?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Månens massa är mycket mindre än jordens, därför är gravitationskraften svagare – ungefär 1/6 av jordens. Din massa ändras inte, men tyngden minskar.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Krafter som samverkar och motverkar</span>
+      </summary>
+      <div class="m-body">
+        <p>Ofta verkar flera krafter på ett föremål samtidigt. Är krafterna riktade åt <strong class="term">samma håll</strong> kan de ersättas med en enda kraft som är lika stor som <strong class="term">summan</strong> av de enskilda krafterna. Två lok som drar en tågvagn åt samma håll med 500 N vardera är liktydigt med en kraft på 1 000 N.</p>
+
+        <p>Är krafterna riktade <strong class="term">rakt motsat</strong> varandra kan de ersättas med en kraft lika stor som <strong class="term">skillnaden</strong> mellan dem, riktad åt det håll där den starkaste kraften verkar. Om en bonde drar åt ett håll med 600 N och en åsna åt det andra med 400 N, är resultatet en kraft på 200 N i bondens riktning.</p>
+
+        <p>Den kraft som ersätter flera krafter kallas <strong class="term">resultant</strong>. Om resultanten är noll – det vill säga krafterna tar ut varandra – är föremålet i <strong class="term">jämvikt</strong> och varken accelererar eller retarderar.</p>
+
+        <p>Det spelar också roll var på ett föremål en kraft har sin <strong class="term">angreppspunkt</strong>. Att dra en låda i dess övre kant kan välta den; att dra i nederkanten håller den stabilt mot golvet.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Krafter åt samma håll summeras; krafter åt motsatt håll subtraheras. Den ersättande kraften kallas resultant. Är resultanten noll råder jämvikt. Angreppspunkten avgör hur en kraft välter eller förflyttar ett föremål.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Krafter som samverkar
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Resultant och jämvikt
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M4 -->
+    <div class="coach-box" id="coach-m4">
+      <div class="coach-header">🎓 Coach – Milstolpe 4</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Krafterna 3,5 N och 6 N verkar åt samma håll. Vad är resultanten?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> 3,5 + 6 = 9,5 N, åt det gemensamma hållet.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Krafterna 3,5 N och 6 N verkar åt motsatt håll. Vad är resultanten?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> 6 − 3,5 = 2,5 N, åt det håll där 6 N verkar.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Tröghet och rörelse</span>
+      </summary>
+      <div class="m-body">
+        <p>Föreställ dig att du sitter på en buss som bromsar plötsligt. Du kastas framåt trots att ingen knuffar dig. Det beror på <strong class="term">tröghet</strong> – föremåls motvilja mot att ändra sin rörelse. Ett föremål i vila vill förbli i vila, och ett föremål i rörelse vill fortsätta röra sig i samma riktning med samma fart, om ingen kraft verkar.</p>
+
+        <p>Detta är kärnan i <strong class="term">Newtons första lag</strong>: ett föremål som inte påverkas av en nettokraft förblir antingen i vila eller i <strong class="term">likformig rörelse</strong> – det vill säga rör sig rakt fram med konstant fart. Bilbältet i en bil är konstruerat just för att stanna dig när bilen bromsas; utan bältet fortsätter du framåt med den fart du hade.</p>
+
+        <p>Fart och rörelse beskrivs med några viktiga begrepp. <strong class="term">Medelfart</strong> är sträckan dividerat med tiden: v = s / t. Farten anges vanligen i m/s eller km/h (1 m/s = 3,6 km/h). Om farten ökar kallas det <strong class="term">acceleration</strong>; om farten minskar kallas det <strong class="term">retardation</strong>.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Tröghet innebär att föremål motstrider förändring i rörelse. Utan nettokraft råder antingen vila eller likformig rörelse (Newtons 1:a lag). Medelfart = sträcka / tid. Fartökning = acceleration; fartminskning = retardation.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Tröghet och rörelse
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om fart och rörelse
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Tröghetsmomentet och cirkelrörelse</summary>
+          <p>Tröghet handlar inte bara om rätlinjig rörelse. För roterande föremål finns begreppet <em>tröghetsmomentet</em> I, som är en massa distribuerad på avstånd från en rotationsaxel. Ju mer massa som befinner sig långt från axeln, desto svårare är det att starta eller stoppa rotationen. Det är därför en pirouett-dansare drar in armarna för att snurra fortare – massan koncentreras närmre axeln, tröghetsmomentet minskar och vinkelhastigheten ökar (rörelsemängdsmomentet bevaras).</p>
+          <p>Vid cirkelrörelse med konstant fart behövs ändå en kraft – inte för att ändra farten utan för att ändra riktningen. Denna kraft kallas <em>centripetalkraft</em> och är alltid riktad mot cirkelns centrum. Utan centripetalkraft skulle föremålet flyga iväg i en rät linje (tröghet). Det är vad som händer om en slungboll plötsligt släpps.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M5 -->
+    <div class="coach-box" id="coach-m5">
+      <div class="coach-header">🎓 Coach – Milstolpe 5</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Förklara med egna ord varför passagerare kastas framåt när en buss bromsar.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Passageraren vill p.g.a. tröghet fortsätta röra sig framåt med den fart bussen hade. Bussen bromsas, men passageraren saknar kraft nog att bromsas lika snabbt – utan bälte kastas hen framåt.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">En cyklist tillryggalägger 180 m på 30 sekunder. Vad är medelfarten i m/s?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> v = s / t = 180 / 30 = 6 m/s.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 6 ========== -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Kraft och acceleration – F = m · a</span>
+      </summary>
+      <div class="m-body">
+        <p>När en nettokraft verkar på ett föremål ändras föremålets rörelse – det accelererar. Sambandet är exakt: kraften är proportionell mot accelerationen, och proportionalitetskonstanten är föremålets massa. Det skrivs <strong class="term">F = m · a</strong>, där F är kraft i newton, m är massa i kilogram och a är acceleration i m/s².</p>
+
+        <p>Sambandet säger två saker på en gång. Dubblar du kraften på ett föremål med konstant massa, dubbleras accelerationen. Dubblar du massan men håller kraften konstant, halveras accelerationen. En tung lastbil accelererar därför långsamt – den kräver stor kraft för att ändra sin rörelse.</p>
+
+        <p>Det är viktigt att förstå att F i formeln är <em>nettokraften</em> – summan av alla krafter. Om du skjuter en låda med 50 N och friktionen bromsar med 30 N, är nettokraften 20 N och det är den som avgör accelerationen.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Newtons andra lag: F = m · a. Större nettokraft ger större acceleration. Större massa kräver större kraft för samma acceleration. F är alltid nettokraft – summan av alla verkande krafter.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Kraft, massa och acceleration
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Beräkningar med F = m · a
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov – krafter och rörelse
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M6 -->
+    <div class="coach-box" id="coach-m6">
+      <div class="coach-header">🎓 Coach – Milstolpe 6</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">En bil med massan 1 000 kg accelererar med 3 m/s². Hur stor är nettokraften?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> F = m · a = 1 000 × 3 = 3 000 N.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">En kraft på 200 N ger en massa en acceleration på 4 m/s². Hur stor är massan?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> m = F / a = 200 / 4 = 50 kg.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 7 ========== -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Fritt fall och Galilei</span>
+      </summary>
+      <div class="m-body">
+        <p>Vad händer om du tappar en tung och en lätt sten samtidigt? Aristoteles hävdade att den tunga stenen faller snabbare. Det verkar rimligt – men det är fel. Den italienske fysikern <strong class="term">Galileo Galilei</strong> (1564–1642) var bland de första att ifrågasätta detta genom systematiska experiment och logisk argumentation.</p>
+
+        <p>Galilei visade att alla föremål faller lika snabbt i <strong class="term">fritt fall</strong>, oberoende av sin massa – förutsatt att luftmotståndet är försumbart. Skälet är att tyngdkraften F = m · g är proportionell mot massan, och det är precis den faktor som bromsar accelerationen (a = F/m). Tyngre föremål dras visserligen kraftigare, men de är också trögare – effekterna tar exakt ut varandra.</p>
+
+        <p>I ett fritt fall accelererar ett föremål med gravitationsaccelerationen <strong class="term">g ≈ 10 m/s²</strong>. Det betyder att farten ökar med 10 m/s för varje sekund som faller. I verkligheten bromsar luftmotståndet, men i vakuum faller en fjäder och ett mynt exakt lika snabbt – ett klassiskt demonstrationsexperiment.</p>
+
+        <p>Galileis metod – att systematiskt mäta och testa hypoteser – var ett avgörande steg mot det moderna naturvetenskapliga <strong class="term">arbetssättet</strong>: observation, hypotes, experiment, slutsats.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Alla föremål faller lika snabbt i fritt fall (utan luftmotstånd), med accelerationen g ≈ 10 m/s². Galilei visade detta experimentellt och lade grunden för det moderna vetenskapliga arbetssättet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Fritt fall och Galilei
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om fritt fall
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Fritt fall med luftmotstånd – terminalfart</summary>
+          <p>I verkligheten finns alltid luftmotstånd. Luftmotståndet ökar med farten: ju snabbare ett föremål rör sig, desto större blir bromskraften. Till slut är luftmotståndet lika stort som tyngdkraften – nettokraften blir noll och föremålet faller med konstant fart. Det kallas <em>terminalfart</em>.</p>
+          <p>En fallskärmshoppare utan öppen skärm når terminalfart på ca 55 m/s (200 km/h) med kroppen horisontellt. Med öppen fallskärm – som har mycket större area – är terminalfarten bara ca 5–7 m/s, vilket möjliggör säker landning. Formeln för luftmotstånd innehåller en luftmotståndskoefficient C_D, luftens densitet ρ, arean A och hastigheten v²: F_drag = ½ · C_D · ρ · A · v².</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M7 -->
+    <div class="coach-box" id="coach-m7">
+      <div class="coach-header">🎓 Coach – Milstolpe 7</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Varför faller en tung och en lätt sten lika snabbt i fritt fall?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Tyngdkraften är proportionell mot massan (F = m·g), men det är samma faktor som gör föremålet trögare (a = F/m). Massan stryks ut och alla föremål får accelerationen g, oberoende av massa.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad bidrog Galilei med till naturvetenskapen utöver fritt fall?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Han betonade vikten av systematiska experiment och mätningar – att pröva hypoteser mot verkligheten – vilket lade grunden för det moderna vetenskapliga arbetssättet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========== MILSTOLPE 8 ========== -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Friktion</span>
+      </summary>
+      <div class="m-body">
+        <p>Drar du en låda över golvet känner du ett motstånd. Även om ytan ser slät ut är den, sedd i mikroskop, ojämn och skrovlig. Låd-bottens ojämnheter hakar i golvets ojämnheter och skapar en bromsande kraft – <strong class="term">friktionskraft</strong>. Ju ojämnare ytorna är, desto större friktionskraft.</p>
+
+        <p>Friktionskraften beror på två saker: ytornas <strong class="term">skrovlighet</strong> och föremålets <strong class="term">tyngd</strong>. En tung låda trycker hårdare mot golvet, ojämnheterna greppar fastare och friktionen ökar. Det spelar också roll vilket <strong class="term">material</strong> ytorna är gjorda av – stål mot stål ger mindre friktion än gummi mot asfalt.</p>
+
+        <p>Man skiljer mellan <strong class="term">glidfriktion</strong> och <strong class="term">rullfriktion</strong>. Glidfriktion uppstår när ett föremål dras direkt mot underlaget; rullfriktion uppstår när det rullar. Rullfriktion är klart mindre än glidfriktion – det är därför hjulet är en av mänsklighetens viktigaste uppfinningar. Vikingar utnyttjade stockar som hjulet för att dra sina skepp på land.</p>
+
+        <p><strong class="term">Friktionen kan vara både till nytta och nackdel.</strong> Utan friktion mot marken skulle du inte kunna gå – skosulorna skulle bara glida. Spiken sitter fast i väggen tack vare friktionen. Men i en motor skapar friktion värme som sliter ut delar – det är därför man smörjer rörliga delar med olja och monterar kullager som omvandlar glidfriktion till rullfriktion.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Friktion är en bromsande kraft som uppstår när ytor rör sig mot varandra. Den ökar med ytans skrovlighet och föremålets tyngd. Rullfriktion är mindre än glidfriktion. Friktionen kan vara till nytta (gå, bromsa) och nackdel (förslitning, värme).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Friktion – glidfriktion och rullfriktion
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om friktion
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort om friktion
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Friktionsvärme, vattenplaning och luftmotstånd</summary>
+          <p>Friktion omvandlar rörelseenergi till värme. Det är detta som händer när du gnider handflatorna mot varandra – friktionen värmer upp dem. I maskiner och motorer uppstår friktionsvärme som kan skada delar om det inte hanteras. Kullager, smörjolja och smörjfett minimerar friktionen. Stannar olje-nivån i en motor sjunka, "skär" motorn – friktionen blir så stor att metalldelar smälter ihop.</p>
+          <p>Vid regn minskar friktionen mellan däck och vägbana. Vid högre hastigheter kan dessutom <em>vattenplaning</em> inträffa: däcken hinner inte tränga undan vattnet och lyfter upp på ett vattenfilms-lager. Styrförmågan försvinner nästan helt, och bilen glider utan kontroll. Risken ökar med slitna däck och hög hastighet.</p>
+          <p>I luft och vatten uppstår bromsande krafter som liknar friktion – <em>luftmotstånd</em> och <em>vattenmotstånd</em>. Dessa beror på föremålets form och yta. Strömlinjeformade fordon, fiskar och fåglar minskar motståndet med en mjuk form och slät yta. Fallskärmar utnyttjar tvärtom ett stort luftmotstånd för att sakta ner.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M8 -->
+    <div class="coach-box" id="coach-m8">
+      <div class="coach-header">🎓 Coach – Milstolpe 8</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Ge ett exempel på när friktion är till nytta och ett när den är till nackdel.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Nytta: friktionen mot marken gör att vi kan gå och bromsa. Nackdel: friktion i en motors rörliga delar skapar värme och slitage.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför är rullfriktion mindre än glidfriktion?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Vid rullfriktion sker bara en liten deformation vid kontaktpunkten – ytorna hakar inte in i varandra på samma sätt som vid glidning.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 9 ========== -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Tyngdpunkt och jämvikt</span>
+      </summary>
+      <div class="m-body">
+        <p>Försök balansera en blyertspenna på fingret. Det finns bara en punkt där pennan ligger stadigt utan att falla – det är pennans <strong class="term">tyngdpunkt</strong>. Tyngdpunkten är den punkt där man kan tänka sig att hela föremålets massa är samlad, och det är i den punkten tyngdkraften har sin angreppspunkt.</p>
+
+        <p>Tyngdpunkten kan ligga inuti föremålet, som i mitten av en järnkula – men den kan också ligga utanför det material som föremålet är gjort av. En ring eller ett hästskoformat föremål har sin tyngdpunkt i mitten av tomrummet, inte i materialet.</p>
+
+        <p>Det finns tre typer av <strong class="term">jämviktsläge</strong>. I ett <strong class="term">stabilt</strong> (säkert) läge hänger tyngdpunkten rakt under vridningspunkten – rubbas föremålet gungar det tillbaka. I ett <strong class="term">labilt</strong> (osäkert) läge befinner sig tyngdpunkten rakt ovanför vridningspunkten – den minsta störning välter föremålet. I ett <strong class="term">obestämt</strong> läge befinner sig tyngdpunkten i vridningspunkten – föremålet stannar i vilket läge man sätter det.</p>
+
+        <p>Tyngdkraften vill alltid dra tyngdpunkten så lågt som möjligt. Det är därför stabilt jämviktsläge uppnås när tyngdpunkten är rakt under vridningspunkten.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Tyngdpunkten är den punkt där man kan tänka sig att all massa är samlad. Tre jämviktslägen: stabilt (tyngdpunkt under vridningspunkten), labilt (tyngdpunkt ovan) och obestämt (tyngdpunkt i vridningspunkten).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Tyngdpunkt och jämvikt
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om tyngdpunkt
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M9 -->
+    <div class="coach-box" id="coach-m9">
+      <div class="coach-header">🎓 Coach – Milstolpe 9</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Var befinner sig tyngdpunkten hos en ring?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> I ringöppningens centrum – alltså utanför det material ringen är gjord av.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Beskriv skillnaden mellan stabilt och labilt jämviktsläge.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Stabilt: tyngdpunkten är under vridningspunkten, föremålet återgår efter störning. Labilt: tyngdpunkten är ovan vridningspunkten, en liten störning välter föremålet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 10 ========== -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Stabilitet och stödyta</span>
+      </summary>
+      <div class="m-body">
+        <p>Ett föremål välter när lodlinjen genom tyngdpunkten hamnar utanför <strong class="term">stödytan</strong>. Stödytan är hela markytan innanför kontaktpunkterna – för en stol med fyra ben är det rektangeln mellan de fyra benen, inte bara benen i sig.</p>
+
+        <p>Det finns två sätt att göra ett föremål stabilare: öka stödytan och/eller sänka tyngdpunkten. En bok som ligger ned har en större stödyta och lägre tyngdpunkt än en bok som står upp – den är därför svårare att välta. En racerbil har bred hjulbas (stor stödyta) och låg kaross (låg tyngdpunkt), vilket gör den stabil i kurvor.</p>
+
+        <p>Principen används också i konstruktion: höga byggnadskranar har tunga bas-vikter för att sänka hela systemets tyngdpunkt. Tightrope-dansare håller en lång stång vågrätt – den böjer ner i ändarna och sänker systemets tyngdpunkt under linans nivå, vilket skapar stabilt jämviktsläge.</p>
+
+        <figure>
+          <img src="/images/fysik/kraft-och-rorelse/gungbrada.png" alt="Illustration av stödyta och tyngdpunkt" />
+          <figcaption>Lodlinjen genom tyngdpunkten måste hamna inom stödytan – annars välter föremålet.</figcaption>
+        </figure>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Föremål välter när lodlinjen genom tyngdpunkten hamnar utanför stödytan. Stor stödyta och låg tyngdpunkt ger hög stabilitet. Stödytan är hela ytan innanför kontaktpunkterna.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Stabilitet och stödyta
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om stabilitet
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M10 -->
+    <div class="coach-box" id="coach-m10">
+      <div class="coach-header">🎓 Coach – Milstolpe 10</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Varför står en vilstol vid en pool stabilare än en hög barstol?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Vilstolen har bredare ben (större stödyta) och lägre tyngdpunkt – lodlinjen genom tyngdpunkten hamnar svårare utanför stödytan jämfört med den höga barstolen.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad menas med stödyta för en stol med fyra ben?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Hela rektangeln (ytan) innanför de fyra benen – inte bara benen i sig.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========== MILSTOLPE 11 ========== -->
+    <details class="milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Hävstänger</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">hävstång</strong> är ett av mänsklighetens äldsta verktyg för att spara kraft. Det kan vara ett spett, en planka, en skottkärra eller skalenstrumpa. Principen är alltid densamma: en stång vrider sig kring en fast punkt, <strong class="term">vridningspunkten</strong>.</p>
+
+        <p>En <strong class="term">tvåarmad hävstång</strong> har krafter på båda sidorna om vridningspunkten. En gungbräda är ett klassiskt exempel – den ena sidan bär upp en person, den andra sidan bär upp en annan. En <strong class="term">enarmad hävstång</strong> har däremot alla krafter på samma sida om vridningspunkten. En skottkärra fungerar som en enarmad hävstång: hjulaxeln är vridningspunkten, lasten trycker nedåt och du lyfter i handtagen – båda på samma sida.</p>
+
+        <p>Det avstånd som gäller från vridningspunkten till kraftens angreppspunkt kallas <strong class="term">hävarm</strong>. En lång hävarm innebär att du kan lyfta en tung last med liten kraft. Det är därför en lång skiftnyckel är lättare att vrida med än en kort: havarmen är längre.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En hävstång vrider sig kring vridningspunkten. Tvåarmad: krafter på båda sidor. Enarmad: krafter på en sida. Havarmen är avståndet från vridningspunkten till kraftens angreppspunkt – lång hävarm kräver liten kraft.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Hävstänger och hävarm
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om hävstänger
+          </a>
+          <a href="./gungbrada.html">
+            <span class="n-label">Laborera</span>
+            Gungbrädesimulatorn
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- Coach M11 -->
+    <div class="coach-box" id="coach-m11">
+      <div class="coach-header">🎓 Coach – Milstolpe 11</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är skillnaden mellan en enarmad och en tvåarmad hävstång?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Tvåarmad: krafter finns på båda sidor om vridningspunkten (t.ex. gungbräda). Enarmad: alla krafter är på samma sida om vridningspunkten (t.ex. skottkärra – hjulet är vridningspunkten, last och lyft är på samma sida).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför är det lättare att lossa en rostig mutter med en lång skiftnyckel?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Längre hävarm ger större vridmoment för samma kraft – du kan alltså producera ett större vridande med samma muskelkraft.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 12 ========== -->
+    <details class="milestone" id="m12">
+      <summary>
+        <span class="m-num">Milstolpe 12</span>
+        <span class="m-title">Vridmoment</span>
+      </summary>
+      <div class="m-body">
+        <p>Hur kraftig vridförmåga en hävstång har beror på två saker: kraftens storlek och hävarmens längd. Produkten kallas <strong class="term">vridmoment</strong> och betecknas ofta M:</p>
+
+        <p style="text-align:center;"><strong>M = F · l</strong></p>
+
+        <p>Här är F kraften i newton och l havarmen i meter. Enheten för vridmoment blir då <strong class="term">Nm (newtonmeter)</strong>. En kraft på 200 N med havarmen 0,25 m ger vridmomentet 200 × 0,25 = 50 Nm.</p>
+
+        <p>En hävstång är i <strong class="term">jämvikt</strong> när vridmomentet åt ena hållet är lika stort som vridmomentet åt det andra hållet. På en gungbräda: flicka med massan 60 kg sitter 2 m från mitten och lillebror med massan 40 kg sitter 3 m från mitten. Vridmomentet på flickans sida: 600 N × 2 m = 1 200 Nm. Lillebrors sida: 400 N × 3 m = 1 200 Nm. Lika – gungbrädan är i jämvikt.</p>
+
+        <p>Principen används överallt: bromssystem i bilar, momentnycklar som kräver ett exakt vridmoment, kranbalkar och sportredskap som tennisracketen (handen är vridningspunkten).</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Vridmoment M = F · l (kraft gånger hävarm), enhet Nm. Hävstång i jämvikt: vridmomentet åt ena hållet = vridmomentet åt andra hållet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Vridmoment och jämvikt
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Beräkningar med vridmoment
+          </a>
+          <a href="./gungbrada.html">
+            <span class="n-label">Laborera</span>
+            Gungbrädesimulatorn
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Momentjämvikt i konstruktion</summary>
+          <p>Vridmoment är grundläggande i all konstruktion. En bro som bär trafik utsätts för vridmoment kring stödpunkterna – ingenjören måste se till att hållfastheten räcker. I en kran hänger lasten långt ut och skapar ett enormt vridmoment; en motvikt på kransarmen på andra sidan balanserar detta.</p>
+          <p>En mänsklig arm fungerar som en enarmad hävstång med vridningspunkten i armbågsleden. Bicepsen fäster nära armbågen, kanske 4 cm från leden, men handen är 30–35 cm bort. För att lyfta 10 N i handen måste bicepsen dra med nästan 10 × (30/4) ≈ 75 N. Muskler är konstruerade för snabba rörelser, inte stor kraft – men havarmen i rörelsens riktning är lång, så rörelseamplituden vid handen är stor för en liten muskelrörelse.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M12 -->
+    <div class="coach-box" id="coach-m12">
+      <div class="coach-header">🎓 Coach – Milstolpe 12</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">En 3 m lång planka används som hävstång. Du lyfter med kraften 75 N längst ut. Hur stort är vridmomentet?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> M = F · l = 75 × 3 = 225 Nm.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">En mutter kräver ett vridmoment på 120 Nm. Havarmen på skiftnyckeln är 0,2 m. Hur stor kraft behövs?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> F = M / l = 120 / 0,2 = 600 N.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 13 ========== -->
+    <details class="milestone" id="m13">
+      <summary>
+        <span class="m-num">Milstolpe 13</span>
+        <span class="m-title">Enkla maskiner</span>
+      </summary>
+      <div class="m-body">
+        <p>Under årtusenden har människor utnyttjat enkla hjälpmedel för att lyfta tunga laster med liten kraft. Dessa kallas <strong class="term">enkla maskiner</strong>. Hävstången (milstolpe 11–12) är en av dem, men det finns fler: det <strong class="term">lutande planet</strong>, <strong class="term">skruven</strong>, <strong class="term">kilen</strong>, <strong class="term">hjulet och axeln</strong>, och <strong class="term">blocket</strong> (taljan).</p>
+
+        <p>Alla enkla maskiner följer <strong class="term">mekanikens gyllene regel</strong>: det man vinner i kraft förlorar man i sträcka – och vice versa. En liten kraft som verkar över en lång sträcka kan lyfta en tung last en kort sträcka. Energin är densamma (arbete = kraft × sträcka), men kraften kan delas ut jämnare och göras hanterbar.</p>
+
+        <p>Det <strong class="term">lutande planet</strong> är ett sluttande underlag som används för att rulla eller dra ett föremål upp i stället för att lyfta det rakt. Skjutrampen till ett lastfordon är ett lutande plan: lasten är tung, men kraften längs rampen är betydligt mindre än att lyfta rakt upp. Ju flackare ramp, desto less kraft – men desto längre väg.</p>
+
+        <p><strong class="term">Skruven</strong> kan ses som ett lutande plan virat runt en cylinder. Varje varv förflyttar skruven en liten sträcka framåt (stigning), men handen snurrar en lång sträcka (omkretsen). Stor mekanisk fördel – och det är därför skruvar och spiralmejslar används för att skapa stora krafter.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Enkla maskiner (hävstång, lutande plan, skruv, kil, hjul, talja) följer mekanikens gyllene regel: vinner man kraft förlorar man sträcka. Det utförda arbetet är detsamma.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Enkla maskiner och gyllene regeln
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om enkla maskiner
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Mekanisk fördel och verkningsgrad</summary>
+          <p>Den <em>mekaniska fördelen</em> (MA) är kvoten mellan motstånds-kraften och drivkraften: MA = F_last / F_hand. Ett lutande plan med MA = 5 innebär att du lyfter en last fem gånger tyngre än din insatskraft – men du måste röra din hand fem gånger så långt.</p>
+          <p>I praktiken är MA alltid lägre än det teoretiska värdet, eftersom friktion förekommer. Verkningsgraden η = nyttig energi ut / tillförd energi in, uttryckt som procent. En maskin med MA = 5 men verkningsgraden 80 % ger en verklig fördel på 5 × 0,80 = 4. Energi kan inte skapas eller förstöras – men den kan omvandlas till värme via friktion och förloras som nyttig rörelseenergi.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M13 -->
+    <div class="coach-box" id="coach-m13">
+      <div class="coach-header">🎓 Coach – Milstolpe 13</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Förklara mekanikens gyllene regel med egna ord.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Det man vinner i kraft förlorar man i sträcka. Enkla maskiner kan minska den kraft man behöver använda, men man måste då röra sig en längre sträcka. Totala arbetet är detsamma.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Hur kan man se skruven som ett lutande plan?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Gängan är ett lutande plan virat runt en cylinder. Varje varv runt skruven är en lång sträcka, men skruven avancerar bara en liten bit (stigningen) – precis som ett flackt lutande plan ger stor rörelseväg men liten höjdökning.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MILSTOLPE 14 ========== -->
+    <details class="milestone" id="m14">
+      <summary>
+        <span class="m-num">Milstolpe 14</span>
+        <span class="m-title">Krafter och rörelse i samhället</span>
+      </summary>
+      <div class="m-body">
+        <p>Kunskapen om krafter och rörelse är inte bara akademisk – den styr hur vi konstruerar fordon, bygger broar, förebygger olyckor och förstår naturkatastrofer. I den sista milstolpen vidgar vi perspektivet till samhälle, miljö och individ.</p>
+
+        <p><strong class="term">Trafiksäkerhet</strong> bygger direkt på mekanik. Bromssträckan ökar med fartens kvadrat: dubblar du farten, fyrdubblas bromssträckan. Säkerhetsbältet utnyttjar tröghetens lag – vid en kollision vill kroppen fortsätta framåt, bältet bromsar den sakta i stället för att låta den slå i ratten. Krockkuddar förlänger bromstiden ytterligare, vilket minskar kraften mot kroppen (impulssatsen: F · Δt = Δp).</p>
+
+        <p><strong class="term">Byggkonstruktion</strong> handlar om att hantera krafter och vridmoment. En balkbro bär sin last via böjmotstånd; en hängbro leder krafterna längs kablarna som dragkrafter. Höga byggnader måste klara vindkrafter och jordbävningar – krafterna är horisontella och vill välta byggnaden.</p>
+
+        <p><strong class="term">Miljöperspektiv:</strong> Friktion i fordon innebär energiförlust. Strömlinjeformade bilar och tåg minskar luftmotstånd, vilket sänker bränsleförbrukning och koldioxidutsläpp. Elektriska fordon förlorar dessutom energi till värme vid regenerativ bromsning – men återvinner en del av rörelseenergin som el.</p>
+
+        <p><strong class="term">Individperspektiv:</strong> Ergonomi – läran om hur kroppen bäst används – är tillämpad mekanik. Rätt lyfteknik (böj på knäna, håll lasten nära kroppen, rak rygg) minskar vridmomentet på ländryggen och förebygger skador. Felaktig lyftteknik kan skapa vridmoment i ryggradens diskar som är mångdubbelt tyngre än den lyfta lasten.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Krafter och rörelse styr trafiksäkerhet (bromssträcka, bälte), byggkonstruktion (broar, höghus), miljöpåverkan (friktion och bränsleförbrukning) och ergonomi (lyfteknik och ryggskador).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Hela checklistan – samla ihop
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Impuls och krocksäkerhet – djupare analys</summary>
+          <p>Impulssatsen säger att kraftens tidintegral (impulsen) är lika med förändringen i rörelsemängd: F · Δt = m · Δv. Vid en kollision är Δv given (bilen stannar från 50 km/h till 0). Om Δt är mycket kort – hård kollision – måste F vara stor och den kan vara dödlig. Krockkuddar och deformationszoner ökar Δt (bromstiden) och minskar därmed F på kroppen.</p>
+          <p>Formeln förklarar varför det är farligare att köra in i en betongmur än i ett räcke som böjer sig. Betongmuren ger liten Δt; räcket ger större Δt och alltså lägre toppkraft. Samma princip används i boxning – man rör huvudet undan vid en träff för att öka Δt och minska kraftens verkan.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- Coach M14 -->
+    <div class="coach-box" id="coach-m14">
+      <div class="coach-header">🎓 Coach – Milstolpe 14</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Förklara med fysikens hjälp varför bromssträckan ökar kraftigt när farten ökar.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Rörelseenergin är proportionell mot fartens kvadrat (E_k = ½mv²). Dubbel fart ger fyra gånger mer rörelseenergi som måste omvandlas av bromsarna – bromsstraff är dessutom begränsad av väggrepp – och bromssträckan fyrdubblas.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Resonera i två led om hur strömlinjeformade elbilar kan minska miljöpåverkan.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span> Strömlinjeform minskar luftmotståndet → bilen behöver mindre energi för att hålla farten → laddningarna räcker längre och behovet av elproduktion minskar → om elen produceras med fossila bränslen minskar koldioxidutsläppen.
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    /* ── Öppna/stäng alla milstolpar ── */
+    function toggleAllMilestones() {
+      const milestones = document.querySelectorAll('details.milestone');
+      const btn = document.getElementById('toggle-all-btn');
+      const anyOpen = Array.from(milestones).some(d => d.open);
+      milestones.forEach(d => d.open = !anyOpen);
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+
+    /* ── Coach ── */
+    let coachActive = false;
+
+    function toggleCoach(on) {
+      coachActive = on;
+      document.querySelectorAll('.coach-box').forEach(box => {
+        box.classList.toggle('coach-visible', on);
+      });
+    }
+
+    function toggleCoachQ(btn) {
+      const card = btn.closest('.coach-q-card');
+      const answer = card.querySelector('.coach-q-answer');
+      const hidden = answer.hidden;
+      answer.hidden = !hidden;
+    }
+
+    /* ── URL-hash: öppna rätt milstolpe direkt ── */
+    (function () {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash);
+        if (el && el.tagName === 'DETAILS') {
+          el.open = true;
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
