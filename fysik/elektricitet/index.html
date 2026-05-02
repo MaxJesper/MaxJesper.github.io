@@ -87,15 +87,52 @@
     }
 
     .area-hero-image figcaption {
-      font-size: 1rem;
-      color: #1f2937;
       margin-top: 0.9rem;
-      line-height: 1.55;
     }
 
-    .area-hero-image figcaption a {
+    .concept-heading {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
       color: var(--area-strong);
-      font-weight: 600;
+      font-weight: 700;
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 0.2rem;
+    }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.18rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .concept-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .concept-list a:hover {
+      text-decoration: underline;
+      color: var(--area-strong);
     }
 
     .resource-grid {
@@ -342,9 +379,23 @@
           <span style="font-weight:400; font-size:0.85rem;">(översikt: ström, spänning, resistans, krets, Ohms lag)</span>
         </div>
         <figcaption>
-          Här möter du elektrisk ström, spänning och resistans,
-          ledare och isolatorer, Ohms lag, serie- och parallellkopplingar,
-          kopplingsscheman, effekt och energi samt elsäkerhet i hemmet.
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <ul class="concept-list">
+            <li><a href="./studieguide.html#m1">Elektrisk ström</a></li>
+            <li><a href="./studieguide.html#m2">Spänning (volt)</a></li>
+            <li><a href="./studieguide.html#m4">Resistans (ohm)</a></li>
+            <li><a href="./studieguide.html#m5">Ohms lag (U = R · I)</a></li>
+            <li><a href="./studieguide.html#m3">Ledare</a></li>
+            <li><a href="./studieguide.html#m3">Isolator</a></li>
+            <li><a href="./studieguide.html#m6">Seriekoppling</a></li>
+            <li><a href="./studieguide.html#m6">Parallellkoppling</a></li>
+            <li><a href="./studieguide.html#m8">Kopplingsschema</a></li>
+            <li><a href="./studieguide.html#m9">Elektrisk effekt (watt)</a></li>
+            <li><a href="./studieguide.html#m9">Kilowattimme</a></li>
+            <li><a href="./studieguide.html#m10">Säkring</a></li>
+            <li><a href="./studieguide.html#m10">Jordfelsbrytare</a></li>
+            <li><a href="./studieguide.html#m11">Elsäkerhet</a></li>
+          </ul>
         </figcaption>
       </figure>
     </section>

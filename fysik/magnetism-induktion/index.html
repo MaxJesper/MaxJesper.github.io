@@ -66,13 +66,62 @@
     }
 
     .area-hero-image figcaption {
-      font-size: 1rem;
-      color: #1f2937;
       margin-top: 0.9rem;
-      line-height: 1.55;
     }
 
-    .area-hero-image figcaption a {
+    .concept-heading {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--area-strong);
+      font-weight: 700;
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 0.2rem;
+    }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.18rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .concept-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .concept-list a:hover {
+      text-decoration: underline;
+      color: var(--area-strong);
+    }
+
+    .concept-note {
+      margin: 0.65rem 0 0 0;
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .concept-note a {
       color: var(--area-strong);
       font-weight: 600;
     }
@@ -88,13 +137,12 @@
       .area-hero-image img {
         flex: 1 1 0;
         width: auto;
-        max-width: 65%;
+        max-width: 60%;
       }
 
       .area-hero-image figcaption {
-        flex: 0 0 35%;
+        flex: 0 0 38%;
         margin-top: 0;
-        font-size: 1.1rem;
       }
     }
 
@@ -336,12 +384,25 @@
         <img src="/images/fysik/magnetism-induktion/introduktion.png"
              alt="Översikt av området: stavmagnet, spole, galvanometer, elektromagnet, elmotor, generator och kraftledningar" />
         <figcaption>
-          Här möter du magneter och magnetfält, jordens magnetism,
-          elektromagneter, elmotorer, generatorer, transformatorer, induktion
-          och hur elnätet hänger ihop.<br><br>
-          <em>Elektricitetens grunder och Ohms lag
-          behandlas i föregående område,
-          <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.</em>
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <ul class="concept-list">
+            <li><a href="./studieguide.html#m1">Permanent magnet</a></li>
+            <li><a href="./studieguide.html#m1">Nordpol och sydpol</a></li>
+            <li><a href="./studieguide.html#m2">Magnetfält</a></li>
+            <li><a href="./studieguide.html#m2">Fältlinjer</a></li>
+            <li><a href="./studieguide.html#m3">Kompassen</a></li>
+            <li><a href="./studieguide.html#m4">Elektromagnetism</a></li>
+            <li><a href="./studieguide.html#m5">Spole</a></li>
+            <li><a href="./studieguide.html#m6">Elektromagnet</a></li>
+            <li><a href="./studieguide.html#m7">Elmotor</a></li>
+            <li><a href="./studieguide.html#m8">Induktion</a></li>
+            <li><a href="./studieguide.html#m9">Generator</a></li>
+            <li><a href="./studieguide.html#m9">Växelström</a></li>
+            <li><a href="./studieguide.html#m10">Transformator</a></li>
+            <li><a href="./studieguide.html#m11">Elektrisk effekt</a></li>
+            <li><a href="./studieguide.html#m11">Kraftverk och elnät</a></li>
+          </ul>
+          <p class="concept-note">Förkunskaper: ström, spänning och Ohms lag från <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.</p>
         </figcaption>
       </figure>
     </section>
