@@ -30,7 +30,7 @@
 
     @media (min-width: 960px) {
       .area-layout {
-        grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+        grid-template-columns: 300px 1fr;
         align-items: start;
       }
     }
@@ -46,30 +46,67 @@
       padding: 1rem 1rem 1.1rem;
       margin: 0;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      text-align: center;
     }
 
-    .mendelejev-img {
+    .area-hero-image img {
       width: 100%;
-      max-width: 220px;
+      max-width: 100%;
       height: auto;
-      border-radius: 10px;
       display: block;
-      margin: 0 auto 0.8rem;
-      border: 1px solid var(--area-border);
+      border-radius: 10px;
+      background: #fff;
     }
 
     .area-hero-image figcaption {
       margin-top: 0.9rem;
-      text-align: left;
     }
 
-    .mendelejev-credit {
+    @media (min-width: 960px) {
+      .area-hero-image {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .area-hero-image img {
+        flex: 1 1 0;
+        width: auto;
+        max-width: 60%;
+      }
+
+      .area-hero-image figcaption {
+        flex: 0 0 38%;
+        margin-top: 0;
+      }
+    }
+
+    /* Bildtext-ruta för Mendelejev */
+    .image-caption-box {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 0.85rem;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      color: #333;
+    }
+
+    .image-caption-box strong {
+      color: var(--area-strong);
+    }
+
+    .image-caption-box small {
       display: block;
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
       font-size: 0.75rem;
       color: #666;
-      font-style: normal;
+    }
+
+    .image-caption-box small a {
+      color: var(--area-strong);
+      font-weight: 600;
     }
 
     .concept-heading {
@@ -103,7 +140,7 @@
     .concept-list li::before {
       content: "→";
       color: var(--area);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       flex-shrink: 0;
     }
 
@@ -124,22 +161,6 @@
       margin-top: 0;
     }
 
-    .sub-list {
-      list-style: none;
-      padding: 0 0 0 1rem;
-      margin: 0.35rem 0 0 0;
-      border-left: 2px solid var(--area-border);
-    }
-
-    .sub-list li {
-      margin-bottom: 0.4rem;
-    }
-
-    .sub-list a {
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
@@ -154,11 +175,6 @@
       margin-bottom: 0.75rem;
       font-size: 1.2rem;
       color: var(--area-strong);
-    }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
     }
 
     .resource-box ul {
@@ -316,11 +332,6 @@
     }
 
     /* Lärare-ordning: lärarkortet överst */
-    body[data-role="larare"] .resource-grid {
-      display: flex;
-      flex-direction: column;
-    }
-
     body[data-role="larare"] .resource-grid article:last-child {
       order: -1;
     }
@@ -357,14 +368,8 @@
               <li><a href="./checklista.html">Checklista</a></li>
               <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
               <li><a href="./ovningsprov.html">Övningsprov</a></li>
-              <li><a href="./facit.html">Facit till övningsprovet</a></li>
               <li><a href="./bildstod.html">Bildstöd</a></li>
-              <li>Lärande spel
-                <ul class="sub-list">
-                  <li><a href="./memory.html">Begreppskort</a></li>
-                  <li><a href="./korsord.html">Korsord</a></li>
-                </ul>
-              </li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
             </ul>
           </article>
 
@@ -379,22 +384,21 @@
 
       <figure class="area-hero-image">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Dmitri_Mendeleev.jpg"
+          src="/kemi/periodiska-systemet/bilder/500px-Dmitri_Mendeleev.jpg"
           alt="Porträtt av Dmitrij Mendelejev"
-          class="mendelejev-img"
         >
         <figcaption>
-          <p style="margin: 0 0 0.5rem 0; font-size: 0.98rem; line-height: 1.45; color: #222;">
+          <div class="image-caption-box">
             <strong>Dmitrij Mendelejev</strong> ordnade grundämnena efter deras egenskaper och massa.
             Hans periodiska system gjorde det möjligt att se mönster mellan ämnena – och till och med
             förutsäga grundämnen som ännu inte hade upptäckts.
-          </p>
-          <small class="mendelejev-credit">
-            Bild: Okänd upphovsperson /
-            <a href="https://commons.wikimedia.org/wiki/File:Dmitri_Mendeleev.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>,
-            licens: <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.sv" target="_blank" rel="noopener">CC BY-SA 3.0</a>.
-          </small>
-          <p class="concept-heading" style="margin-top: 0.9rem;">Viktiga begrepp att lära sig</p>
+            <small>
+              Bild: Okänd upphovsperson /
+              <a href="https://commons.wikimedia.org/wiki/File:Dmitri_Mendeleev.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>,
+              licens: <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.sv" target="_blank" rel="noopener">CC BY-SA 3.0</a>.
+            </small>
+          </div>
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
           <ul class="concept-list">
             <li><a href="./studieguide.html#m1">Proton</a></li>
             <li><a href="./studieguide.html#m1">Neutron</a></li>
@@ -448,7 +452,7 @@
           <li>Träna på att fördela elektroner i skal: K=2, L=8, M=8. Öva på några atomer tills det sitter.</li>
           <li>Förstå skillnaden mellan <strong>period</strong> (rad, antal skal) och <strong>grupp</strong> (kolumn, antal valenselektroner).</li>
           <li>Lär dig de tre grundämnefamiljerna: alkalimetaller (grupp 1, 1 valenselektron), halogener (grupp 17, 7 valenselektroner), ädelgaser (grupp 18, fullt skal).</li>
-          <li>Öva på att förklara hur positiva och negativa joner bildas – och varför det händer (ädelgasstruktur).</li>
+          <li>Öva på att förklara hur positiva och negativa joner bildas – och varför (ädelgasstruktur).</li>
           <li>Jämför de tre bindningstyperna: jonbindning (joner attraheras), elektronparbindning (atomer delar par) och metallbindning (fritt elektronmoln).</li>
         </ul>
       </details>
@@ -476,7 +480,6 @@
         try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
       }
 
-      // Ladda senaste val
       try {
         var saved = localStorage.getItem(STORE_KEY);
         if (saved === "larare") setRole("larare");
