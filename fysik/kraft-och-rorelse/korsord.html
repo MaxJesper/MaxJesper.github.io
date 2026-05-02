@@ -15,7 +15,29 @@
   .top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0 18px; }
 
   .layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 980px) { .layout { grid-template-columns: 420px max-content; align-items: start; gap: 100px; } }
+
+  /* Smal desktop / surfplatta: 2 kolumner – Verktyg hamnar under ledtrådarna */
+  @media (min-width: 980px) {
+    .layout {
+      grid-template-columns: 420px max-content;
+      grid-template-rows: auto auto;
+      grid-template-areas: "clues gridarea" "verktyg gridarea";
+      column-gap: 100px;
+      row-gap: 12px;
+      align-items: start;
+    }
+  }
+
+  /* Bred desktop: 3 kolumner – Verktyg till höger om korsordet */
+  @media (min-width: 1520px) {
+    .layout {
+      grid-template-columns: 420px max-content auto;
+      grid-template-rows: auto;
+      grid-template-areas: "clues gridarea verktyg";
+      gap: 100px;
+      align-items: start;
+    }
+  }
 
   .clues { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .clue-box { border: 1px solid #ddd; border-radius: 10px; padding: 12px 14px; background: #fff; }
@@ -197,7 +219,7 @@
 
     .print-sheet { padding-left: 4mm; break-inside: avoid; page-break-inside: avoid; }
 
-    .layout { grid-template-columns: 1fr !important; gap: 8px; }
+    .layout { grid-template-columns: 1fr !important; grid-template-areas: none !important; gap: 8px; }
 
     .clues { gap: 6px; }
     .clue-box { border: none; padding: 0; }
@@ -235,7 +257,7 @@
     </div>
 
     <div class="layout">
-      <div class="clues">
+      <div class="clues" style="grid-area: clues">
         <div class="clue-box print-clues">
           <h2>Vågrätt</h2>
           <ol>
@@ -259,23 +281,23 @@
             <li value="10">Fartökning</li>
           </ol>
         </div>
-
-        <div class="clue-box">
-          <h2>Verktyg</h2>
-          <div class="controls">
-            <button id="clearWordBtn" class="secondary" type="button" disabled>Rensa senaste</button>
-            <button id="clearBtn" class="secondary" type="button">Rensa</button>
-            <button id="facitBtn" type="button">Facit</button>
-          </div>
-          <div id="status" class="status"></div>
-          <div class="note">
-            Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för senaste ordet om det innehåller fel.
-          </div>
-        </div>
       </div>
 
-      <div class="grid-wrap">
+      <div class="grid-wrap" style="grid-area: gridarea">
         <div id="grid" class="grid" aria-label="Korsord"></div>
+      </div>
+
+      <div class="clue-box" style="grid-area: verktyg">
+        <h2>Verktyg</h2>
+        <div class="controls">
+          <button id="clearWordBtn" class="secondary" type="button" disabled>Rensa senaste</button>
+          <button id="clearBtn" class="secondary" type="button">Rensa</button>
+          <button id="facitBtn" type="button">Facit</button>
+        </div>
+        <div id="status" class="status"></div>
+        <div class="note">
+          Rensa senaste = rensar ordet du senast skrev i. Facit = visar eller döljer facit för senaste ordet om det innehåller fel.
+        </div>
       </div>
     </div>
   </div>
