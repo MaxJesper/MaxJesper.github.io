@@ -46,40 +46,30 @@
       padding: 1rem 1rem 1.1rem;
       margin: 0;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .area-hero-image img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
-      background: #fff;
-    }
-
-    .area-hero-image .image-placeholder {
-      aspect-ratio: 4 / 3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      padding: 1rem;
+    }
+
+    .mendelejev-img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
       border-radius: 10px;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.7),
-        rgba(255, 255, 255, 0.7) 10px,
-        rgba(255, 255, 255, 0.4) 10px,
-        rgba(255, 255, 255, 0.4) 20px
-      );
-      border: 1px dashed var(--area-border);
-      color: var(--area-strong);
-      font-weight: 600;
-      font-size: 0.95rem;
+      display: block;
+      margin: 0 auto 0.8rem;
+      border: 1px solid var(--area-border);
     }
 
     .area-hero-image figcaption {
       margin-top: 0.9rem;
+      text-align: left;
+    }
+
+    .mendelejev-credit {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: #666;
+      font-style: normal;
     }
 
     .concept-heading {
@@ -128,10 +118,26 @@
     }
 
     .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
       margin-top: 0;
+    }
+
+    .sub-list {
+      list-style: none;
+      padding: 0 0 0 1rem;
+      margin: 0.35rem 0 0 0;
+      border-left: 2px solid var(--area-border);
+    }
+
+    .sub-list li {
+      margin-bottom: 0.4rem;
+    }
+
+    .sub-list a {
+      font-weight: 500;
+      font-size: 0.95rem;
     }
 
     .resource-box {
@@ -352,27 +358,43 @@
               <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
               <li><a href="./ovningsprov.html">Övningsprov</a></li>
               <li><a href="./facit.html">Facit till övningsprovet</a></li>
-              <li><a href="./korsord.html">Korsord</a></li>
-              <li><a href="./memory.html">Memoryspel</a></li>
+              <li><a href="./bildstod.html">Bildstöd</a></li>
+              <li>Lärande spel
+                <ul class="sub-list">
+                  <li><a href="./memory.html">Begreppskort</a></li>
+                  <li><a href="./korsord.html">Korsord</a></li>
+                </ul>
+              </li>
             </ul>
           </article>
 
           <article class="resource-box">
             <h2>Material för läraren</h2>
             <ul>
-              <li><a href="./bildstod.html">Bildstöd</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
             </ul>
           </article>
         </section>
       </div>
 
       <figure class="area-hero-image">
-        <div class="image-placeholder">
-          Introduktionsbild kommer snart<br>
-          <span style="font-weight:400; font-size:0.85rem;">(atommodell, elektronskal, periodiska systemet)</span>
-        </div>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Dmitri_Mendeleev.jpg"
+          alt="Porträtt av Dmitrij Mendelejev"
+          class="mendelejev-img"
+        >
         <figcaption>
-          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <p style="margin: 0 0 0.5rem 0; font-size: 0.98rem; line-height: 1.45; color: #222;">
+            <strong>Dmitrij Mendelejev</strong> ordnade grundämnena efter deras egenskaper och massa.
+            Hans periodiska system gjorde det möjligt att se mönster mellan ämnena – och till och med
+            förutsäga grundämnen som ännu inte hade upptäckts.
+          </p>
+          <small class="mendelejev-credit">
+            Bild: Okänd upphovsperson /
+            <a href="https://commons.wikimedia.org/wiki/File:Dmitri_Mendeleev.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>,
+            licens: <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.sv" target="_blank" rel="noopener">CC BY-SA 3.0</a>.
+          </small>
+          <p class="concept-heading" style="margin-top: 0.9rem;">Viktiga begrepp att lära sig</p>
           <ul class="concept-list">
             <li><a href="./studieguide.html#m1">Proton</a></li>
             <li><a href="./studieguide.html#m1">Neutron</a></li>
