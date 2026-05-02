@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Periodiska systemet – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    .games-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .game-card {
+      display: block;
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1px solid #bbf7d0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      text-decoration: none;
+    }
+
+    .game-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: linear-gradient(135deg, #bbf7d0, #86efac);
+    }
+
+    .game-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .game-body {
+      padding: 1rem;
+    }
+
+    .game-body h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.15rem;
+      color: #14532d;
+    }
+
+    .game-body p {
+      margin: 0;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Lärande spel</h1>
+    <p>Periodiska systemet</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="margin-bottom: 1rem;">
+      <a href="/kemi/periodiska-systemet/" class="subject-btn">← Tillbaka till Periodiska systemet</a>
+    </p>
+
+    <section class="games-intro">
+      <p>
+        Här hittar du spel och interaktiva övningar som hjälper dig att träna begrepp
+        inom atomens byggnad och periodiska systemet på ett roligare sätt.
+      </p>
+    </section>
+
+    <section class="games-grid">
+      <a class="game-card" href="./memory.html">
+        <div class="game-image">
+          <!-- Platshållare tills en skärmbild finns -->
+        </div>
+        <div class="game-body">
+          <h2>Begreppskort</h2>
+          <p>Träna viktiga ord och begrepp inom periodiska systemet och atomens byggnad.</p>
+        </div>
+      </a>
+
+      <a class="game-card" href="./korsord.html">
+        <div class="game-image">
+          <!-- Platshållare tills en skärmbild finns -->
+        </div>
+        <div class="game-body">
+          <h2>Korsord</h2>
+          <p>Lös ett korsord med centrala ord från arbetsområdet.</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
