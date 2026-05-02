@@ -52,10 +52,42 @@
     }
 
     .area-hero-image figcaption {
-      font-size: 1rem;
-      color: #1f2937;
       margin-top: 0.9rem;
-      line-height: 1.55;
+    }
+
+    .concept-heading {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.78rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--area-strong);
+      font-weight: 700;
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 0.6rem;
+    }
+
+    .concept-list li {
+      font-size: 0.88rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.18rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.75rem;
+      flex-shrink: 0;
     }
 
     @media (min-width: 960px) {
@@ -68,12 +100,11 @@
       .area-hero-image img {
         flex: 1 1 0;
         width: auto;
-        max-width: 65%;
+        max-width: 60%;
       }
       .area-hero-image figcaption {
-        flex: 0 0 35%;
+        flex: 0 0 38%;
         margin-top: 0;
-        font-size: 1.1rem;
       }
     }
 
@@ -302,9 +333,27 @@
         <img src="/images/fysik/kraft-och-rorelse/kraft-och-rorelse-startbild.png"
              alt="Illustration av krafter och rörelse – kraft, gravitation, friktion, hävstång" />
         <figcaption>
-          Här möter du krafter och hur de påverkar rörelse, tyngdkraft,
-          gravitation, friktion, tröghet, Newtons lagar, hävstänger,
-          vridmoment och enkla maskiner.
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <ul class="concept-list">
+            <li>Kraft</li>
+            <li>Newton (N)</li>
+            <li>Dynamometer</li>
+            <li>Tyngdkraft</li>
+            <li>Gravitation</li>
+            <li>Massa och tyngd</li>
+            <li>F = m × g</li>
+            <li>Resultant</li>
+            <li>Tröghet</li>
+            <li>Acceleration</li>
+            <li>F = m · a</li>
+            <li>Fritt fall</li>
+            <li>Friktion</li>
+            <li>Tyngdpunkt</li>
+            <li>Stödyta</li>
+            <li>Hävstång</li>
+            <li>Vridmoment</li>
+            <li>Enkla maskiner</li>
+          </ul>
         </figcaption>
       </figure>
     </section>
