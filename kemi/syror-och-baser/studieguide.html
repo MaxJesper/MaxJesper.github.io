@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Syror och baser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      border-left: 4px solid #0f766e;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #0f766e;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #0f766e;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .fact-box {
+      background: #f0fdfa;
+      border-left: 4px solid #0f766e;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0f766e;
+    }
+
+    .formula-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      margin: 0.8rem 0;
+      font-family: monospace;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #1a1a2e;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #0f766e;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Coach ────────────────────────────────────────────────── */
+    .coach-box {
+      background: #fff8f0;
+      border: 1px solid #f0c080;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.9rem;
+      display: none;
+    }
+    .coach-box.coach-visible { display: block; }
+    .coach-header {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.5rem;
+    }
+    .coach-box p { margin: 0.4rem 0; line-height: 1.55; color: #1a1a2e; }
+    .coach-questions {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .coach-q-card {
+      background: #fffbf2;
+      border: 1px solid #f0c080;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .coach-q-btn {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    .coach-q-btn:hover { background: #fef3c7; }
+    .coach-q-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: #b45309;
+      text-transform: uppercase;
+      min-width: 4.5rem;
+    }
+    .coach-q-text { flex: 1; }
+    .coach-q-answer {
+      padding: 0.5rem 0.8rem 0.6rem 1.4rem;
+      background: #fef9ec;
+      border-top: 1px solid #f0d090;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .coach-a-label { font-weight: 600; color: #b45309; margin-right: 0.3rem; }
+
+    /* Toggle-switch */
+    .coach-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0f766e;
+      user-select: none;
+    }
+    .coach-toggle {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex-shrink: 0;
+    }
+    .coach-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .coach-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .coach-slider::before {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .coach-toggle input:checked + .coach-slider { background: #F59E0B; }
+    .coach-toggle input:checked + .coach-slider::before { transform: translateX(19px); }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body class="area-syror-och-baser">
+
+  <header class="kemi-header">
+    <h1>Studieguide – Syror och baser</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/syror-och-baser/" class="subject-btn">← Tillbaka till Syror och baser</a>
+    </p>
+
+    <div class="guide-intro">
+      <p><strong>14 milstolpar</strong> – från vardagliga syror till försurning av naturen.</p>
+      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p style="display:flex; align-items:center; gap:0.5rem; margin-top:0.6rem;">
+        <label class="coach-toggle-wrap" for="coach-master">
+          <span class="coach-toggle">
+            <input type="checkbox" id="coach-master">
+            <span class="coach-slider"></span>
+          </span>
+          Coachläge
+        </label>
+        <span style="font-size:0.88rem; color:#555;">– visar repetitionsfrågor under varje milstolpe</span>
+      </p>
+      <p style="margin-top:0.5rem;">
+        <button onclick="toggleAllMilestones(true)"
+          style="margin-right:0.5rem; padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Expandera alla
+        </button>
+        <button onclick="toggleAllMilestones(false)"
+          style="padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Kollapsa alla
+        </button>
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 1 – Vad är en syra?
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Vad är en syra?</span>
+      </summary>
+      <div class="m-body">
+        <p>Syror är vanliga ämnen som vi möter dagligen – i mat, dryck, medicin och hushållsprodukter. Äpplen och päron innehåller <strong class="term">äppelsyra</strong>, citrusfrukter innehåller <strong class="term">citronsyra</strong>, och vindruvor innehåller <strong class="term">vinsyra</strong>. Rönnbär och rabarber innehåller dessutom <strong class="term">oxalsyra</strong>. Vitamintabletter innehåller ofta <strong class="term">askorbinsyra</strong> – ett annat namn för C-vitamin.</p>
+        <p>Trots att syror ser olika ut och har vitt skilda användningsområden har de en sak gemensamt: <strong class="term">alla syror innehåller väte</strong>. Väte är det grundämne som förenar alla kemiska föreningar vi kallar syror. Genom att låta syror reagera med lämpliga metaller kan man visa att väte frigörs – vilket bekräftar att det finns i syran.</p>
+        <p>Att de flesta frukter smakar surt beror på att de innehåller ämnen som bildar sura lösningar. Acetylsalicylsyra är ett exempel på en syra i smärtstillande läkemedel som Magnecyl och Treo. Eftersom syror generellt är frätande bör sådana läkemedel inte tas av den som har magsår.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Alla syror innehåller väte (H). Exempel på syror i vardagen: äppelsyra, citronsyra, vinsyra, oxalsyra, askorbinsyra (C-vitamin), ättiksyra och acetylsalicylsyra.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – syrors grunder
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m1">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 1</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilket grundämne ingår i alla syror?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Väte (H). Det är det gemensamma grundämnet i alla kemiska föreningar vi kallar syror.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Nämn fyra syror som förekommer naturligt i bär och frukter.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Äppelsyra (äpplen, päron), citronsyra (citrusfrukter), vinsyra (vindruvor), oxalsyra (rönnbär, rabarber). Askorbinsyra (C-vitamin) är också ett möjligt svar.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad heter syran i smärtstillande läkemedel som Magnecyl och Treo?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Acetylsalicylsyra.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 2 – Svaga syror
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Svaga syror</span>
+      </summary>
+      <div class="m-body">
+        <p>Man skiljer mellan <strong class="term">svaga</strong> och <strong class="term">starka</strong> syror. Vinsyra, citronsyra och mjölksyra räknas som svaga syror. I ren form är de fasta ämnen som löser sig lätt i vatten. De används för att smaksätta och konservera sylt, saft och livsmedel.</p>
+        <p>En annan viktig svag syra är <strong class="term">ättiksyra</strong> – den syra som ger vinäger dess syrliga smak. Den ättiksyra som säljs i handeln är utspädd med vatten. Outspädd ättiksyra är skadlig att svälja eftersom den fräter på slemhinnor i mun och mage. Trots det räknas ättiksyra kemiskt sett bland de svaga syrorna.</p>
+        <p>Kolsyra är ytterligare en svag syra. Den bildas när koldioxid löses i vatten och är orsaken till att läskedrycker bubblar och smakar syrligt. Kolsyra är instabil och sönderfaller snabbt till koldioxid och vatten igen när flaskan öppnas.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Svaga syror: vinsyra, citronsyra, mjölksyra, ättiksyra, kolsyra, askorbinsyra. De är frätande i koncentrerad form men mildare i utspädd form.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – svaga syror
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför smakar sura livsmedel surt?</summary>
+          <p>Syrlig smak är ett direkt resultat av att syror frigör <strong>vätejoner (H⁺)</strong> i lösning. Smakretceptorerna på tungan registrerar dessa joner som surt. Ju fler vätejoner, desto surare upplever vi smaken.</p>
+          <p>Starka syror som saltsyra och svavelsyra ger ifrån sig sina vätejoner fullständigt och bildar en kraftigt sur lösning. Svaga syror som citronsyra och ättiksyra frigör vätejoner bara till viss del – de befinner sig i jämvikt med sin oladdade form. Det gör att livsmedel med svaga syror smakar syrliga men inte frätande.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m2">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 2</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Ge tre exempel på svaga syror.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Ättiksyra, citronsyra, vinsyra (och mjölksyra, kolsyra, askorbinsyra).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför är ättiksyra en svag syra även om outspädd ättiksyra kan fräta på slemhinnor?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Svag/stark syftar på graden av jonisering i vatten – inte på hur frätande syran är. Ättiksyra joniseras bara delvis, vilket gör den kemiskt svag. Koncentrerad ättiksyra kan ändå fräta mekaniskt i hög koncentration.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilken syra är vanlig vid matlagning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Ättiksyra (vinäger/ättika).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 3 – Starka syror: saltsyra och klor
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Starka syror – saltsyra (HCl)</span>
+      </summary>
+      <div class="m-body">
+        <p>De tre vanligaste starka syrorna är <strong class="term">saltsyra</strong>, <strong class="term">svavelsyra</strong> och <strong class="term">salpetersyra</strong>. Alla är starkt sura och frätande på hud och kläder. De hanteras på laboratorier och inom industrin och kräver alltid skyddsutrustning.</p>
+        <p><strong class="term">Klor</strong> (Cl₂) är en tung, gulgrön och giftig gas. Gasen har stark bakteriedödande förmåga och används för att rena badvatten och dricksvatten. Klor ingår också i vissa rengöringsmedel och blekmedel. Under första världskriget användes klor som stridsgas.</p>
+        <p>När vätgas (H₂) brinner i klor bildas gasen <strong class="term">väteklorid</strong> (HCl). Reaktionen skrivs:</p>
+
+        <div class="formula-box">
+          väte + klor → väteklorid<br>
+          H₂ + Cl₂ → 2 HCl
+        </div>
+
+        <p>När väteklorid löses i vatten bildas <strong class="term">saltsyra</strong>. Den kemiska beteckningen HCl används alltså för både gasen och lösningen. Koncentrerad saltsyra är en färglös, starkt frätande vätska som ryker vitt – röken består av mycket små syrsdroppar och har stickande lukt.</p>
+        <p>Utspädd saltsyra ingår naturligt i magsaften och hjälper till vid matsmältningen. Om saltsyrahalten i magen är för låg fungerar inte matsmältningen normalt, och läkaren kan ordinera medicinsk utspädd saltsyra.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Saltsyra (HCl) = lösning av väteklorid i vatten. Klor (Cl₂) är en giftig, gulgrön gas. De tre starka syrorna: saltsyra (HCl), svavelsyra (H₂SO₄), salpetersyra (HNO₃).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – starka syror
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Saltsyrans joner</summary>
+          <p>När väteklorid löses i vatten delas varje molekyl upp i två joner: en <strong>vätejon (H⁺)</strong> och en <strong>kloridjon (Cl⁻)</strong>. Vätejonen har positiv laddning och kloridjonen har negativ laddning.</p>
+          <p>Det är vätejonerna (H⁺) som ger lösningen dess sura karaktär. Alla sura lösningar innehåller fler H⁺-joner än OH⁻-joner. Ju fler vätejoner, desto lägre pH och desto surare lösning.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m3">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 3</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Nämn de tre vanligaste starka syrorna och skriv deras kemiska beteckningar.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Saltsyra (HCl), svavelsyra (H₂SO₄) och salpetersyra (HNO₃).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vilka grundämnen ingår i saltsyra och vad bildas när vätgas brinner i klor?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Saltsyra innehåller väte och klor. När vätgas (H₂) brinner i klor (Cl₂) bildas gasen väteklorid (HCl). Löst i vatten ger det saltsyra.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Nämn två egenskaper hos klorgasen.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Tung, gulgrön gas. Mycket giftig. Starkt bakteriedödande. Bleker färg. (Välj valfria två.)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 4 – Svavelsyra och SIV-regeln
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Svavelsyra (H₂SO₄) och SIV-regeln</span>
+      </summary>
+      <div class="m-body">
+        <p>Koncentrerad <strong class="term">svavelsyra</strong> (H₂SO₄) är en tjock, trögflytande och färglös vätska som är mycket starkt frätande. Den har dessutom förmågan att suga åt sig vatten ur andra ämnen. Organiska ämnen som tyg, trä och hud innehåller kol och vatten – när de kommer i kontakt med koncentrerad svavelsyra sugs vattnet ur dem och bara kol återstår. Ämnet förkolnas alltså.</p>
+        <p>Vid spädning av koncentrerad svavelsyra frigörs stor värme. Hälls vatten i syran kan temperaturen stiga så högt att vattnet kokar häftigt och syrastänk slungas kring. Regeln är tydlig: <strong class="term">syran ska hällas i vattnet</strong> – aldrig tvärtom. Som minnesregel använder man förkortningen <strong class="term">SIV</strong> (Syra I Vatten).</p>
+        <p>Svavelsyra tillhör de viktigaste kemikalier vi har. Den används vid framställning av gödselmedel, färgämnen, sprängämnen och ett stort antal andra kemikalier. Den används också i bilbatterier och för att avlägsna oxidbeläggningar från metaller.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Svavelsyra: H₂SO₄. Koncentrerad form förkolnar organiska ämnen. SIV = Syra I Vatten – aldrig vatten i syran! Hälls vatten i svavelsyra kan blandningen koka och stänka.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – svavelsyra
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Svavelsyrans joner</summary>
+          <p>När svavelsyra löses i vatten delas varje molekyl upp i tre joner: två vätejoner (H⁺) och en sulfatjon (SO₄²⁻). Sulfatjonen har två negativa laddningar och skrivs SO₄²⁻.</p>
+          <div class="formula-box">H₂SO₄ → 2 H⁺ + SO₄²⁻</div>
+          <p>Sulfatjoner förekommer i många salter, bland annat gips (kalciumsulfat, CaSO₄) och blåsten (kopparsulfat, CuSO₄).</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m4">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 4</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad menas med SIV och varför är regeln viktig?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>SIV = Syra I Vatten. Svavelsyra ska alltid hällas i vattnet, aldrig tvärtom. Hälls vatten i syran utvecklas så mycket värme att blandningen kan koka och stänka.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad händer med organiska ämnen som tyg och trä om de kommer i kontakt med koncentrerad svavelsyra?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Syran suger ut vattnet ur ämnena så att bara kol återstår – de förkolnas.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilka grundämnen ingår i svavelsyra?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Svavel, väte och syre (H₂SO₄).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 5 – Salpetersyra och nitrösa gaser
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Salpetersyra (HNO₃) och nitrösa gaser</span>
+      </summary>
+      <div class="m-body">
+        <p><strong class="term">Salpetersyra</strong> (HNO₃) är en annan starkt frätande syra. Den innehåller grundämnena väte, kväve och syre. Hud, naglar och många organiska material gulnar när de kommer i kontakt med syran – ett känt kemiskt fenomen kallat xantoproteinreaktionen.</p>
+        <p>Koncentrerad salpetersyra är en flyktig, färglös vätska. Om den utsätts för starkt ljus börjar den sönderdelas och gulnar. Därför förvaras salpetersyra i <strong class="term">mörka flaskor</strong> av brunt glas.</p>
+        <p>När salpetersyra reagerar med metaller som koppar bildas en rödbrun, giftig gasblandning kallad <strong class="term">nitrösa gaser</strong>. Dessa består av olika kväveoxider och har stickande lukt. Nitrösa gaser bildas också vid eldning i motorer och bidrar till försurning av nederbörden.</p>
+        <p>Salpetersyra används industriellt bland annat vid tillverkning av gödselmedel och sprängämnen. Tillsammans med svavelsyra är den en av de viktigaste råvarorna i kemisk industri.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Salpetersyra: HNO₃ (väte, kväve, syre). Förvaras i mörka flaskor. Reagerar med metaller som koppar och bildar nitrösa gaser (giftiga kväveoxider). Gulnar hud och naglar.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – salpetersyra
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m5">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 5</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilka grundämnen ingår i salpetersyra och vad är dess kemiska beteckning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Väte, kväve och syre. Kemisk beteckning: HNO₃.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför förvaras salpetersyra i mörka flaskor?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Starkt ljus får salpetersyra att sönderdelas och gulna. Mörka glasflaskor skyddar mot ljusinverkan.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad är nitrösa gaser och hur bildas de?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En giftig gasblandning av kväveoxider. Bildas bland annat när salpetersyra reagerar med metaller som koppar.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 6 – Joner i syror
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Joner i syror – H⁺, Cl⁻, SO₄²⁻ och NO₃⁻</span>
+      </summary>
+      <div class="m-body">
+        <p>När en syra löses i vatten delas den upp i joner. Det är vätejonerna som gör lösningen sur. Alla syror ger ifrån sig <strong class="term">vätejoner (H⁺)</strong> i vattenlösning – det är faktiskt definitionen på en syra.</p>
+        <p>Utöver vätejonerna bildas en negativt laddad jon som beror på vilken syra det är:</p>
+        <ul>
+          <li><strong>Saltsyra:</strong> HCl → H⁺ + Cl⁻ (kloridjon)</li>
+          <li><strong>Svavelsyra:</strong> H₂SO₄ → 2 H⁺ + SO₄²⁻ (sulfatjon, dubbelt negativ)</li>
+          <li><strong>Salpetersyra:</strong> HNO₃ → H⁺ + NO₃⁻ (nitratjon)</li>
+        </ul>
+        <p>Eftersom sura och basiska lösningar innehåller joner kan de leda elektrisk ström. Det är jonerna som transporterar laddningen. Rent (destillerat) vatten saknar joner och leder i princip inte ström alls.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Syror frigör H⁺-joner i vatten → sur lösning. Kloridjon: Cl⁻. Sulfatjon: SO₄²⁻ (laddning −2). Nitratjon: NO₃⁻. Hydroxidjon: OH⁻ (i baser).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – joner i syror
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m6">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 6</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilken jon är gemensam för alla sura lösningar?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Vätejonen, H⁺. Alla syror frigör H⁺-joner i vattenlösning.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Hur betecknar man kloridjon, nitratjon och hydroxidjon?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kloridjon: Cl⁻. Nitratjon: NO₃⁻. Hydroxidjon: OH⁻.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilka joner bildas när svavelsyra löses i vatten? Skriv reaktionsformeln.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Vätejoner (H⁺) och sulfatjoner (SO₄²⁻). H₂SO₄ → 2 H⁺ + SO₄²⁻.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 7 – Basiska ämnen
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Basiska ämnen – baser och lut</span>
+      </summary>
+      <div class="m-body">
+        <p>Det finns en grupp ämnen vars vattenlösningar är motsatsen till sura lösningar – de kallas <strong class="term">baser</strong> (eller basiska ämnen). Till vardags möter vi baser i tvål, såpa, rengöringsmedel och ugnssprej. De flesta baserna är fasta ämnen. Löst i vatten bildar de en lösning som kallas <strong class="term">lut</strong>.</p>
+        <p>Baser är i regel <strong class="term">frätande</strong> och ska hanteras med försiktighet. Följ alltid anvisningarna på förpackningen. Får man lut på huden ska man skölja noga med rikligt med rinnande vatten. Kommer lut i ögonen ska man skölja ordentligt och omedelbart söka läkare.</p>
+        <p>Alla basiska lösningar innehåller <strong class="term">hydroxidjoner (OH⁻)</strong>. Det är dessa negativt laddade joner som ger lösningen dess basiska karaktär – precis som vätejoner (H⁺) gör en lösning sur. Ju fler hydroxidjoner, desto mer basisk är lösningen.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Baser lösta i vatten = lut. Alla basiska lösningar innehåller OH⁻-joner. Baser är frätande – följ säkerhetsanvisningarna. Tvål, såpa och rengöringsmedel innehåller basiska ämnen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – baser
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m7">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 7</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilken jon är gemensam för alla basiska lösningar?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Hydroxidjonen, OH⁻. Alla basiska lösningar innehåller OH⁻-joner.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Ge två exempel på vardagsprodukter som innehåller basiska ämnen.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Tvål, såpa, rengöringsmedel, diskmedel, ugnssprej, kalk (valfria två).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad ska du göra om du får lut i ögonen?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Skölj ordentligt med vatten och söka snarast läkare.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 8 – Natriumhydroxid och kaustik soda
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Natriumhydroxid (NaOH) – kaustik soda</span>
+      </summary>
+      <div class="m-body">
+        <p><strong class="term">Natriumhydroxid</strong> (NaOH) är ett vitt, fast ämne som är starkt basiskt. I handeln säljs det under namnet <strong class="term">kaustik soda</strong>. Löst i vatten bildas en stark frätande lösning som kallas <strong class="term">natronlut</strong>.</p>
+        <p>Natriumhydroxid drar lätt till sig fukt ur luften och bildar en klibbig, frätande massa. Därför förvaras det i täta förpackningar med tydlig etikett. Det ska förvaras oåtkomligt för barn.</p>
+        <p>Natronlut används i industrin för tillverkning av tvål och pappersmassa. Koncentrerad natronlut kan lösa upp proppar av fett och matrester i avlopp. Det används också för att mjuka upp och avlägsna gammal målarfärg samt som kraftigt rengöringsmedel i utspädd form.</p>
+        <p><strong class="term">Metallen natrium</strong> (Na) är ett mjukt, silverfärgat ämne som man kan skära i med en vanlig kniv. Om natrium läggs i vatten sker en häftig reaktion: metallen rusar runt på ytan med ett fräsande ljud. Det bildas <strong class="term">natriumhydroxid</strong> och vätgas:</p>
+
+        <div class="formula-box">
+          2 Na + 2 H₂O → 2 Na⁺ + 2 OH⁻ + H₂
+        </div>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Natriumhydroxid: NaOH = kaustik soda. Lösning kallas natronlut. Starkt frätande – förvaras i täta förpackningar. Natrium reagerar häftigt med vatten och bildar NaOH och vätgas.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – natriumhydroxid
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Natriums egenskaper</summary>
+          <p>Natrium är en alkalimetall i grupp 1 med atomnumret 11. Det är mjukt nog att skäras med kniv, och dess snittyta är blank och silverfärgad – men oxideras på ett par sekunder i luften så att ytan blir matt.</p>
+          <p>Natriums densitet är lägre än vattens, vilket gör att det flyter när det kastas i vatten. Reaktionen är så häftig att det kan antändas. Natrium förvaras därför i olja för att skydda det från luft och fukt.</p>
+          <p>Natriumklorid (koksalt, NaCl) är den vanligaste natriumföreningen och ett av de äldsta konserveringsmedlen.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m8">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 8</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är det kemiska namnet och beteckningen för kaustik soda?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Natriumhydroxid, NaOH. Lösning kallas natronlut.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Ge två användningsområden för natriumhydroxid.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Tillverkning av tvål och pappersmassa, rensa avlopp från fettpropp, avlägsna målarfärg, rengöringsmedel (valfria två).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Nämn två egenskaper hos metallen natrium.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Mjuk (kan skäras med kniv), lättare än vatten (flyter), oxideras snabbt i luften, reagerar häftigt med vatten (valfria två).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 9 – Fler baser: soda, ammoniak, kalciumhydroxid
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Fler baser – soda, ammoniak och kalciumhydroxid</span>
+      </summary>
+      <div class="m-body">
+        <p><strong class="term">Soda</strong> är ett välkänt basiskt ämne. Dess kemiska namn är <strong class="term">natriumkarbonat</strong> (Na₂CO₃). Soda förekommer naturligt i vissa sjöar och ingår i tvättmedel eftersom det löser upp kalksalter i hårt vatten och gör det "mjukt". Soda är en viktig råvara vid glastillverkning.</p>
+        <p><strong class="term">Ammoniak</strong> är en lätt gas med starkt stickande lukt. Den kemiska formeln är <strong class="term">NH₃</strong>. Ammoniak innehåller grundämnena kväve och väte. Gasen är farlig att inandas i större mängder eftersom den angriper slemhinnor och lungor. Ammoniakgas löser sig lätt i vatten. Ammoniaklösningen är fettlösande och används i rengöringsmedel.</p>
+        <p><strong class="term">Kalciumhydroxid</strong> (Ca(OH)₂) bildas när kalcium reagerar med vatten. Det fasta, vita ämnet har formeln som utläses "Ca, OH taget två gånger". Löst i vatten bildas <strong class="term">kalkvatten</strong>, som kan användas för att påvisa koldioxid – leds koldioxid ner i kalkvatten, blir det grumligt.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Soda = natriumkarbonat (Na₂CO₃). Ammoniak: NH₃ – kväve och väte, stickande lukt, lättlöslig, fettlösande. Kalciumhydroxid: Ca(OH)₂ – lösning kallas kalkvatten, påvisar CO₂.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – fler baser
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Ammoniak i industri och kyla</summary>
+          <p>Ammoniak är en av de viktigaste kemikalier som tillverkas industriellt. Den framställs av väte och kväve under högt tryck – ett förfarande som kallas Haber-Bosch-processen. Utan denna process hade konstgödsel och därmed modern storskalig jordbruk inte existerat.</p>
+          <p>Flytande ammoniak kokar vid −33,4 °C, vilket gör den användbar som köldmedium i industriella kylanläggningar och isbanor. Vid förångning tar ammoniak upp stor mängd värme, vilket kyler omgivningen effektivt.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m9">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 9</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är det kemiska namnet på soda och vad används det till?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Natriumkarbonat (Na₂CO₃). Används i tvättmedel och vid glastillverkning.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vilka grundämnen ingår i ammoniak och vad är dess kemiska beteckning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kväve och väte. Kemisk beteckning: NH₃.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad kallas lösningen av kalciumhydroxid och vad kan den användas till?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kalkvatten. Det kan användas för att påvisa koldioxid – leds CO₂ ner i kalkvatten, blir det grumligt.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 10 – Neutrala lösningar och pH-skalan
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Neutrala lösningar och pH-skalan</span>
+      </summary>
+      <div class="m-body">
+        <p>Om en sur och en basisk lösning blandas i rätt förhållanden tar syrans vätejoner (H⁺) ut basens hydroxidjoner (OH⁻). Resultatet är en lösning som varken är sur eller basisk – en <strong class="term">neutral lösning</strong>.</p>
+        <p>För att mäta hur sur eller basisk en lösning är har man infört <strong class="term">pH-värdet</strong>. Skalan går i princip från 0 till 14:</p>
+        <ul>
+          <li><strong>pH &lt; 7</strong> → sur lösning (ju lägre, desto surare)</li>
+          <li><strong>pH = 7</strong> → neutral lösning (rent vatten)</li>
+          <li><strong>pH &gt; 7</strong> → basisk lösning (ju högre, desto mer basisk)</li>
+        </ul>
+        <p>Rent vatten har pH-värdet 7. Starka syror som saltsyra har pH nära 0. Starka baser som natronlut har pH nära 14. Magsaften har ett pH runt 1–2, blod har pH cirka 7,4 och bakpulver i lösning har pH runt 8–9.</p>
+        <p>Om man har en lösning med pH 8 och en annan med pH 4 och vill göra en neutral blandning, behöver man tillsätta mer av den sura lösningen (pH 4) eftersom pH-skalan är logaritmisk och 4 är längre från 7 än 8 är.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          pH &lt; 7 = surt. pH = 7 = neutralt (rent vatten). pH &gt; 7 = basiskt. Neutral lösning = lika många H⁺ som OH⁻. Lösningar kallas basiska om pH-värdet är större än 7.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – pH-skalan
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 5
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför är pH-skalan logaritmisk?</summary>
+          <p>pH-skalan är logaritmisk, vilket innebär att varje steg innebär en tiodubbling (eller tiodeling) av antalet vätejoner. En lösning med pH 4 har tio gånger fler H⁺-joner än en lösning med pH 5, och hundra gånger fler än en med pH 6.</p>
+          <p>Det gör att koncentrationen av vätejoner kan variera enormt – från extremt sura lösningar till extremt basiska – utan att skalan behöver vara ohanterligt stor. En skillnad på bara ett pH-steg innebär alltså en tiofaldig förändring i surhet.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m10">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 10</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilket pH-värde har en neutral lösning och vilket pH har rent vatten?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>pH = 7 för båda. Rent (destillerat) vatten är neutralt med pH 7.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad kallas en lösning vars pH-värde är större än 7?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Basisk lösning.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Du vill blanda en lösning med pH 8 och en med pH 4 för att få en neutral lösning. Hur ska du tänka?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Du behöver mer av den sura lösningen (pH 4), eftersom den är längre från neutralt (7) än den basiska (pH 8). Tillsätt den sura i omgångar och mät pH tills du når 7.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 11 – Indikatorer
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Indikatorer – lackmus, BTB och fenolftalein</span>
+      </summary>
+      <div class="m-body">
+        <p>Bara genom att titta på eller lukta på en lösning kan man normalt inte avgöra om den är sur, basisk eller neutral. Istället använder man ämnen som ändrar färg beroende på lösningens pH. Sådana ämnen kallas <strong class="term">indikatorer</strong>.</p>
+        <p><strong class="term">Lackmus</strong> är den klassiska indikatorn. Den finns i två varianter:</p>
+        <ul>
+          <li><strong>Blått lackmuspapper</strong> färgas rött i en sur lösning.</li>
+          <li><strong>Rött lackmuspapper</strong> färgas blått i en basisk lösning.</li>
+        </ul>
+        <p>I en neutral lösning sker ingen färgförändring.</p>
+        <p><strong class="term">BTB</strong> (bromtymolblått) ger en tydligare färgskala: gult i sur lösning, grönt i neutral och blått i basisk lösning. Det är användbart när man vill se nyanser kring neutralpunkten.</p>
+        <p><strong class="term">Fenolftalein</strong> är färglöst i sura och neutrala lösningar men övergår till klarrosa/violett färg i basiska lösningar. Det används ofta i titrering när man vill hitta exakt neutralpunkt.</p>
+        <p>För att bestämma ett mer exakt pH-värde kan man använda <strong class="term">universalindikatorpapper</strong>. Några droppar av lösningen sätts på pappret och den färg som uppstår jämförs med en färgskala på förpackningen.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Indikator = ämne vars färg påverkas av pH. Blått lackmuspapper → rött i sur lösning. Rött lackmuspapper → blått i basisk lösning. BTB: gult (surt) / grönt (neutralt) / blått (basiskt). Fenolftalein: färglöst → rosa i basisk lösning.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – indikatorer
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 5
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m11">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 11</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad menas med en indikator?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Ett ämne vars färg förändras beroende på om lösningen är sur, neutral eller basisk (beroende på pH).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Du droppar BTB i en okänd lösning och den blir grön. Vad kan du dra för slutsats?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Lösningen är neutral (pH ≈ 7). BTB är grönt i neutral lösning, gult i sur och blått i basisk.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Beskriv hur du kontrollerar om en lösning är sur med lackmuspapper.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Doppa blått lackmuspapper i lösningen. Om det färgas rött är lösningen sur. Rött papper i sur lösning förblir rött.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 12 – Sura och basiska oxider
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m12">
+      <summary>
+        <span class="m-num">Milstolpe 12</span>
+        <span class="m-title">Sura och basiska oxider</span>
+      </summary>
+      <div class="m-body">
+        <p>Syre kan förena sig med många andra grundämnen och bilda <strong class="term">oxider</strong>. Kol brinner och bildar koldioxid (CO₂); svavel brinner och bildar svaveldioxid (SO₂). Beroende på vilket ämne som ingår i oxiden kan den ge upphov till en sur eller basisk lösning när den löses i vatten.</p>
+        <p>En <strong class="term">sur oxid</strong> bildar en sur lösning när den löses i vatten. De flesta icke-metalloxider är sura. Exempel:</p>
+        <ul>
+          <li>Svaveldioxid + vatten → svavelsyrlighet: SO₂ + H₂O → H₂SO₃</li>
+          <li>Svaveltrioxid + vatten → svavelsyra: SO₃ + H₂O → H₂SO₄</li>
+          <li>Koldioxid + vatten → kolsyra: CO₂ + H₂O → H₂CO₃</li>
+        </ul>
+        <p>En <strong class="term">basisk oxid</strong> bildar en basisk lösning när den löses i vatten. De flesta metalloxider är basiska. Exempel:</p>
+        <ul>
+          <li>Magnesiumoxid + vatten → magnesiumhydroxid: MgO + H₂O → Mg(OH)₂</li>
+        </ul>
+        <p>Basiska metalloxider löser sig ofta dåligt i vatten, vilket gör att lösningarna bara är svagt basiska. Vid halsbränna ordineras ofta läkemedel med basiska metalloxider som neutraliserar magsaftens syra.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Sur oxid → sur lösning i vatten. Vanliga sura oxider: SO₂, SO₃, CO₂. Basisk oxid → basisk lösning i vatten. Vanliga basiska oxider: MgO, CaO. De flesta metalloxider är basiska.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – oxider
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 6
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Kolsyra i läskedrycker</summary>
+          <p>Kolsyra (H₂CO₃) bildas när koldioxid (CO₂) löses i vatten under tryck. I läskedrycker är koldioxid inpressad för att ge drycken en frisk, syrlig smak och bubblor. Kolsyra är instabil och sönderfaller snabbt igen till CO₂ och vatten.</p>
+          <p>När flaskan öppnas minskar trycket, och koldioxiden kan inte längre hållas löst i vätskan – den avgår som bubblor. Det är därför läskedrycker "tappar kolsyran" om de lämnas öppna. Kolsyran i flaskan har inte avgått som syra – det är koldioxidgasen som flyger ut.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m12">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 12</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad menas med en sur oxid? Ge två exempel.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En oxid som bildar en sur lösning när den löses i vatten. Exempel: svaveldioxid (SO₂) och koldioxid (CO₂).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Skriv reaktionsformeln för vad som bildas när koldioxid leds ned i vatten.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>CO₂ + H₂O → H₂CO₃ (koldioxid + vatten → kolsyra).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilket ämne bildas när svaveltrioxid (SO₃) löses i vatten? Skriv reaktionsformeln.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Svavelsyra. SO₃ + H₂O → H₂SO₄.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 13 – Lösningars elektriska ledningsförmåga
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m13">
+      <summary>
+        <span class="m-num">Milstolpe 13</span>
+        <span class="m-title">Lösningars elektriska ledningsförmåga</span>
+      </summary>
+      <div class="m-body">
+        <p>Metaller leder elektrisk ström tack vare att de har fria elektroner som kan röra sig i gittret. Men även vissa vätskor kan leda elektricitet – förutsatt att de innehåller <strong class="term">joner</strong>.</p>
+        <p>I en vätska är det jonerna – positiva och negativa – som fungerar som laddningsbärare. Rent (destillerat) vatten består av elektriskt neutrala molekyler och leder i princip inte ström alls. Syror och baser lösta i vatten bildar dock joner, och dessa lösningar leder ström.</p>
+        <p>Tillsätter man lite syra eller ett basiskt ämne till destillerat vatten bildas joner i lösningen och vätskan börjar leda ström. Detsamma gäller om man löser ett salt som natriumklorid i vatten – NaCl delar upp sig i Na⁺- och Cl⁻-joner som kan transportera laddning.</p>
+        <p>Det finns en direkt koppling till pH: sura och basiska lösningar leder ström bättre ju starkare (och mer joniserade) de är. Starka syror och baser leder ström bättre än svaga vid samma koncentration.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Destillerat vatten leder inte ström (inga joner). Sura och basiska lösningar leder ström (innehåller joner). Tillsätt lite syra eller basiskt ämne → joner bildas → lösningen börjar leda.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – elektrisk ledning
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 6
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m13">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 13</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Varför leder metaller elektrisk ström men destillerat vatten gör det inte?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Metaller har fria elektroner som kan röra sig och transportera laddning. Destillerat vatten saknar joner och fria laddningsbärare, och leder därför inte ström.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad kan du göra med destillerat vatten för att det ska leda elektrisk ström?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Tillsätta lite syra, ett basiskt ämne eller ett salt (t.ex. NaCl). Det bildas joner som kan leda ström.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför leder sura och basiska lösningar ström?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>De innehåller joner (H⁺, OH⁻ och andra joner) som kan röra sig i lösningen och transportera elektrisk laddning.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 14 – Försurning av naturen
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m14">
+      <summary>
+        <span class="m-num">Milstolpe 14</span>
+        <span class="m-title">Försurning av naturen</span>
+      </summary>
+      <div class="m-body">
+        <p>Olja och kol som används i värmepannor och förbränningsmotorer innehåller svavel. Vid förbränning bildas bland annat <strong class="term">svaveldioxid</strong> (SO₂), som tillsammans med luftens fuktighet och syre bildar <strong class="term">svavelsyrlighet</strong> (H₂SO₃) och <strong class="term">svavelsyra</strong> (H₂SO₄). Dessa syror hamnar i nederbörden och sänker dess pH – vi talar om <strong class="term">surt regn</strong>.</p>
+        <p>Vid förbränning bildas också <strong class="term">kväveoxider</strong> som på liknande sätt reagerar med vatten och bidrar till försurningen. Luftföroreningarna angriper dessutom näsans och halsens slemhinnor, vilket gör människor mer mottagliga för luftvägsinfektioner.</p>
+        <p>Surt regn påverkar naturen allvarligt. Mark och sjöar försuras; tungmetaller som kvicksilver, bly och kadmium löses ut och tas upp av växter och djur. Aluminium löses ut och fälls som ett finfördelat slam vid fiskars gälar, vilket kan leda till syrebrist och fiskdöd. Byggnader och statyer av kalksten eller marmor vittrar sönder.</p>
+        <p>För att neutralisera den sura nederbördens effekter kan man sprida ett <strong class="term">basiskt ämne</strong> som kalkmjöl (krossad kalciumkarbonat) över mark och sjöar. Kalkningen höjer pH-värdet och motverkar försurningen – men det är bara en tillfällig lösning som behöver upprepas. Den verkliga lösningen är att minska utsläppen av svavelföreningar och kväveoxider.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Svaveldioxid + luftfuktighet → surt regn. Försurning löser ut giftiga tungmetaller och dödar fisk. Kalkning (kalkmjöl) neutraliserar försurningen tillfälligt. Den verkliga åtgärden är minskade svavelhalter i bränslen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Hela checklistan
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov – alla milstolpar
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Kalkning – hjälp på kort sikt</summary>
+          <p>Kalkning av sjöar innebär att man sprider kalkmjöl (kalciumkarbonat, CaCO₃) från helikopter eller båt. Karbonaten reagerar med syrorna i vattnet och höjer pH-värdet. Fisken och de flesta vattenorganismer klarar sig bättre i neutralt vatten.</p>
+          <p>Problemet är att försurningen pågår kontinuerligt. Om utsläppen av svavelföreningar inte minskar måste sjöarna kalkas om och om igen. Sverige har sedan 1970-talet bedrivit storskalig sjökalkning, men den övergripande lösningen är renare bränslen och katalytiska avgasreningssystem i fordon och industrier.</p>
+          <p>I Europa har svavelutsläppen minskat kraftigt sedan 1980-talet tack vare internationella avtal och renare bränslen, vilket har minskat belastningen av surt regn. Återhämtningen i sjöar och skogar tar dock lång tid.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m14">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 14</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Beskriv kortfattat hur försurning av naturen uppkommer.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Svavelhaltiga bränslen förbränns → svaveldioxid (SO₂) bildas → reagerar med luftfuktigheten och bildar svavelsyrlighet och svavelsyra → faller ner med nederbörden och sänker pH i mark och vatten.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Ge några exempel på följderna av sur nederbörd.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Sjöar och mark försuras; fisk dör av aluminiumfällning vid gälarna; tungmetaller löses ut och tas upp av växter; kalkstensbyggnader och statyer vittrar sönder; luftvägsproblem hos människor.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför kalkar man sjöar och vilken effekt har det på vattnet?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kalkmjöl (kalciumkarbonat) sprids för att neutralisera syrans effekter och höja pH-värdet. Det hjälper fisken och andra organismer att överleva, men är bara en tillfällig åtgärd.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    // ── Expandera/kollapsa alla ─────────────────────────────────
+    function toggleAllMilestones(open) {
+      document.querySelectorAll('details.milestone').forEach(function(d) { d.open = open; });
+    }
+
+    // ── Coach-läge ──────────────────────────────────────────────
+    var masterSwitch = document.getElementById('coach-master');
+    masterSwitch.addEventListener('change', function () {
+      var boxes = document.querySelectorAll('.coach-box');
+      if (this.checked) {
+        boxes.forEach(function (b) { b.classList.add('coach-visible'); });
+      } else {
+        boxes.forEach(function (b) { b.classList.remove('coach-visible'); });
+      }
+    });
+
+    // ── Coach-frågor expand/collapse ────────────────────────────
+    function toggleCoachQ(btn) {
+      var ans = btn.nextElementSibling;
+      if (!ans) return;
+      ans.hidden = !ans.hidden;
+    }
+
+    // ── Öppna milstolpe via URL-hash (#m1 … #m14) ───────────────
+    (function () {
+      function openHash() {
+        var h = window.location.hash;
+        if (!h) return;
+        var el = document.querySelector('details.milestone' + h);
+        if (el) {
+          el.open = true;
+          setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        }
+      }
+      openHash();
+      window.addEventListener('hashchange', openHash);
+    })();
+  </script>
+</body>
+</html>
