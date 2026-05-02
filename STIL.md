@@ -285,7 +285,7 @@ När ett nytt område ska byggas (t.ex. `arbete-energi-effekt`) följs denna ord
 
 ## 12. Historiskt arbetskontext (vad som är byggt)
 
-Per 2026-04-22 är följande klart:
+Per 2026-05-02 är följande klart:
 
 ### `fysik/magnetism-induktion/` – komplett
 
@@ -316,4 +316,18 @@ Per 2026-04-22 är följande klart:
 - **Fyll studieguidens milstolpar** i elektricitet/ med TEFY-brödtext, faktaruta och fördjupning enligt samma mönster som magnetism-induktion.
 - **Instuderingsfrågor, övningsprov, facit och laborationer** för elektricitet behöver byggas på nytt i egna ord (inte kopieras från magnetism-induktion).
 
-Övriga områden (andra fysikområden, biologi, kemi) har ännu inte genomgått samma upprustning. Deras checklistor, instuderingsfrågor och begreppskort är fortfarande i stort sett importerade från Gleerups och bör skrivas om i tur och ordning innan publicering.
+### `fysik/kraft-och-rorelse/` – komplett
+
+- Områdesindex med rolltoggel (elev/lärare), milestone-map, begreppslista med milstolpelänkar.
+- Studieguide med 14 fullt ifyllda milstolpar i TEFY-stil, coach-funktion per milstolpe.
+- Korsord med responsiv tre-kolumnslayout (verktygsruta till höger av korsordet vid ≥1520 px).
+- Startbild: `kraft-och-rorelse-startbild.png` under `/images/fysik/kraft-och-rorelse/`.
+
+### `kemi/periodiska-systemet/` – komplett
+
+- Områdesindex med rolltoggel (elev/lärare), milestone-map, begreppslista med milstolpelänkar.
+- Studieguide med 14 fullt ifyllda milstolpar i TEFY-stil, coach-funktion per milstolpe.
+- Områdesfärg: grön (`--area: #166534`).
+- Befintliga datafiler (checklista.json, instuderingsfragor.json, ovningsprov.json) behålls.
+
+Övriga kemi-områden och biologiområden har ännu inte genomgått samma upprustning. Deras checklistor, instuderingsfrågor och begreppskort är fortfarande i stort sett importerade från Gleerups och bör skrivas om i tur och ordning innan publicering.

@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Periodiska systemet</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #166534;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #166534;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #166534;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: center;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #f0fdf4;
+      border-left: 4px solid #166534;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #166534;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #166534;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Coach ────────────────────────────────────────────────── */
+    .coach-box {
+      background: #fff8f0;
+      border: 1px solid #f0c080;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.9rem;
+      display: none;
+    }
+    .coach-box.coach-visible { display: block; }
+    .coach-header {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.5rem;
+    }
+    .coach-box p { margin: 0.4rem 0; line-height: 1.55; color: #1a1a2e; }
+    .coach-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .coach-links a {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      background: #fef3c7;
+      border: 1px solid #f0c040;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #92400e;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: background 0.12s;
+    }
+    .coach-links a:hover { background: #fde68a; }
+
+    .coach-questions {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .coach-q-card {
+      background: #fffbf2;
+      border: 1px solid #f0c080;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .coach-q-btn {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    .coach-q-btn:hover { background: #fef3c7; }
+    .coach-q-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: #b45309;
+      text-transform: uppercase;
+      min-width: 4.5rem;
+    }
+    .coach-q-text { flex: 1; }
+    .coach-q-answer {
+      padding: 0.5rem 0.8rem 0.6rem 1.4rem;
+      background: #fef9ec;
+      border-top: 1px solid #f0d090;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .coach-a-label { font-weight: 600; color: #b45309; margin-right: 0.3rem; }
+
+    /* Toggle-switch */
+    .coach-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #166534;
+      user-select: none;
+    }
+    .coach-toggle {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex-shrink:0;
+    }
+    .coach-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .coach-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .coach-slider::before {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .coach-toggle input:checked + .coach-slider { background: #F59E0B; }
+    .coach-toggle input:checked + .coach-slider::before { transform: translateX(19px); }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body class="area-periodiska-systemet">
+
+  <header class="kemi-header">
+    <h1>Studieguide – Periodiska systemet</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/periodiska-systemet/" class="subject-btn">← Tillbaka till Periodiska systemet</a>
+    </p>
+
+    <div class="guide-intro">
+      <p><strong>14 milstolpar</strong> – från atomens byggnad till kemiska bindningar.</p>
+      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p style="display:flex; align-items:center; gap:0.5rem; margin-top:0.6rem;">
+        <label class="coach-toggle-wrap" for="coach-master">
+          <span class="coach-toggle">
+            <input type="checkbox" id="coach-master">
+            <span class="coach-slider"></span>
+          </span>
+          Coachläge
+        </label>
+        <span style="font-size:0.88rem; color:#555;">– visar repetitionsfrågor under varje milstolpe</span>
+      </p>
+      <p style="margin-top:0.5rem;">
+        <button onclick="toggleAllMilestones(true)"
+          style="margin-right:0.5rem; padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Expandera alla
+        </button>
+        <button onclick="toggleAllMilestones(false)"
+          style="padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Kollapsa alla
+        </button>
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 1 – Atomens byggnad
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Atomens byggnad</span>
+      </summary>
+      <div class="m-body">
+        <p>Allting i universum är uppbyggt av <strong class="term">atomer</strong>. Atomen är extremt liten – ett sandkorn rymmer ungefär hundra tusen miljarder av dem. Trots det är atomen inte materiens minsta del.</p>
+        <p>I mitten av atomen sitter <strong class="term">atomkärnan</strong>. Den innehåller <strong class="term">protoner</strong>, som är positivt laddade, och <strong class="term">neutroner</strong>, som saknar laddning. Runt kärnan kretsar <strong class="term">elektroner</strong>, som är negativt laddade.</p>
+        <p>En proton och en neutron väger ungefär lika mycket. Elektronerna är mycket lättare och påverkar inte atomens massa nämnvärt. Atomens massa bestäms alltså nästan helt av hur många protoner och neutroner kärnan innehåller.</p>
+        <p>En neutral atom har lika många protoner som elektroner. De positiva laddningarna tar då ut de negativa, och atomen är totalt sett oladdad.</p>
+
+        <figure>
+          <img src="/kemi/periodiska-systemet/bilder/proton-neutron-elektron.svg"
+               alt="Schema över atomkärna med protoner och neutroner samt elektroner i skal runt kärnan">
+          <figcaption>Atomkärnan innehåller protoner (+) och neutroner (0). Elektroner (−) kretsar i skal runt kärnan.</figcaption>
+        </figure>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Proton: positiv laddning (+). Neutron: ingen laddning (0). Elektron: negativ laddning (−). En neutral atom har lika många protoner som elektroner.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – atomens byggnad
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m1">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 1</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilka tre partiklar finns i en atom, och vilken laddning har var och en?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Proton (+), neutron (0) och elektron (−). Protoner och neutroner sitter i kärnan; elektroner kretsar runt kärnan.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför är en vanlig atom oladdad trots att den innehåller laddade partiklar?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Den har lika många protoner (+) som elektroner (−). Laddningarna tar ut varandra.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad bestämmer en atoms massa – kärnpartiklarna eller elektronerna?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kärnpartiklarna (protoner och neutroner). Elektronerna väger så lite att de knappt påverkar massan.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 2 – Atomnumret
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Atomnumret</span>
+      </summary>
+      <div class="m-body">
+        <p>Varje grundämne har ett unikt <strong class="term">atomnummer</strong>. Atomnumret anger hur många protoner som finns i kärnan. Eftersom antalet protoner är unikt för varje grundämne, är atomnumret i praktiken grundämnets identitet.</p>
+        <p>Vätets kärna innehåller en proton – vätgas har alltså atomnumret 1. Helium har två protoner och atomnumret 2. Syre har åtta protoner och atomnumret 8.</p>
+        <p>I en neutral atom är antalet elektroner lika stort som antalet protoner. Vet du atomnumret vet du alltså också hur många elektroner atomen har i neutralt tillstånd.</p>
+        <p>Atomnumret skrivs som ett litet tal nere till vänster om det kemiska tecknet. Till exempel skrivs syre som <sup>8</sup>O och helium som <sup>2</sup>He – men på grundskolenivå räcker det att känna till vad atomnumret betyder.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Atomnumret = antal protoner i kärnan. I en neutral atom = antal elektroner. Atomnumret identifierar vilket grundämne det är.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – atomnumret
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Masstal och isotoper</summary>
+          <p><strong class="term">Masstalet</strong> anger det totala antalet kärnpartiklar: protoner + neutroner. Masstalet skrivs som ett litet tal uppe till vänster om det kemiska tecknet, till exempel ¹²C för kol-12.</p>
+          <p>Kol har alltid 6 protoner (atomnumret 6), men det kan ha olika antal neutroner. Kol-12 har 6 neutroner, kol-13 har 7 och kol-14 har 8. Sådana varianter av samma grundämne kallas <strong class="term">isotoper</strong>. De har samma atomnummer men olika masstal.</p>
+          <p>Isotoper uppför sig kemiskt nästan identiskt eftersom kemiska egenskaper styrs av elektronerna, inte av neutronerna. Massan är dock lite olika. Kol-14 är radioaktivt och används inom arkeologi för att åldersbestämma organiska material.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m2">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 2</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad visar atomnumret?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Antal protoner i kärnan (och i en neutral atom även antal elektroner).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Guld har atomnumret 79. Vad vet du om en neutral guldatom?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Den har 79 protoner i kärnan och 79 elektroner runt kärnan.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 3 – Elektronskal
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Elektronskal – K, L och M</span>
+      </summary>
+      <div class="m-body">
+        <p>Elektronerna kretsar inte hur som helst runt kärnan. De befinner sig i bestämda <strong class="term">elektronskal</strong>. Det innersta skalet kallas <strong class="term">K-skalet</strong> och rymmer högst 2 elektroner. Nästa skal, <strong class="term">L-skalet</strong>, rymmer högst 8 elektroner. Sedan följer <strong class="term">M-skalet</strong>, som rymmer 8 elektroner när det är det yttersta skalet.</p>
+        <p>Skalen fylls inifrån och ut. Väte (atomnummer 1) har en elektron i K-skalet. Helium (atomnummer 2) har två – K-skalet är fullt. Litium (atomnummer 3) har två i K-skalet och en i L-skalet.</p>
+        <p>Natrium (atomnummer 11) har 11 elektroner: 2 i K, 8 i L och 1 i M. Klor (atomnummer 17) har 2 i K, 8 i L och 7 i M.</p>
+        <p>Det är framför allt det <strong class="term">yttersta skalet</strong> som avgör hur atomen reagerar kemiskt. Det yttersta skalets elektroner kallas valenselektroner och behandlas i nästa milstolpe.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          K-skalet: max 2 elektroner. L-skalet: max 8 elektroner. M-skalet: max 8 elektroner (när det är yttersta skalet). Skalen fylls inifrån och ut.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – elektronskal
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m3">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 3</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad heter de tre första elektronskalen och hur många elektroner rymmer de?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>K-skalet: 2, L-skalet: 8, M-skalet: 8 (när det är yttersta skalet).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Rita elektronfördelningen för natrium (atomnummer 11).</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>K: 2, L: 8, M: 1. Kärnan har 11 protoner; totalt 11 elektroner fördelade 2-8-1.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilket skal fylls alltid först?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>K-skalet (närmast kärnan) fylls alltid först, sedan L, sedan M.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 4 – Valenselektroner och ädelgasstruktur
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Valenselektroner och ädelgasstruktur</span>
+      </summary>
+      <div class="m-body">
+        <p>Elektronerna i atomens yttersta skal kallas <strong class="term">valenselektroner</strong>. Det är dessa som deltar när kemiska reaktioner sker. Inre elektroner tar normalt inte del i bindningar.</p>
+        <p>De flesta atomer strävar efter att ha fullt yttersta skal. Det stabila tillståndet med fullt yttersta skal kallas <strong class="term">ädelgasstruktur</strong> – eftersom ädelgaserna (grupp 18) naturligt har det. Fullt yttersta skal innebär vanligen 8 elektroner (2 för väte och helium, eftersom K-skalet bara rymmer 2).</p>
+        <p>Atomer kan uppnå ädelgasstruktur på tre sätt: lämna ifrån sig valenselektroner, ta upp elektroner utifrån, eller dela elektroner med en annan atom. Vilket sätt som väljs beror på hur många valenselektroner atomen redan har.</p>
+        <p>Natrium har 1 valenselektron och lämnar den gärna. Klor har 7 valenselektroner och tar gärna upp en till. Kol har 4 och delar ofta elektroner med andra atomer.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Valenselektroner = elektroner i yttersta skalet. Ädelgasstruktur = fullt yttersta skal (8 elektroner, eller 2 för väte/helium). Atomer reagerar för att uppnå ädelgasstruktur.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – valenselektroner
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Oktettregeln och dess gränser</summary>
+          <p>Tendensen att sträva mot 8 elektroner i yttersta skalet kallas <strong class="term">oktettregeln</strong>. Den gäller för de flesta atomer i perioderna 2 och 3 (kol, kväve, syre, fluor, natrium, klor med flera).</p>
+          <p>Det finns undantag. Väte och helium har fullt skal med bara 2 elektroner (K-skalet rymmer inte mer). Bor kan bilda stabila molekyler med bara 6 elektroner i yttersta skalet. Fosfor och svavel kan ibland ha fler än 8 elektroner i sitt yttersta skal om de använder M-skalets utvidgade kapacitet.</p>
+          <p>Oktettregeln är alltså en tumregel som fungerar bra för grundämnena i perioderna 2 och 3, men som inte är en absolut naturlag.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m4">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 4</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är valenselektroner och varför är de viktiga?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Elektroner i atomens yttersta skal. De deltar i kemiska reaktioner och avgör hur atomen binder till andra atomer.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad menas med ädelgasstruktur?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Fullt yttersta elektronskal – vanligtvis 8 elektroner (2 för väte och helium). Det är ett stabilt tillstånd som atomer strävar mot.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Aluminium har atomnummer 13. Hur många valenselektroner har det?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>13 elektroner fördelas 2-8-3. Yttersta skalet (M) har 3 elektroner → 3 valenselektroner.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 5 – Perioder och grupper
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Perioder och grupper i periodiska systemet</span>
+      </summary>
+      <div class="m-body">
+        <p><strong class="term">Periodiska systemet</strong> är en tabell där alla kända grundämnen är ordnade efter atomnummer och efter kemiska egenskaper. Det innehåller drygt 118 grundämnen.</p>
+        <p>En <strong class="term">period</strong> är en vågrät rad i tabellen. Alla grundämnen i samma period har lika många elektronskal. Period 1 innehåller bara väte och helium, båda med enbart K-skalet. Period 2 börjar med litium och slutar med neon – alla har K- och L-skalets elektroner.</p>
+        <p>En <strong class="term">grupp</strong> är en lodrät kolumn. Grundämnen i samma grupp har (som regel) lika många valenselektroner och därför liknande kemiska egenskaper. Grupp 1 har 1 valenselektron, grupp 17 har 7, grupp 18 har fullt yttersta skal.</p>
+        <p>Det är valenselektronernas antal som gör att ämnen i samma grupp beter sig kemiskt lika, trots att de kan ha mycket olika massa och utseende.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Period = vågrät rad → lika många elektronskal. Grupp = lodrät kolumn → (oftast) lika många valenselektroner → liknande kemiska egenskaper.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – perioder och grupper
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+          <a href="./korsord.html">
+            <span class="n-label">Träna</span>
+            Korsord – periodiska systemet
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m5">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 5</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är en period och vad är gemensamt för ämnen i samma period?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En period är en vågrät rad. Ämnen i samma period har lika många elektronskal.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför har ämnen i samma grupp ofta liknande kemiska egenskaper?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>De har lika många valenselektroner, och valenselektronerna styr hur atomer reagerar kemiskt.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför ligger natrium, kisel och klor i samma period?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>De har lika många elektronskal (alla tre befinner sig i period 3).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 6 – Metaller och icke-metaller
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Metaller och icke-metaller</span>
+      </summary>
+      <div class="m-body">
+        <p>De flesta grundämnen är <strong class="term">metaller</strong>. I periodiska systemet sitter de till vänster och i mitten. Metaller leder värme och el väl, är formbart och har typisk metallglans.</p>
+        <p><strong class="term">Icke-metaller</strong> finns till höger i periodiska systemet. De leder normalt inte ström (med undantag för kol i form av grafit) och är mer varierande till sina egenskaper – kväve och syre är gaser, klor är en giftig gas, svavel är ett fast gulaktigt ämne.</p>
+        <p>Väte är ett specialfall: det finns i grupp 1 men är ingen metall – det är en gas och räknas som icke-metall.</p>
+        <p>Längs gränsen mellan metaller och icke-metaller finns ett antal <strong class="term">halvmetaller</strong> (till exempel kisel och germanium). De uppvisar egenskaper från båda kategorierna och är viktiga i halvledare och elektronik.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Metaller: vänster och mitten i periodiska systemet, leder ström. Icke-metaller: höger i systemet. Väte är icke-metall trots att det står i grupp 1.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – metaller/icke-metaller
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Halvledare och kisel</summary>
+          <p>Kisel (Si) är en halvmetall med atomnummer 14. I rent tillstånd leder det ström sämre än metaller men bättre än isolatorer. Genom att tillsätta mycket små mängder av andra grundämnen (dopning) kan man styra kiselkristallers ledningsförmåga exakt.</p>
+          <p>Det är grunden för all modern elektronik: transistorer, mikroprocessorer och solceller bygger på kislets halvledaregenskaper. Utan halvledare ingen dator, ingen mobiltelefon.</p>
+          <p>Germanium (Ge) var den första halvledaren som användes i transistorer på 1940-talet, men kisel tog sedan över tack vare att det är billigare och mer stabilt vid höga temperaturer.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m6">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 6</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Var i periodiska systemet finns metaller respektive icke-metaller?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Metaller: vänster och i mitten. Icke-metaller: till höger. Väte är undantag – det är icke-metall men befinner sig i grupp 1.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad är en halvmetall och ge ett exempel?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Ett ämne med egenskaper från både metaller och icke-metaller. Kisel (Si) är det vanligaste exemplet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 7 – Alkalimetaller
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Alkalimetaller – grupp 1</span>
+      </summary>
+      <div class="m-body">
+        <p>Grundämnena i grupp 1 – utom väte – bildar grundämnefamiljen <strong class="term">alkalimetaller</strong>. Hit hör litium (Li), natrium (Na), kalium (K), rubidium (Rb), cesium (Cs) och francium (Fr).</p>
+        <p>Alla alkalimetaller har <strong>1 valenselektron</strong>. Denna enda elektron i yttersta skalet lämnas gärna ifrån sig, vilket gör att alkalimetallerna är mycket reaktiva. De bildar alltid enkelt positivt laddade joner: Li⁺, Na⁺, K⁺.</p>
+        <p>Alkalimetallerna reagerar häftigt med vatten. Natrium fräser och rör sig på ytan; kalium antänds direkt. Reaktionen med vatten ger ett basiskt ämne (natriumhydroxid eller kaliumhydroxid) och vätgas. Ju längre ner i gruppen, desto häftigare reaktion – valenselektronen sitter längre från kärnan och hålls löst.</p>
+        <p>Alkalimetallerna är mjuka nog att skäras med kniv och förvaras i olja för att inte reagera med luftens fukt och syre.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Alkalimetaller = grupp 1 (utom väte). 1 valenselektron → bildar +1-joner. Reaktiva, reagerar häftigt med vatten. Reaktiviteten ökar nedåt i gruppen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – alkalimetaller
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför ökar reaktiviteten nedåt i grupp 1?</summary>
+          <p>Valenselektronen sitter i det yttersta skalet. Ju fler skal, desto längre bort från kärnan sitter valenselektronen och desto svagare är kärnans dragningskraft på den.</p>
+          <p>Litium har sin valenselektron i L-skalet, nära kärnan. Kalium har sin i M-skalet, längre bort. Kaliums valenselektron hålls alltså lösare och lämnar atomen lättare – det reagerar snabbare och häftigare.</p>
+          <p>Samma princip gäller i andra grupper: för halogener (grupp 17) minskar reaktiviteten nedåt i gruppen, eftersom förmågan att ta upp en elektron försvagas när skalen är fler och elektronen ska ta sig längre in mot kärnan.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m7">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 7</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad kännetecknar alkalimetaller? (grupp, valenselektroner, jonladdning)</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Grupp 1 (utom väte). 1 valenselektron som de lämnar ifrån sig. Bildar +1-joner. Är mycket reaktiva.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför reagerar kalium häftigare med vatten än litium?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kaliums valenselektron sitter i ett yttre skal, längre från kärnan, och hålls svagare – den lämnas lättare.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vilken gas bildas när alkalimetaller reagerar med vatten?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Vätgas (H₂).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 8 – Halogener
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Halogener – grupp 17</span>
+      </summary>
+      <div class="m-body">
+        <p>Grundämnena i grupp 17 bildar familjen <strong class="term">halogener</strong>: fluor (F), klor (Cl), brom (Br), jod (I) och astat (At).</p>
+        <p>Alla halogener har <strong>7 valenselektroner</strong>. De saknar bara en elektron för att uppnå ädelgasstruktur, och tar därför gärna upp en elektron. Halogener bildar alltid enkelt negativa joner: F⁻, Cl⁻, Br⁻, I⁻.</p>
+        <p>Klor är en gulgrön giftig gas som används för att desinficera vatten i bassänger och som ingick i äldre blekmedel. Fluor är ännu mer reaktivt och kan fräta sönder de flesta material. Brom är flytande vid rumstemperatur – ovanligt för ett grundämne. Jod är ett fast, mörkt ämne som sublimerar (övergår direkt till gas).</p>
+        <p>Halogener reagerar gärna med metaller och bildar salter. Natriumklorid (NaCl) – vanligt koksalt – är den mest kända halogenföreningen. Namnet halogener betyder ungefär "saltbildare".</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Halogener = grupp 17. 7 valenselektroner → tar upp 1 elektron → bildar −1-joner. Reaktiva, bildar gärna salter med metaller.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – halogener
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Fluor i tandkräm – fluorid, inte fluor</summary>
+          <p>Fluor i atomform (F₂) är en extremt reaktiv och giftig gas. I tandkräm används inte fluor utan <strong>fluorider</strong> – stabila salter som natriumfluorid (NaF) eller natriummonofluorfosfat (Na₂PO₃F).</p>
+          <p>Fluoridjonerna (F⁻) inbyggda i tandemaljen gör den hårdare och mer motståndskraftig mot syraangrepp från bakterier. Det är alltså jonerna som verkar skyddande, inte gasformigt fluor.</p>
+          <p>Dricksvatten innehåller naturligt små mängder fluorider. I områden med låg naturlig fluorhalt kan tandläkare ordinera fluortabletter till barn under tandutvecklingen.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m8">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 8</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad kännetecknar halogener? (grupp, valenselektroner, jonladdning)</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Grupp 17. 7 valenselektroner – tar upp 1 elektron för att få fullt skal. Bildar −1-joner. Reaktiva, bildar gärna salter.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför innehåller tandkräm fluorid och inte fluor?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Fluor i atomform är en giftig reaktiv gas. Fluorid (F⁻) är en stabil jon som stärker tandemaljen.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 9 – Ädelgaser
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Ädelgaser – grupp 18</span>
+      </summary>
+      <div class="m-body">
+        <p>Grupp 18 innehåller <strong class="term">ädelgaser</strong>: helium (He), neon (Ne), argon (Ar), krypton (Kr), xenon (Xe) och radon (Rn).</p>
+        <p>Alla ädelgaser har ett fullt yttersta elektronskal. Helium har fullt K-skal (2 elektroner); de övriga har 8 elektroner i yttersta skalet. Det ger dem ädelgasstruktur utan att de behöver reagera – de är redan stabila.</p>
+        <p>Ädelgaser reagerar därför ogärna med andra ämnen och bildar nästan inga kemiska föreningar. Det är anledningen till att de kallas <em>ädla</em>.</p>
+        <p>Trots att de är inerta används de i teknik: <strong>argon</strong> används som skyddsgas i glödlampor (hindrar glödtråden från att brinna upp i luftens syre) och vid svetsning. <strong>Neon</strong> lyser rött i reklamskyltars lysrör. <strong>Helium</strong> används i ballonger och MR-kameror (kyler supraledande magneter). <strong>Radon</strong> är radioaktivt och kan ansamlas i hus byggda på uranhaltig mark.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Ädelgaser = grupp 18. Fullt yttersta skal → reagerar nästan inte. Helium har 2 elektroner (fullt K-skal); övriga har 8 i yttersta skalet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – ädelgaser
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m9">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 9</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Varför reagerar ädelgaser nästan inte med andra ämnen?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>De har fullt yttersta elektronskal redan från början – ädelgasstruktur utan att behöva reagera.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför räknas helium till ädelgaserna trots att det bara har 2 elektroner?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>K-skalet är fullt vid 2 elektroner. Helium har alltså ädelgasstruktur.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Ge ett användningsområde för argon och förklara varför just argon passar.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Skyddsgas i glödlampor. Argon reagerar inte med glödtråden, till skillnad från luftens syre som skulle bränna upp den.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 10 – Hur joner bildas
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Hur joner bildas</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">jon</strong> är en atom (eller grupp av atomer) som inte längre är elektriskt neutral – den har fler eller färre elektroner än protoner.</p>
+        <p>En <strong class="term">positiv jon</strong> bildas när en atom <em>lämnar ifrån sig</em> en eller flera elektroner. Natriumatomen har 11 protoner och 11 elektroner. När den lämnar sin enda valenselektron finns 11 protoner och bara 10 elektroner kvar → natriumjonen Na⁺ med laddningen +1.</p>
+        <p>En <strong class="term">negativ jon</strong> bildas när en atom <em>tar upp</em> en eller flera elektroner. Kloratomen har 17 protoner och 17 elektroner. När den tar upp en elektron till finns 17 protoner och 18 elektroner → kloridjon Cl⁻ med laddningen −1.</p>
+        <p>Ämnen i grupp 1 bildar +1-joner. Grupp 2 bildar +2-joner. Grupp 17 bildar −1-joner. Grupp 16 (syre, svavel) bildar −2-joner. Jonernas laddning bestäms alltså av hur många elektroner som lämnas eller tas upp för att uppnå ädelgasstruktur.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Positiv jon: atom lämnar elektroner (fler protoner än elektroner). Negativ jon: atom tar upp elektroner (fler elektroner än protoner). Jonens laddning = skillnaden.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – joner
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 5
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m10">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 10</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Hur bildas en positiv jon?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En atom lämnar ifrån sig en eller flera elektroner. Kvar blir fler protoner (+) än elektroner (−).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Hur bildas en negativ jon?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En atom tar upp en eller flera elektroner. Resultatet: fler elektroner (−) än protoner (+).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Magnesium har atomnummer 12. Vilken jon bildar det och varför?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Mg²⁺. Magnesium har 2 valenselektroner (grupp 2) som lämnas för att uppnå ädelgasstruktur.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 11 – Jonbindning och jonföreningar
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Jonbindning och jonföreningar</span>
+      </summary>
+      <div class="m-body">
+        <p>När en positiv och en negativ jon bildas i närheten av varandra dras de till varandra av elektriska krafter. Denna attraktion kallas <strong class="term">jonbindning</strong>.</p>
+        <p>Natriumklorid (NaCl) är ett klassiskt exempel. Natriumatomen lämnar sin valenselektron till klor: Na → Na⁺ och Cl → Cl⁻. De elektriskt motatta jonerna ordnar sig i ett regelbundet <strong class="term">kristallgitter</strong> där varje Na⁺ omges av Cl⁻ och vice versa.</p>
+        <p><strong class="term">Jonföreningar</strong> (salter) har höga smält- och kokpunkter, eftersom det krävs mycket energi att bryta upp det starka gittret. De leder ström i smält form eller löst i vatten (när jonerna är fria att röra sig), men inte i fast tillstånd.</p>
+        <p>Salter bildas när metaller reagerar med halogener: natrium + klor → natriumklorid, kalium + brom → kaliumbromid. Formeln skrivs alltid med den positiva jonen först.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Jonbindning = attraktion mellan positiva och negativa joner. Jonföreningar (salter) bildar kristallgitter. Höga smältpunkter. Leder ström i lösning eller smält, inte i fast form.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – jonbindning
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 5–6
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Jonlösningar och elektrisk ledning</summary>
+          <p>När ett salt löses i vatten dras vattenmolekylerna (som är polära) isär jonerna och omger dem. Natriumklorid i vatten ger fria Na⁺- och Cl⁻-joner som kan röra sig fritt.</p>
+          <p>Eftersom jonerna är elektriskt laddade och rörliga kan de transportera elektrisk laddning – det är varför saltvatten leder ström. Destillerat vatten saknar joner och leder ström mycket dåligt.</p>
+          <p>Alla starka syror och baser delar också upp sig i joner när de löses i vatten. Syror ger H⁺-joner och baser ger OH⁻-joner. Det är dessa joner som gör lösningarna sura respektive basiska.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m11">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 11</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är jonbindning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Attraktion (elektrisk kraft) mellan positiva och negativa joner som håller ihop en jonförening.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför leder NaCl i fast form inte ström, men i lösning gör det det?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>I fast form är jonerna låsta i gittret och kan inte röra sig. I lösning är de fria att röra sig och kan transportera laddning.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför är natrium och klor farliga var för sig men ofarliga som NaCl?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Na är en reaktiv metall och Cl₂ en giftig gas. I NaCl har båda uppnått ädelgasstruktur som stabila joner – ämnet är kemiskt inert och ofarligt.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 12 – Molekylbindning (kovalent)
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m12">
+      <summary>
+        <span class="m-num">Milstolpe 12</span>
+        <span class="m-title">Molekylbindning – elektronparbindning</span>
+      </summary>
+      <div class="m-body">
+        <p>Icke-metaller och atomer med många valenselektroner uppnår ädelgasstruktur inte genom att lämna elektroner, utan genom att <em>dela</em> dem med andra atomer. Denna typ av bindning kallas <strong class="term">elektronparbindning</strong> eller <strong class="term">kovalent bindning</strong>, och resulterar i <strong class="term">molekyler</strong>.</p>
+        <p>Vätgas (H₂) är det enklaste exemplet. Varje väteatom har 1 elektron men behöver 2 för fullt K-skal. Två väteatomer delar ett elektronpar – båda "äger" nu båda elektronerna och har ädelgasstruktur.</p>
+        <p>Vatten (H₂O) bildas när en syreatom delar elektroner med två väteatomer. Syre har 6 valenselektroner och behöver 2 till för att fylla L-skalet. Väteklorid (HCl) bildas på samma sätt mellan väte och klor.</p>
+        <p>Molekylföreningar har ofta lägre smältpunkter än jonföreningar, eftersom bindningarna mellan molekylerna (intermolekylära krafter) är svagare än de starka elektrostatiska krafterna i ett jonkristallgitter.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Elektronparbindning = kovalent bindning = atomer delar ett elektronpar. Bildar molekyler. Vanligt för icke-metaller.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – molekylbindning
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 6
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Polära och opolära bindningar</summary>
+          <p>I en bindning mellan två identiska atomer (som H₂ eller Cl₂) delas elektronparet lika. Bindningen är <strong>opolär</strong>.</p>
+          <p>När atomer av olika slag delar elektroner drar den mer elektronegativa atomen elektronparet lite åt sig. Bindningen blir då <strong>polär</strong> – en svag positiv laddning på ena sidan och svag negativ på den andra, ett <em>dipolmoment</em>.</p>
+          <p>Vatten (H₂O) är polär: syreatomen är mer elektronnegativ och drar elektronparen mot sig. Det gör att syresidan är något negativ och väteändarna något positiva. Denna polaritet är orsaken till att vatten löser upp jonföreningar så bra – de polära vattenmolekylerna kan omge och dra isär jonerna i ett salt.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m12">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 12</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är elektronparbindning (kovalent bindning)?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Två atomer delar ett elektronpar gemensamt. Båda atomerna räknar de delade elektronerna som sina egna och uppnår ädelgasstruktur.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför bildar vätgas H₂ och inte H – vad driver de två väteatomer samman?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Varje väteatom behöver 2 elektroner för fullt K-skal. Genom att dela ett elektronpar uppnår båda ädelgasstruktur.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 13 – Metallbindning
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m13">
+      <summary>
+        <span class="m-num">Milstolpe 13</span>
+        <span class="m-title">Metallbindning</span>
+      </summary>
+      <div class="m-body">
+        <p>I en metall sitter metallatomer tätt packade i ett gitter. Valenselektronerna är inte bundna till enskilda atomer utan rör sig fritt genom hela strukturen. Man säger att metallatomenerna omges av ett <strong class="term">elektronmoln</strong> av fria elektroner.</p>
+        <p>Denna bindning kallas <strong class="term">metallbindning</strong>. De fria elektronerna håller ihop de positivt laddade metallatomerna (de som lämnat valenselektronerna ifrån sig och blivit katjoner) i ett regelbundet gitter.</p>
+        <p>De fria elektronerna förklarar metallernas typiska egenskaper. Elektroner kan röra sig snabbt genom gittret → metaller leder ström bra. Elektronerna kan också transportera termisk energi → metaller leder värme bra. Metallgittret kan deformeras utan att förstöras → metaller är formbara (duktila).</p>
+        <p>Metallbindning uppstår bara i rena metaller eller metallegeringar (blandningar av metaller). Den är starkare i metaller med fler valenselektroner, vilket förklarar varför till exempel järn har högre smältpunkt än natrium.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Metallbindning = valenselektroner rör sig fritt som ett elektronmoln. Förklarar god elektrisk ledning, värmeledning och formbarhet.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – metallbindning
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 6
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m13">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 13</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är metallbindning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Metallatomer hålls samman av ett gemensamt moln av fria valenselektroner som rör sig fritt i gittret.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför leder metaller ström bra, men salter i fast form gör det inte?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>I metaller finns fria elektroner som kan röra sig och transportera laddning. I salter är jonerna låsta i gittret – inga fria laddningsbärare.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad är skillnaden mellan jonbindning, molekylbindning och metallbindning?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Jonbindning: attraktion mellan + och − joner. Molekylbindning: atomer delar elektronpar. Metallbindning: fritt elektronmoln håller ihop metallatomer.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 14 – Periodiska systemet i samhället
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m14">
+      <summary>
+        <span class="m-num">Milstolpe 14</span>
+        <span class="m-title">Periodiska systemet i samhället</span>
+      </summary>
+      <div class="m-body">
+        <p>Kunskapen om atomens byggnad och periodiska systemet är inte bara akademisk – den har format vår teknologi, vård och miljö på avgörande sätt.</p>
+        <p><strong>Halvledare och elektronik.</strong> Kisel (Si, atomnummer 14) är ryggraden i all modern elektronik. Utan förståelse för elektronskalen, valenselektroner och halvledaregenskaper hade varken transistorer, datorer eller mobiltelefoner existerat.</p>
+        <p><strong>Medicin och bilddiagnostik.</strong> Radioaktiva isotoper används i PET-kameror och scintigrafi för att spåra ämnesomsättning i kroppen. Jod-131 används för att behandla sköldkörtelcancer. MR-kameror kräver flytande helium för att kyla supraledande magneter till nästan absolut nollpunkt.</p>
+        <p><strong>Material och hållbarhet.</strong> Sällsynta jordartsmetaller (grupp 3 och lantanider) är nödvändiga i vindkraftverk, elbilsmotorer och solceller. Litium – en alkalimetall – är kärnan i de batterier som driver elbilar och mobiltelefoner. Utvinning av dessa metaller väcker frågor om gruvor, miljöpåverkan och geopolitik.</p>
+        <p><strong>Radon och strålskydd.</strong> Radon är en radioaktiv ädelgas som bildas när uran i berggrunden sönderfaller. Det kan ansamlas i källare och utgör en hälsorisk (lungcancer vid långvarig exponering). Radonmätning i bostäder är en konkret tillämpning av kunskapen om grundämnefamiljer och radioaktivitet.</p>
+
+        <div class="fact-box">
+          <strong>Sammanhang</strong>
+          Atomernas elektronstruktur styr allt från hur vi kommunicerar (kisel i chips) till hur vi producerar energi (litium i batterier, uran i kärnkraft) och hur vi diagnostiserar sjukdomar (radioaktiva isotoper).
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Hela checklistan
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov – alla milstolpar
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Mendelejevs förutsägelser</summary>
+          <p>Dmitrij Mendelejev publicerade 1869 det första periodiska systemet. Han ordnade grundämnena efter atomvikt och satte ämnen med liknande egenskaper i samma kolumn. Viktigt: han lämnade avsiktligt tomma platser för grundämnen som han förutsåg men som ännu inte upptäckts.</p>
+          <p>Mendelejev förutsåde tre grundämnen: "eka-aluminium" (gallium, upptäckt 1875), "eka-bor" (skandium, 1879) och "eka-kisel" (germanium, 1886). Deras egenskaper – atomvikt, densitet, oxidationstal – stämde anmärkningsvärt väl med hans beräkningar.</p>
+          <p>Det är ett av de mest övertygande exemplen på en vetenskaplig teoris förutsägande kraft: systemet var inte bara ett sätt att sortera det kända, utan ett verktyg för att förutsäga det okända.</p>
+          <p>Idag innehåller periodiska systemet 118 bekräftade grundämnen. Grundämnen med atomnummer högre än 92 (uran) förekommer inte naturligt i mätbara mängder – de syntetiseras i acceleratorer och lever bara bråkdelar av en sekund.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m14">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 14</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilket grundämne är centralt i modern elektronik, och varför?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Kisel (Si). Det är en halvledare vars ledningsförmåga kan styras exakt, vilket används i transistorer och mikrochip.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad är radon och varför kan det vara farligt i byggnader?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Radon är en radioaktiv ädelgas som bildas ur uran i berggrunden. Det kan ansamlas i källare och ökar risken för lungcancer vid långvarig exponering.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    // ── Expandera/kollapsa alla ─────────────────────────────────
+    function toggleAllMilestones(open) {
+      document.querySelectorAll('details.milestone').forEach(d => { d.open = open; });
+    }
+
+    // ── Coach-läge ──────────────────────────────────────────────
+    var masterSwitch = document.getElementById('coach-master');
+    masterSwitch.addEventListener('change', function () {
+      var boxes = document.querySelectorAll('.coach-box');
+      if (this.checked) {
+        boxes.forEach(function (b) { b.classList.add('coach-visible'); });
+      } else {
+        boxes.forEach(function (b) { b.classList.remove('coach-visible'); });
+      }
+    });
+
+    function toggleCoach(id) {
+      var box = document.getElementById('coach-' + id);
+      if (!box) return;
+      box.classList.toggle('coach-visible');
+    }
+
+    // ── Coach-frågor expand/collapse ────────────────────────────
+    function toggleCoachQ(btn) {
+      var ans = btn.nextElementSibling;
+      if (!ans) return;
+      ans.hidden = !ans.hidden;
+    }
+
+    // ── Öppna milstolpe via URL-hash (#m1 … #m14) ───────────────
+    (function () {
+      function openHash() {
+        var h = window.location.hash;
+        if (!h) return;
+        var el = document.querySelector('details.milestone' + h);
+        if (el) {
+          el.open = true;
+          setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        }
+      }
+      openHash();
+      window.addEventListener('hashchange', openHash);
+    })();
+  </script>
+</body>
+</html>

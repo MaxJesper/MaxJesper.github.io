@@ -7,25 +7,137 @@
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>
+    /* === Områdesfärg === */
+    body.area-periodiska-systemet {
+      --area: #166534;
+      --area-strong: #14532d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
+    }
+
     main {
       font-size: 1.2em;
     }
 
+    /* === Områdeslayout: material till vänster, bildpanel till höger === */
+    .area-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
 
-    .page-intro {
-      margin-bottom: 1.5rem;
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+        align-items: start;
+      }
+    }
+
+    .area-main {
+      min-width: 0;
+    }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .area-hero-image .image-placeholder {
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 10px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.7),
+        rgba(255, 255, 255, 0.7) 10px,
+        rgba(255, 255, 255, 0.4) 10px,
+        rgba(255, 255, 255, 0.4) 20px
+      );
+      border: 1px dashed var(--area-border);
+      color: var(--area-strong);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .area-hero-image figcaption {
+      margin-top: 0.9rem;
+    }
+
+    .concept-heading {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--area-strong);
+      font-weight: 700;
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 0.2rem;
+    }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.18rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .concept-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .concept-list a:hover {
+      text-decoration: underline;
+      color: var(--area-strong);
     }
 
     .resource-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -35,6 +147,7 @@
       margin-top: 0;
       margin-bottom: 0.75rem;
       font-size: 1.2rem;
+      color: var(--area-strong);
     }
 
     .resource-box p {
@@ -79,9 +192,135 @@
     .study-tips li {
       margin-bottom: 0.45rem;
     }
+
+    .role-toggle {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .role-toggle button {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      color: var(--area-strong);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover {
+      background: var(--area-hover);
+    }
+
+    .role-toggle button.active {
+      background: var(--area);
+      color: #fff;
+      border-color: var(--area);
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: var(--area-strong);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    /* === Milstolpe-roadmap === */
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li {
+      margin: 0;
+    }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* Lärare-ordning: lärarkortet överst */
+    body[data-role="larare"] .resource-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    body[data-role="larare"] .resource-grid article:last-child {
+      order: -1;
+    }
   </style>
 </head>
-<body>
+<body class="area-periodiska-systemet">
 
   <header class="kemi-header">
     <h1>Periodiska systemet</h1>
@@ -91,58 +330,139 @@
   <nav id="side-menu"></nav>
 
   <main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-    <a href="/kemi/jonforeningar/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>
-        Här hittar du material för att träna på periodiska systemet, atomens byggnad,
-        joner och kemisk bindning.
-      </p>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+      <a href="/kemi/jonforeningar/" class="subject-btn">Nästa område →</a>
+    </p>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
+
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+              <li><a href="./korsord.html">Korsord</a></li>
+              <li><a href="./memory.html">Memoryspel</a></li>
+            </ul>
+          </article>
+
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./bildstod.html">Bildstöd</a></li>
+            </ul>
+          </article>
+        </section>
+      </div>
+
+      <figure class="area-hero-image">
+        <div class="image-placeholder">
+          Introduktionsbild kommer snart<br>
+          <span style="font-weight:400; font-size:0.85rem;">(atommodell, elektronskal, periodiska systemet)</span>
+        </div>
+        <figcaption>
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <ul class="concept-list">
+            <li><a href="./studieguide.html#m1">Proton</a></li>
+            <li><a href="./studieguide.html#m1">Neutron</a></li>
+            <li><a href="./studieguide.html#m1">Elektron</a></li>
+            <li><a href="./studieguide.html#m2">Atomnummer</a></li>
+            <li><a href="./studieguide.html#m3">Elektronskal (K, L, M)</a></li>
+            <li><a href="./studieguide.html#m4">Valenselektroner</a></li>
+            <li><a href="./studieguide.html#m4">Ädelgasstruktur</a></li>
+            <li><a href="./studieguide.html#m5">Period</a></li>
+            <li><a href="./studieguide.html#m5">Grupp</a></li>
+            <li><a href="./studieguide.html#m6">Metall / icke-metall</a></li>
+            <li><a href="./studieguide.html#m7">Alkalimetaller</a></li>
+            <li><a href="./studieguide.html#m8">Halogener</a></li>
+            <li><a href="./studieguide.html#m9">Ädelgaser</a></li>
+            <li><a href="./studieguide.html#m10">Jon (positiv/negativ)</a></li>
+            <li><a href="./studieguide.html#m11">Jonbindning</a></li>
+            <li><a href="./studieguide.html#m12">Elektronparbindning</a></li>
+            <li><a href="./studieguide.html#m13">Metallbindning</a></li>
+            <li><a href="./studieguide.html#m2">Isotop</a></li>
+          </ul>
+        </figcaption>
+      </figure>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <p>Till hösten kommer här även finnas en AI-lärare till din hjälp.</p>
-        <ul>
-          <li><a href="./checklista.html">Checklista</a></li>
-          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
-          <li><a href="./ovningsprov.html">Övningsprov</a></li>
-          <!-- <li><a href="https://sites.google.com/skola.lund.se/fladsgrdensno-undervisninging/ai-tr%C3%A4ning-periodiska-systemet" target="_blank">🤖 Träna med AI</a></li> -->
-          <!-- <li><a href="./trana-med-ai.html">Träna med AI</a></li> -->
-        </ul>
-      </article>
-
-      <article class="resource-box">
-        <h2>För lektioner / läraren</h2>
-        <p>Övrigt material som kan användas i undervisningen.</p>
-        <ul>
-          <li><a href="./facit.html">Facit till övningsprovet</a></li>
-          <li><a href="./bildstod.html">Bildstöd</a></li>
-          <li><a href="./korsord.html">Korsord periodiska systemet</a></li>
-          <li><a href="./memory.html">Memoryspel periodiska systemet</a></li>
-        </ul>
-      </article>
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Atomens byggnad</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Atomnumret</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Elektronskal</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Valenselektroner och ädelgasstruktur</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Perioder och grupper</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Metaller och icke-metaller</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Alkalimetaller</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Halogener</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Ädelgaser</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Hur joner bildas</a></li>
+        <li><a href="./studieguide.html#m11"><span class="m-num-chip">11</span>Jonbindning och jonföreningar</a></li>
+        <li><a href="./studieguide.html#m12"><span class="m-num-chip">12</span>Elektronparbindning</a></li>
+        <li><a href="./studieguide.html#m13"><span class="m-num-chip">13</span>Metallbindning</a></li>
+        <li><a href="./studieguide.html#m14"><span class="m-num-chip">14</span>Periodiska systemet i samhället</a></li>
+      </ul>
     </section>
 
     <section class="study-tips">
       <details>
         <summary>Inläsningstips</summary>
         <ul>
-          <li>Börja med att läsa rubrikerna och titta på bilderna för att få en överblick.</li>
-          <li>Träna först på de viktigaste begreppen: atom, jon, elektronskal, valenselektron och bindning.</li>
-          <li>Jämför begrepp som liknar varandra, till exempel atom och jon.</li>
-          <li>Anteckna både på lektioner och när du arbetar själv. Formuleringar med egna ord gör att du minns bättre, ökar ditt fokus och förstår mer!</li>
-          <li>Säg gärna svaren på frågor högt med egna ord. Då märker du bättre vad du kan och vad du behöver träna mer på.</li>
-          <li>Dela upp pluggandet i kortare pass i stället för att försöka göra allt på en gång.</li>
+          <li>Börja med att kunna de tre partiklarna i atomen och deras laddningar (proton +, neutron 0, elektron −).</li>
+          <li>Träna på att fördela elektroner i skal: K=2, L=8, M=8. Öva på några atomer tills det sitter.</li>
+          <li>Förstå skillnaden mellan <strong>period</strong> (rad, antal skal) och <strong>grupp</strong> (kolumn, antal valenselektroner).</li>
+          <li>Lär dig de tre grundämnefamiljerna: alkalimetaller (grupp 1, 1 valenselektron), halogener (grupp 17, 7 valenselektroner), ädelgaser (grupp 18, fullt skal).</li>
+          <li>Öva på att förklara hur positiva och negativa joner bildas – och varför det händer (ädelgasstruktur).</li>
+          <li>Jämför de tre bindningstyperna: jonbindning (joner attraheras), elektronparbindning (atomer delar par) och metallbindning (fritt elektronmoln).</li>
         </ul>
       </details>
     </section>
   </main>
 
   <script src="/js/menu.js"></script>
+  <script>
+    // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
+    (function () {
+      var STORE_KEY = "mj.role";
+      var btnElev = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+
+      // Ladda senaste val
+      try {
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
+
+      btnElev.addEventListener("click", function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
 </body>
 </html>
