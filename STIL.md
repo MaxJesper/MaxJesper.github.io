@@ -253,7 +253,7 @@ Varje gång en checklista skrivs om ska man kontrollera att inget i checklistan 
 - Remote: GitHub, `main`-gren deployeras automatiskt via GitHub Pages.
 - `.gitignore` innehåller `.DS_Store` och `*.bak` (sed-backups).
 - Commit-meddelanden är beskrivande svenska.
-- Jesper kör själv alla git-operationer i sin terminal (`~/Documents/00- GitHub-Repo`). Claude/Cowork föreslår kommandona men exekverar dem inte.
+- Jesper kör själv alla git-operationer i sin terminal (`~/Documents/00- GitHub-Repo`). Claude/Cowork **ska alltid ge Jesper de exakta kommandona att köra** – aldrig bara beskriva vad som behöver göras. Skriv alltid ut `git add …`, `git commit -m "…"` och `git push` (eller andra relevanta kommandon) i ett kodblock i slutet av varje svar där filer har ändrats.
 
 ---
 
