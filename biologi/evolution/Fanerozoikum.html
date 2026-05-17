@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>När då då? – Fanerozoikum</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 65%);
+      margin: 0;
+      padding: 0;
+    }
+
+    .topbar { max-width: 980px; margin: 14px auto 0; padding: 0 12px; }
+    .subject-btn{
+      display:inline-block; padding:8px 12px; background:#fff; border-radius:6px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); text-decoration:none; color:#0056b3;
+      margin: 6px 0;
+    }
+    .subject-btn:hover{ text-decoration: underline; }
+
+    #container { max-width: 980px; margin: 14px auto; padding: 0 12px; }
+    #card { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.10); }
+    #meta { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; margin-bottom:10px; }
+    #meta .pill { background:#eef4ff; color:#003a8c; padding:6px 10px; border-radius:999px; font-size:14px; }
+    #meta .pill.period  { background:#e8f5e9; color:#1b5e20; }
+    #meta .small { color:#444; font-size:14px; }
+
+    #content { text-align:left; }
+    #content h2 { margin: 6px 0 10px; font-size: 20px; }
+    #content .intro { font-size:16px; line-height:1.45; color:#222; }
+    #content .q { margin-top:14px; font-size:18px; }
+    #content .options { margin-top:8px; padding-left: 18px; }
+    #content .options li { margin: 6px 0; }
+    #content .answerBox {
+      margin-top: 12px; padding: 12px 14px; border-radius: 10px;
+      background: #f0f7ff; border: 1px solid #cfe3ff;
+    }
+    #content .answerBox .label { font-weight: bold; color:#003a8c; }
+    #content .answerBox .extra { margin-top:8px; color:#1c1c1c; }
+    #content .periodList { margin-top: 10px; line-height: 1.7; }
+    #content .periodList .hit { font-weight:bold; }
+    #content .concept { font-weight: 700; font-style: italic; }
+
+    .controls { margin-top: 12px; display:flex; flex-wrap:wrap; gap:8px; }
+    .controls button {
+      padding:10px 12px; border:0; border-radius:8px; cursor:pointer;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#fff; font-size:15px;
+    }
+    .controls button:hover { background:#f3f3f3; }
+    .controls .primary { background:#0056b3; color:#fff; }
+    .controls .primary:hover { background:#004799; }
+
+    .hint { margin-top: 10px; color:#555; font-size: 14px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    code { background:#f3f3f3; padding:2px 6px; border-radius:6px; }
+
+    .info-banner {
+      max-width: 980px;
+      margin: 10px auto 0;
+      padding: 10px 14px;
+      background: #fffbe6;
+      border: 1px solid #ffe58f;
+      border-radius: 10px;
+      color: #614700;
+      font-size: 14px;
+    }
+
+  .scorebar{
+  max-width: 980px;
+  margin: 10px auto 0;
+  padding: 0 12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.score-left{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+.score-left button{
+  padding:8px 10px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  background:#fff;
+  font-size: 14px;
+}
+.score-left button:hover{ background:#f3f3f3; }
+
+.score-right{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  justify-content:flex-end;
+}
+
+.group{
+  background:#fff;
+  border-radius:12px;
+  padding:8px 10px;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.group .name{
+  font-weight:700;
+  color:#003a8c;
+  min-width: 42px;
+}
+
+.group .pts{
+  font-weight:700;
+  min-width: 18px;
+  text-align:center;
+}
+
+.group button{
+  padding:6px 10px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.08);
+  background:#f7f7f7;
+  font-size: 14px;
+}
+.group button:hover{ background:#ededed; }
+  </style>
+</head>
+
+<body>
+<div class="topbar">
+  <a href="index.html" class="subject-btn">← Tillbaka till Biologi</a>
+  &nbsp;
+  <a href="nardada_regler.html" class="subject-btn">📘 Spelregler</a>
+</div>
+
+<div class="info-banner">
+  📝 <strong>När då då? – Fanerozoikum.</strong> Frågor om de geologiska perioderna under Fanerozoikum (Kambrium till Kvartär). Fler frågor kan komma att läggas till.
+</div>
+
+<div class="scorebar">
+  <div class="score-left">
+    <strong>Poäng:</strong>
+    <label style="margin-left:10px;">
+      Grupper:
+      <select id="groupCount" onchange="setGroupCountFromUI()">
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+    <button onclick="resetScores()">Nollställ</button>
+  </div>
+
+  <div class="score-right" id="scoreboard"></div>
+</div>
+
+  <div id="container">
+    <div id="card">
+      <div id="meta">
+        <div class="pill" id="subjectPill">När då då?</div>
+        <div class="pill period" id="periodPill" style="display:none"></div>
+        <div class="small" id="statusText">Laddar frågor…</div>
+      </div>
+
+      <div id="content">
+        <h2>Laddar…</h2>
+        <p>Hämtar <code>Fanerozoikum-fragor.json</code>.</p>
+      </div>
+
+      <div class="controls">
+        <button onclick="prevCard()">⬅️ Föregående kort</button>
+        <button onclick="resetStep()">↩️ Starta om steg</button>
+        <button class="primary" onclick="nextStep()">Nästa steg ▶</button>
+        <button onclick="nextCard()">➡️ Nästa kort</button>
+        <button onclick="shuffleDeck()">🔀 Blanda frågor</button>
+        <button onclick="loadDeck()">⟳ Ladda om JSON</button>
+      </div>
+
+      <div class="hint">
+        Tips: <span class="mono">Nästa steg</span> visar i ordning:
+        inledning → tidsfråga → tidssvar → begreppsfråga → begreppssvar.
+      </div>
+    </div>
+  </div>
+
+<script>
+/**
+ * Steg:
+ * 0 = Inledning
+ * 1 = Fråga 1 (När?)
+ * 2 = Svar 1
+ * 3 = Fråga 2 (A/B/C)
+ * 4 = Svar 2
+ */
+
+const FANEROZOIKUM_PERIODER = [
+  "Kambrium","Ordovicium","Silur","Devon","Karbon","Perm","Trias","Jura","Krita","Paleogen","Neogen","Kvartär"
+];
+
+let deck = [];
+let idx = 0;
+let step = 0; // 0..4
+
+// ===== Poängräknare (enkel) =====
+const SCORE_KEY = "nardada_fanerozoikum_scores_v1";
+let scores = [];         // array med poäng per grupp
+let groupCount = 3;      // default
+
+function loadScores(){
+  try{
+    const raw = localStorage.getItem(SCORE_KEY);
+    if(raw){
+      const obj = JSON.parse(raw);
+      if (Array.isArray(obj.scores)) scores = obj.scores;
+      if (Number.isFinite(obj.groupCount)) groupCount = obj.groupCount;
+    }
+  }catch(e){}
+  setGroupCount(groupCount, false);
+  const sel = document.getElementById("groupCount");
+  if(sel) sel.value = String(groupCount);
+  renderScoreboard();
+}
+
+function saveScores(){
+  localStorage.setItem(SCORE_KEY, JSON.stringify({ groupCount, scores }));
+}
+
+function setGroupCount(n, persist=true){
+  groupCount = Math.max(2, Math.min(6, Number(n) || 3));
+  if(scores.length < groupCount){
+    while(scores.length < groupCount) scores.push(0);
+  } else if(scores.length > groupCount){
+    scores = scores.slice(0, groupCount);
+  }
+  if(persist) saveScores();
+  renderScoreboard();
+}
+
+function setGroupCountFromUI(){
+  const sel = document.getElementById("groupCount");
+  setGroupCount(sel.value, true);
+}
+
+function renderScoreboard(){
+  const board = document.getElementById("scoreboard");
+  if(!board) return;
+  board.innerHTML = "";
+  for(let i=0;i<groupCount;i++){
+    const div = document.createElement("div");
+    div.className = "group";
+    div.innerHTML = `
+      <span class="name">G${i+1}</span>
+      <button title="Minus 1" onclick="addPoints(${i}, -1)">−</button>
+      <span class="pts">${scores[i]}</span>
+      <button title="Plus 1" onclick="addPoints(${i}, 1)">+</button>
+    `;
+    board.appendChild(div);
+  }
+}
+
+function addPoints(i, delta){
+  scores[i] = Math.max(0, (scores[i] || 0) + delta);
+  saveScores();
+  renderScoreboard();
+}
+
+function resetScores(){
+  scores = Array.from({length: groupCount}, () => 0);
+  saveScores();
+  renderScoreboard();
+}
+
+
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+async function loadDeck() {
+  const content = document.getElementById("content");
+  const statusText = document.getElementById("statusText");
+  const subjectPill = document.getElementById("subjectPill");
+
+  statusText.textContent = "Laddar frågor…";
+  subjectPill.textContent = "När då då?";
+
+  try {
+    // JSON-filen ska ligga i samma mapp som denna HTML
+    const res = await fetch("./Fanerozoikum-fragor.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`Kunde inte ladda JSON (${res.status})`);
+
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error("JSON laddades men innehåller ingen lista med kort (tom eller fel format).");
+    }
+
+    deck = data;
+    idx = 0;
+    step = 0;
+    render();
+  } catch (err) {
+    console.error(err);
+    content.innerHTML = `
+      <h2>Fel vid laddning</h2>
+      <p>Kunde inte läsa <code>Fanerozoikum-fragor.json</code>.</p>
+      <p><strong>Orsak:</strong> ${esc(err.message)}</p>
+      <p>Kontrollera att filen ligger i samma mapp som <code>Fanerozoikum.html</code> och att den är giltig JSON.</p>
+    `;
+    statusText.textContent = "Fel: JSON kunde inte laddas";
+    subjectPill.textContent = "När då då?";
+  }
+}
+
+function render() {
+  const subjectPill = document.getElementById("subjectPill");
+  const periodPill  = document.getElementById("periodPill");
+  const statusText = document.getElementById("statusText");
+  const content = document.getElementById("content");
+
+  if (!Array.isArray(deck) || deck.length === 0) {
+    subjectPill.textContent = "När då då?";
+    periodPill.style.display = "none";
+    statusText.textContent = "Inga kort laddade";
+    content.innerHTML = `<h2>Inga kort</h2><p>Lägg in frågor i <code>Fanerozoikum-fragor.json</code> och klicka "Ladda om JSON".</p>`;
+    return;
+  }
+
+  const card = deck[idx];
+  subjectPill.textContent = card.subject || "När då då?";
+
+  // Visa periodtaggen först efter att tidssvaret avslöjats (steg >= 2)
+  if (card.period && step >= 2) {
+    periodPill.textContent = "Period: " + card.period;
+    periodPill.style.display = "";
+  } else {
+    periodPill.style.display = "none";
+  }
+
+  statusText.textContent = `Kort ${idx+1}/${deck.length} · Steg ${step}/4`;
+
+  let html = `<h2>${esc(card.subject || "När då då?")} – kort ${esc(card.id ?? (idx+1))}</h2>`;
+
+  if (step === 0) {
+    html += `<div class="intro">${card.intro || ""}</div>`;
+  }
+
+  if (step === 1) {
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
+  }
+
+  if (step === 2) {
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
+    html += renderAnswer1(card.q1);
+  }
+
+  if (step === 3) {
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
+    html += renderAnswer1(card.q1);
+    html += renderQuestion2(card.q2);
+  }
+
+  if (step === 4) {
+    html += `<div class="intro">${card.intro || ""}</div>`;
+    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
+    html += renderAnswer1(card.q1);
+    html += renderQuestion2(card.q2);
+    html += renderAnswer2(card.q2);
+  }
+
+  content.innerHTML = html;
+}
+
+function renderAnswer1(q1) {
+  let box = `<div class="answerBox"><div class="label">Svar 1</div>`;
+
+  if (!q1 || !q1.type) {
+    box += `<div class="periodList"><span class="hit">[Saknar data för svar 1]</span></div></div>`;
+    return box;
+  }
+
+  if (q1.type === "period_fanerozoikum") {
+    const list = FANEROZOIKUM_PERIODER.map(p => {
+      if (p === q1.correct) return `<span class="hit">${esc(p)} (${esc(q1.interval || "")})</span>`;
+      return esc(p);
+    }).join(" · ");
+    box += `<div class="periodList">${list}</div>`;
+    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+  } else if (q1.type === "year") {
+    box += `<div class="periodList"><span class="hit">${esc(q1.correctYear)}</span></div>`;
+    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+  } else if (q1.type === "human_time") {
+    box += `<div class="periodList"><span class="hit">${esc(q1.correctText || "")}</span></div>`;
+    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+  } else {
+    box += `<div class="periodList"><span class="hit">[Okänt format: ${esc(q1.type)}]</span></div>`;
+    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+  }
+
+  box += `</div>`;
+  return box;
+}
+
+function renderQuestion2(q2) {
+  if (!q2) return `<div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>[Saknar fråga 2]</div>`;
+
+  return `
+    <div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>${esc(q2.question || "")}</div>
+    <ol class="options" type="A">
+      <li>${esc(q2.options?.A || "")}</li>
+      <li>${esc(q2.options?.B || "")}</li>
+      <li>${esc(q2.options?.C || "")}</li>
+    </ol>
+  `;
+}
+
+function renderAnswer2(q2) {
+  if (!q2) {
+    return `
+      <div class="answerBox">
+        <div class="label">Svar 2</div>
+        <div class="periodList"><span class="hit">[Saknar facit]</span></div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="answerBox">
+      <div class="label">Svar 2</div>
+      <div class="periodList">Rätt alternativ: <span class="hit">${esc(q2.correct || "")}</span></div>
+      <div class="extra">${esc(q2.explanation || "")}</div>
+    </div>
+  `;
+}
+
+function nextStep() {
+  if (!deck.length) return;
+  step = Math.min(4, step + 1);
+  render();
+}
+
+function resetStep() {
+  if (!deck.length) return;
+  step = 0;
+  render();
+}
+
+function nextCard() {
+  if (!deck.length) return;
+  idx = (idx + 1) % deck.length;
+  step = 0;
+  render();
+}
+
+function prevCard() {
+  if (!deck.length) return;
+  idx = (idx - 1 + deck.length) % deck.length;
+  step = 0;
+  render();
+}
+
+function shuffleDeck() {
+  if (!deck.length) return;
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  idx = 0;
+  step = 0;
+  render();
+}
+
+// Start: ladda från JSON
+loadScores();
+loadDeck();
+</script>
+</body>
+</html>
