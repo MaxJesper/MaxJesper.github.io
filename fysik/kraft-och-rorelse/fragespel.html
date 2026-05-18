@@ -252,15 +252,15 @@
 <div class="timerbar">
   <div class="timerbar-inner locked" id="timerbarInner">
     <label>
-      <input type="checkbox" id="timerCheck" checked onchange="onTimerToggle()">
+      <input type="checkbox" id="timerCheck" checked onchange="onTimerToggle()" disabled>
       ⏱ Spela med timer
     </label>
     <label id="timerSecLabel">
-      <input type="number" id="timerSec" value="20" min="5" max="120"> sek/fråga
+      <input type="number" id="timerSec" value="20" min="5" max="120" disabled> sek/fråga
     </label>
     <label>
       🏆 Vinst vid
-      <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()"> poäng
+      <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()" disabled> poäng
     </label>
     <button class="btn-lock" id="lockBtn" onclick="showPasswordModal()">🔒 Ändra inställningar</button>
     <span id="timerModeHint"></span>
@@ -463,8 +463,15 @@ function checkPassword() {
     document.getElementById('passwordInput').focus();
   }
 }
+function setSettingsInputsDisabled(disabled) {
+  ['timerCheck', 'timerSec', 'winScoreInput'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = disabled;
+  });
+}
 function unlockSettings() {
   settingsUnlocked = true;
+  setSettingsInputsDisabled(false);
   document.getElementById('timerbarInner').classList.remove('locked');
   const btn = document.getElementById('lockBtn');
   btn.textContent = '🔓 Lås inställningar';
@@ -472,6 +479,7 @@ function unlockSettings() {
 }
 function lockSettings() {
   settingsUnlocked = false;
+  setSettingsInputsDisabled(true);
   document.getElementById('timerbarInner').classList.add('locked');
   const btn = document.getElementById('lockBtn');
   btn.textContent = '🔒 Ändra inställningar';
