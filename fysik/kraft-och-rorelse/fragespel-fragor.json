@@ -1,0 +1,622 @@
+[
+  {
+    "id": 1,
+    "subject": "Rörelse",
+    "topic": "Rörelsens typer",
+    "intro": "En rullskridskoåkare glider jämt framåt på en lång, rak gata. Han håller exakt 15 km/h och varken snabbar upp eller saktar ner.",
+    "q1": {
+      "question": "Vad kallas den typ av rörelse som rullskridskoåkaren utför?",
+      "options": { "A": "Accelererad rörelse", "B": "Likformig rörelse", "C": "Retarderad rörelse" },
+      "correct": "B",
+      "explanation": "Likformig rörelse = konstant hastighet i rät linje. Varken snabbare, långsammare eller kurvigt."
+    },
+    "q2": {
+      "question": "Rullskridskoåkaren glider i 15 km/h i 4 timmar. Hur lång sträcka tillryggalägger han?",
+      "options": { "A": "30 km", "B": "45 km", "C": "60 km" },
+      "correct": "C",
+      "explanation": "Sträcka = hastighet × tid = 15 × 4 = 60 km."
+    }
+  },
+  {
+    "id": 2,
+    "subject": "Rörelse",
+    "topic": "Acceleration och retardation",
+    "intro": "En cyklist åker snabbare och snabbare nedför en backe. En bit längre bort ser han ett stopptecken och bromsar kraftigt tills han stannar.",
+    "q1": {
+      "question": "Vad kallas rörelsen när cyklisten snabbar upp nedför backen?",
+      "options": { "A": "Likformig rörelse", "B": "Retarderad rörelse", "C": "Accelererad rörelse" },
+      "correct": "C",
+      "explanation": "Acceleration = farten ökar. Retardation = farten minskar. Likformig = konstant fart."
+    },
+    "q2": {
+      "question": "När cyklisten bromsar in mot stoppskylten – vad kallas den rörelsen?",
+      "options": { "A": "Accelererad rörelse", "B": "Retarderad rörelse", "C": "Likformig rörelse" },
+      "correct": "B",
+      "explanation": "Retarderad rörelse är när farten minskar. Retardation är 'negativ acceleration'."
+    }
+  },
+  {
+    "id": 3,
+    "subject": "Rörelse",
+    "topic": "Medelhastighet – formel",
+    "intro": "En familj kör bil från stad A till stad B. Sträckan är 300 km och resan tar 4 timmar, inklusive ett par raster.",
+    "q1": {
+      "question": "Vilken formel används för att beräkna medelhastigheten?",
+      "options": { "A": "v = t / s", "B": "v = s + t", "C": "v = s / t" },
+      "correct": "C",
+      "explanation": "Medelhastighet = sträcka / tid. Enheten är km/h om sträcka är i km och tid i timmar."
+    },
+    "q2": {
+      "question": "Vad är familjens medelhastighet under resan (300 km på 4 timmar)?",
+      "options": { "A": "60 km/h", "B": "75 km/h", "C": "100 km/h" },
+      "correct": "B",
+      "explanation": "v = 300 / 4 = 75 km/h."
+    }
+  },
+  {
+    "id": 4,
+    "subject": "Rörelse",
+    "topic": "Beräkna tid",
+    "intro": "Ett godståg ska frakta varor 480 km. Tåget håller en medelhastighet av 120 km/h.",
+    "q1": {
+      "question": "Vilken formel används för att beräkna restiden när man känner till sträcka och hastighet?",
+      "options": { "A": "t = v × s", "B": "t = s / v", "C": "t = v / s" },
+      "correct": "B",
+      "explanation": "Tid = sträcka / hastighet. Det följer direkt av v = s/t om man löser ut t."
+    },
+    "q2": {
+      "question": "Hur lång tid tar godstågets resa (480 km vid 120 km/h)?",
+      "options": { "A": "3 timmar", "B": "4 timmar", "C": "6 timmar" },
+      "correct": "B",
+      "explanation": "t = 480 / 120 = 4 timmar."
+    }
+  },
+  {
+    "id": 5,
+    "subject": "Rörelse",
+    "topic": "Tröghet",
+    "intro": "En fullsatt buss bromsar hastigt. Alla passagerare glider framåt mot sätet framför sig.",
+    "q1": {
+      "question": "Vilket fysikaliskt fenomen förklarar varför passagerarna glider framåt när bussen bromsar?",
+      "options": { "A": "Friktion", "B": "Tröghet", "C": "Reaktionskraft" },
+      "correct": "B",
+      "explanation": "Tröghet = föremåls tendens att behålla sin fart och riktning. Kroppen vill fortsätta framåt när bussen stannar."
+    },
+    "q2": {
+      "question": "Varför sitter vi fastspända i bilbälte i en bil?",
+      "options": {
+        "A": "För att hålla oss varma",
+        "B": "För att hindra kroppen från att fortsätta framåt vid en krasch (tröghet)",
+        "C": "För att öka friktionen mot sätet"
+      },
+      "correct": "B",
+      "explanation": "Vid en krasch stannar bilen snabbt. Kroppen vill – på grund av tröghet – fortsätta framåt. Bilbältet håller fast kroppen och minskar skadorna."
+    }
+  },
+  {
+    "id": 6,
+    "subject": "Rörelse",
+    "topic": "Fritt fall",
+    "intro": "Galileo Galilei genomförde ett berömt experiment för att visa hur föremål faller. Han tappade föremål med olika massor från ett torn.",
+    "q1": {
+      "question": "Vad menas med fritt fall?",
+      "options": {
+        "A": "Föremål faller olika snabbt beroende på vikt",
+        "B": "Fall utan luftmotstånd, där bara tyngdkraften verkar",
+        "C": "Fall i vatten"
+      },
+      "correct": "B",
+      "explanation": "I fritt fall bortser man från luftmotståndet. Då accelererar alla föremål lika snabbt nedåt – ungefär 10 m/s² på jorden."
+    },
+    "q2": {
+      "question": "Galilei visade att en tung och en lätt boll träffar marken samtidigt (utan luftmotstånd). Varför?",
+      "options": {
+        "A": "Tyngdkraften är lika för alla föremål",
+        "B": "Gravitationen ger alla föremål samma acceleration, oavsett massa",
+        "C": "Tyngre föremål faller egentligen snabbare, men det märks inte"
+      },
+      "correct": "B",
+      "explanation": "Gravitationens acceleration g ≈ 10 m/s² är lika för alla föremål. Tyngre föremål dras hårdare men har också mer tröghet – exakt så att accelerationen blir lika."
+    }
+  },
+  {
+    "id": 7,
+    "subject": "Rörelse",
+    "topic": "Centralrörelse",
+    "intro": "En sten är fastknutet i ett snöre och snurras runt i en horisontell cirkel.",
+    "q1": {
+      "question": "Åt vilket håll verkar centripetalkraften på stenen?",
+      "options": { "A": "Utåt, bort från centrum", "B": "Mot centrum", "C": "I rörelseriktningen" },
+      "correct": "B",
+      "explanation": "Centripetalkraften håller föremålet i cirkelbanan och är alltid riktad mot centrum. Det är snörets dragkraft som ger denna kraft."
+    },
+    "q2": {
+      "question": "Vad händer med stenen om snöret brister plötsligt?",
+      "options": {
+        "A": "Stenen flyger utåt i en böjd bana",
+        "B": "Stenen stannar på stället",
+        "C": "Stenen fortsätter rakt fram – tangentiellt – i den riktning den hade just då"
+      },
+      "correct": "C",
+      "explanation": "När centripetalkraften försvinner fortsätter stenen i rät linje på grund av tröghet (Newtons 1:a lag). Riktningen är tangenten till cirkeln."
+    }
+  },
+  {
+    "id": 8,
+    "subject": "Rörelse",
+    "topic": "Momentan- och medelhastighet",
+    "intro": "En fartkamera fotograferar en bil och mäter att den håller 90 km/h på en väg med hastighetsgränsen 70 km/h.",
+    "q1": {
+      "question": "Fartkameran mäter momentanhastighet. Vad är skillnaden mot medelhastighet?",
+      "options": {
+        "A": "Medelhastighet är alltid snabbare",
+        "B": "Momentanhastighet är farten vid ett specifikt ögonblick; medelhastighet är snittfarten över en hel sträcka",
+        "C": "De mäter samma sak fast i olika enheter"
+      },
+      "correct": "B",
+      "explanation": "Medelhastighet = total sträcka / total tid. Momentanhastighet är farten just nu – det fartkameran mäter."
+    },
+    "q2": {
+      "question": "Om bilen körde 90 km/h och bromsade jämnt till 54 km/h (15 m/s) under 5 sekunder – acceleration eller retardation?",
+      "options": {
+        "A": "Acceleration – farten ökade",
+        "B": "Likformig rörelse – farten var konstant",
+        "C": "Retardation – farten minskade"
+      },
+      "correct": "C",
+      "explanation": "Farten minskar → retardation (negativ acceleration). 90 km/h → 54 km/h är en minskning."
+    }
+  },
+  {
+    "id": 9,
+    "subject": "Kraft",
+    "topic": "Kraftens enhet och mätning",
+    "intro": "En lärare håller upp ett instrument med en fjäder inuti och en skala på sidan. I instrumentet hänger en tung sten.",
+    "q1": {
+      "question": "Vad heter instrumentet som mäter krafters storlek?",
+      "options": { "A": "Barometer", "B": "Dynamometer", "C": "Voltmeter" },
+      "correct": "B",
+      "explanation": "En dynamometer (kraftmätare) mäter kraft i newton med hjälp av en sträckt fjäder."
+    },
+    "q2": {
+      "question": "I vilken enhet mäts krafter, och vad är enheten uppkallad efter?",
+      "options": {
+        "A": "Pascal (Pa) – uppkallad efter Blaise Pascal",
+        "B": "Joule (J) – uppkallad efter James Joule",
+        "C": "Newton (N) – uppkallad efter Isaac Newton"
+      },
+      "correct": "C",
+      "explanation": "Kraft mäts i newton (N). 1 N är ungefär den kraft som krävs för att hålla ett litet äpple (100 g) i handen."
+    }
+  },
+  {
+    "id": 10,
+    "subject": "Kraft",
+    "topic": "Massa och tyngd",
+    "intro": "En astronaut mäter sin vikt på Jordens yta och sedan på Månen. På Månen är gravitationen ungefär en sjättedel av Jordens.",
+    "q1": {
+      "question": "Vad är skillnaden mellan massa och tyngd?",
+      "options": {
+        "A": "Massa mäts i newton och ändras, tyngd mäts i kilogram och är konstant",
+        "B": "Massa mäts i kg och är konstant, tyngd mäts i N och beror på gravitationen",
+        "C": "De är samma sak men med olika namn"
+      },
+      "correct": "B",
+      "explanation": "Massa (kg) är konstant – lika stor i rymden som på Jordens yta. Tyngd (N) = massa × g och varierar beroende på var du befinner dig."
+    },
+    "q2": {
+      "question": "Astronauten har massan 78 kg. Vad är hennes tyngd på Jorden (g = 10 N/kg) och på Månen (g ≈ 1,6 N/kg)?",
+      "options": {
+        "A": "Jordens: 78 N, Månens: 12,5 N",
+        "B": "Jordens: 780 N, Månens: ≈125 N",
+        "C": "Jordens: 780 N, Månens: 780 N"
+      },
+      "correct": "B",
+      "explanation": "F = m × g. Jordens: 78 × 10 = 780 N. Månens: 78 × 1,6 ≈ 125 N. Massan är 78 kg överallt."
+    }
+  },
+  {
+    "id": 11,
+    "subject": "Kraft",
+    "topic": "Tyngdkraft – beräkning",
+    "intro": "Jonas hoppar upp på en badrumsvåg. Displayen visar 70 kg.",
+    "q1": {
+      "question": "Vad visar badrumsvågen – Jonas massa eller hans tyngd?",
+      "options": {
+        "A": "Hans tyngd i newton",
+        "B": "Hans massa i kilogram",
+        "C": "Hans volym i liter"
+      },
+      "correct": "B",
+      "explanation": "Badrumsvågar är konstruerade för att visa massa i kg. Egentligen mäter de kraft (tyngden) men räknar om till kg med g ≈ 10 N/kg."
+    },
+    "q2": {
+      "question": "Hur stor är Jonas tyngd (F) på Jordens yta?",
+      "options": { "A": "70 N", "B": "700 N", "C": "7 000 N" },
+      "correct": "B",
+      "explanation": "F = m × g = 70 × 10 = 700 N."
+    }
+  },
+  {
+    "id": 12,
+    "subject": "Kraft",
+    "topic": "Tyngdpunkt och stabilitet",
+    "intro": "En skateboardåkare strävar efter att hålla låg kroppshöjd och bred ståyta på brädan för att inte välta.",
+    "q1": {
+      "question": "Vad menas med ett föremåls tyngdpunkt?",
+      "options": {
+        "A": "Det tyngsta materialet i föremålet",
+        "B": "Den punkt där man kan tänka sig att föremålets hela massa är samlad",
+        "C": "Kontaktytan mot underlaget"
+      },
+      "correct": "B",
+      "explanation": "Tyngdpunkten är den punkt där tyngdkraften kan anses verka. Om tyngdpunkten hamnar utanför stödytan välter föremålet."
+    },
+    "q2": {
+      "question": "Vad händer om skateboardåkarens tyngdpunkt hamnar utanför stödytan (brädan)?",
+      "options": { "A": "Ingenting förändras", "B": "Han faller", "C": "Han glider snabbare" },
+      "correct": "B",
+      "explanation": "När tyngdpunkten hamnar utanför stödytan uppstår ett vridmoment som välter föremålet. Bred stödyta och låg tyngdpunkt ger bäst stabilitet."
+    }
+  },
+  {
+    "id": 13,
+    "subject": "Kraft",
+    "topic": "Friktion – definition",
+    "intro": "En person drar en tung låda längs ett golv med konstant fart. Det krävs en dragkraft på 12 N.",
+    "q1": {
+      "question": "Vad är friktion?",
+      "options": {
+        "A": "En kraft som uppstår när två ytor rör sig mot varandra och som motverkar rörelsen",
+        "B": "En kraft som snabbar upp rörelsen",
+        "C": "Tyngdkraftens komponent i rörelseriktningen"
+      },
+      "correct": "A",
+      "explanation": "Friktion är en bromsande kraft som uppstår i kontaktzonen mellan två ytor. Riktningen är alltid motriktat rörelsen."
+    },
+    "q2": {
+      "question": "Lådan dras med jämn fart framåt med en kraft på 12 N. Hur stor är friktionskraften?",
+      "options": { "A": "0 N", "B": "6 N", "C": "12 N" },
+      "correct": "C",
+      "explanation": "Jämn fart = resultant noll = krafterna är i balans. Dragkraft framåt (12 N) = friktionskraft bakåt (12 N)."
+    }
+  },
+  {
+    "id": 14,
+    "subject": "Kraft",
+    "topic": "Friktion – vad påverkar?",
+    "intro": "Sofia undersöker friktion i skolan. Hon drar klossar med olika massor längs bänken med en dynamometer.",
+    "q1": {
+      "question": "Vad händer med friktionskraften om Sofia fördubblar klossens massa (men samma yta mot bänken)?",
+      "options": {
+        "A": "Friktionen halveras",
+        "B": "Friktionen förblir lika stor",
+        "C": "Friktionen ungefär fördubblas"
+      },
+      "correct": "C",
+      "explanation": "Friktionskraften beror på normalkraften (trycket mot underlaget). Tyngre kloss → starkare kontakttryck → större friktion."
+    },
+    "q2": {
+      "question": "Sofia vänder klossen på sidan – smalare yta mot bänken, men massan densamma. Vad händer med friktionen?",
+      "options": {
+        "A": "Friktionen ökar eftersom ytan är smalare",
+        "B": "Friktionen minskar med smalare yta",
+        "C": "Friktionen förblir i princip lika stor"
+      },
+      "correct": "C",
+      "explanation": "Friktionskraften beror inte på kontaktytans storlek (vid konstant massa och underlag). Det är ytan och normalkraftens styrka som avgör – inte ytans area. Ett vanligt missförstånd!"
+    }
+  },
+  {
+    "id": 15,
+    "subject": "Kraft",
+    "topic": "Resultant och jämvikt",
+    "intro": "Två lag i en dragkamp drar i var sin ände av ett rep. Lag A drar med 800 N och Lag B drar med 800 N – rakt emot varandra.",
+    "q1": {
+      "question": "Vad är den sammanlagda kraften (resultanten) av de två lika stora, motriktade krafterna?",
+      "options": { "A": "1 600 N", "B": "800 N", "C": "0 N" },
+      "correct": "C",
+      "explanation": "Resultant = summan av krafter. Motriktade lika stora krafter tar ut varandra → resultant = 0 N → repet rör sig inte."
+    },
+    "q2": {
+      "question": "Lag A ökar till 900 N. Lag B drar fortfarande med 800 N. Vad är resultanten och åt vilket håll rör sig repet?",
+      "options": {
+        "A": "100 N åt Lag A:s håll",
+        "B": "1 700 N åt Lag A:s håll",
+        "C": "0 N – repet rör sig inte"
+      },
+      "correct": "A",
+      "explanation": "Resultant = 900 − 800 = 100 N i Lag A:s riktning. Repet börjar röra sig mot Lag A."
+    }
+  },
+  {
+    "id": 16,
+    "subject": "Kraft",
+    "topic": "Normalkraft",
+    "intro": "En bok med massan 2 kg ligger stilla på ett bord. Boken varken faller igenom bordet eller flyger upp i luften.",
+    "q1": {
+      "question": "Vilken kraft hindrar boken från att falla igenom bordet?",
+      "options": { "A": "Friktionskraften", "B": "Normalkraften", "C": "Tyngdkraften" },
+      "correct": "B",
+      "explanation": "Normalkraften är bordets motkraft riktad uppåt – lika stor och motsatt riktad mot bokens tyngd. Utan normalkraft skulle boken falla igenom bordet."
+    },
+    "q2": {
+      "question": "Hur stor är normalkraften som bordet utövar på boken (massan 2 kg)?",
+      "options": { "A": "2 N", "B": "10 N", "C": "20 N" },
+      "correct": "C",
+      "explanation": "Tyngdkraft = m × g = 2 × 10 = 20 N nedåt. Normalkraft = 20 N uppåt (jämvikt – resultant = 0)."
+    }
+  },
+  {
+    "id": 17,
+    "subject": "Kraft",
+    "topic": "F = m × a",
+    "intro": "En bowlingboll och en tennisboll kastas med exakt samma kraft. Tennisbollen far iväg mycket snabbare.",
+    "q1": {
+      "question": "Vilket samband visar varför tennisbollen accelererar mer än bowlingbollen?",
+      "options": { "A": "F = m + a", "B": "F = m × a", "C": "F = m / a" },
+      "correct": "B",
+      "explanation": "Newtons 2:a lag: F = m × a, omvandlad: a = F / m. Samma kraft men lägre massa (tennisboll) → större acceleration."
+    },
+    "q2": {
+      "question": "En kraft på 60 N verkar på en massa av 12 kg. Hur stor är accelerationen?",
+      "options": { "A": "2 m/s²", "B": "5 m/s²", "C": "720 m/s²" },
+      "correct": "B",
+      "explanation": "a = F / m = 60 / 12 = 5 m/s²."
+    }
+  },
+  {
+    "id": 18,
+    "subject": "Kraft",
+    "topic": "Reaktionskraft",
+    "intro": "En uppblåst ballong utan knut far iväg blixtsnabbt. En astronaut i rymden kastar en skiftnyckel bakåt för att manövrera sig framåt.",
+    "q1": {
+      "question": "Vilken av Newtons lagar förklarar varför ballongen och astronauten rör sig?",
+      "options": {
+        "A": "Newtons 1:a lag (tröghet)",
+        "B": "Newtons 2:a lag (F = m × a)",
+        "C": "Newtons 3:e lag (kraft och motkraft)"
+      },
+      "correct": "C",
+      "explanation": "Varje kraft har en lika stor, motriktad motkraft. Luften pressas bakåt → ballongen rör sig framåt. Skiftnyckeln kastas bakåt → astronauten rör sig framåt."
+    },
+    "q2": {
+      "question": "En raket skjuter ut gas bakåt med 5 000 N kraft. Hur stor är reaktionskraften som driver raketen framåt?",
+      "options": { "A": "2 500 N", "B": "5 000 N", "C": "10 000 N" },
+      "correct": "B",
+      "explanation": "Kraft och motkraft är alltid lika stora (Newtons 3:e lag). Gasen trycks bakåt med 5 000 N → raketen skjuts framåt med 5 000 N."
+    }
+  },
+  {
+    "id": 19,
+    "subject": "Kraft",
+    "topic": "Hävstång",
+    "intro": "Oscar (500 N) och Emma (250 N) sitter på en gungbräda. Oscar sitter 2 m från vridpunkten.",
+    "q1": {
+      "question": "Vad säger hävstångslagen?",
+      "options": {
+        "A": "Kraft × massa = konstant",
+        "B": "Kraft × hävarm är lika stor på båda sidor vid jämvikt",
+        "C": "Det tyngre barnet ska alltid sitta längre från vridpunkten"
+      },
+      "correct": "B",
+      "explanation": "Hävstångslagen: F₁ × l₁ = F₂ × l₂. Vid jämvikt är vridmomenten (kraft × hävarm) lika stora på båda sidor."
+    },
+    "q2": {
+      "question": "Hur långt från vridpunkten ska Emma (250 N) sitta för att gungbrädan ska vara i jämvikt?",
+      "options": { "A": "1 m", "B": "4 m", "C": "8 m" },
+      "correct": "B",
+      "explanation": "Oscar: 500 × 2 = 1 000 Nm. Emma: 250 × avstånd = 1 000 → avstånd = 1 000 / 250 = 4 m."
+    }
+  },
+  {
+    "id": 20,
+    "subject": "Kraft",
+    "topic": "Enkla maskiner",
+    "intro": "En man lastar pallar upp i en lastbil. Han väljer att använda en 4 m lång ramp istället för att lyfta lasten (1 000 N) rakt upp 1 m.",
+    "q1": {
+      "question": "Vad är mekanikens gyllene regel?",
+      "options": {
+        "A": "Det man vinner i kraft, förlorar man i väg",
+        "B": "Mer kraft ger alltid mer arbete",
+        "C": "En maskin kan skapa energi ur ingenting"
+      },
+      "correct": "A",
+      "explanation": "Enkla maskiner sparar kraft men kräver längre väg. Det totala arbetet (kraft × väg) är detsamma – maskinen skapar ingen ny energi."
+    },
+    "q2": {
+      "question": "Mannen behöver 1 000 N för att lyfta lasten rakt upp 1 m. Med 4 m lång ramp – hur stor kraft behövs?",
+      "options": { "A": "4 000 N", "B": "1 000 N", "C": "250 N" },
+      "correct": "C",
+      "explanation": "Arbetet är detsamma: 1 000 × 1 = 1 000 J. Med 4 m ramp: F × 4 = 1 000 → F = 250 N. Fyra gånger kortare kraft men fyra gånger längre väg."
+    }
+  },
+  {
+    "id": 21,
+    "subject": "Tryck",
+    "topic": "Tryck – definition och formel",
+    "intro": "En person i stilettklackar och en elefant ger ett klassiskt tryckexempel. Stilettklacken har liten yta, elefantfoten stor – trots att elefanten är mycket tyngre.",
+    "q1": {
+      "question": "Hur beräknar man tryck?",
+      "options": {
+        "A": "Tryck = Area / Kraft",
+        "B": "Tryck = Kraft × Area",
+        "C": "Tryck = Kraft / Area"
+      },
+      "correct": "C",
+      "explanation": "Tryck (P) = Kraft (F) / Area (A). Enheten är pascal (Pa) = N/m², eller N/cm² i vardagliga beräkningar."
+    },
+    "q2": {
+      "question": "En kraft på 240 N verkar på en yta av 8 cm². Hur stort är trycket?",
+      "options": { "A": "30 N/cm²", "B": "1 920 N/cm²", "C": "0,033 N/cm²" },
+      "correct": "A",
+      "explanation": "P = F / A = 240 / 8 = 30 N/cm²."
+    }
+  },
+  {
+    "id": 22,
+    "subject": "Tryck",
+    "topic": "Pascal – enheten",
+    "intro": "En meteorologibulletin rapporterar att lufttrycket är 1 013 hPa (hektopascal). Vad betyder egentligen pascal?",
+    "q1": {
+      "question": "Vad är SI-enheten för tryck och hur definieras den?",
+      "options": {
+        "A": "Newton – 1 N = kraft på 1 kg",
+        "B": "Pascal – 1 Pa = 1 N/m²",
+        "C": "Bar – 1 bar = 10 N/cm²"
+      },
+      "correct": "B",
+      "explanation": "Pascal (Pa) är SI-enheten för tryck: 1 Pa = 1 N/m². Enheten är uppkallad efter Blaise Pascal som studerade vätskors tryck."
+    },
+    "q2": {
+      "question": "En kraft på 500 N verkar på en yta av 2 m². Hur stort är trycket i pascal?",
+      "options": { "A": "1 000 Pa", "B": "250 Pa", "C": "500 Pa" },
+      "correct": "B",
+      "explanation": "P = F / A = 500 / 2 = 250 Pa."
+    }
+  },
+  {
+    "id": 23,
+    "subject": "Tryck",
+    "topic": "Tryck och area – skridskor",
+    "intro": "Viktor (72 kg) skridskoåker. Hans skridskoblad har tillsammans en kontaktyta mot isen på 36 cm². Isen tål maximalt 20 N/cm².",
+    "q1": {
+      "question": "Om Viktor lyfter ett ben och enbart åker på en skridskas yta (18 cm²) – vad händer med trycket mot isen?",
+      "options": { "A": "Trycket halveras", "B": "Trycket fördubblas", "C": "Trycket är oförändrat" },
+      "correct": "B",
+      "explanation": "P = F / A. Samma kraft men halva arean → dubbelt tryck."
+    },
+    "q2": {
+      "question": "Håller isen när Viktor åker på båda skridskor (72 kg, 36 cm² kontaktyta, istålighet 20 N/cm²)?",
+      "options": {
+        "A": "Nej – trycket överstiger 20 N/cm²",
+        "B": "Ja – trycket är precis 20 N/cm², exakt på gränsen",
+        "C": "Ja – trycket är bara 2 N/cm²"
+      },
+      "correct": "B",
+      "explanation": "F = 72 × 10 = 720 N. P = 720 / 36 = 20 N/cm². Precis på gränsen – isen håller precis."
+    }
+  },
+  {
+    "id": 24,
+    "subject": "Tryck",
+    "topic": "Tryck på is – beräkning",
+    "intro": "Sara (50 kg) och hennes kompis Mia (80 kg) ska gå ut på en frusen sjö. En skylt säger: 'Isen tål 10 N/cm².' Båda bär stövlar med sulan 200 cm² per fot.",
+    "q1": {
+      "question": "Hur räknar man ut om isen håller för en person?",
+      "options": {
+        "A": "Jämföra personens vikt (kg) med isens tjocklek (cm)",
+        "B": "Beräkna P = F / A och jämföra med isens hållfasthet",
+        "C": "Multiplicera vikt × area"
+      },
+      "correct": "B",
+      "explanation": "P = F (tyngden i N) / A (kontaktytan i cm²). Om P ≤ isens hållfasthet håller isen."
+    },
+    "q2": {
+      "question": "Håller isen för Mia (80 kg) om hon går med båda fötterna (total yta 400 cm²)?",
+      "options": {
+        "A": "Nej – trycket är 20 N/cm², för högt",
+        "B": "Ja – trycket är 2 N/cm², säkert under gränsen 10 N/cm²",
+        "C": "Nej – isen tål bara 80 kg"
+      },
+      "correct": "B",
+      "explanation": "F = 80 × 10 = 800 N. P = 800 / 400 = 2 N/cm². Isen tål 10 N/cm² → isen håller med god marginal."
+    }
+  },
+  {
+    "id": 25,
+    "subject": "Tryck",
+    "topic": "Skidor och tryckspreading",
+    "intro": "En skidåkare (65 kg) glider ner för en snöig backe. Hans skidor har en sammanlagd area av 1 300 cm².",
+    "q1": {
+      "question": "Varför sjunker skidåkaren inte ner djupt i snön, trots att han väger 65 kg?",
+      "options": {
+        "A": "Skidorna är gjorda av ett material som håller emot snön",
+        "B": "Skidorna fördelar trycket på en stor yta, vilket ger litet tryck per ytenhet",
+        "C": "Snön är hård och tål vilken tyngd som helst"
+      },
+      "correct": "B",
+      "explanation": "P = F / A. Stor area → litet tryck. Skidorna fungerar som 'tryckspreaders' – samma princip som en snösko."
+    },
+    "q2": {
+      "question": "Hur stort är trycket skidåkaren utövar mot snön?",
+      "options": { "A": "0,5 N/cm²", "B": "65 N/cm²", "C": "5 N/cm²" },
+      "correct": "A",
+      "explanation": "F = 65 × 10 = 650 N. P = 650 / 1 300 = 0,5 N/cm². Mycket litet tryck – det är meningen med skidor!"
+    }
+  },
+  {
+    "id": 26,
+    "subject": "Tryck",
+    "topic": "Vätskors tryck",
+    "intro": "En dykare dyker allt djupare. Vid ytan andas hon normalt, men på djupet märker hon att vattnet pressar mot kroppen.",
+    "q1": {
+      "question": "Vad händer med vattentrycket ju djupare under ytan dykaren befinner sig?",
+      "options": {
+        "A": "Trycket minskar med djupet",
+        "B": "Trycket är lika oberoende av djup",
+        "C": "Trycket ökar med djupet"
+      },
+      "correct": "C",
+      "explanation": "Vätskors tryck ökar med djupet – det finns mer vätska ovanför som pressar nedåt. Ungefär 1 bar extra per 10 m djup."
+    },
+    "q2": {
+      "question": "Varför måste dykare använda lufttuber med komprimerad luft på stora djup – fungerar inte vanlig lungkraft?",
+      "options": {
+        "A": "Det är lagstyrt men egentligen onödigt",
+        "B": "Vattentrycket på djupet är för högt för lungornas muskler att expandera mot",
+        "C": "Luften i tuberna är surare och bättre för blodet"
+      },
+      "correct": "B",
+      "explanation": "På 10 m djup är vattentrycket dubbelt mot ytan. Lungornas muskler kan inte expandera mot det höga trycket utan komprimerad luft som matchar omgivningstrycket."
+    }
+  },
+  {
+    "id": 27,
+    "subject": "Tryck",
+    "topic": "Archimedes princip",
+    "intro": "En massiv metallbit sjunker direkt till botten. Men ett metallskepp – trots att det väger tusentals ton – flyter. Varför?",
+    "q1": {
+      "question": "Vad säger Archimedes princip?",
+      "options": {
+        "A": "Alla föremål sjunker om de är tyngre än vatten",
+        "B": "En kropp i en vätska upplever en uppåtkraft lika stor som tyngden av den undanträngda vätskan",
+        "C": "Trycket ökar med djupet"
+      },
+      "correct": "B",
+      "explanation": "Flytkraften = tyngden av undanträngt vatten. Om flytkraften ≥ föremålets tyngd → det flyter."
+    },
+    "q2": {
+      "question": "Varför flyter ett stålskepp men inte en massiv stålbit av samma massa?",
+      "options": {
+        "A": "Stålskeppet är gjort av ett lättare sorts stål",
+        "B": "Skeppets form innebär att det tränger undan en stor volym vatten vars tyngd är lika stor som skeppets tyngd",
+        "C": "Skeppet har en motor som håller det uppe"
+      },
+      "correct": "B",
+      "explanation": "Skeppet är ihåligt och har stor volym. Volymen vatten som trängs undan väger lika mycket som skeppet → flytkraft = tyngd → skeppet flyter."
+    }
+  },
+  {
+    "id": 28,
+    "subject": "Tryck",
+    "topic": "Pascals lag – hydraulik",
+    "intro": "En bilmekaniker trycker lätt på bromspedalen och alla fyra hjulbromsar aktiveras med stor kraft. Det är ett hydraulsystem.",
+    "q1": {
+      "question": "Vad säger Pascals lag om tryck i slutna vätskor?",
+      "options": {
+        "A": "Trycket ökar med volym av vätskan",
+        "B": "Trycket i en sluten vätska sprids lika åt alla håll",
+        "C": "Trycket beror på vätskans temperatur"
+      },
+      "correct": "B",
+      "explanation": "Pascals lag: Tryck som utövas på en innestängd vätska sprids oförändrat lika åt alla håll. Det möjliggör hydrauliska system."
+    },
+    "q2": {
+      "question": "En liten kolv (5 cm²) utövar 50 N in i hydraulvätskan. En stor kolv (50 cm²) är kopplad till systemet. Hur stor kraft ger den stora kolven ut?",
+      "options": { "A": "50 N", "B": "500 N", "C": "5 N" },
+      "correct": "B",
+      "explanation": "Trycket = 50 / 5 = 10 N/cm². Stora kolven: F = 10 × 50 = 500 N. Hydraulsystemet förstärker kraften 10 gånger (men kräver 10 gånger längre väg)."
+    }
+  }
+]

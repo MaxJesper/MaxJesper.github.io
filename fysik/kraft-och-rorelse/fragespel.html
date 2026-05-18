@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Frågespel – Kraft, rörelse och tryck</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #dbeafe 0%, #f9f9f9 65%);
+      margin: 0;
+      padding: 0;
+    }
+
+    .topbar { max-width: 980px; margin: 14px auto 0; padding: 0 12px; display:flex; flex-wrap:wrap; gap:8px; }
+    .subject-btn {
+      display:inline-block; padding:8px 12px; background:#fff; border-radius:6px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); text-decoration:none; color:#0056b3; font-size:14px;
+    }
+    .subject-btn:hover { text-decoration:underline; }
+
+    .info-banner {
+      max-width: 980px; margin: 10px auto 0; padding: 10px 14px;
+      background: #fffbe6; border: 1px solid #ffe58f; border-radius: 10px;
+      color: #614700; font-size: 14px;
+    }
+
+    /* ===== Scorebar ===== */
+    .scorebar {
+      max-width: 980px; margin: 10px auto 0; padding: 0 12px;
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .score-left { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .score-left button {
+      padding:8px 10px; border:0; border-radius:10px; cursor:pointer;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#fff; font-size:14px;
+    }
+    .score-left button:hover { background:#f3f3f3; }
+    .score-right { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-end; }
+    .group {
+      background:#fff; border-radius:12px; padding:8px 10px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); display:flex; gap:8px; align-items:center;
+    }
+    .group .name { font-weight:700; color:#003a8c; min-width:42px; }
+    .group .pts  { font-weight:700; min-width:18px; text-align:center; }
+    .group button {
+      padding:6px 10px; border:0; border-radius:10px; cursor:pointer;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#f7f7f7; font-size:14px;
+    }
+    .group button:hover { background:#ededed; }
+
+    /* ===== Progressionsbar ===== */
+    .progression { max-width: 980px; margin: 10px auto 0; padding: 0 12px; }
+    .prog-bar {
+      display:flex; gap:6px; background:#fff; border-radius:12px; padding:10px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); align-items:stretch;
+    }
+    .prog-label { font-size:13px; font-weight:600; color:#555; margin-right:6px; align-self:center; white-space:nowrap; }
+    .prog-topic {
+      flex:1; padding:8px 10px; border-radius:8px; text-align:center;
+      font-size:13px; font-weight:700; color:#fff; transition:opacity 0.2s, transform 0.2s;
+      line-height:1.3;
+    }
+    .prog-topic.rorelse { background:#2e7d32; }
+    .prog-topic.kraft   { background:#1565c0; }
+    .prog-topic.tryck   { background:#6a1b9a; }
+    .prog-topic.inactive { opacity:0.35; }
+    .prog-topic.active  { transform:scale(1.04); box-shadow:0 2px 8px rgba(0,0,0,0.18); }
+    .prog-topic .pcount { font-size:11px; font-weight:400; margin-top:3px; opacity:0.9; }
+
+    /* ===== Card ===== */
+    #container { max-width: 980px; margin: 14px auto; padding: 0 12px; }
+    #card { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.10); }
+
+    #meta { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; margin-bottom:10px; }
+    .pill { padding:6px 12px; border-radius:999px; font-size:14px; font-weight:600; }
+    .pill-subject.rorelse { background:#e8f5e9; color:#1b5e20; }
+    .pill-subject.kraft   { background:#e3f2fd; color:#0d47a1; }
+    .pill-subject.tryck   { background:#f3e5f5; color:#4a148c; }
+    .pill-subject.default { background:#eef4ff; color:#003a8c; }
+    .pill-topic { background:#f5f5f5; color:#333; }
+    #statusText { color:#444; font-size:14px; }
+
+    /* ===== Content ===== */
+    #content { text-align:left; }
+    #content h2 { margin:6px 0 10px; font-size:20px; }
+    .intro { font-size:16px; line-height:1.5; color:#222; }
+    .q-block { margin-top:16px; }
+    .q-block .q-label { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:#555; margin-bottom:4px; }
+    .q-block .q-text { font-size:18px; line-height:1.4; }
+    .options { margin-top:8px; padding-left:18px; }
+    .options li { margin:6px 0; font-size:16px; }
+
+    .answerBox {
+      margin-top:12px; padding:12px 14px; border-radius:10px;
+      background:#f0f7ff; border:1px solid #cfe3ff;
+    }
+    .answerBox .ans-label { font-weight:bold; color:#003a8c; font-size:15px; margin-bottom:6px; }
+    .answerBox .ans-correct { font-size:16px; margin-bottom:4px; }
+    .answerBox .ans-explain { font-size:15px; color:#1c1c1c; line-height:1.45; }
+    .concept { font-weight:700; font-style:italic; }
+
+    /* ===== Chansa / Säkra ===== */
+    #decisionArea { margin-top:16px; }
+    .decision-box {
+      padding:14px 16px; background:#fffde7; border:2px solid #f9a825; border-radius:12px;
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center;
+    }
+    .decision-label { font-weight:bold; font-size:16px; color:#614700; flex:1; min-width:160px; }
+    .btn-sakra {
+      padding:12px 20px; border:0; border-radius:10px; cursor:pointer;
+      font-size:16px; font-weight:bold; background:#2e7d32; color:#fff;
+    }
+    .btn-sakra:hover { background:#1b5e20; }
+    .btn-chansa {
+      padding:12px 20px; border:0; border-radius:10px; cursor:pointer;
+      font-size:16px; font-weight:bold; background:#f9a825; color:#333;
+    }
+    .btn-chansa:hover { background:#f57f17; }
+
+    /* ===== Controls ===== */
+    .controls { margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+    .controls button {
+      padding:10px 12px; border:0; border-radius:8px; cursor:pointer;
+      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#fff; font-size:15px;
+    }
+    .controls button:hover { background:#f3f3f3; }
+    .controls .primary { background:#0056b3; color:#fff; }
+    .controls .primary:hover { background:#004799; }
+
+    .hint { margin-top:10px; color:#555; font-size:14px; }
+    .mono { font-family:ui-monospace, monospace; }
+  </style>
+</head>
+
+<body>
+<div class="topbar">
+  <a href="/fysik/kraft-och-rorelse/" class="subject-btn">← Krafter och rörelse</a>
+  <a href="/fysik/tryck/" class="subject-btn">← Tryck</a>
+</div>
+
+<div class="info-banner">
+  ⚡ <strong>Frågespel om kraft, rörelse och tryck.</strong>
+  Varje kort har två frågor. Svara på fråga 1 – välj sedan att <strong>Säkra</strong> (1 poäng) eller <strong>Chansa</strong> för fråga 2 (2 poäng om rätt, 0 om fel).
+</div>
+
+<div class="scorebar">
+  <div class="score-left">
+    <strong>Poäng:</strong>
+    <label style="margin-left:8px;">
+      Grupper:
+      <select id="groupCount" onchange="setGroupCountFromUI()">
+        <option value="2">2</option>
+        <option value="3" selected>3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+    <button onclick="resetScores()">Nollställ</button>
+  </div>
+  <div class="score-right" id="scoreboard"></div>
+</div>
+
+<div class="progression">
+  <div class="prog-bar">
+    <span class="prog-label">Ämne:</span>
+    <div class="prog-topic rorelse inactive" id="prog-rorelse">
+      Rörelse
+      <div class="pcount" id="prog-rorelse-count"></div>
+    </div>
+    <div class="prog-topic kraft inactive" id="prog-kraft">
+      Kraft
+      <div class="pcount" id="prog-kraft-count"></div>
+    </div>
+    <div class="prog-topic tryck inactive" id="prog-tryck">
+      Tryck
+      <div class="pcount" id="prog-tryck-count"></div>
+    </div>
+  </div>
+</div>
+
+<div id="container">
+  <div id="card">
+    <div id="meta">
+      <div class="pill pill-subject default" id="subjectPill">Frågespel</div>
+      <div class="pill pill-topic" id="topicPill" style="display:none"></div>
+      <div id="statusText">Laddar frågor…</div>
+    </div>
+
+    <div id="content">
+      <h2>Laddar…</h2>
+      <p>Hämtar <code>fragespel-fragor.json</code>.</p>
+    </div>
+
+    <div id="decisionArea"></div>
+
+    <div class="controls">
+      <button onclick="prevCard()">⬅️ Föregående</button>
+      <button onclick="resetStep()">↩️ Starta om</button>
+      <button class="primary" onclick="nextStep()">Nästa steg ▶</button>
+      <button onclick="nextCard()">➡️ Nästa kort</button>
+      <button onclick="shuffleDeck()">🔀 Blanda</button>
+      <button onclick="loadDeck()">⟳ Ladda om</button>
+    </div>
+
+    <div class="hint">
+      Tips: <span class="mono">Nästa steg</span> visar:
+      inledning → fråga 1 → svar 1 + <em>chansa/säkra</em> → fråga 2 → svar 2.
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+ * Steg:
+ * 0 = Inledning
+ * 1 = Fråga 1
+ * 2 = Svar 1  +  Chansa/Säkra-knappar
+ * 3 = Fråga 2
+ * 4 = Svar 2
+ */
+
+const SUBJECT_CLS = { "Rörelse": "rorelse", "Kraft": "kraft", "Tryck": "tryck" };
+
+let deck = [];
+let idx  = 0;
+let step = 0;
+
+// ===== Poäng =====
+const SCORE_KEY = "fragespel_krt_v1";
+let scores = [];
+let groupCount = 3;
+
+function loadScores() {
+  try {
+    const raw = localStorage.getItem(SCORE_KEY);
+    if (raw) {
+      const obj = JSON.parse(raw);
+      if (Array.isArray(obj.scores)) scores = obj.scores;
+      if (Number.isFinite(obj.groupCount)) groupCount = obj.groupCount;
+    }
+  } catch(e) {}
+  setGroupCount(groupCount, false);
+  const sel = document.getElementById("groupCount");
+  if (sel) sel.value = String(groupCount);
+  renderScoreboard();
+}
+
+function saveScores() {
+  localStorage.setItem(SCORE_KEY, JSON.stringify({ groupCount, scores }));
+}
+
+function setGroupCount(n, persist = true) {
+  groupCount = Math.max(2, Math.min(6, Number(n) || 3));
+  while (scores.length < groupCount) scores.push(0);
+  if (scores.length > groupCount) scores = scores.slice(0, groupCount);
+  if (persist) saveScores();
+  renderScoreboard();
+}
+
+function setGroupCountFromUI() {
+  setGroupCount(document.getElementById("groupCount").value, true);
+}
+
+function renderScoreboard() {
+  const board = document.getElementById("scoreboard");
+  if (!board) return;
+  board.innerHTML = "";
+  for (let i = 0; i < groupCount; i++) {
+    const div = document.createElement("div");
+    div.className = "group";
+    div.innerHTML = `
+      <span class="name">G${i+1}</span>
+      <button onclick="addPoints(${i}, -1)">−</button>
+      <span class="pts">${scores[i]}</span>
+      <button onclick="addPoints(${i}, 1)">+</button>
+    `;
+    board.appendChild(div);
+  }
+}
+
+function addPoints(i, delta) {
+  scores[i] = Math.max(0, (scores[i] || 0) + delta);
+  saveScores();
+  renderScoreboard();
+}
+
+function resetScores() {
+  scores = Array.from({ length: groupCount }, () => 0);
+  saveScores();
+  renderScoreboard();
+}
+
+// ===== Progressionsbar =====
+function updateProgression() {
+  if (!deck.length) return;
+  const cur = deck[idx]?.subject || "";
+  const totals = {}, played = {};
+  ["Rörelse","Kraft","Tryck"].forEach(s => { totals[s] = 0; played[s] = 0; });
+
+  deck.forEach((c, i) => {
+    if (totals[c.subject] !== undefined) {
+      totals[c.subject]++;
+      if (i < idx) played[c.subject]++;
+    }
+  });
+
+  ["Rörelse","Kraft","Tryck"].forEach(s => {
+    const cls = SUBJECT_CLS[s];
+    const el  = document.getElementById("prog-" + cls);
+    const cnt = document.getElementById("prog-" + cls + "-count");
+    if (!el) return;
+    el.classList.toggle("active",   cur === s);
+    el.classList.toggle("inactive", cur !== s);
+    if (cnt) cnt.textContent = played[s] + "/" + totals[s] + " kort";
+  });
+}
+
+// ===== Escape =====
+function esc(s) {
+  return String(s || "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+}
+
+// ===== Ladda JSON =====
+async function loadDeck() {
+  const content    = document.getElementById("content");
+  const statusText = document.getElementById("statusText");
+  statusText.textContent = "Laddar frågor…";
+
+  try {
+    const res = await fetch("./fragespel-fragor.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) throw new Error("Tom eller felaktig JSON.");
+    deck = data;
+    idx  = 0;
+    step = 0;
+    render();
+  } catch(err) {
+    content.innerHTML = `<h2>Fel vid laddning</h2><p>${esc(err.message)}</p>`;
+    statusText.textContent = "Fel";
+  }
+}
+
+// ===== Rendera kort =====
+function render() {
+  if (!deck.length) return;
+  const card = deck[idx];
+  const cls  = SUBJECT_CLS[card.subject] || "default";
+
+  // Meta
+  const subjectPill = document.getElementById("subjectPill");
+  const topicPill   = document.getElementById("topicPill");
+  const statusText  = document.getElementById("statusText");
+
+  subjectPill.textContent = card.subject || "Frågespel";
+  subjectPill.className   = "pill pill-subject " + cls;
+
+  if (card.topic) {
+    topicPill.textContent  = card.topic;
+    topicPill.style.display = "";
+  } else {
+    topicPill.style.display = "none";
+  }
+  statusText.textContent = `Kort ${idx+1}/${deck.length} · Steg ${step}/4`;
+
+  updateProgression();
+
+  // Bygg innehåll
+  let html = `<h2>${esc(card.subject)} – ${esc(card.topic || "")}</h2>`;
+  html += `<div class="intro">${card.intro || ""}</div>`;
+
+  if (step >= 1) html += renderQuestion(1, card.q1);
+  if (step >= 2) html += renderAnswer(1, card.q1);
+  if (step >= 3) html += renderQuestion(2, card.q2);
+  if (step >= 4) html += renderAnswer(2, card.q2);
+
+  document.getElementById("content").innerHTML = html;
+
+  // Chansa/Säkra (bara vid steg 2)
+  const da = document.getElementById("decisionArea");
+  if (step === 2) {
+    da.innerHTML = `
+      <div class="decision-box">
+        <div class="decision-label">🤔 Gruppen väljer nu:</div>
+        <button class="btn-sakra" onclick="doSakra()">🔒 Säkra – 1 poäng och nästa kort</button>
+        <button class="btn-chansa" onclick="doChansa()">🎲 Chansa! – Försök med fråga 2 (2 poäng om rätt)</button>
+      </div>`;
+  } else {
+    da.innerHTML = "";
+  }
+}
+
+function renderQuestion(num, q) {
+  if (!q) return `<div class="q-block"><div class="q-label">Fråga ${num}</div><p>[Saknar fråga]</p></div>`;
+  return `
+    <div class="q-block">
+      <div class="q-label">Fråga ${num}</div>
+      <div class="q-text">${esc(q.question)}</div>
+      <ol class="options" type="A">
+        <li>${esc(q.options?.A || "")}</li>
+        <li>${esc(q.options?.B || "")}</li>
+        <li>${esc(q.options?.C || "")}</li>
+      </ol>
+    </div>`;
+}
+
+function renderAnswer(num, q) {
+  if (!q) return `<div class="answerBox"><div class="ans-label">Svar ${num}</div><p>[Saknar svar]</p></div>`;
+  return `
+    <div class="answerBox">
+      <div class="ans-label">Svar ${num}</div>
+      <div class="ans-correct">✅ Rätt svar: <strong>${esc(q.correct)}</strong></div>
+      <div class="ans-explain">${q.explanation || ""}</div>
+    </div>`;
+}
+
+// ===== Navigation =====
+function nextStep() {
+  if (!deck.length) return;
+  if (step < 4) { step++; render(); }
+}
+function resetStep() {
+  if (!deck.length) return;
+  step = 0; render();
+}
+function nextCard() {
+  if (!deck.length) return;
+  idx  = (idx + 1) % deck.length;
+  step = 0;
+  render();
+}
+function prevCard() {
+  if (!deck.length) return;
+  idx  = (idx - 1 + deck.length) % deck.length;
+  step = 0;
+  render();
+}
+function shuffleDeck() {
+  if (!deck.length) return;
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  idx = 0; step = 0; render();
+}
+
+// ===== Chansa / Säkra =====
+function doSakra() {
+  // Gruppen säkrar – gå direkt till nästa kort
+  nextCard();
+}
+function doChansa() {
+  // Gruppen chansar – fortsätt till fråga 2
+  step = 3;
+  render();
+}
+
+// ===== Start =====
+loadScores();
+loadDeck();
+</script>
+</body>
+</html>
