@@ -335,7 +335,7 @@
 </div>
 <div class="overlay" id="victoryOverlay" onclick="this.classList.remove('show')">
   <div>🎉</div>
-  <div>10 POÄNG!</div>
+  <div id="victoryText">10 POÄNG!</div>
   <div class="overlay-sub">Ni vinner! Klicka för att fortsätta</div>
 </div>
 
@@ -563,11 +563,10 @@ function loseCard() {
 function showVictory() {
   victoryShown = true;
   playVictory();
+  const vt = document.getElementById('victoryText');
+  if (vt) vt.textContent = winScore + ' POÄNG!';
   const el = document.getElementById('victoryOverlay');
-  if (el) {
-    el.classList.add('show');
-    // onclick on overlay itself will dismiss
-  }
+  if (el) el.classList.add('show');
 }
 
 /* =====================================================
@@ -685,7 +684,7 @@ function blockQ(num, q, mode) {
     <div class="q-label">Fråga ${num}${mode==='revealed'?tick:''}</div>
     <div class="q-text">${esc(q.question)}</div>
     ${opts}
-    ${mode==='revealed' ? `<div class="answerBox"><div class="ans-explain">${q.explanation||''}</div></div>` : ''}
+    ${mode==='revealed' ? `<div class="answerBox"><div class="ans-explain">${esc(q.explanation||'')}</div></div>` : ''}
   </div>`;
 }
 
