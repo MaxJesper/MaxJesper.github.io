@@ -74,16 +74,28 @@
       margin-bottom:10px; display:none;
     }
     .countdown-track {
-      height:8px; background:#e0e0e0; border-radius:4px; overflow:hidden; margin-bottom:4px;
+      height:12px; background:#e0e0e0; border-radius:6px; overflow:hidden; margin-bottom:10px;
     }
     .countdown-fill {
-      height:100%; background:#1565c0; border-radius:4px;
+      height:100%; background:#1565c0; border-radius:6px;
       transition:width 0.9s linear;
     }
     .countdown-fill.urgent { background:#c62828; }
     #countdownNum {
-      font-size:13px; color:#555; text-align:right;
+      font-size:48px; font-weight:900; color:#1565c0; text-align:center;
+      line-height:1; letter-spacing:-1px; transition:color 0.3s;
     }
+    #countdownNum.urgent { color:#c62828; }
+
+    /* Kort förlorat-overlay */
+    #lostOverlay {
+      display:none; position:fixed; inset:0; z-index:999;
+      background:rgba(198,40,40,0.88); color:#fff;
+      font-size:clamp(2rem,8vw,5rem); font-weight:900;
+      align-items:center; justify-content:center; text-align:center;
+      flex-direction:column; gap:16px;
+    }
+    #lostOverlay.show { display:flex; }
 
     /* ===== Progressionsbar ===== */
     .progression { max-width:980px; margin:8px auto 0; padding:0 12px; }
@@ -255,8 +267,16 @@
       Tips: <span class="mono">Nästa steg</span> visar:
       inledning → fråga 1 → svar 1 + <em>chansa/säkra</em> → fråga 2 → svar 2.
       Klockan pausar automatiskt vid chansa/säkra-valet och efter svar 2.
+      Om klockan tickar ner till 0 spelas ett ljud och kortet förlorats.
     </div>
   </div>
+</div>
+
+<!-- Kort förlorat-overlay -->
+<div id="lostOverlay">
+  <div>⏰</div>
+  <div>Kort förlorat!</div>
+  <div style="font-size:40%;font-weight:400;opacity:0.9;">Ingen svarade i tid</div>
 </div>
 
 <script>
@@ -356,7 +376,7 @@ function startCountdown() {
     updateTimerDisplay(timerLeft, timerTotal);
     if (timerLeft <= 0) {
       clearCountdown();
-      nextStep(); // auto-advance
+      loseCard(); // ingen svarade i tid → kort förlorat
     }
   }, 1000);
 }
@@ -371,8 +391,41 @@ function updateTimerDisplay(left, total) {
   if (!fill || !num) return;
   const pct = total > 0 ? Math.max(0, (left / total) * 100) : 0;
   fill.style.width = pct + "%";
-  fill.classList.toggle("urgent", left <= 5 && left > 0);
-  num.textContent = left > 0 ? left + " sekunder kvar" : "";
+  const urgent = left <= 5 && left > 0;
+  fill.classList.toggle("urgent", urgent);
+  num.classList.toggle("urgent", urgent);
+  num.textContent = left > 0 ? left : "";
+}
+
+// ===== Ljud =====
+function playBuzzer() {
+  try {
+    const ctx  = new (window.AudioContext || window.webkitAudioContext)();
+    [[0, 440, 0.6], [0.25, 330, 0.5], [0.5, 220, 0.4]].forEach(([t, freq, vol]) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = "sawtooth";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol, ctx.currentTime + t);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.22);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + 0.25);
+    });
+  } catch(e) {}
+}
+
+// ===== Kort förlorat =====
+function loseCard() {
+  playBuzzer();
+  clearCountdown();
+  showCountdownWrap(false);
+  const overlay = document.getElementById("lostOverlay");
+  if (overlay) overlay.classList.add("show");
+  setTimeout(() => {
+    if (overlay) overlay.classList.remove("show");
+    nextCard();
+  }, 1600);
 }
 
 function showCountdownWrap(show) {
