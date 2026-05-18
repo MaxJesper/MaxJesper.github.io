@@ -622,12 +622,11 @@ function render() {
 
     case 'q2wait':
       html += blockQ(1, card.q1, selectedQ1 ? 'revealed' : 'plain');
-      html += blockQ(2, card.q2, 'plain');
       if (timerEnabled) {
-        html += `<div class="wait-notice">⏸ Vänta på läraren…</div>`;
-        html += `<button class="phase-btn" onclick="goNextPhase()">Fortsätt ▶ (startar timer)</button>`;
+        html += `<div class="wait-notice">⏸ Vänta på läraren innan ni trycker Fortsätt – fråga 2 visas då och timern startar.</div>`;
+        html += `<button class="phase-btn" onclick="goNextPhase()">Fortsätt ▶ (visar fråga 2 + startar timer)</button>`;
       } else {
-        html += `<button class="phase-btn" onclick="goNextPhase()">Visa svar ▶</button>`;
+        html += `<button class="phase-btn" onclick="goNextPhase()">Visa fråga 2 ▶</button>`;
       }
       showTimerWrap(false);
       break;
