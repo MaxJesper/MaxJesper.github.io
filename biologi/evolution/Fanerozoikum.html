@@ -43,6 +43,24 @@
     #content .periodList .hit { font-weight:bold; }
     #content .concept { font-weight: 700; font-style: italic; }
 
+    #content .imageBlock {
+      margin-top: 12px;
+      text-align: center;
+    }
+    #content .imageBlock img {
+      max-width: 100%;
+      max-height: 360px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    #content .imageBlock .credit {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #555;
+      font-style: italic;
+    }
+    #content .imageBlock .credit a { color: #555; }
+
     .controls { margin-top: 12px; display:flex; flex-wrap:wrap; gap:8px; }
     .controls button {
       padding:10px 12px; border:0; border-radius:8px; cursor:pointer;
@@ -382,7 +400,7 @@ function render() {
     html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
     html += renderAnswer1(card.q1);
     html += renderQuestion2(card.q2);
-    html += renderAnswer2(card.q2);
+    html += renderAnswer2(card.q2, card);
   }
 
   content.innerHTML = html;
@@ -402,20 +420,32 @@ function renderAnswer1(q1) {
       return esc(p);
     }).join(" · ");
     box += `<div class="periodList">${list}</div>`;
-    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
   } else if (q1.type === "year") {
     box += `<div class="periodList"><span class="hit">${esc(q1.correctYear)}</span></div>`;
-    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
   } else if (q1.type === "human_time") {
     box += `<div class="periodList"><span class="hit">${esc(q1.correctText || "")}</span></div>`;
-    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
   } else {
     box += `<div class="periodList"><span class="hit">[Okänt format: ${esc(q1.type)}]</span></div>`;
-    if (q1.extra) box += `<div class="extra">${esc(q1.extra)}</div>`;
+    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
   }
 
   box += `</div>`;
   return box;
+}
+
+function renderImage(img) {
+  if (!img || !img.url) return "";
+  const credit = img.credit ? `<div class="credit">${img.credit}</div>` : "";
+  const alt = img.alt ? esc(img.alt) : "";
+  return `
+    <div class="imageBlock">
+      <img src="${esc(img.url)}" alt="${alt}" loading="lazy" onerror="this.parentElement.style.display='none'">
+      ${credit}
+    </div>
+  `;
 }
 
 function renderQuestion2(q2) {
@@ -431,7 +461,7 @@ function renderQuestion2(q2) {
   `;
 }
 
-function renderAnswer2(q2) {
+function renderAnswer2(q2, card) {
   if (!q2) {
     return `
       <div class="answerBox">
@@ -441,11 +471,14 @@ function renderAnswer2(q2) {
     `;
   }
 
+  const img = card && card.image ? renderImage(card.image) : "";
+
   return `
     <div class="answerBox">
       <div class="label">Svar 2</div>
       <div class="periodList">Rätt alternativ: <span class="hit">${esc(q2.correct || "")}</span></div>
-      <div class="extra">${esc(q2.explanation || "")}</div>
+      <div class="extra">${q2.explanation || ""}</div>
+      ${img}
     </div>
   `;
 }
