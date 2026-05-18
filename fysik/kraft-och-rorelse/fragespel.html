@@ -56,6 +56,42 @@
       width: 58px; padding: 4px 6px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
     }
     #timerModeHint { font-size: 13px; color: #888; font-style: italic; }
+    .timerbar-inner.locked input,
+    .timerbar-inner.locked select { opacity: .45; pointer-events: none; }
+    .btn-lock {
+      padding: 7px 13px; border: 0; border-radius: 8px; cursor: pointer;
+      font-size: 14px; font-weight: 600; background: #e3f2fd; color: #0056b3;
+    }
+    .btn-lock:hover { background: #bbdefb; }
+    .btn-lock.unlocked { background: #e8f5e9; color: #1b5e20; }
+
+    /* === Password modal === */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.45); align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 14px; padding: 24px 28px; width: 320px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.22);
+    }
+    .modal-box h3 { margin: 0 0 10px; font-size: 18px; }
+    .modal-box p  { margin: 0 0 12px; font-size: 14px; color: #444; }
+    .modal-box input[type=password] {
+      width: 100%; padding: 9px 12px; border: 1px solid #ccc; border-radius: 8px;
+      font-size: 16px; outline: none;
+    }
+    .modal-box input[type=password]:focus { border-color: #0056b3; }
+    #passwordError { color: #c62828; font-size: 13px; margin-top: 6px; min-height: 18px; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 14px; }
+    .modal-btns button {
+      flex: 1; padding: 10px; border: 0; border-radius: 8px; cursor: pointer;
+      font-size: 15px; font-weight: 600;
+    }
+    .modal-btn-ok  { background: #0056b3; color: #fff; }
+    .modal-btn-ok:hover  { background: #004799; }
+    .modal-btn-cancel { background: #f3f3f3; color: #333; }
+    .modal-btn-cancel:hover { background: #e8e8e8; }
 
     /* === Timer display inside card === */
     #timerWrap { display: none; margin-bottom: 14px; }
@@ -209,12 +245,12 @@
 <div class="info-banner">
   ⚡ <strong>Frågespel – kraft, rörelse och tryck.</strong>
   Varje grupp spelar på sin dator. Svara i tid → välj <strong>Säkra</strong> (1p) eller <strong>Chansa</strong> (2p om båda rätt).
-  Läraren stänger av timern och visar korten på projektorn. Mål: <strong>10 poäng 🏆</strong>
+  Läraren stänger av timern och visar korten på projektorn. Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
 </div>
 
 <!-- Timer settings -->
 <div class="timerbar">
-  <div class="timerbar-inner">
+  <div class="timerbar-inner locked" id="timerbarInner">
     <label>
       <input type="checkbox" id="timerCheck" checked onchange="onTimerToggle()">
       ⏱ Spela med timer
@@ -222,7 +258,27 @@
     <label id="timerSecLabel">
       <input type="number" id="timerSec" value="20" min="5" max="120"> sek/fråga
     </label>
+    <label>
+      🏆 Vinst vid
+      <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()"> poäng
+    </label>
+    <button class="btn-lock" id="lockBtn" onclick="showPasswordModal()">🔒 Ändra inställningar</button>
     <span id="timerModeHint"></span>
+  </div>
+</div>
+
+<!-- Password modal -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal-box">
+    <h3>🔒 Lärarlösenord</h3>
+    <p>Ange lösenordet för att ändra spelinställningarna.</p>
+    <input type="password" id="passwordInput" placeholder="Lösenord"
+           onkeydown="if(event.key==='Enter')checkPassword()">
+    <div id="passwordError"></div>
+    <div class="modal-btns">
+      <button class="modal-btn-ok" onclick="checkPassword()">OK</button>
+      <button class="modal-btn-cancel" onclick="hidePasswordModal()">Avbryt</button>
+    </div>
   </div>
 </div>
 
@@ -289,9 +345,13 @@
    Phases: intro | q1 | q1done | q2wait | q2 | q2done
    ===================================================== */
 const SUBJECT_CLS = { "Rörelse":"rorelse", "Kraft":"kraft", "Tryck":"tryck" };
-const SCORE_KEY   = 'fragespel_krt_score_v3';
-const TIMER_KEY   = 'fragespel_krt_timer_v3';
-const WIN_SCORE   = 10;
+const SCORE_KEY    = 'fragespel_krt_score_v3';
+const TIMER_KEY    = 'fragespel_krt_timer_v3';
+const SETTINGS_KEY = 'fragespel_krt_settings_v1';
+const PASSWORD     = 'JTo';
+
+let winScore = 10;
+let settingsUnlocked = false;
 
 let deck = [], cardIdx = 0;
 let phase = 'intro';
@@ -335,7 +395,7 @@ function addScore(pts) {
   lastPts = pts;
   totalScore = Math.max(0, totalScore + pts);
   saveScore(); renderScore();
-  if (totalScore >= WIN_SCORE && !victoryShown) showVictory();
+  if (totalScore >= winScore && !victoryShown) showVictory();
 }
 function renderScore() {
   const el = document.getElementById('scoreDisplay');
@@ -349,20 +409,74 @@ function renderScore() {
    ===================================================== */
 function onTimerToggle() {
   timerEnabled = document.getElementById('timerCheck').checked;
-  localStorage.setItem(TIMER_KEY, timerEnabled ? '1' : '0');
+  saveSettings();
   document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
   document.getElementById('timerModeHint').textContent = timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
   if (!timerEnabled) { clearTimer(); showTimerWrap(false); }
 }
-function loadTimerPref() {
-  const pref = localStorage.getItem(TIMER_KEY);
-  if (pref !== null) {
-    timerEnabled = pref === '1';
-    const cb = document.getElementById('timerCheck');
-    if (cb) cb.checked = timerEnabled;
-    document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
-    document.getElementById('timerModeHint').textContent = timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
+function onWinScoreChange() {
+  winScore = Math.max(1, parseInt(document.getElementById('winScoreInput').value)||10);
+  const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
+  saveSettings();
+}
+function saveSettings() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+    timerEnabled, timerSec: document.getElementById('timerSec').value, winScore
+  }));
+}
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
+    if (s.timerEnabled !== undefined) timerEnabled = s.timerEnabled;
+    if (s.timerSec)     document.getElementById('timerSec').value = s.timerSec;
+    if (s.winScore) {
+      winScore = s.winScore;
+      document.getElementById('winScoreInput').value = winScore;
+      const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
+    }
+  } catch(e) {}
+  const cb = document.getElementById('timerCheck');
+  if (cb) cb.checked = timerEnabled;
+  document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
+  document.getElementById('timerModeHint').textContent = timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
+}
+
+/* === Password / settings lock === */
+function showPasswordModal() {
+  if (settingsUnlocked) { lockSettings(); return; }
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('passwordError').textContent = '';
+  document.getElementById('passwordModal').classList.add('show');
+  setTimeout(() => document.getElementById('passwordInput').focus(), 50);
+}
+function hidePasswordModal() {
+  document.getElementById('passwordModal').classList.remove('show');
+}
+function checkPassword() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === PASSWORD) {
+    hidePasswordModal();
+    unlockSettings();
+  } else {
+    document.getElementById('passwordError').textContent = 'Fel lösenord – försök igen.';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
   }
+}
+function unlockSettings() {
+  settingsUnlocked = true;
+  document.getElementById('timerbarInner').classList.remove('locked');
+  const btn = document.getElementById('lockBtn');
+  btn.textContent = '🔓 Lås inställningar';
+  btn.classList.add('unlocked');
+}
+function lockSettings() {
+  settingsUnlocked = false;
+  document.getElementById('timerbarInner').classList.add('locked');
+  const btn = document.getElementById('lockBtn');
+  btn.textContent = '🔒 Ändra inställningar';
+  btn.classList.remove('unlocked');
+  saveSettings();
 }
 function clearTimer() {
   if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
@@ -707,7 +821,7 @@ async function loadDeckData(doShuffle) {
    Init
    ===================================================== */
 loadScore();
-loadTimerPref();
+loadSettings();
 loadDeckData(true);
 </script>
 </body>
