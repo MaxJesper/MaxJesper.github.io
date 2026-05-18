@@ -400,8 +400,8 @@ function addScore(pts) {
 function renderScore() {
   const el = document.getElementById('scoreDisplay');
   if (!el) return;
-  el.textContent = totalScore + ' poäng' + (totalScore >= WIN_SCORE ? ' 🏆' : '');
-  el.classList.toggle('winning', totalScore >= WIN_SCORE);
+  el.textContent = totalScore + ' poäng' + (totalScore >= winScore ? ' 🏆' : '');
+  el.classList.toggle('winning', totalScore >= winScore);
 }
 
 /* =====================================================
