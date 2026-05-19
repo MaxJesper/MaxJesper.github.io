@@ -169,6 +169,9 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px;
     }
     .opt-text { flex: 1; }
+    .opt-mark { font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .option-btn.correct .opt-mark { color: #0d47a1; }
+    .option-btn.wrong   .opt-mark { color: #bf360c; }
     .option-btn.correct { background: #e3f2fd !important; border-color: #1565c0 !important; }
     .option-btn.correct .opt-key { background: #1565c0; color: #fff; }
     .option-btn.wrong { background: #fff3e0 !important; border-color: #e65100 !important; }
@@ -876,11 +879,13 @@ function blockQ2(mode) {
       ['A','B','C'].map(opt => {
         let cls = '';
         let keyLabel = opt;
-        if (opt === q2.correct) { cls = 'correct'; keyLabel = '✓'; }
-        else if (selectedQ2 && opt === selectedQ2) { cls = 'wrong'; keyLabel = '✗'; }
+        let mark = '';
+        if (opt === q2.correct) { cls = 'correct'; keyLabel = '✓'; mark = '<span class="opt-mark">Rätt</span>'; }
+        else if (selectedQ2 && opt === selectedQ2) { cls = 'wrong'; keyLabel = '✗'; mark = '<span class="opt-mark">Fel</span>'; }
         return `<div class="option-btn ${cls}" style="pointer-events:none">
           <span class="opt-key">${keyLabel}</span>
           <span class="opt-text">${esc(q2.options?.[opt] || '')}</span>
+          ${mark}
         </div>`;
       }).join('') + '</div>';
     opts += `<div class="answerBox"><div class="ans-extra">${esc(q2.explanation || '')}</div></div>`;
