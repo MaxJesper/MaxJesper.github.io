@@ -3,526 +3,880 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>När då då? – Fanerozoikum</title>
+  <title>När då då? – Fanerozoikum – Frågespel</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 65%);
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0 0 40px;
     }
 
-    .topbar { max-width: 980px; margin: 14px auto 0; padding: 0 12px; }
-    .subject-btn{
-      display:inline-block; padding:8px 12px; background:#fff; border-radius:6px;
-      box-shadow:0 2px 4px rgba(0,0,0,0.08); text-decoration:none; color:#0056b3;
-      margin: 6px 0;
+    /* === Topbar === */
+    .topbar {
+      max-width: 980px; margin: 14px auto 0; padding: 0 12px;
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;
     }
-    .subject-btn:hover{ text-decoration: underline; }
-
-    #container { max-width: 980px; margin: 14px auto; padding: 0 12px; }
-    #card { background:#fff; border-radius:10px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.10); }
-    #meta { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; margin-bottom:10px; }
-    #meta .pill { background:#eef4ff; color:#003a8c; padding:6px 10px; border-radius:999px; font-size:14px; }
-    #meta .pill.period  { background:#e8f5e9; color:#1b5e20; }
-    #meta .small { color:#444; font-size:14px; }
-
-    #content { text-align:left; }
-    #content h2 { margin: 6px 0 10px; font-size: 20px; }
-    #content .intro { font-size:16px; line-height:1.45; color:#222; }
-    #content .q { margin-top:14px; font-size:18px; }
-    #content .options { margin-top:8px; padding-left: 18px; }
-    #content .options li { margin: 6px 0; }
-    #content .answerBox {
-      margin-top: 12px; padding: 12px 14px; border-radius: 10px;
-      background: #f0f7ff; border: 1px solid #cfe3ff;
+    .topbar-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .subject-btn {
+      display: inline-block; padding: 8px 12px; background: #fff; border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.08); text-decoration: none; color: #0056b3; font-size: 14px;
     }
-    #content .answerBox .label { font-weight: bold; color:#003a8c; }
-    #content .answerBox .extra { margin-top:8px; color:#1c1c1c; }
-    #content .periodList { margin-top: 10px; line-height: 1.7; }
-    #content .periodList .hit { font-weight:bold; }
-    #content .concept { font-weight: 700; font-style: italic; }
-
-    #content .imageBlock {
-      margin-top: 12px;
-      text-align: center;
+    .subject-btn:hover { text-decoration: underline; }
+    .score-area { display: flex; align-items: center; gap: 8px; }
+    #scoreDisplay {
+      background: #fff; border-radius: 10px; padding: 8px 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.08);
+      font-weight: 700; font-size: 20px; color: #004d40; white-space: nowrap;
     }
-    #content .imageBlock img {
-      max-width: 100%;
-      max-height: 360px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    #scoreDisplay.winning { color: #1b5e20; background: #e8f5e9; }
+    .btn-small {
+      padding: 7px 12px; border: 0; border-radius: 8px; cursor: pointer;
+      background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.08); font-size: 14px;
     }
-    #content .imageBlock .credit {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #555;
-      font-style: italic;
-    }
-    #content .imageBlock .credit a { color: #555; }
+    .btn-small:hover { background: #f3f3f3; }
 
-    .controls { margin-top: 12px; display:flex; flex-wrap:wrap; gap:8px; }
-    .controls button {
-      padding:10px 12px; border:0; border-radius:8px; cursor:pointer;
-      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#fff; font-size:15px;
-    }
-    .controls button:hover { background:#f3f3f3; }
-    .controls .primary { background:#0056b3; color:#fff; }
-    .controls .primary:hover { background:#004799; }
-
-    .hint { margin-top: 10px; color:#555; font-size: 14px; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-
-    code { background:#f3f3f3; padding:2px 6px; border-radius:6px; }
-
+    /* === Info === */
     .info-banner {
-      max-width: 980px;
-      margin: 10px auto 0;
-      padding: 10px 14px;
-      background: #fffbe6;
-      border: 1px solid #ffe58f;
-      border-radius: 10px;
-      color: #614700;
-      font-size: 14px;
+      max-width: 980px; margin: 10px auto 0; padding: 10px 14px;
+      background: #fffbe6; border: 1px solid #ffe58f; border-radius: 10px;
+      color: #614700; font-size: 14px;
     }
 
-  .scorebar{
-  max-width: 980px;
-  margin: 10px auto 0;
-  padding: 0 12px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  align-items:center;
-  justify-content:space-between;
-}
+    /* === Timer settings === */
+    .timerbar { max-width: 980px; margin: 8px auto 0; padding: 0 12px; }
+    .timerbar-inner {
+      background: #fff; border-radius: 12px; padding: 9px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,.08);
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    }
+    .timerbar-inner label { font-size: 15px; color: #333; display: flex; align-items: center; gap: 7px; cursor: pointer; }
+    .timerbar-inner input[type=checkbox] { width: 18px; height: 18px; cursor: pointer; accent-color: #00796b; }
+    .timerbar-inner input[type=number] {
+      width: 58px; padding: 4px 6px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px;
+    }
+    #timerModeHint { font-size: 13px; color: #888; font-style: italic; }
+    .timerbar-inner.locked input,
+    .timerbar-inner.locked select { opacity: .45; pointer-events: none; }
+    .btn-lock {
+      padding: 7px 13px; border: 0; border-radius: 8px; cursor: pointer;
+      font-size: 14px; font-weight: 600; background: #e0f2f1; color: #00796b;
+    }
+    .btn-lock:hover { background: #b2dfdb; }
+    .btn-lock.unlocked { background: #e8f5e9; color: #1b5e20; }
 
-.score-left{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-}
+    /* === Password modal === */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.45); align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 14px; padding: 24px 28px; width: 320px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.22);
+    }
+    .modal-box h3 { margin: 0 0 10px; font-size: 18px; }
+    .modal-box p  { margin: 0 0 12px; font-size: 14px; color: #444; }
+    .modal-box input[type=password] {
+      width: 100%; padding: 9px 12px; border: 1px solid #ccc; border-radius: 8px;
+      font-size: 16px; outline: none;
+    }
+    .modal-box input[type=password]:focus { border-color: #00796b; }
+    #passwordError { color: #c62828; font-size: 13px; margin-top: 6px; min-height: 18px; }
+    .modal-btns { display: flex; gap: 8px; margin-top: 14px; }
+    .modal-btns button {
+      flex: 1; padding: 10px; border: 0; border-radius: 8px; cursor: pointer;
+      font-size: 15px; font-weight: 600;
+    }
+    .modal-btn-ok  { background: #00796b; color: #fff; }
+    .modal-btn-ok:hover  { background: #004d40; }
+    .modal-btn-cancel { background: #f3f3f3; color: #333; }
+    .modal-btn-cancel:hover { background: #e8e8e8; }
 
-.score-left button{
-  padding:8px 10px;
-  border:0;
-  border-radius:10px;
-  cursor:pointer;
-  box-shadow:0 2px 4px rgba(0,0,0,0.08);
-  background:#fff;
-  font-size: 14px;
-}
-.score-left button:hover{ background:#f3f3f3; }
+    /* === Timer display inside card === */
+    #timerWrap { display: none; margin-bottom: 14px; }
+    .timer-track { height: 14px; background: #e0e0e0; border-radius: 7px; overflow: hidden; margin-bottom: 8px; }
+    .timer-fill { height: 100%; background: #00796b; border-radius: 7px; transition: width 0.9s linear; }
+    .timer-fill.urgent { background: #c62828; }
+    #timerNum {
+      font-size: 60px; font-weight: 900; color: #00796b; text-align: center;
+      line-height: 1; transition: color 0.3s; letter-spacing: -2px;
+    }
+    #timerNum.urgent { color: #c62828; }
 
-.score-right{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  align-items:center;
-  justify-content:flex-end;
-}
+    /* === Card === */
+    #container { max-width: 980px; margin: 10px auto; padding: 0 12px; }
+    #card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,.10); }
+    #meta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .pill { background: #eef4ff; color: #003a8c; padding: 6px 10px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+    .pill.period { background: #e8f5e9; color: #1b5e20; }
+    #statusText { color: #444; font-size: 14px; }
 
-.group{
-  background:#fff;
-  border-radius:12px;
-  padding:8px 10px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.08);
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
+    /* Content */
+    #content { text-align: left; }
+    #content h2 { margin: 6px 0 10px; font-size: 20px; }
+    .intro { font-size: 16px; line-height: 1.5; color: #222; }
+    .q-block { margin-top: 16px; }
+    .q-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #555; margin-bottom: 4px; }
+    .q-text  { font-size: 18px; line-height: 1.4; margin-bottom: 6px; }
 
-.group .name{
-  font-weight:700;
-  color:#003a8c;
-  min-width: 42px;
-}
+    /* === Period grid for Q1 === */
+    .period-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .period-btn {
+      padding: 10px 8px; border: 2px solid #b2dfdb; border-radius: 8px;
+      background: #e0f2f1; cursor: pointer; font-size: 14px; font-weight: 600;
+      color: #004d40; text-align: center; transition: background .12s, border-color .12s;
+      line-height: 1.3;
+    }
+    .period-btn:hover:not([disabled]) { background: #b2dfdb; border-color: #00796b; }
+    .period-btn[disabled] { cursor: default; }
+    .period-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; color: #1b5e20 !important; }
+    .period-btn.wrong   { background: #ffebee !important; border-color: #c62828 !important; color: #b71c1c !important; }
+    .period-interval { font-size: 11px; font-weight: 400; display: block; margin-top: 3px; opacity: .85; }
 
-.group .pts{
-  font-weight:700;
-  min-width: 18px;
-  text-align:center;
-}
+    /* === Q2 MCQ buttons === */
+    .options-grid { display: grid; gap: 8px; margin-top: 10px; }
+    .option-btn {
+      display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+      border: 2px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer;
+      font-size: 16px; text-align: left; width: 100%; transition: background .12s, border-color .12s;
+    }
+    .option-btn:hover:not([disabled]) { background: #e0f2f1; border-color: #00796b; }
+    .option-btn[disabled] { cursor: default; }
+    .opt-key {
+      font-weight: bold; background: #e0f2f1; color: #00796b;
+      width: 34px; height: 34px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px;
+    }
+    .opt-text { flex: 1; }
+    .option-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; }
+    .option-btn.correct .opt-key { background: #2e7d32; color: #fff; }
+    .option-btn.wrong { background: #ffebee !important; border-color: #c62828 !important; }
+    .option-btn.wrong .opt-key { background: #c62828; color: #fff; }
 
-.group button{
-  padding:6px 10px;
-  border:0;
-  border-radius:10px;
-  cursor:pointer;
-  box-shadow:0 2px 4px rgba(0,0,0,0.08);
-  background:#f7f7f7;
-  font-size: 14px;
-}
-.group button:hover{ background:#ededed; }
+    /* Plain list (teacher mode) */
+    .options-list { margin-top: 6px; padding-left: 18px; }
+    .options-list li { margin: 6px 0; font-size: 16px; }
+
+    /* === Answer box === */
+    .answerBox {
+      margin-top: 10px; padding: 12px 14px; border-radius: 10px;
+      background: #f0f9ff; border: 1px solid #b2dfdb;
+    }
+    .ans-label { font-weight: bold; color: #004d40; margin-bottom: 4px; font-size: 14px; }
+    .ans-extra { margin-top: 6px; color: #1c1c1c; font-size: 15px; line-height: 1.45; }
+
+    /* === Decision box (Säkra / Chansa) === */
+    #decisionArea { margin-top: 16px; }
+    .decision-box {
+      padding: 14px 16px; background: #fffde7; border: 2px solid #f9a825; border-radius: 12px;
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    }
+    .decision-label { font-weight: bold; font-size: 17px; color: #614700; flex: 1; min-width: 140px; }
+    .btn-sakra  { padding: 12px 20px; border: 0; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; background: #2e7d32; color: #fff; }
+    .btn-sakra:hover  { background: #1b5e20; }
+    .btn-chansa { padding: 12px 20px; border: 0; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; background: #f9a825; color: #333; }
+    .btn-chansa:hover { background: #f57f17; }
+
+    /* Result box */
+    .result-box {
+      margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+      font-size: 17px; font-weight: bold;
+    }
+    .pts-pos  { background: #e8f5e9; border: 2px solid #2e7d32; color: #1b5e20; }
+    .pts-zero { background: #ffebee; border: 2px solid #c62828; color: #b71c1c; }
+
+    /* Phase action button */
+    .phase-btn {
+      margin-top: 16px; display: block; width: 100%;
+      padding: 14px; border: 0; border-radius: 10px; cursor: pointer;
+      font-size: 16px; font-weight: bold; background: #00796b; color: #fff;
+    }
+    .phase-btn:hover { background: #004d40; }
+
+    /* Wait notice */
+    .wait-notice {
+      margin-top: 12px; padding: 12px 16px; background: #fff8e1; border: 1px solid #ffe082;
+      border-radius: 10px; color: #5d4037; font-size: 15px; text-align: center;
+    }
+
+    /* Image */
+    .imageBlock { margin-top: 14px; text-align: center; }
+    .imageBlock img {
+      max-width: 100%; max-height: 300px;
+      border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .imageBlock .credit { margin-top: 6px; font-size: 12px; color: #555; font-style: italic; }
+    .imageBlock .credit a { color: #555; }
+
+    /* Controls */
+    .controls { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .controls button {
+      padding: 10px 12px; border: 0; border-radius: 8px; cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,.08); background: #fff; font-size: 15px;
+    }
+    .controls button:hover { background: #f3f3f3; }
+
+    /* Overlays */
+    .overlay {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      align-items: center; justify-content: center; text-align: center;
+      flex-direction: column; gap: 12px; cursor: pointer;
+    }
+    .overlay.show { display: flex; }
+    #lostOverlay    { background: rgba(198,40,40,.91); color: #fff; font-size: clamp(2.2rem,9vw,5.5rem); font-weight: 900; }
+    #victoryOverlay { background: rgba(0,77,64,.93);   color: #fff; font-size: clamp(2.2rem,9vw,5.5rem); font-weight: 900; }
+    .overlay-sub { font-size: 38%; font-weight: 400; opacity: .9; margin-top: 4px; }
+
+    /* Inline concept emphasis (used in JSON extras) */
+    .concept { font-weight: 700; font-style: italic; }
   </style>
 </head>
-
 <body>
+
+<!-- Topbar -->
 <div class="topbar">
-  <a href="index.html" class="subject-btn">← Tillbaka till Biologi</a>
-  &nbsp;
-  <a href="nardada_regler.html" class="subject-btn">📘 Spelregler</a>
-</div>
-
-<div class="info-banner">
-  📝 <strong>När då då? – Fanerozoikum.</strong> Frågor om de geologiska perioderna under Fanerozoikum (Kambrium till Kvartär). Fler frågor kan komma att läggas till.
-</div>
-
-<div class="scorebar">
-  <div class="score-left">
-    <strong>Poäng:</strong>
-    <label style="margin-left:10px;">
-      Grupper:
-      <select id="groupCount" onchange="setGroupCountFromUI()">
-        <option value="2">2</option>
-        <option value="3" selected>3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-      </select>
-    </label>
-    <button onclick="resetScores()">Nollställ</button>
+  <div class="topbar-links">
+    <a href="index.html" class="subject-btn">← Evolution</a>
+    <a href="nardada_regler.html" class="subject-btn">📘 Spelregler</a>
   </div>
-
-  <div class="score-right" id="scoreboard"></div>
+  <div class="score-area">
+    <button class="btn-small" onclick="confirmResetScore()">Nollställ poäng</button>
+    <div id="scoreDisplay">0 poäng</div>
+  </div>
 </div>
 
-  <div id="container">
-    <div id="card">
-      <div id="meta">
-        <div class="pill" id="subjectPill">När då då?</div>
-        <div class="pill period" id="periodPill" style="display:none"></div>
-        <div class="small" id="statusText">Laddar frågor…</div>
-      </div>
+<!-- Info -->
+<div class="info-banner">
+  🌍 <strong>När då då? – Fanerozoikum.</strong>
+  Varje grupp spelar på sin dator. Välj rätt geologisk period på fråga 1, sedan
+  <strong>Säkra</strong> (1p) eller <strong>Chansa</strong> (2p om båda rätt, annars 0p).
+  Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
+</div>
 
-      <div id="content">
-        <h2>Laddar…</h2>
-        <p>Hämtar <code>Fanerozoikum-fragor.json</code>.</p>
-      </div>
+<!-- Timer settings -->
+<div class="timerbar">
+  <div class="timerbar-inner locked" id="timerbarInner">
+    <label>
+      <input type="checkbox" id="timerCheck" checked onchange="onTimerToggle()" disabled>
+      ⏱ Spela med timer
+    </label>
+    <label id="timerSecLabel">
+      <input type="number" id="timerSec" value="20" min="5" max="120" disabled> sek/fråga
+    </label>
+    <label>
+      🏆 Vinst vid
+      <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()" disabled> poäng
+    </label>
+    <button class="btn-lock" id="lockBtn" onclick="showPasswordModal()">🔒 Ändra inställningar</button>
+    <span id="timerModeHint"></span>
+  </div>
+</div>
 
-      <div class="controls">
-        <button onclick="prevCard()">⬅️ Föregående kort</button>
-        <button onclick="resetStep()">↩️ Starta om steg</button>
-        <button class="primary" onclick="nextStep()">Nästa steg ▶</button>
-        <button onclick="nextCard()">➡️ Nästa kort</button>
-        <button onclick="shuffleDeck()">🔀 Blanda frågor</button>
-        <button onclick="loadDeck()">⟳ Ladda om JSON</button>
-      </div>
-
-      <div class="hint">
-        Tips: <span class="mono">Nästa steg</span> visar i ordning:
-        inledning → tidsfråga → tidssvar → begreppsfråga → begreppssvar.
-      </div>
+<!-- Password modal -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal-box">
+    <h3>🔒 Lärarlösenord</h3>
+    <p>Ange lösenordet för att ändra spelinställningarna.</p>
+    <input type="password" id="passwordInput" placeholder="Lösenord"
+           onkeydown="if(event.key==='Enter')checkPassword()">
+    <div id="passwordError"></div>
+    <div class="modal-btns">
+      <button class="modal-btn-ok" onclick="checkPassword()">OK</button>
+      <button class="modal-btn-cancel" onclick="hidePasswordModal()">Avbryt</button>
     </div>
   </div>
+</div>
+
+<!-- Card -->
+<div id="container">
+  <div id="card">
+    <div id="meta">
+      <div class="pill" id="subjectPill">Fanerozoikum</div>
+      <div class="pill period" id="periodPill" style="display:none"></div>
+      <div id="statusText">Laddar…</div>
+    </div>
+
+    <div id="timerWrap">
+      <div class="timer-track">
+        <div class="timer-fill" id="timerFill" style="width:100%"></div>
+      </div>
+      <div id="timerNum"></div>
+    </div>
+
+    <div id="content"><h2>Laddar…</h2></div>
+    <div id="decisionArea"></div>
+
+    <div class="controls">
+      <button onclick="prevCard()">⬅️ Föregående</button>
+      <button onclick="restartCard()">↩️ Starta om kort</button>
+      <button onclick="nextCard()">➡️ Nästa kort</button>
+      <button onclick="shuffleDeck()">🔀 Blanda</button>
+      <button onclick="reloadDeck()">⟳ Nummerordning</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlays -->
+<div class="overlay" id="lostOverlay" onclick="this.classList.remove('show')">
+  <div>⏰</div>
+  <div>Kort förlorat!</div>
+  <div class="overlay-sub">Ingen svarade i tid</div>
+</div>
+<div class="overlay" id="victoryOverlay" onclick="this.classList.remove('show')">
+  <div>🎉</div>
+  <div id="victoryText">10 POÄNG!</div>
+  <div class="overlay-sub">Ni vinner! Klicka för att fortsätta</div>
+</div>
 
 <script>
-/**
- * Steg:
- * 0 = Inledning
- * 1 = Fråga 1 (När?)
- * 2 = Svar 1
- * 3 = Fråga 2 (A/B/C)
- * 4 = Svar 2
- */
-
+/* =====================================================
+   Constants
+   ===================================================== */
 const FANEROZOIKUM_PERIODER = [
-  "Kambrium","Ordovicium","Silur","Devon","Karbon","Perm","Trias","Jura","Krita","Paleogen","Neogen","Kvartär"
+  "Kambrium", "Ordovicium", "Silur", "Devon",
+  "Karbon",   "Perm",       "Trias", "Jura",
+  "Krita",    "Paleogen",   "Neogen","Kvartär"
 ];
 
-let deck = [];
-let idx = 0;
-let step = 0; // 0..4
+const SCORE_KEY    = 'fanerozoikum_score_v1';
+const SETTINGS_KEY = 'fanerozoikum_settings_v1';
+const PASSWORD     = 'JTo';
 
-// ===== Poängräknare (enkel) =====
-const SCORE_KEY = "nardada_fanerozoikum_scores_v1";
-let scores = [];         // array med poäng per grupp
-let groupCount = 3;      // default
+/* =====================================================
+   State
+   Phases: intro | q1 | q1done | q2wait | q2 | q2done
+   ===================================================== */
+let winScore = 10;
+let settingsUnlocked = false;
 
-function loadScores(){
-  try{
-    const raw = localStorage.getItem(SCORE_KEY);
-    if(raw){
-      const obj = JSON.parse(raw);
-      if (Array.isArray(obj.scores)) scores = obj.scores;
-      if (Number.isFinite(obj.groupCount)) groupCount = obj.groupCount;
-    }
-  }catch(e){}
-  setGroupCount(groupCount, false);
-  const sel = document.getElementById("groupCount");
-  if(sel) sel.value = String(groupCount);
-  renderScoreboard();
+let deck = [], cardIdx = 0;
+let phase = 'intro';
+let selectedQ1 = null, selectedQ2 = null;
+let chosing = null;   // 'sakra' | 'chansa'
+let lastPts = 0;
+let totalScore = 0;
+let victoryShown = false;
+
+let timerEnabled = true;
+let timerInterval = null, timerLeft = 0, timerTotal = 20;
+
+/* =====================================================
+   Helpers
+   ===================================================== */
+function esc(s) {
+  return String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
-
-function saveScores(){
-  localStorage.setItem(SCORE_KEY, JSON.stringify({ groupCount, scores }));
-}
-
-function setGroupCount(n, persist=true){
-  groupCount = Math.max(2, Math.min(6, Number(n) || 3));
-  if(scores.length < groupCount){
-    while(scores.length < groupCount) scores.push(0);
-  } else if(scores.length > groupCount){
-    scores = scores.slice(0, groupCount);
-  }
-  if(persist) saveScores();
-  renderScoreboard();
-}
-
-function setGroupCountFromUI(){
-  const sel = document.getElementById("groupCount");
-  setGroupCount(sel.value, true);
-}
-
-function renderScoreboard(){
-  const board = document.getElementById("scoreboard");
-  if(!board) return;
-  board.innerHTML = "";
-  for(let i=0;i<groupCount;i++){
-    const div = document.createElement("div");
-    div.className = "group";
-    div.innerHTML = `
-      <span class="name">G${i+1}</span>
-      <button title="Minus 1" onclick="addPoints(${i}, -1)">−</button>
-      <span class="pts">${scores[i]}</span>
-      <button title="Plus 1" onclick="addPoints(${i}, 1)">+</button>
-    `;
-    board.appendChild(div);
-  }
-}
-
-function addPoints(i, delta){
-  scores[i] = Math.max(0, (scores[i] || 0) + delta);
-  saveScores();
-  renderScoreboard();
-}
-
-function resetScores(){
-  scores = Array.from({length: groupCount}, () => 0);
-  saveScores();
-  renderScoreboard();
-}
-
-
-function esc(s){
-  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-}
-
-async function loadDeck() {
-  const content = document.getElementById("content");
-  const statusText = document.getElementById("statusText");
-  const subjectPill = document.getElementById("subjectPill");
-
-  statusText.textContent = "Laddar frågor…";
-  subjectPill.textContent = "När då då?";
-
-  try {
-    // JSON-filen ska ligga i samma mapp som denna HTML
-    const res = await fetch("./Fanerozoikum-fragor.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`Kunde inte ladda JSON (${res.status})`);
-
-    const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) {
-      throw new Error("JSON laddades men innehåller ingen lista med kort (tom eller fel format).");
-    }
-
-    deck = data;
-    idx = 0;
-    step = 0;
-    render();
-  } catch (err) {
-    console.error(err);
-    content.innerHTML = `
-      <h2>Fel vid laddning</h2>
-      <p>Kunde inte läsa <code>Fanerozoikum-fragor.json</code>.</p>
-      <p><strong>Orsak:</strong> ${esc(err.message)}</p>
-      <p>Kontrollera att filen ligger i samma mapp som <code>Fanerozoikum.html</code> och att den är giltig JSON.</p>
-    `;
-    statusText.textContent = "Fel: JSON kunde inte laddas";
-    subjectPill.textContent = "När då då?";
-  }
-}
-
-function render() {
-  const subjectPill = document.getElementById("subjectPill");
-  const periodPill  = document.getElementById("periodPill");
-  const statusText = document.getElementById("statusText");
-  const content = document.getElementById("content");
-
-  if (!Array.isArray(deck) || deck.length === 0) {
-    subjectPill.textContent = "När då då?";
-    periodPill.style.display = "none";
-    statusText.textContent = "Inga kort laddade";
-    content.innerHTML = `<h2>Inga kort</h2><p>Lägg in frågor i <code>Fanerozoikum-fragor.json</code> och klicka "Ladda om JSON".</p>`;
-    return;
-  }
-
-  const card = deck[idx];
-  subjectPill.textContent = card.subject || "När då då?";
-
-  // Visa periodtaggen först efter att tidssvaret avslöjats (steg >= 2)
-  if (card.period && step >= 2) {
-    periodPill.textContent = "Period: " + card.period;
-    periodPill.style.display = "";
-  } else {
-    periodPill.style.display = "none";
-  }
-
-  statusText.textContent = `Kort ${idx+1}/${deck.length} · Steg ${step}/4`;
-
-  let html = `<h2>${esc(card.subject || "När då då?")} – kort ${esc(card.id ?? (idx+1))}</h2>`;
-
-  if (step === 0) {
-    html += `<div class="intro">${card.intro || ""}</div>`;
-  }
-
-  if (step === 1) {
-    html += `<div class="intro">${card.intro || ""}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
-  }
-
-  if (step === 2) {
-    html += `<div class="intro">${card.intro || ""}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
-    html += renderAnswer1(card.q1);
-  }
-
-  if (step === 3) {
-    html += `<div class="intro">${card.intro || ""}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
-    html += renderAnswer1(card.q1);
-    html += renderQuestion2(card.q2);
-  }
-
-  if (step === 4) {
-    html += `<div class="intro">${card.intro || ""}</div>`;
-    html += `<div class="q"><strong>Fråga 1 – När?</strong><br>${esc(card.q1?.question || "")}</div>`;
-    html += renderAnswer1(card.q1);
-    html += renderQuestion2(card.q2);
-    html += renderAnswer2(card.q2, card);
-  }
-
-  content.innerHTML = html;
-}
-
-function renderAnswer1(q1) {
-  let box = `<div class="answerBox"><div class="label">Svar 1</div>`;
-
-  if (!q1 || !q1.type) {
-    box += `<div class="periodList"><span class="hit">[Saknar data för svar 1]</span></div></div>`;
-    return box;
-  }
-
-  if (q1.type === "period_fanerozoikum") {
-    const list = FANEROZOIKUM_PERIODER.map(p => {
-      if (p === q1.correct) return `<span class="hit">${esc(p)} (${esc(q1.interval || "")})</span>`;
-      return esc(p);
-    }).join(" · ");
-    box += `<div class="periodList">${list}</div>`;
-    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
-  } else if (q1.type === "year") {
-    box += `<div class="periodList"><span class="hit">${esc(q1.correctYear)}</span></div>`;
-    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
-  } else if (q1.type === "human_time") {
-    box += `<div class="periodList"><span class="hit">${esc(q1.correctText || "")}</span></div>`;
-    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
-  } else {
-    box += `<div class="periodList"><span class="hit">[Okänt format: ${esc(q1.type)}]</span></div>`;
-    if (q1.extra) box += `<div class="extra">${q1.extra}</div>`;
-  }
-
-  box += `</div>`;
-  return box;
-}
-
-function renderImage(img) {
-  if (!img || !img.url) return "";
-  const credit = img.credit ? `<div class="credit">${img.credit}</div>` : "";
-  const alt = img.alt ? esc(img.alt) : "";
-  return `
-    <div class="imageBlock">
-      <img src="${esc(img.url)}" alt="${alt}" loading="lazy" onerror="this.parentElement.style.display='none'">
-      ${credit}
-    </div>
-  `;
-}
-
-function renderQuestion2(q2) {
-  if (!q2) return `<div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>[Saknar fråga 2]</div>`;
-
-  return `
-    <div class="q"><strong>Fråga 2 – Begrepp (A–C)</strong><br>${esc(q2.question || "")}</div>
-    <ol class="options" type="A">
-      <li>${esc(q2.options?.A || "")}</li>
-      <li>${esc(q2.options?.B || "")}</li>
-      <li>${esc(q2.options?.C || "")}</li>
-    </ol>
-  `;
-}
-
-function renderAnswer2(q2, card) {
-  if (!q2) {
-    return `
-      <div class="answerBox">
-        <div class="label">Svar 2</div>
-        <div class="periodList"><span class="hit">[Saknar facit]</span></div>
-      </div>
-    `;
-  }
-
-  const img = card && card.image ? renderImage(card.image) : "";
-
-  return `
-    <div class="answerBox">
-      <div class="label">Svar 2</div>
-      <div class="periodList">Rätt alternativ: <span class="hit">${esc(q2.correct || "")}</span></div>
-      <div class="extra">${q2.explanation || ""}</div>
-      ${img}
-    </div>
-  `;
-}
-
-function nextStep() {
-  if (!deck.length) return;
-  step = Math.min(4, step + 1);
-  render();
-}
-
-function resetStep() {
-  if (!deck.length) return;
-  step = 0;
-  render();
-}
-
-function nextCard() {
-  if (!deck.length) return;
-  idx = (idx + 1) % deck.length;
-  step = 0;
-  render();
-}
-
-function prevCard() {
-  if (!deck.length) return;
-  idx = (idx - 1 + deck.length) % deck.length;
-  step = 0;
-  render();
-}
-
-function shuffleDeck() {
-  if (!deck.length) return;
-  for (let i = deck.length - 1; i > 0; i--) {
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  idx = 0;
-  step = 0;
+  return arr;
+}
+
+/* =====================================================
+   Score
+   ===================================================== */
+function loadScore() {
+  totalScore = parseInt(localStorage.getItem(SCORE_KEY) || '0') || 0;
+  renderScore();
+}
+function saveScore() { localStorage.setItem(SCORE_KEY, String(totalScore)); }
+function confirmResetScore() {
+  if (confirm('Nollställa poängen för denna enhet?')) {
+    totalScore = 0; victoryShown = false; saveScore(); renderScore();
+  }
+}
+function addScore(pts) {
+  lastPts = pts;
+  totalScore = Math.max(0, totalScore + pts);
+  saveScore(); renderScore();
+  if (totalScore >= winScore && !victoryShown) showVictory();
+}
+function renderScore() {
+  const el = document.getElementById('scoreDisplay');
+  if (!el) return;
+  el.textContent = totalScore + ' poäng' + (totalScore >= winScore ? ' 🏆' : '');
+  el.classList.toggle('winning', totalScore >= winScore);
+}
+
+/* =====================================================
+   Settings / Timer
+   ===================================================== */
+function onTimerToggle() {
+  timerEnabled = document.getElementById('timerCheck').checked;
+  saveSettings();
+  document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
+  document.getElementById('timerModeHint').textContent =
+    timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
+  if (!timerEnabled) { clearTimer(); showTimerWrap(false); }
+}
+function onWinScoreChange() {
+  winScore = Math.max(1, parseInt(document.getElementById('winScoreInput').value) || 10);
+  const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
+  saveSettings();
+}
+function saveSettings() {
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+    timerEnabled,
+    timerSec: document.getElementById('timerSec').value,
+    winScore
+  }));
+}
+function loadSettings() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
+    if (s.timerEnabled !== undefined) timerEnabled = s.timerEnabled;
+    if (s.timerSec) document.getElementById('timerSec').value = s.timerSec;
+    if (s.winScore) {
+      winScore = s.winScore;
+      document.getElementById('winScoreInput').value = winScore;
+      const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
+    }
+  } catch(e) {}
+  const cb = document.getElementById('timerCheck');
+  if (cb) cb.checked = timerEnabled;
+  document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
+  document.getElementById('timerModeHint').textContent =
+    timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
+}
+
+/* === Password / settings lock === */
+function showPasswordModal() {
+  if (settingsUnlocked) { lockSettings(); return; }
+  document.getElementById('passwordInput').value = '';
+  document.getElementById('passwordError').textContent = '';
+  document.getElementById('passwordModal').classList.add('show');
+  setTimeout(() => document.getElementById('passwordInput').focus(), 50);
+}
+function hidePasswordModal() {
+  document.getElementById('passwordModal').classList.remove('show');
+}
+function checkPassword() {
+  const val = document.getElementById('passwordInput').value;
+  if (val === PASSWORD) {
+    hidePasswordModal();
+    unlockSettings();
+  } else {
+    document.getElementById('passwordError').textContent = 'Fel lösenord – försök igen.';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
+  }
+}
+function setSettingsInputsDisabled(disabled) {
+  ['timerCheck', 'timerSec', 'winScoreInput'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = disabled;
+  });
+}
+function unlockSettings() {
+  settingsUnlocked = true;
+  setSettingsInputsDisabled(false);
+  document.getElementById('timerbarInner').classList.remove('locked');
+  const btn = document.getElementById('lockBtn');
+  btn.textContent = '🔓 Lås inställningar';
+  btn.classList.add('unlocked');
+}
+function lockSettings() {
+  settingsUnlocked = false;
+  setSettingsInputsDisabled(true);
+  document.getElementById('timerbarInner').classList.add('locked');
+  const btn = document.getElementById('lockBtn');
+  btn.textContent = '🔒 Ändra inställningar';
+  btn.classList.remove('unlocked');
+  saveSettings();
+}
+
+/* === Timer === */
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+}
+function startTimer() {
+  clearTimer();
+  if (!timerEnabled) return;
+  timerTotal = Math.max(5, parseInt(document.getElementById('timerSec').value) || 20);
+  timerLeft  = timerTotal;
+  showTimerWrap(true);
+  updateTimerDisplay();
+  timerInterval = setInterval(() => {
+    timerLeft--;
+    updateTimerDisplay();
+    if (timerLeft <= 0) { clearTimer(); loseCard(); }
+  }, 1000);
+}
+function updateTimerDisplay() {
+  const fill = document.getElementById('timerFill');
+  const num  = document.getElementById('timerNum');
+  if (!fill || !num) return;
+  const pct = timerTotal > 0 ? Math.max(0, timerLeft / timerTotal * 100) : 0;
+  fill.style.width = pct + '%';
+  const urgent = timerLeft <= 5 && timerLeft > 0;
+  fill.classList.toggle('urgent', urgent);
+  num.classList.toggle('urgent',  urgent);
+  num.textContent = timerLeft > 0 ? timerLeft : '';
+}
+function showTimerWrap(show) {
+  const el = document.getElementById('timerWrap');
+  if (el) el.style.display = show ? '' : 'none';
+}
+
+/* =====================================================
+   Sounds
+   ===================================================== */
+function playBuzzer() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [[0, 440, .6], [.25, 330, .5], [.5, 220, .4]].forEach(([t, freq, vol]) => {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sawtooth'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol, ctx.currentTime + t);
+      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + t + .22);
+      osc.start(ctx.currentTime + t); osc.stop(ctx.currentTime + t + .25);
+    });
+  } catch(e) {}
+}
+function playVictory() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [[0,.261,.5],[.18,.329,.5],[.36,.392,.5],[.54,.523,.7],[.76,.523,.45],[.94,.659,.65]]
+      .map(([t,f,v]) => [t, f*1000, v])
+      .forEach(([t, freq, vol]) => {
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'triangle'; osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, ctx.currentTime + t);
+        gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + t + .42);
+        osc.start(ctx.currentTime + t); osc.stop(ctx.currentTime + t + .46);
+      });
+  } catch(e) {}
+}
+
+/* =====================================================
+   Overlays
+   ===================================================== */
+function loseCard() {
+  playBuzzer();
+  showTimerWrap(false);
+  const el = document.getElementById('lostOverlay');
+  if (el) {
+    el.classList.add('show');
+    setTimeout(() => { el.classList.remove('show'); nextCard(); }, 1800);
+  } else { nextCard(); }
+}
+function showVictory() {
+  victoryShown = true;
+  playVictory();
+  const vt = document.getElementById('victoryText');
+  if (vt) vt.textContent = winScore + ' POÄNG!';
+  const el = document.getElementById('victoryOverlay');
+  if (el) el.classList.add('show');
+}
+
+/* =====================================================
+   Game logic
+   ===================================================== */
+function calcPoints() {
+  const card = deck[cardIdx];
+  const q1ok = selectedQ1 === card.q1.correct;
+  const q2ok = selectedQ2 === card.q2.correct;
+  if (chosing === 'sakra') return q1ok ? 1 : 0;
+  return (q1ok && q2ok) ? 2 : 0; // chansa: båda rätt = 2p, annars 0p
+}
+
+function selectAnswer(qNum, opt) {
+  clearTimer();
+  if (qNum === 1) {
+    selectedQ1 = opt;
+    phase = 'q1done';
+  } else {
+    selectedQ2 = opt;
+    const pts = calcPoints();
+    addScore(pts);
+    phase = 'q2done';
+  }
   render();
 }
 
-// Start: ladda från JSON
-loadScores();
-loadDeck();
+function doSakra() {
+  chosing = 'sakra';
+  const pts = calcPoints();
+  addScore(pts);
+  nextCard();
+}
+
+function doChansa() {
+  chosing = 'chansa';
+  phase = 'q2wait';
+  render();
+}
+
+function goNextPhase() {
+  if (phase === 'intro') {
+    phase = 'q1';
+    if (timerEnabled) startTimer();
+  } else if (phase === 'q1' && !timerEnabled) {
+    selectedQ1 = null; phase = 'q1done';
+  } else if (phase === 'q1done' && !timerEnabled) {
+    chosing = 'chansa'; phase = 'q2wait';
+  } else if (phase === 'q2wait') {
+    phase = 'q2';
+    if (timerEnabled) startTimer();
+  } else if (phase === 'q2' && !timerEnabled) {
+    selectedQ2 = null; phase = 'q2done';
+  } else if (phase === 'q2done') {
+    nextCard(); return;
+  }
+  render();
+}
+
+function resetCardState() {
+  phase = 'intro'; selectedQ1 = null; selectedQ2 = null; chosing = null; lastPts = 0;
+}
+function restartCard() { clearTimer(); resetCardState(); render(); }
+function nextCard()    { clearTimer(); cardIdx = (cardIdx + 1) % deck.length; resetCardState(); render(); }
+function prevCard()    { clearTimer(); cardIdx = (cardIdx - 1 + deck.length) % deck.length; resetCardState(); render(); }
+function shuffleDeck() { clearTimer(); shuffle(deck); cardIdx = 0; resetCardState(); render(); }
+function reloadDeck()  { clearTimer(); deck.sort((a,b) => (a.id||0)-(b.id||0)); cardIdx = 0; resetCardState(); render(); }
+
+/* =====================================================
+   Render – Q1 (period question)
+   ===================================================== */
+function q1PeriodButtons() {
+  return '<div class="period-grid">' +
+    FANEROZOIKUM_PERIODER.map(p =>
+      `<button class="period-btn" onclick="selectAnswer(1,${JSON.stringify(p)})">${esc(p)}</button>`
+    ).join('') +
+  '</div>';
+}
+
+function q1PeriodRevealed(q1) {
+  const correct = q1.correct;
+  const grid = '<div class="period-grid">' +
+    FANEROZOIKUM_PERIODER.map(p => {
+      let cls = '';
+      if (p === correct) cls = 'correct';
+      else if (selectedQ1 && p === selectedQ1) cls = 'wrong';
+      const interval = (p === correct && q1.interval)
+        ? `<span class="period-interval">${esc(q1.interval)}</span>` : '';
+      return `<div class="period-btn ${cls}" style="pointer-events:none">${esc(p)}${interval}</div>`;
+    }).join('') +
+  '</div>';
+  const extra = q1.extra
+    ? `<div class="answerBox"><div class="ans-label">Mer info</div><div class="ans-extra">${q1.extra}</div></div>`
+    : '';
+  return grid + extra;
+}
+
+function q1PeriodPlain() {
+  return '<div class="period-grid">' +
+    FANEROZOIKUM_PERIODER.map(p =>
+      `<div class="period-btn" style="pointer-events:none; opacity:0.65">${esc(p)}</div>`
+    ).join('') +
+  '</div>';
+}
+
+function blockQ1(mode) {
+  const q1 = deck[cardIdx].q1;
+  if (!q1) return '<div class="q-block"><div class="q-label">Fråga 1</div><p>[Saknar fråga]</p></div>';
+  const tick = selectedQ1 ? (selectedQ1 === q1.correct ? ' ✅' : ' ❌') : '';
+  const inner = mode === 'interactive' ? q1PeriodButtons()
+              : mode === 'revealed'    ? q1PeriodRevealed(q1)
+              : q1PeriodPlain();
+  return `<div class="q-block">
+    <div class="q-label">Fråga 1 – När?${mode === 'revealed' ? tick : ''}</div>
+    <div class="q-text">${esc(q1.question)}</div>
+    ${inner}
+  </div>`;
+}
+
+/* =====================================================
+   Render – Q2 (MCQ)
+   ===================================================== */
+function blockQ2(mode) {
+  const q2 = deck[cardIdx].q2;
+  if (!q2) return '<div class="q-block"><div class="q-label">Fråga 2</div><p>[Saknar fråga]</p></div>';
+  const tick = selectedQ2 ? (selectedQ2 === q2.correct ? ' ✅' : ' ❌') : '';
+
+  let opts = '';
+  if (mode === 'interactive') {
+    opts = '<div class="options-grid">' +
+      ['A','B','C'].map(opt =>
+        `<button class="option-btn" onclick="selectAnswer(2,'${opt}')" ${selectedQ2 ? 'disabled' : ''}>
+          <span class="opt-key">${opt}</span>
+          <span class="opt-text">${esc(q2.options?.[opt] || '')}</span>
+        </button>`
+      ).join('') + '</div>';
+
+  } else if (mode === 'revealed') {
+    opts = '<div class="options-grid">' +
+      ['A','B','C'].map(opt => {
+        let cls = '';
+        if (opt === q2.correct) cls = 'correct';
+        else if (selectedQ2 && opt === selectedQ2) cls = 'wrong';
+        return `<div class="option-btn ${cls}" style="pointer-events:none">
+          <span class="opt-key">${opt}</span>
+          <span class="opt-text">${esc(q2.options?.[opt] || '')}</span>
+        </div>`;
+      }).join('') + '</div>';
+    opts += `<div class="answerBox"><div class="ans-extra">${esc(q2.explanation || '')}</div></div>`;
+
+  } else {
+    opts = `<ol class="options-list" type="A">
+      <li>${esc(q2.options?.A || '')}</li>
+      <li>${esc(q2.options?.B || '')}</li>
+      <li>${esc(q2.options?.C || '')}</li>
+    </ol>`;
+  }
+
+  return `<div class="q-block">
+    <div class="q-label">Fråga 2 – Begrepp (A–C)${mode === 'revealed' ? tick : ''}</div>
+    <div class="q-text">${esc(q2.question)}</div>
+    ${opts}
+  </div>`;
+}
+
+/* =====================================================
+   Image
+   ===================================================== */
+function renderImage(img) {
+  if (!img || !img.url) return '';
+  const credit = img.credit ? `<div class="credit">${img.credit}</div>` : '';
+  return `<div class="imageBlock">
+    <img src="${esc(img.url)}" alt="${esc(img.alt || '')}" loading="lazy"
+         onerror="this.parentElement.style.display='none'">
+    ${credit}
+  </div>`;
+}
+
+/* =====================================================
+   Main render
+   ===================================================== */
+function render() {
+  if (!deck.length) return;
+  const card = deck[cardIdx];
+
+  document.getElementById('subjectPill').textContent = 'Fanerozoikum';
+  const pp = document.getElementById('periodPill');
+  const showPeriod = ['q1done','q2wait','q2','q2done'].includes(phase);
+  if (card.period && showPeriod) {
+    pp.textContent = 'Period: ' + card.period;
+    pp.style.display = '';
+  } else {
+    pp.style.display = 'none';
+  }
+  document.getElementById('statusText').textContent = `Kort ${cardIdx + 1}/${deck.length}`;
+
+  let html = `<h2>Fanerozoikum – kort ${esc(String(card.id ?? (cardIdx + 1)))}</h2>`;
+  let decision = '';
+
+  switch (phase) {
+
+    case 'intro':
+      html += `<div class="intro">${card.intro || ''}</div>`;
+      html += `<button class="phase-btn" onclick="goNextPhase()">Nästa fråga ▶${timerEnabled ? ' (startar timer)' : ''}</button>`;
+      showTimerWrap(false);
+      break;
+
+    case 'q1':
+      if (timerEnabled) {
+        html += blockQ1('interactive');
+      } else {
+        html += blockQ1('plain');
+        html += `<button class="phase-btn" onclick="goNextPhase()">Visa svar ▶</button>`;
+      }
+      break;
+
+    case 'q1done': {
+      html += blockQ1('revealed');
+      showTimerWrap(false);
+      if (timerEnabled && selectedQ1 !== null) {
+        const q1ok = selectedQ1 === card.q1.correct;
+        decision = `<div class="decision-box">
+          <div class="decision-label">${q1ok ? '✅ Rätt period!' : '❌ Fel period.'} Välj:</div>
+          <button class="btn-sakra"  onclick="doSakra()">🔒 Säkra – ${q1ok ? '1 poäng' : '0 poäng'}</button>
+          <button class="btn-chansa" onclick="doChansa()">🎲 Chansa! Fråga 2 →</button>
+        </div>`;
+      } else {
+        html += `<button class="phase-btn" onclick="goNextPhase()">Nästa fråga ▶</button>`;
+      }
+      break;
+    }
+
+    case 'q2wait':
+      html += blockQ1('revealed');
+      if (timerEnabled) {
+        html += `<div class="wait-notice">⏸ Vänta på läraren innan ni trycker Fortsätt – fråga 2 visas då och timern startar.</div>`;
+        html += `<button class="phase-btn" onclick="goNextPhase()">Fortsätt ▶ (visar fråga 2 + startar timer)</button>`;
+      } else {
+        html += `<button class="phase-btn" onclick="goNextPhase()">Visa fråga 2 ▶</button>`;
+      }
+      showTimerWrap(false);
+      break;
+
+    case 'q2':
+      if (timerEnabled) {
+        html += blockQ2('interactive');
+      } else {
+        html += blockQ2('plain');
+        html += `<button class="phase-btn" onclick="goNextPhase()">Visa svar ▶</button>`;
+      }
+      break;
+
+    case 'q2done': {
+      html += blockQ1('revealed');
+      html += blockQ2('revealed');
+      if (card.image) html += renderImage(card.image);
+      showTimerWrap(false);
+      if (timerEnabled && selectedQ2 !== null) {
+        const q1ok = selectedQ1 === card.q1.correct;
+        const q2ok = selectedQ2 === card.q2.correct;
+        const pts  = lastPts;
+        html += `<div class="result-box ${pts > 0 ? 'pts-pos' : 'pts-zero'}">
+          ${pts > 0 ? '🎉' : '😬'} Ni fick <strong>+${pts} poäng</strong>
+          (Fråga 1 ${q1ok ? '✅' : '❌'} Fråga 2 ${q2ok ? '✅' : '❌'}) – Totalt: ${totalScore} poäng
+        </div>`;
+      }
+      html += `<button class="phase-btn" onclick="nextCard()">Nästa kort ▶</button>`;
+      break;
+    }
+  }
+
+  document.getElementById('content').innerHTML = html;
+  document.getElementById('decisionArea').innerHTML = decision;
+}
+
+/* =====================================================
+   Load deck
+   ===================================================== */
+async function loadDeckData(doShuffle) {
+  document.getElementById('statusText').textContent = 'Laddar frågor…';
+  try {
+    const res  = await fetch('./Fanerozoikum-fragor.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!Array.isArray(data) || !data.length) throw new Error('Tom JSON.');
+    deck = doShuffle ? shuffle(data) : data;
+    cardIdx = 0; resetCardState(); render();
+  } catch(err) {
+    document.getElementById('content').innerHTML =
+      `<h2>Fel vid laddning</h2><p>${esc(err.message)}</p>`;
+    document.getElementById('statusText').textContent = 'Fel';
+  }
+}
+
+/* =====================================================
+   Init
+   ===================================================== */
+loadScore();
+loadSettings();
+loadDeckData(true);
 </script>
 </body>
 </html>
