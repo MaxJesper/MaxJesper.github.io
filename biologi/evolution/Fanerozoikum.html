@@ -95,14 +95,28 @@
 
     /* === Timer display inside card === */
     #timerWrap { display: none; margin-bottom: 14px; }
-    .timer-track { height: 14px; background: #e0e0e0; border-radius: 7px; overflow: hidden; margin-bottom: 8px; }
+    .timer-track { height: 14px; background: #e0e0e0; border-radius: 7px; overflow: hidden; margin-bottom: 12px; }
     .timer-fill { height: 100%; background: #00796b; border-radius: 7px; transition: width 0.9s linear; }
-    .timer-fill.urgent { background: #c62828; }
-    #timerNum {
-      font-size: 60px; font-weight: 900; color: #00796b; text-align: center;
-      line-height: 1; transition: color 0.3s; letter-spacing: -2px;
+    .timer-fill.urgent { background: #e65100; }
+    #timerClock {
+      display: flex; justify-content: center;
     }
-    #timerNum.urgent { color: #c62828; }
+    #timerNum {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 72px; font-weight: 900; color: #e8f5ff;
+      background: #1a2a3a; border-radius: 12px; padding: 6px 28px;
+      border: 3px solid #00796b;
+      letter-spacing: 4px; line-height: 1.1; text-align: center;
+      box-shadow: 0 0 16px rgba(0,121,107,0.35);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      min-width: 160px;
+    }
+    #timerNum.urgent {
+      border-color: #e65100;
+      box-shadow: 0 0 16px rgba(230,81,0,0.45);
+      animation: timerBlink 0.6s step-end infinite;
+    }
+    @keyframes timerBlink { 50% { opacity: 0.45; } }
 
     /* === Card === */
     #container { max-width: 980px; margin: 10px auto; padding: 0 12px; }
@@ -135,8 +149,9 @@
     }
     .period-btn:hover:not([disabled]) { background: #b2dfdb; border-color: #00796b; }
     .period-btn[disabled] { cursor: default; }
-    .period-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; color: #1b5e20 !important; }
-    .period-btn.wrong   { background: #ffebee !important; border-color: #c62828 !important; color: #b71c1c !important; }
+    .period-btn.correct { background: #e3f2fd !important; border-color: #1565c0 !important; color: #0d47a1 !important; }
+    .period-btn.wrong   { background: #fff3e0 !important; border-color: #e65100 !important; color: #bf360c !important; }
+    .period-mark { display: block; font-size: 16px; margin-top: 2px; }
     .period-interval { font-size: 11px; font-weight: 400; display: block; margin-top: 3px; opacity: .85; }
 
     /* === Q2 MCQ buttons === */
@@ -154,10 +169,10 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px;
     }
     .opt-text { flex: 1; }
-    .option-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; }
-    .option-btn.correct .opt-key { background: #2e7d32; color: #fff; }
-    .option-btn.wrong { background: #ffebee !important; border-color: #c62828 !important; }
-    .option-btn.wrong .opt-key { background: #c62828; color: #fff; }
+    .option-btn.correct { background: #e3f2fd !important; border-color: #1565c0 !important; }
+    .option-btn.correct .opt-key { background: #1565c0; color: #fff; }
+    .option-btn.wrong { background: #fff3e0 !important; border-color: #e65100 !important; }
+    .option-btn.wrong .opt-key { background: #e65100; color: #fff; }
 
     /* Plain list (teacher mode) */
     .options-list { margin-top: 6px; padding-left: 18px; }
@@ -188,8 +203,8 @@
       margin-top: 14px; padding: 14px 16px; border-radius: 10px;
       font-size: 17px; font-weight: bold;
     }
-    .pts-pos  { background: #e8f5e9; border: 2px solid #2e7d32; color: #1b5e20; }
-    .pts-zero { background: #ffebee; border: 2px solid #c62828; color: #b71c1c; }
+    .pts-pos  { background: #e3f2fd; border: 2px solid #1565c0; color: #0d47a1; }
+    .pts-zero { background: #fff3e0; border: 2px solid #e65100; color: #bf360c; }
 
     /* Phase action button */
     .phase-btn {
@@ -306,7 +321,7 @@
       <div class="timer-track">
         <div class="timer-fill" id="timerFill" style="width:100%"></div>
       </div>
-      <div id="timerNum"></div>
+      <div id="timerClock"><div id="timerNum"></div></div>
     </div>
 
     <div id="content"><h2>Laddar…</h2></div>
@@ -661,11 +676,12 @@ function q1PeriodRevealed(q1) {
   const grid = '<div class="period-grid">' +
     FANEROZOIKUM_PERIODER.map(p => {
       let cls = '';
-      if (p === correct) cls = 'correct';
-      else if (selectedQ1 && p === selectedQ1) cls = 'wrong';
+      let mark = '';
+      if (p === correct) { cls = 'correct'; mark = '<span class="period-mark">✓ Rätt</span>'; }
+      else if (selectedQ1 && p === selectedQ1) { cls = 'wrong'; mark = '<span class="period-mark">✗ Fel</span>'; }
       const interval = (p === correct && q1.interval)
         ? `<span class="period-interval">${esc(q1.interval)}</span>` : '';
-      return `<div class="period-btn ${cls}" style="pointer-events:none">${esc(p)}${interval}</div>`;
+      return `<div class="period-btn ${cls}" style="pointer-events:none">${esc(p)}${interval}${mark}</div>`;
     }).join('') +
   '</div>';
   const extra = q1.extra
@@ -718,10 +734,11 @@ function blockQ2(mode) {
     opts = '<div class="options-grid">' +
       ['A','B','C'].map(opt => {
         let cls = '';
-        if (opt === q2.correct) cls = 'correct';
-        else if (selectedQ2 && opt === selectedQ2) cls = 'wrong';
+        let keyLabel = opt;
+        if (opt === q2.correct) { cls = 'correct'; keyLabel = '✓'; }
+        else if (selectedQ2 && opt === selectedQ2) { cls = 'wrong'; keyLabel = '✗'; }
         return `<div class="option-btn ${cls}" style="pointer-events:none">
-          <span class="opt-key">${opt}</span>
+          <span class="opt-key">${keyLabel}</span>
           <span class="opt-text">${esc(q2.options?.[opt] || '')}</span>
         </div>`;
       }).join('') + '</div>';
