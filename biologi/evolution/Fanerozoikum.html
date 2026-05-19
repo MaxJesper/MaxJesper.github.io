@@ -651,7 +651,7 @@ function reloadDeck()  { clearTimer(); deck.sort((a,b) => (a.id||0)-(b.id||0)); 
 function q1PeriodButtons() {
   return '<div class="period-grid">' +
     FANEROZOIKUM_PERIODER.map(p =>
-      `<button class="period-btn" onclick="selectAnswer(1,${JSON.stringify(p)})">${esc(p)}</button>`
+      `<button class="period-btn" onclick="selectAnswer(1,'${esc(p)}')">${esc(p)}</button>`
     ).join('') +
   '</div>';
 }
