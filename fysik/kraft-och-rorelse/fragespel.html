@@ -97,12 +97,16 @@
     #timerWrap { display: none; margin-bottom: 14px; }
     .timer-track { height: 14px; background: #e0e0e0; border-radius: 7px; overflow: hidden; margin-bottom: 8px; }
     .timer-fill { height: 100%; background: #1565c0; border-radius: 7px; transition: width 0.9s linear; }
-    .timer-fill.urgent { background: #c62828; }
+    .timer-fill.urgent { background: #e65100; }
+    #timerClock { display: flex; justify-content: center; margin-bottom: 4px; }
     #timerNum {
-      font-size: 60px; font-weight: 900; color: #1565c0; text-align: center;
-      line-height: 1; transition: color 0.3s; letter-spacing: -2px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 72px; font-weight: 900; color: #e8f5ff;
+      background: #1a2a3a; border-radius: 12px; padding: 6px 28px;
+      border: 3px solid #1565c0; letter-spacing: 4px; min-width: 160px; text-align: center;
     }
-    #timerNum.urgent { color: #c62828; }
+    #timerNum.urgent { border-color: #e65100; animation: timerBlink 0.6s step-end infinite; }
+    @keyframes timerBlink { 50% { opacity: 0.45; } }
 
     /* === Progressionsbar === */
     .progression { max-width: 980px; margin: 8px auto 0; padding: 0 12px; }
@@ -161,10 +165,13 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px;
     }
     .opt-text { flex: 1; }
-    .option-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; }
-    .option-btn.correct .opt-key { background: #2e7d32; color: #fff; }
-    .option-btn.wrong { background: #ffebee !important; border-color: #c62828 !important; }
-    .option-btn.wrong .opt-key { background: #c62828; color: #fff; }
+    .option-btn.correct { background: #e3f2fd !important; border-color: #1565c0 !important; }
+    .option-btn.correct .opt-key { background: #1565c0; color: #fff; }
+    .option-btn.wrong { background: #fff3e0 !important; border-color: #e65100 !important; }
+    .option-btn.wrong .opt-key { background: #e65100; color: #fff; }
+    .opt-mark { font-size: 13px; font-weight: 700; white-space: nowrap; }
+    .option-btn.correct .opt-mark { color: #0d47a1; }
+    .option-btn.wrong   .opt-mark { color: #bf360c; }
 
     /* Answer explanation */
     .answerBox {
@@ -190,8 +197,8 @@
       margin-top: 14px; padding: 14px 16px; border-radius: 10px;
       font-size: 17px; font-weight: bold;
     }
-    .pts-pos  { background: #e8f5e9; border: 2px solid #2e7d32; color: #1b5e20; }
-    .pts-zero { background: #ffebee; border: 2px solid #c62828; color: #b71c1c; }
+    .pts-pos  { background: #e3f2fd; border: 2px solid #1565c0; color: #0d47a1; }
+    .pts-zero { background: #fff3e0; border: 2px solid #e65100; color: #bf360c; }
 
     /* Phase action button */
     .phase-btn {
@@ -214,6 +221,21 @@
       box-shadow: 0 2px 4px rgba(0,0,0,.08); background: #fff; font-size: 15px;
     }
     .controls button:hover { background: #f3f3f3; }
+
+    /* Säkra-straff countdown */
+    .sakra-wait-box {
+      margin-top: 16px; padding: 20px; border-radius: 14px;
+      background: #1a2a3a; color: #e8f5ff; text-align: center; border: 3px solid #1565c0;
+    }
+    .sakra-wait-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .sakra-wait-sub   { font-size: 14px; opacity: .8; margin-bottom: 12px; }
+    .sakra-wait-num {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 80px; font-weight: 900; color: #e8f5ff; letter-spacing: 4px;
+    }
+    .sakra-wait-num.urgent { color: #ff8a65; animation: timerBlink 0.6s step-end infinite; }
+    .sakra-wait-track { height: 10px; background: rgba(255,255,255,.15); border-radius: 5px; overflow: hidden; margin-top: 12px; }
+    .sakra-wait-fill  { height: 100%; background: #42a5f5; border-radius: 5px; transition: width 0.9s linear; }
 
     /* Overlays */
     .overlay {
@@ -244,8 +266,8 @@
 <!-- Info -->
 <div class="info-banner">
   ⚡ <strong>Frågespel – kraft, rörelse och tryck.</strong>
-  Varje grupp spelar på sin dator. Svara i tid → välj <strong>Säkra</strong> (1p) eller <strong>Chansa</strong> (2p om båda rätt).
-  Läraren stänger av timern och visar korten på projektorn. Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
+  Varje grupp spelar på sin dator. Svara fråga 1 i tid → <strong>Chansa</strong> (2p om båda rätt, annars 0p) eller <strong>Säkra</strong> (1p men väntestraff).
+  Fråga 2 kan ge 1p tröstpoäng även om fråga 1 var fel. Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
 </div>
 
 <!-- Timer settings -->
@@ -261,6 +283,10 @@
     <label>
       🏆 Vinst vid
       <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()" disabled> poäng
+    </label>
+    <label>
+      🔒 Säkra-straff
+      <input type="number" id="sakraDelayInput" value="30" min="0" max="300" onchange="onSakraDelayChange()" disabled> sek
     </label>
     <button class="btn-lock" id="lockBtn" onclick="showPasswordModal()">🔒 Ändra inställningar</button>
     <span id="timerModeHint"></span>
@@ -311,13 +337,13 @@
       <div class="timer-track">
         <div class="timer-fill" id="timerFill" style="width:100%"></div>
       </div>
-      <div id="timerNum"></div>
+      <div id="timerClock"><div id="timerNum"></div></div>
     </div>
 
     <div id="content"><h2>Laddar…</h2></div>
     <div id="decisionArea"></div>
 
-    <div class="controls">
+    <div class="controls" id="cardControls">
       <button onclick="prevCard()">⬅️ Föregående</button>
       <button onclick="restartCard()">↩️ Starta om kort</button>
       <button onclick="nextCard()">➡️ Nästa kort</button>
@@ -342,7 +368,7 @@
 <script>
 /* =====================================================
    State
-   Phases: intro | q1 | q1done | q2wait | q2 | q2done
+   Phases: intro | q1 | q1done | q2 | q2done | sakrawait
    ===================================================== */
 const SUBJECT_CLS = { "Rörelse":"rorelse", "Kraft":"kraft", "Tryck":"tryck" };
 const SCORE_KEY    = 'fragespel_krt_score_v3';
@@ -363,6 +389,8 @@ let victoryShown = false;
 
 let timerEnabled = true;
 let timerInterval = null, timerLeft = 0, timerTotal = 20;
+let sakraDelay = 30;
+let sakraWaitInterval = null, sakraWaitLeft = 0;
 
 /* =====================================================
    Helpers
@@ -421,7 +449,7 @@ function onWinScoreChange() {
 }
 function saveSettings() {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-    timerEnabled, timerSec: document.getElementById('timerSec').value, winScore
+    timerEnabled, timerSec: document.getElementById('timerSec').value, winScore, sakraDelay
   }));
 }
 function loadSettings() {
@@ -434,11 +462,19 @@ function loadSettings() {
       document.getElementById('winScoreInput').value = winScore;
       const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
     }
+    if (s.sakraDelay !== undefined) {
+      sakraDelay = s.sakraDelay;
+      const sd = document.getElementById('sakraDelayInput'); if (sd) sd.value = sakraDelay;
+    }
   } catch(e) {}
   const cb = document.getElementById('timerCheck');
   if (cb) cb.checked = timerEnabled;
   document.getElementById('timerSecLabel').style.display = timerEnabled ? '' : 'none';
   document.getElementById('timerModeHint').textContent = timerEnabled ? '' : '📽 Lärare/projektorläge – ingen timer';
+}
+function onSakraDelayChange() {
+  sakraDelay = Math.max(0, parseInt(document.getElementById('sakraDelayInput').value)||30);
+  saveSettings();
 }
 
 /* === Password / settings lock === */
@@ -464,7 +500,7 @@ function checkPassword() {
   }
 }
 function setSettingsInputsDisabled(disabled) {
-  ['timerCheck', 'timerSec', 'winScoreInput'].forEach(id => {
+  ['timerCheck', 'timerSec', 'winScoreInput', 'sakraDelayInput'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.disabled = disabled;
   });
@@ -537,13 +573,29 @@ function playBuzzer() {
 function playVictory() {
   try {
     const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    [[0,261,.5],[.18,329,.5],[.36,392,.5],[.54,523,.7],[.76,523,.45],[.94,659,.65]].forEach(([t,freq,vol]) => {
-      const osc=ctx.createOscillator(), gain=ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.type='triangle'; osc.frequency.value=freq;
-      gain.gain.setValueAtTime(vol, ctx.currentTime+t);
-      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime+t+.42);
-      osc.start(ctx.currentTime+t); osc.stop(ctx.currentTime+t+.46);
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -6; comp.knee.value = 3; comp.ratio.value = 4;
+    comp.attack.value = 0.003; comp.release.value = 0.1;
+    comp.connect(ctx.destination);
+    const master = ctx.createGain();
+    master.gain.value = 1.0;
+    master.connect(comp);
+    const fanfare = [
+      [0.00,392,0.10,1.0],[0.13,392,0.10,1.0],[0.26,523,0.10,1.0],
+      [0.40,659,0.14,1.0],[0.57,784,0.17,1.0],
+      [0.77,784,0.55,1.0],[0.77,523,0.55,0.55],[0.77,392,0.55,0.35],
+      [1.36,659,0.12,0.9],[1.51,698,0.12,0.9],
+      [1.67,784,0.80,1.0],[1.67,659,0.80,0.7],[1.67,523,0.80,0.55],[1.67,392,0.80,0.4],
+    ];
+    fanfare.forEach(([t,freq,dur,vol]) => {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.connect(gain); gain.connect(master);
+      osc.type = 'sawtooth'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.001, ctx.currentTime+t);
+      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime+t+0.018);
+      gain.gain.setValueAtTime(vol*0.85, ctx.currentTime+t+dur*0.65);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+t+dur);
+      osc.start(ctx.currentTime+t); osc.stop(ctx.currentTime+t+dur+0.05);
     });
   } catch(e) {}
 }
@@ -577,7 +629,9 @@ function calcPoints() {
   const q1ok = selectedQ1 === card.q1.correct;
   const q2ok = selectedQ2 === card.q2.correct;
   if (chosing === 'sakra') return q1ok ? 1 : 0;
-  return (q1ok && q2ok) ? 2 : 0; // chansa: båda rätt = 2p, annars 0p
+  // chansa: båda rätt = 2p, q1 rätt + q2 fel = 0p, q1 fel + q2 rätt = 1p tröst
+  if (q1ok) return q2ok ? 2 : 0;
+  return q2ok ? 1 : 0;
 }
 
 function selectAnswer(qNum, opt) {
@@ -598,13 +652,47 @@ function doSakra() {
   chosing = 'sakra';
   const pts = calcPoints();
   addScore(pts);
-  nextCard();
+  if (timerEnabled && sakraDelay > 0) {
+    phase = 'sakrawait';
+    startSakraWait();
+    render();
+  } else {
+    nextCard();
+  }
 }
 
 function doChansa() {
   chosing = 'chansa';
-  phase = 'q2wait';
+  phase = 'q2';
+  if (timerEnabled) startTimer();
   render();
+}
+
+/* === Säkra-straff countdown === */
+function clearSakraWait() {
+  if (sakraWaitInterval) { clearInterval(sakraWaitInterval); sakraWaitInterval = null; }
+}
+function startSakraWait() {
+  clearSakraWait();
+  sakraWaitLeft = sakraDelay;
+  updateSakraWaitDisplay();
+  sakraWaitInterval = setInterval(() => {
+    sakraWaitLeft--;
+    updateSakraWaitDisplay();
+    if (sakraWaitLeft <= 0) { clearSakraWait(); nextCard(); }
+  }, 1000);
+}
+function updateSakraWaitDisplay() {
+  const numEl  = document.getElementById('sakraWaitNum');
+  const fillEl = document.getElementById('sakraWaitFill');
+  if (numEl) {
+    numEl.textContent = sakraWaitLeft > 0 ? sakraWaitLeft : '';
+    numEl.classList.toggle('urgent', sakraWaitLeft <= 5 && sakraWaitLeft > 0);
+  }
+  if (fillEl) {
+    const pct = sakraDelay > 0 ? Math.max(0, sakraWaitLeft / sakraDelay * 100) : 0;
+    fillEl.style.width = pct + '%';
+  }
 }
 
 // "Fortsätt / Nästa steg / Visa svar" – universal forward button
@@ -615,10 +703,7 @@ function goNextPhase() {
   } else if (phase === 'q1' && !timerEnabled) {
     selectedQ1 = null; phase = 'q1done';
   } else if (phase === 'q1done' && !timerEnabled) {
-    chosing = 'chansa'; phase = 'q2wait';
-  } else if (phase === 'q2wait') {
-    phase = 'q2';
-    if (timerEnabled) startTimer();
+    chosing = 'chansa'; phase = 'q2';
   } else if (phase === 'q2' && !timerEnabled) {
     selectedQ2 = null; phase = 'q2done';
   } else if (phase === 'q2done') {
@@ -630,11 +715,11 @@ function goNextPhase() {
 function resetCardState() {
   phase = 'intro'; selectedQ1 = null; selectedQ2 = null; chosing = null; lastPts = 0;
 }
-function restartCard()  { clearTimer(); resetCardState(); render(); }
-function nextCard()     { clearTimer(); cardIdx=(cardIdx+1)%deck.length; resetCardState(); render(); }
-function prevCard()     { clearTimer(); cardIdx=(cardIdx-1+deck.length)%deck.length; resetCardState(); render(); }
-function shuffleDeck()  { clearTimer(); shuffle(deck); cardIdx=0; resetCardState(); render(); }
-function reloadDeck()   { clearTimer(); deck.sort((a,b)=>(a.id||0)-(b.id||0)); cardIdx=0; resetCardState(); render(); }
+function restartCard()  { clearTimer(); clearSakraWait(); resetCardState(); render(); }
+function nextCard()     { clearTimer(); clearSakraWait(); cardIdx=(cardIdx+1)%deck.length; resetCardState(); render(); }
+function prevCard()     { clearTimer(); clearSakraWait(); cardIdx=(cardIdx-1+deck.length)%deck.length; resetCardState(); render(); }
+function shuffleDeck()  { clearTimer(); clearSakraWait(); shuffle(deck); cardIdx=0; resetCardState(); render(); }
+function reloadDeck()   { clearTimer(); clearSakraWait(); deck.sort((a,b)=>(a.id||0)-(b.id||0)); cardIdx=0; resetCardState(); render(); }
 
 /* =====================================================
    Render helpers
@@ -654,12 +739,18 @@ function optionsRevealed(q, selected) {
   const correct = q?.correct;
   return `<div class="options-grid">` +
     ['A','B','C'].map(opt => {
-      let cls = '';
-      if (opt === correct) cls = 'correct';
-      else if (selected && opt === selected) cls = 'wrong';
+      let cls = '', keyLabel = opt, mark = '';
+      if (opt === correct) {
+        cls = 'correct'; keyLabel = '✓';
+        mark = '<span class="opt-mark">Rätt</span>';
+      } else if (selected && opt === selected) {
+        cls = 'wrong'; keyLabel = '✗';
+        mark = '<span class="opt-mark">Fel</span>';
+      }
       return `<div class="option-btn ${cls}" style="pointer-events:none">
-        <span class="opt-key">${opt}</span>
+        <span class="opt-key">${keyLabel}</span>
         <span class="opt-text">${esc(q?.options?.[opt]||'')}</span>
+        ${mark}
       </div>`;
     }).join('') + `</div>`;
 }
@@ -729,11 +820,18 @@ function render() {
       showTimerWrap(false);
       if (timerEnabled && selectedQ1 !== null) {
         const q1ok = selectedQ1 === card.q1.correct;
-        decision = `<div class="decision-box">
-          <div class="decision-label">${q1ok ? '✅ Rätt svar!' : '❌ Fel svar.'} Välj:</div>
-          <button class="btn-sakra" onclick="doSakra()">🔒 Säkra – ${q1ok?'1 poäng':'0 poäng'}</button>
-          <button class="btn-chansa" onclick="doChansa()">🎲 Chansa! Fråga 2 →</button>
-        </div>`;
+        if (q1ok) {
+          decision = `<div class="decision-box">
+            <div class="decision-label">✅ Rätt svar! Välj:</div>
+            <button class="btn-sakra" onclick="doSakra()">🔒 Säkra – 1 poäng (men ${sakraDelay}s väntestraff)</button>
+            <button class="btn-chansa" onclick="doChansa()">🎲 Chansa – 2p om fråga 2 också rätt, annars 0p</button>
+          </div>`;
+        } else {
+          decision = `<div class="decision-box">
+            <div class="decision-label">❌ Fel svar. Fråga 2 kan ändå ge 1p:</div>
+            <button class="btn-chansa" onclick="doChansa()">📖 Försök med fråga 2 →</button>
+          </div>`;
+        }
       } else {
         // teacher mode
         html += `<button class="phase-btn" onclick="goNextPhase()">Nästa fråga ▶</button>`;
@@ -741,16 +839,18 @@ function render() {
       break;
     }
 
-    case 'q2wait':
-      html += blockQ(1, card.q1, selectedQ1 ? 'revealed' : 'plain');
-      if (timerEnabled) {
-        html += `<div class="wait-notice">⏸ Vänta på läraren innan ni trycker Fortsätt – fråga 2 visas då och timern startar.</div>`;
-        html += `<button class="phase-btn" onclick="goNextPhase()">Fortsätt ▶ (visar fråga 2 + startar timer)</button>`;
-      } else {
-        html += `<button class="phase-btn" onclick="goNextPhase()">Visa fråga 2 ▶</button>`;
-      }
+    case 'sakrawait': {
       showTimerWrap(false);
+      html += `<div class="sakra-wait-box">
+        <div class="sakra-wait-title">🔒 Säkra valt – +${lastPts} poäng</div>
+        <div class="sakra-wait-sub">Nästa kort om ${sakraDelay} sekunder. Andra grupper spelar vidare!</div>
+        <div class="sakra-wait-num" id="sakraWaitNum">${sakraWaitLeft}</div>
+        <div class="sakra-wait-track">
+          <div class="sakra-wait-fill" id="sakraWaitFill" style="width:100%"></div>
+        </div>
+      </div>`;
       break;
+    }
 
     case 'q2':
       if (timerEnabled) {
@@ -781,6 +881,18 @@ function render() {
 
   document.getElementById('content').innerHTML = html;
   document.getElementById('decisionArea').innerHTML = decision;
+
+  // Hide controls during säkra-straff so users can't skip it
+  const ctrl = document.getElementById('cardControls');
+  if (ctrl) ctrl.style.display = phase === 'sakrawait' ? 'none' : '';
+
+  // Auto-scroll to result after q2
+  if (phase === 'q2done') {
+    setTimeout(() => {
+      const target = document.querySelector('.result-box') || document.querySelector('#content .phase-btn');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  }
 }
 
 /* =====================================================
