@@ -356,7 +356,7 @@
     <div id="content"><h2>Laddar…</h2></div>
     <div id="decisionArea"></div>
 
-    <div class="controls">
+    <div class="controls" id="cardControls">
       <button onclick="prevCard()">⬅️ Föregående</button>
       <button onclick="restartCard()">↩️ Starta om kort</button>
       <button onclick="nextCard()">➡️ Nästa kort</button>
@@ -1018,6 +1018,7 @@ function render() {
 
   document.getElementById('content').innerHTML = html;
   document.getElementById('decisionArea').innerHTML = decision;
+  document.getElementById('cardControls').style.display = phase === 'sakrawait' ? 'none' : '';
 }
 
 /* =====================================================
