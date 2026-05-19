@@ -248,6 +248,30 @@
     #victoryOverlay { background: rgba(0,77,64,.93);   color: #fff; font-size: clamp(2.2rem,9vw,5.5rem); font-weight: 900; }
     .overlay-sub { font-size: 38%; font-weight: 400; opacity: .9; margin-top: 4px; }
 
+    /* === Säkra wait screen === */
+    .sakra-wait-box {
+      margin-top: 16px; padding: 20px; border-radius: 14px;
+      background: #1a2a3a; color: #e8f5ff; text-align: center;
+      border: 3px solid #00796b;
+    }
+    .sakra-wait-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .sakra-wait-sub   { font-size: 14px; opacity: .75; margin-bottom: 14px; }
+    .sakra-wait-num   {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 80px; font-weight: 900; line-height: 1;
+      color: #e8f5ff; letter-spacing: 4px;
+    }
+    .sakra-wait-num.urgent { color: #ff8a65; animation: timerBlink 0.6s step-end infinite; }
+    .sakra-wait-track {
+      height: 12px; background: rgba(255,255,255,.15); border-radius: 6px;
+      overflow: hidden; margin-top: 14px;
+    }
+    .sakra-wait-fill {
+      height: 100%; background: #00796b; border-radius: 6px;
+      transition: width 0.9s linear;
+    }
+    .sakra-wait-fill.urgent { background: #e65100; }
+
     /* Inline concept emphasis (used in JSON extras) */
     .concept { font-weight: 700; font-style: italic; }
   </style>
@@ -269,8 +293,9 @@
 <!-- Info -->
 <div class="info-banner">
   🌍 <strong>När då då? – Fanerozoikum.</strong>
-  Varje grupp spelar på sin dator. Välj rätt geologisk period på fråga 1, sedan
-  <strong>Säkra</strong> (1p) eller <strong>Chansa</strong> (2p om båda rätt, annars 0p).
+  Varje grupp spelar på sin dator. Välj rätt period på fråga 1, sedan
+  <strong>Chansa</strong> (direkt till fråga 2, 2p om båda rätt) eller
+  <strong>Säkra</strong> (1p men <span id="sakraDelayBanner">30</span> sek väntetid).
   Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
 </div>
 
@@ -287,6 +312,10 @@
     <label>
       🏆 Vinst vid
       <input type="number" id="winScoreInput" value="10" min="1" max="99" onchange="onWinScoreChange()" disabled> poäng
+    </label>
+    <label>
+      🔒 Säkra-straff
+      <input type="number" id="sakraDelayInput" value="30" min="0" max="180" onchange="onSakraDelayChange()" disabled> sek
     </label>
     <button class="btn-lock" id="lockBtn" onclick="showPasswordModal()">🔒 Ändra inställningar</button>
     <span id="timerModeHint"></span>
@@ -396,6 +425,9 @@ let victoryShown = false;
 let timerEnabled = true;
 let timerInterval = null, timerLeft = 0, timerTotal = 20;
 
+let sakraDelay = 30;
+let sakraWaitInterval = null, sakraWaitLeft = 0;
+
 /* =====================================================
    Helpers
    ===================================================== */
@@ -452,11 +484,17 @@ function onWinScoreChange() {
   const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
   saveSettings();
 }
+function onSakraDelayChange() {
+  sakraDelay = Math.max(0, parseInt(document.getElementById('sakraDelayInput').value) || 0);
+  const b = document.getElementById('sakraDelayBanner'); if (b) b.textContent = sakraDelay;
+  saveSettings();
+}
 function saveSettings() {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify({
     timerEnabled,
     timerSec: document.getElementById('timerSec').value,
-    winScore
+    winScore,
+    sakraDelay
   }));
 }
 function loadSettings() {
@@ -468,6 +506,11 @@ function loadSettings() {
       winScore = s.winScore;
       document.getElementById('winScoreInput').value = winScore;
       const b = document.getElementById('winScoreBanner'); if (b) b.textContent = winScore;
+    }
+    if (s.sakraDelay !== undefined) {
+      sakraDelay = s.sakraDelay;
+      document.getElementById('sakraDelayInput').value = sakraDelay;
+      const b = document.getElementById('sakraDelayBanner'); if (b) b.textContent = sakraDelay;
     }
   } catch(e) {}
   const cb = document.getElementById('timerCheck');
@@ -500,7 +543,7 @@ function checkPassword() {
   }
 }
 function setSettingsInputsDisabled(disabled) {
-  ['timerCheck', 'timerSec', 'winScoreInput'].forEach(id => {
+  ['timerCheck', 'timerSec', 'winScoreInput', 'sakraDelayInput'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.disabled = disabled;
   });
@@ -683,7 +726,39 @@ function doSakra() {
   chosing = 'sakra';
   const pts = calcPoints();
   addScore(pts);
-  nextCard();
+  if (timerEnabled && sakraDelay > 0) {
+    phase = 'sakrawait';
+    startSakraWait();
+    render();
+  } else {
+    nextCard();
+  }
+}
+
+function startSakraWait() {
+  clearSakraWait();
+  sakraWaitLeft = sakraDelay;
+  sakraWaitInterval = setInterval(() => {
+    sakraWaitLeft--;
+    updateSakraWaitDisplay();
+    if (sakraWaitLeft <= 0) { clearSakraWait(); nextCard(); }
+  }, 1000);
+}
+function clearSakraWait() {
+  if (sakraWaitInterval) { clearInterval(sakraWaitInterval); sakraWaitInterval = null; }
+}
+function updateSakraWaitDisplay() {
+  const num  = document.getElementById('sakraWaitNum');
+  const fill = document.getElementById('sakraWaitFill');
+  if (num) {
+    num.textContent = sakraWaitLeft;
+    num.classList.toggle('urgent', sakraWaitLeft <= 5 && sakraWaitLeft > 0);
+  }
+  if (fill) {
+    const pct = sakraDelay > 0 ? Math.max(0, sakraWaitLeft / sakraDelay * 100) : 0;
+    fill.style.width = pct + '%';
+    fill.classList.toggle('urgent', sakraWaitLeft <= 5 && sakraWaitLeft > 0);
+  }
 }
 
 function doChansa() {
@@ -712,11 +787,11 @@ function goNextPhase() {
 function resetCardState() {
   phase = 'intro'; selectedQ1 = null; selectedQ2 = null; chosing = null; lastPts = 0;
 }
-function restartCard() { clearTimer(); resetCardState(); render(); }
-function nextCard()    { clearTimer(); cardIdx = (cardIdx + 1) % deck.length; resetCardState(); render(); }
-function prevCard()    { clearTimer(); cardIdx = (cardIdx - 1 + deck.length) % deck.length; resetCardState(); render(); }
-function shuffleDeck() { clearTimer(); shuffle(deck); cardIdx = 0; resetCardState(); render(); }
-function reloadDeck()  { clearTimer(); deck.sort((a,b) => (a.id||0)-(b.id||0)); cardIdx = 0; resetCardState(); render(); }
+function restartCard() { clearTimer(); clearSakraWait(); resetCardState(); render(); }
+function nextCard()    { clearTimer(); clearSakraWait(); cardIdx = (cardIdx + 1) % deck.length; resetCardState(); render(); }
+function prevCard()    { clearTimer(); clearSakraWait(); cardIdx = (cardIdx - 1 + deck.length) % deck.length; resetCardState(); render(); }
+function shuffleDeck() { clearTimer(); clearSakraWait(); shuffle(deck); cardIdx = 0; resetCardState(); render(); }
+function reloadDeck()  { clearTimer(); clearSakraWait(); deck.sort((a,b) => (a.id||0)-(b.id||0)); cardIdx = 0; resetCardState(); render(); }
 
 /* =====================================================
    Render – Q1 (period question)
@@ -896,6 +971,20 @@ function render() {
       } else {
         html += `<button class="phase-btn" onclick="goNextPhase()">Nästa fråga ▶</button>`;
       }
+      break;
+    }
+
+    case 'sakrawait': {
+      showTimerWrap(false);
+      const q1ok = selectedQ1 === card.q1.correct;
+      html += `<div class="sakra-wait-box">
+        <div class="sakra-wait-title">🔒 Säkra valt – +${lastPts} poäng</div>
+        <div class="sakra-wait-sub">Nästa kort om ${sakraDelay} sekunder. Andra grupper spelar vidare!</div>
+        <div class="sakra-wait-num" id="sakraWaitNum">${sakraWaitLeft}</div>
+        <div class="sakra-wait-track">
+          <div class="sakra-wait-fill" id="sakraWaitFill" style="width:100%"></div>
+        </div>
+      </div>`;
       break;
     }
 
