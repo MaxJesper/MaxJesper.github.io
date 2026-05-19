@@ -556,17 +556,34 @@ function showTimerWrap(show) {
 
 /* =====================================================
    Sounds – ett delat AudioContext för iOS-kompatibilitet
+   iOS stänger av AudioContext automatiskt när skärmen ej rörs.
+   Lösning: starta en tyst oändlig loop som håller kontexten vid liv.
    ===================================================== */
 let _audioCtx = null;
+let _keepAlive = null;
+
 function getAudio() {
   if (!_audioCtx) _audioCtx = new (window.AudioContext||window.webkitAudioContext)();
   if (_audioCtx.state === 'suspended') _audioCtx.resume();
   return _audioCtx;
 }
-// Väck AudioContext vid första touch (krävs på iOS)
-document.addEventListener('touchstart', function wakeAudio() {
+
+function startAudioKeepAlive() {
+  const ctx = getAudio();
+  if (_keepAlive) return;
+  // En tyst 1-sampel buffer som loopar – håller iOS AudioContext vid liv
+  const buf = ctx.createBuffer(1, 1, ctx.sampleRate);
+  _keepAlive = ctx.createBufferSource();
+  _keepAlive.buffer = buf;
+  _keepAlive.loop = true;
+  _keepAlive.connect(ctx.destination);
+  _keepAlive.start(0);
+}
+
+// Väck + håll vid liv vid varje touch (iOS somnar annars)
+document.addEventListener('touchstart', () => {
   getAudio();
-  document.removeEventListener('touchstart', wakeAudio);
+  startAudioKeepAlive();
 }, { passive: true });
 
 function playBuzzer() {
