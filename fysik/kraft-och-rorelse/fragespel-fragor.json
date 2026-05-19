@@ -11,7 +11,7 @@
       "explanation": "Likformig rörelse = konstant hastighet i rät linje. Varken snabbare, långsammare eller kurvigt."
     },
     "q2": {
-      "question": "Rullskridskoåkaren glider i 15 km/h i 4 timmar. Hur lång sträcka tillryggalägger han?",
+      "question": "Rullskridskoåkaren glider i 15 km/h i 4 timmar. Hur lång sträcka lägger han bakom sig?",
       "options": { "A": "30 km", "B": "45 km", "C": "60 km" },
       "correct": "C",
       "explanation": "Sträcka = hastighet × tid = 15 × 4 = 60 km."
@@ -86,7 +86,7 @@
       "question": "Varför sitter vi fastspända i bilbälte i en bil?",
       "options": {
         "A": "För att hålla oss varma",
-        "B": "För att hindra kroppen från att fortsätta framåt vid en krasch (tröghet)",
+        "B": "För att hindra kroppen från att fortsätta framåt vid en krasch – på grund av tröghet",
         "C": "För att öka friktionen mot sätet"
       },
       "correct": "B",
@@ -116,7 +116,7 @@
         "C": "Tyngre föremål faller egentligen snabbare, men det märks inte"
       },
       "correct": "B",
-      "explanation": "Gravitationens acceleration g ≈ 10 m/s² är lika för alla föremål. Tyngre föremål dras hårdare men har också mer tröghet – exakt så att accelerationen blir lika."
+      "explanation": "Gravitationens acceleration g är ca 10 m/s² för alla föremål. Tyngre föremål dras hårdare men har också mer tröghet – exakt så att accelerationen blir lika."
     }
   },
   {
@@ -135,10 +135,10 @@
       "options": {
         "A": "Stenen flyger utåt i en böjd bana",
         "B": "Stenen stannar på stället",
-        "C": "Stenen fortsätter rakt fram – tangentiellt – i den riktning den hade just då"
+        "C": "Stenen fortsätter rakt fram i den riktning den rörde sig just i det ögonblicket"
       },
       "correct": "C",
-      "explanation": "När centripetalkraften försvinner fortsätter stenen i rät linje på grund av tröghet (Newtons 1:a lag). Riktningen är tangenten till cirkeln."
+      "explanation": "När centripetalkraften försvinner fortsätter stenen i rät linje på grund av tröghet (Newtons 1:a lag). Riktningen är tangentiell – dvs. rakt ut från cirkeln, inte böjt."
     }
   },
   {
@@ -157,14 +157,14 @@
       "explanation": "Medelhastighet = total sträcka / total tid. Momentanhastighet är farten just nu – det fartkameran mäter."
     },
     "q2": {
-      "question": "Om bilen körde 90 km/h och bromsade jämnt till 54 km/h (15 m/s) under 5 sekunder – acceleration eller retardation?",
+      "question": "Bilen körde 90 km/h och bromsade jämnt till 54 km/h under 5 sekunder – acceleration eller retardation?",
       "options": {
         "A": "Acceleration – farten ökade",
         "B": "Likformig rörelse – farten var konstant",
         "C": "Retardation – farten minskade"
       },
       "correct": "C",
-      "explanation": "Farten minskar → retardation (negativ acceleration). 90 km/h → 54 km/h är en minskning."
+      "explanation": "Farten minskar – det är retardation (negativ acceleration). 90 km/h ned till 54 km/h är en minskning."
     }
   },
   {
@@ -205,14 +205,14 @@
       "explanation": "Massa (kg) är konstant – lika stor i rymden som på Jordens yta. Tyngd (N) = massa × g och varierar beroende på var du befinner dig."
     },
     "q2": {
-      "question": "Astronauten har massan 78 kg. Vad är hennes tyngd på Jorden (g = 10 N/kg) och på Månen (g ≈ 1,6 N/kg)?",
+      "question": "Astronauten har massan 78 kg. Vad är hennes tyngd på Jorden (g = 10 N/kg) och på Månen (g ca 1,6 N/kg)?",
       "options": {
         "A": "Jordens: 78 N, Månens: 12,5 N",
-        "B": "Jordens: 780 N, Månens: ≈125 N",
+        "B": "Jordens: 780 N, Månens: ca 125 N",
         "C": "Jordens: 780 N, Månens: 780 N"
       },
       "correct": "B",
-      "explanation": "F = m × g. Jordens: 78 × 10 = 780 N. Månens: 78 × 1,6 ≈ 125 N. Massan är 78 kg överallt."
+      "explanation": "F = m × g. Jordens: 78 × 10 = 780 N. Månens: 78 × 1,6 ca 125 N. Massan är 78 kg överallt."
     }
   },
   {
@@ -228,7 +228,7 @@
         "C": "Hans volym i liter"
       },
       "correct": "B",
-      "explanation": "Badrumsvågar är konstruerade för att visa massa i kg. Egentligen mäter de kraft (tyngden) men räknar om till kg med g ≈ 10 N/kg."
+      "explanation": "Badrumsvågar är konstruerade för att visa massa i kg. Egentligen mäter de kraft (tyngden) men räknar om till kg med g ca 10 N/kg."
     },
     "q2": {
       "question": "Hur stor är Jonas tyngd (F) på Jordens yta?",
@@ -294,7 +294,7 @@
         "C": "Friktionen ungefär fördubblas"
       },
       "correct": "C",
-      "explanation": "Friktionskraften beror på normalkraften (trycket mot underlaget). Tyngre kloss → starkare kontakttryck → större friktion."
+      "explanation": "Friktionskraften beror på normalkraften (trycket mot underlaget). Tyngre kloss ger starkare kontakttryck och därmed större friktion."
     },
     "q2": {
       "question": "Sofia vänder klossen på sidan – smalare yta mot bänken, men massan densamma. Vad händer med friktionen?",
@@ -304,7 +304,7 @@
         "C": "Friktionen förblir i princip lika stor"
       },
       "correct": "C",
-      "explanation": "Friktionskraften beror inte på kontaktytans storlek (vid konstant massa och underlag). Det är ytan och normalkraftens styrka som avgör – inte ytans area. Ett vanligt missförstånd!"
+      "explanation": "Friktionskraften beror inte på kontaktytans storlek vid konstant massa och underlag. Det är normalkraftens styrka som avgör – ett vanligt missförstånd!"
     }
   },
   {
@@ -316,7 +316,7 @@
       "question": "Vad är den sammanlagda kraften (resultanten) av de två lika stora, motriktade krafterna?",
       "options": { "A": "1 600 N", "B": "800 N", "C": "0 N" },
       "correct": "C",
-      "explanation": "Resultant = summan av krafter. Motriktade lika stora krafter tar ut varandra → resultant = 0 N → repet rör sig inte."
+      "explanation": "Resultant = summan av krafter. Motriktade lika stora krafter tar ut varandra, resultant = 0 N, repet rör sig inte."
     },
     "q2": {
       "question": "Lag A ökar till 900 N. Lag B drar fortfarande med 800 N. Vad är resultanten och åt vilket håll rör sig repet?",
@@ -326,7 +326,7 @@
         "C": "0 N – repet rör sig inte"
       },
       "correct": "A",
-      "explanation": "Resultant = 900 − 800 = 100 N i Lag A:s riktning. Repet börjar röra sig mot Lag A."
+      "explanation": "Resultant = 900 - 800 = 100 N i Lag A:s riktning. Repet börjar röra sig mot Lag A."
     }
   },
   {
@@ -344,7 +344,7 @@
       "question": "Hur stor är normalkraften som bordet utövar på boken (massan 2 kg)?",
       "options": { "A": "2 N", "B": "10 N", "C": "20 N" },
       "correct": "C",
-      "explanation": "Tyngdkraft = m × g = 2 × 10 = 20 N nedåt. Normalkraft = 20 N uppåt (jämvikt – resultant = 0)."
+      "explanation": "Tyngdkraft = m × g = 2 × 10 = 20 N nedåt. Normalkraft = 20 N uppåt (jämvikt, resultant = 0)."
     }
   },
   {
@@ -356,7 +356,7 @@
       "question": "Vilket samband visar varför tennisbollen accelererar mer än bowlingbollen?",
       "options": { "A": "F = m + a", "B": "F = m × a", "C": "F = m / a" },
       "correct": "B",
-      "explanation": "Newtons 2:a lag: F = m × a, omvandlad: a = F / m. Samma kraft men lägre massa (tennisboll) → större acceleration."
+      "explanation": "Newtons 2:a lag: F = m × a, omvandlad: a = F / m. Samma kraft men lägre massa (tennisboll) ger större acceleration."
     },
     "q2": {
       "question": "En kraft på 60 N verkar på en massa av 12 kg. Hur stor är accelerationen?",
@@ -369,7 +369,7 @@
     "id": 18,
     "subject": "Kraft",
     "topic": "Reaktionskraft",
-    "intro": "En uppblåst ballong utan knut far iväg blixtsnabbt. En astronaut i rymden kastar en skiftnyckel bakåt för att manövrera sig framåt.",
+    "intro": "En uppblåst ballong utan knut far iväg blixtsnabbt. En astronaut i rymden kastar en skiftnyckel bakåt för att ta sig framåt.",
     "q1": {
       "question": "Vilken av Newtons lagar förklarar varför ballongen och astronauten rör sig?",
       "options": {
@@ -378,13 +378,13 @@
         "C": "Newtons 3:e lag (kraft och motkraft)"
       },
       "correct": "C",
-      "explanation": "Varje kraft har en lika stor, motriktad motkraft. Luften pressas bakåt → ballongen rör sig framåt. Skiftnyckeln kastas bakåt → astronauten rör sig framåt."
+      "explanation": "Varje kraft har en lika stor, motriktad motkraft. Luften pressas bakåt, ballongen rör sig framåt. Skiftnyckeln kastas bakåt, astronauten rör sig framåt."
     },
     "q2": {
       "question": "En raket skjuter ut gas bakåt med 5 000 N kraft. Hur stor är reaktionskraften som driver raketen framåt?",
       "options": { "A": "2 500 N", "B": "5 000 N", "C": "10 000 N" },
       "correct": "B",
-      "explanation": "Kraft och motkraft är alltid lika stora (Newtons 3:e lag). Gasen trycks bakåt med 5 000 N → raketen skjuts framåt med 5 000 N."
+      "explanation": "Kraft och motkraft är alltid lika stora (Newtons 3:e lag). Gasen trycks bakåt med 5 000 N, raketen skjuts framåt med 5 000 N."
     }
   },
   {
@@ -400,13 +400,13 @@
         "C": "Det tyngre barnet ska alltid sitta längre från vridpunkten"
       },
       "correct": "B",
-      "explanation": "Hävstångslagen: F₁ × l₁ = F₂ × l₂. Vid jämvikt är vridmomenten (kraft × hävarm) lika stora på båda sidor."
+      "explanation": "Hävstångslagen: F1 × l1 = F2 × l2. Vid jämvikt är vridmomenten (kraft × hävarm) lika stora på båda sidor."
     },
     "q2": {
       "question": "Hur långt från vridpunkten ska Emma (250 N) sitta för att gungbrädan ska vara i jämvikt?",
       "options": { "A": "1 m", "B": "4 m", "C": "8 m" },
       "correct": "B",
-      "explanation": "Oscar: 500 × 2 = 1 000 Nm. Emma: 250 × avstånd = 1 000 → avstånd = 1 000 / 250 = 4 m."
+      "explanation": "Oscar: 500 × 2 = 1 000 Nm. Emma: 250 × avstånd = 1 000, avstånd = 1 000 / 250 = 4 m."
     }
   },
   {
@@ -428,7 +428,7 @@
       "question": "Mannen behöver 1 000 N för att lyfta lasten rakt upp 1 m. Med 4 m lång ramp – hur stor kraft behövs?",
       "options": { "A": "4 000 N", "B": "1 000 N", "C": "250 N" },
       "correct": "C",
-      "explanation": "Arbetet är detsamma: 1 000 × 1 = 1 000 J. Med 4 m ramp: F × 4 = 1 000 → F = 250 N. Fyra gånger kortare kraft men fyra gånger längre väg."
+      "explanation": "Arbetet är detsamma: 1 000 × 1 = 1 000 J. Med 4 m ramp: F × 4 = 1 000, F = 250 N. Fyra gånger kortare kraft men fyra gånger längre väg."
     }
   },
   {
@@ -457,7 +457,7 @@
     "id": 22,
     "subject": "Tryck",
     "topic": "Pascal – enheten",
-    "intro": "En meteorologibulletin rapporterar att lufttrycket är 1 013 hPa (hektopascal). Vad betyder egentligen pascal?",
+    "intro": "En väderrapport visar att lufttrycket är 1 013 hPa (hektopascal). Vad betyder egentligen pascal?",
     "q1": {
       "question": "Vad är SI-enheten för tryck och hur definieras den?",
       "options": {
@@ -484,7 +484,7 @@
       "question": "Om Viktor lyfter ett ben och enbart åker på en skridskas yta (18 cm²) – vad händer med trycket mot isen?",
       "options": { "A": "Trycket halveras", "B": "Trycket fördubblas", "C": "Trycket är oförändrat" },
       "correct": "B",
-      "explanation": "P = F / A. Samma kraft men halva arean → dubbelt tryck."
+      "explanation": "P = F / A. Samma kraft men halva arean ger dubbelt tryck."
     },
     "q2": {
       "question": "Håller isen när Viktor åker på båda skridskor (72 kg, 36 cm² kontaktyta, istålighet 20 N/cm²)?",
@@ -510,7 +510,7 @@
         "C": "Multiplicera vikt × area"
       },
       "correct": "B",
-      "explanation": "P = F (tyngden i N) / A (kontaktytan i cm²). Om P ≤ isens hållfasthet håller isen."
+      "explanation": "P = F (tyngden i N) / A (kontaktytan i cm²). Om P är lika med eller under isens hållfasthet håller isen."
     },
     "q2": {
       "question": "Håller isen för Mia (80 kg) om hon går med båda fötterna (total yta 400 cm²)?",
@@ -520,7 +520,7 @@
         "C": "Nej – isen tål bara 80 kg"
       },
       "correct": "B",
-      "explanation": "F = 80 × 10 = 800 N. P = 800 / 400 = 2 N/cm². Isen tål 10 N/cm² → isen håller med god marginal."
+      "explanation": "F = 80 × 10 = 800 N. P = 800 / 400 = 2 N/cm². Isen tål 10 N/cm², isen håller med god marginal."
     }
   },
   {
@@ -536,7 +536,7 @@
         "C": "Snön är hård och tål vilken tyngd som helst"
       },
       "correct": "B",
-      "explanation": "P = F / A. Stor area → litet tryck. Skidorna fungerar som 'tryckspreaders' – samma princip som en snösko."
+      "explanation": "P = F / A. Stor area ger litet tryck. Skidorna fungerar som 'tryckspreaders' – samma princip som en snösko."
     },
     "q2": {
       "question": "Hur stort är trycket skidåkaren utövar mot snön?",
@@ -558,17 +558,17 @@
         "C": "Trycket ökar med djupet"
       },
       "correct": "C",
-      "explanation": "Vätskors tryck ökar med djupet – det finns mer vätska ovanför som pressar nedåt. Ungefär 1 bar extra per 10 m djup."
+      "explanation": "Vätskors tryck ökar med djupet – det finns mer vätska ovanför som pressar nedåt. Ungefär 10 kPa extra per meters djup."
     },
     "q2": {
       "question": "Varför måste dykare använda lufttuber med komprimerad luft på stora djup – fungerar inte vanlig lungkraft?",
       "options": {
         "A": "Det är lagstyrt men egentligen onödigt",
-        "B": "Vattentrycket på djupet är för högt för lungornas muskler att expandera mot",
+        "B": "Vattentrycket på djupet är för högt för lungornas muskler att andas in mot",
         "C": "Luften i tuberna är surare och bättre för blodet"
       },
       "correct": "B",
-      "explanation": "På 10 m djup är vattentrycket dubbelt mot ytan. Lungornas muskler kan inte expandera mot det höga trycket utan komprimerad luft som matchar omgivningstrycket."
+      "explanation": "På 10 m djup är vattentrycket dubbelt mot ytan. Lungornas muskler kan inte vidga sig (andas in) mot det höga trycket utan trycksatt luft som matchar omgivningstrycket."
     }
   },
   {
@@ -584,7 +584,7 @@
         "C": "Trycket ökar med djupet"
       },
       "correct": "B",
-      "explanation": "Flytkraften = tyngden av undanträngt vatten. Om flytkraften ≥ föremålets tyngd → det flyter."
+      "explanation": "Flytkraften = tyngden av undanträngt vatten. Om flytkraften är lika stor som eller större än föremålets tyngd flyter det."
     },
     "q2": {
       "question": "Varför flyter ett stålskepp men inte en massiv stålbit av samma massa?",
@@ -594,7 +594,7 @@
         "C": "Skeppet har en motor som håller det uppe"
       },
       "correct": "B",
-      "explanation": "Skeppet är ihåligt och har stor volym. Volymen vatten som trängs undan väger lika mycket som skeppet → flytkraft = tyngd → skeppet flyter."
+      "explanation": "Skeppet är ihåligt och har stor volym. Volymen vatten som trängs undan väger lika mycket som skeppet, flytkraft = tyngd, skeppet flyter."
     }
   },
   {
@@ -617,6 +617,330 @@
       "options": { "A": "50 N", "B": "500 N", "C": "5 N" },
       "correct": "B",
       "explanation": "Trycket = 50 / 5 = 10 N/cm². Stora kolven: F = 10 × 50 = 500 N. Hydraulsystemet förstärker kraften 10 gånger (men kräver 10 gånger längre väg)."
+    }
+  },
+  {
+    "id": 29,
+    "subject": "Kraft",
+    "topic": "Gravitation",
+    "intro": "Julia tittar ut genom fönstret och ser ett löv falla till marken. Hon undrar varför allting faller nedåt och vad som egentligen håller Månen i sin bana runt Jorden.",
+    "q1": {
+      "question": "Vad menas med gravitation?",
+      "options": {
+        "A": "En grundläggande kraft som uppstår mellan alla föremål med massa och drar dem mot varandra",
+        "B": "En kraft som bara finns vid Jordens yta och påverkar fallande föremål",
+        "C": "Den kraft som uppstår när föremål är i rörelse"
+      },
+      "correct": "A",
+      "explanation": "Gravitation är en grundläggande naturkraft mellan alla föremål med massa. Jordens stora massa ger en stark gravitationskraft – det är den som håller Månen i bana och får löv att falla."
+    },
+    "q2": {
+      "question": "Vilka två faktorer avgör hur stark gravitationen är mellan två föremål?",
+      "options": {
+        "A": "Föremålens hastighet och temperatur",
+        "B": "Föremålens massor och avståndet dem emellan",
+        "C": "Föremålens form och yta"
+      },
+      "correct": "B",
+      "explanation": "Gravitationen är starkare ju större massor det handlar om (Solen är enorm, stark gravitation) och svagare ju längre bort föremålen befinner sig från varandra."
+    }
+  },
+  {
+    "id": 30,
+    "subject": "Kraft",
+    "topic": "Tre typer av jämvikt",
+    "intro": "En ingenjör studerar tre föremål: en bred lågmöbel, en smal hög stol och en boll på ett plant golv. Alla tre är i jämvikt – men på olika sätt.",
+    "q1": {
+      "question": "Vad kallas den jämvikt där ett föremål återgår till utgångsläget om det störs?",
+      "options": {
+        "A": "Labil jämvikt",
+        "B": "Indifferent jämvikt",
+        "C": "Stabil jämvikt"
+      },
+      "correct": "C",
+      "explanation": "Stabil jämvikt: föremålet återgår till ursprungsläget om det störs lite. Labil jämvikt: det välter om det störs. Indifferent jämvikt: det stannar i det nya läget."
+    },
+    "q2": {
+      "question": "En boll rullar lite på ett plant golv och stannar i ett nytt läge. Vilken typ av jämvikt är det?",
+      "options": {
+        "A": "Stabil jämvikt",
+        "B": "Labil jämvikt",
+        "C": "Indifferent jämvikt"
+      },
+      "correct": "C",
+      "explanation": "Indifferent jämvikt: föremålet är i jämvikt i vilket läge som helst. En boll eller cylinder på ett plant underlag är ett typexempel – den stannar i vilket nytt läge som helst."
+    }
+  },
+  {
+    "id": 31,
+    "subject": "Kraft",
+    "topic": "Vridmoment – beräkning",
+    "intro": "Farid ska lossa en mutter med en skiftnyckel. Han trycker med kraften 30 N, 0,4 m från muttern (vridpunkten).",
+    "q1": {
+      "question": "Vad är vridmoment och vilken enhet har det?",
+      "options": {
+        "A": "Kraft × massa, enhet: kg·N",
+        "B": "Kraft × hävarm, enhet: Nm",
+        "C": "Massa × hastighet, enhet: kg·m/s"
+      },
+      "correct": "B",
+      "explanation": "Vridmoment (M) = kraft (F) × hävarm (l). Enheten är newtonmeter (Nm). Det anger hur kraftigt ett föremål vrids runt en vridpunkt."
+    },
+    "q2": {
+      "question": "Hur stort är vridmomentet när Farid trycker 30 N på en 0,4 m lång skiftnyckel?",
+      "options": { "A": "75 Nm", "B": "12 Nm", "C": "30,4 Nm" },
+      "correct": "B",
+      "explanation": "M = F × l = 30 × 0,4 = 12 Nm."
+    }
+  },
+  {
+    "id": 32,
+    "subject": "Kraft",
+    "topic": "Friktion – typer och hydroplaning",
+    "intro": "Erik rullar en tunna längs en gata och märker att det är mycket lättare än att dra en lika tung låda. En dag i regn kör han lite för fort med bilen.",
+    "q1": {
+      "question": "Vilka två huvudtyper av friktion finns det?",
+      "options": {
+        "A": "Tyngdfriktion och luftfriktion",
+        "B": "Glidfriktion och rullningsfriktion",
+        "C": "Statisk friktion och dynamisk gravitation"
+      },
+      "correct": "B",
+      "explanation": "Glidfriktion uppstår när ytor glider mot varandra (som en låda på golvet). Rullningsfriktion uppstår när ett föremål rullar (hjul, kula). Rullning ger mycket lägre friktion – därav hjulets uppfinning!"
+    },
+    "q2": {
+      "question": "Vilket farligt fenomen kan uppstå om man kör för fort på en våt väg?",
+      "options": {
+        "A": "Motorn kyls ner och stannar",
+        "B": "Däcken glider upp på ett vattenlager och friktionen försvinner – hydroplaning",
+        "C": "Bromsarna överhettas av vattnet"
+      },
+      "correct": "B",
+      "explanation": "Hydroplaning (vattenplaning) uppstår när däcken glider upp på ett vattenlager vid hög fart. Friktionen mot vägen försvinner och föraren förlorar kontrollen. Sänk farten i regn!"
+    }
+  },
+  {
+    "id": 33,
+    "subject": "Kraft",
+    "topic": "Hävstång – vridmoment och beräkning",
+    "intro": "Lina (tyngd 400 N) och Noa sitter på en gungbräda. Lina sitter 1,5 m från vridpunkten. Noa sitter 2,0 m på andra sidan.",
+    "q1": {
+      "question": "Vad krävs för att en hävstång ska vara i jämvikt?",
+      "options": {
+        "A": "Krafterna på varje sida måste vara lika stora",
+        "B": "Vridmomenten (kraft × hävarm) på varje sida måste vara lika stora",
+        "C": "Personerna måste ha samma massa"
+      },
+      "correct": "B",
+      "explanation": "Jämvikt kräver att vridmomenten på varje sida är lika: F1 × l1 = F2 × l2. Det räcker alltså att en lättare person sitter längre ut."
+    },
+    "q2": {
+      "question": "Hur stor tyngd måste Noa ha för att gungbrädan ska vara i jämvikt?",
+      "options": { "A": "400 N", "B": "300 N", "C": "200 N" },
+      "correct": "B",
+      "explanation": "Linas vridmoment: 400 × 1,5 = 600 Nm. Noas: F × 2,0 = 600, F = 600 / 2 = 300 N."
+    }
+  },
+  {
+    "id": 34,
+    "subject": "Tryck",
+    "topic": "Vätskors tryck – djupberäkning",
+    "intro": "En dykare vet att vattnets tryck ökar ju djupare hon dyker. Instruktören lär henne en enkel tumregel för att beräkna trycket.",
+    "q1": {
+      "question": "Hur ökar trycket i vatten för varje meters djup?",
+      "options": {
+        "A": "1 kPa per meter",
+        "B": "10 kPa per meter",
+        "C": "100 kPa per meter"
+      },
+      "correct": "B",
+      "explanation": "Vattentrycket ökar med ca 10 kPa per meters djup. På 1 m djup: 10 kPa, på 10 m djup: 100 kPa, och så vidare."
+    },
+    "q2": {
+      "question": "Dykaren befinner sig på 8 m djup. Hur stort är vattnets tryck på det djupet?",
+      "options": { "A": "8 kPa", "B": "800 Pa", "C": "80 kPa" },
+      "correct": "C",
+      "explanation": "8 m × 10 kPa/m = 80 kPa. Trycket ökar jämnt med djupet."
+    }
+  },
+  {
+    "id": 35,
+    "subject": "Tryck",
+    "topic": "Hydraulik – domkraft",
+    "intro": "En bilmekaniker använder en hydraulisk domkraft för att lyfta en bil. En liten kolv med arean 2 cm² trycks ned med kraften 100 N.",
+    "q1": {
+      "question": "Vilket tryck skapas i hydrauloljan när 100 N verkar på den lilla kolven (area 2 cm²)?",
+      "options": { "A": "200 N/cm²", "B": "50 N/cm²", "C": "100 N/cm²" },
+      "correct": "B",
+      "explanation": "Tryck = kraft / area = 100 / 2 = 50 N/cm². Enligt Pascals lag sprids detta tryck till hela systemet."
+    },
+    "q2": {
+      "question": "Trycket (50 N/cm²) verkar på den stora kolven med arean 20 cm². Hur stor kraft lyfter den stora kolven?",
+      "options": { "A": "500 N", "B": "50 N", "C": "1 000 N" },
+      "correct": "C",
+      "explanation": "Kraft = tryck × area = 50 × 20 = 1 000 N. Den lilla kraften på 100 N 'förstärks' tio gånger – det är hydraulikens fördel."
+    }
+  },
+  {
+    "id": 36,
+    "subject": "Tryck",
+    "topic": "Kommunicerande kärl",
+    "intro": "Klassen kopplar ihop tre glasrör med olika former i botten och fyller dem med vatten. Alla rör har en gemensam förbindning.",
+    "q1": {
+      "question": "Vad händer med vattennivån i kommunicerande kärl?",
+      "options": {
+        "A": "Vattnet rinner alltid till det smalaste röret",
+        "B": "Vattennivån ställer sig lika högt i alla sammankopplade kärl, oavsett form eller volym",
+        "C": "Trycket är störst i det bredaste kärlet"
+      },
+      "correct": "B",
+      "explanation": "I kommunicerande kärl (kärl som är förbundna med varandra) håller vätskan alltid samma nivå i alla delar. Det spelar ingen roll om kärlen är breda, smala eller konstigt formade."
+    },
+    "q2": {
+      "question": "Vilket vardagligt föremål i ett badrum bygger på principen om kommunicerande kärl?",
+      "options": {
+        "A": "Duschgelen",
+        "B": "Vattenlåset under tvättstället",
+        "C": "Spegeln"
+      },
+      "correct": "B",
+      "explanation": "Vattenlåset under tvättstället är ett U-format rör som alltid innehåller vatten. Det fungerar som kommunicerande kärl och förhindrar att illaluktande gaser tränger in från avloppet."
+    }
+  },
+  {
+    "id": 37,
+    "subject": "Tryck",
+    "topic": "Archimedes princip – beräkning",
+    "intro": "En metallkub hänger i en dynamometer och visar 5 N i luft. Sedan sänks kuben försiktigt ner i vatten och dynamometern visar bara 3 N.",
+    "q1": {
+      "question": "Hur stor är vattnets lyftkraft på kuben?",
+      "options": { "A": "5 N", "B": "3 N", "C": "2 N" },
+      "correct": "C",
+      "explanation": "Lyftkraften = tyngden i luft minus tyngden i vatten = 5 - 3 = 2 N. Det är hur mycket kuben 'tappar' i tyngd när den nedsänks i vatten."
+    },
+    "q2": {
+      "question": "Enligt Archimedes princip – hur stor är tyngden av det vatten som kuben tränger undan?",
+      "options": { "A": "5 N", "B": "3 N", "C": "2 N" },
+      "correct": "C",
+      "explanation": "Archimedes princip: lyftkraften = tyngden av undanträngt vatten. Lyftkraften är 2 N, alltså väger det undanträngda vattnet precis 2 N."
+    }
+  },
+  {
+    "id": 38,
+    "subject": "Tryck",
+    "topic": "Lufttryck och barometer",
+    "intro": "En meteorolog visar väderkartan på TV och berättar om ett högtryck med 1 020 hPa som ger soligt väder. Han håller upp ett instrument för att mäta lufttrycket.",
+    "q1": {
+      "question": "Vad är normalt lufttryck vid jordytan?",
+      "options": { "A": "101,3 Pa", "B": "1 013 hPa", "C": "1 013 kPa" },
+      "correct": "B",
+      "explanation": "Normalt lufttryck är ca 1 013 hPa (hektopascal). Högtryck (över 1 013 hPa) ger oftast fint väder, lågtryck (under 1 013 hPa) ger ofta regn och blåst."
+    },
+    "q2": {
+      "question": "Med vilket instrument mäter man lufttrycket, och vilken typ är vanligast idag?",
+      "options": {
+        "A": "Manometer – används i vädersammanhang",
+        "B": "Termometer – mäter både tryck och temperatur",
+        "C": "Barometer – vanligast är aneroidbarometern"
+      },
+      "correct": "C",
+      "explanation": "Lufttryck mäts med barometer. Aneroidbarometern (en tät plåtdosa med fjädrande lock) är vanligast idag. Den äldre kvicksilverbarometern används sällan pga kvicksilvrets giftighet."
+    }
+  },
+  {
+    "id": 39,
+    "subject": "Tryck",
+    "topic": "Tryck i gaser",
+    "intro": "En cykelreparatör pumpar upp ett platt cykelhjul. Ju mer luft han pumpar in, desto hårdare och mer svårpumpat blir det.",
+    "q1": {
+      "question": "Vad händer med trycket i ett däck när man pumpar in mer luft (oförändrad volym)?",
+      "options": {
+        "A": "Trycket minskar – mer luft gör det lättare",
+        "B": "Trycket ökar – gasmolekylerna packas tätare och slår hårdare mot väggarna",
+        "C": "Trycket förblir detsamma"
+      },
+      "correct": "B",
+      "explanation": "Mer gas i samma volym ger tätare packade molekyler, fler kollisioner mot väggarna och därmed högre tryck. Det är principen bakom komprimerad gas."
+    },
+    "q2": {
+      "question": "Varför ska man aldrig utsätta en sprayburk för temperaturer över 50°C, t.ex. i solen?",
+      "options": {
+        "A": "Färgen i burken förstörs av värmen",
+        "B": "Värmen ökar gasmolekylernas rörelse, trycket stiger kraftigt och burken kan explodera",
+        "C": "Spraymunstycket smälter vid 50°C"
+      },
+      "correct": "B",
+      "explanation": "Trycket i en instängd gas ökar när gasen värms upp. I en sprayburk kan trycket bli så högt att burken exploderar. Tryckbehållare ska aldrig utsättas för hög värme."
+    }
+  },
+  {
+    "id": 40,
+    "subject": "Tryck",
+    "topic": "Vattentorn och vattentryck",
+    "intro": "Karin undrar varför kranvattnet har bra tryck i köket på bottenvåningen men sämre tryck i duschen på tredje våningen. Hennes granne berättar om vattentornet i byn.",
+    "q1": {
+      "question": "Varför är vattentrycket högre på lägre våningar i ett hus?",
+      "options": {
+        "A": "Rören är tjockare på bottenvåningen",
+        "B": "Ju längre ner under vattentornets vattennivå man befinner sig, desto högre är trycket",
+        "C": "Pumpen sitter alltid längst ner i huset"
+      },
+      "correct": "B",
+      "explanation": "Vattenledningar fungerar som kommunicerande kärl. Trycket beror på höjdskillnaden till vattenytan i tornet: 10 kPa per meter, precis som i en vätska."
+    },
+    "q2": {
+      "question": "Vattentornets vattenyta ligger 40 m ovanför Karins vattenkran. Hur stort är vattentrycket vid kranen?",
+      "options": { "A": "4 kPa", "B": "40 Pa", "C": "400 kPa" },
+      "correct": "C",
+      "explanation": "Trycket ökar med 10 kPa per meter. 40 m × 10 kPa/m = 400 kPa."
+    }
+  },
+  {
+    "id": 41,
+    "subject": "Tryck",
+    "topic": "Densitet och flytkraft",
+    "intro": "I ett naturprogram ser klassen hur ett isberg flyter i havet med bara en liten topp ovanför ytan, medan en isbit sjunker direkt till botten i tändvätska.",
+    "q1": {
+      "question": "När flyter ett föremål i en vätska?",
+      "options": {
+        "A": "Alltid om föremålet är gjort av trä",
+        "B": "När föremålets densitet är lika med eller lägre än vätskans densitet",
+        "C": "Aldrig om föremålet innehåller metall"
+      },
+      "correct": "B",
+      "explanation": "Flytkraften = tyngden av undanträngt vatten. Om flytkraft är lika med eller större än föremålets tyngd flyter det. Det avgörs av densiteten: lägre densitet än vätskan ger flytande."
+    },
+    "q2": {
+      "question": "Is har lägre densitet än vatten men högre densitet än tändvätska. Vad händer om man lägger is i vatten respektive i tändvätska?",
+      "options": {
+        "A": "Is sjunker i båda vätskorna",
+        "B": "Is flyter i vatten, Is sjunker i tändvätska",
+        "C": "Is flyter i båda"
+      },
+      "correct": "B",
+      "explanation": "Is flyter i vatten (is ca 0,9 g/cm³, vatten 1,0 g/cm³). Men is sjunker i tändvätska som har lägre densitet (ca 0,7 g/cm³). Densiteten avgör allt!"
+    }
+  },
+  {
+    "id": 42,
+    "subject": "Tryck",
+    "topic": "Trycket i alla riktningar – ubåt",
+    "intro": "En ubåt dyker allt djupare i havet. Besättningen vet att vattentrycket ökar med djupet – och att det verkar mot skrovet från alla håll.",
+    "q1": {
+      "question": "I vilka riktningar verkar vätskors tryck på ett nedsänkt föremål?",
+      "options": {
+        "A": "Bara nedåt, i tyngdkraftens riktning",
+        "B": "Bara uppåt och nedåt",
+        "C": "Lika stort i alla riktningar på ett visst djup"
+      },
+      "correct": "C",
+      "explanation": "Vattnets (och alla vätskors) tryck på ett visst djup är lika stort i alla riktningar. Därför känner en dykare tryck mot hela kroppen – framsidan, baksidan och sidorna – inte bara ovanifrån."
+    },
+    "q2": {
+      "question": "Ubåten befinner sig på 70 m djup. Hur stort är vattnets tryck mot skrovet?",
+      "options": { "A": "7 kPa", "B": "70 Pa", "C": "700 kPa" },
+      "correct": "C",
+      "explanation": "70 m × 10 kPa/m = 700 kPa. Det är ett enormt tryck – som tyngden av sju 10-tons lastbilar på varje kvadratmeter. Ubåtens skrov måste vara extremt tjockt."
     }
   }
 ]
