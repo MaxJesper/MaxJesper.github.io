@@ -575,16 +575,59 @@ function playBuzzer() {
 function playVictory() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [[0,.261,.5],[.18,.329,.5],[.36,.392,.5],[.54,.523,.7],[.76,.523,.45],[.94,.659,.65]]
-      .map(([t,f,v]) => [t, f*1000, v])
-      .forEach(([t, freq, vol]) => {
-        const osc = ctx.createOscillator(), gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.type = 'triangle'; osc.frequency.value = freq;
-        gain.gain.setValueAtTime(vol, ctx.currentTime + t);
-        gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + t + .42);
-        osc.start(ctx.currentTime + t); osc.stop(ctx.currentTime + t + .46);
-      });
+
+    // Kompressor för maximal upplevd volym
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -6;
+    comp.knee.value = 3;
+    comp.ratio.value = 4;
+    comp.attack.value = 0.003;
+    comp.release.value = 0.1;
+    comp.connect(ctx.destination);
+
+    const master = ctx.createGain();
+    master.gain.value = 1.0;
+    master.connect(comp);
+
+    // Trumpetfanfar – sawtooth låter som mässing
+    // [start_sek, frekvens_Hz, längd_sek, volym]
+    const fanfare = [
+      // Tre korta inledande noter
+      [0.00, 392, 0.10, 1.0],  // G4
+      [0.13, 392, 0.10, 1.0],  // G4
+      [0.26, 523, 0.10, 1.0],  // C5
+      // Uppgång
+      [0.40, 659, 0.14, 1.0],  // E5
+      [0.57, 784, 0.17, 1.0],  // G5
+      // Triumferande håll
+      [0.77, 784, 0.55, 1.0],  // G5 lång
+      [0.77, 523, 0.55, 0.55], // C5 harmoni
+      [0.77, 392, 0.55, 0.35], // G4 bas
+      // Kort mellanspel
+      [1.36, 659, 0.12, 0.9],  // E5
+      [1.51, 698, 0.12, 0.9],  // F5
+      // Kraftfullt final-ackord
+      [1.67, 784, 0.80, 1.0],  // G5
+      [1.67, 659, 0.80, 0.7],  // E5
+      [1.67, 523, 0.80, 0.55], // C5
+      [1.67, 392, 0.80, 0.4],  // G4
+    ];
+
+    fanfare.forEach(([t, freq, dur, vol]) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(master);
+      osc.type = 'sawtooth';
+      osc.frequency.value = freq;
+      // Attack snabb, håll, release
+      gain.gain.setValueAtTime(0.001, ctx.currentTime + t);
+      gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + t + 0.018);
+      gain.gain.setValueAtTime(vol * 0.85, ctx.currentTime + t + dur * 0.65);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + dur);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + dur + 0.05);
+    });
   } catch(e) {}
 }
 
@@ -617,7 +660,9 @@ function calcPoints() {
   const q1ok = selectedQ1 === card.q1.correct;
   const q2ok = selectedQ2 === card.q2.correct;
   if (chosing === 'sakra') return q1ok ? 1 : 0;
-  return (q1ok && q2ok) ? 2 : 0; // chansa: båda rätt = 2p, annars 0p
+  // chansa: Q1 rätt + Q2 rätt = 2p | Q1 rätt + Q2 fel = 0p | Q1 fel + Q2 rätt = 1p tröst | Q1 fel + Q2 fel = 0p
+  if (q1ok) return q2ok ? 2 : 0;
+  return q2ok ? 1 : 0;
 }
 
 function selectAnswer(qNum, opt) {
@@ -643,7 +688,8 @@ function doSakra() {
 
 function doChansa() {
   chosing = 'chansa';
-  phase = 'q2wait';
+  phase = 'q2';
+  if (timerEnabled) startTimer();
   render();
 }
 
@@ -654,10 +700,7 @@ function goNextPhase() {
   } else if (phase === 'q1' && !timerEnabled) {
     selectedQ1 = null; phase = 'q1done';
   } else if (phase === 'q1done' && !timerEnabled) {
-    chosing = 'chansa'; phase = 'q2wait';
-  } else if (phase === 'q2wait') {
-    phase = 'q2';
-    if (timerEnabled) startTimer();
+    chosing = 'chansa'; phase = 'q2';
   } else if (phase === 'q2' && !timerEnabled) {
     selectedQ2 = null; phase = 'q2done';
   } else if (phase === 'q2done') {
@@ -804,7 +847,7 @@ function render() {
 
   document.getElementById('subjectPill').textContent = 'Fanerozoikum';
   const pp = document.getElementById('periodPill');
-  const showPeriod = ['q1done','q2wait','q2','q2done'].includes(phase);
+  const showPeriod = ['q1done','q2','q2done'].includes(phase);
   if (card.period && showPeriod) {
     pp.textContent = 'Period: ' + card.period;
     pp.style.display = '';
@@ -838,27 +881,23 @@ function render() {
       showTimerWrap(false);
       if (timerEnabled && selectedQ1 !== null) {
         const q1ok = selectedQ1 === card.q1.correct;
-        decision = `<div class="decision-box">
-          <div class="decision-label">${q1ok ? '✅ Rätt period!' : '❌ Fel period.'} Välj:</div>
-          <button class="btn-sakra"  onclick="doSakra()">🔒 Säkra – ${q1ok ? '1 poäng' : '0 poäng'}</button>
-          <button class="btn-chansa" onclick="doChansa()">🎲 Chansa! Fråga 2 →</button>
-        </div>`;
+        if (q1ok) {
+          decision = `<div class="decision-box">
+            <div class="decision-label">✅ Rätt period! Välj:</div>
+            <button class="btn-sakra"  onclick="doSakra()">🔒 Säkra – 1 poäng</button>
+            <button class="btn-chansa" onclick="doChansa()">🎲 Chansa – 2p om fråga 2 också rätt, annars 0p</button>
+          </div>`;
+        } else {
+          decision = `<div class="decision-box">
+            <div class="decision-label">❌ Fel period. Fråga 2 kan ändå ge 1p:</div>
+            <button class="btn-chansa" onclick="doChansa()">📖 Försök med fråga 2 →</button>
+          </div>`;
+        }
       } else {
         html += `<button class="phase-btn" onclick="goNextPhase()">Nästa fråga ▶</button>`;
       }
       break;
     }
-
-    case 'q2wait':
-      html += blockQ1('revealed');
-      if (timerEnabled) {
-        html += `<div class="wait-notice">⏸ Vänta på läraren innan ni trycker Fortsätt – fråga 2 visas då och timern startar.</div>`;
-        html += `<button class="phase-btn" onclick="goNextPhase()">Fortsätt ▶ (visar fråga 2 + startar timer)</button>`;
-      } else {
-        html += `<button class="phase-btn" onclick="goNextPhase()">Visa fråga 2 ▶</button>`;
-      }
-      showTimerWrap(false);
-      break;
 
     case 'q2':
       if (timerEnabled) {
