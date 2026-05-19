@@ -152,7 +152,7 @@
     .period-btn.correct { background: #e3f2fd !important; border-color: #1565c0 !important; color: #0d47a1 !important; }
     .period-btn.wrong   { background: #fff3e0 !important; border-color: #e65100 !important; color: #bf360c !important; }
     .period-mark { display: block; font-size: 16px; margin-top: 2px; }
-    .period-interval { font-size: 11px; font-weight: 400; display: block; margin-top: 3px; opacity: .85; }
+    .period-interval { font-size: 13px; font-weight: 400; display: block; margin-top: 4px; opacity: .8; }
 
     /* === Q2 MCQ buttons === */
     .options-grid { display: grid; gap: 8px; margin-top: 10px; }
@@ -358,6 +358,21 @@ const FANEROZOIKUM_PERIODER = [
   "Karbon",   "Perm",       "Trias", "Jura",
   "Krita",    "Paleogen",   "Neogen","Kvartär"
 ];
+
+const PERIOD_INTERVAL = {
+  "Kambrium":   "541–485 Ma",
+  "Ordovicium": "485–444 Ma",
+  "Silur":      "444–419 Ma",
+  "Devon":      "419–359 Ma",
+  "Karbon":     "359–299 Ma",
+  "Perm":       "299–252 Ma",
+  "Trias":      "252–201 Ma",
+  "Jura":       "201–145 Ma",
+  "Krita":      "145–66 Ma",
+  "Paleogen":   "66–23 Ma",
+  "Neogen":     "23–2,6 Ma",
+  "Kvartär":    "2,6–0 Ma"
+};
 
 const SCORE_KEY    = 'fanerozoikum_score_v1';
 const SETTINGS_KEY = 'fanerozoikum_settings_v1';
@@ -666,7 +681,10 @@ function reloadDeck()  { clearTimer(); deck.sort((a,b) => (a.id||0)-(b.id||0)); 
 function q1PeriodButtons() {
   return '<div class="period-grid">' +
     FANEROZOIKUM_PERIODER.map(p =>
-      `<button class="period-btn" onclick="selectAnswer(1,'${esc(p)}')">${esc(p)}</button>`
+      `<button class="period-btn" onclick="selectAnswer(1,'${esc(p)}')">
+        ${esc(p)}
+        <span class="period-interval">${esc(PERIOD_INTERVAL[p] || '')}</span>
+      </button>`
     ).join('') +
   '</div>';
 }
@@ -679,9 +697,11 @@ function q1PeriodRevealed(q1) {
       let mark = '';
       if (p === correct) { cls = 'correct'; mark = '<span class="period-mark">✓ Rätt</span>'; }
       else if (selectedQ1 && p === selectedQ1) { cls = 'wrong'; mark = '<span class="period-mark">✗ Fel</span>'; }
-      const interval = (p === correct && q1.interval)
-        ? `<span class="period-interval">${esc(q1.interval)}</span>` : '';
-      return `<div class="period-btn ${cls}" style="pointer-events:none">${esc(p)}${interval}${mark}</div>`;
+      return `<div class="period-btn ${cls}" style="pointer-events:none">
+        ${esc(p)}
+        <span class="period-interval">${esc(PERIOD_INTERVAL[p] || '')}</span>
+        ${mark}
+      </div>`;
     }).join('') +
   '</div>';
   const extra = q1.extra
@@ -693,7 +713,10 @@ function q1PeriodRevealed(q1) {
 function q1PeriodPlain() {
   return '<div class="period-grid">' +
     FANEROZOIKUM_PERIODER.map(p =>
-      `<div class="period-btn" style="pointer-events:none; opacity:0.65">${esc(p)}</div>`
+      `<div class="period-btn" style="pointer-events:none; opacity:0.7">
+        ${esc(p)}
+        <span class="period-interval">${esc(PERIOD_INTERVAL[p] || '')}</span>
+      </div>`
     ).join('') +
   '</div>';
 }
