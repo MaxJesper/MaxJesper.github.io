@@ -1019,6 +1019,14 @@ function render() {
   document.getElementById('content').innerHTML = html;
   document.getElementById('decisionArea').innerHTML = decision;
   document.getElementById('cardControls').style.display = phase === 'sakrawait' ? 'none' : '';
+
+  // Scrolla ned till resultatet när Q2 är besvarad
+  if (phase === 'q2done') {
+    setTimeout(() => {
+      const target = document.querySelector('.result-box') || document.querySelector('#content .phase-btn');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 60);
+  }
 }
 
 /* =====================================================
