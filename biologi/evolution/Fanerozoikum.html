@@ -603,11 +603,23 @@ function showTimerWrap(show) {
 }
 
 /* =====================================================
-   Sounds
+   Sounds – ett delat AudioContext för iOS-kompatibilitet
    ===================================================== */
+let _audioCtx = null;
+function getAudio() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  return _audioCtx;
+}
+// Väck AudioContext vid första touch (krävs på iOS)
+document.addEventListener('touchstart', function wakeAudio() {
+  getAudio();
+  document.removeEventListener('touchstart', wakeAudio);
+}, { passive: true });
+
 function playBuzzer() {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = getAudio();
     [[0, 440, .6], [.25, 330, .5], [.5, 220, .4]].forEach(([t, freq, vol]) => {
       const osc = ctx.createOscillator(), gain = ctx.createGain();
       osc.connect(gain); gain.connect(ctx.destination);
@@ -620,7 +632,7 @@ function playBuzzer() {
 }
 function playVictory() {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = getAudio();
 
     // Kompressor för maximal upplevd volym
     const comp = ctx.createDynamicsCompressor();
