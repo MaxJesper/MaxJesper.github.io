@@ -713,7 +713,7 @@ function loseCard() {
   const el = document.getElementById('lostOverlay');
   if (el) {
     el.classList.add('show');
-    setTimeout(() => { el.classList.remove('show'); nextCard(); }, 1800);
+    setTimeout(() => { el.classList.remove('show'); nextCard(); }, 3000);
   } else { nextCard(); }
 }
 function showVictory() {
