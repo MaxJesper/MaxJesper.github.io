@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "intro": "Introduktionstext som visas innan frågorna. Här presenterar du begreppet eller händelsen. Du kan använda <strong>fetstil</strong> och <em>kursiv</em> text. Håll det kort – 2–4 meningar.",
+    "q1": {
+      "question": "Fråga 1 – ställ en fråga om t.ex. tid, plats, orsak eller vem. Tre svarsalternativ (A/B/C).",
+      "options": {
+        "A": "Första alternativet",
+        "B": "Andra alternativet (det rätta)",
+        "C": "Tredje alternativet"
+      },
+      "correct": "B",
+      "extra": "Valfri förklaringstext som visas efter att spelaren svarat på fråga 1. Kan lämnas tom – ta då bort hela raden."
+    },
+    "q2": {
+      "question": "Fråga 2 – testa förståelse av begreppet eller händelsen. Ska vara svårare/djupare än fråga 1.",
+      "options": {
+        "A": "Rätt svar – sätt 'correct' till 'A'",
+        "B": "Felaktigt alternativ",
+        "C": "Felaktigt alternativ"
+      },
+      "correct": "A",
+      "explanation": "Förklaring som visas efter att spelaren svarat på fråga 2. Används för att fördjupa förståelsen."
+    },
+    "image": {
+      "url": "images/exempel.jpg",
+      "alt": "Bildbeskrivning för skärmläsare",
+      "credit": "Foto: Fotografens namn, Wikimedia Commons (CC BY-SA 4.0)"
+    }
+  },
+  {
+    "id": 2,
+    "intro": "Kort utan bild – ta bara bort hela 'image'-blocket nedan.",
+    "q1": {
+      "question": "Vilken är den rätta förklaringen?",
+      "options": {
+        "A": "Fel svar",
+        "B": "Fel svar",
+        "C": "Rätt svar"
+      },
+      "correct": "C"
+    },
+    "q2": {
+      "question": "Följdfråga om samma ämne.",
+      "options": {
+        "A": "Rätt svar",
+        "B": "Fel svar",
+        "C": "Fel svar"
+      },
+      "correct": "A",
+      "explanation": "Förklaring till varför A är rätt."
+    }
+  }
+]
