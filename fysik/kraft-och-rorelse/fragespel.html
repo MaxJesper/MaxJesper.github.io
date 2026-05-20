@@ -266,8 +266,10 @@
 <!-- Info -->
 <div class="info-banner">
   ⚡ <strong>Frågespel – kraft, rörelse och tryck.</strong>
-  Varje grupp spelar på sin dator. Svara fråga 1 i tid → <strong>Chansa</strong> (2p om båda rätt, annars 0p) eller <strong>Säkra</strong> (1p men väntestraff).
-  Fråga 2 kan ge 1p tröstpoäng även om fråga 1 var fel. Mål: <strong id="winScoreBanner">10</strong> poäng 🏆
+  Spelas enskilt eller i grupper som tävlar mot varandra. Svara fråga 1 i tid → <strong>Chansa</strong> (2p om båda rätt, annars 0p) eller <strong>Säkra</strong> (1p men <span id="sakraDelayBanner">30</span> sek väntestraff).
+  Fråga 2 ger 1p tröstpoäng även om fråga 1 var fel.
+  Mål: <strong id="winScoreBanner">10</strong> poäng 🏆 – poängen nollställs och du kan spela igen!
+  Endast läraren kan ändra inställningarna.
 </div>
 
 <!-- Timer settings -->
@@ -359,10 +361,23 @@
   <div>Kort förlorat!</div>
   <div class="overlay-sub">Ingen svarade i tid</div>
 </div>
-<div class="overlay" id="victoryOverlay" onclick="this.classList.remove('show')">
+<div class="overlay" id="victoryOverlay">
   <div>🎉</div>
   <div id="victoryText">10 POÄNG!</div>
-  <div class="overlay-sub">Ni vinner! Klicka för att fortsätta</div>
+  <div class="overlay-sub" id="victorySubText">Bra jobbat!</div>
+</div>
+
+<!-- Spela igen-modal -->
+<div class="modal-overlay" id="playAgainModal">
+  <div class="modal-box" style="text-align:center">
+    <div style="font-size:48px;margin-bottom:8px">🏆</div>
+    <h3 id="playAgainTitle">Mål nått!</h3>
+    <p id="playAgainMsg">Du nådde <strong id="playAgainScore">10</strong> poäng. Vill du spela igen för att lära dig mer?</p>
+    <div class="modal-btns">
+      <button class="modal-btn-ok" onclick="doPlayAgain()">Ja, spela igen!</button>
+      <button class="modal-btn-cancel" onclick="hidePlayAgainModal()">Stanna kvar</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -465,6 +480,7 @@ function loadSettings() {
     if (s.sakraDelay !== undefined) {
       sakraDelay = s.sakraDelay;
       const sd = document.getElementById('sakraDelayInput'); if (sd) sd.value = sakraDelay;
+      const b = document.getElementById('sakraDelayBanner'); if (b) b.textContent = sakraDelay;
     }
   } catch(e) {}
   const cb = document.getElementById('timerCheck');
@@ -474,6 +490,7 @@ function loadSettings() {
 }
 function onSakraDelayChange() {
   sakraDelay = Math.max(0, parseInt(document.getElementById('sakraDelayInput').value)||30);
+  const b = document.getElementById('sakraDelayBanner'); if (b) b.textContent = sakraDelay;
   saveSettings();
 }
 
@@ -663,6 +680,27 @@ function showVictory() {
   if (vt) vt.textContent = winScore + ' POÄNG!';
   const el = document.getElementById('victoryOverlay');
   if (el) el.classList.add('show');
+  // Visa victory kort, nollställ sedan poäng och fråga om spela igen
+  setTimeout(() => {
+    if (el) el.classList.remove('show');
+    totalScore = 0;
+    victoryShown = false;
+    saveScore();
+    renderScore();
+    showPlayAgainModal();
+  }, 3500);
+}
+function showPlayAgainModal() {
+  const msg = document.getElementById('playAgainMsg');
+  if (msg) msg.innerHTML = 'Du nådde <strong>' + winScore + '</strong> poäng – bra jobbat! Vill du spela igen för att lära dig ännu mer?';
+  document.getElementById('playAgainModal').classList.add('show');
+}
+function hidePlayAgainModal() {
+  document.getElementById('playAgainModal').classList.remove('show');
+}
+function doPlayAgain() {
+  hidePlayAgainModal();
+  shuffleDeck();
 }
 
 /* =====================================================

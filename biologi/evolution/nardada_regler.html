@@ -8,215 +8,166 @@
     body{
       font-family: Arial, sans-serif;
       background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 65%);
-      margin:0; padding:0;
+      margin:0; padding:0 0 40px;
     }
-    .wrap{ max-width: 980px; margin: 14px auto; padding: 0 12px 24px; }
-    .topbar{ margin: 14px auto 0; padding: 0 12px; max-width: 980px; }
+    .wrap{ max-width: 780px; margin: 14px auto; padding: 0 14px; }
+    .topbar{ margin: 14px auto 0; padding: 0 14px; max-width: 780px; }
     .btn{
-      display:inline-block; padding:8px 12px; background:#fff; border-radius:8px;
+      display:inline-block; padding:8px 14px; background:#fff; border-radius:8px;
       box-shadow:0 2px 4px rgba(0,0,0,0.08); text-decoration:none; color:#0056b3;
-      margin: 6px 0;
     }
     .btn:hover{ text-decoration: underline; }
-
     .card{
-      background:#fff; border-radius:12px; padding:18px 18px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.10);
-      margin-top: 12px;
+      background:#fff; border-radius:14px; padding:20px 22px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.10);
+      margin-top: 14px;
     }
-    h1{ margin: 0 0 8px; font-size: 24px; }
-    h2{ margin: 18px 0 8px; font-size: 20px; }
-    h3{ margin: 14px 0 6px; font-size: 17px; }
-    p{ margin: 8px 0; line-height: 1.5; color:#222; }
-    ul, ol{ margin: 8px 0 8px 20px; line-height: 1.5; }
-    .muted{ color:#444; font-size: 14px; }
-    .pillRow{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 10px; }
-    .pill{
-      background:#eef4ff; color:#003a8c; padding:6px 10px; border-radius:999px; font-size: 14px;
+    h1{ margin: 0 0 10px; font-size: 26px; }
+    h2{ margin: 20px 0 8px; font-size: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 4px; }
+    h3{ margin: 14px 0 6px; font-size: 17px; color: #00796b; }
+    p{ margin: 8px 0; line-height: 1.6; color:#222; }
+    ul{ margin: 6px 0 10px 20px; line-height: 1.7; }
+    li{ margin-bottom: 2px; }
+    .tag{
+      display:inline-block; background:#e0f2f1; color:#004d40;
+      padding:4px 10px; border-radius:999px; font-size: 13px; font-weight:600;
+      margin: 3px 3px 3px 0;
     }
-
-    .flagRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 8px; }
-    .flag{
-      border-radius:10px; padding:10px 12px; border:1px solid #ddd; background:#fafafa;
-      min-width: 260px;
+    .tag-row{ margin: 10px 0; }
+    .score-table{ width:100%; border-collapse:collapse; margin:10px 0; font-size:15px; }
+    .score-table th{ background:#e0f2f1; color:#004d40; padding:8px 10px; text-align:left; }
+    .score-table td{ padding:8px 10px; border-bottom:1px solid #eee; }
+    .score-table tr:last-child td{ border-bottom:none; }
+    .box{
+      background:#fffbe6; border:1px solid #ffe58f; border-radius:10px;
+      padding:12px 14px; margin:12px 0; color:#614700;
     }
-    .flag .title{ font-weight:bold; margin-bottom: 6px; }
-    .flag.black .title{ color:#111; }
-    .flag.red .title{ color:#b00020; }
-
-    .controls{
-      display:flex; flex-wrap:wrap; gap:10px; margin-top: 12px;
+    .box-green{
+      background:#e8f5e9; border:1px solid #a5d6a7; border-radius:10px;
+      padding:12px 14px; margin:12px 0; color:#1b5e20;
     }
-    button{
-      padding:10px 12px; border:0; border-radius:10px; cursor:pointer;
-      box-shadow:0 2px 4px rgba(0,0,0,0.08); background:#fff; font-size: 15px;
-    }
-    button:hover{ background:#f3f3f3; }
-    .primary{ background:#0056b3; color:#fff; }
-    .primary:hover{ background:#004799; }
-
-    .full{ display:none; }
-    .hr{ height:1px; background:#eee; margin: 14px 0; }
-
     @media print{
       body{ background:#fff; }
-      .topbar, .controls{ display:none; }
-      .card{ box-shadow:none; border:1px solid #ddd; }
-      .full{ display:block !important; }
+      .topbar{ display:none; }
+      .card{ box-shadow:none; border:1px solid #ddd; page-break-inside:avoid; }
     }
   </style>
 </head>
-
 <body>
-  <div class="topbar">
-    <a class="btn" href="nardada.html">← Tillbaka till När då då?</a>
-  </div>
 
-  <div class="wrap">
-    <div class="card">
-      <h1>📘 När då då? – Spelregler</h1>
-      <p class="definition">
-  <strong>Definition:</strong> En omgång består av 4 flashcards, och varje flashcard består av två delar:
-  när det hände (fråga 1) och vad begreppet betyder (fråga 2).
-</p>
+<div class="topbar">
+  <a class="btn" href="Fanerozoikum.html">← Tillbaka till spelet</a>
+</div>
 
-      <p class="muted">
-        Kortversionen räcker för att börja spela. Fullversionen är för den som leder spelet (lärare eller gruppansvarig).
-      </p>
+<div class="wrap">
+  <div class="card">
+    <h1>📘 När då då? – Spelregler</h1>
 
-      <div class="pillRow">
-        <span class="pill">3–5 elever/grupp</span>
-        <span class="pill">4 frågor per omgång</span>
-        <span class="pill">Tidsfråga + begrepp</span>
-        <span class="pill">Säkra eller chansa</span>
-        <span class="pill">Först till 10p vinner</span>
-      </div>
-
-      <div class="controls">
-        <button class="primary" onclick="toggleFull()">Visa/Dölj fullversion</button>
-        <button onclick="window.print()">🖨️ Skriv ut</button>
-      </div>
-
-      <div class="hr"></div>
-
-      <!-- KORTVERSION -->
-      <h2>Kortversion</h2>
-      <ol>
-        <li>
-          <strong>Spela i grupper (3–5 elever).</strong> Ni har en gemensam tidslinje i gruppen och tomma kort att skriva på.
-        </li>
-        <li>
-          <strong>Varje flashcard har två delar:</strong>
-          <ul>
-            <li><strong>Fråga 1:</strong> <em>När?</em> (geologisk period/årtal)</li>
-            <li><strong>Fråga 2:</strong> <em>Begrepp/förståelse</em> (A–C)</li>
-          </ul>
-        </li>
-        <li>
-          <strong>Poäng:</strong>
-          <ul>
-            <li>Rätt på Fråga 1 ⇒ <strong>1 poäng</strong> (kortet kan säkras)</li>
-            <li>Rätt på Fråga 2 ⇒ <strong>+1 poäng</strong> (extra poäng kopplad till förståelse)</li>
-          </ul>
-        </li>
-        <li>
-          <strong>Efter ett kort:</strong> Gruppen väljer <strong>SÄKRA</strong> (ta hem poängen) eller <strong>CHANSA</strong> (försöka vinna mer).
-        </li>
-        <li>
-          <strong>Omgångar:</strong> 4 flashcards per omgång (4 tidsfrågor + 4 begreppsfrågor), sedan roterar rollerna. Först till <strong>10 poäng</strong> vinner (eller flest vid stopptid).
-        </li>
-      </ol>
-
-      <p class="muted">
-        Fullversionen nedan beskriver rollerna, flaggorna och exakt hur säkra/chansa fungerar i klassrumsflödet.
-      </p>
-
-      <!-- FULLVERSION -->
-      <div class="full" id="fullRules">
-        <div class="hr"></div>
-        <h2>Fullversion (för den som leder spelet)</h2>
-
-        <h3>1. Roller i varje grupp</h3>
-        <p>Varje grupp (3–5 elever) har roller som roteras ett steg medurs efter en omgång med 4 frågor.</p>
-        <ul>
-          <li><strong>Diskussionsledare</strong> – ser till att alla får säga sitt, avgör vid oenighet (tidsplacering, säkra/chansa).</li>
-          <li><strong>Tidslinjeansvarig</strong> – placerar kort på tidslinjen och håller koll på gruppens poäng.</li>
-          <li><strong>Skylt-/flaggansvarig</strong> – visar gruppens status efter första kortet i en riskomgång (svart/röd/blå).</li>
-          <li><strong>Övriga</strong> – diskuterar, röstar, hjälper.</li>
-        </ul>
-
-        <h3>2. Flashcardets två frågor</h3>
-        <ul>
-          <li><strong>Fråga 1 (tidsfråga):</strong> När hände det? (geologisk period/årtal)</li>
-          <li><strong>Fråga 2 (begrepp):</strong> A–C-fråga som testar förståelse av begreppet från inledningen</li>
-        </ul>
-
-        <h3>3. Poäng för ett kort</h3>
-        <ul>
-          <li>Rätt på Fråga 1 ⇒ <strong>1 poäng</strong></li>
-          <li>Rätt på Fråga 2 ⇒ <strong>+1 poäng</strong></li>
-          <li>Max per kort: <strong>2 poäng</strong></li>
-        </ul>
-
-        <h3>4. Riskomgång (säkra eller chansa)</h3>
-        <p>Fråga 1–2 på ett flashcard utgör en riskomgång</p>
-
-        <div class="flagRow">
-          <div class="flag black">
-            <div class="title">⬛ Svart – SÄKRA</div>
-            <ul>
-              <li>Gruppen tar hem sitt poäng från fråga 1 och flyttar kortet under tidslinjen.</li>
-              <li>Gruppen chansar <strong>inte</strong>, dvs. spelar vidare med fråga 2 och lägger ytterligare ett kort ovanpå det första ovanpå tidslinjen</li>
-            </ul>
-          </div>
-
-          <div class="flag red">
-            <div class="title">🟥 Röd – CHANSAR</div>
-            <ul>
-              <li>Gruppen väljer att spela vidare med fråga 2 (chansar, kortet är kvar ovanför tidslinjen)</li>
-              <li>Det finns möjlighet att vinna mer – men också risk att tappa båda poängen för fråga 1 och 2.</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3>5. Enkelfråga-regeln</h3>
-        <p>
-          Om <strong>alla grupper</strong> säkrar (svarta flaggor),
-          spelas nästa fråga som <strong>enkelfråga</strong>:
-        </p>
-        <ul>
-          <li>Alla deltar.</li>
-          <li>Ingen chansning (ingen riskkedja).</li>
-        </ul>
-
-        <h3>6. Efter 4 flashcards (8 frågor)</h3>
-        <ul>
-          <li>Tidslinjeansvarig räknar gruppens poäng (antal säkrade poäng/kort enligt ert upplägg).</li>
-          <li>Rollerna roteras ett steg medurs.</li>
-          <li>Läraren klickar i gruppernas resultat i räknaren.</li>
-        </ul>
-
-        <h3>7. Tips för lärare</h3>
-        <ul>
-          <li>Visa spelet på projektor och låt grupperna jobba vid sina tidslinjer.</li>
-          <li>Håll tempo: kort diskussion → beslut → klicka vidare.</li>
-          <li>Fokusera på begrepp: A–C-frågan gör att förståelsen också ger poäng.</li>
-        </ul>
-
-        <p class="muted">
-          Not: Om du vill kan vi anpassa fullversionen exakt ord för ord till ert sista beslut om poänglogik för “chansa”-läget
-          (t.ex. “nytt kort men bara begreppsfrågan” etc.) och göra den ännu mer precis.
-        </p>
-      </div>
+    <div class="tag-row">
+      <span class="tag">Enskilt eller i grupper</span>
+      <span class="tag">Säkra eller Chansa</span>
+      <span class="tag">Läraren styr inställningarna</span>
+      <span class="tag">Mål: nå vinstpoängen</span>
     </div>
-  </div>
 
-<script>
-  function toggleFull(){
-    const el = document.getElementById("fullRules");
-    el.style.display = (el.style.display === "block") ? "none" : "block";
-  }
-</script>
+    <h2>Kort om spelet</h2>
+    <p>
+      Spelet tränar geologi och evolution genom frågor om perioder och begrepp.
+      Varje flashcard består av <strong>två frågor</strong>. Efter fråga 1 väljer du om du vill
+      <strong>Säkra</strong> eller <strong>Chansa</strong> innan fråga 2.
+      Spelas antingen enskilt (alla mot sig själva) eller i grupper som tävlar mot varandra om vem som
+      når vinstpoängen först.
+    </p>
+
+    <h2>Så här spelar du</h2>
+
+    <h3>1. Fråga 1 – svara innan timern tar slut</h3>
+    <p>
+      Varje kort börjar med en fråga om <em>geologisk period eller tidpunkt</em>.
+      Välj rätt alternativ (A–C) innan timern tar slut. Misslyckas du förlorar du kortet
+      och ingen poäng ges för den omgången.
+    </p>
+
+    <h3>2. Säkra eller Chansa?</h3>
+    <p>Efter att du svarat på fråga 1 väljer du din strategi:</p>
+    <ul>
+      <li><strong>Säkra</strong> – du tar hem 1 poäng direkt och väntar sedan en stund
+          (läraren bestämmer hur länge) innan nästa kort.</li>
+      <li><strong>Chansa</strong> – du går vidare till fråga 2. Lyckas du på båda frågorna
+          får du 2 poäng. Men om fråga 2 är fel tappar du allt – 0 poäng för det kortet.</li>
+    </ul>
+
+    <h3>3. Fråga 2 – begreppsförståelse</h3>
+    <p>Fråga 2 testar vad begreppet eller händelsen <em>betyder</em>. Svara rätt för att
+    ta hem maxpoängen vid "Chansa".</p>
+
+    <div class="box-green">
+      <strong>Tröstpoäng:</strong> Om du svarade fel på fråga 1 men rätt på fråga 2 ger det 1p,
+      oavsett om du valde Säkra eller Chansa.
+    </div>
+
+    <h2>Poängsättning</h2>
+    <table class="score-table">
+      <tr>
+        <th>Situation</th>
+        <th>Val</th>
+        <th>Poäng</th>
+      </tr>
+      <tr>
+        <td>Fråga 1 rätt</td>
+        <td>Säkra</td>
+        <td><strong>1p</strong></td>
+      </tr>
+      <tr>
+        <td>Fråga 1 rätt + Fråga 2 rätt</td>
+        <td>Chansa</td>
+        <td><strong>2p</strong></td>
+      </tr>
+      <tr>
+        <td>Fråga 1 rätt + Fråga 2 fel</td>
+        <td>Chansa</td>
+        <td><strong>0p</strong></td>
+      </tr>
+      <tr>
+        <td>Fråga 1 fel + Fråga 2 rätt</td>
+        <td>Säkra eller Chansa</td>
+        <td><strong>1p</strong> (tröstpoäng)</td>
+      </tr>
+      <tr>
+        <td>Fråga 1 fel + Fråga 2 fel</td>
+        <td>Säkra eller Chansa</td>
+        <td><strong>0p</strong></td>
+      </tr>
+      <tr>
+        <td>Timern tar slut</td>
+        <td>–</td>
+        <td><strong>0p</strong>, kortet förlorat</td>
+      </tr>
+    </table>
+
+    <h2>Vinna och spela igen</h2>
+    <p>
+      Den som (eller det lag som) först når <strong>vinstpoängen</strong> (normalt 10p, men läraren kan ändra) vinner.
+      Poängen nollställs automatiskt och frågan "Vill du spela igen?" dyker upp – perfekt för den som
+      är klar tidigt medan andra fortfarande spelar.
+    </p>
+
+    <h2>Inställningar (lärare)</h2>
+    <div class="box">
+      <strong>Lärarlösenord krävs</strong> för att ändra inställningarna.
+      Klicka på 🔒 <em>Ändra inställningar</em> i spelskärmen och ange lösenordet.
+    </div>
+    <ul>
+      <li><strong>Timer på/av</strong> – stäng av timern för att använda spelet som projektorläge
+          utan tidspress.</li>
+      <li><strong>Sekunder per fråga</strong> – hur lång tid spelarna har på sig per fråga.</li>
+      <li><strong>Vinstpoäng</strong> – hur många poäng som krävs för att vinna en omgång.</li>
+      <li><strong>Säkra-straff</strong> – hur många sekunder man måste vänta efter att ha valt Säkra
+          (skapar en naturlig paus för de som är snabba).</li>
+    </ul>
+
+  </div>
+</div>
+
 </body>
 </html>
-
