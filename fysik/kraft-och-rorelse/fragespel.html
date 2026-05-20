@@ -417,6 +417,7 @@ let chosing = null;      // 'sakra' | 'chansa'
 let lastPts = 0;
 let totalScore = 0;
 let victoryShown = false;
+let fanfarePlayed = false; // spelas bara första gången per sidladdning
 
 let timerEnabled = true;
 let timerInterval = null, timerLeft = 0, timerTotal = 20;
@@ -691,7 +692,7 @@ function loseCard() {
 }
 function showVictory() {
   victoryShown = true;
-  playVictory();
+  if (!fanfarePlayed) { playVictory(); fanfarePlayed = true; }
   const vt = document.getElementById('victoryText');
   if (vt) vt.textContent = winScore + ' POÄNG!';
   const el = document.getElementById('victoryOverlay');
