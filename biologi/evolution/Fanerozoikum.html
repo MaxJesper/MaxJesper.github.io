@@ -387,11 +387,27 @@
 <div class="modal-overlay" id="playAgainModal">
   <div class="modal-box" style="text-align:center">
     <div style="font-size:48px;margin-bottom:8px">🏆</div>
-    <h3 id="playAgainTitle">Mål nått!</h3>
-    <p id="playAgainMsg">Du nådde <strong id="playAgainScore">10</strong> poäng. Vill du spela igen för att lära dig mer?</p>
+    <h3>Mål nått!</h3>
+    <p id="playAgainMsg"></p>
+    <div class="modal-btns" style="flex-direction:column;gap:10px">
+      <button class="modal-btn-ok" onclick="doPlayAgainShuffle()" style="font-size:14px">
+        🔀 Spela igen! <span style="font-weight:400;font-size:12px">(korten blandas)</span>
+      </button>
+      <button class="modal-btn-cancel" onclick="doPlayAgainRemaining()" style="font-size:14px">
+        ▶ Spela resterande kort!
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Alla kort spelade-modal -->
+<div class="modal-overlay" id="allDoneModal">
+  <div class="modal-box" style="text-align:center">
+    <div style="font-size:48px;margin-bottom:8px">✅</div>
+    <h3>Alla kort är spelade!</h3>
+    <p>Du har gått igenom hela leken. Dags att börja om från början!</p>
     <div class="modal-btns">
-      <button class="modal-btn-ok" onclick="doPlayAgain()">Ja, spela igen!</button>
-      <button class="modal-btn-cancel" onclick="hidePlayAgainModal()">Stanna kvar</button>
+      <button class="modal-btn-ok" onclick="doRestartAll()">🔀 Spela från början!</button>
     </div>
   </div>
 </div>
@@ -749,15 +765,33 @@ function showVictory() {
   }, 3500);
 }
 function showPlayAgainModal() {
+  const remaining = deck.length - 1 - cardIdx;
   const msg = document.getElementById('playAgainMsg');
-  if (msg) msg.innerHTML = 'Du nådde <strong>' + winScore + '</strong> poäng – bra jobbat! Vill du spela igen för att lära dig ännu mer?';
+  if (msg) msg.innerHTML = 'Du nådde <strong>' + winScore + '</strong> poäng – bra jobbat! '
+    + (remaining > 0 ? 'Det finns <strong>' + remaining + '</strong> kort kvar i leken.' : 'Du är på sista kortet.');
   document.getElementById('playAgainModal').classList.add('show');
 }
 function hidePlayAgainModal() {
   document.getElementById('playAgainModal').classList.remove('show');
 }
-function doPlayAgain() {
+function doPlayAgainShuffle() {
   hidePlayAgainModal();
+  shuffleDeck();
+}
+function doPlayAgainRemaining() {
+  hidePlayAgainModal();
+  // Fortsätt från nästa kort; om vi redan är på sista kortet, starta om
+  if (cardIdx >= deck.length - 1) {
+    doRestartAll();
+  } else {
+    nextCard();
+  }
+}
+function showAllDoneModal() {
+  document.getElementById('allDoneModal').classList.add('show');
+}
+function doRestartAll() {
+  document.getElementById('allDoneModal').classList.remove('show');
   shuffleDeck();
 }
 
@@ -854,7 +888,11 @@ function resetCardState() {
   phase = 'intro'; selectedQ1 = null; selectedQ2 = null; chosing = null; lastPts = 0;
 }
 function restartCard() { clearTimer(); clearSakraWait(); resetCardState(); render(); }
-function nextCard()    { clearTimer(); clearSakraWait(); cardIdx = (cardIdx + 1) % deck.length; resetCardState(); render(); }
+function nextCard()    {
+  clearTimer(); clearSakraWait();
+  if (cardIdx >= deck.length - 1) { showAllDoneModal(); return; }
+  cardIdx++; resetCardState(); render();
+}
 function prevCard()    { clearTimer(); clearSakraWait(); cardIdx = (cardIdx - 1 + deck.length) % deck.length; resetCardState(); render(); }
 function shuffleDeck() { clearTimer(); clearSakraWait(); shuffle(deck); cardIdx = 0; resetCardState(); render(); }
 function reloadDeck()  { clearTimer(); clearSakraWait(); deck.sort((a,b) => (a.id||0)-(b.id||0)); cardIdx = 0; resetCardState(); render(); }
