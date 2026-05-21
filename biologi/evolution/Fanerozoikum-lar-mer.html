@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Fanerozoikum – Lär mer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #79cee3 0%, #f9f9f9 40%);
+      margin: 0; padding: 0 0 60px;
+      color: #1a1a1a;
+    }
+
+    /* === Topbar === */
+    .topbar {
+      max-width: 900px; margin: 14px auto 0; padding: 0 14px;
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    }
+    .btn-back {
+      display: inline-block; padding: 9px 14px; background: #fff; border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.10); text-decoration: none;
+      color: #0056b3; font-size: 14px; font-weight: 600;
+    }
+    .btn-back:hover { background: #e8f0fe; }
+
+    /* === Wrapper === */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 0 14px; }
+
+    /* === Hero === */
+    .hero {
+      background: linear-gradient(135deg, #1a2a3a 0%, #00796b 100%);
+      color: #fff; border-radius: 14px; padding: 32px 28px; margin-top: 14px;
+    }
+    .hero h1 { margin: 0 0 8px; font-size: clamp(22px, 5vw, 34px); }
+    .hero .subtitle { font-size: 15px; opacity: .85; line-height: 1.6; margin: 0; }
+    .hero .timespan { font-size: 13px; opacity: .65; margin-top: 8px; }
+
+    /* === Innehållsförteckning === */
+    .toc {
+      background: #fff; border-radius: 12px; padding: 18px 20px; margin-top: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .toc h3 { margin: 0 0 10px; font-size: 16px; color: #004d40; }
+    .toc-era { font-weight: 700; color: #004d40; margin-top: 8px; font-size: 14px; }
+    .toc-list { list-style: none; margin: 4px 0 0 12px; padding: 0; }
+    .toc-list li { margin: 3px 0; }
+    .toc-list a { color: #0056b3; text-decoration: none; font-size: 14px; }
+    .toc-list a:hover { text-decoration: underline; }
+
+    /* === Era-sektion === */
+    .era-section {
+      margin-top: 28px;
+    }
+    .era-header {
+      border-radius: 12px; padding: 20px 22px; color: #fff; margin-bottom: 4px;
+    }
+    .era-paleozoikum { background: linear-gradient(135deg, #1565c0, #0d47a1); }
+    .era-mesozoikum  { background: linear-gradient(135deg, #2e7d32, #1b5e20); }
+    .era-kenozoikum  { background: linear-gradient(135deg, #6a1b9a, #4a148c); }
+    .era-header h2 { margin: 0 0 6px; font-size: clamp(18px, 4vw, 26px); }
+    .era-header .era-dates { font-size: 13px; opacity: .80; }
+    .era-header .era-motto { font-size: 15px; font-style: italic; opacity: .90; margin-top: 4px; }
+
+    /* === Period-sektion === */
+    .period-section {
+      background: #fff; border-radius: 12px; padding: 22px 22px;
+      margin-top: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    }
+    .period-section h3 {
+      margin: 0 0 4px; font-size: clamp(17px, 3.5vw, 22px); color: #1a1a1a;
+    }
+    .period-dates {
+      font-size: 13px; color: #666; margin: 0 0 14px; font-weight: 600;
+    }
+    .period-section p { margin: 10px 0; line-height: 1.7; font-size: 15px; }
+    .period-section h4 {
+      margin: 18px 0 4px; font-size: 15px; color: #004d40; border-bottom: 1px solid #e0f2f1;
+      padding-bottom: 3px;
+    }
+
+    /* === Epoker-ruta === */
+    .epochs-box {
+      background: #f3e5f5; border-left: 4px solid #7b1fa2;
+      border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 14px 0;
+    }
+    .epochs-box strong { color: #4a148c; }
+    .epochs-box ul { margin: 8px 0 0 16px; padding: 0; }
+    .epochs-box li { margin: 5px 0; font-size: 14px; line-height: 1.6; }
+
+    /* === Bild === */
+    .img-float-right {
+      float: right; margin: 0 0 14px 18px;
+      max-width: 280px; width: 100%;
+    }
+    .img-float-left {
+      float: left; margin: 0 18px 14px 0;
+      max-width: 280px; width: 100%;
+    }
+    .img-block { margin: 16px 0; text-align: center; }
+    .img-block img, .img-float-right img, .img-float-left img {
+      width: 100%; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.15); display: block;
+    }
+    .img-caption {
+      font-size: 12px; color: #555; font-style: italic;
+      margin-top: 5px; line-height: 1.5;
+    }
+    .img-caption strong { color: #333; font-style: normal; }
+    .clearfix::after { content: ''; display: table; clear: both; }
+
+    /* === Faktaruta === */
+    .fact-box {
+      background: #e8f5e9; border-left: 4px solid #2e7d32;
+      border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 14px 0;
+      font-size: 14px; line-height: 1.6;
+    }
+    .fact-box strong { color: #1b5e20; }
+
+    /* === Massutrotning-ruta === */
+    .extinction-box {
+      background: #fbe9e7; border-left: 4px solid #c62828;
+      border-radius: 0 8px 8px 0; padding: 12px 14px; margin: 14px 0;
+    }
+    .extinction-box strong { color: #b71c1c; }
+    .extinction-box p { margin: 5px 0; font-size: 14px; line-height: 1.6; }
+
+    /* === Footer-knapp === */
+    .back-btn-wrap { text-align: center; margin-top: 36px; }
+    .back-btn {
+      display: inline-block; padding: 14px 28px; background: #00796b; color: #fff;
+      border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0,121,107,.3);
+    }
+    .back-btn:hover { background: #004d40; }
+
+    @media (max-width: 600px) {
+      .img-float-right, .img-float-left {
+        float: none; max-width: 100%; margin: 14px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="Fanerozoikum.html" class="btn-back">← Tillbaka till spelet</a>
+</div>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>🌍 Fanerozoikum – Livet på Jordens historia</h1>
+    <p class="subtitle">En berättelse om 541 miljoner år av dramatiska förändringar – klimat, kontinenter, utrotningar och livets enastående uppfinningsrikedom.</p>
+    <p class="timespan">Fanerozoikum (av grekiskans <em>faineros</em> = synlig, <em>zōē</em> = liv) · 541 miljoner år sedan – nutid</p>
+  </div>
+
+  <!-- Innehållsförteckning -->
+  <div class="toc">
+    <h3>📋 Innehåll</h3>
+    <div class="toc-era">ERA I · Paleozoikum (541–252 Ma)</div>
+    <ul class="toc-list">
+      <li><a href="#kambrium">Kambrium (541–485 Ma)</a></li>
+      <li><a href="#ordovicium">Ordovicium (485–444 Ma)</a></li>
+      <li><a href="#silur">Silur (444–419 Ma)</a></li>
+      <li><a href="#devon">Devon (419–359 Ma)</a></li>
+      <li><a href="#karbon">Karbon (359–299 Ma)</a></li>
+      <li><a href="#perm">Perm (299–252 Ma)</a></li>
+    </ul>
+    <div class="toc-era">ERA II · Mesozoikum (252–66 Ma)</div>
+    <ul class="toc-list">
+      <li><a href="#trias">Trias (252–201 Ma)</a></li>
+      <li><a href="#jura">Jura (201–145 Ma)</a></li>
+      <li><a href="#krita">Krita (145–66 Ma)</a></li>
+    </ul>
+    <div class="toc-era">ERA III · Kenozoikum (66 Ma – nutid)</div>
+    <ul class="toc-list">
+      <li><a href="#paleogen">Paleogen (66–23 Ma)</a></li>
+      <li><a href="#neogen">Neogen (23–2,6 Ma)</a></li>
+      <li><a href="#kvartar">Kvartär (2,6 Ma – nutid)</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- ERA I: PALEOZOIKUM -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="era-section">
+    <div class="era-header era-paleozoikum">
+      <h2>ERA I · Paleozoikum</h2>
+      <div class="era-dates">541–252 miljoner år sedan · varaktighet: ~289 miljoner år</div>
+      <div class="era-motto">"Livet erövrar haven, landet och luften"</div>
+    </div>
+
+    <p style="padding: 12px 0 0; font-size: 15px; line-height: 1.7;">
+      Paleozoikum (av grekiskans <em>palaios</em> = gammal) är eran då flercelligt liv exploderade i mångfald.
+      Från havens bottnar med svampar och maskar utvecklades under drygt en kvarts miljard år
+      ryggradsdjur, landväxter och slutligen de första reptilerna. Eran avslutas med
+      den värsta massutrotningen i Jordens historia.
+    </p>
+
+    <!-- KAMBRIUM -->
+    <div class="period-section" id="kambrium">
+      <h3>🦐 Kambrium</h3>
+      <p class="period-dates">541–485 miljoner år sedan · varaktighet: ~56 miljoner år</p>
+
+      <div class="img-float-right">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Anomalocaris_canadensis.jpg"
+             alt="Rekonstruktion av Anomalocaris canadensis"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Anomalocaris canadensis</strong> – tidens topprovdjur, upp till en meter lång.
+          Fossilet hittades i Burgess Shale-formationen i Yoho National Park, British Columbia, Kanada.
+          Burgess Shale är ett av världens viktigaste fossillager och ett UNESCO-världsarv –
+          besökare kan följa guidade vandringar till fyndplatsen på drygt 2 000 meters höjd.
+          Bild: Wikimedia Commons (public domain)
+        </p>
+      </div>
+
+      <h4>Den kambriska explosionen</h4>
+      <p>
+        Kambrium är känt för en av evolutionens mest dramatiska händelser: den
+        <strong>kambriska explosionen</strong>. På en relativt kort geologisk tid – ungefär 10–25 miljoner år –
+        uppstod nästan alla moderna djurgrupper. Innan Kambrium dominerades livet av enkla mjukkroppsdjur
+        och bakterier. Plötsligt blomstrade ett fantastiskt utbud av djur med skal, ögon,
+        käkar och ledade lemmar.
+      </p>
+      <p>
+        Orsakerna är fortfarande omdiskuterade, men ökande syrehalter i haven, nya ekologiska nischer
+        och kanske genetiska nyckelmutationer (Hox-gener) tycks ha samverkat.
+      </p>
+
+      <h4>Havslivet – en främmande värld</h4>
+      <p>
+        I kambriska hav mylade det av experiment i form och funktion.
+        <strong>Trilobiter</strong> – leddjur med sammansatta ögon och hårt pansar – var periodens
+        dominerande djur och levde i 270 miljoner år. <strong>Anomalocaris</strong> (upp till 1 m)
+        var tidens apex-predator med ett gripvapen framför munnen. <strong>Hallucigenia</strong>
+        gick på styltar längs havsbottnen. <strong>Opabinia</strong> hade fem ögon och en lång snabel.
+        Dessa djur bevarades utomordentligt väl i <strong>Burgess Shale</strong> i Kanada och i
+        <strong>Chengjiang Biota</strong> i Yunnan, Kina.
+      </p>
+
+      <h4>Klimat och geografi</h4>
+      <p>
+        Jordens kontinenter var koncentrerade nära ekvatorn och sydpolen. Koldioxidhalten i atmosfären
+        var extremt hög – kanske 16 gånger dagens nivåer – och klimatet var varmt.
+        Inga inlandsisar existerade. Land var golhygget: inga växter, inga djur, bara klippor,
+        sand och biofilmer av cyanobakterier längs stränderna.
+      </p>
+      <div class="clearfix"></div>
+    </div>
+
+    <!-- ORDOVICIUM -->
+    <div class="period-section" id="ordovicium">
+      <h3>🐚 Ordovicium</h3>
+      <p class="period-dates">485–444 miljoner år sedan · varaktighet: ~41 miljoner år</p>
+
+      <h4>Havens blomstring</h4>
+      <p>
+        Ordoviciums hav var bland de artrikaste i Jordens historia. <strong>Koraller</strong> bildade
+        de första riffbarriärerna. <strong>Brachiopoder</strong> (skaldjur som liknar musslor men
+        inte är besläktade med dem) täckte havsbottnen. <strong>Graptoliter</strong> – koloniala djur
+        som simmade i öppet vatten i fjäderliknande kolonier – är viktiga ledartfossil för geologer
+        att datera bergarter. Riesiga <strong>nautilider</strong> (bläckfiskars skal-bärande släktingar)
+        nådde upp till 9 meters längd.
+      </p>
+
+      <h4>Första ryggradsdjuren med käkar</h4>
+      <p>
+        Under Ordovicium uppstod de första primitiva käklösa fiskarna (agnather) – förfäder till
+        nutidens nejonögon. Mot periodens slut dök de första käkförsedda fiskarna upp,
+        en revolution som öppnade upp en helt ny ekologisk strategi för rovdrift.
+      </p>
+
+      <h4>Land och atmosfär</h4>
+      <p>
+        De första enkla landväxterna – mossor och levermossor – tros ha koloniserat fuktigare
+        klippkuster. Syrehalten steg stadigt. Inga djur bodde ännu på land.
+      </p>
+
+      <div class="extinction-box">
+        <strong>💀 Ordovicisk-silurisk massutrotning (ca 444 Ma)</strong>
+        <p>
+          Periodernas slut markerades av en av Jordens fem stora massutrotningar.
+          Ungefär 85 % av alla marina arter dog ut. Orsaken var en dramatisk global nedkylning
+          när superkontinentet Gondwana drev in över sydpolen och skapade enorma inlandsisar.
+          Havsnivån sjönk med 50–100 meter och de grunda kusthaven, där livet blomstrade, torkade ut.
+        </p>
+      </div>
+    </div>
+
+    <!-- SILUR -->
+    <div class="period-section" id="silur">
+      <h3>🌿 Silur</h3>
+      <p class="period-dates">444–419 miljoner år sedan · varaktighet: ~25 miljoner år</p>
+
+      <h4>Återhämtning och landkolonisering</h4>
+      <p>
+        Klimatet värmde upp igen och haven steg. Livet återhämtade sig förvånansvärt snabbt.
+        Men den viktigaste händelsen i Silur utspelade sig på land:
+        <strong>de första kärlväxterna</strong> med ett ledningssystem för vatten och näring
+        koloniserade strandkanter och fuktiga sänkor. <em>Cooksonia</em> var en av de enklaste –
+        en liten, kluven stam utan blad, bara några centimeter hög. Mot periodens slut hade
+        mossor och primitiva ormbunksväxter börjat forma enkla samhällen på land.
+      </p>
+
+      <h4>Havslivet</h4>
+      <p>
+        I haven dominerade <strong>eurypterider</strong> – "havsskorpioner" – som nådde upp till
+        2,5 meters längd och var de största leddjur som någonsin levat. Korallreven återhämtade sig
+        och de käkförsedda fiskarna spred sig. <strong>Placodermer</strong> – bepansrade fiskar –
+        uppträdde och skulle dominera Devon.
+      </p>
+
+      <h4>De första djuren på land</h4>
+      <p>
+        Spår av leddjur – troligen kvalster och tusenben – finns bevarade i Silur.
+        I skydd av de enkla växternas fuktiga miljöer tog de första djuren sina försiktiga
+        steg upp från vattnet.
+      </p>
+    </div>
+
+    <!-- DEVON -->
+    <div class="period-section" id="devon">
+      <h3>🐟 Devon – fiskens tidsålder</h3>
+      <p class="period-dates">419–359 miljoner år sedan · varaktighet: ~60 miljoner år</p>
+
+      <div class="img-float-left">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tiktaalik_roseae_life_restor.jpg"
+             alt="Rekonstruktion av Tiktaalik roseae"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Tiktaalik roseae</strong> – ett av evolutionens mest berömda övergångsfossil,
+          ca 375 miljoner år gammalt. Funnet på Ellesmere Island i Nunavut, norra Kanada, 2004.
+          Originalfossilet förvaras vid University of Chicago. Ellesmere Island är avlägset arktiskt
+          vildmark – fyndplatsen nås enbart med liten propellerplan under sommarmånaderna.
+          Bild: Wikimedia Commons (CC BY 2.5, Nobu Tamura)
+        </p>
+      </div>
+
+      <h4>Fiskexplosionen</h4>
+      <p>
+        Devon kallas med rätta "fiskens tidsålder". Alla moderna fiskgrupper uppstod under denna period.
+        <strong>Hajar och rockor</strong> (broskfiskar) spred sig i haven.
+        <strong>Benfiskar</strong> diversifierades explosionsartat.
+        <strong>Dunkleosteus</strong> – en bepansrad placoderm upp till 6–8 meter lång – var periodens
+        topprovdjur med ett bett starkare än något annat käkförsett djur i sin tid.
+      </p>
+
+      <h4>Tiktaalik – steget upp på land</h4>
+      <p>
+        <strong>Tiktaalik roseae</strong> är ett av evolutionens mest berömda "missing links".
+        Funnet på Ellesmere Island i Kanada 2004, levde detta djur för ca 375 miljoner år sedan.
+        Det var en lobbensfisk vars fenor innehöll de ben som hos landdjur blivit arm-,
+        underarms- och handskelett. Tiktaalik kunde troligen lyfta sin kropp ur vattnet,
+        röra huvud och nacke oberoende av kroppen (ett drag saknat hos fiskar) och befinna sig
+        i grunt vatten och på land under korta perioder.
+      </p>
+
+      <h4>Jordens första skogar</h4>
+      <p>
+        <em>Archaeopteris</em> – ett träd upp till 10 meter högt med riktig ved och bladliknade
+        grenar – formade de första riktiga skogarna. Dessa skogar band enorma mängder koldioxid
+        ur atmosfären. CO₂-halten sjönk dramatiskt, klimatet svalnade och syrehalten steg.
+      </p>
+
+      <div class="extinction-box">
+        <strong>💀 Sen devonsk massutrotning (ca 372 Ma)</strong>
+        <p>
+          Ungefär 75 % av alla arter dog ut i en serie pulser under sen Devon.
+          Orsakerna är omdiskuterade: möjligen en kombination av syrefria havsbottnar (anoxia)
+          drivet av skogarnas koldioxidabsorption, klimatkylning och möjligen meteoritnedslag.
+          Marine ekosystem drabbades hårdast.
+        </p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <!-- KARBON -->
+    <div class="period-section" id="karbon">
+      <h3>🌲 Karbon – kolskogarnas tidsålder</h3>
+      <p class="period-dates">359–299 miljoner år sedan · varaktighet: ~60 miljoner år</p>
+
+      <div class="epochs-box">
+        <strong>Epoker – varför delas Karbon upp?</strong>
+        <ul>
+          <li><strong>Mississippian (359–323 Ma):</strong> Varmt klimat, grunda tropiska hav täckte
+          stora delar av Nordamerika och Europa. Rika korallrev och kalkstensformationer bildades.
+          Livet återhämtade sig efter devons massutrotning. Perioden är uppkallad efter
+          Mississippi-floden i USA där formationerna är väl utforskade.</li>
+          <li><strong>Pennsylvanian (323–299 Ma):</strong> Kolskogarnas guldålder. Enorma tropiska
+          sumpsskogar täckte vad som idag är Europa och Nordamerika. Klimatförändringar och
+          skogseldar var mer frekventa. Perioden uppkallad efter Pennsylvania, USA.
+          I Europa kallas dessa underperioder Dinantian och Silesian.</li>
+        </ul>
+        <em>Indelningen motiveras av att klimat, havsnivåer och ekosystem skilde sig markant
+        mellan de två halvorna av Karbon.</em>
+      </div>
+
+      <h4>Kolskogarna</h4>
+      <p>
+        Karbon är mest känt för sina enorma tropiska sumpsskogar, uppbyggda av
+        <strong>lykopodträd</strong> (som <em>Lepidodendron</em>, 30–50 meter höga),
+        <strong>fräkenträd</strong> (<em>Calamites</em>), tidiga barrträd och ormbunkar.
+        Dessa skogar producerade enorma mängder ved. Utan svampar och bakterier som kunde bryta
+        ned lignin (vedens hårda polymer) begravdes döda träd lag på lag och bildade till slut
+        de kolfilder som drev den industriella revolutionen – och gav perioden sitt namn
+        (latin: <em>carbo</em> = kol).
+      </p>
+
+      <h4>Livet tar nya steg</h4>
+      <p>
+        De <strong>första reptilerna</strong> uppstod under Karbon – en revolutionerande händelse.
+        Reptilernas <em>amniotiska ägg</em> (med skal och hinnor) behövde inte vattnet för att
+        inte torka ut, vilket frigjorde livet från beroendet av vatten för fortplantning.
+        <strong>Jätteinsekter</strong> trives i den syrerika luften: libellor med vingspann
+        upp till 70 cm (<em>Meganeura</em>), mångfotingar på 2 meters längd.
+      </p>
+
+      <h4>Atmosfär</h4>
+      <p>
+        Syrehalten nådde ca 35 % (jämfört med 21 % idag) och koldioxidhalten sjönk drastiskt.
+        Det höga syreinnehållet gynnade stora djur men skapade också brandbenägen vegetation –
+        spår av skogsbränder syns i kolfyndigheterna.
+      </p>
+    </div>
+
+    <!-- PERM -->
+    <div class="period-section" id="perm">
+      <h3>🦎 Perm – synapsidernas tidsålder</h3>
+      <p class="period-dates">299–252 miljoner år sedan · varaktighet: ~47 miljoner år</p>
+
+      <div class="img-float-right">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dimetrodon_BW.jpg"
+             alt="Rekonstruktion av Dimetrodon"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Dimetrodon grandis</strong> – trots att den liknar en dinosaurie är Dimetrodon
+          faktiskt en synapsid och däggdjurens avlägsne förfader. Fossilrester finns i "Red Beds"
+          i Texas och Oklahoma, USA – nu torra öknar, men under Perm låg de nära ekvatorn.
+          Bild: Wikimedia Commons (CC BY, Nobu Tamura)
+        </p>
+      </div>
+
+      <h4>Pangaea</h4>
+      <p>
+        Under Perm slutfördes sammansmältningen av alla kontinenter till
+        <strong>superkontinentet Pangaea</strong> omgiven av det globala havet <em>Panthalassa</em>.
+        Pangaeas enorma storlek skapade ett extremt kontinentalklimat: brinnande öknar i inlandet,
+        kraftiga monsuner längs kusterna och dramatiska årstidsskillnader.
+      </p>
+
+      <h4>Synapsiderna dominerar</h4>
+      <p>
+        <strong>Dimetrodon</strong> – ofta felaktigt kallad "dinosaurie" – var en synapsid och
+        topprovdjur i tidig Perm. Den karaktäristiska ryggfensan var sannolikt ett redskap
+        för temperaturreglering. Senare synapsider som <strong>cynodonter</strong> och
+        <strong>dicynodonter</strong> var alltmer lika moderna däggdjur i både kropp och beteende –
+        de hade möjligen päls och ett mer aktivt ämnesomsättning.
+      </p>
+
+      <div class="extinction-box">
+        <strong>💀 Perm–Trias-massutrotningen: "Den stora döden" (ca 252 Ma)</strong>
+        <p>
+          Den värsta katastrofen i Jordens historia. Upp till <strong>96 % av alla marina arter</strong>
+          och 70 % av landdjursarterna dog ut. Den sannolika huvudorsaken var
+          <strong>Sibiriska trapprovinsen</strong> – ett gigantiskt vulkanutbrott som pågick i
+          hundratusentals år och täckte 2 miljoner km² av nutidens Sibirien med lava.
+          Utbrottet frisatte enorma mängder CO₂ och svaveldioxid, orsakade extremt
+          växthusklimat och försurning av haven. Det tog 5–10 miljoner år
+          för ekosystemen att återhämta sig.
+        </p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div><!-- /era paleozoikum -->
+
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- ERA II: MESOZOIKUM -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="era-section">
+    <div class="era-header era-mesozoikum">
+      <h2>ERA II · Mesozoikum</h2>
+      <div class="era-dates">252–66 miljoner år sedan · varaktighet: ~186 miljoner år</div>
+      <div class="era-motto">"Reptilernas och dinosauriernas tidsålder"</div>
+    </div>
+
+    <p style="padding: 12px 0 0; font-size: 15px; line-height: 1.7;">
+      Mesozoikum (av grekiskans <em>mesos</em> = mellom) är eran då reptilerna tog över Jordens
+      ekosystem. Från det nästan tomma ekosystemet efter Perm-katastrofen reste sig
+      dinosaurernas välde, fåglarna uppstod, de första däggdjuren smög fram i mörkret
+      och blomväxterna revolutionerade Jordens vegetation. Eran slutar med ett asteroidnedslag
+      som förändrade allt.
+    </p>
+
+    <!-- TRIAS -->
+    <div class="period-section" id="trias">
+      <h3>🦕 Trias – återfödelsens period</h3>
+      <p class="period-dates">252–201 miljoner år sedan · varaktighet: ~51 miljoner år</p>
+
+      <div class="epochs-box">
+        <strong>Epoker – varför delas Trias upp?</strong>
+        <ul>
+          <li><strong>Tidig Trias (252–247 Ma):</strong> Livet på ett minimum. Ekosystemen var
+          nästan tomma efter massutrotningen. Några få generalistarter – som det hundstora
+          <em>Lystrosaurus</em> – dominerade helt. Havet var varmt och syrefattigt.</li>
+          <li><strong>Mellantrias (247–237 Ma):</strong> Gradvis återhämtning. De första äkta
+          dinosaurierna uppstod i slutet av denna epok. Krokodilernas och sköldpaddsarnas
+          förfäder diversifierades.</li>
+          <li><strong>Sen Trias (237–201 Ma):</strong> Dinosaurernas och pterosaurernas genombrott.
+          De första äkta däggdjuren uppstod – små insektsätare i nattens skydd.
+          Pangaea börjar spricka.</li>
+        </ul>
+      </div>
+
+      <h4>Pangaea spricker</h4>
+      <p>
+        Under sen Trias började Pangaea spricka längs vad som skulle bli Atlanten.
+        Den <strong>centrala atlantiska magmaprovinsen (CAMP)</strong> – ett av de mest
+        omfattande vulkanutbrotten i Jordens historia – frisatte enorma mängder CO₂ och
+        bidrog till den triassiska massutrotningen vid periodens slut.
+      </p>
+
+      <h4>De första dinosaurerna</h4>
+      <p>
+        <em>Eoraptor</em> och <em>Herrerasaurus</em> från Argentina är bland de äldsta kända
+        dinosaurerna – relativt små, tvåbenta rovdjur. <em>Plateosaurus</em>, en 8–10 meter lång
+        sauropodomorph från Europa, var en tidig växtätare och visar hur snabbt
+        dinosaurierna diversifierades.
+      </p>
+
+      <div class="fact-box">
+        <strong>💡 Varför överlevde dinosaurerna?</strong> En teori är att dinosaurierna hade
+        en mer effektiv andning (med luftsäckar, liknande fåglar) som gav dem fördelar i
+        den syrefattiga luften under sen Trias, när syrehalten kan ha sjunkit till 16 %.
+      </div>
+    </div>
+
+    <!-- JURA -->
+    <div class="period-section" id="jura">
+      <h3>🦖 Jura – dinosauriernas guldålder</h3>
+      <p class="period-dates">201–145 miljoner år sedan · varaktighet: ~56 miljoner år</p>
+
+      <div class="img-float-right">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Archaeopteryx_lithographica_(Berlin_specimen).jpg"
+             alt="Archaeopteryx litographica, Berlinexemplaret"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Archaeopteryx lithographica</strong> – Berlinexemplaret, ca 150 miljoner år gammalt.
+          Funnet 1876–77 vid Blumenberg nära Eichstätt, Bayern, Tyskland, i den finkorniga
+          Solnhofen-kalkstenen. Förvaras på <em>Museum für Naturkunde</em> i Berlin –
+          ett av Europas finaste naturhistoriska museer, känt för sitt välbevarade
+          Brachiosaurus-skelett (det längsta uppställda dinosaurie-skelett i världen).
+          Bild: Wikimedia Commons (public domain)
+        </p>
+      </div>
+
+      <h4>Sauropodernas välde</h4>
+      <p>
+        Jura är dinosauriernas blomstringstid. <strong>Sauropoderna</strong> – de långhalsade
+        växtätarna – nådde imponerande dimensioner: <em>Brachiosaurus</em> vägde 60–80 ton och
+        var 26 meter lång, <em>Diplodocus</em> nådde 33 meters längd.
+        Dessa djur är de största landlevande djur som någonsin existerat.
+        <strong>Stegosaurus</strong> med sina benplattor längs ryggen var ett vanligt herbivort.
+      </p>
+
+      <h4>Havets och luftens varelser</h4>
+      <p>
+        I haven dominerade <strong>ichtyosaurer</strong> (delfin-liknande reptiler) och
+        <strong>plesiosaurer</strong> med långa halsar och paddlar. I luften svingade sig
+        <strong>pterosaurer</strong> med vingspann upp till 12 meter hos de största arterna.
+        <em>Allosaurus</em> (12 meter, 2 ton) var Juras främste landrovdjur.
+      </p>
+
+      <h4>Archaeopteryx – länken till fåglarna</h4>
+      <p>
+        <strong>Archaeopteryx</strong> ("urvingens fågel"), funnen i Solnhofen-kalkstenen i Bayern,
+        är ett av paleontologins allra viktigaste fossil. Den hade <em>fjädrar</em> precis som
+        fåglar, men också <em>tänder</em>, <em>klor på vingarna</em> och ett långt skelettsvans –
+        drag av dinosaurier. Archaeopteryx visar tydligt att fåglar är levande dinosaurier.
+      </p>
+
+      <div class="epochs-box">
+        <strong>Epoker</strong>
+        <ul>
+          <li><strong>Tidig Jura (201–174 Ma):</strong> Ekosystemen återhämtade sig efter
+          triassiska massutrotningen. Dinosaurierna spred sig och diversifierades. Havens
+          reptiler dominerade.</li>
+          <li><strong>Mellanjura (174–163 Ma):</strong> Sauropodernas explosiva diversifiering.
+          De första riktiga fågelförfäderna uppstod. Gondwana fortsatte att splittras.</li>
+          <li><strong>Sen Jura (163–145 Ma):</strong> Stegosaurier, stora sauropoder och
+          Allosaurus dominerade. Archaeopteryx levde i denna epok. Nordamerika och Europa
+          separerades av ett grunt innanhav.</li>
+        </ul>
+      </div>
+
+      <h4>Klimat och växter</h4>
+      <p>
+        Jura var generellt varmt och fuktigt. Polerna var isfria. Koldioxidhalten var hög.
+        Barrträd, ormbunkar, cykadéer och ginkgoträd formade Juras skogar.
+        Inga blomväxter existerade ännu.
+      </p>
+      <div class="clearfix"></div>
+    </div>
+
+    <!-- KRITA -->
+    <div class="period-section" id="krita">
+      <h3>🌺 Krita – blomväxternas och T. rex tidsålder</h3>
+      <p class="period-dates">145–66 miljoner år sedan · varaktighet: ~79 miljoner år</p>
+
+      <div class="img-float-left">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tyrannosaurus_rex_mmartyniuk_wiki.png"
+             alt="Rekonstruktion av Tyrannosaurus rex"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Tyrannosaurus rex</strong> – rekonstruktion baserad på fossilfynd.
+          Det mest kompletta T. rex-skelett som hittats ("Sue") återfinns på
+          <em>Field Museum of Natural History</em> i Chicago, USA –
+          ett av världens mest besökta naturhistoriska museer med 40 miljoner föremål.
+          T. rex-skelett finns också på <em>American Museum of Natural History</em> i New York.
+          Bild: Wikimedia Commons (CC BY-SA 3.0, Matt Martyniuk)
+        </p>
+      </div>
+
+      <h4>Blomväxternas revolution</h4>
+      <p>
+        En av Kritas viktigaste händelser var <strong>blomväxternas</strong> (angiospermer)
+        uppkomst och explosion. Blommor och frukter skapade nya evolutionära allianser med
+        insekter (pollinering) och ryggradsdjur (fröspridning). Mot slutet av Krita
+        dominerade blomväxterna de flesta landbaserade ekosystem.
+      </p>
+
+      <h4>Dinosauriernas höjdpunkt</h4>
+      <p>
+        Krita rymmer de mest ikoniska dinosaurierna.
+        <strong>Tyrannosaurus rex</strong> levde i sen Krita med ett bett kraftigare än
+        något annat landlevande djur i Jordens historia.
+        <strong>Triceratops</strong> med sina tre horn och nackskärm var ett socialt levande herbivort.
+        Fjäderprydda rovdjur som <em>Velociraptor</em> och <em>Deinonychus</em> var sannolikt
+        intelligenta jaktare. <strong>Ankylosaurus</strong> bar ett pansar av benbrickor.
+      </p>
+
+      <div class="epochs-box">
+        <strong>Epoker</strong>
+        <ul>
+          <li><strong>Tidig Krita (145–100 Ma):</strong> Gondwana fortsatte splittras.
+          Atlanten breddades. De fjäderklädda dinosaurierna diversifierades kraftigt.
+          De första blommorna uppstod.</li>
+          <li><strong>Sen Krita (100–66 Ma):</strong> T. rex, Triceratops och de klassiska
+          nordamerikanska dinosaurierna levde här. Blomväxterna tog över.
+          Havsytan var 200–300 meter högre än idag och grunda innanhav delade Nordamerika.</li>
+        </ul>
+      </div>
+
+      <div class="extinction-box">
+        <strong>💀 K-Pg-massutrotningen (66 Ma) – asteroidnedslaget vid Chicxulub</strong>
+        <p>
+          För 66 miljoner år sedan slog en asteroid med 10–15 km diameter ned vid nutidens
+          Yucatán-halvö i Mexiko (<strong>Chicxulub-kratern</strong>, 180 km i diameter).
+          Explosionen, de globala tsunamivågorna och den långvariga "vintern" – då damm och
+          sotpartiklar blockade solljuset i månader till år – raderade ut 75 % av alla arter.
+          Alla icke-flygsamma dinosaurier utrotades. <strong>Fåglarna</strong> (flygande dinosaurier)
+          och de tidiga däggdjuren överlevde och tog över de lediga nischerna.
+        </p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div><!-- /era mesozoikum -->
+
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- ERA III: KENOZOIKUM -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="era-section">
+    <div class="era-header era-kenozoikum">
+      <h2>ERA III · Kenozoikum</h2>
+      <div class="era-dates">66 miljoner år sedan – nutid · varaktighet: ~66 miljoner år (pågår)</div>
+      <div class="era-motto">"Däggdjurens, blomväxternas och slutligen människans tidsålder"</div>
+    </div>
+
+    <p style="padding: 12px 0 0; font-size: 15px; line-height: 1.7;">
+      Kenozoikum (av grekiskans <em>kainos</em> = ny) är eran vi lever i. Däggdjur, fåglar och
+      blomväxter fyllde de ekologiska nischer som dinosauriernas utrotning lämnat tomma.
+      Under 66 miljoner år svalnade klimatet gradvis, inlandsisar formades och till slut
+      uppstod – hos en liten gren av primater – det djur som nu formar hela planetens framtid.
+    </p>
+
+    <!-- PALEOGEN -->
+    <div class="period-section" id="paleogen">
+      <h3>🐘 Paleogen – däggdjurens blomstring</h3>
+      <p class="period-dates">66–23 miljoner år sedan · varaktighet: ~43 miljoner år</p>
+
+      <div class="epochs-box">
+        <strong>Epoker</strong>
+        <ul>
+          <li><strong>Paleocen (66–56 Ma):</strong> Återhämtningsepoken. Däggdjuren var
+          fortfarande relativt små men spred sig explosionsartat. Inga moderna ordningar
+          fanns ännu i sin nuvarande form. Polerna var isfria och tropisk vegetation
+          sträckte sig långt norrut. Stora flygoförmögna fåglar som <em>Gastornis</em>
+          kan ha spelat rollen som topprovdjur.</li>
+          <li><strong>Eocen (56–34 Ma):</strong> Jordens varmaste period under Kenozoikum.
+          De första hästarna uppstod (<em>Hyracotherium</em>, hundstorlek med fyra tår).
+          <em>Pakicetus</em> – ett landlevande däggdjur som gradvis anpassade sig till havet –
+          är de moderna valars förfader. Primitiva primater utvecklades i Sydostasien och Afrika.
+          Eocens slut markerades av en snabb avkylning kallad "Grande Coupure".</li>
+          <li><strong>Oligocen (34–23 Ma):</strong> Antarktisens iskappa bildades när
+          Sydamerika och Australien separerades från Antarktis och ett cirkulerande havsströmmar
+          isolerade kontinenten termiskt. Gräsmarkerna bredde ut sig.
+          <em>Indricotherium (Paraceratherium)</em> – det
+          största landlevande däggdjuret i historien (5 m i mankhöjd, upp till 20 ton) –
+          levde i Oligocen.</li>
+        </ul>
+      </div>
+
+      <h4>Geografi och klimat</h4>
+      <p>
+        Atlanten fortsatte att breddas. Indien kolliderade med Asien och reste
+        <strong>Himalaya</strong>. Alperna formades av Afrikas rörelse mot Europa.
+        Under Eocen var klimatet så varmt att krokodiler och palmer levde vid Arktis.
+      </p>
+
+      <div class="fact-box">
+        <strong>💡 Valarna – havets nykomling</strong> Valarnas evolution är en av de mest
+        dramatiska i ryggradsdjurens historia. Från landlevande, klövbärande däggdjur liknande
+        nutidens flodhästar gick det på drygt 15 miljoner år – via <em>Pakicetus</em>,
+        <em>Ambulocetus</em> (en "gångande val") och <em>Rodhocetus</em> – till fullt anpassade
+        havsdäggdjur utan bakben. Fossil av dessa övergångsformer har hittats i
+        nutidens Egypten och Pakistan.
+      </div>
+    </div>
+
+    <!-- NEOGEN -->
+    <div class="period-section" id="neogen">
+      <h3>🐎 Neogen – gräsmarkernas och primaternas tidsålder</h3>
+      <p class="period-dates">23–2,6 miljoner år sedan · varaktighet: ~20 miljoner år</p>
+
+      <div class="epochs-box">
+        <strong>Epoker</strong>
+        <ul>
+          <li><strong>Miocen (23–5,3 Ma):</strong> Gräsmarkerna expanderade dramatiskt och
+          skapade de savanner och stäpper vi känner idag. Hästarnas evolution accelererade –
+          tårna reducerades från tre till en (<em>Merychippus</em>, <em>Pliohippus</em>).
+          Valar diversifierades. De första hominiderna uppstod i Afrika.
+          Klimatet var varmare än idag men svalnade gradvis.</li>
+          <li><strong>Pliocen (5,3–2,6 Ma):</strong> Klimatet fortsatte att svalnas.
+          Panamanäset slutfördes och separerade Atlanten och Stilla havet, vilket
+          omformade havscirkulationerna och förstärkte nedisningarna på norra halvklotet.
+          <em>Australopithecus</em> i Afrika – upprätt gående hominid med ett litet hjärna –
+          levde på de öppna savanerna. Istidernas cykler började.</li>
+        </ul>
+      </div>
+
+      <h4>Klimat och Himalaya</h4>
+      <p>
+        Himalaya fortsatte att resa sig under Neogen. Bergskedjans tillväxt påverkade
+        globala vindmönster och bidrog till gräsmarkernas spridning i Asien och Afrika.
+        Den globala avkylningen under Neogen är kopplad till den andinska och himalayanska
+        bergskedjebildningen som absorberar CO₂ vid kemisk vittring av bergarter.
+      </p>
+    </div>
+
+    <!-- KVARTÄR -->
+    <div class="period-section" id="kvartar">
+      <h3>🧊 Kvartär – istidernas och människans tidsålder</h3>
+      <p class="period-dates">2,6 miljoner år sedan – nutid · varaktighet: pågår</p>
+
+      <div class="img-float-right">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Woolly_mammoth_model_Royal_BC_Museum_in_Victoria.jpg"
+             alt="Ullhårig mammut, rekonstruktionsmodell"
+             onerror="this.parentElement.style.display='none'">
+        <p class="img-caption">
+          <strong>Ullhårig mammut (<em>Mammuthus primigenius</em>)</strong> – rekonstruktionsmodell.
+          Utställd på <em>Royal BC Museum</em> i Victoria, British Columbia, Kanada –
+          ett av Kanadas mest besökta museer med enastående utställningar om istidstidens megafauna
+          och ursprungsbefolkningens historia. Mammutarna dog ut för ca 4 000 år sedan;
+          de sista individerna levde isolerade på Wrangel Island i Arktis.
+          Bild: Wikimedia Commons (CC BY-SA 3.0)
+        </p>
+      </div>
+
+      <div class="epochs-box">
+        <strong>Epoker</strong>
+        <ul>
+          <li><strong>Pleistocen (2,6 Ma – 11 700 år sedan):</strong> Istidernas era.
+          Enorma inlandsisar täckte vid maximum 30 % av Jordens landyta. Sverige var under
+          de senaste istiden täckt av upp till 3 km tjock is. <em>Mammuthus primigenius</em>
+          (ullhårig mammut), ullhårig noshörning och sabeltandad katt (<em>Smilodon</em>)
+          dominerade tundrasteppen. <em>Homo erectus</em> och sedan
+          <em>Homo sapiens</em> (uppstod ca 300 000 år sedan i Afrika) spred sig över världen.</li>
+          <li><strong>Holocen (11 700 år sedan – nutid):</strong> Den interglacialperiod vi lever i.
+          Inlandsisarna drog sig tillbaka, havsytan steg ca 120 meter och de stora
+          istidens megafauna dog ut. Jordbruket uppstod ca 10 000 år sedan och civilisationerna
+          blomstrade. Koldioxidhalten och temperaturen har under Holocen varit relativt stabila –
+          fram till den industriella revolutionen.</li>
+        </ul>
+      </div>
+
+      <h4>Istidernas rytm – Milankovič-cyklerna</h4>
+      <p>
+        Istidernas regelbundna rytm (ca 100 000 år mellan istidernas maximum) styrs av
+        <strong>Milankovič-cyklerna</strong>: variationer i Jordens omloppsbana runt Solen,
+        axelns lutning och precessionens wobble. Dessa variationer ändrar hur mycket solstrålning
+        som träffar norra halvklotets höga breddgrader under sommaren – och avgör om snö
+        och is kan byggas upp eller smälter bort.
+      </p>
+
+      <h4>Megafauna-utrotningen</h4>
+      <p>
+        Mot slutet av Pleistocen och i Holocens inledning dog de flesta av världens stora däggdjur ut.
+        I Nordamerika försvann mammutarna, mastodonterna, sabeltandade katter, kameler och hästar
+        på ett geologiskt ögonblick. I Australien utrotades de gigantiska pungdjuren
+        (<em>Diprotodon</em>, jättekänguruer). I Sverige dog mammuten och den ullhåriga noshörningen ut.
+        Det är fortfarande debatterat om det primärt var <strong>klimatförändringar</strong> eller
+        <strong>human jakt</strong> som orsakade utrotningarna – troligen en kombination av båda.
+      </p>
+
+      <h4>Människans tid</h4>
+      <p>
+        <em>Homo sapiens</em> uppstod i Afrika för ca 300 000 år sedan. Spridningen ut ur Afrika
+        skedde i flera vågor – den sista stora för ca 70 000 år sedan. Längs vägen
+        mötte vi och korsade oss med <em>Neandertalarna</em> (Europa och Väst-Asien) och
+        <em>Denisovanerna</em> (Asien). Alla icke-afrikanska människor bär ca 1–4 % neandertal-DNA.
+      </p>
+
+      <div class="fact-box">
+        <strong>💡 Antropocen – en ny epok?</strong>
+        Många geologer föreslår att vi nu lever i <strong>Antropocen</strong> – en epok formad
+        av mänskliga aktiviteter. Fosforesten av plast i sediment, radioaktivt nedfall från
+        kärnvapenstester (från 1950-talet), massiva ekosystemförändringar och en
+        CO₂-ökning utan motstycke sedan Perm syns i det geologiska lagret.
+        Om geologer om en miljon år borrar i dagens bergarter kommer de att se ett tydligt
+        "golden spike" – ett lager som markerar vår tid.
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div><!-- /era kenozoikum -->
+
+  <!-- Tillbaka-knapp -->
+  <div class="back-btn-wrap">
+    <a href="Fanerozoikum.html" class="back-btn">← Tillbaka till spelet</a>
+  </div>
+
+</div><!-- /wrap -->
+</body>
+</html>
