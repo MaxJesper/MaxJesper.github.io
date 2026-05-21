@@ -23,6 +23,11 @@
       box-shadow: 0 2px 4px rgba(0,0,0,.08); text-decoration: none; color: #0056b3; font-size: 14px;
     }
     .subject-btn:hover { text-decoration: underline; }
+    .subject-btn-highlight {
+      background: #1565c0; color: #fff;
+      box-shadow: 0 2px 6px rgba(21,101,192,.35);
+    }
+    .subject-btn-highlight:hover { background: #0d47a1; color: #fff; text-decoration: none; }
     .score-area { display: flex; align-items: center; gap: 8px; }
     #scoreDisplay {
       background: #fff; border-radius: 10px; padding: 8px 16px;
@@ -286,7 +291,7 @@
   <div class="topbar-links">
     <a href="index.html" class="subject-btn">← Evolution</a>
     <a href="nardada_regler.html" class="subject-btn">📘 Spelregler</a>
-    <a href="Fanerozoikum-lar-mer.html" class="subject-btn">🔬 Spelet om Livet under Fanerozoikum</a>
+    <a href="Fanerozoikum-lar-mer.html" class="subject-btn subject-btn-highlight">📖 Lär mer om Livet under Fanerozoikum</a>
   </div>
   <div class="score-area">
     <button class="btn-small" onclick="confirmResetScore()">Nollställ poäng</button>
