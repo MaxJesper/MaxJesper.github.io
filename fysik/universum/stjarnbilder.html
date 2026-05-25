@@ -103,6 +103,24 @@
       line-height: 1.65;
     }
 
+    /* ===== Miniatyr-SVG ===== */
+    .const-svg {
+      float: right;
+      margin: 0 0 0.5rem 1rem;
+      background: #0d0d2b;
+      border-radius: 10px;
+      border: 1px solid #4a1f8c44;
+      width: 120px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+
+    .const-svg svg { width: 100%; height: 100%; display: block; }
+
+    @media (max-width: 520px) {
+      .const-svg { width: 90px; height: 75px; }
+    }
+
     /* ===== Objekt-lista ===== */
     .objekt-lista {
       margin: 0.8rem 0;
@@ -231,6 +249,25 @@
 
     <!-- Lilla Björnen -->
     <section class="stjarnbild" id="lilla-bjorn">
+      <div class="const-svg" aria-hidden="true">
+        <svg viewBox="0 0 120 105" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="105" fill="#0d0d2b"/>
+          <line x1="60" y1="16" x2="74" y2="38" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="74" y1="38" x2="62" y2="58" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="62" y1="58" x2="48" y2="66" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="48" y1="66" x2="62" y2="76" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="62" y1="76" x2="72" y2="78" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="72" y1="78" x2="84" y2="74" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <circle cx="60" cy="16" r="5" fill="#ffffcc"/>
+          <circle cx="74" cy="38" r="2.5" fill="white"/>
+          <circle cx="62" cy="58" r="3" fill="white"/>
+          <circle cx="48" cy="66" r="3.5" fill="white"/>
+          <circle cx="62" cy="76" r="2.5" fill="white"/>
+          <circle cx="72" cy="78" r="2.5" fill="white"/>
+          <circle cx="84" cy="74" r="2.5" fill="white"/>
+          <text x="63" y="13" font-size="7" fill="#ffffcc" opacity="0.9" font-family="system-ui">Polaris</text>
+        </svg>
+      </div>
       <div class="stjarnbild-header">
         <h3>Lilla Björnen <span class="circumpolar-badge">↑ Norr alltid</span></h3>
         <span class="stjarnbild-latin">Ursa Minor</span>
@@ -264,6 +301,26 @@
 
     <!-- Stora Björnen -->
     <section class="stjarnbild" id="stora-bjorn">
+      <div class="const-svg" aria-hidden="true">
+        <svg viewBox="0 0 120 105" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="105" fill="#0d0d2b"/>
+          <line x1="24" y1="66" x2="36" y2="78" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="36" y1="78" x2="52" y2="74" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="52" y1="74" x2="62" y2="60" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="62" y1="60" x2="36" y2="78" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="62" y1="60" x2="76" y2="50" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="76" y1="50" x2="90" y2="36" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="90" y1="36" x2="104" y2="26" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <circle cx="24" cy="66" r="3.5" fill="white"/>
+          <circle cx="36" cy="78" r="3" fill="white"/>
+          <circle cx="52" cy="74" r="3" fill="white"/>
+          <circle cx="62" cy="60" r="3" fill="white"/>
+          <circle cx="76" cy="50" r="3.5" fill="white"/>
+          <circle cx="90" cy="36" r="3.5" fill="white"/>
+          <circle cx="104" cy="26" r="3" fill="white"/>
+          <text x="10" y="64" font-size="6.5" fill="white" opacity="0.7" font-family="system-ui">Dubhe</text>
+        </svg>
+      </div>
       <div class="stjarnbild-header">
         <h3>Stora Björnen</h3>
         <span class="stjarnbild-latin">Ursa Major</span>
@@ -309,6 +366,21 @@
 
     <!-- Cassiopeja -->
     <section class="stjarnbild" id="cassiopeja">
+      <div class="const-svg" aria-hidden="true">
+        <svg viewBox="0 0 120 105" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="105" fill="#0d0d2b"/>
+          <line x1="16" y1="48" x2="36" y2="68" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="36" y1="68" x2="60" y2="48" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="60" y1="48" x2="84" y2="68" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="84" y1="68" x2="104" y2="48" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <circle cx="16" cy="48" r="3" fill="white"/>
+          <circle cx="36" cy="68" r="3.5" fill="white"/>
+          <circle cx="60" cy="48" r="3" fill="white"/>
+          <circle cx="84" cy="68" r="3" fill="white"/>
+          <circle cx="104" cy="48" r="3" fill="white"/>
+          <text x="50" y="30" font-size="8" fill="white" opacity="0.6" text-anchor="middle" font-family="system-ui">W</text>
+        </svg>
+      </div>
       <div class="stjarnbild-header">
         <h3>Cassiopeja</h3>
         <span class="stjarnbild-latin">Cassiopeia</span>
@@ -352,6 +424,27 @@
 
     <!-- Orion -->
     <section class="stjarnbild" id="orion">
+      <div class="const-svg" aria-hidden="true">
+        <svg viewBox="0 0 120 105" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="105" fill="#0d0d2b"/>
+          <line x1="32" y1="18" x2="40" y2="54" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="32" y1="18" x2="84" y2="22" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="84" y1="22" x2="80" y2="54" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="40" y1="54" x2="60" y2="52" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="60" y1="52" x2="80" y2="54" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="40" y1="54" x2="38" y2="85" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <line x1="80" y1="54" x2="86" y2="80" stroke="rgba(200,180,255,0.4)" stroke-width="1"/>
+          <circle cx="32" cy="18" r="4.5" fill="#ff8844"/>
+          <circle cx="84" cy="22" r="3.5" fill="#aaddff"/>
+          <circle cx="40" cy="54" r="2.5" fill="white"/>
+          <circle cx="60" cy="52" r="2.5" fill="white"/>
+          <circle cx="80" cy="54" r="2.5" fill="white"/>
+          <circle cx="38" cy="85" r="2.5" fill="white"/>
+          <circle cx="86" cy="80" r="5" fill="#99ccff"/>
+          <text x="20" y="16" font-size="7" fill="#ff8844" opacity="0.85" font-family="system-ui">Betelgeuze</text>
+          <text x="76" y="93" font-size="7" fill="#99ccff" opacity="0.85" font-family="system-ui">Rigel</text>
+        </svg>
+      </div>
       <div class="stjarnbild-header">
         <h3>Orion – jägaren</h3>
         <span class="stjarnbild-latin">Orion</span>

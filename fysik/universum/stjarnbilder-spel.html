@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stjärnbildskort – Universum</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 1.1em;
+    }
+
+    /* ===== Kontrollrad ===== */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .counter {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    /* ===== Kort ===== */
+    .card-wrap {
+      perspective: 1200px;
+      min-height: 400px;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      min-height: 400px;
+      background: #0d0d2b;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(74,31,140,0.25), 0 0 0 1px #4a1f8c44;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem 1.2rem 1.2rem;
+      box-sizing: border-box;
+    }
+
+    .card-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #e8d8ff;
+      margin-bottom: 0.2rem;
+      text-align: center;
+    }
+
+    .card-latin {
+      font-size: 0.9rem;
+      color: #9980cc;
+      font-style: italic;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .card-svg-wrap {
+      width: 100%;
+      max-width: 380px;
+      flex: 1;
+    }
+
+    .card-svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-desc {
+      margin-top: 0.9rem;
+      font-size: 0.92rem;
+      color: #bba8e0;
+      text-align: center;
+      line-height: 1.55;
+      max-width: 380px;
+    }
+
+    /* ===== Knappar ===== */
+    .btn-row {
+      display: flex;
+      gap: 0.7rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+
+    .btn {
+      background: #f2eeff;
+      color: #4a1f8c;
+      border: 1px solid #c4a8f0;
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 0.97rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s ease;
+    }
+
+    .btn:hover { background: #e4d7fb; }
+    .btn:disabled { opacity: 0.35; cursor: default; }
+
+    .btn-back {
+      background: transparent;
+      color: #888;
+      border-color: #ccc;
+    }
+    .btn-back:hover { background: #f0f0f0; color: #444; }
+
+    /* ===== Progress bar ===== */
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: #e4d7fb;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #4a1f8c;
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    /* ===== Star label styles in SVG ===== */
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Stjärnbildskort</h1>
+    <p>Universum – lär känna himlen</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="margin-bottom:1rem;">
+      <a href="./larande-spel.html" class="subject-btn">← Lärande spel</a>
+    </p>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="controls">
+      <span class="counter" id="counter">Kort 1 av 8</span>
+      <label style="font-size:0.88rem; color:#666; display:flex; align-items:center; gap:0.35rem;">
+        <input type="checkbox" id="shuffle-cb"> Slumpa ordning
+      </label>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card" id="card"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-back" id="btn-prev" onclick="move(-1)">◀ Föregående</button>
+      <button class="btn" id="btn-next" onclick="move(1)">Nästa ▶</button>
+    </div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  // ============================================================
+  //  DATA – 8 stjärnbilder med SVG-koordinater
+  //  Koordinatsystem: viewBox="0 0 300 260"
+  //  Stjärnor: [x, y, radie, namn (tomt om namnlös)]
+  //  Linjer: [[i1,i2], ...] – index i stjärnlistan
+  // ============================================================
+  const cards = [
+    {
+      name: "Orion",
+      latin: "Orion · Ori",
+      season: "Vinter (dec–feb), mot söder",
+      desc: "Tre stjärnor i rad – Orions bälte – gör denna stjärnbild omöjlig att missa. Betelgeuze (röd superjätte) och Rigel (blå superjätte) är de ljusstarkaste.",
+      stars: [
+        [80,  45, 5.5, "Betelgeuze"],   // 0  övre vänster, röd
+        [210, 55, 4,   "Bellatrix"],    // 1  övre höger
+        [100, 135,3,   "Mintaka"],      // 2  bälte vänster
+        [150, 130,3,   "Alnilam"],      // 3  bälte mitten
+        [200, 130,3,   "Alnitak"],      // 4  bälte höger
+        [95,  210,4,   "Saiph"],        // 5  nedre vänster
+        [215, 200,6,   "Rigel"],        // 6  nedre höger, blå
+      ],
+      starColors: ["#ff8844","#aaddff","white","white","white","white","#99ccff"],
+      lines: [[0,2],[0,1],[1,4],[2,5],[4,6],[2,3],[3,4]],
+      extra: [[150,175,2,""],[150,195,2,""],[150,215,2,""]],  // Svärdet
+    },
+    {
+      name: "Stora Björnen / Karlavagnen",
+      latin: "Ursa Major · UMa",
+      season: "Hela året (cirkumpolär), mot norr",
+      desc: "Sju stjärnor formar den kända skopan. 'Hinkstjärnorna' Merak och Dubhe pekar mot Polstjärnan 5× sin inbördes avstånd.",
+      stars: [
+        [60,  165,3.5,"Dubhe"],    // 0 hinkstjärna yttre
+        [90,  195,3,  "Merak"],    // 1 hinkstjärna inre
+        [130, 185,3,  "Phekda"],   // 2
+        [155, 155,3,  "Megrez"],   // 3 skaftets böj
+        [190, 125,4,  "Alioth"],   // 4
+        [225, 90, 3.5,"Mizar"],    // 5
+        [260, 65, 3,  "Alkaid"],   // 6 skaftets ände
+      ],
+      starColors: ["white","white","white","white","white","white","white"],
+      lines: [[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]],
+      extra: [],
+    },
+    {
+      name: "Lilla Björnen / Polstjärnan",
+      latin: "Ursa Minor · UMi",
+      season: "Hela året (cirkumpolär) – pekar alltid mot norr",
+      desc: "Polstjärnan (Polaris) sitter i svansens ände – alltid nära norr. Stjärnbilden liknar en liten skopa.",
+      stars: [
+        [150, 40,  5,  "Polaris"],   // 0 Polstjärnan
+        [185, 95,  3,  ""],          // 1
+        [160, 145, 3,  "Kochab"],    // 2
+        [120, 165, 3.5,"Pherkad"],   // 3
+        [155, 190, 2.5,""],          // 4
+        [180, 200, 2.5,""],          // 5
+        [210, 185, 2.5,""],          // 6
+      ],
+      starColors: ["#ffffcc","white","white","white","white","white","white"],
+      lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]],
+      extra: [],
+    },
+    {
+      name: "Cassiopeja",
+      latin: "Cassiopeia · Cas",
+      season: "Hela året (cirkumpolär) – W eller M",
+      desc: "Fem stjärnor i ett tydligt W- eller M-mönster. Lätt att hitta tvärs över himlen från Karlavagnen, med Polstjärnan emellan.",
+      stars: [
+        [60,  120, 3.5,"Caph"],      // 0
+        [115, 170, 3,  "Schedar"],   // 1
+        [165, 125, 3,  "Navi"],      // 2
+        [215, 170, 3,  "Ruchbah"],   // 3
+        [265, 120, 3,  "Segin"],     // 4
+      ],
+      starColors: ["white","white","white","white","white"],
+      lines: [[0,1],[1,2],[2,3],[3,4]],
+      extra: [],
+    },
+    {
+      name: "Andromedagalaxen",
+      latin: "Andromeda · And",
+      season: "Höst (sep–dec), högt mot söder",
+      desc: "Andromeda innehåller Andromedagalaxen (M31) – det mest avlägsna objekt synligt med blotta ögat: 2,5 miljoner ljusår bort.",
+      stars: [
+        [80,  90,  4.5,"Alpheratz"],  // 0 delas med Pegasus
+        [135, 120, 3.5,"Mirach"],     // 1
+        [190, 95,  3,  "Almach"],     // 2
+        [105, 80,  2.5,""],           // 3 mot M31
+        [75,  60,  2,  ""],           // 4
+      ],
+      starColors: ["white","white","white","white","white"],
+      lines: [[0,1],[1,2],[0,3],[3,4]],
+      extra: [[60,45,8,"M31"]],   // galax-fläck
+      extraStyle: "blur",
+    },
+    {
+      name: "Oxen",
+      latin: "Taurus · Tau",
+      season: "Vinter (nov–feb), mot söder",
+      desc: "Aldebaran (röd jätte) lyser som Oxens öga. Plejaderna (Sjustjärnorna) är en rik öppen stjärnhop. Krabbnebulosan (M1) är rest av supernova år 1054.",
+      stars: [
+        [140, 130, 5,  "Aldebaran"],  // 0 röd
+        [100, 115, 2.5,""],           // 1 Hyad
+        [115, 155, 2.5,""],           // 2 Hyad
+        [165, 155, 2.5,""],           // 3 Hyad
+        [175, 115, 2.5,""],           // 4 Hyad
+        [230, 90,  3,  "Elnath"],     // 5
+        [55,  80,  2,  ""],           // 6 Pleiad
+        [70,  70,  2,  ""],           // 7 Pleiad
+        [80,  65,  2,  ""],           // 8 Pleiad
+        [65,  60,  2,  ""],           // 9 Pleiad
+        [50,  55,  2,  ""],           //10 Pleiad
+        [75,  55,  2,  ""],           //11 Pleiad
+        [90,  58,  2,  ""],           //12 Pleiad
+      ],
+      starColors: ["#ff9955","white","white","white","white","white","#aaddff","#aaddff","#aaddff","#aaddff","#aaddff","#aaddff","#aaddff"],
+      lines: [[0,1],[0,2],[0,3],[0,4],[1,2],[3,4],[1,4],[0,5]],
+      extra: [],
+      labels: [{text:"Plejaderna",x:70,y:45,col:"#aaddff"},{text:"Hyader",x:150,y:170,col:"#ffeecc"}],
+    },
+    {
+      name: "Lyran",
+      latin: "Lyra · Lyr",
+      season: "Sommar (jun–sep), nära zenit",
+      desc: "Vega är en av de ljusstarkaste stjärnorna på norra himlen och del av Sommartriangeln. Ringnebulosan (M57) är en vacker planetarisk nebulosa.",
+      stars: [
+        [150, 55,  6,  "Vega"],       // 0 ljusstark
+        [120, 130, 3,  "Sulafat"],    // 1
+        [180, 125, 3,  "Sheliak"],    // 2
+        [125, 170, 2.5,""],           // 3
+        [175, 170, 2.5,""],           // 4
+      ],
+      starColors: ["white","white","white","white","white"],
+      lines: [[0,1],[0,2],[1,2],[1,3],[2,4],[3,4]],
+      extra: [[150,150,6,"M57"]],
+      extraStyle: "ring",
+    },
+    {
+      name: "Herkules",
+      latin: "Hercules · Her",
+      season: "Sommar (maj–sep), nära zenit",
+      desc: "Nyckelstenen – fyra stjärnor i en fyrkant – är kärnan. M13 (Herkuleshopen) är en av de finaste klotformiga stjärnhoparna på norra himlen.",
+      stars: [
+        [130, 110, 3,  "Kornephoros"], // 0 ljusast
+        [170, 105, 2.5,"Pi Her"],      // 1
+        [175, 150, 2.5,""],            // 2
+        [130, 155, 2.5,""],            // 3
+        [95,  85,  2.5,""],            // 4 vänster arm
+        [70,  60,  2,  ""],            // 5
+        [205, 80,  2.5,""],            // 6 höger arm
+        [235, 55,  2,  ""],            // 7
+        [100, 185, 2,  ""],            // 8 vänster ben
+        [200, 185, 2,  ""],            // 9 höger ben
+      ],
+      starColors: ["white","white","white","white","white","white","white","white","white","white"],
+      lines: [[0,1],[1,2],[2,3],[3,0],[0,4],[4,5],[1,6],[6,7],[3,8],[2,9]],
+      extra: [[105,130,7,"M13"]],
+      extraStyle: "cluster",
+    },
+  ];
+
+  // ============================================================
+  //  SVG-ritare
+  // ============================================================
+  function buildSVG(c) {
+    const W = 300, H = 260;
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${c.name} stjärnbild">`;
+
+    // Bakgrund: stjärnfält
+    const bg = [
+      [20,20],[50,80],[80,30],[120,50],[200,20],[260,40],[280,90],
+      [30,150],[260,160],[10,200],[50,220],[230,230],[270,200],[100,240],
+      [155,240],[240,250],[30,250],[180,15],[240,100],[130,20],
+    ];
+    bg.forEach(([x,y]) => {
+      const r = (Math.sin(x*y)*0.5+0.8).toFixed(1);
+      const op = (0.2+Math.abs(Math.sin(x+y))*0.3).toFixed(2);
+      svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="white" opacity="${op}"/>`;
+    });
+
+    // Extra objekt (nebulosa/hop/galax)
+    (c.extra || []).forEach(([x,y,r,label]) => {
+      if (c.extraStyle === "ring") {
+        svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#ffddaa" stroke-width="1.5" opacity="0.7"/>`;
+        svg += `<circle cx="${x}" cy="${y}" r="${r*0.4}" fill="#ffddaa" opacity="0.3"/>`;
+      } else if (c.extraStyle === "cluster") {
+        // klotformig hop – täta prickar
+        for (let i=0;i<12;i++){
+          const a=i/12*Math.PI*2, d=Math.random()*r*0.8;
+          svg += `<circle cx="${(x+Math.cos(a)*d).toFixed(1)}" cy="${(y+Math.sin(a)*d).toFixed(1)}" r="0.9" fill="#ffffcc" opacity="0.8"/>`;
+        }
+        svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#ffffcc" stroke-width="0.8" opacity="0.4"/>`;
+      } else if (c.extraStyle === "blur") {
+        // galax fläck
+        svg += `<ellipse cx="${x}" cy="${y}" rx="${r*2}" ry="${r}" fill="#aaddff" opacity="0.15" transform="rotate(-30,${x},${y})"/>`;
+        svg += `<ellipse cx="${x}" cy="${y}" rx="${r}" ry="${r*0.5}" fill="#aaddff" opacity="0.25" transform="rotate(-30,${x},${y})"/>`;
+      } else {
+        svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="#aaddff" opacity="0.25"/>`;
+      }
+      if (label) {
+        svg += `<text x="${x+r+3}" y="${y+4}" font-size="8" fill="#aaddff" opacity="0.8">${label}</text>`;
+      }
+    });
+
+    // Linjer
+    (c.lines || []).forEach(([a,b]) => {
+      const s=c.stars[a], e=c.stars[b];
+      svg += `<line x1="${s[0]}" y1="${s[1]}" x2="${e[0]}" y2="${e[1]}" stroke="rgba(200,180,255,0.45)" stroke-width="1.2"/>`;
+    });
+
+    // Stjärnor
+    c.stars.forEach((st,i) => {
+      const [x,y,r,name] = st;
+      const col = (c.starColors||[])[i] || "white";
+      // glöd
+      svg += `<circle cx="${x}" cy="${y}" r="${r*2.5}" fill="${col}" opacity="0.08"/>`;
+      svg += `<circle cx="${x}" cy="${y}" r="${r*1.5}" fill="${col}" opacity="0.15"/>`;
+      svg += `<circle cx="${x}" cy="${y}" r="${r}" fill="${col}" opacity="0.95"/>`;
+      if (name) {
+        // placera label klart utanför stjärnan
+        let lx = x + r + 4;
+        let ly = y + 4;
+        // enkel kollisionsundvikelse baserad på position
+        if (x > W*0.7) lx = x - r - 4;
+        const anchor = (x > W*0.7) ? "end" : "start";
+        svg += `<text x="${lx}" y="${ly}" font-size="9" fill="${col}" opacity="0.85" text-anchor="${anchor}" font-family="system-ui,sans-serif">${name}</text>`;
+      }
+    });
+
+    // Extra labels (t.ex. Plejaderna)
+    (c.labels || []).forEach(({text,x,y,col}) => {
+      svg += `<text x="${x}" y="${y}" font-size="8" fill="${col||'white'}" opacity="0.75" text-anchor="middle" font-family="system-ui,sans-serif">${text}</text>`;
+    });
+
+    svg += `</svg>`;
+    return svg;
+  }
+
+  // ============================================================
+  //  Kortlogik
+  // ============================================================
+  let order = cards.map((_,i)=>i);
+  let cur = 0;
+
+  function render() {
+    const idx = order[cur];
+    const c = cards[idx];
+    const total = cards.length;
+
+    document.getElementById('counter').textContent = `Kort ${cur+1} av ${total}`;
+    document.getElementById('progress-fill').style.width = `${(cur+1)/total*100}%`;
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === total-1;
+
+    document.getElementById('card').innerHTML = `
+      <div class="card-name">${c.name}</div>
+      <div class="card-latin">${c.latin}</div>
+      <div class="card-svg-wrap">${buildSVG(c)}</div>
+      <div class="card-desc">
+        <strong style="color:#e8d8ff;">Synlig:</strong> ${c.season}<br>
+        ${c.desc}
+      </div>
+    `;
+  }
+
+  function move(dir) {
+    cur = Math.max(0, Math.min(cards.length-1, cur+dir));
+    render();
+  }
+
+  document.getElementById('shuffle-cb').addEventListener('change', function() {
+    if (this.checked) {
+      // Fisher-Yates shuffle
+      for (let i=order.length-1;i>0;i--) {
+        const j=Math.floor(Math.random()*(i+1));
+        [order[i],order[j]]=[order[j],order[i]];
+      }
+    } else {
+      order = cards.map((_,i)=>i);
+    }
+    cur = 0;
+    render();
+  });
+
+  render();
+  </script>
+</body>
+</html>

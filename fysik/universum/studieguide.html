@@ -238,6 +238,39 @@
 
     details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
 
+    /* ===== Källhänvisningar ===== */
+    a.cite {
+      font-size: 0.78rem;
+      color: #4a1f8c;
+      font-weight: 700;
+      vertical-align: super;
+      text-decoration: none;
+      margin-left: 0.05rem;
+    }
+    a.cite:hover { text-decoration: underline; }
+
+    .references {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #d8d8d8;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .references h2 {
+      font-size: 1rem;
+      color: #32146a;
+      margin: 0 0 0.6rem;
+    }
+    .references ol {
+      margin: 0 0 0 1.3rem;
+    }
+    .references li {
+      margin-bottom: 0.4rem;
+    }
+    .references a {
+      color: #4a1f8c;
+    }
+
     @media (max-width: 520px) {
       main { font-size: 1.05em; }
       .milestone .m-title { font-size: 1rem; }
@@ -261,8 +294,8 @@
     </p>
 
     <section class="guide-intro">
-      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar eller fördjupning.</p>
-      <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Fördjupningar (★) är klickbara och fälls ut för den som vill komma längre. Milstolpar med lila kant till vänster är extra viktiga för grupparbetet.</p>
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp och leder dig sedan vidare till övningar eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fetstil i texten och återkommer i checklistan. Fördjupningar är klickbara rutor som fälls ut för den som vill gå djupare. Arbetar ni med grupparbete finns instruktioner på en <a href="./grupparbete.html">separat sida</a>.</p>
     </section>
 
     <!-- ========== MILSTOLPE 1 ========== -->
@@ -276,13 +309,27 @@
 
         <p>En <strong class="term">galax</strong> är en enorm samling stjärnor, gas och stoft som hålls ihop av gravitationen. Vintergatan är en <strong class="term">spiralgalax</strong> med mer än 200 miljarder stjärnor. Sett uppifrån liknar den ett hjul med spiralformade armar som spinner ut från ett tjockt centrum. Om man stod utanför och tittade på sidan skulle den se ut som en platt skiva med en upphöjning i mitten.</p>
 
-        <p>Vår sol är en alldeles vanlig stjärna som befinner sig i en av spiralarmarna, ungefär <strong class="term">30 000 ljusår från galaxens centrum</strong>. Runt solen kretsar planeterna i vårt <strong class="term">solsystem</strong>. Solsystemet är i sin tur ett av miljarder stjärnsystem i Vintergatan.</p>
+        <p>Vår sol är en alldeles vanlig stjärna som befinner sig i en av spiralarmarna, ungefär <strong class="term">26 000 ljusår från galaxens centrum</strong> <a href="#ref-1" class="cite">[1]</a>. Runt solen kretsar planeterna i vårt <strong class="term">solsystem</strong>. Solsystemet är i sin tur ett av miljarder stjärnsystem i Vintergatan.</p>
 
         <p>En klar sommarnatt kan man med blotta ögat se Vintersgatans kärnband – ett mjölkaktigt strimmigt ljusbälte som sträcker sig tvärs över himlen. Det är miljarder stjärnor så långt bort att vi inte kan skilja dem åt.</p>
 
+        <figure style="margin:0.9rem 0; text-align:center;">
+          <a href="https://commons.wikimedia.org/wiki/File:ESO-VLT-Laser-phot-0a-99.jpg" target="_blank" rel="noopener">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/ESO-VLT-Laser-phot-0a-99.jpg/960px-ESO-VLT-Laser-phot-0a-99.jpg"
+                 alt="Vintergatan fotograferad från ESO:s observatorium i Chile, med en laserstråle riktad mot galaxens centrum"
+                 style="max-width:100%; border-radius:8px; border:1px solid #e4e4e4;" />
+          </a>
+          <figcaption style="font-size:0.83rem; color:#555; margin-top:0.35rem; font-style:italic;">
+            Vintergatan sedd från ESO:s Very Large Telescope i Chile. Laserstrålen pekar mot galaxens centrum i Skytten.
+            <span style="display:block; font-style:normal; color:#888; font-size:0.78rem; margin-top:0.15rem;">
+              © ESO/Y. Beletsky · Licens: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+            </span>
+          </figcaption>
+        </figure>
+
         <div class="fact-box">
           <strong>Sammanfattning</strong>
-          Vi bor i solsystemet, som är ett av miljarder stjärnsystem i galaxen Vintergatan. Vintergatan är en spiralgalax med mer än 200 miljarder stjärnor. Solen sitter i en spiralarm, ca 30 000 ljusår från centrum.
+          Vi bor i solsystemet, som är ett av miljarder stjärnsystem i galaxen Vintergatan. Vintergatan är en spiralgalax med mer än 200 miljarder stjärnor. Solen sitter i en spiralarm, ca 26 000 ljusår från centrum.
         </div>
 
         <div class="next-steps">
@@ -354,9 +401,9 @@
 
         <p>Fram till 2006 räknade man med nio planeter, med Pluto som den yttersta. Men Pluto är för liten och befinner sig i <strong class="term">Kuiperbältet</strong> – ett bälte av tusentals frusna klumpar utanför Neptunus bana. Pluto är numera klassad som en <em>dvärgplanet</em>.</p>
 
-        <p>Mellan Mars och Jupiter finns <strong class="term">asteroidbältet</strong>, ett brett bälte av sten och metallklumpar, från sandkornskorn till asteroider på hundratals kilometer. Ingen av dessa hann bli en planet, troligen på grund av Jupiters starka gravitation som störde ihopsamlingen.</p>
+        <p>Mellan Mars och Jupiter finns <strong class="term">asteroidbältet</strong>, ett brett bälte av sten och metallklumpar, från sandkorn till asteroider på hundratals kilometer. Ingen av dessa hann bli en planet, troligen på grund av Jupiters starka gravitation som störde ihopsamlingen.</p>
 
-        <p><strong class="term">Kometerna</strong> är smutsiga snöbollar i långa elliptiska banor. När de svänger in mot solen värms de upp och gas och stoft slits loss – det bildas en lysande svans. Svansen pekar alltid <em>bort från solen</em>, driven av solvinden. Den mest kända kometen är <strong class="term">Halleys komet</strong>, med ett omloppsperiod på 76 år – senast synlig 1986, nästa gång 2061.</p>
+        <p><strong class="term">Kometerna</strong> är smutsiga snöbollar i långa elliptiska banor. När de svänger in mot solen värms de upp och gas och stoft slits loss – det bildas en lysande svans. Svansen pekar alltid <em>bort från solen</em>, driven av solvinden. Den mest kända kometen är <strong class="term">Halleys komet</strong>, med en omloppstid på 76 år – senast synlig 1986, nästa gång 2061.</p>
 
         <p>Planeter kan ha <strong class="term">månar</strong>. Jordens måne är relativt stor jämfört med planeten den kretsar kring. Jupiter har minst 95 kända månar, varav de fyra stora – <strong class="term">Io, Europa, Ganymedes och Callisto</strong> – kallas de galileiska månarna och kan ses med en enkel kikare.</p>
 
@@ -433,7 +480,7 @@
 
         <p>Stjärnornas <strong class="term">ljusstyrka</strong> mäts i <strong class="term">magnitud</strong>. Det finns två typer: <em>skenbar</em> magnitud (hur ljusstark stjärnan verkar sett från jorden) och <em>absolut</em> magnitud (den verkliga ljusstyrkan, mätt på standardavståndet 32,6 ljusår). En stjärna kan verka ljusstark antingen för att den är riktigt nära oss, eller för att den verkligen är väldigt stark. Himlens ljusstarkaste stjärna, <strong class="term">Sirius</strong>, lyser så starkt delvis för att den ligger relativt nära – bara 8,6 ljusår bort.</p>
 
-        <p>Stjärnornas <strong class="term">storlek</strong> varierar extremt. Vår sol är medelstor. Dvärgar är mindre än solen, jättar är hundratals gånger större, och superjättar kan vara tusen gånger solens diameter. Den största kända stjärnan, <em>Epsilon Aurigae</em>, är ca 3 000 gånger solens diameter – hela solsystemet ut till Jupiter skulle rymmas inuti.</p>
+        <p>Stjärnornas <strong class="term">storlek</strong> varierar extremt. Vår sol är medelstor. Dvärgar är mindre än solen, jättar är hundratals gånger större, och superjättar kan vara tusentals gånger solens diameter. En av de största kända stjärnorna, <em>VY Canis Majoris</em> i Stora Hunden, har en radie på ca 1 400 gånger solens – om den ersatte vår sol skulle ytan nå bortom Jupiters bana <a href="#ref-2" class="cite">[2]</a>.</p>
 
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -471,9 +518,18 @@
 
         <p>Om 5 miljarder år kommer solen att bli en röd jätte och svälla ut till ungefär vid jordens nuvarande bana – Merkurius och Venus kommer att sväljas. Huruvida jordens yta överlever är osäkert, men livet som vi känner det kommer inte att klara sig.</p>
 
-        <figure>
-          <img src="/images/fysik/universum/stjarnans-liv.png" alt="Stjärnans livscykel: nebulosa, protostar, huvudserien, röd jätte" onerror="this.parentElement.style.display='none'" />
-          <figcaption><strong>Stjärnans livscykel</strong> – från gasmoln till röd jätte, och sedan vidare beroende på massa.</figcaption>
+        <figure style="margin:0.9rem 0; text-align:center;">
+          <a href="https://commons.wikimedia.org/wiki/File:Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg" target="_blank" rel="noopener">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg/960px-Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg"
+                 alt="Orionnebulosan (M42) fotograferad av Hubble rymdteleskop – ett gasmoln där nya stjärnor föds"
+                 style="max-width:100%; border-radius:8px; border:1px solid #e4e4e4;" />
+          </a>
+          <figcaption style="font-size:0.83rem; color:#555; margin-top:0.35rem; font-style:italic;">
+            Orionnebulosan (M42) – en av de aktivaste stjärnbildningsregionerna nära oss, ~1 350 ljusår bort. Tusentals unga stjärnor håller på att formas inuti molnet.
+            <span style="display:block; font-style:normal; color:#888; font-size:0.78rem; margin-top:0.15rem;">
+              NASA, ESA, M. Robberto (STScI/ESA) m.fl. · Källa: <a href="https://commons.wikimedia.org/wiki/File:Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain
+            </span>
+          </figcaption>
         </figure>
 
         <div class="fact-box">
@@ -519,7 +575,21 @@
           <li><strong class="term">Svart hål:</strong> Om resten är tillräckligt massiv kollapsar den vidare tills gravitationen övervinner allt. Inte ens ljus kan fly. Gränsen där ingenting kan fly kallas <em>händelsehorisonten</em>. Svarta hål kan inte ses direkt, men de avslöjar sig genom gravitationspåverkan på omgivande material och stjärnor.</li>
         </ul>
 
-        <p>År 1054 exploderade en stjärna synlig mitt på dagen – den kinesiska astronomin dokumenterade den noggrant. Det som är kvar syns idag som <strong class="term">Krabnebulosan</strong> i stjärnbilden Oxen, och i dess centrum snurrar en pulsar med 30 rotationer per sekund.</p>
+        <p>År 1054 exploderade en stjärna synlig mitt på dagen – kinesiska och arabiska astronomer dokumenterade händelsen noggrant <a href="#ref-3" class="cite">[3]</a>. Det som är kvar syns i dag som <strong class="term">Krabbnebulosan</strong> (M1) i stjärnbilden Oxen, och i dess centrum snurrar en pulsar med 30 rotationer per sekund.</p>
+
+        <figure style="margin:0.9rem 0; text-align:center;">
+          <a href="https://commons.wikimedia.org/wiki/File:Crab_Nebula.jpg" target="_blank" rel="noopener">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/960px-Crab_Nebula.jpg"
+                 alt="Krabbnebulosan (M1) – supernovarestant i stjärnbilden Oxen, fotograferad av Hubble rymdteleskop"
+                 style="max-width:100%; border-radius:8px; border:1px solid #e4e4e4;" />
+          </a>
+          <figcaption style="font-size:0.83rem; color:#555; margin-top:0.35rem; font-style:italic;">
+            Krabbnebulosan (M1) – det expanderande gasskal som lämnade efter sig supernovaexplosionen år 1054. I centrum snurrar en pulsar med 30 varv per sekund.
+            <span style="display:block; font-style:normal; color:#888; font-size:0.78rem; margin-top:0.15rem;">
+              NASA, ESA, J. Hester &amp; A. Loll (Arizona State University) · Källa: <a href="https://commons.wikimedia.org/wiki/File:Crab_Nebula.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · Public domain
+            </span>
+          </figcaption>
+        </figure>
 
         <div class="fact-box">
           <strong>Sammanfattning – del 2</strong>
@@ -560,11 +630,25 @@
           <li><strong class="term">Irreguljära galaxer</strong>: oregelbunden form, ofta till följd av kollisioner med andra galaxer.</li>
         </ul>
 
-        <p>Vår galax <strong class="term">Vintergatan</strong> är en spiralgalax med en diameter på ca 100 000 ljusår. I galaxens centrum sitter ett <strong class="term">supermassivt svart hål</strong> – <em>Sagittarius A*</em> – med en massa på 4 miljoner solmassor. De flesta galaxer tycks ha supermassiva svarta hål i sina centra.</p>
+        <p>Vår galax <strong class="term">Vintergatan</strong> är en spiralgalax med en diameter på ca 100 000 ljusår. I galaxens centrum sitter ett <strong class="term">supermassivt svart hål</strong> – <em>Sagittarius A*</em> – med en massa på ungefär 4 miljoner solmassor <a href="#ref-5" class="cite">[5]</a>. Det första direkta fotografiet av Sagittarius A* presenterades av Event Horizon Telescope-samarbetet 2022. De flesta galaxer tycks ha supermassiva svarta hål i sina centra.</p>
 
-        <p>Den närmaste stora grannlgalaxen är <strong class="term">Andromedagalaxen</strong> (M31), en spiralgalax på 2,5 miljoner ljusårs avstånd. Den kan ses med blotta ögat som en suddig ljusfläck i stjärnbilden Andromeda. Andromedagalaxen och Vintergatan rör sig mot varandra och kommer att kollidera om ca 4,5 miljarder år. Kollisionen innebär inte att stjärnor krockar – avstånden är för stora – men galaxerna kommer att deformeras och sluta som en stor elliptisk galax.</p>
+        <p>Den närmaste stora granngalaxen är <strong class="term">Andromedagalaxen</strong> (M31), en spiralgalax på 2,5 miljoner ljusårs avstånd. Den kan ses med blotta ögat som en suddig ljusfläck i stjärnbilden Andromeda. Andromedagalaxen och Vintergatan rör sig mot varandra och kommer att kollidera om ca 4,5 miljarder år. Kollisionen innebär inte att stjärnor krockar – avstånden är för stora – men galaxerna kommer att deformeras och sluta som en stor elliptisk galax.</p>
 
         <p>Galaxer finns ofta i <strong class="term">galaxgrupper</strong> och <strong class="term">galaxhopar</strong>. Vintergatan och Andromedagalaxen tillhör <em>Lokala gruppen</em>, en samling av drygt 50 galaxer. Lokala gruppen tillhör i sin tur en ännu större struktur kallad Virgo-superhopen.</p>
+
+        <figure style="margin:0.9rem 0; text-align:center;">
+          <a href="https://commons.wikimedia.org/wiki/File:2022-05-12_Sagittarius_A*_black_hole_(EHT).jpg" target="_blank" rel="noopener">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/2022-05-12_Sagittarius_A%2A_black_hole_%28EHT%29.jpg/960px-2022-05-12_Sagittarius_A%2A_black_hole_%28EHT%29.jpg"
+                 alt="Det supermassiva svarta hålet Sagittarius A* i Vintergatans centrum, fotograferat av Event Horizon Telescope 2022"
+                 style="max-width:100%; border-radius:8px; border:1px solid #e4e4e4;" />
+          </a>
+          <figcaption style="font-size:0.83rem; color:#555; margin-top:0.35rem; font-style:italic;">
+            Sagittarius A* – det supermassiva svarta hålet i Vintergatans centrum, avbildat för första gången av Event Horizon Telescope-samarbetet 2022. Massan är ~4 miljoner gånger solens.
+            <span style="display:block; font-style:normal; color:#888; font-size:0.78rem; margin-top:0.15rem;">
+              EHT Collaboration · Källa: <a href="https://commons.wikimedia.org/wiki/File:2022-05-12_Sagittarius_A*_black_hole_(EHT).jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+            </span>
+          </figcaption>
+        </figure>
 
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -598,13 +682,27 @@
       <div class="m-body">
         <p>På 1920-talet observerade astronomen <strong class="term">Edwin Hubble</strong> att nästan alla avlägsna galaxer rör sig bort från oss – och ju längre bort en galax befinner sig, desto snabbare avlägsnar den sig. Det kallas <strong class="term">Hubbles lag</strong>. Slutsatsen är chockerande: universum expanderar. Om man "spolar tillbaka" expansionen bakåt i tiden, kom allting en gång från en enda punkt.</p>
 
-        <p>Teorin om universums uppkomst kallas <strong class="term">Big Bang</strong>. För ungefär <strong class="term">13,8 miljarder år sedan</strong> exploderade allt materia, energi, rum och tid ur ett extremt tätt och hett tillstånd. Det var inte en explosion i rymden – det var en explosion av rummet självt.</p>
+        <p>Teorin om universums uppkomst kallas <strong class="term">Big Bang</strong>. För ungefär <strong class="term">13,8 miljarder år sedan</strong> expanderade allt materia, energi, rum och tid ut från ett extremt tätt och hett tillstånd <a href="#ref-4" class="cite">[4]</a>. Det var inte en explosion i rymden – det var en explosion av rummet självt.</p>
 
         <p>Under de första sekunderna var universum ofattbart hett och tätt. Grundläggande partiklar skapades: kvarkar, elektroner och fotoner. Under de första minuterna slog protoner och neutroner ihop sig till lätta atomkärnor – framför allt väte och helium. Resterande grundämnen bildades senare i stjärnornas kärnor och vid supernovor.</p>
 
-        <p>Under de första 380 000 åren var universum för tätt och hett för att fotoner (ljuspartiklar) skulle kunna färdas fritt. Universum var "ogenomskinligt". När temperaturen sjunkit nog bildades de första hela atomer, och universum blev genomskinligt. Det ljus som frigjordes då är fortfarande på väg genom rymden – avkylt till nästan absoluta nollpunkten – och kallas <strong class="term">kosmisk bakgrundsstrålning</strong>. Det är det äldsta ljuset i universum och observerades för första gången 1965.</p>
+        <p>Under de första 380 000 åren var universum för tätt och hett för att fotoner (ljuspartiklar) skulle kunna färdas fritt. Universum var "ogenomskinligt". När temperaturen sjunkit nog bildades de första hela atomer, och universum blev genomskinligt. Det ljus som frigjordes då är fortfarande på väg genom rymden – avkylt till nästan absoluta nollpunkten – och kallas <strong class="term">kosmisk bakgrundsstrålning</strong>. Det är det äldsta ljuset i universum och påvisades av Arno Penzias och Robert Wilson 1964–65, ett fynd som gav dem Nobelpriset i fysik 1978 <a href="#ref-6" class="cite">[6]</a>.</p>
 
         <p>Hundratals miljoner år efter Big Bang samlades gasen ihop och bildade de första stjärnorna och galaxerna. Universum såg nu ut ungefär som det gör idag – med miljarder galaxer som alltjämt rör sig ifrån varandra.</p>
+
+        <figure style="margin:0.9rem 0; text-align:center;">
+          <a href="https://commons.wikimedia.org/wiki/File:Planck_CMB.jpg" target="_blank" rel="noopener">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Planck_CMB.jpg/960px-Planck_CMB.jpg"
+                 alt="Karta över kosmisk bakgrundsstrålning från ESA:s Planck-satellit – temperaturvariationer i det äldsta ljuset i universum"
+                 style="max-width:100%; border-radius:8px; border:1px solid #e4e4e4;" />
+          </a>
+          <figcaption style="font-size:0.83rem; color:#555; margin-top:0.35rem; font-style:italic;">
+            Hela himlen i kosmisk bakgrundsstrålning, kartlagd av ESA:s Planck-satellit. Färgvariationerna visar minimala temperaturskillnader (±0,0002 K) i det 380 000 år gamla ljuset – frön till galaxers uppkomst.
+            <span style="display:block; font-style:normal; color:#888; font-size:0.78rem; margin-top:0.15rem;">
+              ESA/Planck Collaboration · Källa: <a href="https://commons.wikimedia.org/wiki/File:Planck_CMB.jpg" target="_blank" rel="noopener">Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/igo/" target="_blank" rel="noopener">CC BY-SA 3.0 IGO</a>
+            </span>
+          </figcaption>
+        </figure>
 
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -711,6 +809,18 @@
         </details>
       </div>
     </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Gravity Collaboration, Abuter R. m.fl. (2019). <em>A geometric distance measurement to the Galactic center black hole with 0.3% uncertainty.</em> Astronomy &amp; Astrophysics, 625, L10. <a href="https://doi.org/10.1051/0004-6361/201935656" target="_blank" rel="noopener">doi:10.1051/0004-6361/201935656</a></li>
+        <li id="ref-2">Monnier, J.D. m.fl. (2004). <em>Interferometric observations of the hypergiant VY CMa.</em> The Astrophysical Journal Letters, 605, L57. <a href="https://doi.org/10.1086/420769" target="_blank" rel="noopener">doi:10.1086/420769</a></li>
+        <li id="ref-3">Stephenson, F.R. &amp; Green, D.A. (2002). <em>Historical Supernovae and their Remnants.</em> Oxford University Press. ISBN 0-19-850766-6.</li>
+        <li id="ref-4">Planck Collaboration (2020). <em>Planck 2018 results. VI. Cosmological parameters.</em> Astronomy &amp; Astrophysics, 641, A6. <a href="https://doi.org/10.1051/0004-6361/201833910" target="_blank" rel="noopener">doi:10.1051/0004-6361/201833910</a> (universums ålder: 13,787 ± 0,020 miljarder år)</li>
+        <li id="ref-5">Event Horizon Telescope Collaboration (2022). <em>First Sagittarius A* Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole in the Center of the Milky Way.</em> The Astrophysical Journal Letters, 930, L12. <a href="https://doi.org/10.3847/2041-8213/ac6674" target="_blank" rel="noopener">doi:10.3847/2041-8213/ac6674</a></li>
+        <li id="ref-6">Penzias, A.A. &amp; Wilson, R.W. (1965). <em>A Measurement of Excess Antenna Temperature at 4080 Mc/s.</em> The Astrophysical Journal, 142, 419–421. <a href="https://doi.org/10.1086/148307" target="_blank" rel="noopener">doi:10.1086/148307</a></li>
+      </ol>
+    </section>
 
     <div style="background:#f2eeff; border:1px solid #c4a8f0; border-left:4px solid #4a1f8c; border-radius:10px; padding:1rem 1.2rem; margin-top:1.5rem;">
       <p style="margin:0 0 0.5rem; font-weight:700; color:#32146a;">Arbetar ni med grupparbete?</p>
