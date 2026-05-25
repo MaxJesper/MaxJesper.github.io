@@ -191,11 +191,11 @@
       season: "Vinter (dec–feb), mot söder",
       desc: "Tre stjärnor i rad – Orions bälte – gör denna stjärnbild omöjlig att missa. Betelgeuze (röd superjätte) och Rigel (blå superjätte) är de ljusstarkaste.",
       stars: [
-        [80,  45, 5.5, "Betelgeuze"],   // 0  övre vänster, röd
+        [80,  45, 5.5, "Betelgeuze"],   // 0  övre vänster, röd (RA högst = mest öst = mest vänster)
         [210, 55, 4,   "Bellatrix"],    // 1  övre höger
-        [100, 135,3,   "Mintaka"],      // 2  bälte vänster
+        [100, 135,3,   "Alnitak"],      // 2  bälte vänster (RA 85,2° = mest östlig bältestjärna)
         [150, 130,3,   "Alnilam"],      // 3  bälte mitten
-        [200, 130,3,   "Alnitak"],      // 4  bälte höger
+        [200, 130,3,   "Mintaka"],      // 4  bälte höger (RA 83,0° = mest västlig bältestjärna)
         [95,  210,4,   "Saiph"],        // 5  nedre vänster
         [215, 200,6,   "Rigel"],        // 6  nedre höger, blå
       ],
@@ -207,15 +207,15 @@
       name: "Stora Björnen / Karlavagnen",
       latin: "Ursa Major · UMa",
       season: "Hela året (cirkumpolär), mot norr",
-      desc: "Sju stjärnor formar den kända skopan. 'Hinkstjärnorna' Merak och Dubhe pekar mot Polstjärnan 5× sin inbördes avstånd.",
+      desc: "Sju stjärnor formar den kända skopan. Hinkstjärnorna Dubhe och Merak sitter nästan lodrätt ovanför varandra – förlängt 5× pekar de till Polstjärnan.",
       stars: [
-        [60,  165,3.5,"Dubhe"],    // 0 hinkstjärna yttre
-        [90,  195,3,  "Merak"],    // 1 hinkstjärna inre
-        [130, 185,3,  "Phekda"],   // 2
-        [155, 155,3,  "Megrez"],   // 3 skaftets böj
-        [190, 125,4,  "Alioth"],   // 4
-        [225, 90, 3.5,"Mizar"],    // 5
-        [260, 65, 3,  "Alkaid"],   // 6 skaftets ände
+        [220, 92,  3.5,"Dubhe"],   // 0 hinkstjärna yttre – övre höger (RA 11h03, Dec 61°45)
+        [222, 135, 3,  "Merak"],   // 1 hinkstjärna inre – nedre höger, nästan samma RA som Dubhe
+        [176, 157, 3,  "Phekda"],  // 2 skålens nedre vänstra hörn (RA 11h54, Dec 53°42)
+        [157, 130, 3,  "Megrez"],  // 3 skålens övre vänstra hörn / skaftets böj (RA 12h15, Dec 57°02)
+        [124, 138, 4,  "Alioth"],  // 4 skaftet (RA 12h54, Dec 55°58)
+        [97,  147, 3.5,"Mizar"],   // 5 skaftet (RA 13h24, Dec 54°56)
+        [77,  193, 3,  "Alkaid"],  // 6 skaftets ände – kurvar tydligt nedåt (RA 13h48, Dec 49°19)
       ],
       starColors: ["white","white","white","white","white","white","white"],
       lines: [[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]],
@@ -261,15 +261,15 @@
       season: "Höst (sep–dec), högt mot söder",
       desc: "Andromeda innehåller Andromedagalaxen (M31) – det mest avlägsna objekt synligt med blotta ögat: 2,5 miljoner ljusår bort.",
       stars: [
-        [80,  90,  4.5,"Alpheratz"],  // 0 delas med Pegasus
-        [135, 120, 3.5,"Mirach"],     // 1
-        [190, 95,  3,  "Almach"],     // 2
-        [105, 80,  2.5,""],           // 3 mot M31
-        [75,  60,  2,  ""],           // 4
+        [245, 185, 4.5,"Alpheratz"],  // 0 SW – väst (låg RA) och lägst Dec, delas med Pegasus
+        [150, 135, 3.5,"Mirach"],     // 1 centrum (RA 1h09, Dec +35°37)
+        [55,  82,  3,  "Almach"],     // 2 NE – öst (hög RA) och högst Dec (RA 2h04, Dec +42°20)
+        [185, 100, 2.5,""],           // 3 nav-stjärna mot M31 (norr om kedjan)
+        [160, 85,  2,  ""],           // 4 nav-stjärna, nära M31
       ],
       starColors: ["white","white","white","white","white"],
-      lines: [[0,1],[1,2],[0,3],[3,4]],
-      extra: [[60,45,8,"M31"]],   // galax-fläck
+      lines: [[0,1],[1,2],[1,3],[3,4]],
+      extra: [[138,70,9,"M31"]],   // M31 norr om Mirach (RA 0h43, Dec +41°16)
       extraStyle: "blur",
     },
     {
