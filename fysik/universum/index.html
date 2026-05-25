@@ -1,25 +1,147 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Universum – Fysik</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    /* === Områdesfärg === */
+    body.area-universum {
+      --area: #4a1f8c;
+      --area-strong: #32146a;
+      --area-soft: #f2eeff;
+      --area-border: #c4a8f0;
+      --area-hover: #e4d7fb;
+    }
+
+    main {
+      font-size: 1.2em;
+    }
+
+    .area-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: 300px 1fr;
+        align-items: start;
+      }
+    }
+
+    .area-main { min-width: 0; }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+      background: #1a0a3a;
+    }
+
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+
+    .concept-heading {
+      margin: 0 0 0.55rem 0;
+      font-size: 0.9rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--area-strong);
+      font-weight: 700;
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 0.2rem;
+    }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.18rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .concept-list a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .concept-list a:hover {
+      text-decoration: underline;
+      color: var(--area-strong);
+    }
+
+    .concept-note {
+      margin: 0.65rem 0 0 0;
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .concept-note a {
+      color: var(--area-strong);
+      font-weight: 600;
+    }
+
+    @media (min-width: 960px) {
+      .area-hero-image {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      .area-hero-image img {
+        flex: 1 1 0;
+        width: auto;
+        max-width: 60%;
+      }
+      .area-hero-image figcaption {
+        flex: 0 0 38%;
+        margin-top: 0;
+      }
     }
 
     .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -28,12 +150,8 @@
     .resource-box h2 {
       margin-top: 0;
       margin-bottom: 0.75rem;
-      font-size: 1.35rem;
-    }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
+      font-size: 1.2rem;
+      color: var(--area-strong);
     }
 
     .resource-box ul {
@@ -42,9 +160,7 @@
       margin: 0;
     }
 
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
+    .resource-box li { margin-bottom: 0.7rem; }
 
     .resource-box a {
       display: inline-block;
@@ -52,41 +168,354 @@
       font-weight: 600;
     }
 
-    main {
-      font-size: 1.2em;
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
     }
 
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .role-toggle {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .role-toggle button {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      color: var(--area-strong);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover { background: var(--area-hover); }
+
+    .role-toggle button.active {
+      background: var(--area);
+      color: #fff;
+      border-color: var(--area);
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: var(--area-strong);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    /* === Milstolpe-roadmap === */
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li { margin: 0; }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    /* Gruppens chip: markerar att milstolpen är extra utbyggd */
+    .milestone-map-list a.group-milestone {
+      border-color: var(--area);
+      font-weight: 700;
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .milestone-map-list .group-badge {
+      font-size: 0.72rem;
+      background: var(--area);
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.1rem 0.45rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Lärare-ordning */
+    body[data-role="larare"] .resource-grid article:last-child {
+      order: -1;
+    }
+
+    /* Grupparbete-förklaring */
+    .group-info {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.97rem;
+    }
+
+    .group-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--area-strong);
+      font-size: 1rem;
+    }
+
+    .group-info ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.4rem 1rem;
+    }
+
+    .group-info li {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .group-info .g-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
   </style>
 </head>
+<body class="area-universum">
 
-<body>
+  <header class="fysik-header">
+    <h1>Universum</h1>
+  </header>
 
-<header class="fysik-header">
-  <h1>Universum</h1>
-</header>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
+    </p>
 
-<nav id="side-menu"></nav>
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
 
-<main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
-    <a href="/fysik/ljud/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om solsystemet, stjärnor, galaxer, rödförskjutning och universums historia.</p>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+              <li><a href="./larande-spel.html">Lärande spel – begreppskort</a></li>
+              <li><a href="./stjarnbilder.html">Stjärnbilder – guide med mythology</a></li>
+            </ul>
+          </article>
+
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./laborationer.html">Laborationer</a></li>
+              <li><a href="./instuderingsfragor-lararutskrift.html">Instuderingsfrågor – lärarutskrift</a></li>
+              <li><a href="./ovningsprov-elevutskrift.html">Övningsprov – elevutskrift</a></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="group-info">
+          <h3>Grupparbete – presentationsämnen</h3>
+          <ul>
+            <li><span class="g-chip">1</span> Universums utveckling – Big Bang</li>
+            <li><span class="g-chip">2</span> Galaxer</li>
+            <li><span class="g-chip">3</span> En stjärnas födelse och död</li>
+            <li><span class="g-chip">4</span> Stjärntecken och djurkretsen</li>
+          </ul>
+          <p style="margin: 0.6rem 0 0; font-size:0.85rem; color:#555; font-style:italic;">Dessa fyra ämnen är extra utbyggda i studieguiden – markerade med en chip på milstolpekartan nedan.</p>
+        </section>
+      </div>
+
+      <figure class="area-hero-image">
+        <img src="/images/fysik/universum/introduktion.png"
+             alt="Universum – galaxer, stjärnor, nebulosa och solsystemet"
+             onerror="this.style.display='none'" />
+        <figcaption>
+          <p class="concept-heading">Viktiga begrepp att lära sig</p>
+          <ul class="concept-list">
+            <li><a href="./studieguide.html#m1">Galax</a></li>
+            <li><a href="./studieguide.html#m1">Vintergatan</a></li>
+            <li><a href="./studieguide.html#m2">Ljusår</a></li>
+            <li><a href="./studieguide.html#m3">Solsystem</a></li>
+            <li><a href="./studieguide.html#m3">Exoplanet</a></li>
+            <li><a href="./studieguide.html#m4">Fusion</a></li>
+            <li><a href="./studieguide.html#m4">Solvind</a></li>
+            <li><a href="./studieguide.html#m5">Magnitud</a></li>
+            <li><a href="./studieguide.html#m6">Nebulosa</a></li>
+            <li><a href="./studieguide.html#m6">Röd jätte</a></li>
+            <li><a href="./studieguide.html#m7">Supernova</a></li>
+            <li><a href="./studieguide.html#m7">Svart hål</a></li>
+            <li><a href="./studieguide.html#m8">Spiralgalax</a></li>
+            <li><a href="./studieguide.html#m9">Big Bang</a></li>
+            <li><a href="./studieguide.html#m10">Stjärnbild</a></li>
+            <li><a href="./studieguide.html#m11">Djurkretsen</a></li>
+          </ul>
+          <p class="concept-note">Förkunskaper: grundläggande kunskaper om atomer och strålning är en fördel.</p>
+        </figcaption>
+      </figure>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <p style="color:#888; font-style:italic;">Material kommer snart.</p>
-      </article>
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden. Fetstilta är grupparbetets presentationsämnen.</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vår plats i universum</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Avstånd i rymden</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Solsystemet</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Solen – vår stjärna</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Stjärnors egenskaper</a></li>
+        <li><a href="./studieguide.html#m6" class="group-milestone"><span class="m-num-chip">6</span>En stjärnas liv <span class="group-badge">Grupp 3</span></a></li>
+        <li><a href="./studieguide.html#m7" class="group-milestone"><span class="m-num-chip">7</span>En stjärnas död <span class="group-badge">Grupp 3</span></a></li>
+        <li><a href="./studieguide.html#m8" class="group-milestone"><span class="m-num-chip">8</span>Galaxer <span class="group-badge">Grupp 2</span></a></li>
+        <li><a href="./studieguide.html#m9" class="group-milestone"><span class="m-num-chip">9</span>Big Bang <span class="group-badge">Grupp 1</span></a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Stjärnbilder</a></li>
+        <li><a href="./studieguide.html#m11" class="group-milestone"><span class="m-num-chip">11</span>Stjärntecken <span class="group-badge">Grupp 4</span></a></li>
+      </ul>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Inläsningstips</summary>
+        <ul>
+          <li>Börja med att skaffa dig en känsla för de enorma avstånden i rymden – ljusåret är nyckeln till att förstå allt annat.</li>
+          <li>Lär dig de 8 planeterna i ordning och skillnaden mellan jordlika planeter och gasjättar.</li>
+          <li>Försök förstå hur solen fungerar: fusion omvandlar väte till helium och frigör energi som ljus och värme.</li>
+          <li>Koppla ihop stjärnans massa med dess öde: små stjärnor dör stilla som vita dvärgar, stora stjärnor exploderar som supernovor.</li>
+          <li>Träna på att skilja astronomi (vetenskap) från astrologi (inte vetenskap).</li>
+          <li>Hitta Polstjärnan på stjärnhimlen – den sitter alltid i norr och hjälper dig orientera dig.</li>
+        </ul>
+      </details>
     </section>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>
+    (function () {
+      var STORE_KEY = "universum.role";
+      var btnElev   = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+
+      try {
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
+
+      btnElev.addEventListener("click",   function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Universum</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f5f0ff;
+      border: 1px solid #c4a8f0;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    /* Extra markering för grupparbetsmilstolpar */
+    .milestone.group-milestone {
+      border-left: 4px solid #4a1f8c;
+    }
+
+    .group-tag {
+      display: inline-flex;
+      align-items: center;
+      background: #4a1f8c;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #4a1f8c;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4a1f8c;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: center;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 0.88rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #f0eaff;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4a1f8c;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    /* Varning/info-ruta för astrologi-vs-astronomi */
+    .info-box {
+      background: #fff8e6;
+      border: 1px solid #f0c860;
+      border-left: 4px solid #d4a017;
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      margin: 0.9rem 0;
+      font-size: 0.96rem;
+    }
+    .info-box strong { color: #7a5a00; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f5f0ff;
+      border: 1px solid #c4a8f0;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e4d7fb;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #4a1f8c;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* Skalatabell */
+    .scale-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 0.9rem 0;
+    }
+    .scale-table th, .scale-table td {
+      border: 1px solid #d8d8d8;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+    }
+    .scale-table th {
+      background: #f0eaff;
+      color: #32146a;
+      font-weight: 700;
+    }
+    .scale-table tr:nth-child(even) td { background: #faf8ff; }
+
+    .swipe-toast {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(74, 31, 140, 0.9);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+      white-space: nowrap;
+      max-width: 85vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .swipe-toast.visible { opacity: 1; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Studieguide</h1>
+    <p>Universum</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f5f0ff; border:1px solid #c4a8f0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#4a1f8c; cursor:pointer;">Öppna alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Fördjupningar (★) är klickbara och fälls ut för den som vill komma längre. Milstolpar med lila kant till vänster är extra viktiga för grupparbetet.</p>
+    </section>
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Vår plats i universum</span>
+      </summary>
+      <div class="m-body">
+        <p>När du tittar upp mot stjärnhimlen en klar natt ser du i princip ingenting av universum. De tusentals stjärnor du kan se med blotta ögat är alla en del av vår galax – <strong class="term">Vintergatan</strong> – och den är bara en av hundratals miljarder galaxer i det synliga universum.</p>
+
+        <p>En <strong class="term">galax</strong> är en enorm samling stjärnor, gas och stoft som hålls ihop av gravitationen. Vintergatan är en <strong class="term">spiralgalax</strong> med mer än 200 miljarder stjärnor. Sett uppifrån liknar den ett hjul med spiralformade armar som spinner ut från ett tjockt centrum. Om man stod utanför och tittade på sidan skulle den se ut som en platt skiva med en upphöjning i mitten.</p>
+
+        <p>Vår sol är en alldeles vanlig stjärna som befinner sig i en av spiralarmarna, ungefär <strong class="term">30 000 ljusår från galaxens centrum</strong>. Runt solen kretsar planeterna i vårt <strong class="term">solsystem</strong>. Solsystemet är i sin tur ett av miljarder stjärnsystem i Vintergatan.</p>
+
+        <p>En klar sommarnatt kan man med blotta ögat se Vintersgatans kärnband – ett mjölkaktigt strimmigt ljusbälte som sträcker sig tvärs över himlen. Det är miljarder stjärnor så långt bort att vi inte kan skilja dem åt.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Vi bor i solsystemet, som är ett av miljarder stjärnsystem i galaxen Vintergatan. Vintergatan är en spiralgalax med mer än 200 miljarder stjärnor. Solen sitter i en spiralarm, ca 30 000 ljusår från centrum.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Begreppen galax och Vintergatan i checklistan
+          </a>
+          <a href="./larande-spel.html">
+            <span class="n-label">Träna</span>
+            Begreppskort
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Hur vet vi hur Vintergatan ser ut om vi sitter inuti den?</summary>
+          <p>Det är just det som gör det svårt – vi kan aldrig flyga ut och ta en bild uppifrån. Men vi kan använda indirekta metoder. Genom att mäta <em>var stjärnorna befinner sig</em> i tre dimensioner (med parallaxmätningar, cepheidvariabler och radiostyrkan hos gasmolnet) kan man rekonstruera galaxens form. Radioteleskop som pekar mot galaxens kärna avslöjar hur densiteten av gas och stjärnor varierar med avståndet. Spiralstrukturen avslöjas av att molnen av vätegas koncentreras längs spiralarmarnas ytterkanter. Jämförelser med andra spiralgalaxer, som vi kan se utifrån, ger oss en mall för hur en typisk spiralgalax ser ut – och Vintergatan passar mönstret.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Avstånd i rymden</span>
+      </summary>
+      <div class="m-body">
+        <p>Avstånden i rymden är så enorma att vanliga mått som kilometer blir omständliga att använda. Istället använder astronomer begreppet <strong class="term">ljusår</strong>. Ett ljusår är den sträcka ljuset tillryggalägger på ett år. Ljuset färdas med en hastighet av <strong class="term">300 000 km per sekund</strong> – alltså ungefär 9 500 miljarder kilometer per år.</p>
+
+        <p>Det tar ungefär <strong class="term">8 minuter</strong> för ljuset att ta sig från solen till jorden. Man säger att solen är 8 <em>ljusminuter</em> bort. Till vår närmaste grannstjärna, <strong class="term">Alfa Centauri</strong>, är avståndet 4,3 ljusår. Det ljus som når dig från den stjärnan i kväll lämnade stjärnan för 4,3 år sedan.</p>
+
+        <p>Det finns stjärnor som ligger på flera miljarder ljusårs avstånd. Det ljus som når oss från sådana stjärnor lämnade dem för miljarder år sedan – långt före jordens tillkomst. Vi ser alltså universum som det <em>såg ut</em> när ljuset gav sig iväg, inte som det ser ut nu. Ju längre bort vi tittar, desto längre tillbaka i tiden ser vi.</p>
+
+        <table class="scale-table">
+          <thead>
+            <tr><th>Avstånd</th><th>Ljustid</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Solen – Jorden</td><td>8 minuter</td></tr>
+            <tr><td>Närmaste stjärna (Alfa Centauri)</td><td>4,3 ljusår</td></tr>
+            <tr><td>Vintergatans diameter</td><td>~100 000 ljusår</td></tr>
+            <tr><td>Andromedagalaxen</td><td>2,5 miljoner ljusår</td></tr>
+            <tr><td>Observerbara universum (radie)</td><td>~46 miljarder ljusår</td></tr>
+          </tbody>
+        </table>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          1 ljusår = sträckan ljuset (300 000 km/s) tillryggalägger på ett år. När vi tittar på avlägsna stjärnor ser vi dem som de var – inte som de är nu. Ju längre bort, desto längre tillbaka i tiden.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om ljusår och avstånd
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Solsystemet</span>
+      </summary>
+      <div class="m-body">
+        <p>Runt solen kretsar <strong class="term">åtta planeter</strong> i nästan cirkelformade banor. De delas in i två grupper. De fyra <strong class="term">jordlika planeterna</strong> – Merkurius, Venus, Jorden och Mars – är relativt små med en fast stenyta. De fyra <strong class="term">gasjättarna</strong> – Jupiter, Saturnus, Uranus och Neptunus – är enormt mycket större och saknar fast markyta.</p>
+
+        <p>Fram till 2006 räknade man med nio planeter, med Pluto som den yttersta. Men Pluto är för liten och befinner sig i <strong class="term">Kuiperbältet</strong> – ett bälte av tusentals frusna klumpar utanför Neptunus bana. Pluto är numera klassad som en <em>dvärgplanet</em>.</p>
+
+        <p>Mellan Mars och Jupiter finns <strong class="term">asteroidbältet</strong>, ett brett bälte av sten och metallklumpar, från sandkornskorn till asteroider på hundratals kilometer. Ingen av dessa hann bli en planet, troligen på grund av Jupiters starka gravitation som störde ihopsamlingen.</p>
+
+        <p><strong class="term">Kometerna</strong> är smutsiga snöbollar i långa elliptiska banor. När de svänger in mot solen värms de upp och gas och stoft slits loss – det bildas en lysande svans. Svansen pekar alltid <em>bort från solen</em>, driven av solvinden. Den mest kända kometen är <strong class="term">Halleys komet</strong>, med ett omloppsperiod på 76 år – senast synlig 1986, nästa gång 2061.</p>
+
+        <p>Planeter kan ha <strong class="term">månar</strong>. Jordens måne är relativt stor jämfört med planeten den kretsar kring. Jupiter har minst 95 kända månar, varav de fyra stora – <strong class="term">Io, Europa, Ganymedes och Callisto</strong> – kallas de galileiska månarna och kan ses med en enkel kikare.</p>
+
+        <p>Planeter utanför vårt eget solsystem kallas <strong class="term">exoplaneter</strong>. Sedan 1990-talet har astronomerna hittat tusentals exoplaneter runt andra stjärnor. De flesta påvisas indirekt – antingen via det lilla ljusfall som uppstår när planeten passerar framför stjärnan (transitmetoden) eller via den lilla gupp i stjärnans rörelse som planeten orsakar.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          8 planeter: 4 jordlika (Merkurius, Venus, Jorden, Mars) och 4 gasjättar (Jupiter, Saturnus, Uranus, Neptunus). Dessutom asteroider, kometer och dvärgplaneter som Pluto. Exoplaneter är planeter runt andra stjärnor.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Planeter i checklistan
+          </a>
+          <a href="./laborationer.html">
+            <span class="n-label">Laborera</span>
+            Triangulering och planetarium
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför kan det finnas liv på Jupiters måne Europa?</summary>
+          <p>Europa är täckt av ett skal av is, men under isen tror forskare att det finns ett flytande hav av saltvatten som hålls flytande av den enorma tidvattenkraft som Jupiters gravitation utövar. Värme genereras i månens inre av friktionen. Flytande vatten, energikälla och kemikalier är de tre grundkraven för liv som vi känner det. Europaklippets sprickade isyta avbildad av Voyager och Galileo-sonderna ser ut precis som man förväntar sig av ett isskal som sprickar och frysts om upprepade gånger. NASA:s Europa Clipper-sond, som sändes upp 2024, är nu på väg mot Jupiter och ska undersöka Europas potential för liv.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Solen – vår stjärna</span>
+      </summary>
+      <div class="m-body">
+        <p>Solen är ett lysande gasklot – en stjärna av medelmåttig storlek och ålder. I solens kärna är temperaturen ungefär <strong class="term">15 miljoner grader Celsius</strong> och trycket ofattbart högt. Under dessa förhållanden sker <strong class="term">kärnfusion</strong>: vätekärnor slår ihop sig och bildar heliumkärnor. Vid varje fusion frigörs en stor mängd energi som strålning.</p>
+
+        <p>Det ljus som träffar dig just nu skapades i solens kärna för ungefär en miljon år sedan. Det tog så lång tid för fotonerna att ta sig ut ur den täta solen – studsandes hit och dit i materialet. Sedan tog det 8 minuter för ljuset att resa från solen till jordens yta.</p>
+
+        <p>Solens yta – <strong class="term">fotosfären</strong> – håller en temperatur på ca 6 000 °C. På ytan syns mörka fläckar, <strong class="term">solfläckar</strong>, som beror på ojämnheter i solens magnetfält. De är något svalare (ca 4 000 °C) och ser därför mörka ut mot den ljusare omgivningen.</p>
+
+        <p>Solen skickar ständigt ut en ström av laddade partiklar – <strong class="term">solvinden</strong>. Jordens magnetfält deflekterar de flesta partiklarna, men vid polerna kan de tränga in i atmosfären. Där kolliderar de med luftmolekyler och skapar det vackra ljusfenomenet <strong class="term">norrsken</strong>.</p>
+
+        <p>Solen är ca <strong class="term">5 miljarder år</strong> gammal och beräknas ha ungefär lika lång tid kvar. Därefter tar vätebränslet slut och solen expanderar till en <em>röd jätte</em> – mer om det i milstolpe 6.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Solen producerar energi via fusion: väte slår ihop sig till helium i kärnan (15 miljoner °C). Ytan är ~6 000 °C. Solvinden skapar norrsken vid polerna. Solen är ~5 miljarder år gammal.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om solen
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Fusion och solvind i checklistan
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Stjärnors egenskaper</span>
+      </summary>
+      <div class="m-body">
+        <p>Stjärnor ser likadana ut på himlen – vita prickar – men i verkligheten är de enormt olika i storlek, temperatur och ljusstyrka. Dessa egenskaper hänger ihop på ett bestämt sätt.</p>
+
+        <p><strong class="term">Färgen</strong> avslöjar temperaturen. Blåvita stjärnor har yttemperaturer på 15 000–40 000 °C. Solen är gulvit med ca 6 000 °C. Röda stjärnor har yttemperaturer på bara 3 000 °C. Regeln är: ju hetare yta, desto blåare.</p>
+
+        <p>Stjärnornas <strong class="term">ljusstyrka</strong> mäts i <strong class="term">magnitud</strong>. Det finns två typer: <em>skenbar</em> magnitud (hur ljusstark stjärnan verkar sett från jorden) och <em>absolut</em> magnitud (den verkliga ljusstyrkan, mätt på standardavståndet 32,6 ljusår). En stjärna kan verka ljusstark antingen för att den är riktigt nära oss, eller för att den verkligen är väldigt stark. Himlens ljusstarkaste stjärna, <strong class="term">Sirius</strong>, lyser så starkt delvis för att den ligger relativt nära – bara 8,6 ljusår bort.</p>
+
+        <p>Stjärnornas <strong class="term">storlek</strong> varierar extremt. Vår sol är medelstor. Dvärgar är mindre än solen, jättar är hundratals gånger större, och superjättar kan vara tusen gånger solens diameter. Den största kända stjärnan, <em>Epsilon Aurigae</em>, är ca 3 000 gånger solens diameter – hela solsystemet ut till Jupiter skulle rymmas inuti.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Blå stjärnor är hetast, röda kallast. Magnitud mäter ljusstyrka: skenbar (hur den ser ut härifrån) och absolut (verklig ljusstyrka). Stjärnor varierar enormt i storlek, från dvärgar till superjättar.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om magnitud och stjärnfärg
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Hertzsprung-Russel-diagrammet</summary>
+          <p>Om man ritar ett diagram med stjärnors absoluta ljusstyrka på ena axeln och yttemperatur på den andra, hamnar nästan alla stjärnor längs ett diagonalt band kallat <em>huvudserien</em>. Solen befinner sig ungefär i mitten. Längs huvudserien finns ett klart mönster: hetare stjärnor är starkare och mer massiva. Blå jättar sitter högt upp till vänster (heta och starka), röda dvärgar sitter nere till höger (svala och svaga). Utanför huvudserien finns röda jättar (kalla men enormt ljusstarka) och vita dvärgar (heta men svaga). Diagrammet kallas Hertzsprung-Russel-diagrammet och är ett av astronomins viktigaste verktyg för att förstå stjärnors liv.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 – GRUPP 3 ========== -->
+    <details class="milestone group-milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">En stjärnas liv – från nebulosa till röd jätte<span class="group-tag">Grupp 3</span></span>
+      </summary>
+      <div class="m-body">
+        <p>Alla stjärnor föds, lever och dör. Hur länge en stjärna lever och hur den dör beror nästan uteslutande på dess massa. En stor och tung stjärna bränner sin bränsle snabbt och lever kortare – en liten stjärna är sparsam och kan leva hundratals miljarder år.</p>
+
+        <p><strong>Stjärnans födelse:</strong> Universum innehåller enorma moln av gas och stoft som kallas <strong class="term">nebulosor</strong>. Ibland – kanske till följd av en tryckvåg från en supernova i närheten – börjar tyngdkraften att samla delar av molnet. Gasen klumpar ihop sig och värms upp allteftersom den faller samman. Det bildas en <strong class="term">protostellar kärna</strong>. När trycket och temperaturen i kärnan blir tillräckligt höga – ungefär 10 miljoner grader – startar kärnfusionen. Stjärnan tänds! Strålningstrycket utåt balanserar tyngdkraften inåt, och stjärnan befinner sig i ett stabilt tillstånd kallat <strong class="term">huvudserien</strong>.</p>
+
+        <p>Vår sol befinner sig nu i denna fas och har gjort det i ca 5 miljarder år. Den har lika många år kvar.</p>
+
+        <p><strong>Röd jätte:</strong> Till slut tar vätebränslet i kärnan slut. Kärnan börjar krympa och värms ytterligare upp. Det höga trycket gör att fusion av väte nu sker i ett skal runt den ihopkrympta kärnan. Energin som frigörs är enorm, och stjärnan sväller kraftigt – den blir en <strong class="term">röd jätte</strong>. Yttemperaturen sjunker (därför rödaktig), men eftersom ytan är enorm är den totala ljusstyrkan mycket hög.</p>
+
+        <p>Om 5 miljarder år kommer solen att bli en röd jätte och svälla ut till ungefär vid jordens nuvarande bana – Merkurius och Venus kommer att sväljas. Huruvida jordens yta överlever är osäkert, men livet som vi känner det kommer inte att klara sig.</p>
+
+        <figure>
+          <img src="/images/fysik/universum/stjarnans-liv.png" alt="Stjärnans livscykel: nebulosa, protostar, huvudserien, röd jätte" onerror="this.parentElement.style.display='none'" />
+          <figcaption><strong>Stjärnans livscykel</strong> – från gasmoln till röd jätte, och sedan vidare beroende på massa.</figcaption>
+        </figure>
+
+        <div class="fact-box">
+          <strong>Sammanfattning – del 1</strong>
+          Stjärnor föds i nebulosor när gas samlas ihop av gravitation. Fusionen startar när temperaturen når ~10 miljoner grader. När vätebränslet tar slut sväller stjärnan till en röd jätte. Solen gör detta om ~5 miljarder år.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om stjärnors liv
+          </a>
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Nebulosa och röd jätte i checklistan
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Vad händer inne i en röd jätte?</summary>
+          <p>I en röd jätte sker nu fusion i ett skal runt kärnan av helium. Kärnan av helium värms upp tills <em>heliumfusion</em> startar – tre heliumkärnor kan slå ihop sig till en kol-12-kärna. I ännu tyngre stjärnor kan detta fortsätta: kol fusionerar till neon, magnesium, kisel och slutligen järn. Järnet är en vändpunkt – fusion av järn frigör ingen energi utan kräver energi. Järnet är alltså en bottenpunkt i fusionsprocessen och samlas i kärnan utan att brännas vidare. Slutresultatet är ett "lökskalsmönster" i stjärnan: lager av tungare och tungare ämnen, med järn i mitten. Alla grundämnen tyngre än helium som finns i dig – kol, kväve, syre, kalcium i dina ben – skapades i stjärnors kärnor och spreds ut vid explosioner. Vi är verkligen gjorda av stjärnstoft.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 7 – GRUPP 3 ========== -->
+    <details class="milestone group-milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">En stjärnas död – supernova, neutronstjärna och svart hål<span class="group-tag">Grupp 3</span></span>
+      </summary>
+      <div class="m-body">
+        <p>Vad som händer när en stjärna dör beror på hur stor den är. Det finns två huvudspår.</p>
+
+        <p><strong>Liten stjärna (som solen eller mindre):</strong> Den röda jätten kastar av sina yttre gasskal och bildar en <strong class="term">planetarisk nebulosa</strong> – ett vackert lysande gasmoln. Kvar blir en kompakt glödande rest, en <strong class="term">vit dvärg</strong>. En vit dvärg är ungefär jordenstor men har solens massa – en tesked av dess material väger flera ton. Den ger gradvis ifrån sig sin värme och svalnar, till slut till ett mörkt, kallnat objekt.</p>
+
+        <p><strong>Stor stjärna (mer än ca 8 solmassor):</strong> Kärnan kollapsar på bråkdelen av en sekund när järnet kan inte fusioneras längre. Tryckvågen studsar mot den täta kärnan och slungar bort stjärnans yttre lager i en gigantisk explosion – en <strong class="term">supernova</strong>. Under explosionens bråkdel av en sekund frigörs lika mycket energi som solen ger ifrån sig under hela sitt liv. Ljuset kan vara synligt mitt på dagen.</p>
+
+        <p>Efter supernovan återstår två möjliga öden beroende på massan:</p>
+
+        <ul style="margin:0.6rem 0 0.6rem 1.4rem; line-height:1.6;">
+          <li><strong class="term">Neutronstjärna:</strong> En extremt tät rest där elektroner och protoner har pressats ihop till neutroner. Densiteten är så hög att en handfull material väger en miljard ton. Neutronstjärnor kan rotera hundratals gånger per sekund och utsänder regelbundna radiopulser – de kallas då <em>pulsarer</em>.</li>
+          <li><strong class="term">Svart hål:</strong> Om resten är tillräckligt massiv kollapsar den vidare tills gravitationen övervinner allt. Inte ens ljus kan fly. Gränsen där ingenting kan fly kallas <em>händelsehorisonten</em>. Svarta hål kan inte ses direkt, men de avslöjar sig genom gravitationspåverkan på omgivande material och stjärnor.</li>
+        </ul>
+
+        <p>År 1054 exploderade en stjärna synlig mitt på dagen – den kinesiska astronomin dokumenterade den noggrant. Det som är kvar syns idag som <strong class="term">Krabnebulosan</strong> i stjärnbilden Oxen, och i dess centrum snurrar en pulsar med 30 rotationer per sekund.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning – del 2</strong>
+          Liten stjärna → röd jätte → vit dvärg. Stor stjärna → supernova → neutronstjärna eller svart hål. Supernovan sprider grundämnen i rymden. Svarta hål är rester där gravitationen är så stark att inte ens ljus kan fly.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om supernovor och svarta hål
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Variabla stjärnor och Cepheiderna – hur mäter man avstånd till galaxer?</summary>
+          <p>En typ av variabla stjärnor – <em>Cepheidvariabler</em> – pulserar med en period som är direkt kopplad till deras absoluta ljusstyrka. Ju längre period, desto ljusstarkare. Denna koppling, som Henrietta Swan Leavitt upptäckte 1908, är ett oerhört värdefullt instrument: om man mäter hur länge en Cepheidvariabel tar per pulsation vet man dess absoluta ljusstyrka. Jämför sedan med hur ljusstark den verkar (skenbar magnitud) så kan man räkna ut hur långt bort den är. Cepheiderna fungerar som en kosmisk måttstock och var avgörande för Edwin Hubbles slutsats 1925 att Andromedanebulosan ligger utanför Vintergatan – att universum är mycket större än man trott.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 8 – GRUPP 2 ========== -->
+    <details class="milestone group-milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Galaxer<span class="group-tag">Grupp 2</span></span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">galax</strong> är en samling av miljarder stjärnor, gas och stoft som hålls ihop av sin gemensamma gravitation. Det finns uppskattningsvis mer än en biljon (1 000 miljarder) galaxer i det observerbara universum.</p>
+
+        <p>Galaxer delas in efter form. De vanligaste är:</p>
+        <ul style="margin:0.5rem 0 0.8rem 1.4rem; line-height:1.6;">
+          <li><strong class="term">Spiralgalaxer</strong>: platta skivor med spiralformade armar av gas, stoft och unga stjärnor. Vintergatan och Andromedagalaxen är spiralgalaxer.</li>
+          <li><strong class="term">Elliptiska galaxer</strong>: äggformade eller sfäriska samlingar av huvudsakligen gamla stjärnor. Lite gas och stoft – lite nybildning av stjärnor.</li>
+          <li><strong class="term">Irreguljära galaxer</strong>: oregelbunden form, ofta till följd av kollisioner med andra galaxer.</li>
+        </ul>
+
+        <p>Vår galax <strong class="term">Vintergatan</strong> är en spiralgalax med en diameter på ca 100 000 ljusår. I galaxens centrum sitter ett <strong class="term">supermassivt svart hål</strong> – <em>Sagittarius A*</em> – med en massa på 4 miljoner solmassor. De flesta galaxer tycks ha supermassiva svarta hål i sina centra.</p>
+
+        <p>Den närmaste stora grannlgalaxen är <strong class="term">Andromedagalaxen</strong> (M31), en spiralgalax på 2,5 miljoner ljusårs avstånd. Den kan ses med blotta ögat som en suddig ljusfläck i stjärnbilden Andromeda. Andromedagalaxen och Vintergatan rör sig mot varandra och kommer att kollidera om ca 4,5 miljarder år. Kollisionen innebär inte att stjärnor krockar – avstånden är för stora – men galaxerna kommer att deformeras och sluta som en stor elliptisk galax.</p>
+
+        <p>Galaxer finns ofta i <strong class="term">galaxgrupper</strong> och <strong class="term">galaxhopar</strong>. Vintergatan och Andromedagalaxen tillhör <em>Lokala gruppen</em>, en samling av drygt 50 galaxer. Lokala gruppen tillhör i sin tur en ännu större struktur kallad Virgo-superhopen.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En galax är en samling miljarder stjärnor. Galaxer finns som spiraler, ellipser och oregelbundna former. Vintergatan är en spiralgalax med ett supermassivt svart hål i centrum. Andromedagalaxen är vår närmaste stora granne – 2,5 miljoner ljusår bort.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om galaxer
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Mörk materia – vad håller egentligen galaxerna ihop?</summary>
+          <p>Om man mäter hur fort stjärnorna i en galax kretsar runt dess centrum stämmer hastigheterna inte med den synliga massans tyngdkraft. Stjärnorna på galaxens yttre delar rör sig för snabbt – de borde slungas ut om det bara vore den synliga materians gravitation som höll dem kvar. Slutsatsen är att det måste finnas ett "osynligt" extra material som bidrar med gravitation utan att sända ut ljus. Det kallas <em>mörk materia</em>. Man vet att det finns (via gravitationseffekter) men inte vad det är. Det beräknas utgöra ca 27 % av universums totala massa-energi, medan synlig materia (stjärnor, gas) bara utgör ca 5 %.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 9 – GRUPP 1 ========== -->
+    <details class="milestone group-milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Universums historia – Big Bang<span class="group-tag">Grupp 1</span></span>
+      </summary>
+      <div class="m-body">
+        <p>På 1920-talet observerade astronomen <strong class="term">Edwin Hubble</strong> att nästan alla avlägsna galaxer rör sig bort från oss – och ju längre bort en galax befinner sig, desto snabbare avlägsnar den sig. Det kallas <strong class="term">Hubbles lag</strong>. Slutsatsen är chockerande: universum expanderar. Om man "spolar tillbaka" expansionen bakåt i tiden, kom allting en gång från en enda punkt.</p>
+
+        <p>Teorin om universums uppkomst kallas <strong class="term">Big Bang</strong>. För ungefär <strong class="term">13,8 miljarder år sedan</strong> exploderade allt materia, energi, rum och tid ur ett extremt tätt och hett tillstånd. Det var inte en explosion i rymden – det var en explosion av rummet självt.</p>
+
+        <p>Under de första sekunderna var universum ofattbart hett och tätt. Grundläggande partiklar skapades: kvarkar, elektroner och fotoner. Under de första minuterna slog protoner och neutroner ihop sig till lätta atomkärnor – framför allt väte och helium. Resterande grundämnen bildades senare i stjärnornas kärnor och vid supernovor.</p>
+
+        <p>Under de första 380 000 åren var universum för tätt och hett för att fotoner (ljuspartiklar) skulle kunna färdas fritt. Universum var "ogenomskinligt". När temperaturen sjunkit nog bildades de första hela atomer, och universum blev genomskinligt. Det ljus som frigjordes då är fortfarande på väg genom rymden – avkylt till nästan absoluta nollpunkten – och kallas <strong class="term">kosmisk bakgrundsstrålning</strong>. Det är det äldsta ljuset i universum och observerades för första gången 1965.</p>
+
+        <p>Hundratals miljoner år efter Big Bang samlades gasen ihop och bildade de första stjärnorna och galaxerna. Universum såg nu ut ungefär som det gör idag – med miljarder galaxer som alltjämt rör sig ifrån varandra.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Big Bang inträffade för 13,8 miljarder år sedan. Universum expanderar (Hubbles lag). De första atomkärnorna bildades under de första minuterna. Kosmisk bakgrundsstrålning är "ekot" av Big Bang, fortfarande mätbar idag.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om Big Bang
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Vad var det som "bangade" och vad fanns innan?</summary>
+          <p>Det är en av de svåraste frågorna i hela vetenskapen. "Vad fanns innan Big Bang?" är egentligen en meningslös fråga om Big Bang verkligen innebar att <em>tiden</em> också började – det finns inget "innan" om det inte finns tid. Fysikens nuvarande lagar bryter samman vid det initiala singularitetstillståndet, och vi kan inte extrapolera vad som hände vid nolltidpunkten. Teorier som <em>inflation</em> beskriver hur universum i sin allra första bråkdel av sekund expanderade ofattbart snabbt – men vad som orsakade inflationen är oklart. Alternativa teorier som <em>cykliska universum</em> och <em>multiversum</em> existerar men är spekulativa. Det är en aktiv forskningsfronts fråga, och svaret är: vi vet inte.</p>
+        </details>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 10 ========== -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Stjärnbilder och orientering på himlen</span>
+      </summary>
+      <div class="m-body">
+        <p>Sedan urminnes tider har människor sett mönster i stjärnorna och gett dem namn. Dessa mönster kallas <strong class="term">stjärnbilder</strong>. De hjälper oss orientera oss på himlen, precis som en karta hjälper oss på marken. Stjärnorna i en stjärnbild ligger inte nödvändigtvis nära varandra i rymden – de ser bara ut att ligga nära sett från vår vinkel.</p>
+
+        <p>En av de mest kända stjärnbilderna är <strong class="term">Orion</strong>. De tre stjärnorna i rad – Orions bälte – är lätta att känna igen. Orions ljusstarkaste stjärnor är <strong class="term">Betelgeuze</strong> (rödaktig, uppe till vänster – en röd superjätte) och <strong class="term">Rigel</strong> (blåvit, nere till höger – en blå superjätte).</p>
+
+        <p>För att hitta <strong class="term">Polstjärnan</strong> använder man <strong class="term">Karlavagnen</strong>, som ingår i stjärnbilden Stora Björnen. De två stjärnorna längst bort i "hinkens" vägg pekar rakt mot Polstjärnan. Polstjärnan befinner sig nästan exakt vid himmelspolens nordpol – den punkt som jordens rotationsaxel pekar mot. Polstjärnan rör sig därför knappt alls på himlen och har sedan länge använts som navigationsstjärna.</p>
+
+        <p>Andra välkända nordliga stjärnbilder är <strong class="term">Cassiopeja</strong> (ett W eller M på himlen), <strong class="term">Lilla Björnen</strong> (med Polstjärnan i svansen) och <strong class="term">Andromeda</strong> (där man kan se Andromedagalaxen som en suddig fläck).</p>
+
+        <p>Idag används Stellarium, ett gratis stjärnprogram, för att utforska stjärnhimlen interaktivt – antingen som app eller i webbläsaren.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Stjärnbilder är mönster av stjärnor på himlen, använda för orientering. Hitta Polstjärnan via Karlavagnen – den pekar alltid mot norr. Kända bilder: Orion, Stora och Lilla Björnen, Cassiopeja.
+        </div>
+
+        <div class="next-steps">
+          <a href="./stjarnbilder.html">
+            <span class="n-label">Utforska</span>
+            Stjärnbildsguide – Orion, Stora Björnen m.fl.
+          </a>
+          <a href="./laborationer.html">
+            <span class="n-label">Laborera</span>
+            Enkelt planetarium &amp; Stellarium
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om stjärnbilder
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 11 – GRUPP 4 ========== -->
+    <details class="milestone group-milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Djurkretsen, stjärntecken och astrologi<span class="group-tag">Grupp 4</span></span>
+      </summary>
+      <div class="m-body">
+        <p>Jordens bana runt solen kallas <strong class="term">ekliptikan</strong>. Längs ekliptikan solen passerar 12 stjärnbilder under årets gång. Dessa tolv stjärnbilder kallas <strong class="term">djurkretsen</strong> eller <strong class="term">zodiaken</strong> och de flesta har fått namn efter djur eller figurer: Väduren, Oxen, Tvillingarna, Kräftan, Lejonet, Jungfrun, Vågen, Skorpionen, Skytten, Stenbocken, Vattumannen och Fiskarna.</p>
+
+        <p>Eftersom jordens "nattsida" under årets gång pekar mot olika delar av stjärnhimlen syns olika stjärnbilder bäst under olika årstider. Den stjärnbild solen "befinner sig i" under ett visst datum kan man inte se på natten – den är bakom solen. Man ser i stället stjärnbilderna på motsatt sida av himlen.</p>
+
+        <p>Ditt <strong class="term">stjärntecken</strong> – eller "horoskoptecken" – bestäms av vilken stjärnbild solen stod i när du föddes. Det är en gammal tradition som härstammar från Babylonien, över 2 000 år gammal.</p>
+
+        <div class="info-box">
+          <strong>Observera – astrologi vs astronomi:</strong> Astrologi är <em>inte</em> en vetenskap. Det finns inga bevis för att stjärntecken påverkar personlighet eller händelser. Astronomi är vetenskapen om universum. Det är viktigt att skilja på dem!
+        </div>
+
+        <p>En intressant detalj: <em>jordens rotationsaxel</em> utför en långsam gyrationsrörelse som kallas <strong class="term">precession</strong> med en period på ca 26 000 år. Det gör att himmelspolen kryper längs en cirkel, och ekliptikans förhållande till stjärnbilderna förskjuts. Det innebär att de gamla babyloniska stjärntecknen faktiskt är förskjutna ungefär en hel stjärnbild bakåt jämfört med vad solen verkligen befinner sig i idag. Den som tror sig vara Lejonet befinner sig i astronomivetenskapens mening ofta i Kräftans stjärnbild.</p>
+
+        <p>Djurkretsens historia är ändå fascinerande. De 12 stjärnbilderna bär historier från den antika kulturen – gudar, hjältar och djur som spelat roll i mänskliga berättelser. Stjärntecknen är en inkörsport till astronomins långa historia och till hur olika kulturer har tolkat natthimlen.</p>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Djurkretsen (zodiaken) är de 12 stjärnbilder solen passerar under ett år längs ekliptikan. Stjärntecken bestäms av solens position vid födseln. Astrologi är inte vetenskap. Precession gör att stjärntecknen i praktiken är förskjutna en hel bild jämfört med astrologins ursprungliga definitioner.
+        </div>
+
+        <div class="next-steps">
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Frågor om djurkretsen
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Hela övningsprovet
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför är det 12 stjärntecken och inte fler?</summary>
+          <p>Babylonierna använde ett talsystem baserat på 12 (duodecimalt) och delade upp himlen i 12 sektorer. I verkligheten passerar solen under ett år faktiskt 13 stjärnbilder, inte 12 – den trettonde heter <em>Ormbäraren</em> (Ophiuchus) och befinner sig längs ekliptikan mellan Skorpionen och Skytten. Babylonierna utelämnade den för symmetrins skull, och med tanke på att astrologi inte är vetenskap spelar det förstås ingen praktisk roll. Men om det hade gjort det borde folk som är "Skorpionen" ibland kalla sig "Ormbäraren".</p>
+        </details>
+      </div>
+    </details>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", openFromHash);
+      } else {
+        openFromHash();
+      }
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+</body>
+</html>

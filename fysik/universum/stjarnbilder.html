@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stjärnbilder – Universum</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ===== Intro ===== */
+    .page-intro {
+      background: #f2eeff;
+      border: 1px solid #c4a8f0;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    /* ===== Årstidskategorier ===== */
+    .season-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin: 2rem 0 0.8rem 0;
+    }
+
+    .season-header h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: #32146a;
+    }
+
+    .season-badge {
+      background: #4a1f8c;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.18rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* ===== Stjärnbildskort ===== */
+    .stjarnbild {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem 1.1rem;
+      margin-bottom: 1.4rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .stjarnbild-header {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stjarnbild-header h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #32146a;
+    }
+
+    .stjarnbild-latin {
+      font-size: 0.88rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    .stjarnbild-forkortn {
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #ede6ff;
+      color: #4a1f8c;
+      border-radius: 5px;
+      padding: 0.1rem 0.45rem;
+    }
+
+    .stjarnbild-meta {
+      font-size: 0.86rem;
+      color: #666;
+      margin-bottom: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 1.2rem;
+    }
+
+    .stjarnbild p {
+      margin: 0.55rem 0;
+      line-height: 1.65;
+    }
+
+    /* ===== Objekt-lista ===== */
+    .objekt-lista {
+      margin: 0.8rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .objekt {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 0.7rem;
+      align-items: baseline;
+    }
+
+    .objekt-namn {
+      font-weight: 700;
+      color: #32146a;
+      white-space: nowrap;
+    }
+
+    .objekt-typ {
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #f2eeff;
+      color: #4a1f8c;
+      border-radius: 4px;
+      padding: 0.05rem 0.4rem;
+      margin-left: 0.3rem;
+      white-space: nowrap;
+    }
+
+    /* ===== Mytologiruta ===== */
+    .myt-box {
+      background: #faf8ff;
+      border: 1px solid #d8d0f0;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.85rem;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    .myt-box strong {
+      display: block;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4a1f8c;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ===== Cirkumpolär-badge ===== */
+    .circumpolar-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: #32146a;
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.15rem 0.65rem;
+      margin-left: 0.5rem;
+    }
+
+    /* ===== Tips-ruta längst ned ===== */
+    .tips-box {
+      background: #f2eeff;
+      border: 1px solid #c4a8f0;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-top: 2rem;
+      font-size: 0.97rem;
+      line-height: 1.65;
+    }
+
+    .tips-box h2 {
+      margin: 0 0 0.5rem;
+      color: #32146a;
+      font-size: 1.05rem;
+    }
+
+    .tips-box ul {
+      margin: 0.3rem 0 0 1.2rem;
+      line-height: 1.8;
+    }
+
+    .mag-chip {
+      display: inline-block;
+      font-size: 0.78rem;
+      background: #e4d7fb;
+      color: #32146a;
+      border-radius: 4px;
+      padding: 0.05rem 0.4rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Stjärnbilder</h1>
+    <p>Universum – synliga från Sverige</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="margin-bottom:1.1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <div class="page-intro">
+      <p>En <strong>stjärnbild</strong> är ett namngivet mönster av stjärnor på himlen. Internationella astronomförbundet (IAU) delar in hela himlavalvet i <strong>88 officiella stjärnbilder</strong> – av dessa kan ungefär 50 ses från Sverige. Namnen och mytologin härstammar i huvudsak från antikens Grekland och Rom.</p>
+      <p>Stjärnorna i en stjärnbild är <em>inte</em> egentliga grannar i rymden – de ligger på helt olika avstånd från oss och råkar bara hamna i samma riktning från jordens perspektiv. Stjärnbilderna är med andra ord ett kartläggningsverktyg, inte verkliga grupperingar.</p>
+      <p>På den här sidan presenteras de stjärnbilder som syns tydligast från Sverige, med fokus på nyckeljärnor och intressanta astronomiska objekt. Använd gärna <a href="https://stellarium-web.org" target="_blank" rel="noopener" style="color:#4a1f8c;font-weight:600;">Stellarium</a> som komplement.</p>
+    </div>
+
+    <!-- ========== CIRKUMPOLÄRA (syns hela året) ========== -->
+    <div class="season-header">
+      <h2>Cirkumpolära stjärnbilder</h2>
+      <span class="season-badge">Syns hela året från Sverige</span>
+    </div>
+
+    <!-- Lilla Björnen -->
+    <section class="stjarnbild" id="lilla-bjorn">
+      <div class="stjarnbild-header">
+        <h3>Lilla Björnen <span class="circumpolar-badge">↑ Norr alltid</span></h3>
+        <span class="stjarnbild-latin">Ursa Minor</span>
+        <span class="stjarnbild-forkortn">UMi</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: hela året, mot norr</span>
+        <span>Svårighetsgrad: enkel att hitta</span>
+      </p>
+
+      <p>Lilla Björnen är kanske den viktigaste stjärnbilden för orientering. I "svansens" yttersta spets sitter <strong>Polstjärnan (Polaris)</strong> – den stjärna som befinner sig nästan exakt i norr dit jordens rotationsaxel pekar. Alla stjärnor på himlen verkar kretsa runt Polstjärnan under nattens lopp, men Polstjärnan rör sig knappt.</p>
+
+      <p>Stjärnbilden liknar en liten skopa (Lilla Karlavagnen) och består av sju stjärnor. Den är svagare och svårare att se än Stora Björnen, men Polstjärnan är alltid lätt att identifiera med hjälp av Karlavagnens "hinkstjärnor".</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Polaris (α UMi) <span class="objekt-typ">Gul superjätte</span></span>
+          <span>Avstånd ~430 ljusår · Magnitud <span class="mag-chip">2,0</span> · Faktiskt en trippelstjärna. Befinner sig 0,7° från den exakta nordpolen – en effekt av precession gör att "polstjärnan" byts ut var ~13 000 år.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Kochab (β UMi) <span class="objekt-typ">Röd jätte</span></span>
+          <span>Avstånd ~130 ljusår · Magnitud <span class="mag-chip">2,1</span> · En av de yttre "hinkstjärnorna" i Lilla Karlavagnen. Var polstjärna för ca 3 000 år sedan.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Lilla Björnen föreställer Arkas, son till nymfen Kallisto och Zeus. Kallisto förvandlades till en björn av den svartsjuke Hera. Arkas, som inte kände igen sin mor, var nära att jaga ihjäl henne – men Zeus förvandlade också honom till en björn och placerade dem båda på himlen som Lilla och Stora Björnen.
+      </div>
+    </section>
+
+    <!-- Stora Björnen -->
+    <section class="stjarnbild" id="stora-bjorn">
+      <div class="stjarnbild-header">
+        <h3>Stora Björnen</h3>
+        <span class="stjarnbild-latin">Ursa Major</span>
+        <span class="stjarnbild-forkortn">UMa</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: hela året, mot norr</span>
+        <span>Innehåller: Karlavagnen (asterism)</span>
+      </p>
+
+      <p>Stora Björnen är en av himmelens största stjärnbilder och hemvist till den välkända <strong>Karlavagnen</strong> – en asterism (ett igenkänningsbart delmönster) av sju ljusstarka stjärnor som formar en stor skopa. De fem mellersta stjärnorna i Karlavagnen tillhör en grupp som verkligen rör sig tillsammans i rymden: Ursa Major-rörelsegruppen, ~80 ljusår bort.</p>
+
+      <p>De två "hinkstjärnorna" Merak och Dubhe pekar direkt mot Polstjärnan. Förlänger du linjen 5 gånger hinkstjärnornas inbördes avstånd hittar du Polstjärnan.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Alioth (ε UMa) <span class="objekt-typ">Vit jätte</span></span>
+          <span>Ljusstarkaste stjärnan i Stora Björnen · Magnitud <span class="mag-chip">1,76</span> · ~83 ljusår</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Dubhe (α UMa) <span class="objekt-typ">Röd jätte</span></span>
+          <span>Den yttre hinkstjärnan · Magnitud <span class="mag-chip">1,79</span> · ~124 ljusår · Är <em>inte</em> med i rörelsegruppen – rör sig i annan riktning.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Mizar + Alcor <span class="objekt-typ">Dubbelstjärna</span></span>
+          <span>Stjärnan i "skaftknäcken" – med blotta ögat ser man Mizar (ζ UMa) och intill den svagare Alcor. Faktiskt ett system med 6 stjärnor. Skarpsynta kan skilja dem åt utan kikare.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">M81 + M82 <span class="objekt-typ">Galaxer</span></span>
+          <span>Två dramatiska galaxer ~12 miljoner ljusår bort, synliga i kikare nära varandra. M82 är en "starburstgalax" – en intensiv stjärnbildningsvåg pågår där p.g.a. gravitationspåverkan från M81.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">M97 – Ugglenebulosan <span class="objekt-typ">Planetarisk nebulosa</span></span>
+          <span>En svag rund nebulosa ~2 000 ljusår bort. I teleskop syns två mörka "ögon" – därav namnet. Rest av en röd jätte som kastat av sina yttre lager.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Stora Björnen föreställer Kallisto, en av Zeus många älskarinnor. Hera, Zeus hustru, förvandlade henne av svartsjuka till en björn. Zeus placerade henne på himlen för att skydda henne – och drog henne upp i himlen efter svansen (vilket förklarar björnens ovanligt långa svans).
+      </div>
+    </section>
+
+    <!-- Cassiopeja -->
+    <section class="stjarnbild" id="cassiopeja">
+      <div class="stjarnbild-header">
+        <h3>Cassiopeja</h3>
+        <span class="stjarnbild-latin">Cassiopeia</span>
+        <span class="stjarnbild-forkortn">Cas</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: hela året, mot nordsidan</span>
+        <span>Form: W (sommar) eller M (vinter)</span>
+      </p>
+
+      <p>Cassiopeja är en av de lättaste stjärnbilderna att känna igen: fem stjärnor formar ett tydligt <strong>W</strong> eller <strong>M</strong> beroende på årstid. Den befinner sig på himlen mitt emot Karlavagnen, med Polstjärnan däremellan. Cassiopeja och Stora Björnen "vänder runt" Polstjärnan som speglar av varandra.</p>
+
+      <p>Stjärnbilden ligger mitt i Vintergatan och innehåller rikligt med öppna stjärnhopar, synliga i kikare och teleskop.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Schedar (α Cas) <span class="objekt-typ">Röd jätte</span></span>
+          <span>Cassiopejas ljusstarkaste stjärna · Magnitud <span class="mag-chip">2,2</span> · ~230 ljusår</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Tycho Brahes supernova (1572) <span class="objekt-typ">Historisk händelse</span></span>
+          <span>I november 1572 dök en ny stjärna upp i Cassiopeja – en supernova så ljus att den syntes på dagarna i veckor. Den danske astronomen Tycho Brahe dokumenterade den noga. Resten (Tycho's SNR) kan ses med radioteleskop. Händelsen skakade om det antika synsättet att "stjärnhimlen är oföränderlig".</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Cassiopeja A <span class="objekt-typ">Supernovarestant</span></span>
+          <span>Den starkaste radiosändaren på himlen utanför solsystemet – rest av en supernova som exploderade ~11 000 ljusår bort, synlig från jorden runt år 1680.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Cassiopeja var den fåfänga drottningen av Etiopien i den grekiska mytologin, maka till kung Cefeus. Hon skröt om att hon var vackrare än havsgudinnorna (Nereiderna), vilket ledde till att havsgudar och sjöodjur hotade landet. Som straff sattes hon på himlen i en stol, bunden att evigt rotera runt Polstjärnan – hälften av tiden hängandes upp och ner.
+      </div>
+    </section>
+
+    <!-- ========== VINTER ========== -->
+    <div class="season-header">
+      <h2>Vinter- och vårkvällar</h2>
+      <span class="season-badge">Nov – Apr, mot söder</span>
+    </div>
+
+    <!-- Orion -->
+    <section class="stjarnbild" id="orion">
+      <div class="stjarnbild-header">
+        <h3>Orion – jägaren</h3>
+        <span class="stjarnbild-latin">Orion</span>
+        <span class="stjarnbild-forkortn">Ori</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: dec–feb, mot söder</span>
+        <span>Kännetecken: tre stjärnor i rad (Orions bälte)</span>
+      </p>
+
+      <p>Orion är en av de mest igenkännbara stjärnbilderna på himlen och ett sant skyltfönster för astronomin. <strong>Orions bälte</strong> – tre jämt fördelade, ljusstarka stjärnor i en rak rad – gör stjärnbilden omöjlig att missa på en vinterkväll mot söder. Under bältet hänger Orions "svärd" med den fantastiska Orionnebulosan.</p>
+
+      <p>Orion innehåller tre av himlens tjugofem ljusstarkaste stjärnor och erbjuder en komplett kurs i stjärntyper: en blå superjätte, en röd superjätte och en av de mest aktiva stjärnbildningsregionerna vi kan se.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Betelgeuze (α Ori) <span class="objekt-typ">Röd superjätte</span></span>
+          <span>Övre vänster i Orion · ~700 ljusår · Magnitud <span class="mag-chip">~0,5</span> (varierar) · En av de största kända stjärnorna – om den ersatte vår sol skulle den sträcka sig bortom Jupiters bana. Beräknas explodera som supernova inom astronomiskt nära framtid (inom ~100 000 år). Dess rödorange färg syns tydligt för blotta ögat.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Rigel (β Ori) <span class="objekt-typ">Blå superjätte</span></span>
+          <span>Nedre höger i Orion · ~860 ljusår · Magnitud <span class="mag-chip">0,13</span> · Sjätte ljusstarkaste stjärnan på hela himlen. Trots beteckningen β (beta) är den ljusstarkare än α (alfa, Betelgeuze). Blåvit färg och 120 000 gånger solens ljusstyrka.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Bellatrix (γ Ori) <span class="objekt-typ">Blå jätte</span></span>
+          <span>Övre höger · ~250 ljusår · Magnitud <span class="mag-chip">1,64</span> · "Amazonstjärnan". Hetare och blåare än solen.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Orions bälte: Alnitak, Alnilam, Mintaka <span class="objekt-typ">Blå superjättar</span></span>
+          <span>Tre stjärnor i rak rad ~800–1 350 ljusår bort. Linjens förlängning mot sydöst leder till Sirius i Stora Hunden. Bältets namn kommer från arabiskan: "bälte" och "bältesspänne".</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Orionnebulosan (M42) <span class="objekt-typ">Emissionsnebulosa</span></span>
+          <span>~1 350 ljusår · Synlig med blotta ögat som en suddig fläck under bältet. En av de mest fotograferade objekten på himlen. Aktiv stjärnbildningsregion – tusentals unga stjärnor håller på att formas inuti molnet. Glöder av UV-strålning från de nybildade heta stjärnorna. I teleskop visar sig en rik, dimhöljd struktur.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Trapeziet (θ¹ Ori C) <span class="objekt-typ">Ung stjärnhop</span></span>
+          <span>Fyra unga, extremt heta stjärnor i hjärtat av Orionnebulosan. Deras ultravioletta strålning är det som får hela nebulosan att lysa.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Orion var den mäktigaste jägaren i den grekiska mytologin – son till havsguden Poseidon. Han skröt om att han kunde döda alla djur på jorden, vilket upprörde gudinnorna och jorden själv (Gaia). En skorpion dödade honom (Skorpionen/Scorpius syns aldrig samtidigt med Orion på himlen – de flyr varandra). Zeus placerade Orion på himlen med sina jakthundar (Stora och Lilla Hunden), efter sig Haren, och framför sig Oxen.
+      </div>
+    </section>
+
+    <!-- Oxen -->
+    <section class="stjarnbild" id="oxen">
+      <div class="stjarnbild-header">
+        <h3>Oxen</h3>
+        <span class="stjarnbild-latin">Taurus</span>
+        <span class="stjarnbild-forkortn">Tau</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: nov–feb, mot söder</span>
+        <span>Notera: tredje zodiak-stjärnbilden</span>
+      </p>
+
+      <p>Oxen är en rik vinterstjärnbild med tre sevärdheter: Oxens röda öga (Aldebaran), den berömda öppna stjärnhopen Plejaderna och den historiska Krabbnebulosan.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Aldebaran (α Tau) <span class="objekt-typ">Röd jätte</span></span>
+          <span>~65 ljusår · Magnitud <span class="mag-chip">0,85</span> · "Oxens öga" – den röd-orangea stjärnan i V-mönstret av Hyaderna. Trettonde ljusstarkaste stjärnan på himlen. 44 gånger solens diameter.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Plejaderna (M45) <span class="objekt-typ">Öppen stjärnhop</span></span>
+          <span>~440 ljusår · Kallas också "Sjustjärnorna" – de flesta ser 6–7 stjärnor med blotta ögat, men i kikare syns hundratals. Unga, heta blåa stjärnor, bara ~100 miljoner år gamla. En av de närmaste och mest studerade stjärnhoparna. Omnämns i flera av världens äldsta texter (Homer, Bibeln).</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Hyaderna <span class="objekt-typ">Öppen stjärnhop</span></span>
+          <span>~150 ljusår – den <em>närmaste</em> öppna stjärnhopen till oss. Formar det V-mönster som Aldebarans röda öga sitter i (Aldebaran är dock inte del av hopen). ~200 stjärnor delar samma rörelse.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Krabbnebulosan (M1) <span class="objekt-typ">Supernovarestant</span></span>
+          <span>~6 500 ljusår · Rest av en supernova som exploderade år <strong>1054 e.Kr.</strong> – observerad av kinesiska och arabiska astronomer, synlig på dagtid i 23 dagar. I centrum sitter en pulsar (neutronstjärna) som roterar 30 gånger per sekund och pumpar ut enorma mängder energi. Charles Messier noterade den som objekt nr 1 i sin katalog (M1) 1758, efter att ha förväxlat den med en komet.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Oxen brukar identifieras med Zeus som förvandlade sig till en vit tjur för att föra bort den vackra feniciska prinsessan Europa till Kreta. Plejaderna är de sju döttrar som Plejone och Atlas fick – Zeus förvandlade dem till stjärnor för att rädda dem från jägaren Orion. Hyaderna är Plejadernas halvystrar.
+      </div>
+    </section>
+
+    <!-- Stora Hunden -->
+    <section class="stjarnbild" id="stora-hunden">
+      <div class="stjarnbild-header">
+        <h3>Stora Hunden</h3>
+        <span class="stjarnbild-latin">Canis Major</span>
+        <span class="stjarnbild-forkortn">CMa</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: jan–mar, lågt mot söder</span>
+        <span>Innehåller: Sirius – himlens ljusstarkaste stjärna</span>
+      </p>
+
+      <p>Stora Hunden – en av Orions jakthundar – innehåller <strong>Sirius</strong>, den ljusstarkaste stjärnan på hela natthimlen. Förlänger du linjen genom Orions bälte mot sydöst når du direkt till Sirius. Stjärnbilden syns lågt mot horisonten i söder från Sverige under januari–mars.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Sirius (α CMa) <span class="objekt-typ">Vit stjärna (A-klass)</span></span>
+          <span>~8,6 ljusår – en av våra närmaste stjärnnar · Magnitud <span class="mag-chip">−1,46</span> · Himlens absolut ljusstarkaste stjärna, "hundens öga". Sirius är faktiskt ett dubbelstjärnesystem: Sirius A (en normal vit stjärna) och Sirius B – en vit dvärg, ungefär så stor som jorden men med solens massa, som kretsar runt Sirius A var 50:e år.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Sirius-uppgången <span class="objekt-typ">Historisk astronomisk händelse</span></span>
+          <span>De gamla egyptierna kallade Sirius för "Sothis". Dagen då Sirius åter syntes i gryningen (heliakisk uppgång) markerade nilens översvämning och det egyptiska nyåret. Greker och romare kopplade Sirius sommarmorgonuppgångar till de hetaste dagarna – "hundadagarna" (dog days of summer).</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Canis Major är en av Orions jakthundar – den trogna följeslagaren till den store jägaren. I vissa berättelser är det Laelaps, den magiska hunden som aldrig missade sitt byte. Sirius kallades av egyptierna för gudinnans Isis öga och hade central plats i deras kalender och religion.
+      </div>
+    </section>
+
+    <!-- ========== SOMMAR / HÖST ========== -->
+    <div class="season-header">
+      <h2>Sommar- och höstkvällar</h2>
+      <span class="season-badge">Maj – Okt, mot söder och zenit</span>
+    </div>
+
+    <!-- Lyran -->
+    <section class="stjarnbild" id="lyran">
+      <div class="stjarnbild-header">
+        <h3>Lyran</h3>
+        <span class="stjarnbild-latin">Lyra</span>
+        <span class="stjarnbild-forkortn">Lyr</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: jun–sep, nära zenit</span>
+        <span>Del av Sommartriangeln</span>
+      </p>
+
+      <p>Lyran är en liten men ljusstark stjärnbild som representerar lyran som tillhörde den mytologiske sångaren Orfeus. Den är lätt att hitta tack vare <strong>Vega</strong>, en av de tre stjärnorna i den berömda <strong>Sommartriangeln</strong> (Vega, Deneb i Svanen och Altair i Örnen).</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Vega (α Lyr) <span class="objekt-typ">Vit stjärna (A-klass)</span></span>
+          <span>~25 ljusår · Magnitud <span class="mag-chip">0,03</span> · Näst ljusstarkaste stjärnan på norra stjärnhimlen. Rotererar så snabbt (~274 km/s vid ekvatorn) att den är tydligt tillplattad vid polerna. Vega var <em>polstjärna</em> för ungefär 12 000 år sedan och blir det igen om ca 14 000 år p.g.a. precession.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Ringnebulosan (M57) <span class="objekt-typ">Planetarisk nebulosa</span></span>
+          <span>~2 500 ljusår · I teleskop syns en liten, tydlig ring av lysande gas – rök-ring från en sol-lik stjärna som kastat av sina yttre lager och nu dör som vit dvärg i centrum. Klassiskt och lättfunnet objekt för amatörteleskop.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Lyran föreställer instrumentet som tillhörde Orfeus – den störste musikern i den grekiska mytologin, son till musikens gud Apollon. Orfeus spelade så vackert att stenar och djur följde honom. Han försökte hämta sin döda hustru Eurydike från dödsriket, och hans musik mjukade upp till och med Hades hjärta. Lyran placerades på himlen efter hans tragiska död.
+      </div>
+    </section>
+
+    <!-- Herkules -->
+    <section class="stjarnbild" id="herkules">
+      <div class="stjarnbild-header">
+        <h3>Herkules</h3>
+        <span class="stjarnbild-latin">Hercules</span>
+        <span class="stjarnbild-forkortn">Her</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: maj–sep, nära zenit</span>
+        <span>Stor men svag stjärnbild</span>
+      </p>
+
+      <p>Herkules är en av himmelens största stjärnbilder men med relativt svaga stjärnor. Kärnan av stjärnbilden – det karakteristiska fyrkantiga mönstret (Keystone/Nyckelstenen) – är ändå lätt att känna igen nära zenit sommarnätter. Stjärnbildens huvudattraktion är <strong>Herkuleshopen (M13)</strong>, en av de finaste klotformiga stjärnhoparna på norra natthimlen.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Kornephoros (β Her) <span class="objekt-typ">Gul jätte</span></span>
+          <span>Ljusstarkaste stjärnan i Herkules · Magnitud <span class="mag-chip">2,77</span> · ~140 ljusår</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Herkuleshopen (M13) <span class="objekt-typ">Klotformig stjärnhop</span></span>
+          <span>~25 000 ljusår · Innehåller uppskattningsvis 300 000 stjärnor tätt packade i en klot. Synlig med blotta ögat som en svag fläck i Nyckelstenen. Med kikare syns en tydlig rund fläck; i teleskop löser den upp sig i otaliga enskilda stjärnor. 1974 skickades det berömda <strong>Arecibo-meddelandet</strong> – ett radiosignal med information om mänskligheten – riktat mot M13.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">M92 <span class="objekt-typ">Klotformig stjärnhop</span></span>
+          <span>~27 000 ljusår · En annan stor klotformig stjärnhop i Herkules, ofta förbisedd till förmån för den mer kända M13, men faktiskt nästan lika imponerande.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Herkules (Herakles på grekiska) var den störste hjälten i den grekiska mytologin, son till Zeus och den dödliga Alkmene. Han är mest känd för sina <strong>tolv stordåd</strong> (arbeten), ålagda honom av kung Eurysteus som straff (t.ex. besegra Nemea-lejonet, döda Hydran, hämta Cerberus från dödsriket). I stjärnbilden avbildas han knäböjande med en klubba.
+      </div>
+    </section>
+
+    <!-- ========== HÖST / TIDIG VINTER ========== -->
+    <div class="season-header">
+      <h2>Höst- och tidig vinterkvällar</h2>
+      <span class="season-badge">Sep – Dec</span>
+    </div>
+
+    <!-- Andromeda -->
+    <section class="stjarnbild" id="andromeda">
+      <div class="stjarnbild-header">
+        <h3>Andromeda</h3>
+        <span class="stjarnbild-latin">Andromeda</span>
+        <span class="stjarnbild-forkortn">And</span>
+      </div>
+      <p class="stjarnbild-meta">
+        <span>Bäst synlig: sep–dec, högt mot söder</span>
+        <span>Innehåller: Andromedagalaxen (M31)</span>
+      </p>
+
+      <p>Andromeda är en höststjärnbild som gränsar till Pegasusens stora fyrkant. Stjärnbildens stora attraktion är <strong>Andromedagalaxen (M31)</strong> – det mest avlägsna objektet som kan ses med blotta ögat, 2,5 miljoner ljusår bort. Andromedagalaxen syns som en svag, suddig fläck i mörk himmel och är faktiskt lite större än Vintergatan.</p>
+
+      <div class="objekt-lista">
+        <div class="objekt">
+          <span class="objekt-namn">Alpheratz (α And) <span class="objekt-typ">Blåvit jätte</span></span>
+          <span>~97 ljusår · Magnitud <span class="mag-chip">2,07</span> · Hörnet av Pegasusens fyrkant, delad med Pegasus-stjärnbilden. Dubbelstjärna.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Andromedagalaxen (M31) <span class="objekt-typ">Spiralgalax</span></span>
+          <span>~2,5 miljoner ljusår · Den närmaste stora spiralgalaxen och vår galaktiska grannfamilj i Lokala gruppen. Innehåller ~1 000 miljarder stjärnor (mer än Vintergatan). Syns som en avlång suddig fläck under mörk himmel. Omgiven av minst 14 satellit-galaxer, varav M32 och M110 syns i teleskop. <strong>Rörelse mot oss:</strong> Andromeda och Vintergatan kolliderar om ungefär 4,5 miljarder år.</span>
+        </div>
+        <div class="objekt">
+          <span class="objekt-namn">Hitta Andromedagalaxen <span class="objekt-typ">Navigeringstips</span></span>
+          <span>Börja vid Cassiopejas W, hitta den inre vänstra "V-grenen" och förlänge den nedåt – den pekar mot M31. Eller: hitta Alpheratz (hörnet på Pegasusens fyrkant), hoppa till Mirach (β And), och gå rakt uppåt (norr) två stjärnhopp.</span>
+        </div>
+      </div>
+
+      <div class="myt-box">
+        <strong>Mytologi</strong>
+        Andromeda var en etiopisk prinsessa, dotter till kung Cefeus och drottning Cassiopeja. Cassiopejas skryt ledde till att havsgudar krävde att Andromeda offrades till sjöodjuret Cetus – hon kedjas fast vid en klippa vid havet. Hjälten Perseus (som återvände från att ha dödat Medusa) räddade henne med hjälp av Medusas huvud, vars blick förvandlade Cetus till sten. Hela "familjen" – Cefeus, Cassiopeja, Andromeda och Perseus – bildar en grupp av intilliggande höststjärnbilder.
+      </div>
+    </section>
+
+    <!-- ===== Tips och verktyg ===== -->
+    <div class="tips-box">
+      <h2>Praktiska tips för stjärntittande</h2>
+      <ul>
+        <li><strong>Ge ögonen tid:</strong> Det tar 20–30 minuter för ögonen att anpassa sig till mörkret (mörkeradaptation). Undvik att titta på ljus däremellan – använd röd ficklampa om du behöver se något.</li>
+        <li><strong>Himmelskvalitet:</strong> Gå ut från stadsbelysningen. Redan ett par kilometer utanför tätorten ger märkbart mörkare himmel och fler synliga stjärnor. Undvik fullmånekvällar.</li>
+        <li><strong>Stellarium:</strong> Använd <a href="https://stellarium-web.org" target="_blank" rel="noopener" style="color:#4a1f8c;font-weight:600;">stellarium-web.org</a> för att se exakt vilka stjärnbilder som syns från din plats och tid. Mobilappen är perfekt att ta med ut.</li>
+        <li><strong>Börja enkelt:</strong> Lär dig Karlavagnen → Polstjärnan → Cassiopeja. Med dessa tre som ankare kan du orientera dig på hela himlen.</li>
+        <li><strong>Vinterhimlen:</strong> Vinterhimlen (Orion, Sirius, Plejaderna) är den rikaste och lättaste att lära sig – de ljusstarkaste stjärnorna samlas alla mot söder under januari.</li>
+        <li><strong>Stjärnmagnituden:</strong> Ju lägre (eller mer negativ) magnitud, desto ljusstarkare. Blotta ögat klarar ca magnitud 6 under mörk himmel. Sirius: −1,46. Svagaste synliga: +6.</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
