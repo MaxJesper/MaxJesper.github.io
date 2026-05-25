@@ -286,12 +286,6 @@
       text-decoration: none;
     }
 
-    /* Gruppens chip: markerar att milstolpen är extra utbyggd */
-    .milestone-map-list a.group-milestone {
-      border-color: var(--area);
-      font-weight: 700;
-    }
-
     .milestone-map-list .m-num-chip {
       display: inline-flex;
       align-items: center;
@@ -306,66 +300,11 @@
       flex-shrink: 0;
     }
 
-    .milestone-map-list .group-badge {
-      font-size: 0.72rem;
-      background: var(--area);
-      color: #fff;
-      border-radius: 999px;
-      padding: 0.1rem 0.45rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
     /* Lärare-ordning */
     body[data-role="larare"] .resource-grid article:last-child {
       order: -1;
     }
 
-    /* Grupparbete-förklaring */
-    .group-info {
-      background: var(--area-soft);
-      border: 1px solid var(--area-border);
-      border-radius: 12px;
-      padding: 0.9rem 1rem;
-      margin-top: 1.5rem;
-      font-size: 0.97rem;
-    }
-
-    .group-info h3 {
-      margin: 0 0 0.5rem 0;
-      color: var(--area-strong);
-      font-size: 1rem;
-    }
-
-    .group-info ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.4rem 1rem;
-    }
-
-    .group-info li {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.9rem;
-    }
-
-    .group-info .g-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      background: var(--area);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.78rem;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 <body class="area-universum">
@@ -400,7 +339,8 @@
               <li><a href="./ovningsprov.html">Övningsprov</a></li>
               <li><a href="./facit.html">Facit till övningsprovet</a></li>
               <li><a href="./larande-spel.html">Lärande spel – begreppskort</a></li>
-              <li><a href="./stjarnbilder.html">Stjärnbilder – guide med mythology</a></li>
+              <li><a href="https://stellarium-web.org" target="_blank" rel="noopener">Stellarium – interaktiv stjärnkarta</a></li>
+              <li><a href="./stjarnbilder.html">Stjärnbilder – guide med mytologi</a></li>
             </ul>
           </article>
 
@@ -408,22 +348,13 @@
             <h2>Material för läraren</h2>
             <ul>
               <li><a href="./laborationer.html">Laborationer</a></li>
+              <li><a href="./grupparbete.html">Grupparbete – instruktioner och ämnen</a></li>
               <li><a href="./instuderingsfragor-lararutskrift.html">Instuderingsfrågor – lärarutskrift</a></li>
               <li><a href="./ovningsprov-elevutskrift.html">Övningsprov – elevutskrift</a></li>
             </ul>
           </article>
         </section>
 
-        <section class="group-info">
-          <h3>Grupparbete – presentationsämnen</h3>
-          <ul>
-            <li><span class="g-chip">1</span> Universums utveckling – Big Bang</li>
-            <li><span class="g-chip">2</span> Galaxer</li>
-            <li><span class="g-chip">3</span> En stjärnas födelse och död</li>
-            <li><span class="g-chip">4</span> Stjärntecken och djurkretsen</li>
-          </ul>
-          <p style="margin: 0.6rem 0 0; font-size:0.85rem; color:#555; font-style:italic;">Dessa fyra ämnen är extra utbyggda i studieguiden – markerade med en chip på milstolpekartan nedan.</p>
-        </section>
       </div>
 
       <figure class="area-hero-image">
@@ -457,19 +388,19 @@
 
     <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
       <h2>Studieguidens milstolpar</h2>
-      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden. Fetstilta är grupparbetets presentationsämnen.</p>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden.</p>
       <ul class="milestone-map-list">
         <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vår plats i universum</a></li>
         <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Avstånd i rymden</a></li>
         <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Solsystemet</a></li>
         <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Solen – vår stjärna</a></li>
         <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Stjärnors egenskaper</a></li>
-        <li><a href="./studieguide.html#m6" class="group-milestone"><span class="m-num-chip">6</span>En stjärnas liv <span class="group-badge">Grupp 3</span></a></li>
-        <li><a href="./studieguide.html#m7" class="group-milestone"><span class="m-num-chip">7</span>En stjärnas död <span class="group-badge">Grupp 3</span></a></li>
-        <li><a href="./studieguide.html#m8" class="group-milestone"><span class="m-num-chip">8</span>Galaxer <span class="group-badge">Grupp 2</span></a></li>
-        <li><a href="./studieguide.html#m9" class="group-milestone"><span class="m-num-chip">9</span>Big Bang <span class="group-badge">Grupp 1</span></a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>En stjärnas liv</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>En stjärnas död</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Galaxer</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Big Bang</a></li>
         <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Stjärnbilder</a></li>
-        <li><a href="./studieguide.html#m11" class="group-milestone"><span class="m-num-chip">11</span>Stjärntecken <span class="group-badge">Grupp 4</span></a></li>
+        <li><a href="./studieguide.html#m11"><span class="m-num-chip">11</span>Stjärntecken</a></li>
       </ul>
     </section>
 

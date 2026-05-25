@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grupparbete – Universum</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .page-intro {
+      background: #f2eeff;
+      border: 1px solid #c4a8f0;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    /* ===== Ämnesgrupper ===== */
+    .amne {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem 1.1rem;
+      margin-bottom: 1.3rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .amne-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .amne-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #4a1f8c;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .amne-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #32146a;
+    }
+
+    .amne-milstolpar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+    .milstolpe-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #ede6ff;
+      color: #4a1f8c;
+      border: 1px solid #c4a8f0;
+      border-radius: 999px;
+      padding: 0.2rem 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .milstolpe-chip:hover {
+      background: #e4d7fb;
+      text-decoration: none;
+    }
+
+    .amne ul {
+      margin: 0.4rem 0 0 1.3rem;
+      line-height: 1.8;
+    }
+
+    .amne li { margin-bottom: 0.1rem; }
+
+    .amne ul ul {
+      margin-top: 0.1rem;
+      margin-bottom: 0.3rem;
+      line-height: 1.7;
+    }
+
+    .amne p {
+      margin: 0.5rem 0;
+      line-height: 1.65;
+    }
+
+    .amne a {
+      color: #4a1f8c;
+      font-weight: 600;
+    }
+
+    /* ===== Regler ===== */
+    .regler-box {
+      background: #faf8ff;
+      border: 1px solid #d8d0f0;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      margin-top: 1.5rem;
+    }
+
+    .regler-box h2 {
+      margin: 0 0 0.8rem;
+      color: #32146a;
+      font-size: 1.1rem;
+    }
+
+    .regler-box ul {
+      margin: 0 0 0 1.2rem;
+      line-height: 1.85;
+    }
+
+    .regler-box li { margin-bottom: 0.2rem; }
+
+    /* ===== Redovisning ===== */
+    .redovisning-box {
+      background: #f2eeff;
+      border: 1px solid #c4a8f0;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-top: 1.3rem;
+      line-height: 1.65;
+    }
+
+    .redovisning-box h2 {
+      margin: 0 0 0.5rem;
+      color: #32146a;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Grupparbete</h1>
+    <p>Universum – tvärgruppsredovisningar</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="margin-bottom:1.1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <div class="page-intro">
+      <p>Ni ska med gemensamma insatser ta fram en presentation som redovisas i <strong>tvärgrupper</strong>. Du kan önska vilket ämnesområde du vill jobba med, men läraren beslutar och sätter ihop de slutliga grupperna. Det ska vara <strong>fem personer i varje grupp</strong>.</p>
+      <p>Klicka på milstolpelänkarna i varje ämne för att gå direkt till relevant del av studieguiden.</p>
+    </div>
+
+    <!-- ===== ÄMNE 1 ===== -->
+    <section class="amne" id="amne-1">
+      <div class="amne-header">
+        <span class="amne-num">1</span>
+        <h2>Universums utveckling</h2>
+      </div>
+      <div class="amne-milstolpar">
+        <span style="font-size:0.82rem; color:#666; align-self:center;">Relevanta milstolpar:</span>
+        <a class="milstolpe-chip" href="./studieguide.html#m9">M9 – Big Bang</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m8">M8 – Galaxer</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m6">M6 – En stjärnas liv</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m1">M1 – Vår plats i universum</a>
+      </div>
+      <ul>
+        <li>Från Big Bang till universums möjliga slut</li>
+        <li>Stjärnornas och galaxernas skapelse</li>
+        <li>Liv i universum – förutsättningar och sökandet efter det</li>
+        <li>Se studiefilmerna i ämnet (tillgängliga via läraren)</li>
+        <li>Vår plats i universum – var befinner vi oss?</li>
+      </ul>
+    </section>
+
+    <!-- ===== ÄMNE 2 ===== -->
+    <section class="amne" id="amne-2">
+      <div class="amne-header">
+        <span class="amne-num">2</span>
+        <h2>Galaxer</h2>
+      </div>
+      <div class="amne-milstolpar">
+        <span style="font-size:0.82rem; color:#666; align-self:center;">Relevanta milstolpar:</span>
+        <a class="milstolpe-chip" href="./studieguide.html#m8">M8 – Galaxer</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m1">M1 – Vår plats i universum</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m7">M7 – En stjärnas död</a>
+      </div>
+      <ul>
+        <li>Historia – hur upptäcktes och namngavs galaxerna?</li>
+        <li>Olika typer av galaxer (spiral, elliptisk, irreguljär)</li>
+        <li>Storlek – från dvärggalaxer till jättegalaxer</li>
+        <li>Kvasarer – de ljusstarkaste objekten i universum</li>
+        <li>Andra himlakroppar – t.ex. pulsarer</li>
+        <li>Galaxer som krockar – vad händer?</li>
+        <li>Svarta hål – bildning, egenskaper och händelsehorisont</li>
+      </ul>
+    </section>
+
+    <!-- ===== ÄMNE 3 ===== -->
+    <section class="amne" id="amne-3">
+      <div class="amne-header">
+        <span class="amne-num">3</span>
+        <h2>En stjärnas utveckling, död och efterliv – analys av stjärnljus</h2>
+      </div>
+      <div class="amne-milstolpar">
+        <span style="font-size:0.82rem; color:#666; align-self:center;">Relevanta milstolpar:</span>
+        <a class="milstolpe-chip" href="./studieguide.html#m5">M5 – Stjärnors egenskaper</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m6">M6 – En stjärnas liv</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m7">M7 – En stjärnas död</a>
+      </div>
+      <ul>
+        <li>Olika möjliga slut för en stjärna beroende på dess massa</li>
+        <li>Hertzsprung–Russell-diagrammet – förklara och tolka det (se Studi)</li>
+        <li>Nova och supernova – vad är skillnaden? Ge konkreta exempel</li>
+        <li>Vad kan stjärnor ge upphov till? Ge exempel (neutronstjärnor, svarta hål, vita dvärgar, nebulosor)</li>
+      </ul>
+    </section>
+
+    <!-- ===== ÄMNE 4 ===== -->
+    <section class="amne" id="amne-4">
+      <div class="amne-header">
+        <span class="amne-num">4</span>
+        <h2>Stjärntecken</h2>
+      </div>
+      <div class="amne-milstolpar">
+        <span style="font-size:0.82rem; color:#666; align-self:center;">Relevanta milstolpar:</span>
+        <a class="milstolpe-chip" href="./studieguide.html#m10">M10 – Stjärnbilder</a>
+        <a class="milstolpe-chip" href="./studieguide.html#m11">M11 – Stjärntecken</a>
+      </div>
+      <ul>
+        <li>Historia
+          <ul>
+            <li>Olika världsbilder och hur de förändrats</li>
+            <li>De första "astronomerna" – Babylonien, Egypten, Gamla Grekland</li>
+          </ul>
+        </li>
+        <li>Astrologi – vad är det och hur skiljer det sig från astronomi?</li>
+        <li>Stjärntecken – ursprung, ekliptikan och precessionens påverkan</li>
+        <li>Stjärntecknens sägner – välj några och berätta</li>
+        <li>Utforska stjärnhimlen med <a href="https://stellarium.org/" target="_blank" rel="noopener">Stellarium</a></li>
+      </ul>
+    </section>
+
+    <!-- ===== REGLER ===== -->
+    <div class="regler-box">
+      <h2>Regler och arbetssätt</h2>
+      <ul>
+        <li>Utse en i gruppen som skapar en Google Presentation (och eventuella övriga dokument).</li>
+        <li>Första sidan ska presentera gruppmedlemmarna, gärna med bild.</li>
+        <li>Dela snabbt upp arbetet så att varje person ansvarar för en del av presentationen – men ni måste sedan lära er <em>allt</em> som era kamrater gjort. I tvärgrupperna drar ni hela presentationen själva, och läraren samt tvärgruppens medlemmar bedömer hur väl du kan det avsnitt du talar om.</li>
+        <li>Alla ansvarar gemensamt för att innehållet håller god kvalitet.</li>
+        <li>Presentationstid i tvärgrupperna: <strong>ca 10 minuter</strong>.</li>
+        <li>Max 2 YouTube-klipp, vardera max 1 minut.</li>
+        <li>Anteckna källorna för er fakta på presentationens sista sida.</li>
+      </ul>
+    </div>
+
+    <!-- ===== REDOVISNING ===== -->
+    <div class="redovisning-box">
+      <h2>När redovisar ni?</h2>
+      <p>Ni får ca <strong>fyra lektioner</strong> att arbeta på. Datum för redovisning meddelas av läraren.</p>
+    </div>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
