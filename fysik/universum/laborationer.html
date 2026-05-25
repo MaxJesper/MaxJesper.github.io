@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationer – Universum</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .lab {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid #4a1f8c;
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .lab h2 {
+      margin: 0 0 0.25rem 0;
+      color: #32146a;
+      font-size: 1.25rem;
+    }
+
+    .lab .lab-meta {
+      font-size: 0.88rem;
+      color: #666;
+      margin-bottom: 0.9rem;
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .lab .lab-meta span::before {
+      font-weight: 700;
+      color: #4a1f8c;
+      margin-right: 0.25rem;
+    }
+
+    .lab .lab-meta .lm-tid::before { content: "Tid:"; }
+    .lab .lab-meta .lm-mat::before { content: "Materiel:"; }
+
+    .lab p {
+      margin: 0.6rem 0;
+      line-height: 1.6;
+    }
+
+    .lab ol, .lab ul {
+      margin: 0.5rem 0 0.8rem 1.3rem;
+      line-height: 1.7;
+    }
+
+    .lab li { margin-bottom: 0.2rem; }
+
+    .lab h3 {
+      font-size: 1rem;
+      color: #32146a;
+      margin: 1rem 0 0.4rem 0;
+    }
+
+    .lab .redovisa {
+      background: #f2eeff;
+      border: 1px solid #c4a8f0;
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      margin-top: 1rem;
+      font-size: 0.96rem;
+    }
+
+    .lab .redovisa strong {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #4a1f8c;
+      margin-bottom: 0.3rem;
+    }
+
+    .fig-box {
+      background: #faf8ff;
+      border: 1px solid #d8d0f0;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      margin: 0.9rem 0;
+      font-size: 0.93rem;
+    }
+
+    .fig-box .fig-caption {
+      font-size: 0.83rem;
+      color: #666;
+      font-style: italic;
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Laborationer</h1>
+    <p>Universum</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="margin-bottom:1.25rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <!-- ========== LABORATION 1 ========== -->
+    <section class="lab" id="lab-1">
+      <h2>Lab 1 · Triangulering – hur långt är det till en "stjärna"?</h2>
+      <div class="lab-meta">
+        <span class="lm-tid">~40 minuter</span>
+        <span class="lm-mat">Rutat A4-papper (5 mm rutor), linjal, 2 blyertspennor</span>
+      </div>
+
+      <p>Astronomer kan inte åka till en stjärna och mäta hur långt bort den är. Istället används en metod som kallas <strong>triangulering</strong> (parallaxmetoden). Den bygger på att ett föremål verkar byta position mot bakgrunden när man observerar det från två olika platser. Ju kortare bassträcka, desto längre bort är föremålet.</p>
+
+      <p>I den här laborationen använder du en "stjärna" på tavlan och din bänk som bassträcka för att öva på principen.</p>
+
+      <h3>Utförande</h3>
+      <ol>
+        <li>Läraren ritar en "stjärna" på tavlan och drar ett lodrätt streck genom den.</li>
+        <li>Mät upp en 1,00 m lång sträcka längs din bänk och markera ändpunkterna svagt (punkt 1 = vänster, punkt 2 = höger).</li>
+        <li>Markera ändpunkterna av en sträcka på 5 cm längs nedre kanten på ett rutat A4-papper. Den är en avbildning i skala 1:20 av sträckan på bänken.</li>
+        <li>Lägg papprets nedre kant längs bänkskivans kant med vänster markering vid punkt 1.</li>
+        <li>Håll en blyertspenna vid ändpunkten av ditt streck. Sikta mot stjärnan med en annan penna och sätt en markering på papperet i linje med stjärnan. Rita en linje i riktning mot stjärnan.</li>
+        <li>Flytta papperet till punkt 2. Sikta mot stjärnan igen och rita en ny linje i riktning mot stjärnan.</li>
+        <li>De två linjerna ska skära varandra i en punkt – den representerar stjärnans position i din förminskade skala.</li>
+        <li>Mät avståndet från skärningspunkten till papperets nedre kant och multiplicera med 20 (skalan är 1:20). Det är det verkliga avståndet till "stjärnan" på tavlan.</li>
+        <li>Kontrollmät det verkliga avståndet med ett måttband.</li>
+      </ol>
+
+      <div class="fig-box">
+        <p><strong>Principen i rymden:</strong> För att mäta avståndet till en riktig stjärna använder man jordens bana runt solen som bassträcka. Man mäter stjärnans position i januari och i juli (6 månaders mellanrum, då jorden befinner sig på motsatt sida om solen). Bassträckan blir då ca 300 miljoner km. Denna metod kallas <em>parallaxmetoden</em> och används för stjärnor upp till några hundra ljusårs avstånd.</p>
+        <p class="fig-caption">Vinkeln som uppstår kallas <em>parallaxvinkel</em>. Ju mindre vinkel, desto längre bort är stjärnan.</p>
+      </div>
+
+      <div class="redovisa">
+        <strong>Redovisa</strong>
+        <ul style="margin:0.3rem 0 0 1.2rem;">
+          <li>Vad fick du för uppmätt avstånd med trianguleringsmetoden?</li>
+          <li>Stämde det med det faktiska avståndet? Vad kan ha gett felkällor?</li>
+          <li>Förklara med egna ord hur parallaxmetoden fungerar i rymden.</li>
+          <li>Varför kan man inte använda parallaxmetoden för stjärnor som ligger mer än några hundra ljusår bort?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== LABORATION 2 ========== -->
+    <section class="lab" id="lab-2">
+      <h2>Lab 2 · Enkelt planetarium – projicera stjärnbilder</h2>
+      <div class="lab-meta">
+        <span class="lm-tid">~50 minuter</span>
+        <span class="lm-mat">Stordiaprojektor (OH-projektor), kartongbitar (ca 24×24 cm), passare, sax, stjärnkarta</span>
+      </div>
+
+      <p>Ett planetarium är en byggnad med ett kupol-tak där stjärnhimlen projiceras med hjälp av en projektor. I den här laborationen gör du ett enkelt planetarium med en stordiaprojektor och pappskivor med hål.</p>
+
+      <h3>Utförande</h3>
+      <ol>
+        <li>Välj en stjärnbild som du vill projicera. Bra val för taket är: Andromeda, Cassiopeja, Stora Björnen, Lilla Björnen. Bra val för väggen är: Stora Hunden, Oxen, Haren, Valfisken, Fiskarna.</li>
+        <li>Leta upp stjärnbilden i en stjärnkarta eller i Stellarium. Notera vilka stjärnor som är ljusstarka och vilka som är svagare.</li>
+        <li>Rita av stjärnbilden på en pappskiva (24×24 cm). Se till att proportionerna stämmer ungefär.</li>
+        <li>Använd spetsen av en passare och gör hål i pappet där stjärnorna ska vara. Gör <em>stora hål</em> för ljusstarka stjärnor och <em>små hål</em> för svaga stjärnor.</li>
+        <li>Obs: Vänd pappet rätt! Om du projicerar på taket eller väggen spegelvänds bilden – tänk på det när du placerar hålen.</li>
+        <li>Lägg pappskivan på stordiaprojektor och projicera på tak eller vägg.</li>
+        <li>Låt de andra eleverna försöka gissa vilken stjärnbild det är.</li>
+      </ol>
+
+      <div class="fig-box">
+        <p><strong>Orions stjärnbild som exempel:</strong> De tre stjärnorna i rad (Orions bälte) är lätta att känna igen. Betelgeuze sitter uppe till vänster (stor röd superjätte) och Rigel nere till höger (blå superjätte). Orionnebulosan (M42) syns som en svag fläck under bältet och kan visas som ett litet tätt hålmönster.</p>
+        <p class="fig-caption">Skriv på pappet var Betelgeuze och Rigel finns – annars kan det vara svårt att orientera sig.</p>
+      </div>
+
+      <h3>Extra: Välj ytterligare en stjärnbild</h3>
+      <p>Gör en till pappskiva med en angränsande stjärnbild, dvs en stjärnbild som brukar synas nära den första. Projicera båda och se hur de passar ihop på "himlen" i klassrummet.</p>
+
+      <div class="redovisa">
+        <strong>Redovisa</strong>
+        <ul style="margin:0.3rem 0 0 1.2rem;">
+          <li>Vilken stjärnbild valde du? Beskriv hur den ser ut på himlen.</li>
+          <li>Varför är hålen olika stora?</li>
+          <li>Vad kallas det mått som anger en stjärnas skenliga ljusstyrka?</li>
+          <li>Vad heter de två mest kända stjärnorna i Orion och vilken typ av stjärna är respektive?</li>
+          <li>Bonusfråga: Varför är stjärnorna i en stjärnbild egentligen <em>inte</em> nära varandra i rymden, trots att de ser nära ut på himlen?</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== LABORATION 3 ========== -->
+    <section class="lab" id="lab-3">
+      <h2>Lab 3 · Stellarium – utforska stjärnhimlen</h2>
+      <div class="lab-meta">
+        <span class="lm-tid">~40 minuter</span>
+        <span class="lm-mat">Dator eller chromebook med webbläsare</span>
+      </div>
+
+      <p>Stellarium är ett gratis och öppet planetariumprogram som visar en realistisk bild av stjärnhimlen från valfri plats och tid. Det finns som nedladdningsbar app och som webbversion.</p>
+
+      <p><strong>Webbversion:</strong> <a href="https://stellarium-web.org" target="_blank" rel="noopener" style="color:#4a1f8c; font-weight:600;">stellarium-web.org</a></p>
+
+      <h3>Uppgifter</h3>
+      <ol>
+        <li><strong>Hitta Polstjärnan.</strong> Vrid vyn mot norr. Hitta Karlavagnen (i Stora Björnen) och följ de två "hinkstjärnorna" till Polstjärnan. Vad heter stjärnbilden Polstjärnan tillhör?</li>
+        <li><strong>Hitta Orion.</strong> Orion syns bäst på vinterkvällar mot söder. Identifiera Orions bälte, Betelgeuze och Rigel. Vad är deras skenliga magnitud?</li>
+        <li><strong>Hitta Andromedagalaxen.</strong> Sök på "Andromeda Galaxy" eller M31. Hur långt bort är den? Kan den ses med blotta ögat?</li>
+        <li><strong>Gå tillbaka i tid.</strong> Ändra datumet till din födelsedag för 2 000 år sedan. I vilken stjärnbild befann sig solen? Det är det "egentliga" astronomiska stjärntecknet jämfört med vad astrologin säger idag. Vad kan förklara skillnaden? (Ledtråd: precession.)</li>
+        <li><strong>Fäst Polstjärnan och öka tidshastigheten.</strong> Klicka på Polstjärnan och öka tidshastigheten kraftigt. Vad händer med stjärnhimlen och varför?</li>
+        <li><strong>Hitta Jupiters månar.</strong> Sök efter Jupiter. Zooma in tills du ser de fyra galileiska månarna. Vad heter de?</li>
+      </ol>
+
+      <div class="redovisa">
+        <strong>Redovisa</strong>
+        <ul style="margin:0.3rem 0 0 1.2rem;">
+          <li>I vilken stjärnbild befann sig solen på din födelsedag för 2 000 år sedan?</li>
+          <li>Vad är din astrologiska "stjärnbild" och stämmer det? Vad förklarar eventuell skillnad?</li>
+          <li>Vad heter Jupiters fyra galileiska månar?</li>
+          <li>Vad händer med stjärnhimlen när du fixerar Polstjärnan och ökar hastigheten – och varför?</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
