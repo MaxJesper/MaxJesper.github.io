@@ -71,6 +71,8 @@ Varje spelfil (t.ex. `ohms-lag-spel.html`) bor i **ett** område – det område
 
 Studieguidens "Träna"-länk per milstolpe går **direkt** till rätt spel, inte till palett-sidan, när en milstolpe har ett specifikt spel. Det sparar ett klick och håller studieguidens flöde stramt.
 
+Länken till **Lärande spel** i elevkortet på `index.html` ska alltid peka på `larande-spel.html` — aldrig direkt på ett enskilt spel (t.ex. `begreppskort.html`). Eleven väljer spel inne på spel-sidan.
+
 ---
 
 ## 3. Områdets startsida (`index.html`)
