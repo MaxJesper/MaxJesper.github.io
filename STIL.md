@@ -310,6 +310,22 @@ Per 2026-05-02 är följande klart:
 - Alla "Fäladsgården"-referenser borttagna från hela repot.
 - Hamburgermenyn (`/js/menu.js`) och `fysik/index.html` listar båda områdena i rätt ordning: `El & Ohms lag` före `Magnetism & induktion`.
 
+---
+
+## 13. Arbetsflöde – stora uppgifter
+
+När Jesper har flera saker han vill göra och skriver ned dem i ett meddelande ska Claude alltid:
+
+1. **Numrera uppgifterna** om Jesper inte redan gjort det.
+2. **Hantera en uppgift i taget**, avsluta den fullständigt och redovisa resultatet innan nästa påbörjas.
+3. **Fråga efter bekräftelse** om en uppgift är otydlig i stället för att gissa och göra fel.
+4. **Aldrig sänka kvaliteten** för att hinna med fler uppgifter – hellre ta färre steg med hög kvalitet än många steg med slarv.
+5. **Lämna tydlig redovisning** i slutet av varje steg: vad gjordes, vad är kvar.
+
+Jesper bestämmer prioritetsordningen. Om ingen ordning anges löser Claude det som ser enklast/minst riskabelt ut först och frågar om resten.
+
+**Varför:** Claude har begränsat "arbetsminne" (kontext). Stora parallella uppgifter ökar risken för fel – som att stjärnpositioner i Karlavagnen hamnar fel för att uppgiften bundlades med tio andra saker. Numrering och stegvis hantering är den enklaste motåtgärden.
+
 ### Öppna designbeslut att ta senare
 
 - **Verktygsrad på område-index** (AI-lärare, Läs upp, Översätt, Bildstöd, Lärarläge) som alternativ till att bädda in sidan i kommunens Google Site. Läs-upp-funktionen kan byggas med Web Speech API utan tredjepartsbibliotek. AI-lärare kopplas som utgående länk snarare än iframe för att behålla ägandet av sajten.
