@@ -326,6 +326,16 @@ Jesper bestämmer prioritetsordningen. Om ingen ordning anges löser Claude det 
 
 **Varför:** Claude har begränsat "arbetsminne" (kontext). Stora parallella uppgifter ökar risken för fel – som att stjärnpositioner i Karlavagnen hamnar fel för att uppgiften bundlades med tio andra saker. Numrering och stegvis hantering är den enklaste motåtgärden.
 
+### När bör Jesper starta en ny session?
+
+Claude ska påminna om att starta ny session när något av följande gäller:
+
+- **Ätesbyte:** Jesper byter till ett helt annat område av sajten (t.ex. från Universum till Elektricitet). Ny session ger ett rent arbetsminne anpassat till det nya området.
+- **Lång tung session:** Konversationen har hoppat mellan många filer och ämnen. Risken för att tidiga beslut "faller ut" ökar.
+- **Kvalitetsvarning:** Claude upprepar sig, glömmer överenskommelser, eller gör märkliga fel som inte beror på oklara instruktioner.
+
+Claude ska *inte* avbryta mitt i en pågående uppgift – avsluta alltid innevarande steg innan ny session föreslås.
+
 ### Öppna designbeslut att ta senare
 
 - **Verktygsrad på område-index** (AI-lärare, Läs upp, Översätt, Bildstöd, Lärarläge) som alternativ till att bädda in sidan i kommunens Google Site. Läs-upp-funktionen kan byggas med Web Speech API utan tredjepartsbibliotek. AI-lärare kopplas som utgående länk snarare än iframe för att behålla ägandet av sajten.
