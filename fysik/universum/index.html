@@ -51,10 +51,55 @@
       height: auto;
       display: block;
       border-radius: 10px;
-      background: #1a0a3a;
+      background: #060c1a;
+    }
+
+    .hero-img-link {
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .hero-img-link:hover img {
+      opacity: 0.88;
+      transition: opacity 0.2s ease;
     }
 
     .area-hero-image figcaption { margin-top: 0.9rem; }
+
+    .hero-caption p {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .image-credit {
+      font-size: 0.78rem !important;
+      color: #666 !important;
+      font-style: italic;
+      border-top: 1px solid var(--area-border);
+      padding-top: 0.6rem;
+      margin-top: 0.9rem !important;
+    }
+
+    .image-credit a {
+      color: var(--area-strong);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .hubble-link {
+      color: var(--area-strong);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .hubble-link:hover { color: var(--area); }
 
     .concept-heading {
       margin: 0 0 0.55rem 0;
@@ -118,15 +163,18 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 1.25rem;
+      }
+      .hero-img-link {
+        flex: 0 0 auto;
       }
       .area-hero-image img {
-        flex: 1 1 0;
         width: auto;
-        max-width: 60%;
+        max-width: 100%;
+        max-height: 460px;
       }
       .area-hero-image figcaption {
-        flex: 0 0 38%;
+        flex: 1 1 0;
         margin-top: 0;
       }
     }
@@ -358,30 +406,23 @@
       </div>
 
       <figure class="area-hero-image">
-        <img src="/images/fysik/universum/introduktion.png"
-             alt="Universum – galaxer, stjärnor, nebulosa och solsystemet"
-             onerror="this.style.display='none'" />
-        <figcaption>
-          <p class="concept-heading">Viktiga begrepp att lära sig</p>
-          <ul class="concept-list">
-            <li><a href="./studieguide.html#m1">Galax</a></li>
-            <li><a href="./studieguide.html#m1">Vintergatan</a></li>
-            <li><a href="./studieguide.html#m2">Ljusår</a></li>
-            <li><a href="./studieguide.html#m3">Solsystem</a></li>
-            <li><a href="./studieguide.html#m3">Exoplanet</a></li>
-            <li><a href="./studieguide.html#m4">Fusion</a></li>
-            <li><a href="./studieguide.html#m4">Solvind</a></li>
-            <li><a href="./studieguide.html#m5">Magnitud</a></li>
-            <li><a href="./studieguide.html#m6">Nebulosa</a></li>
-            <li><a href="./studieguide.html#m6">Röd jätte</a></li>
-            <li><a href="./studieguide.html#m7">Supernova</a></li>
-            <li><a href="./studieguide.html#m7">Svart hål</a></li>
-            <li><a href="./studieguide.html#m8">Spiralgalax</a></li>
-            <li><a href="./studieguide.html#m9">Big Bang</a></li>
-            <li><a href="./studieguide.html#m10">Stjärnbild</a></li>
-            <li><a href="./studieguide.html#m11">Djurkretsen</a></li>
-          </ul>
-          <p class="concept-note">Förkunskaper: grundläggande kunskaper om atomer och strålning är en fördel.</p>
+        <a href="https://commons.wikimedia.org/wiki/File%3AThe_Hubble_Space_Telescope_in_orbit_%2828247098826%29.jpg"
+           target="_blank" rel="noopener noreferrer"
+           class="hero-img-link"
+           title="Se originalbilden på Wikimedia Commons">
+          <img src="/images/fysik/universum/hubble-i-omloppsbana.jpg"
+               alt="Hubbleteleskopet i omloppsbana runt Jorden med solpaneler och öppet teleskopskydd"
+               onerror="this.style.display='none'" />
+        </a>
+        <figcaption class="hero-caption">
+          <p><a href="https://commons.wikimedia.org/wiki/File%3AThe_Hubble_Space_Telescope_in_orbit_%2828247098826%29.jpg"
+                target="_blank" rel="noopener noreferrer"
+                class="hubble-link">Hubbleteleskopet</a> är uppkallat efter astronomen Edwin Hubble, som visade att universum är mycket större än man tidigare trott och att galaxerna rör sig bort från varandra. Det blev ett viktigt bevis för att universum expanderar.</p>
+          <p>Rymdteleskopet Hubble skickades upp 1990 och har sedan dess tagit några av de mest berömda bilderna av galaxer, nebulosor och avlägsna delar av universum. I dag har Hubble kompletterats av James Webb-teleskopet, som framför allt undersöker universum med infrarött ljus och kan se ännu längre in i stoftmoln och längre tillbaka i universums historia. Tillsammans ger teleskopen oss en djupare bild av rymden.</p>
+          <p class="image-credit">Bild: <a href="https://commons.wikimedia.org/wiki/File%3AThe_Hubble_Space_Telescope_in_orbit_%2828247098826%29.jpg"
+             target="_blank" rel="noopener noreferrer">The Hubble Space Telescope in orbit</a>.
+            Illustration: Hubble Space Telescope&nbsp;/ ESA, via Wikimedia Commons.
+            Licens: CC&nbsp;BY&nbsp;2.0. Bearbetad/beskuren.</p>
         </figcaption>
       </figure>
     </section>
