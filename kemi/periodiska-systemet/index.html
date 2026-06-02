@@ -480,7 +480,81 @@
   </main>
 
   <script src="/js/menu.js"></script>
-  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
+  <script>
+  window.BEGREPP = [
+  {
+    "namn": "Atom",
+    "definition": "Materiens minsta byggsten som behåller ett grundämnes kemiska egenskaper. Extremt liten – ett sandkorn rymmer ungefär hundra tusen miljarder av dem.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Proton",
+    "definition": "Positivt laddad partikel i atomkärnan. Antalet protoner är unikt för varje grundämne och kallas atomnumret – det är protonerna som bestämmer vilket grundämne det är.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Neutron",
+    "definition": "Oladdad partikel i atomkärnan. Tillsammans med protonerna bildar neutroner atomkärnan. Antalet neutroner kan variera – atomer med samma protontal men olika neutrontal kallas isotoper.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Elektron",
+    "definition": "Negativt laddad partikel som kretsar runt atomkärnan i elektronskal. Elektronerna i yttersta skalet (valenselektronerna) styr atomens kemiska egenskaper och hur den bildar bindningar.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Atomnummer",
+    "definition": "Antalet protoner i en atoms kärna – unikt för varje grundämne. Kol har alltid atomnummer 6, syre alltid 8. Atomnumret bestämmer var grundämnet placeras i periodiska systemet.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Isotoper",
+    "definition": "Varianter av samma grundämne med samma protontal men olika antal neutroner och därmed olika masstal. Kol-12, kol-13 och kol-14 är alla kolisotoper.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Valenselektroner",
+    "definition": "Elektronerna i atomens yttersta elektronskal. Dessa styr hur atomen reagerar kemiskt och hur den bildar bindningar med andra atomer. Atomer strävar efter att ha fullt yttersta skal (ädelgasstruktur).",
+    "anchor": "./studieguide.html#m4"
+  },
+  {
+    "namn": "Periodiska systemet",
+    "definition": "En tabell med alla kända grundämnen ordnade efter atomnummer. Rader kallas perioder (lika många elektronskal), kolumner kallas grupper (liknande kemiska egenskaper).",
+    "anchor": "./studieguide.html#m5"
+  },
+  {
+    "namn": "Ädelgaser",
+    "definition": "Grundämnena i grupp 18 (helium, neon, argon m.fl.) med fullt yttersta elektronskal. Extremt stabila och reagerar nästan aldrig med andra ämnen. Används i t.ex. lysrör och glödlampor.",
+    "anchor": "./studieguide.html#m9"
+  },
+  {
+    "namn": "Alkalimetaller",
+    "definition": "Metallerna i grupp 1 (litium, natrium, kalium m.fl.) med en valenselektron. Reagerar häftigt med vatten och bildar starka baser (lut). Mjuka metaller som lätt oxiderar.",
+    "anchor": "./studieguide.html#m7"
+  },
+  {
+    "namn": "Halogener",
+    "definition": "Grundämnena i grupp 17 (fluor, klor, brom, jod m.fl.) med sju valenselektroner. Mycket reaktiva och bildar salter när de reagerar med metaller. Används bl.a. i desinfektion.",
+    "anchor": "./studieguide.html#m8"
+  },
+  {
+    "namn": "Jon",
+    "definition": "En atom som fått elektrisk laddning genom att avge eller ta upp elektroner. Positiva joner (katjoner) har lämnat elektroner; negativa joner (anjoner) har tagit upp elektroner.",
+    "anchor": "./studieguide.html#m10"
+  },
+  {
+    "namn": "Jonbindning",
+    "definition": "Kemisk bindning där positiva och negativa joner dras till varandra av elektriska krafter. Bildar kristallgitter med höga smältpunkter. Exempel: natriumklorid (koksalt, NaCl).",
+    "anchor": "./studieguide.html#m11"
+  },
+  {
+    "namn": "Kovalent bindning",
+    "definition": "Kemisk bindning där atomer delar elektroner för att uppnå fullt yttersta skal. Kallas också elektronparbindning och bildar molekyler. Exempel: vatten (H₂O) och koldioxid (CO₂).",
+    "anchor": "./studieguide.html#m12"
+  }
+];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
   <script>
     // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
     (function () {

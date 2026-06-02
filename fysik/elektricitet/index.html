@@ -454,7 +454,71 @@
   </main>
 
   <script src="/js/menu.js"></script>
-  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
+  <script>
+  window.BEGREPP = [
+  {
+    "namn": "Elektrisk ström",
+    "definition": "Ett riktat flöde av laddningar (i metaller: fria elektroner) genom en ledare. Strömstyrkan mäts i ampere (A) och anger hur många laddningar som passerar en punkt per sekund.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Spänning",
+    "definition": "Den elektriska kraft som driver strömmen, mätt i volt (V). Spänning är energi per laddning – ett batteri på 9 V ger 9 joule energi till varje coulomb laddning som passerar.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Resistans",
+    "definition": "Ledarens motstånd mot strömflödet, mätt i ohm (Ω). Resistansen beror på materialet, ledarens längd och tjocklek – längre och tunnare ledare har högre resistans.",
+    "anchor": "./studieguide.html#m4"
+  },
+  {
+    "namn": "Ohms lag",
+    "definition": "Sambandet U = R · I, där U är spänning (V), R är resistans (Ω) och I är ström (A). Lagen beskriver hur spänning, ström och resistans hänger ihop i en elektrisk krets.",
+    "anchor": "./studieguide.html#m5"
+  },
+  {
+    "namn": "Seriekoppling",
+    "definition": "Komponenter kopplade efter varandra i en enda slinga. Strömmen är lika stor överallt i kretsen. Om en lampa går sönder slocknar alla.",
+    "anchor": "./studieguide.html#m6"
+  },
+  {
+    "namn": "Parallellkoppling",
+    "definition": "Komponenter kopplade i egna grenar med samma spänning. Om en lampa går sönder lyser de övriga vidare. Hemmets lampor är parallellkopplade.",
+    "anchor": "./studieguide.html#m6"
+  },
+  {
+    "namn": "Ledare",
+    "definition": "Material som leder elektrisk ström väl tack vare fria elektroner. Metaller som koppar och aluminium är typiska ledare och används i elsladdar och kablar.",
+    "anchor": "./studieguide.html#m3"
+  },
+  {
+    "namn": "Isolator",
+    "definition": "Material som inte leder elektrisk ström. Plast, gummi, glas och torr luft är isolatorer och används för att skydda ledare och förhindra oönskad strömgenomgång.",
+    "anchor": "./studieguide.html#m3"
+  },
+  {
+    "namn": "Elektrisk effekt",
+    "definition": "Hur snabbt elektrisk energi omvandlas, P = U · I, mätt i watt (W). En 2000 W vattenkokare omvandlar 50 gånger mer energi per sekund än en 40 W lampa.",
+    "anchor": "./studieguide.html#m9"
+  },
+  {
+    "namn": "Kilowattimme",
+    "definition": "Enhet för elektrisk energi (kWh) som används på elräkningar. 1 kWh = en effekt på 1 000 W under 1 timme. En 2000 W vattenkokare som körs i 30 min förbrukar 1 kWh.",
+    "anchor": "./studieguide.html#m9"
+  },
+  {
+    "namn": "Säkring",
+    "definition": "En skyddskomponent som bryter strömmen om den överskrider ett visst värde. Skyddar mot överhettning och brandrisk vid kortslutning eller överbelastning.",
+    "anchor": "./studieguide.html#m10"
+  },
+  {
+    "namn": "Jordfelsbrytare",
+    "definition": "En säkerhetsanordning som löser ut vid minsta läckström till jord – t.ex. om någon råkar vidröra en strömförande del. Reagerar mycket snabbare än en vanlig säkring.",
+    "anchor": "./studieguide.html#m10"
+  }
+];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
   <script>
     // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
     (function () {
