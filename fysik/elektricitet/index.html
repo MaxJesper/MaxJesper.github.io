@@ -38,7 +38,7 @@
 
     @media (min-width: 960px) {
       .area-layout {
-        grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+        grid-template-columns: 300px 1fr;
         align-items: start;
       }
     }
@@ -153,8 +153,8 @@
     }
 
     .resource-grid {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
       margin-top: 0;
     }
