@@ -101,13 +101,20 @@
 
     .hubble-link:hover { color: var(--area); }
 
-    .concept-heading {
-      margin: 0 0 0.55rem 0;
-      font-size: 0.9rem;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+    .concept-section {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .concept-section h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
       color: var(--area-strong);
-      font-weight: 700;
     }
 
     .concept-list {
@@ -115,14 +122,22 @@
       padding: 0;
       margin: 0;
       columns: 2;
-      column-gap: 0.2rem;
+      column-gap: 1rem;
+    }
+
+    @media (min-width: 600px) {
+      .concept-list { columns: 3; }
+    }
+
+    @media (min-width: 900px) {
+      .concept-list { columns: 4; }
     }
 
     .concept-list li {
       font-size: 0.95rem;
       color: #1f2937;
       line-height: 1.35;
-      padding: 0.18rem 0;
+      padding: 0.22rem 0;
       break-inside: avoid;
       display: flex;
       align-items: baseline;
@@ -136,18 +151,8 @@
       flex-shrink: 0;
     }
 
-    .concept-list a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .concept-list a:hover {
-      text-decoration: underline;
-      color: var(--area-strong);
-    }
-
     .concept-note {
-      margin: 0.65rem 0 0 0;
+      margin: 0.8rem 0 0 0;
       font-size: 0.82rem;
       color: #555;
       font-style: italic;
@@ -427,25 +432,28 @@
             Illustration: Hubble Space Telescope&nbsp;/ ESA, via Wikimedia Commons.
             Licens: CC&nbsp;BY&nbsp;2.0. Bearbetad/beskuren.</p>
 
-          <p class="concept-heading">Viktiga begrepp att lära sig</p>
-          <ul class="concept-list">
-            <li><button class="concept-btn" data-concept="Vintergatan">Vintergatan</button></li>
-            <li><button class="concept-btn" data-concept="Galax">Galax</button></li>
-            <li><button class="concept-btn" data-concept="Ljusår">Ljusår</button></li>
-            <li><button class="concept-btn" data-concept="Solsystem">Solsystem</button></li>
-            <li><button class="concept-btn" data-concept="Kärnfusion">Kärnfusion</button></li>
-            <li><button class="concept-btn" data-concept="Solvinden">Solvinden</button></li>
-            <li><button class="concept-btn" data-concept="Norrsken">Norrsken</button></li>
-            <li><button class="concept-btn" data-concept="Nebulosa">Nebulosa</button></li>
-            <li><button class="concept-btn" data-concept="Röd jätte">Röd jätte</button></li>
-            <li><button class="concept-btn" data-concept="Supernova">Supernova</button></li>
-            <li><button class="concept-btn" data-concept="Neutronstjärna">Neutronstjärna</button></li>
-            <li><button class="concept-btn" data-concept="Svart hål">Svart hål</button></li>
-            <li><button class="concept-btn" data-concept="Big Bang">Big Bang</button></li>
-            <li><button class="concept-btn" data-concept="Exoplanet">Exoplanet</button></li>
-          </ul>
         </figcaption>
       </figure>
+    </section>
+
+    <section class="concept-section" aria-label="Viktiga begrepp">
+      <h2>Viktiga begrepp att lära sig</h2>
+      <ul class="concept-list">
+        <li><button class="concept-btn" data-concept="Vintergatan">Vintergatan</button></li>
+        <li><button class="concept-btn" data-concept="Galax">Galax</button></li>
+        <li><button class="concept-btn" data-concept="Ljusår">Ljusår</button></li>
+        <li><button class="concept-btn" data-concept="Solsystem">Solsystem</button></li>
+        <li><button class="concept-btn" data-concept="Kärnfusion">Kärnfusion</button></li>
+        <li><button class="concept-btn" data-concept="Solvinden">Solvinden</button></li>
+        <li><button class="concept-btn" data-concept="Norrsken">Norrsken</button></li>
+        <li><button class="concept-btn" data-concept="Nebulosa">Nebulosa</button></li>
+        <li><button class="concept-btn" data-concept="Röd jätte">Röd jätte</button></li>
+        <li><button class="concept-btn" data-concept="Supernova">Supernova</button></li>
+        <li><button class="concept-btn" data-concept="Neutronstjärna">Neutronstjärna</button></li>
+        <li><button class="concept-btn" data-concept="Svart hål">Svart hål</button></li>
+        <li><button class="concept-btn" data-concept="Big Bang">Big Bang</button></li>
+        <li><button class="concept-btn" data-concept="Exoplanet">Exoplanet</button></li>
+      </ul>
     </section>
 
     <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">

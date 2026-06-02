@@ -69,13 +69,20 @@
       margin-top: 0.9rem;
     }
 
-    .concept-heading {
-      margin: 0 0 0.55rem 0;
-      font-size: 0.9rem;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+    .concept-section {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .concept-section h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
       color: var(--area-strong);
-      font-weight: 700;
     }
 
     .concept-list {
@@ -83,14 +90,22 @@
       padding: 0;
       margin: 0;
       columns: 2;
-      column-gap: 0.2rem;
+      column-gap: 1rem;
+    }
+
+    @media (min-width: 600px) {
+      .concept-list { columns: 3; }
+    }
+
+    @media (min-width: 900px) {
+      .concept-list { columns: 4; }
     }
 
     .concept-list li {
       font-size: 0.95rem;
       color: #1f2937;
       line-height: 1.35;
-      padding: 0.18rem 0;
+      padding: 0.22rem 0;
       break-inside: avoid;
       display: flex;
       align-items: baseline;
@@ -104,18 +119,8 @@
       flex-shrink: 0;
     }
 
-    .concept-list a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .concept-list a:hover {
-      text-decoration: underline;
-      color: var(--area-strong);
-    }
-
     .concept-note {
-      margin: 0.65rem 0 0 0;
+      margin: 0.8rem 0 0 0;
       font-size: 0.82rem;
       color: #555;
       font-style: italic;
@@ -383,28 +388,29 @@
       <figure class="area-hero-image">
         <img src="/images/fysik/magnetism-induktion/introduktion.png"
              alt="Översikt av området: stavmagnet, spole, galvanometer, elektromagnet, elmotor, generator och kraftledningar" />
-        <figcaption>
-          <p class="concept-heading">Viktiga begrepp att lära sig</p>
-          <ul class="concept-list">
-            <li><a href="./studieguide.html#m1">Permanent magnet</a></li>
-            <li><a href="./studieguide.html#m1">Nordpol och sydpol</a></li>
-            <li><a href="./studieguide.html#m2">Magnetfält</a></li>
-            <li><a href="./studieguide.html#m2">Fältlinjer</a></li>
-            <li><a href="./studieguide.html#m3">Kompassen</a></li>
-            <li><a href="./studieguide.html#m4">Elektromagnetism</a></li>
-            <li><a href="./studieguide.html#m5">Spole</a></li>
-            <li><a href="./studieguide.html#m6">Elektromagnet</a></li>
-            <li><a href="./studieguide.html#m7">Elmotor</a></li>
-            <li><a href="./studieguide.html#m8">Induktion</a></li>
-            <li><a href="./studieguide.html#m9">Generator</a></li>
-            <li><a href="./studieguide.html#m9">Växelström</a></li>
-            <li><a href="./studieguide.html#m10">Transformator</a></li>
-            <li><a href="./studieguide.html#m11">Elektrisk effekt</a></li>
-            <li><a href="./studieguide.html#m11">Kraftverk och elnät</a></li>
-          </ul>
-          <p class="concept-note">Förkunskaper: ström, spänning och Ohms lag från <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.</p>
-        </figcaption>
       </figure>
+    </section>
+
+    <section class="concept-section" aria-label="Viktiga begrepp">
+      <h2>Viktiga begrepp att lära sig</h2>
+      <ul class="concept-list">
+        <li><button class="concept-btn" data-concept="Permanent magnet">Permanent magnet</button></li>
+        <li><button class="concept-btn" data-concept="Nordpol och sydpol">Nordpol och sydpol</button></li>
+        <li><button class="concept-btn" data-concept="Magnetfält">Magnetfält</button></li>
+        <li><button class="concept-btn" data-concept="Fältlinjer">Fältlinjer</button></li>
+        <li><button class="concept-btn" data-concept="Kompassen">Kompassen</button></li>
+        <li><button class="concept-btn" data-concept="Elektromagnetism">Elektromagnetism</button></li>
+        <li><button class="concept-btn" data-concept="Spole">Spole</button></li>
+        <li><button class="concept-btn" data-concept="Elektromagnet">Elektromagnet</button></li>
+        <li><button class="concept-btn" data-concept="Elmotor">Elmotor</button></li>
+        <li><button class="concept-btn" data-concept="Induktion">Induktion</button></li>
+        <li><button class="concept-btn" data-concept="Generator">Generator</button></li>
+        <li><button class="concept-btn" data-concept="Växelström">Växelström</button></li>
+        <li><button class="concept-btn" data-concept="Transformator">Transformator</button></li>
+        <li><button class="concept-btn" data-concept="Elektrisk effekt">Elektrisk effekt</button></li>
+        <li><button class="concept-btn" data-concept="Kraftverk och elnät">Kraftverk och elnät</button></li>
+      </ul>
+      <p class="concept-note">Förkunskaper: ström, spänning och Ohms lag från <a href="/fysik/elektricitet/">Elektricitet och Ohms lag</a>.</p>
     </section>
 
     <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
@@ -442,6 +448,7 @@
   </main>
 
   <script src="/js/menu.js"></script>
+  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
   <script>
     // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
     (function () {
