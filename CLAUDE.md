@@ -1,5 +1,18 @@
 # Projektregler – Studieguide-webbplatsen
 
+## Git och deployment
+
+Pushes görs alltid av användaren via deras egen terminal. Efter varje avslutad förändring avslutar Claude alltid med att ge push-kommandona:
+
+```bash
+cd ~/Documents/github
+git add <ändrade filer>
+git commit -m "Beskrivande commit-meddelande"
+git push
+```
+
+Claude ska **aldrig** försöka köra `git push` eller `git commit` själv — det blockerar användarens terminal och orsakar låsningsproblem.
+
 ## Viktiga begrepp – standard för alla områden med studieguide
 
 Varje område som har en `studieguide.html` ska ha en **"Viktiga begrepp"-sektion** på sin `index.html`.
