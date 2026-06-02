@@ -65,9 +65,40 @@
       background: #fff;
     }
 
-    .area-hero-image figcaption {
-      margin-top: 0.9rem;
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+
+    .hero-caption p {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
+      color: #1f2937;
+      line-height: 1.6;
     }
+
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .image-credit {
+      font-size: 0.78rem !important;
+      color: #666 !important;
+      font-style: italic;
+      border-top: 1px solid var(--area-border);
+      padding-top: 0.6rem;
+      margin-top: 0.9rem !important;
+    }
+
+    .image-credit a {
+      color: var(--area-strong);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .scientist-link {
+      color: var(--area-strong);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .scientist-link:hover { color: var(--area); }
 
     .area-right {
       display: flex;
@@ -141,17 +172,18 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 1.5rem;
       }
 
       .area-hero-image img {
-        flex: 1 1 0;
-        width: auto;
-        max-width: 60%;
+        flex: 0 0 auto;
+        width: 220px;
+        height: auto;
+        object-fit: cover;
       }
 
       .area-hero-image figcaption {
-        flex: 0 0 38%;
+        flex: 1 1 0;
         margin-top: 0;
       }
     }
@@ -394,6 +426,11 @@
         <figure class="area-hero-image">
           <img src="/images/fysik/magnetism-induktion/introduktion.png"
                alt="Översikt av området: stavmagnet, spole, galvanometer, elektromagnet, elmotor, generator och kraftledningar" />
+          <figcaption class="hero-caption">
+            <p>År 1820 lade den danske fysikern <strong class="scientist-link">Hans Christian Örsted</strong> av en händelse märke till att en kompassnål rörde sig när han stängde en elektrisk krets. Det var det första beviset på att elektricitet och magnetism hänger ihop.</p>
+            <p>Den brittiske vetenskapsmannen <strong class="scientist-link">Michael Faraday</strong> tog nästa steg 1831 och visade att ett rörligt magnetfält kan skapa elektrisk ström – induktion. Utan den upptäckten hade vi varken generatorer, transformatorer eller det elnät som i dag förser hela samhället med el.</p>
+            <p>Tillsammans lade Örsted och Faraday grunden till elektromagnetismen – en av de mest samhällsomvälvande upptäckterna i vetenskapens historia.</p>
+          </figcaption>
         </figure>
 
         <section class="concept-section" aria-label="Viktiga begrepp">
