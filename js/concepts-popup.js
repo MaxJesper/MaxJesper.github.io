@@ -10,6 +10,9 @@
  */
 
 (function () {
+  // Fånga currentScript synkront – null om init() körs via DOMContentLoaded
+  const SCRIPT_EL = document.currentScript;
+
   // ── Modal-HTML ──────────────────────────────────────────────────────────────
   const MODAL_ID = 'concept-modal';
 
@@ -175,8 +178,7 @@
 
   // ── Init ────────────────────────────────────────────────────────────────────
   function init() {
-    const script = document.currentScript ||
-      document.querySelector('script[data-begrepp]');
+    const script = SCRIPT_EL || document.querySelector('script[data-begrepp]');
     const jsonUrl = script && script.dataset.begrepp;
     if (!jsonUrl) return;
 

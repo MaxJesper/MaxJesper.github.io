@@ -90,13 +90,25 @@
       margin-top: 0.9rem;
     }
 
-    .concept-heading {
-      margin: 0 0 0.55rem 0;
-      font-size: 0.9rem;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
+    .area-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .concept-section h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
       color: var(--area-strong);
-      font-weight: 700;
     }
 
     .concept-list {
@@ -104,14 +116,17 @@
       padding: 0;
       margin: 0;
       columns: 2;
-      column-gap: 0.2rem;
+      column-gap: 1rem;
     }
+
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
 
     .concept-list li {
       font-size: 0.95rem;
       color: #1f2937;
       line-height: 1.35;
-      padding: 0.18rem 0;
+      padding: 0.22rem 0;
       break-inside: avoid;
       display: flex;
       align-items: baseline;
@@ -121,18 +136,20 @@
     .concept-list li::before {
       content: "→";
       color: var(--area);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       flex-shrink: 0;
     }
 
-    .concept-list a {
-      color: inherit;
-      text-decoration: none;
+    .concept-note {
+      margin: 0.8rem 0 0 0;
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
     }
 
-    .concept-list a:hover {
-      text-decoration: underline;
+    .concept-note a {
       color: var(--area-strong);
+      font-weight: 600;
     }
 
     .resource-grid {
@@ -372,32 +389,33 @@
           </article>
         </section>
       </div>
-
-      <figure class="area-hero-image">
+      <div class="area-right">
+        <figure class="area-hero-image">
         <div class="image-placeholder">
           Introduktionsbild kommer snart<br>
           <span style="font-weight:400; font-size:0.85rem;">(översikt: ström, spänning, resistans, krets, Ohms lag)</span>
         </div>
         <figcaption>
-          <p class="concept-heading">Viktiga begrepp att lära sig</p>
-          <ul class="concept-list">
-            <li><a href="./studieguide.html#m1">Elektrisk ström</a></li>
-            <li><a href="./studieguide.html#m2">Spänning (volt)</a></li>
-            <li><a href="./studieguide.html#m4">Resistans (ohm)</a></li>
-            <li><a href="./studieguide.html#m5">Ohms lag (U = R · I)</a></li>
-            <li><a href="./studieguide.html#m3">Ledare</a></li>
-            <li><a href="./studieguide.html#m3">Isolator</a></li>
-            <li><a href="./studieguide.html#m6">Seriekoppling</a></li>
-            <li><a href="./studieguide.html#m6">Parallellkoppling</a></li>
-            <li><a href="./studieguide.html#m8">Kopplingsschema</a></li>
-            <li><a href="./studieguide.html#m9">Elektrisk effekt (watt)</a></li>
-            <li><a href="./studieguide.html#m9">Kilowattimme</a></li>
-            <li><a href="./studieguide.html#m10">Säkring</a></li>
-            <li><a href="./studieguide.html#m10">Jordfelsbrytare</a></li>
-            <li><a href="./studieguide.html#m11">Elsäkerhet</a></li>
-          </ul>
-        </figcaption>
+          </figcaption>
       </figure>
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Elektrisk ström">Elektrisk ström</button></li>
+            <li><button class="concept-btn" data-concept="Spänning">Spänning</button></li>
+            <li><button class="concept-btn" data-concept="Resistans">Resistans</button></li>
+            <li><button class="concept-btn" data-concept="Ohms lag">Ohms lag</button></li>
+            <li><button class="concept-btn" data-concept="Ledare">Ledare</button></li>
+            <li><button class="concept-btn" data-concept="Isolator">Isolator</button></li>
+            <li><button class="concept-btn" data-concept="Seriekoppling">Seriekoppling</button></li>
+            <li><button class="concept-btn" data-concept="Parallellkoppling">Parallellkoppling</button></li>
+            <li><button class="concept-btn" data-concept="Elektrisk effekt">Elektrisk effekt</button></li>
+            <li><button class="concept-btn" data-concept="Kilowattimme">Kilowattimme</button></li>
+            <li><button class="concept-btn" data-concept="Säkring">Säkring</button></li>
+            <li><button class="concept-btn" data-concept="Jordfelsbrytare">Jordfelsbrytare</button></li>
+          </ul>
+        </section>
+      </div>
     </section>
 
     <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
@@ -436,6 +454,7 @@
   </main>
 
   <script src="/js/menu.js"></script>
+  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
   <script>
     // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
     (function () {
