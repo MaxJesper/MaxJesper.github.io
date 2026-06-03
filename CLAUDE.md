@@ -226,3 +226,9 @@ Tills filer finns används syntetisk röst (TTS) som standard.
 ## Idéer och påminnelser
 
 - **Lärarstöd för lektioner** – en sida per område med en strukturerad lista över saker att ta upp på lektionerna. Ska göras tillsammans med Jesper.
+
+- **Gymnasiefördjupning** – en fördjupningssektion på kemi-hudsidan för natur/teknikprogrammet. Exempel: molräkning och balansering av kemiska formler. Ska göras tillsammans med Jesper.
+
+- **Nationella provuppgifter** – gamla släppta nationella prov ska finnas som övningar i två varianter:
+  1. Samlad övning per NO-ämne (biologi, kemi, fysik) – troligen på ämnets hudsida.
+  2. Områdesspecifik övning – uppgifter kopplade till ett specifikt område (t.ex. elektrokemi) läggs direkt på den sidan. Båda varianterna kan finnas parallellt. Ska göras tillsammans med Jesper.
