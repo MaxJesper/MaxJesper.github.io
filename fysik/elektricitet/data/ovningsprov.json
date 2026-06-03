@@ -1,0 +1,119 @@
+{
+  "sections": [
+    {
+      "title": "Del I – E-nivå",
+      "questions": [
+        {
+          "q": "Vad är elektrisk ström? Vad kallas enheten och vilket tecken används?",
+          "a": "Elektrisk ström är elektroner som rör sig i en ledning. Enheten är ampere, tecknet A.",
+          "lines": 3
+        },
+        {
+          "q": "Vad kallas den enhet som mäter spänning?",
+          "a": "Volt (V).",
+          "lines": 2
+        },
+        {
+          "q": "Vad kallas den enhet som mäter resistans?",
+          "a": "Ohm (Ω).",
+          "lines": 2
+        },
+        {
+          "q": "Ge två exempel på ledare och två exempel på isolatorer.",
+          "a": "Ledare: koppar, silver (eller aluminium, järn).\nIsolatorer: plast, gummi (eller glas, porslin).",
+          "lines": 3
+        },
+        {
+          "q": "Vad är skillnaden mellan likström och växelström?",
+          "a": "Likström flödar åt samma håll hela tiden (t.ex. från ett batteri). Växelström byter riktning hela tiden (t.ex. från vägguttaget).",
+          "lines": 3
+        },
+        {
+          "q": "Hur lyder Ohms lag? Skriv formeln med bokstäver.",
+          "a": "U = R · I (spänning = resistans × ström).",
+          "lines": 2
+        },
+        {
+          "q": "Beräkna strömstyrkan om spänningen är 12 V och resistansen är 4 Ω.",
+          "a": "I = U / R = 12 / 4 = 3 A.",
+          "lines": 3
+        },
+        {
+          "q": "Vad är skillnaden mellan seriekoppling och parallellkoppling av lampor?",
+          "a": "I seriekoppling går strömmen genom lamporna efter varandra – en gemensam väg. I parallellkoppling har varje lampa sin egen gren.",
+          "lines": 4
+        },
+        {
+          "q": "Vad gör en säkring?",
+          "a": "En säkring bryter strömmen om den blir för hög, så att ledningarna inte överhettas och börjar brinna.",
+          "lines": 3
+        },
+        {
+          "q": "Varför är det farligt att använda elektriska apparater nära vatten?",
+          "a": "Vatten leder ström (p.g.a. lösta salter). Om en apparat kortsluts kan ström gå genom kroppen.",
+          "lines": 3
+        }
+      ]
+    },
+    {
+      "title": "Del II – C-nivå",
+      "questions": [
+        {
+          "q": "En lampa har resistansen 20 Ω och kopplas till en spänning på 6 V.\na) Hur stor ström går genom lampan?\nb) Vad händer om man byter ut lampan mot en med resistansen 30 Ω (samma spänning)?",
+          "a": "a) I = U / R = 6 / 20 = 0,3 A.\nb) I = 6 / 30 = 0,2 A. Strömmen minskar eftersom resistansen är högre.",
+          "lines": 5
+        },
+        {
+          "q": "Förklara varför alla lampor slocknar i en seriekoppling om en lampa går sönder, men inte i en parallellkoppling.",
+          "a": "I seriekoppling finns bara en ström-väg – om den bryts kan strömmen inte flöda alls. I parallellkoppling har varje lampa sin egen väg, så övriga lampor kan fortfarande leda ström.",
+          "lines": 5
+        },
+        {
+          "q": "Två batterier på 1,5 V vardera ska kopplas till en lampa som kräver 3 V.\na) Hur ska batterierna kopplas?\nb) Vad hade hänt om de parallellkopplades i stället?",
+          "a": "a) De ska seriekopplas: 1,5 V + 1,5 V = 3 V.\nb) Vid parallellkoppling är spänningen fortfarande 1,5 V – lampan hade fått för låg spänning och lyst svagt (eller inte alls).",
+          "lines": 5
+        },
+        {
+          "q": "Vad menas med skyddsjordning och vad skyddar den mot?",
+          "a": "Skyddsjordning innebär att en apparats hölje kopplas till en jordledning (gulgrön). Om höljet oavsiktligt blir strömförande leds strömmen till jord i stället för genom en människa.",
+          "lines": 4
+        },
+        {
+          "q": "Hur påverkas resistansen i en metalltråd om den\na) görs dubbelt så lång?\nb) görs dubbelt så tjock?",
+          "a": "a) Resistansen fördubblas – längre tråd ger mer motstånd.\nb) Resistansen halveras – tjockare ledare har mer utrymme för elektronerna.",
+          "lines": 4
+        }
+      ]
+    },
+    {
+      "title": "Del III – A-nivå",
+      "questions": [
+        {
+          "q": "En elev mäter spänningen och strömmen i en krets och får U = 9 V och I = 0,45 A.\na) Beräkna resistansen.\nb) Strömmen ökar sedan till 0,6 A. Vilken ny spänning måste kretsen ha om resistansen är oförändrad?",
+          "a": "a) R = U / I = 9 / 0,45 = 20 Ω.\nb) U = R · I = 20 · 0,6 = 12 V.",
+          "lines": 6
+        },
+        {
+          "q": "Förklara med egna ord vad en kortslutning är och varför den kan vara farlig.",
+          "a": "En kortslutning uppstår när strömmen tar en alltför lätt väg runt en komponent (t.ex. en lampa) utan resistans. Eftersom R ≈ 0 Ω blir strömmen mycket stor (I = U/R → stor). Det kan smälta ledningar, skada apparater och orsaka brand.",
+          "lines": 6
+        },
+        {
+          "q": "Jämför hur hemmets lampor och en gammal julgransslinga med seriekopplade lampor fungerar vid ett glödlampsbrott. Vilket system är bättre och varför?",
+          "a": "Hemmets lampor är parallellkopplade – varje lampa har sin egen krets. Om en lampa går sönder påverkas inte de andra.\nEn gammal julgransslinga med seriekopplade lampor har bara en strömväg. Går en lampa sönder bryts hela kretsen och alla lampor slocknar.\nParallellkoppling är klart bättre ur driftssynpunkt.",
+          "lines": 7
+        },
+        {
+          "q": "Varför används växelström (AC) i elnätet i stället för likström (DC)? Nämn minst ett tekniskt skäl.",
+          "a": "Växelspänning kan enkelt transformeras upp till hög spänning med hjälp av en transformator. Hög spänning ger låg ström vid överföring, vilket minskar energiförlusterna i ledningarna (P_förlust = R · I²). Likspänning är svårare att transformera och kräver mer komplex teknik för långväga överföring.",
+          "lines": 6
+        },
+        {
+          "q": "En elev påstår: 'Om man parallellkopplar två resistorer blir den totala resistansen alltid hälften av den minsta resistansen.' Stämmer detta? Förklara.",
+          "a": "Nej, det stämmer bara om de två resistorerna är lika stora. Formeln för parallellkoppling är 1/R_tot = 1/R₁ + 1/R₂. Är R₁ = R₂ = R ger det R_tot = R/2. Men om R₁ = 10 Ω och R₂ = 90 Ω ger det R_tot = 9 Ω, vilket är mindre än hälften av den minsta (10 Ω). Påståendet är alltså fel i det allmänna fallet.",
+          "lines": 7
+        }
+      ]
+    }
+  ]
+}
