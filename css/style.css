@@ -456,3 +456,61 @@ button.subject-btn:focus-visible,
 @media print {
   .site-footer { display: none !important; }
 }
+
+/* =================== LYSSNA-KNAPP (studieguide) =================== */
+/* Färg styrs via --listen-color (standard: fysik-blå).               */
+/* Kemi-sidor sätter --listen-color i sidans <style>-block.           */
+
+.listen-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid var(--listen-border, #c8d5e8);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.88rem;
+  color: var(--listen-color, #2e4a8a);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.listen-btn:hover {
+  background: var(--listen-hover-bg, #eef3fb);
+  border-color: var(--listen-color, #2e4a8a);
+}
+
+.listen-btn.playing {
+  background: var(--listen-color, #2e4a8a);
+  color: #fff;
+  border-color: var(--listen-color, #2e4a8a);
+}
+
+.deepen > summary {
+  display: flex;
+  align-items: center;
+}
+
+.deepen > summary .listen-btn {
+  margin-left: auto;
+  color: var(--listen-deepen-color, #a37a00);
+  border-color: var(--listen-deepen-border, #d4b870);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.55rem;
+}
+
+.deepen > summary .listen-btn:hover {
+  background: var(--listen-deepen-hover-bg, #fdf6e3);
+  border-color: var(--listen-deepen-color, #a37a00);
+}
+
+.deepen > summary .listen-btn.playing {
+  background: var(--listen-deepen-color, #a37a00);
+  color: #fff;
+  border-color: var(--listen-deepen-color, #a37a00);
+}
