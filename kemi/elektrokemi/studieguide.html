@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    :root {
+      --listen-color: #1d4ed8;
+      --listen-border: #bfdbfe;
+      --listen-hover-bg: #eff6ff;
+    }
+
+    body.area-elektrokemi {
+      --area: #1d4ed8;
+      --area-strong: #1e3a8a;
+      --area-soft: #eff6ff;
+      --area-border: #bfdbfe;
+      --area-hover: #dbeafe;
+    }
+
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #1d4ed8;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+    }
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #1d4ed8;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .fact-box {
+      background: #eff6ff;
+      border-left: 4px solid #1d4ed8;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #1d4ed8;
+    }
+
+    .formula-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      margin: 0.8rem 0;
+      font-family: monospace;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #1a1a2e;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f4f6fa;
+      border: 1px solid #d8e0ea;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e9eef7;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── Coach ────────────────────────────────────────────────── */
+    .coach-box {
+      background: #fff8f0;
+      border: 1px solid #f0c080;
+      border-left: 4px solid #F59E0B;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 0.9rem;
+      display: none;
+    }
+    .coach-box.coach-visible { display: block; }
+    .coach-header {
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.5rem;
+    }
+    .coach-box p { margin: 0.4rem 0; line-height: 1.55; color: #1a1a2e; }
+    .coach-questions {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .coach-q-card {
+      background: #fffbf2;
+      border: 1px solid #f0c080;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .coach-q-btn {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: #1a1a2e;
+      line-height: 1.45;
+    }
+    .coach-q-btn:hover { background: #fef3c7; }
+    .coach-q-num {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+      color: #b45309;
+      text-transform: uppercase;
+      min-width: 4.5rem;
+    }
+    .coach-q-text { flex: 1; }
+    .coach-q-answer {
+      padding: 0.5rem 0.8rem 0.6rem 1.4rem;
+      background: #fef9ec;
+      border-top: 1px solid #f0d090;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+    .coach-a-label { font-weight: 600; color: #b45309; margin-right: 0.3rem; }
+
+    /* Toggle-switch */
+    .coach-toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #1d4ed8;
+      user-select: none;
+    }
+    .coach-toggle {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex-shrink: 0;
+    }
+    .coach-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .coach-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 999px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .coach-slider::before {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .coach-toggle input:checked + .coach-slider { background: #F59E0B; }
+    .coach-toggle input:checked + .coach-slider::before { transform: translateX(19px); }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    /* ===== Källhänvisningar ===== */
+    a.cite {
+      font-size: 0.78rem;
+      color: #1e3a8a;
+      font-weight: 700;
+      vertical-align: super;
+      text-decoration: none;
+      margin-left: 0.05rem;
+    }
+    a.cite:hover { text-decoration: underline; }
+
+    .references {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #d8d8d8;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .references h2 {
+      font-size: 1rem;
+      color: #1e3a8a;
+      margin: 0 0 0.6rem;
+    }
+    .references ol {
+      margin: 0 0 0 1.3rem;
+    }
+    .references li {
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body class="area-elektrokemi">
+
+  <header class="kemi-header">
+    <h1>Studieguide – Elektrokemi</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/elektrokemi/" class="subject-btn">← Tillbaka till Elektrokemi</a>
+    </p>
+
+    <div class="guide-intro">
+      <p><strong>10 milstolpar</strong> – från jonreaktioner och galvaniska element till elektrolys och oxidation–reduktion.</p>
+      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p style="display:flex; align-items:center; gap:0.5rem; margin-top:0.6rem;">
+        <label class="coach-toggle-wrap" for="coach-master">
+          <span class="coach-toggle">
+            <input type="checkbox" id="coach-master">
+            <span class="coach-slider"></span>
+          </span>
+          Coachläge
+        </label>
+        <span style="font-size:0.88rem; color:#555;">– visar repetitionsfrågor under varje milstolpe</span>
+      </p>
+      <p style="margin-top:0.5rem;">
+        <button onclick="toggleAllMilestones(true)"
+          style="margin-right:0.5rem; padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Expandera alla
+        </button>
+        <button onclick="toggleAllMilestones(false)"
+          style="padding:0.3rem 0.8rem; border:1px solid #ccc; border-radius:6px; background:#f4f6fa; cursor:pointer; font-family:inherit;">
+          Kollapsa alla
+        </button>
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 1 – Atomer och joner: elektroner på vandring
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Atomer och joner – elektroner på vandring</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">atom</strong> är elektriskt neutral – den har lika många protoner som elektroner. Om atomen förlorar en eller flera elektroner uppstår en positivt laddad partikel som kallas <strong class="term">katjon</strong> (positiv jon). Om atomen i stället tar upp extra elektroner bildas en negativt laddad <strong class="term">anjon</strong> (negativ jon). Processen kan även gå åt andra hållet: en jon kan återfå elektroner och omvandlas tillbaka till en neutral atom.</p>
+        <p>Det är just detta elektronutbyte som ligger till grund för all elektrokemi. Betrakta ett klassiskt exempel: en järnspik sänks ner i en lösning som innehåller kopparjoner, Cu²⁺. Järnatomerna i spiken lämnar ifrån sig elektroner och förvandlas till järnjoner, Fe²⁺, som löser sig i vätskan. Samtidigt tar de lösta kopparjonerna upp elektronerna och fälls ut som kopparatomer på spikens yta. Det sker alltså en <strong class="term">jonreaktion</strong> där järn och koppar byter roller.</p>
+
+        <div class="formula-box">
+          Fe → Fe²⁺ + 2e⁻ &nbsp;&nbsp;(järn oxideras – lämnar elektroner)<br>
+          Cu²⁺ + 2e⁻ → Cu &nbsp;&nbsp;(koppar reduceras – tar upp elektroner)<br>
+          <br>
+          Samlad reaktion:&nbsp; Fe + Cu²⁺ → Fe²⁺ + Cu
+        </div>
+
+        <p>Beteckningen <strong>e⁻</strong> används för en fri elektron. Reaktionerna sker alltid parallellt – de elektroner som en art avger tas omedelbart upp av en annan. Det går alltså inte att isolera elektronerna; det handlar alltid om ett <em>par</em> av processer.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Atom → jon: atomen lämnar ifrån sig eller tar upp elektroner. Positiv jon (katjon) = färre elektroner än protoner. Negativ jon (anjon) = fler elektroner än protoner. Jonreaktioner innebär alltid ett elektronutbyte mellan två ämnen.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – joner
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför är just elektroner det som överförs?</summary>
+          <p>Vid kemiska reaktioner är det ytterelektronerna (valenselektronerna) som är inblandade – protoner och neutroner sitter fast i atomkärnan och påverkas inte vid vanliga kemiska processer. Elektroner är lätta att flytta mellan atomer och joner, och det är just den rörelsen som skapar kemisk bindning, upplöser metaller och driver galvaniska element.</p>
+          <p>I metaller rör sig elektroner relativt fritt genom atomgittret. Det är därför metaller leder elektrisk ström och dessutom kan delta i jonreaktioner, där elektroner vandrar från en metallyta till joner i en omgivande lösning.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m1">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 1</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad skiljer en positiv jon från en neutral atom av samma grundämne?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En positiv jon har lämnat ifrån sig en eller flera elektroner och har därför färre elektroner än protoner. Den bär en positiv laddning, medan den neutrala atomen har lika många av vardera.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Beskriv vad som händer när en järnspik sänks ner i en kopparsulfatlösning.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Järnatomer lämnar elektroner och omvandlas till järnjoner (Fe²⁺) som löser sig. Kopparjonerna (Cu²⁺) i lösningen tar upp elektronerna och omvandlas till kopparatomer som fälls ut på järnytan. Järnet löses upp och ersätts av koppar.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad betecknar e⁻ i en reaktionsformel?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>e⁻ är beteckningen för en fri elektron i en jonreaktion.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 2 – Spänningsserien: ädla och oädla metaller
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Spänningsserien – ädla och oädla metaller</span>
+      </summary>
+      <div class="m-body">
+        <p>Alla metaller bildar inte lika gärna joner. En metall som lätt avger elektroner och övergår till jonform kallas <strong class="term">oädel</strong>. Guld, platina och silver bildar knappt joner alls och kallas därför <strong class="term">ädla</strong>. Järn, zink och aluminium hör till de oädlare metallerna.</p>
+        <p>Metallerna kan ordnas efter hur lätt de bildar joner. Denna rangordning kallas <strong class="term">spänningsserien</strong> (eller aktivitetsserien). Längst till vänster i serien står de mest oädla metallerna – kalium, kalcium och natrium. Längst till höger finns de ädlaste – koppar, silver, platina och guld. Väte brukar inkluderas som en referenspunkt mittemellan.</p>
+
+        <div class="formula-box">
+          ← Oädlare &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ädlare →<br>
+          K · Ca · Na · Mg · Al · Zn · Fe · Ni · Sn · Pb · H · Cu · Ag · Pt · Au
+        </div>
+
+        <p>En oädlare metall kan tränga undan en ädlare metall ur dess lösning – precis som järnet trängde undan kopparn i milstolpe 1. Det omvända fungerar inte: koppar löser inte upp ett järnföremål.</p>
+        <p>De metaller som står till vänster om väte i spänningsserien löser sig när de placeras i en syralösning, och vätgas (H₂) frigörs. Dessa kallas därför <strong class="term">väteutdrivande metaller</strong>. De ädla metallerna reagerar inte med utspädd syra på samma sätt.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Oädla metaller bildar lätt joner. Ädla metaller bildar ogärna joner. En oädlare metall kan undantränga en ädlare metall ur en lösning. Metaller till vänster om H i spänningsserien kallas väteutdrivande och löser sig i syra.
+        </div>
+
+        <div class="next-steps">
+          <a href="./adel-eller-oadel.html">
+            <span class="n-label">Testa</span>
+            Ädel eller oädel?
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 1
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför är guld och platina ädla?</summary>
+          <p>Ädelhet hos en metall beror på hur starkt dess yttre elektroner hålls kvar av kärnan. Guld och platina har fyllda eller nästan fyllda d-orbitaler som ger hög stabilitet. Det krävs mer energi för att rycka loss elektroner från dessa atomer, vilket gör dem motståndskraftiga mot kemiska angrepp – de oxideras inte i luft och löser sig inte i vanliga syror.</p>
+          <p>Guld löses dock i en blandning av koncentrerad saltsyra och salpetersyra, kallad kungsvatten (aqua regia). Det är den enda vanliga syrablandning som kan angripa guld.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m2">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 2</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad menas med att en metall är "oädel"?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Att den relativt lätt avger elektroner och övergår till jonform. Oädla metaller reagerar lättare med syror och oxiderar snabbare.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad händer om du lägger en bit magnesium i utspädd saltsyra? Motivera med hjälp av spänningsserien.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Magnesium (Mg) är oädlare än väte (H) i spänningsserien och är alltså väteutdrivande. Det löser sig i syran och vätgas (H₂) bubblar ut.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Kan koppar lösa sig i utspädd svavelsyra? Motivera.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Nej. Koppar (Cu) befinner sig till höger om väte i spänningsserien och är alltså ädlare. Det är inte väteutdrivande och reagerar inte med utspädd syra.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 3 – Galvaniska element: kemisk energi till el
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Galvaniska element – kemisk energi till elektrisk ström</span>
+      </summary>
+      <div class="m-body">
+        <p>Jonreaktionerna i milstolpe 1 sker spontant när en metall befinner sig direkt i kontakt med en lösning. Men vad händer om man separerar de två reaktionerna och låter elektronerna ta en omväg via en ledare? Då kan vi ta ut det arbete som elektronerna utför – vi får elektrisk ström. Det är grundprincipen för ett <strong class="term">galvaniskt element</strong>.</p>
+        <p>I ett galvaniskt element sänks två metallplattor av <em>olika</em> ämnen ner i en vätska som innehåller joner. Vätskan kallas <strong class="term">elektrolyt</strong>. Den kan exempelvis bestå av utspädd svavelsyra eller en saltlösning. Den oädlare metallen (t.ex. zink) fungerar som <strong class="term">minuspol</strong> – zinkatomerna lämnar elektroner som vandrar ut i den yttre ledaren. Den ädlare metallen (t.ex. koppar) tar emot elektronerna och fungerar som <strong class="term">pluspol</strong>.</p>
+
+        <div class="formula-box">
+          Zn → Zn²⁺ + 2e⁻ &nbsp;&nbsp;(vid minuspolen – zink löses upp)<br>
+          Elektroner flödar via ledaren från Zn-plattan till Cu-plattan<br>
+          Cu²⁺ + 2e⁻ → Cu &nbsp;&nbsp;(vid pluspolen – koppar fälls ut)
+        </div>
+
+        <p>För att få hög spänning väljer man metaller som befinner sig långt ifrån varandra i spänningsserien – ju större skillnad i ädelhet, desto mer energi frigörs per elektronöverföring och desto högre spänning. Elektrolyten måste innehålla joner för att sluta kretsen inuti elementet.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Galvaniskt element = två olika metaller i en elektrolyt. Den oädlare metallen är minuspol (avger elektroner). Den ädlare är pluspol (tar emot elektroner). Elektrolyt = jonledande vätska. Kemisk energi omvandlas till elektrisk energi.
+        </div>
+
+        <div class="next-steps">
+          <a href="./bygg-ett-batteri.html">
+            <span class="n-label">Testa</span>
+            Bygg ett batteri
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Luigi Galvani och grodlår</summary>
+          <p>Galvaniska element är uppkallade efter den italienske läkaren och naturforskaren Luigi Galvani (1737–1798). Han gjorde i slutet av 1700-talet en berömd observation: grodlårsmusklerna rycktes ihop när de vidrördes av instrument av olika metaller. Galvani tolkade det som att det fanns en "djurisk elektricitet" i muskeln.</p>
+          <p>Hans landsman Alessandro Volta menade i stället att elektriciteten uppstod i kontakten mellan de två metallerna, med muskelvätskan som elektrolyt. Volta hade rätt och konstruerade det första elektriska batteriet – voltapelaren – år 1800. Volt, spänningens enhet, är uppkallad efter Volta.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m3">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 3</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är en elektrolyt och varför behövs den i ett galvaniskt element?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En elektrolyt är en jonledande vätska (t.ex. saltlösning eller utspädd syra). Den behövs för att sluta kretsen inuti elementet – jonerna i elektrolyten transporterar laddning mellan plattorna.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vilken av plattorna i ett galvaniskt element med zink och koppar är minuspol? Varför?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Zinkplattan är minuspol. Zink är oädlare än koppar och avger därför elektroner. Minuspolen är den pol där elektroner frigörs och flödar ut i den yttre ledaren.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför väljer man metaller långt ifrån varandra i spänningsserien?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Ju större skillnad i ädelhet, desto mer energi frigörs när elektronerna vandrar från den oädla till den ädla metallen. Det ger en högre elektrisk spänning.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 4 – Batterier i vardagen
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Batterier – galvaniska element i vardagen</span>
+      </summary>
+      <div class="m-body">
+        <p>Vanliga ficklampsbatterier är galvaniska element i förpackad form. Höljet består av en tunn <strong class="term">zinkplåt</strong> som fungerar som minuspol. Inuti sitter en <strong class="term">kolstav</strong> omgiven av brunstenspulver (mangandioxid, MnO₂) – detta är pluspolen. Elektrolyten är en salmiaklösning (ammoniumkloridlösning) blandad med ett förtjockningsmedel för att hindra den från att läcka. Salmiaklösningen ger batteriet dess smeknamn: <strong class="term">salmiakbatteri</strong>.</p>
+        <p>När batteriet används reagerar zinken med elektrolyten och löses successivt upp. Det är därför batteriet till slut är tomt – den kemiska reaktionen har förbrukat zinkmetallen. Eftersom zinkhöljet långsamt fräts sönder är det viktigt att ta ut batterierna ur apparater som inte ska användas under en längre tid, annars kan läckage skada apparaten.</p>
+        <p><strong class="term">Alkaliska batterier</strong> är uppbyggda på liknande sätt men med kaliumhydroxidlösning (KOH) som elektrolyt. Det ger en jämnare urladdning och längre livslängd än salmiakbatterier.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Ficklampsbatteri: zinklhölje (–), kolstav (+), salmiaklösning som elektrolyt. Alkaliskt batteri: samma princip men med KOH-elektrolyt → längre livslängd. Ta ut batterier ur apparater som ska lagras länge.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – batterier
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m4">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 4</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad fyller salmiaklösningen för funktion i ett ficklampsbatteri?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Den fungerar som elektrolyt – den ledande vätskan som gör det möjligt för joner att röra sig mellan plattorna och sluta den inre kretsen.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Varför är det viktigt att ta bort batterier ur en apparat som ska ligga i förrådet länge?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Zinkhöljet löses successivt upp av reaktionen med elektrolyten. Med tiden kan höljet bli så tunt att batteriets innehåll läcker ut och skadar apparaten.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad skiljer ett alkaliskt batteri från ett salmiakbatteri?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Elektrolyten: alkaliska batterier använder kaliumhydroxid (KOH) i stället för salmiaklösning. Det ger jämnare spänning och längre livslängd.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 5 – Ackumulatorn: batteriet som laddas om
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Ackumulatorn – batteriet som kan laddas om</span>
+      </summary>
+      <div class="m-body">
+        <p>Vanliga engångsbatterier är "förbrukningsvaror" – när de kemiska reaktanterna tar slut är batteriet dött. En <strong class="term">ackumulator</strong> (uppladdningsbart batteri) fungerar annorlunda: när man kopplar in en yttre strömkälla kan reaktionerna drivas baklänges och elementet återladdas.</p>
+        <p>Det vanligaste exemplet i vardagen är <strong class="term">blyackumulatorn</strong>, som används som startbatteri i fordon. Den består av porösa blyplattor sänkta i utspädd svavelsyra (H₂SO₄) som elektrolyt. Den positiva plattan är belagd med blydioxid (PbO₂) och den negativa med rent bly (Pb). När strömmen tas ut reagerar båda plattorna med syran och omvandlas till blysulfat (PbSO₄). Laddas batteriet återbildas blydioxid och bly på respektive platta.</p>
+        <p>Andra typer av ackumulatorer är nickelkadmiumbatterier (NiCd), nickelmetallhydridbatterier (NiMH) och <strong class="term">litiumjonbatterier</strong> – de sistnämnda dominerar i dag i mobiltelefoner, elbilar och bärbara datorer tack vare hög energitäthet och lång livslängd.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Ackumulator = uppladdningsbart galvaniskt element. Blyackumulator: Pb och PbO₂ i H₂SO₄. Urladdad → båda plattorna bildar PbSO₄. Laddas upp med yttre strömkälla. Litiumjonbatterier används idag i elektronik och elbilar.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – ackumulatorn
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 2
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Litiumjonbatterier och framtiden</summary>
+          <p>Litiumjonbatteriet revolutionerade bärbar elektronik på 1990-talet och driver i dag elfordonsrevolutionen. Litium (Li) är den lättaste metallen och har extremt hög energitäthet per viktenhet, vilket gör det möjligt att lagra mycket energi i ett litet och lätt batteri.</p>
+          <p>En utmaning är att litium är ett relativt sällsynt ämne och att gruvor för litiumutvinning – framför allt i Sydamerika och Australien – väcker miljö- och rättvisefrågor. Forskning pågår kring natrium-jonbatterier och solid-state-batterier som alternativ.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m5">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 5</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är den viktigaste skillnaden mellan en ackumulator och ett vanligt engångsbatteri?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En ackumulator kan laddas upp igen genom att en yttre strömkälla driver de kemiska reaktionerna baklänges. Ett engångsbatteri kan inte återladdas.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vilka material finns på den positiva respektive negativa plattan i en fullt laddad blyackumulator?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Positiv platta: blydioxid (PbO₂). Negativ platta: rent bly (Pb).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Ge två exempel på apparater som drivs av litiumjonbatterier.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Mobiltelefoner, bärbara datorer, elbilar, elcyklar, trådlösa verktyg m.m. (valfria två).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 6 – Korrosion: metallernas fiende
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Korrosion – metallernas fiende</span>
+      </summary>
+      <div class="m-body">
+        <p>När metaller utsätts för fukt och syre i luften kan de reagera med sin omgivning och gradvis brytas ned. Det kallas <strong class="term">korrosion</strong>. Det vanligaste exemplet är att järn rostar: järnet oxideras till järnoxider (rost) när det utsätts för vatten och syre. Även andra oädla metaller som aluminium, zink och koppar påverkas av fuktig luft, men de bildar täta oxidskikt som faktiskt skyddar det underliggande materialet mot fortsatt angrepp.</p>
+        <p>Korrosion kan också uppstå när två <em>olika</em> metaller befinner sig i elektrisk kontakt med varandra i en fuktig miljö. Systemet fungerar då som ett galvaniskt element: den oädlare metallen upplöses fortare än om den hade legat ensam. Ett klassiskt problem uppstår exempelvis om man skruvar ihop ett järnrör med ett kopparrör med vatten som elektrolyt – järnet, som är oädlare, rostar snabbare vid skarven.</p>
+        <p>För att skydda stålskrov på fartyg och bropelare mot korrosion fästs block av en oädlare metall – vanligen zink – direkt på stålkonstruktionen. Zinkblocken löses upp i stället för stålet. Man säger att zinken fungerar som <strong class="term">offer-anod</strong>: den "offrar sig" för att skydda konstruktionen. Zinkblocken byts ut med jämna mellanrum.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Korrosion = kemisk nedbrytning av metall i fuktig miljö. Oädla metaller rostar snabbare. Kontakt mellan två olika metaller i fuktig miljö påskyndar korrosionen av den oädlare. Offer-anod = oädlare metall (t.ex. zink) som skyddar en konstruktion genom att själv lösa sig.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – korrosion
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Galvanisering som korrosionsskydd</summary>
+          <p>En vanlig metod för att skydda stål mot rost är <strong>galvanisering</strong> – stålföremålet beläggs med ett tunt lager zink. Zink är oädlare än järn och fungerar som en offer-anod även om ytan skadas. Till skillnad från en vanlig målarfärg, som bara fysiskt täcker järnet, fortsätter ett zinkskikt att skydda järnet elektrokemiskt även om skiktet ristas upp.</p>
+          <p>Galvaniserade plåtar används i byggnadssektorn, bilkarosser och staketpålar. Metoden döptes av misstag efter Galvani – det är egentligen Voltas elektrokemi som styr processen.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m6">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 6</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Varför rostar ett järnrör snabbare om det skruvas ihop med ett kopparrör i ett blött utrymme?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>De två metallerna bildar ett galvaniskt element med vattnet som elektrolyt. Järn är oädlare än koppar och fungerar som minuspol – det löses upp (rostar) snabbare än om det hade legat ensamt.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad menas med offer-anod och varför används zink till detta?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>En offer-anod är ett block av en oädlare metall som fästs på en konstruktion. Zink (oädlare än järn) löses upp av korrosionen i stället för stålet och "offrar sig". Zinkblocken byts ut regelbundet.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Varför är aluminium mer korrosionsbeständigt än järn trots att aluminium är oädlare?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Aluminium bildar ett tunt, tätt oxidskikt (aluminiumoxid, Al₂O₃) på ytan som skyddar metallen mot fortsatt angrepp. Järnrost (Fe₂O₃/Fe₃O₄) är däremot porös och skyddar inte – fukten tränger igenom och angreppet fortsätter inåt.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 7 – Elektrolys: el omvandlar joner
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Elektrolys – el omvandlar joner till atomer</span>
+      </summary>
+      <div class="m-body">
+        <p>I ett galvaniskt element drivs kemiska reaktioner spontant och elektrisk energi frigörs. <strong class="term">Elektrolys</strong> är den omvända processen: man tillför elektrisk energi utifrån för att driva icke-spontana kemiska reaktioner. Kortfattat: istället för att kemiska reaktioner skapar ström, använder man ström för att genomdriva kemiska reaktioner.</p>
+        <p>Vid elektrolys sänker man ner två elektroder i en elektrolyt och kopplar dem till en strömkälla. Elektroden som ansluts till strömkällans <strong class="term">positiva pol kallas anod</strong>. Elektroden vid den <strong class="term">negativa polen kallas katod</strong>. De positiva jonerna i elektrolyten dras mot katoden och tar upp elektroner – de reduceras till neutrala atomer. De negativa jonerna dras mot anoden och lämnar elektroner – de oxideras.</p>
+
+        <div class="formula-box">
+          Vid katoden (–): joner + e⁻ → atomer &nbsp;&nbsp;(reduktion)<br>
+          Vid anoden (+): atomer → joner + e⁻ &nbsp;&nbsp;(oxidation)<br>
+          <br>
+          Grundsats: vid elektrolys omvandlas jonerna i lösningen till atomer.
+        </div>
+
+        <p>Elektrolys används industriellt för att framställa rena metaller (t.ex. aluminium och koppar), tillverka klor och natriumhydroxid, samt för ytbehandling av föremål. I hemmet möter vi elektrolys indirekt – utan elektrolytisk aluminiumproduktion hade vi till exempel inte aluminiumfolie i köket.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Elektrolys = elektrisk energi driver kemiska reaktioner. Anod (kopplad till +) = oxidation sker. Katod (kopplad till –) = reduktion sker. Positiva joner (katjoner) dras till katoden. Negativa joner (anjoner) dras till anoden.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – elektrolys
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 3
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Elektrolys av vatten – att dela H₂O</summary>
+          <p>Rent vatten leder ström dåligt, men om man tillsätter lite svavelsyra (för att öka jonkoncentrationen) kan man elektrolysera vatten. Vid katoden frigörs vätgas (H₂) och vid anoden frigörs syrgas (O₂). Dubbelt så mycket vätgas som syrgas bildas, vilket stämmer med vattnets formel H₂O.</p>
+          <p>Elektrolys av vatten för att framställa "grön" vätgas – med el från förnybar energi – är ett aktivt forskningsområde. Vätgas kan lagra energi och användas som bränsle i bränsleceller.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m7">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 7</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vad är skillnaden mellan ett galvaniskt element och elektrolys?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>I ett galvaniskt element sker spontana reaktioner som ger elektrisk energi. Vid elektrolys tillför man elektrisk energi utifrån för att driva reaktioner som inte sker spontant.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad kallas elektroderna vid positiv respektive negativ pol vid elektrolys?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Anod = elektroden vid den positiva polen. Katod = elektroden vid den negativa polen.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Mot vilken elektrod vandrar positiva joner vid elektrolys, och vad händer med dem där?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Positiva joner (katjoner) vandrar mot katoden (–). Där tar de upp elektroner och omvandlas (reduceras) till neutrala atomer.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 8 – Elektrolys i praktiken
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Elektrolys i praktiken – koppar, klor och vätgas</span>
+      </summary>
+      <div class="m-body">
+        <p>Löser man kopparklorid (CuCl₂) i vatten bildas positiva kopparjoner, Cu²⁺, och negativa kloridjoner, Cl⁻. Vid elektrolys av denna lösning sker följande: kopparjonerna dras till katoden och reduceras – varje jon tar upp två elektroner och fälls ut som ett tunt kopparskikt på katoden. Kloridjoner­na dras till anoden och oxideras – varje jon lämnar en elektron och omvandlas till en neutral kloratom. Två kloratomer slår ihop sig och bildar klorgasmolekylen Cl₂, som bubblar upp vid anoden.</p>
+
+        <div class="formula-box">
+          Vid katoden: Cu²⁺ + 2e⁻ → Cu &nbsp;&nbsp;&nbsp;(koppar fälls ut)<br>
+          Vid anoden: 2Cl⁻ → Cl₂ + 2e⁻ &nbsp;&nbsp;(klorgas bildas)
+        </div>
+
+        <p>Elektrolys av <strong class="term">saltsyra</strong> (HCl) är ett annat illustrativt exempel. Saltsyra innehåller vätejoner (H⁺) och kloridjoner (Cl⁻). Vid katoden bildas vätgas när vätejoner tar upp elektroner: 2H⁺ + 2e⁻ → H₂. Vid anoden bildas åter klorgas: 2Cl⁻ → Cl₂ + 2e⁻. Man kan alltså "dela upp" saltsyran i sina två grundkomponenter – vätgas och klorgas – med hjälp av elektrisk ström.</p>
+        <p>Industriellt används liknande processer för att framställa klor och natriumhydroxid (natronlut) i stor skala, och för att raffinera koppar och andra metaller till hög renhet.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Elektrolys av CuCl₂: koppar bildas vid katoden, klorgas vid anoden. Elektrolys av HCl: vätgas vid katoden, klorgas vid anoden. Industriellt används elektrolys för att framställa ren koppar, klor och natronlut.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – elektrolys i praktiken
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m8">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 8</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Vilket ämne bildas vid katoden respektive anoden när kopparkloridlösning (CuCl₂) elektrolyseras?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Katod: koppar (Cu) fälls ut som ett metallskikt. Anod: klorgas (Cl₂) bildas och bubblar upp.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Skriv reaktionsformeln för vad som händer vid katoden vid elektrolys av saltsyra.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>2H⁺ + 2e⁻ → H₂ &nbsp;(vätgas bildas).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Ge ett industriellt användningsområde för elektrolys.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Framställning av ren koppar, produktion av klor och natronlut, raffinering av aluminium, ytbehandling av metaller (valfritt ett).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 9 – Ytbehandling genom elektrolys
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Ytbehandling – elektrolys ger metallföremål ny yta</span>
+      </summary>
+      <div class="m-body">
+        <p>Att belägga ett metallföremål med ett tunt skikt av en annan metall är ett av de mest praktiska användningsområdena för elektrolys. Metoden utnyttjar det faktum att metalljonerna i en lösning attraheras till katoden och fälls ut som metallatomer. Föremålet som ska beläggas kopplas till den negativa polens elektrod (katoden). Den lösning man väljer innehåller joner av den metall man vill belägga med.</p>
+        <p><strong class="term">Galvanisering</strong> är beteckningen för att belägga stål eller järn med zink. Zinkskiktet är opolärt mot syrerika miljöer och skyddar stålet mot rost. Galvaniserade plåtar används flitigt i byggbranschen och för bilkarossar.</p>
+        <p>Vid <strong class="term">förkromning</strong> fälls krom ut på föremålet från en kromlösning. Det ger en hård, blank och kemiskt beständig yta. <strong class="term">Förnickling</strong> och <strong class="term">förgyllning</strong> sker på liknande sätt – föremålet leder ström och metalljonerna i badet fälls ut som ett tunt, jämnt skikt.</p>
+        <p><strong class="term">Eloxering</strong> är en speciell process för aluminium. Aluminiumföremålet kopplas till <em>anoden</em> (inte katoden) i utspädd svavelsyra. Det bildas ett poröst oxidskikt av aluminiumoxid på ytan. Skiktet är hårt och kan färgas i många kulörer genom att doppas i färgbad – vilket man kan se på till exempel nycklar och sportprodukter.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Ytbehandling: föremålet kopplas till katoden, metalljonerna fälls ut på ytan. Galvanisering = zinkskikt på stål (rostskydd). Förkromning = krombad. Förnickling = nickelbad. Eloxering (aluminium): föremålet är anod → oxidskikt bildas, kan färgas.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Checklistan – ytbehandling
+          </a>
+          <a href="./instuderingsfragor.html">
+            <span class="n-label">Öva</span>
+            Instuderingsfrågor grupp 4
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Varför är eloxerad aluminium så populärt?</summary>
+          <p>Eloxerad aluminium kombinerar lätthet, hållfasthet och estetik. Oxidskiktet som bildas vid eloxering är upp till tusen gånger tjockare än det naturliga oxidlagret på aluminium. Det är mycket hårdare – nästan lika hårt som korund (rubiner och safirer är korund) – och skyddar mot repor och kemikalier.</p>
+          <p>Porerna i det nybildade oxidskiktet kan fyllas med organiska färger som sedan "låses in" när oxidet slutbehandlas med varmt vatten eller ånga. Resultatet är en ljusbeständig, korrisionsskyddad och vackert färgad yta. Eloxerad aluminium används i allt från smartklockor och laptops till fönsterbågar och båtmaster.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m9">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 9</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Till vilken elektrod kopplas föremålet vid förkromning, och varför?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Till katoden (–). Metalljonerna (kromjonerna) i lösningen dras dit och reduceras – de tar upp elektroner och fälls ut som metallatomer på föremålets yta.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">Vad kallas processen när järn beläggs med zink och vad är syftet?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Galvanisering. Syftet är att skydda järnet/stålet mot korrosion. Zinkskiktet är oädlare än järnet och fungerar som ett skyddande offer-skikt.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Vad skiljer eloxering från vanlig ytbeläggning? Är aluminiumföremålet anod eller katod?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Vid eloxering bildas ett oxidskikt på aluminiumföremålet i stället för att en ny metall läggs på. Föremålet är anod (+) – det oxideras och bildar aluminiumoxid (Al₂O₃) på ytan. Skiktet kan sedan färgas.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MILSTOLPE 10 – Oxidation och reduktion
+    ═══════════════════════════════════════════════════════════════ -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Oxidation och reduktion – elektronernas riktning</span>
+      </summary>
+      <div class="m-body">
+        <p>Genom hela elektrokemin löper ett gemensamt tema: överföring av elektroner. Nu är det dags att sätta namn på de två halvreaktionerna. <strong class="term">Oxidation</strong> är den process där ett ämne avger elektroner – atomer eller joner tappar elektroner och får en mer positiv laddning. <strong class="term">Reduktion</strong> är motsatsen: ett ämne tar upp elektroner och får en mer negativ laddning.</p>
+
+        <div class="formula-box">
+          Oxidation:  Cu → Cu²⁺ + 2e⁻ &nbsp;&nbsp;(koppar avger elektroner)<br>
+          Reduktion: 2Ag⁺ + 2e⁻ → 2Ag &nbsp;(silverjon tar upp elektroner)<br>
+          <br>
+          Samlad redoxreaktion: Cu + 2Ag⁺ → Cu²⁺ + 2Ag
+        </div>
+
+        <p>Oxidation och reduktion sker alltid <em>samtidigt</em> – de elektroner som ett ämne avger tas omedelbart upp av ett annat. Reaktionsparet kallas därför en <strong class="term">redoxreaktion</ktion> (av reduktion-oxidation). Ämnet som oxideras kallas <strong>reduktionsmedel</strong> (det levererar elektroner). Ämnet som reduceras kallas <strong>oxidationsmedel</strong> (det tar emot elektroner).</p>
+        <p>Ursprungligen definierades oxidation som att ett ämne förenas med syre (t.ex. järn rostar, kol förbränns). Den bredare definitionen baserad på elektronöverföring gäller i alla situationer, även utan att syre är inblandat. Förbränning i syre är ett specialfall – syreatomerna tar upp elektroner och reduceras, medan det brinnande ämnet oxideras.</p>
+
+        <div class="fact-box">
+          <strong>Kom ihåg</strong>
+          Oxidation = elektroner avges (ämnets laddning ökar). Reduktion = elektroner tas upp (ämnets laddning minskar). Redoxreaktion = oxidation + reduktion sker alltid ihop. Reduktionsmedel = avger elektroner. Oxidationsmedel = tar upp elektroner.
+        </div>
+
+        <div class="next-steps">
+          <a href="./checklista.html">
+            <span class="n-label">Kontrollera</span>
+            Hela checklistan
+          </a>
+          <a href="./ovningsprov.html">
+            <span class="n-label">Testa</span>
+            Övningsprov – alla milstolpar
+          </a>
+        </div>
+
+        <details class="deepen">
+          <summary>Biokemi: oxidation i kroppen</summary>
+          <p>Kroppens celler "förbränner" glukos (druvsocker) för att utvinna energi. I grunden är det en redoxreaktion: glukosen oxideras (kolatomerna avger elektroner till syreatomer) och syre reduceras till vatten. Den frigjorda energin lagras som ATP och driver livets alla processer.</p>
+          <p>Antioxidanter – ämnen som C-vitamin och E-vitamin – skyddar cellernas molekyler mot oönskade oxidationer. De fungerar som reduktionsmedel: de avger gärna elektroner till aggressiva oxidationsmedel (fria radikaler) och skyddar därigenom celler och vävnader.</p>
+        </details>
+      </div>
+    </details>
+
+    <div class="coach-box" id="coach-m10">
+      <div class="coach-header">🎯 Repetitionsfrågor – Milstolpe 10</div>
+      <div class="coach-questions">
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 1</span>
+            <span class="coach-q-text">Definiera oxidation och reduktion med hjälp av elektroner.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Oxidation = ett ämne avger elektroner. Reduktion = ett ämne tar upp elektroner.
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 2</span>
+            <span class="coach-q-text">I reaktionen Cu + 2Ag⁺ → Cu²⁺ + 2Ag – vilket ämne oxideras och vilket reduceras?</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Koppar (Cu) oxideras – det avger elektroner och blir Cu²⁺. Silverjonerna (Ag⁺) reduceras – de tar upp elektroner och omvandlas till silveratomer (Ag).
+          </div>
+        </div>
+        <div class="coach-q-card">
+          <button class="coach-q-btn" onclick="toggleCoachQ(this)">
+            <span class="coach-q-num">Fråga 3</span>
+            <span class="coach-q-text">Kan oxidation ske utan att reduktion sker samtidigt? Motivera.</span>
+          </button>
+          <div class="coach-q-answer" hidden>
+            <span class="coach-a-label">Svar:</span>Nej. Elektroner kan inte "ligga och vänta fritt" – de elektroner som ett ämne avger tas omedelbart upp av ett annat ämne. Oxidation och reduktion sker alltid i par (redoxreaktion).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         KÄLLFÖRTECKNING
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Atkins, P. &amp; de Paula, J. (2014). <em>Physical Chemistry</em>, 10th ed. Oxford University Press. ISBN 978-0-19-871240-3.</li>
+        <li id="ref-2">Chang, R. &amp; Goldsby, K. A. (2016). <em>Chemistry</em>, 12th ed. McGraw-Hill Education. ISBN 978-0-07-802151-0.</li>
+        <li id="ref-3">Nationalencyklopedin (2024). <em>Elektrokemi</em>. NE Nationalencyklopedin AB. Hämtad 2024 från <a href="https://www.ne.se/uppslagsverk/encyklopedi/lång/elektrokemi" target="_blank" rel="noopener">ne.se</a>.</li>
+        <li id="ref-4">Tullgren, B., Andersson, M., &amp; Ekborg, M. (2021). <em>PULS Kemi 7–9</em>. Natur &amp; Kultur. ISBN 978-91-27-46043-1.</li>
+        <li id="ref-5">IUPAC (2014). <em>Compendium of Chemical Terminology</em> ("Gold Book"), 3rd ed. International Union of Pure and Applied Chemistry. <a href="https://goldbook.iupac.org" target="_blank" rel="noopener">goldbook.iupac.org</a>.</li>
+        <li id="ref-6">Skolverket (2022). <em>Kommentarmaterial till kursplanen i kemi – grundskolan</em>. Skolverket. Hämtad från <a href="https://www.skolverket.se" target="_blank" rel="noopener">skolverket.se</a>.</li>
+      </ol>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js" data-audio-base="/kemi/elektrokemi/audio/"></script>
+  <script>
+    // ── Expandera/kollapsa alla ─────────────────────────────────
+    function toggleAllMilestones(open) {
+      document.querySelectorAll('details.milestone').forEach(function(d) { d.open = open; });
+    }
+
+    // ── Coach-läge ──────────────────────────────────────────────
+    var masterSwitch = document.getElementById('coach-master');
+    masterSwitch.addEventListener('change', function () {
+      var boxes = document.querySelectorAll('.coach-box');
+      if (this.checked) {
+        boxes.forEach(function (b) { b.classList.add('coach-visible'); });
+      } else {
+        boxes.forEach(function (b) { b.classList.remove('coach-visible'); });
+      }
+    });
+
+    // ── Coach-frågor expand/collapse ────────────────────────────
+    function toggleCoachQ(btn) {
+      var ans = btn.nextElementSibling;
+      if (!ans) return;
+      ans.hidden = !ans.hidden;
+    }
+
+    // ── Öppna milstolpe via URL-hash (#m1 … #m10) ───────────────
+    (function () {
+      function openHash() {
+        var h = window.location.hash;
+        if (!h) return;
+        var el = document.querySelector('details.milestone' + h);
+        if (el) {
+          el.open = true;
+          setTimeout(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+        }
+      }
+      openHash();
+      window.addEventListener('hashchange', openHash);
+    })();
+  </script>
+</body>
+</html>

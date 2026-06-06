@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>
+    body.area-elektrokemi {
+      --area: #1d4ed8;
+      --area-strong: #1e3a8a;
+      --area-soft: #eff6ff;
+      --area-border: #bfdbfe;
+      --area-hover: #dbeafe;
+    }
+
     main {
       font-size: 1.2em;
     }
@@ -78,9 +86,115 @@
     .study-tips li {
       margin-bottom: 0.45rem;
     }
+
+    .area-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: 1fr 300px;
+        align-items: start;
+      }
+    }
+
+    .area-main { min-width: 0; }
+
+    .area-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      font-style: italic;
+      color: #444;
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .concept-section h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 1rem;
+    }
+
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 2; } }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.22rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .concept-note {
+      margin: 0.8rem 0 0 0;
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .concept-note a {
+      color: var(--area-strong);
+      font-weight: 600;
+    }
+
+    .concept-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .concept-btn:hover {
+      color: var(--area-strong);
+      text-decoration: underline;
+    }
   </style>
 </head>
-<body>
+<body class="area-elektrokemi">
 
   <header class="kemi-header">
     <h1>Elektrokemi</h1>
@@ -100,42 +214,77 @@
       </p>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <ul>
-          <li><a href="./checklista.html">Checklista</a></li>
-          <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
-          <li><a href="./ovningsprov.html">Övningsprov</a></li>
-          <li><a href="./larande-spel.html">Lärande spel</a></li>
-        </ul>
-      </article>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>För elever</h2>
+            <p>Material för att träna inför prov och bygga förståelse.</p>
+            <ul>
+              <li><a href="./studieguide.html">Studieguide</a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+            </ul>
+          </article>
 
-      <article class="resource-box">
-        <h2>För lektioner / läraren</h2>
-        <p>Övrigt material som kan användas i undervisningen.</p>
-        <ul>
-          <li><a href="./facit.html">Facit till övningsprovet</a></li>
-        </ul>
-      </article>
-    </section>
+          <article class="resource-box">
+            <h2>För lektioner / läraren</h2>
+            <p>Övrigt material som kan användas i undervisningen.</p>
+            <ul>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+            </ul>
+          </article>
+        </section>
 
-    <section class="study-tips">
-      <details>
-        <summary>Inläsningstips</summary>
-        <ul>
-          <li>Börja med att förstå skillnaden mellan ädla och oädla metaller.</li>
-          <li>Träna på vad som händer när metaller lämnar ifrån sig elektroner och bildar joner.</li>
-          <li>Rita gärna enkla bilder av minuspol, pluspol, elektrolyt och elektronflöde.</li>
-          <li>Jämför galvaniska element och elektrolys så att du ser skillnaden mellan dem.</li>
-          <li>Försök koppla innehållet till vardagen: batterier, rost, metallföremål, återvinning och miljö.</li>
-          <li>Träna både begrepp och reaktionsformler, särskilt för korrosion, elektrolys och batterier.</li>
-        </ul>
-      </details>
+        <section class="study-tips" style="margin-top:1.5rem;">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Börja med att förstå skillnaden mellan ädla och oädla metaller.</li>
+              <li>Träna på vad som händer när metaller lämnar ifrån sig elektroner och bildar joner.</li>
+              <li>Rita gärna enkla bilder av minuspol, pluspol, elektrolyt och elektronflöde.</li>
+              <li>Jämför galvaniska element och elektrolys så att du ser skillnaden mellan dem.</li>
+              <li>Försök koppla innehållet till vardagen: batterier, rost, metallföremål, återvinning och miljö.</li>
+              <li>Träna både begrepp och reaktionsformler, särskilt för korrosion, elektrolys och batterier.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <p>⚡ Elektrokemi handlar om hur kemiska reaktioner och elektrisk ström hänger ihop – från batteriet i ficklampan till rostskyddet på ett fartyg.</p>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Galvaniskt element">Galvaniskt element</button></li>
+            <li><button class="concept-btn" data-concept="Elektrolyt">Elektrolyt</button></li>
+            <li><button class="concept-btn" data-concept="Spänningsserien">Spänningsserien</button></li>
+            <li><button class="concept-btn" data-concept="Ädel metall">Ädel metall</button></li>
+            <li><button class="concept-btn" data-concept="Oädel metall">Oädel metall</button></li>
+            <li><button class="concept-btn" data-concept="Elektrolys">Elektrolys</button></li>
+            <li><button class="concept-btn" data-concept="Anod">Anod</button></li>
+            <li><button class="concept-btn" data-concept="Katod">Katod</button></li>
+            <li><button class="concept-btn" data-concept="Oxidation">Oxidation</button></li>
+            <li><button class="concept-btn" data-concept="Reduktion">Reduktion</button></li>
+            <li><button class="concept-btn" data-concept="Korrosion">Korrosion</button></li>
+            <li><button class="concept-btn" data-concept="Offer-anod">Offer-anod</button></li>
+            <li><button class="concept-btn" data-concept="Ackumulator">Ackumulator</button></li>
+            <li><button class="concept-btn" data-concept="Galvanisering">Galvanisering</button></li>
+            <li><button class="concept-btn" data-concept="Eloxering">Eloxering</button></li>
+            <li><button class="concept-btn" data-concept="Redoxreaktion">Redoxreaktion</button></li>
+          </ul>
+          <p class="concept-note">Förkunskaper: <a href="/kemi/atomer/">Atomer och joner</a>, <a href="/kemi/jonforeningar/">Jonföreningar</a></p>
+        </section>
+      </div>
     </section>
   </main>
 
   <script src="/js/menu.js"></script>
+  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
 </body>
 </html>

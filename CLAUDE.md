@@ -223,6 +223,19 @@ Tills filer finns används syntetisk röst (TTS) som standard.
 
 ---
 
+## Originalitet – inga kopior av lärobokstext
+
+När Claude skapar **studieguider**, **instuderingsfrågor** och **övningsprov** gäller att all text ska vara ny och självständigt formulerad. Det är inte tillåtet att kopiera eller nära citera text från läroböcker (t.ex. TEFY, Puls, Spektrum eller andra förlag).
+
+- **Inspirationen** kan komma från läroböcker och PDF-material som Jesper delar.
+- **Formuleringarna** ska alltid vara omskrivna – egna meningar, egna exempel, eget pedagogiskt grepp.
+- Kemiska formler, reaktionslikningar och faktauppgifter (t.ex. atomnummer, kockpunkter) är offentlig faktakunskap och kan användas fritt.
+- Varje studieguide ska avslutas med en **källförteckning** (`<section class="references" id="kallor">`) med numrerade referenser i APA-liknande format, i linje med universum/studieguide.html.
+
+Syftet är att Jesper ska kunna publicera och använda materialet utan risk för anklagelse om upphovsrättsintrång.
+
+---
+
 ## Idéer och påminnelser
 
 - **Lärarstöd för lektioner** – en sida per område med en strukturerad lista över saker att ta upp på lektionerna. Ska göras tillsammans med Jesper.
