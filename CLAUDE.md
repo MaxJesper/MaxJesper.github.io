@@ -150,6 +150,40 @@ Det är colorblind-säkert och hänger ihop visuellt med hero-bildkortet ovanfö
 
 ---
 
+## Layout-standard för index.html (område)
+
+Alla `index.html` för ett område följer samma tvåkolumnslayout på desktop.
+
+### Struktur
+
+```
+area-layout (grid)
+├── area-main (300px på desktop)      ← material-boxarna
+│   ├── resource-grid (flex-column)
+│   │   ├── "Material för elever"
+│   │   └── "Material för läraren"
+│   └── study-tips / milestone-map (under)
+└── area-right (1fr på desktop)       ← bild + begrepp
+    ├── area-hero-image
+    └── concept-section
+```
+
+### Regler
+
+- **resource-grid** använder alltid `display: flex; flex-direction: column;` — de två boxarna ("Material för elever" och "Material för läraren") är **alltid staplade ovanpå varandra**, aldrig bredvid varandra.
+- **area-layout** på desktop: `grid-template-columns: 300px 1fr` — area-main till vänster (smal), area-right till höger (bred).
+- **area-right** innehåller alltid: (1) hero-bild/-infogram, (2) concept-section **under** bilden.
+- **resource-box** har `border-left: 4px solid var(--area)` för färgkodning.
+
+### Två godkända bildvarianter i area-right
+
+1. **Universum-stil** – ett riktigt foto med bildtext och CC-uppgift i `<figcaption>`. Bilden och texten kan ligga bredvid varandra på desktop (flex-row).
+2. **Magnetism-stil** – ett infogram (SVG eller PNG) med en pedagogisk `<figcaption>` under (ingen CC-uppgift behövs om bilden är egenhändigt skapad). Ingen horisontell layout.
+
+Välj Universum-stil när ett bra licensierat foto finns. Välj Magnetism-stil för egenskapade infogram och illustrationer.
+
+---
+
 ## Utskriftsstandard
 
 Alla utskriftsvyer följer namnmönstret `*-print-elev.html`, `*-print-larare.html`, `ovningsprov-print.html`, `facit-print.html`.

@@ -15,78 +15,9 @@
       --area-hover: #dbeafe;
     }
 
-    main {
-      font-size: 1.2em;
-    }
+    main { font-size: 1.2em; }
 
-    .page-intro {
-      margin-bottom: 1.5rem;
-    }
-
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
-    }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .study-tips {
-      margin-top: 1.5rem;
-      background: #f8f9fb;
-      border: 1px solid #d8e0ea;
-      border-radius: 12px;
-      padding: 1rem;
-    }
-
-    .study-tips summary {
-      cursor: pointer;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .study-tips ul {
-      margin: 0.75rem 0 0 1.2rem;
-    }
-
-    .study-tips li {
-      margin-bottom: 0.45rem;
-    }
-
+    /* ── Tvåkolumnslayout ── */
     .area-layout {
       display: grid;
       grid-template-columns: 1fr;
@@ -96,13 +27,52 @@
 
     @media (min-width: 960px) {
       .area-layout {
-        grid-template-columns: 1fr 300px;
+        grid-template-columns: 300px 1fr;
         align-items: start;
       }
     }
 
     .area-main { min-width: 0; }
 
+    /* ── Materiallistan: alltid vertikal ── */
+    .resource-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 0;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .resource-box h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      color: var(--area-strong);
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li { margin-bottom: 0.7rem; }
+
+    .resource-box a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── Högerkolumn ── */
     .area-right {
       display: flex;
       flex-direction: column;
@@ -117,12 +87,28 @@
       padding: 1rem 1rem 1.1rem;
       margin: 0;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      font-style: italic;
-      color: #444;
-      font-size: 1rem;
-      line-height: 1.55;
     }
 
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+
+    .hero-caption p {
+      margin: 0 0 0.75rem 0;
+      font-size: 1rem;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    /* ── Begrepp ── */
     .concept-section {
       background: var(--area-soft);
       border: 1px solid var(--area-border);
@@ -146,7 +132,7 @@
     }
 
     @media (min-width: 600px) { .concept-list { columns: 3; } }
-    @media (min-width: 900px) { .concept-list { columns: 2; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
 
     .concept-list li {
       font-size: 0.95rem;
@@ -178,19 +164,139 @@
       font-weight: 600;
     }
 
-    .concept-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      text-align: left;
+    /* ── Inläsningstips ── */
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
     }
 
-    .concept-btn:hover {
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    /* ── Milstolpe-karta ── */
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
       color: var(--area-strong);
-      text-decoration: underline;
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li { margin: 0; }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Roll-toggle ── */
+    .role-toggle {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .role-toggle button {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      color: var(--area-strong);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover { background: var(--area-hover); }
+
+    .role-toggle button.active {
+      background: var(--area);
+      color: #fff;
+      border-color: var(--area);
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: var(--area-strong);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    /* Lärare: lärarboken överst */
+    body[data-role="larare"] .resource-grid article:last-child {
+      order: -1;
     }
   </style>
 </head>
@@ -204,24 +310,23 @@
   <nav id="side-menu"></nav>
 
   <main>
-  <p style="margin-bottom:1rem;">
-    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-  </p>
-    <section class="page-intro">
-      <p>
-        Här hittar du material om metaller, batterier, galvaniska element,
-        elektrolys, korrosion, återvinning och miljöfrågor kopplade till elektrokemi.
-      </p>
-    </section>
+    <p style="margin-bottom:1rem;">
+      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+    </p>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
 
     <section class="area-layout">
       <div class="area-main">
         <section class="resource-grid">
           <article class="resource-box">
-            <h2>För elever</h2>
-            <p>Material för att träna inför prov och bygga förståelse.</p>
+            <h2>Material för elever</h2>
             <ul>
-              <li><a href="./studieguide.html">Studieguide</a></li>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
               <li><a href="./checklista.html">Checklista</a></li>
               <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
               <li><a href="./ovningsprov.html">Övningsprov</a></li>
@@ -230,15 +335,14 @@
           </article>
 
           <article class="resource-box">
-            <h2>För lektioner / läraren</h2>
-            <p>Övrigt material som kan användas i undervisningen.</p>
+            <h2>Material för läraren</h2>
             <ul>
               <li><a href="./facit.html">Facit till övningsprovet</a></li>
             </ul>
           </article>
         </section>
 
-        <section class="study-tips" style="margin-top:1.5rem;">
+        <section class="study-tips">
           <details>
             <summary>Inläsningstips</summary>
             <ul>
@@ -255,7 +359,12 @@
 
       <div class="area-right">
         <figure class="area-hero-image">
-          <p>⚡ Elektrokemi handlar om hur kemiska reaktioner och elektrisk ström hänger ihop – från batteriet i ficklampan till rostskyddet på ett fartyg.</p>
+          <img src="/images/kemi/elektrokemi/introduktion.svg"
+               alt="Diagram över ett galvaniskt element: zinkplatta (minuspol) och kopparplatta (pluspol) i ett elektrolytkar med elektronflöde via ledare och glödlampa" />
+          <figcaption class="hero-caption">
+            <p>Ett <strong>galvaniskt element</strong> omvandlar kemisk energi till elektrisk ström. Den oädlare metallen (zink) löses upp och avger elektroner som flödar genom ledaren – lampan lyser. Den ädlare metallen (koppar) tar emot elektronerna och kopparjoner fälls ut på plattan.</p>
+            <p>Principen uppfanns av Alessandro Volta år 1800 och är grunden för alla batterier – från ficklampans AA-batteri till elbilens litiumjonpack.</p>
+          </figcaption>
         </figure>
 
         <section class="concept-section" aria-label="Viktiga begrepp">
@@ -282,9 +391,74 @@
         </section>
       </div>
     </section>
+
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Atomer och joner</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Spänningsserien</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Galvaniska element</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Batterier</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Ackumulatorn</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Korrosion</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Elektrolys – princip</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Elektrolys – praktik</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Ytbehandling</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Oxidation och reduktion</a></li>
+      </ul>
+    </section>
   </main>
 
   <script src="/js/menu.js"></script>
-  <script src="/js/concepts-popup.js" data-begrepp="./data/begrepp.json"></script>
+  <script>
+  window.BEGREPP = [
+    { "namn": "Galvaniskt element", "definition": "En anordning där två olika metaller sänks ner i en elektrolyt och kemisk energi omvandlas till elektrisk ström. Den oädlare metallen är minuspol och den ädlare är pluspol.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Elektrolyt", "definition": "En jonledande vätska, till exempel en saltlösning eller utspädd syra. Elektrolyten gör det möjligt för joner att röra sig och sluter den inre kretsen i ett galvaniskt element.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Spänningsserien", "definition": "En rangordning av metallerna efter hur lätt de bildar joner. Längst till vänster de mest oädla (K, Ca, Na…), längst till höger de ädlaste (Cu, Ag, Au). Väte ingår som referenspunkt.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Ädel metall", "definition": "En metall som ogärna bildar joner och är motståndskraftig mot kemiska angrepp. Exempel: guld, platina, silver och koppar.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Oädel metall", "definition": "En metall som relativt lätt avger elektroner och övergår till jonform. Oädla metaller löser sig i syra och bildar lättare joner. Exempel: zink, järn och magnesium.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Elektrolys", "definition": "En process där elektrisk energi tillförs en elektrolyt för att driva kemiska reaktioner. Jonerna i lösningen omvandlas till atomer vid elektroderna. Används för att framställa rena metaller och för ytbehandling.", "anchor": "./studieguide.html#m7" },
+    { "namn": "Anod", "definition": "Elektroden kopplad till strömkällans positiva pol vid elektrolys. Vid anoden sker oxidation – negativa joner lämnar elektroner och omvandlas.", "anchor": "./studieguide.html#m7" },
+    { "namn": "Katod", "definition": "Elektroden kopplad till strömkällans negativa pol vid elektrolys. Vid katoden sker reduktion – positiva joner tar upp elektroner och omvandlas till neutrala atomer.", "anchor": "./studieguide.html#m7" },
+    { "namn": "Oxidation", "definition": "En kemisk process där ett ämne avger elektroner. Ämnets laddning ökar (blir mer positiv). Oxidation och reduktion sker alltid samtidigt.", "anchor": "./studieguide.html#m10" },
+    { "namn": "Reduktion", "definition": "En kemisk process där ett ämne tar upp elektroner. Ämnets laddning minskar (blir mer negativ). Reduktion och oxidation sker alltid ihop i en redoxreaktion.", "anchor": "./studieguide.html#m10" },
+    { "namn": "Korrosion", "definition": "Kemisk nedbrytning av en metall i fuktig miljö, till exempel när järn rostar. Korrosion påskyndas om två olika metaller befinner sig i elektrisk kontakt med varandra.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Offer-anod", "definition": "Ett block av en oädlare metall (vanligen zink) som fästs på en konstruktion för att skydda den mot korrosion. Offer-anoden löses upp i stället för konstruktionsmaterialet och byts ut regelbundet.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Ackumulator", "definition": "Ett uppladdningsbart galvaniskt element. Reaktionerna kan drivas baklänges med hjälp av en yttre strömkälla. Exempel: blyackumulatorn i bilar och litiumjonbatterier i mobiltelefoner.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Galvanisering", "definition": "Ytbehandlingsprocess där järn eller stål beläggs med ett tunt lager zink för att skydda mot rost. Kan ske via varmförzinkning eller elektrolytisk process.", "anchor": "./studieguide.html#m9" },
+    { "namn": "Eloxering", "definition": "Elektrolytisk process för aluminium där föremålet kopplas till anoden. Ett poröst oxidskikt av aluminiumoxid bildas på ytan, vilket kan färgas och ger ett hårt, korrosionsskyddande ytskikt.", "anchor": "./studieguide.html#m9" },
+    { "namn": "Redoxreaktion", "definition": "En reaktion där oxidation och reduktion sker samtidigt. Det ämne som oxideras (avger elektroner) kallas reduktionsmedel, och det ämne som reduceras (tar upp elektroner) kallas oxidationsmedel.", "anchor": "./studieguide.html#m10" }
+  ];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script>
+    (function () {
+      var STORE_KEY = "elektrokemi.role";
+      var btnElev   = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+
+      try {
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
+
+      btnElev.addEventListener("click",   function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
 </body>
 </html>
