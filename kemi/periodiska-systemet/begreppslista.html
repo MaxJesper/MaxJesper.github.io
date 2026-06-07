@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Periodiska systemet</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-periodiska-systemet {
+      --area: #166534;
+      --area-strong: #14532d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: var(--area); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-periodiska-systemet">
+  <header class="kemi-header">
+    <h1>Begreppslista – Periodiska systemet</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp inom atomens uppbyggnad och periodiska systemet med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <table class="begrepp-table">
+      <thead>
+        <tr><th style="width:30%">Begrepp</th><th>Förklaring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Atom</td><td>Materiens minsta byggsten som behåller ett grundämnes kemiska egenskaper. En atom består av en kärna (protoner och neutroner) omgiven av elektroner i skal. Extremt liten – ett sandkorn rymmer ungefär hundra tusen miljarder av dem.</td></tr>
+        <tr><td>Proton</td><td>Positivt laddad partikel i atomkärnan. Antalet protoner är unikt för varje grundämne och kallas atomnumret. Det är protonerna som avgör vilket grundämne det är – ändras protonantalet är det ett annat grundämne.</td></tr>
+        <tr><td>Neutron</td><td>Oladdad partikel i atomkärnan. Tillsammans med protonerna bildar neutroner atomkärnan och bidrar till dess massa. Antalet neutroner kan variera i ett och samma grundämne – sådana varianter kallas isotoper.</td></tr>
+        <tr><td>Elektron</td><td>Negativt laddad partikel som rör sig runt atomkärnan i elektronskal. Elektronernas massa är försumbar jämfört med protoner och neutroner. Elektronerna i yttersta skalet, valenselektronerna, styr atomens kemiska egenskaper.</td></tr>
+        <tr><td>Atomnummer</td><td>Antalet protoner i en atoms kärna. Atomnumret är unikt för varje grundämne och avgör dess plats i periodiska systemet. Kol har alltid atomnummer 6, syre alltid 8. Det är atomnumret som definierar vilket grundämne det är.</td></tr>
+        <tr><td>Masstal</td><td>Totalt antal protoner och neutroner i en atomkärna (masstal = protoner + neutroner). Massan per proton eller neutron är ungefär 1 u (atommassaenhet). En kolatom med 6 protoner och 6 neutroner har masstal 12 (kol-12).</td></tr>
+        <tr><td>Isotoper</td><td>Varianter av samma grundämne som har samma antal protoner men olika antal neutroner, och därmed olika masstal. Kol-12, kol-13 och kol-14 är alla kolisotoper. Kol-14 är radioaktivt och används i radiokol-datering.</td></tr>
+        <tr><td>Elektronskal</td><td>Zoner runt atomkärnan där elektroner befinner sig. Innersta skalet (K) rymmer max 2 elektroner, nästa (L) max 8, och sedan (M) max 8 (i grundskolekemi). Elektroner fyller skalen inifrån och ut. Antal elektronskal avgör vilken period grundämnet befinner sig i.</td></tr>
+        <tr><td>Valenselektroner</td><td>Elektronerna i atomens yttersta elektronskal. Dessa styr hur atomen reagerar kemiskt och hur den bildar bindningar. Atomer strävar efter att ha fullt yttersta skal (ädelgasstruktur). Antal valenselektroner avgör vilket ämnes­grupp grundämnet tillhör.</td></tr>
+        <tr><td>Periodiska systemet</td><td>En tabell med alla kända grundämnen ordnade i stigande atomnummer. Rader kallas perioder (grundämnen med lika många elektronskal), kolumner kallas grupper (grundämnen med liknande kemiska egenskaper och lika många valenselektroner).</td></tr>
+        <tr><td>Period</td><td>En vågrät rad i periodiska systemet. Alla grundämnen i samma period har lika många elektronskal. Period 1 har 2 grundämnen (H och He), period 2 har 8 grundämnen (Li–Ne). Perioderna blir längre längre ner i systemet.</td></tr>
+        <tr><td>Grupp</td><td>En lodrät kolumn i periodiska systemet. Grundämnen i samma grupp har lika många valenselektroner och liknande kemiska egenskaper. Grupp 1 = alkalimetaller, grupp 17 = halogener, grupp 18 = ädelgaser.</td></tr>
+        <tr><td>Ädelgaser</td><td>Grundämnena i grupp 18: helium (He), neon (Ne), argon (Ar), krypton (Kr), xenon (Xe) och radon (Rn). De har fullt yttersta elektronskal och är extremt stabila – reagerar nästan aldrig med andra ämnen. Används i lysrör och dykgas.</td></tr>
+        <tr><td>Alkalimetaller</td><td>Metallerna i grupp 1: litium (Li), natrium (Na), kalium (K), rubidium, cesium, francium. Har en valenselektron och reagerar häftigt med vatten och binder vätgas under bildning av en stark bas. Mjuka, silverfärgade metaller som förvaras i olja.</td></tr>
+        <tr><td>Halogener</td><td>Grundämnena i grupp 17: fluor (F), klor (Cl), brom (Br), jod (I) och astat. Har sju valenselektroner och saknar bara en för fullt skal. Mycket reaktiva – bildar salter när de reagerar med metaller. Klorgas används i vattenrening och desinfektionsmedel.</td></tr>
+        <tr><td>Övergångsmetaller</td><td>Metallerna i periodiska systemets mittblock (grupperna 3–12). Hit hör järn, koppar, zink, guld, silver, platina m.fl. Har ofta färgade föreningar och kan bilda joner med olika laddning. Används i legeringar och katalysatorer.</td></tr>
+        <tr><td>Jon</td><td>En atom (eller grupp av atomer) som fått elektrisk laddning genom att avge eller ta upp elektroner. Positiva joner (katjoner) har lämnat elektroner och bildas ofta av metaller; negativa joner (anjoner) har tagit upp elektroner och bildas av icke-metaller.</td></tr>
+        <tr><td>Jonbindning</td><td>Kemisk bindning där positiva och negativa joner dras till varandra av elektrostatiska krafter och bildar ett kristallgitter. Hög smältpunkt och leder el i smält form eller lösning men inte som fast ämne. Koksalt (NaCl) är ett klassiskt exempel.</td></tr>
+        <tr><td>Kovalent bindning</td><td>Kemisk bindning (elektronparbindning) där atomer delar ett eller flera elektronpar för att uppnå fullt yttersta skal. Bildar molekyler. Exempel: vatten (H₂O), syre (O₂) och koldioxid (CO₂). Vanlig bindning mellan icke-metaller.</td></tr>
+        <tr><td>Metallbindning</td><td>Den bindning som håller ihop metallatomer i ett fast material. Valenselektronerna är fria att röra sig som ett "elektronhav" kring positiva metalljoner i ett gitter. Det är därför metaller leder el och värme, är formbar och glänsande.</td></tr>
+        <tr><td>Ädelgasstruktur</td><td>Tillståndet med fullt yttersta elektronskal, som ädelgaserna har. Atomer strävar mot ädelgasstruktur när de bildar kemiska bindningar – de avger, tar upp eller delar elektroner för att uppnå detta stabila tillstånd.</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+</body>
+</html>

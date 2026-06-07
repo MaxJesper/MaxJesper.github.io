@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Elektricitet</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-magnetism {
+      --area: #2e4a8a;
+      --area-strong: #1e3466;
+      --area-soft: #eef3fb;
+      --area-border: #b9cde6;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: var(--area); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-magnetism">
+  <header class="fysik-header">
+    <h1>Begreppslista – Elektricitet</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp inom elektricitet med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <table class="begrepp-table">
+      <thead>
+        <tr><th style="width:30%">Begrepp</th><th>Förklaring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Elektrisk laddning</td><td>En grundläggande egenskap hos materia. Protoner bär positiv laddning, elektroner negativ. Lika laddningar stöter bort varandra; olika laddningar drar till sig varandra. Enheten är coulomb (C). Statisk elektricitet uppstår när laddningar separeras utan att flöda.</td></tr>
+        <tr><td>Elektrisk ström</td><td>Ett riktat flöde av laddningar (i metaller: fria elektroner) genom en ledare. Strömstyrkan mäts i ampere (A) och anger hur många laddningar som passerar en punkt per sekund. 1 A = 1 coulomb per sekund. Konventionell strömriktning är från plus till minus.</td></tr>
+        <tr><td>Spänning</td><td>Den elektriska drivkraften som driver strömmen, mätt i volt (V). Spänning är energi per laddning – ett batteri på 9 V ger 9 joule energi till varje coulomb laddning som passerar igenom det. Utan spänningsskillnad flödar ingen ström.</td></tr>
+        <tr><td>Resistans</td><td>Ledarens motstånd mot strömflödet, mätt i ohm (Ω). Beror på materialet (koppar leder bättre än järn), ledarens längd (längre = högre resistans) och tvärsnitt (tunnare = högre resistans). Resistansen ökar ofta med temperaturen.</td></tr>
+        <tr><td>Ohms lag</td><td>Sambandet U = R · I, där U är spänning (V), R är resistans (Ω) och I är ström (A). Lagen gäller för ohmskt material (t.ex. metaller vid konstant temperatur). Används för att beräkna okänd storlek om de andra två är kända.</td></tr>
+        <tr><td>Elektrisk krets</td><td>En sluten slinga som innehåller en strömkälla (batteri/generator), ledare och komponenter (lampor, resistorer osv.). Strömmen kan bara flöda om kretsen är sluten. En öppen krets (bruten ledare) stoppar all ström.</td></tr>
+        <tr><td>Ledare</td><td>Material som leder elektrisk ström väl tack vare fria elektroner. Metaller som koppar, aluminium och silver är typiska ledare. Koppar används i de flesta elsladdar och kablar eftersom det kombinerar god ledningsförmåga med rimligt pris.</td></tr>
+        <tr><td>Isolator</td><td>Material som inte leder elektrisk ström på grund av att alla elektroner är bundna. Plast, gummi, glas, keramik och torr luft är isolatorer. Används för att omge ledare och skydda mot oönskad ström­genomgång och elektriska stötar.</td></tr>
+        <tr><td>Halvledare</td><td>Material med ledningsförmåga mellan ledare och isolator. Silicon och germanium är klassiska halvledare. Halvledares ledningsförmåga kan styras med föroreningar (dopning). Grunden för alla transistorer, dioder och integrerade kretsar i modern elektronik.</td></tr>
+        <tr><td>Seriekoppling</td><td>Komponenter kopplade efter varandra i en enda slinga. Strömstyrkan är densamma i alla komponenter. Spänningarna över komponenterna adderas till totala spänningen. Resistanserna adderas: R_tot = R₁ + R₂ + ... Om en komponent slutar fungera bryts hela kretsen.</td></tr>
+        <tr><td>Parallellkoppling</td><td>Komponenter kopplade i egna grenar med samma spänning över varje gren. Strömmen delas upp. Summan av grenströmmarna är lika med total­strömmen. Reciprokt: 1/R_tot = 1/R₁ + 1/R₂ + ... Om en komponent slutar fungera fortsätter de övriga. Hemmets uttag är parallell­kopplade.</td></tr>
+        <tr><td>Elektrisk effekt</td><td>Hur snabbt elektrisk energi omvandlas, P = U · I = U²/R = I²·R, mätt i watt (W). En 2 000 W vattenkokare omvandlar 50 gånger mer energi per sekund än en 40 W lampa. Effekt talar om hur snabbt energi används, inte hur mycket totalt.</td></tr>
+        <tr><td>Kilowattimme (kWh)</td><td>Enhet för elektrisk energi som används på elräkningar. 1 kWh = en effekt på 1 000 W under 1 timme = 3 600 000 joule. En 2 000 W vattenkokare som körs i 30 min förbrukar 1 kWh. Elkostnaden beräknas i kronor per kWh.</td></tr>
+        <tr><td>Amperemeter</td><td>Instrument för att mäta strömstyrka. Kopplas alltid i serie med den komponent vars ström mäts. Har mycket låg resistans för att inte störa kretsen. Mäter i ampere (A) eller milliampere (mA).</td></tr>
+        <tr><td>Voltmeter</td><td>Instrument för att mäta spänning. Kopplas alltid parallellt med den komponent vars spänning mäts. Har mycket hög resistans för att inte ta upp ström. Mäter i volt (V).</td></tr>
+        <tr><td>Kortslutning</td><td>Uppstår när strömmen kan ta en väg med nästan noll resistans, vilket ger en mycket hög ström. Leder till överhettning av ledare och brandrisk. Orsakas t.ex. av skadad isolering eller felkoppling. Skyddas mot med säkringar och jordfels­brytare.</td></tr>
+        <tr><td>Säkring</td><td>En skyddskomponent som bryter strömmen om den överskrider ett visst värde (t.ex. 10 A eller 16 A). En smältsäkring har en tunn metalltråd som smälter av den höga strömmen. Automatsäkringen återställs och kan återanvändas. Skyddar mot överhettning och brand.</td></tr>
+        <tr><td>Jordfelsbrytare</td><td>En säkerhetsanordning som mäter skillnaden mellan fasledare och neutral­ledare. Om det uppstår en läckström (t.ex. om någon vidrör en spänningssatt del) bryts strömmen på millisekunder – mycket snabbare än en vanlig säkring. Obligatorisk i bad- och uterum.</td></tr>
+        <tr><td>Elektrisk energi</td><td>Den energi som överförs av elektrisk ström, E = P × t (watt × sekunder = joule) eller E = U · I · t. Elektrisk energi kan omvandlas till ljus (lampa), rörelse (motor), värme (element) eller ljud (högtalare). Alla omvandlingar följer energiprincipen – energi varken skapas eller förstörs.</td></tr>
+        <tr><td>Nätspänning</td><td>Den spänning som levereras via elnätet till hem och industrier. I Sverige och resten av Europa är nätspänningen 230 V växelström med frekvensen 50 Hz. Hög spänning valdes för att minska energiförluster vid långa ledningar (P_förlust = R × I²).</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+</body>
+</html>

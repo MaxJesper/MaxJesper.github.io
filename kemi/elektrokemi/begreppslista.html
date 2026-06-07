@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Elektrokemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-elektrokemi {
+      --area: #1d4ed8;
+      --area-strong: #1e3a8a;
+      --area-soft: #eff6ff;
+      --area-border: #bfdbfe;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: var(--area); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-elektrokemi">
+  <header class="kemi-header">
+    <h1>Begreppslista – Elektrokemi</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp inom elektrokemi med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <table class="begrepp-table">
+      <thead>
+        <tr><th style="width:30%">Begrepp</th><th>Förklaring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Galvaniskt element</td><td>En anordning där två olika metaller sänks ner i en elektrolyt och kemisk energi omvandlas till elektrisk ström. Den oädlare metallen fungerar som minuspol och löses upp, medan den ädlare är pluspol. Elektroner vandrar genom den yttre ledaren från minuspol till pluspol.</td></tr>
+        <tr><td>Elektrolyt</td><td>En jonledande vätska, till exempel en saltlösning, utspädd syra eller smält salt. Elektrolyten möjliggör att joner rör sig och sluter den inre kretsen i ett galvaniskt element eller vid elektrolys. Utan elektrolyt kan ingen ström flöda.</td></tr>
+        <tr><td>Spänningsserien</td><td>En rangordning av metallerna efter hur lätt de bildar joner. Längst till vänster finns de mest oädla metallerna (kalium, natrium), längst till höger de ädlaste (silver, guld, platina). Väte ingår som referenspunkt. En oädlare metall tränger ut en ädlare ur dess saltlösning.</td></tr>
+        <tr><td>Ädel metall</td><td>En metall som ogärna bildar joner och är motståndskraftig mot kemiska angrepp. Ädla metaller har låg benägenhet att korrodera. Exempel: guld, platina, silver och koppar. De befinner sig till höger i spänningsserien.</td></tr>
+        <tr><td>Oädel metall</td><td>En metall som relativt lätt avger elektroner och övergår till jonform. Oädla metaller löser sig i syra och är benägna att korrodera. Exempel: zink, järn, aluminium och magnesium. De befinner sig till vänster i spänningsserien.</td></tr>
+        <tr><td>Elektrolys</td><td>En process där elektrisk energi tillförs för att driva en kemisk reaktion som annars inte sker spontant. En yttre strömkälla tvingar joner i elektrolyten att omvandlas vid elektroderna. Används för att framställa rena metaller (t.ex. aluminium), för ytbehandling och för att framställa klor och väte.</td></tr>
+        <tr><td>Anod</td><td>Elektroden kopplad till strömkällans positiva pol vid elektrolys. Vid anoden sker oxidation – negativa joner (anjoner) vandrar hit, lämnar elektroner och omvandlas. Vid galvaniska element är anoden minuspolen, dvs. den oädlare metallen som löses upp.</td></tr>
+        <tr><td>Katod</td><td>Elektroden kopplad till strömkällans negativa pol vid elektrolys. Vid katoden sker reduktion – positiva joner (katjoner) vandrar hit, tar upp elektroner och omvandlas till neutrala atomer som avsätts. Vid galvaniska element är katoden pluspolen (den ädlare metallen).</td></tr>
+        <tr><td>Oxidation</td><td>En kemisk process där ett ämne avger elektroner. Ämnets oxidationstal ökar (laddningen blir mer positiv). En oädel metall oxideras när den löses upp i en elektrolyt. Oxidation och reduktion sker alltid samtidigt – de kallas gemensamt redoxreaktion.</td></tr>
+        <tr><td>Reduktion</td><td>En kemisk process där ett ämne tar upp elektroner. Ämnets oxidationstal minskar (laddningen blir mer negativ). Vid katoden reduceras positiva metalljoner till atomer. Reduktion och oxidation sker alltid ihop.</td></tr>
+        <tr><td>Redoxreaktion</td><td>En reaktion där oxidation och reduktion sker samtidigt. Det ämne som oxideras (avger elektroner) kallas reduktionsmedel; det ämne som reduceras (tar upp elektroner) kallas oxidationsmedel. Rostning av järn och förbränning är exempel på redoxreaktioner.</td></tr>
+        <tr><td>Korrosion</td><td>Kemisk nedbrytning av en metall i fuktig miljö när metallen reagerar med syre och vatten. Järnets korrosion (rostning) är den vanligaste formen. Korrosion påskyndas kraftigt om två olika metaller är i elektrisk kontakt med varandra i en elektrolyt – ett s.k. galvaniskt par bildas.</td></tr>
+        <tr><td>Offer-anod</td><td>Ett block av oädlare metall (vanligen zink eller magnesium) som fästs på en konstruktion för att skydda den mot korrosion. Offer-anoden är oädlare och löses därför upp i stället för konstruktionsmaterialet. Den byts ut regelbundet. Används på fartyg, bryggor och rörledningar.</td></tr>
+        <tr><td>Ackumulator</td><td>Ett uppladdningsbart galvaniskt element. Reaktionerna kan drivas baklänges med hjälp av en yttre strömkälla, vilket lagrar energi igen. Blyackumulatorn i bilar och litiumjonbatterier i mobiltelefoner och elbilar är vanliga exempel. Skiljer sig från engångsbatterier som inte kan laddas om.</td></tr>
+        <tr><td>Galvanisering</td><td>Ytbehandlingsprocess där järn eller stål beläggs med ett tunt lager zink för att skydda mot rost. Kan ske via varmförzinkning (föremålet doppas i smält zink vid ~450 °C) eller elektrolytisk förzinkning. Zinklagret fungerar dels som barriär, dels som offer-anod om ytan skadas.</td></tr>
+        <tr><td>Eloxering</td><td>Elektrolytisk ytbehandling av aluminium där föremålet kopplas till anoden i en syrabad. Ett poröst oxidskikt av aluminiumoxid (Al₂O₃) bildas på ytan. Skiktet kan sedan färgas och ger ett hårt, korrosionsskyddande ytskikt. Används på exempelvis cykelramar och arkitektonisk aluminium.</td></tr>
+        <tr><td>Förkoppling (metallisering)</td><td>Elektrolytisk process för att belägga ett föremål med ett tunt lager av en annan metall (t.ex. koppar, nickel, krom eller silver). Föremålet kopplas till katoden i en lösning av den metall man vill lägga på. Ger skydd mot korrosion och förbättrar utseendet.</td></tr>
+        <tr><td>Elektrod</td><td>Den ledande del (metall eller kol) som är nedsänkt i elektrolyten och via vilken strömmen leds in i eller ut ur elektrolyten. Elektroden vid vilken oxidation sker kallas anod; elektroden vid vilken reduktion sker kallas katod.</td></tr>
+        <tr><td>Halvreaktion</td><td>En delreaktion som beskriver antingen oxidationen eller reduktionen separat. En fullständig redoxreaktion består av två halv­reaktioner. Halv­reaktioner används för att balansera redox­ekvationer och förstå vad som händer vid varje elektrod.</td></tr>
+        <tr><td>Bränslecell</td><td>En anordning som omvandlar kemisk energi direkt till elektrisk energi genom en kontrollerad redoxreaktion, utan förbränning. I en vätebränslecell reagerar väte och syre och bildar vatten; den elektriska energin tas ut via elektroder. Hög verkningsgrad och låga utsläpp.</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+</body>
+</html>

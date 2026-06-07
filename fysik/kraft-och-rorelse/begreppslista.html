@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Kraft och rörelse</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-kraft {
+      --area: #2e4a8a;
+      --area-strong: #1e3466;
+      --area-soft: #eef3fb;
+      --area-border: #b9cde6;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: var(--area); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-kraft">
+  <header class="fysik-header">
+    <h1>Begreppslista – Kraft och rörelse</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp inom kraft och rörelse med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <table class="begrepp-table">
+      <thead>
+        <tr><th style="width:30%">Begrepp</th><th>Förklaring</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kraft</td><td>En påverkan som kan ändra ett föremåls fart, riktning eller form. Kraft är en vektor med storlek, riktning och angreppspunkt. Mäts i newton (N). Krafter kan vara kontaktkrafter (friktion, normalkraft, dragkraft) eller fjärrverkan (gravitation, magnetism).</td></tr>
+        <tr><td>Newton</td><td>Enheten för kraft (N), uppkallad efter Isaac Newton. 1 N är den kraft som ger ett föremål med massan 1 kg en acceleration på 1 m/s². Ungefär den kraft som krävs för att hålla ett litet äpple (100 g) i handen mot tyngdkraften.</td></tr>
+        <tr><td>Tyngdkraft</td><td>Den kraft som gravitationen utövar på ett föremål. På jordens yta beräknas den som F_g = m × g, där g ≈ 10 N/kg (mer exakt 9,82 N/kg i Sverige). Tyngdkraften riktas alltid rakt nedåt mot jordens centrum och är anledningen till att föremål faller.</td></tr>
+        <tr><td>Massa</td><td>Anger hur mycket materia ett föremål innehåller, mätt i kilogram (kg). Massan är konstant oavsett var i universum föremålet befinner sig. Skiljer sig från tyngd (vikt), som är en kraft och varierar med gravitationsfältet. En astronaut på månen har samma massa som på jorden men lägre tyngd.</td></tr>
+        <tr><td>Tyngd (vikt)</td><td>Den kraft med vilken gravitationen verkar på ett föremål, F = m × g. Mäts i newton. I vardagsspråk används "vikt" ofta synonymt med "massa" (kg), men i fysiken är tyngd en kraft (N). En person med massan 70 kg har tyngden 700 N på jordens yta.</td></tr>
+        <tr><td>Gravitationskonstanten (g)</td><td>Gravitationsfältets styrka vid jordens yta: g ≈ 10 N/kg (9,82 N/kg exakt). Det innebär att varje kilogram massa dras nedåt med ca 10 N. Varierar något med latitud och höjd – vid polerna är g något större än vid ekvatorn.</td></tr>
+        <tr><td>Resultant</td><td>Den enda kraft som kan ersätta alla krafter som verkar på ett föremål, dvs. deras vektorsumma. Om resultanten är noll är föremålet i kraftjämvikt och accelererar inte (det är i vila eller rör sig rätlinjigt med konstant fart).</td></tr>
+        <tr><td>Kraftjämvikt</td><td>Tillståndet när ett föremåls resultantkraft är noll. Föremålet är antingen i vila eller i likformig rörelse. En bok på ett bord är i jämvikt: tyngdkraften nedåt balanseras av bordets normalkraft uppåt.</td></tr>
+        <tr><td>Tröghet</td><td>Föremålets motvilja mot att ändra sin rörelsetillstånd. Formuleras i Newtons första lag: ett föremål i vila förblir i vila; ett föremål i rörelse fortsätter röra sig rätlinjigt med konstant fart – om ingen resultantkraft verkar. Massan är ett mått på tröghet.</td></tr>
+        <tr><td>Newtons första lag</td><td>Ett föremål behåller sitt rörelsetillstånd (vila eller likformig rätlinjig rörelse) om resultantkraften på det är noll. Kallas också tröghetsprincipen och formulerades av Isaac Newton 1687. Förklarar varför passagerare kastas framåt vid en plötslig bromsning.</td></tr>
+        <tr><td>Acceleration</td><td>Hastighetens förändring per tidsenhet. Uppstår när en nettokraft verkar på ett föremål. Beräknas med Newtons andra lag: a = F/m, mäts i m/s². En acceleration kan vara hastighetökning, hastighetsminskning (retardation) eller riktningsändring.</td></tr>
+        <tr><td>Newtons andra lag</td><td>Sambandet F = m · a: en kraft F (N) ger massan m (kg) accelerationen a (m/s²). Ju större kraft, desto större acceleration. Ju större massa, desto mindre acceleration för samma kraft. Grunden för all beräkning av rörelse under krafter.</td></tr>
+        <tr><td>Newtons tredje lag</td><td>Principen om kraft och motkraft: för varje kraft finns en lika stor och motriktad kraft. Om du trycker på väggen trycker väggen lika hårt tillbaka. Raketmotorer fungerar tack vare denna princip – gasen kastas bakåt, raketen skjuts framåt.</td></tr>
+        <tr><td>Fritt fall</td><td>Rörelse under enbart tyngdkraftens inverkan, utan luftmotstånd. Alla föremål faller med samma acceleration oavsett massa (visades av Galilei). Accelerationen är g ≈ 10 m/s² vid jordens yta. Hastigheten ökar med 10 m/s för varje sekund ett föremål faller.</td></tr>
+        <tr><td>Friktion</td><td>Bromsande kraft som verkar parallellt med ytan när två ytor är i kontakt och glider (glidfriktion) eller är på väg att glida (statisk friktion) mot varandra. Beror på ytornas skrovlighet och normalkraftens storlek. Rullfriktion (hjul) är avsevärt lägre än glidfriktion.</td></tr>
+        <tr><td>Luftmotstånd</td><td>En friktionskraft som uppstår när ett föremål rör sig genom luft. Ökar med hastigheten och föremålets tvärsnittsyta. Vid tillräckligt hög fart jämnar luftmotståndet och tyngdkraften ut sig – föremålet faller sedan med konstant terminalfart.</td></tr>
+        <tr><td>Normalkraft</td><td>Den kraft som en yta utövar på ett föremål i rät vinkel mot ytan. Normalkraften motverkar att föremålet sjunker in i ytan. En bok på ett bord påverkas av normalkraften uppåt, lika stor som tyngdkraften nedåt.</td></tr>
+        <tr><td>Tyngdpunkt</td><td>Den punkt där man kan tänka sig att hela föremålets massa är samlad. Tyngdkraften angriper i tyngdpunkten. Föremål välter när lodlinjen genom tyngdpunkten hamnar utanför stödytan. Låg tyngdpunkt och bred stödyta ökar stabiliteten.</td></tr>
+        <tr><td>Hävstång</td><td>En styv stång som vrider sig kring en fast vridningspunkt (stödpunkt). Används för att spara kraft: kraft × kraftarm = börda × bördearm (momentprincipen). Exempel: bräckjärn, skottkärra, sax, pinsettar och underarmen som biologisk hävstång.</td></tr>
+        <tr><td>Tryck</td><td>Kraft per ytenhet, p = F / A, mätt i pascal (Pa). Samma kraft ger högre tryck på liten yta och lägre tryck på stor yta. Det är därför en vass kniv skär bra (liten yta = högt tryck) och snöskoskor bär på djup snö (stor yta = lågt tryck).</td></tr>
+        <tr><td>Hastighet</td><td>Sträcka per tidsenhet, v = s / t, mätt i m/s eller km/h. Hastighet är en vektor och har både storlek och riktning. Medel­hastighet räknas ut som total sträcka / total tid. Momentan­hastighet är hastigheten vid ett givet ögonblick.</td></tr>
+      </tbody>
+    </table>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+</body>
+</html>
