@@ -95,6 +95,14 @@
       height: auto;
       display: block;
       border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .hero-img-wrap {
+      display: block;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .area-hero-image figcaption { margin-top: 0.9rem; }
@@ -107,6 +115,41 @@
     }
 
     .hero-caption p:last-child { margin-bottom: 0; }
+
+    .image-credit {
+      font-size: 0.78rem !important;
+      color: #666 !important;
+      font-style: italic;
+      border-top: 1px solid var(--area-border);
+      padding-top: 0.6rem;
+      margin-top: 0.9rem !important;
+    }
+
+    .image-credit a {
+      color: var(--area-strong);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media (min-width: 960px) {
+      .area-hero-image {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.1rem;
+      }
+      .hero-img-wrap {
+        flex: 0 0 auto;
+      }
+      .area-hero-image img {
+        width: 160px;
+        height: auto;
+      }
+      .area-hero-image figcaption {
+        flex: 1;
+        margin-top: 0;
+      }
+    }
 
     /* ── Begrepp ── */
     .concept-section {
@@ -359,11 +402,21 @@
 
       <div class="area-right">
         <figure class="area-hero-image">
-          <img src="/images/kemi/elektrokemi/introduktion.svg"
-               alt="Diagram över ett galvaniskt element: zinkplatta (minuspol) och kopparplatta (pluspol) i ett elektrolytkar med elektronflöde via ledare och glödlampa" />
+          <a href="https://commons.wikimedia.org/wiki/File:Faraday-Daniell.PNG"
+             target="_blank" rel="noopener noreferrer"
+             class="hero-img-wrap"
+             title="Se originalbilden på Wikimedia Commons">
+            <img src="/images/kemi/elektrokemi/Faraday-Daniell.png"
+                 alt="Porträtt av de engelska kemisterna Michael Faraday och John Frederic Daniell, elektrokemins grundare" />
+          </a>
           <figcaption class="hero-caption">
-            <p>Ett <strong>galvaniskt element</strong> omvandlar kemisk energi till elektrisk ström. Den oädlare metallen (zink) löses upp och avger elektroner som flödar genom ledaren – lampan lyser. Den ädlare metallen (koppar) tar emot elektronerna och kopparjoner fälls ut på plattan.</p>
-            <p>Principen uppfanns av Alessandro Volta år 1800 och är grunden för alla batterier – från ficklampans AA-batteri till elbilens litiumjonpack.</p>
+            <p><strong>Michael Faraday</strong> (1791–1867) och <strong>John Frederic Daniell</strong> (1790–1845) räknas som elektrokemins grundare. Daniell konstruerade 1836 den cell som bär hans namn – ett galvaniskt element med zink och koppar i separata lösningar, förbundna via en porös lerbehållare. Det var det första stabila och pålitliga batteriet och lade grunden för telegrafen.</p>
+            <p>Faraday formulerade elektrolysens lagar: mängden ämne som bildas vid en elektrod är proportionell mot den laddning som passerar. Han myntade också begreppen <em>jon</em>, <em>elektrolyt</em>, <em>anod</em> och <em>katod</em> – termer vi fortfarande använder.</p>
+            <p class="image-credit">
+              Bild: <a href="https://commons.wikimedia.org/wiki/File:Faraday-Daniell.PNG" target="_blank" rel="noopener">Faraday-Daniell.PNG</a>,
+              uppladdad av HappyApple, via Wikimedia Commons.
+              Källa: Bioanalytical Systems, Inc. (1997). Skapad ca 1840. Allmän egendom (Public Domain).
+            </p>
           </figcaption>
         </figure>
 
