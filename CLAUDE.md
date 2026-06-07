@@ -272,10 +272,71 @@ Syftet är att Jesper ska kunna publicera och använda materialet utan risk för
 
 ## Idéer och påminnelser
 
-- **Lärarstöd för lektioner** – en sida per område med en strukturerad lista över saker att ta upp på lektionerna. Ska göras tillsammans med Jesper.
+### Pedagogisk bakgrund – spel och engagemang
+Jesper har identifierat fyra faktorer från spelvärlden som driver starkt engagemang och som bör eftersträvas i webbplatsens aktiviteter:
+1. Skapar starka känslor och engagemang
+2. Är tydligt målstyrd
+3. Skänker grupptillhörighet
+4. Man arbetar för något som är större än en själv
 
-- **Gymnasiefördjupning** – en fördjupningssektion på kemi-hudsidan för natur/teknikprogrammet. Exempel: molräkning och balansering av kemiska formler. Ska göras tillsammans med Jesper.
+Jesper har själv prövat ett projekt där elever skapade sånger, dikter eller berättelser med NO-begrepp, inspirerat av en egen skriven rap. Projektet skapade exceptionellt engagemang (elever vägrade lämna lektionen). Denna typ av kreativa uppdrag bör utforskas vidare.
 
-- **Nationella provuppgifter** – gamla släppta nationella prov ska finnas som övningar i två varianter:
-  1. Samlad övning per NO-ämne (biologi, kemi, fysik) – troligen på ämnets hudsida.
-  2. Områdesspecifik övning – uppgifter kopplade till ett specifikt område (t.ex. elektrokemi) läggs direkt på den sidan. Båda varianterna kan finnas parallellt. Ska göras tillsammans med Jesper.
+Nuvarande lärande spel fångar inte alla fyra punkterna – grupptillhörighet och "större syfte" saknas framför allt.
+
+### Bevaka: AI-coaching för elever
+När ska AI-coaching kunna användas direkt på sajten? Förutsättningar som behöver vara uppfyllda:
+- Tillräcklig hastighet i textsvar för att inte tappa lågmotiverade elever
+- Bättre bildgenerering som ger korrekta diagram och formler
+- Kommunen/skolhuvudmännen ger grönt ljus
+- Kombinationsmöjlighet med bild, film och interaktivitet
+
+Bevaka Anthropics modellreleaser och pedagogiska AI-projekt för tecken på att dessa trösklar passerats.
+
+### Idé 1 – Läxbank per område
+Strukturerade läxor kopplade till checklistan, med progression: Läxa 1, Läxa 2 osv. Varje läxa är ett kort uppdrag: lär dig dessa begrepp, gör den här övningen, titta på den här filmen. Ska göras tillsammans med Jesper.
+
+### Idé 2 – Laborationsbank (kemi-hudsidan)
+En laborationsbank på kemi-hudsidan med:
+- Beskrivningssida per laboration: lärandesyfte, koppling till kursplan
+- Länk till laborationsbeskrivning
+- Kategori: demonstration, "luktsalt" (väcker nyfikenhet vid nytt område) eller elevlaboration
+Jesper har lärarhandledningar med laborationer som ska gås igenom och karakteriseras efter lärandemål och lämplig form. Ska göras tillsammans med Jesper.
+
+### Idé 3 – Powerpoints till lärare
+Färdiga presentationer per område som lärare kan använda direkt i undervisningen. Ska göras tillsammans med Jesper.
+
+### Idé 4 – Områdesplanering till lärare
+En strukturerad lektionsplanering per område: mål, progression, förslag på lektionsupplägg. Ska göras tillsammans med Jesper.
+
+### Idé 5 – Bra länkar till lärare
+Kurerade länksamlingar per område – filmer, simuleringar, externa resurser. Ska göras tillsammans med Jesper.
+
+### Idé 6 – Fördjupningsmaterial på gymnasienivå
+Fördjupningssektion för elever som vill gå vidare mot gymnasienivå. Exempel för kemi: molräkning, balansering av kemiska formler, elektrokemisk cell-potentialberäkning. Ska göras tillsammans med Jesper.
+
+### Idé 7 – Nationella provuppgifter per område
+Gamla släppta nationella prov fördelade på respektive område (t.ex. elektrokemi-uppgifter direkt på elektrokemi-sidan). Även samlad övning per NO-ämne på hudsidan. Ska göras tillsammans med Jesper.
+
+### Idé 8 – Språkstöd för de vanligaste invandrarspråken
+Studieguiden och begreppen översatta/tillgängliga på de vanligaste invandrarspråken i Sverige (arabiska, somaliska, dari/persiska m.fl.). Ska utredas hur det tekniskt löses bäst.
+
+### Idé 9 – Miniminivå-indikator per område ("Vad behöver jag för E?")
+En tydlig funktion eller sektion som visar exakt vad eleven minst behöver kunna för betyget E på ett givet avsnitt. Kopplat till checklistan och studieguiden. Ska göras tillsammans med Jesper.
+
+### Idé 10 – Pedagogiska tips från forskningen
+"Punchlines" från pedagogisk forskning för lärare – gärna specifikt för NO-undervisning. Kortfattade, konkreta tips baserade på forskning om inlärning. Ska göras tillsammans med Jesper.
+
+### Idé 11 – Screening av andra läromedel och NO-sajter
+Genomgång av konkurrerande läromedel och nätsidor för NO för att identifiera vad sajten saknar eller kan göra bättre. Ska göras tillsammans med Jesper.
+
+### Idé 12 – Filmer för flipped classroom
+Jesper funderar på att spela in egna filmer per område som kan användas som läxor (flipped classroom). Filmerna länkas från läxbanken. Ska göras tillsammans med Jesper.
+
+### Idé 13 – Kort lärarhandledning per område
+En kortfattad handledning per område som lyfter fram: vilka övningar som finns, hur de används, förslag på lektionsupplägg. Ska göras tillsammans med Jesper.
+
+### Idé 14 – Övningsbank (huvud-sidorna)
+En övningsbank i samma stil som laborationsbanken, liggande på kemi-, fysik- och biologihudsidorna. Kategoriserade övningar per ämne och nivå. Ska göras tillsammans med Jesper.
+
+### Idé 15 – Tankekarta per område
+En visuell tankekarta som ger eleverna en överblick över allt som ingår i ett område innan studierna börjar. Kan vara interaktiv (klickbar) eller statisk. Ska göras tillsammans med Jesper.
