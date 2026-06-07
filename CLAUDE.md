@@ -292,6 +292,15 @@ När ska AI-coaching kunna användas direkt på sajten? Förutsättningar som be
 
 Bevaka Anthropics modellreleaser och pedagogiska AI-projekt för tecken på att dessa trösklar passerats.
 
+### Presentation hösten 2026 – Jespers arbete med AI och sajten
+Jesper ska göra en PowerPoint under sommaren 2026 och presentera i höst om sitt arbete med Claude. Möjliga teman att lyfta:
+- Hur AI användes som verktyg för att bygga ut en pedagogisk NO-sajt
+- Effektiviteten: vad som tidigare tog dagar tar nu minuter
+- Pedagogiska reflektioner: variationsprincipen, spelbaserat lärande, AI-coaching
+- Etiska frågor: upphovsrätt, originalitet, kommunens restriktioner
+- Framtidsperspektiv: när AI-coaching kan bli möjlig direkt på sajten
+- Konkreta exempel: studieguider, begreppspopups, lyssna-funktion, instuderingsfrågor
+
 ### Idé 1 – Läxbank per område
 Strukturerade läxor kopplade till checklistan, med progression: Läxa 1, Läxa 2 osv. Varje läxa är ett kort uppdrag: lär dig dessa begrepp, gör den här övningen, titta på den här filmen. Ska göras tillsammans med Jesper.
 
