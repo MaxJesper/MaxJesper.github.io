@@ -76,14 +76,21 @@
     }
 
     fetch(url)
-      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
       .then(function (data) {
         if (data && data.length) {
           begreppCache[cacheKey] = data;
           applyTranslation(data, langCode);
+        } else {
+          console.warn('[begrepp] Tom fil:', url);
         }
       })
-      .catch(function () { /* Tyst fallback om filen saknas */ });
+      .catch(function (err) {
+        console.warn('[begrepp] Kunde inte ladda ' + url + ':', err.message || err);
+      });
   }
 
   function applyTranslation(data, langCode) {
