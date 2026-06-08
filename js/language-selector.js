@@ -56,13 +56,25 @@
     if (!begreppBase) return;
 
     if (langCode === 'sv-SE') {
-      // Återställ till svenska
-      if (window.BEGREPPPopup && window.BEGREPP) {
-        window.BEGREPPPopup.update(window.BEGREPP);
+      if (window.BEGREPP && window.BEGREPP.length) {
+        // index.html – använd inladdad data direkt
+        if (window.BEGREPPPopup) window.BEGREPPPopup.update(window.BEGREPP);
+        window.dispatchEvent(new CustomEvent('begreppLangUpdate', {
+          detail: { data: window.BEGREPP, lang: 'sv-SE' }
+        }));
+      } else {
+        // begreppslista.html – hämta svenska JSON-filen
+        fetch(begreppBase + '.json')
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (data && data.length) {
+              window.dispatchEvent(new CustomEvent('begreppLangUpdate', {
+                detail: { data: data, lang: 'sv-SE' }
+              }));
+            }
+          })
+          .catch(function (err) { console.warn('[begrepp] sv:', err); });
       }
-      window.dispatchEvent(new CustomEvent('begreppLangUpdate', {
-        detail: { data: window.BEGREPP || [], lang: 'sv-SE' }
-      }));
       return;
     }
 
