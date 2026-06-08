@@ -188,7 +188,7 @@
       var uid = 'tts-lang-' + Math.random().toString(36).slice(2, 7);
 
       var label = document.createElement('label');
-      label.textContent = '🔈 Läsröst:';
+      label.textContent = '🌐 Språk:';
       label.className = 'lang-selector-label';
       label.htmlFor = uid;
 
