@@ -16,6 +16,7 @@
     { code: 'ar-SA', label: '🇸🇦 Arabiska (عربية)',           prefix: 'ar' },
     { code: 'so',    label: '🇸🇴 Somaliska (Soomaali)',       prefix: 'so' },
     { code: 'fa',    label: '🇮🇷 Persiska/Dari (فارسی)',      prefix: 'fa' },
+    { code: 'am-ET', label: '🇪🇹 Amhariska (አማርኛ)',          prefix: 'am' },
     { code: 'pl-PL', label: '🇵🇱 Polska (Polski)',            prefix: 'pl' },
     { code: 'en-GB', label: '🇬🇧 Engelska (English)',         prefix: 'en' },
     { code: 'bs',    label: '🇧🇦 Bosniska (Bosanski)',        prefix: 'bs' },
@@ -35,6 +36,62 @@
   ].join('');
 
   var synth = window.speechSynthesis || null;
+
+  // ── Begrepp-översättningar ────────────────────────────────────────────────
+  // Mappar TTS-språkkod → filprefix för begrepp-JSON (t.ex. 'ar-SA' → 'ar')
+  var LANG_PREFIX = {
+    'sv-SE': 'sv', 'ar-SA': 'ar', 'so': 'so', 'fa': 'fa',
+    'am-ET': 'am', 'pl-PL': 'pl', 'en-GB': 'en', 'bs': 'bs', 'es-ES': 'es'
+  };
+
+  // Cache: {basePath+prefix → data[]}
+  var begreppCache = {};
+
+  function getLangPrefix(code) {
+    return LANG_PREFIX[code] || code.split('-')[0];
+  }
+
+  // Hämta översatt begrepp-JSON och uppdatera popup + begreppslista
+  function loadBegreppForLang(langCode, begreppBase) {
+    if (!begreppBase) return;
+
+    if (langCode === 'sv-SE') {
+      // Återställ till svenska
+      if (window.BEGREPPPopup && window.BEGREPP) {
+        window.BEGREPPPopup.update(window.BEGREPP);
+      }
+      window.dispatchEvent(new CustomEvent('begreppLangUpdate', {
+        detail: { data: window.BEGREPP || [], lang: 'sv-SE' }
+      }));
+      return;
+    }
+
+    var prefix = getLangPrefix(langCode);
+    var url    = begreppBase + '.' + prefix + '.json';
+    var cacheKey = url;
+
+    if (begreppCache[cacheKey]) {
+      applyTranslation(begreppCache[cacheKey], langCode);
+      return;
+    }
+
+    fetch(url)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          begreppCache[cacheKey] = data;
+          applyTranslation(data, langCode);
+        }
+      })
+      .catch(function () { /* Tyst fallback om filen saknas */ });
+  }
+
+  function applyTranslation(data, langCode) {
+    if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+    window.dispatchEvent(new CustomEvent('begreppLangUpdate', {
+      detail: { data: data, lang: langCode }
+    }));
+  }
 
   function injectCSS() {
     if (document.getElementById('lang-selector-style')) return;
@@ -136,7 +193,19 @@
       sel.addEventListener('change', function () {
         save(sel.value);
         syncAll(sel.value);
+        // Hämta och aktivera begrepp-översättning om bas-sökväg finns
+        var begreppBase = mount.dataset.begreppBase;
+        loadBegreppForLang(sel.value, begreppBase);
       });
+
+      // Ladda direkt vid sidan start om ett icke-svenskt språk är sparat
+      (function () {
+        var saved = getSaved();
+        if (saved !== 'sv-SE') {
+          var base = mount.dataset.begreppBase;
+          if (base) loadBegreppForLang(saved, base);
+        }
+      })();
 
       wrap.appendChild(label);
       wrap.appendChild(sel);
