@@ -33,10 +33,23 @@
 
   // ── Hjälpfunktioner ──────────────────────────────────────────────────────
 
-  function getSwedishVoice() {
+  function getPreferredLang() {
+    try { return localStorage.getItem('site.tts-lang') || 'sv-SE'; } catch (e) { return 'sv-SE'; }
+  }
+
+  function getVoiceForLang(lang) {
     if (!synth) return null;
     var voices = synth.getVoices();
-    return voices.find(function (v) { return v.lang.startsWith('sv'); }) || null;
+    // Exakt träff
+    var v = voices.find(function (v) { return v.lang === lang; });
+    if (v) return v;
+    // Prefixträff (t.ex. 'ar' matchar 'ar-SA')
+    var prefix = lang.split('-')[0];
+    return voices.find(function (v) { return v.lang.startsWith(prefix); }) || null;
+  }
+
+  function getSwedishVoice() {
+    return getVoiceForLang('sv-SE');
   }
 
   function extractText(root, removeSelectors) {
@@ -91,10 +104,11 @@
 
   function playWithTTS(text, btn) {
     if (!synth) { onDone(btn); return; }
+    var lang = getPreferredLang();
     var utt = new SpeechSynthesisUtterance(text);
-    utt.lang = 'sv-SE';
+    utt.lang = lang;
     utt.rate = 0.92;
-    var voice = getSwedishVoice();
+    var voice = getVoiceForLang(lang);
     if (voice) utt.voice = voice;
     utt.onend = function () { onDone(btn); };
     synth.speak(utt);
