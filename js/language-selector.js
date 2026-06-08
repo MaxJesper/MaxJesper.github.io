@@ -12,13 +12,14 @@
   var STORAGE_KEY = 'site.tts-lang';
 
   var LANGUAGES = [
-    { code: 'sv-SE', label: '🇸🇪 Svenska',      prefix: 'sv' },
-    { code: 'ar-SA', label: '🇸🇦 عربية',         prefix: 'ar' },
-    { code: 'en-GB', label: '🇬🇧 English',       prefix: 'en' },
-    { code: 'fa',    label: '🇮🇷 فارسی/دری',     prefix: 'fa' },
-    { code: 'so',    label: '🇸🇴 Soomaali',      prefix: 'so' },
-    { code: 'pl-PL', label: '🇵🇱 Polski',        prefix: 'pl' },
-    { code: 'es-ES', label: '🇪🇸 Español',       prefix: 'es' }
+    { code: 'sv-SE', label: '🇸🇪 Svenska',                    prefix: 'sv' },
+    { code: 'ar-SA', label: '🇸🇦 Arabiska (عربية)',           prefix: 'ar' },
+    { code: 'so',    label: '🇸🇴 Somaliska (Soomaali)',       prefix: 'so' },
+    { code: 'fa',    label: '🇮🇷 Persiska/Dari (فارسی)',      prefix: 'fa' },
+    { code: 'pl-PL', label: '🇵🇱 Polska (Polski)',            prefix: 'pl' },
+    { code: 'en-GB', label: '🇬🇧 Engelska (English)',         prefix: 'en' },
+    { code: 'bs',    label: '🇧🇦 Bosniska (Bosanski)',        prefix: 'bs' },
+    { code: 'es-ES', label: '🇪🇸 Spanska (Español)',         prefix: 'es' }
   ];
 
   var CSS = [
