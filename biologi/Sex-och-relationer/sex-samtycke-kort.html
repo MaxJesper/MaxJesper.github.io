@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Sex, samtycke och relationer – Kort</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: Georgia, serif; background: #e8e8e8; }
+
+/* ── Skärm-header ─────────────────────────────────── */
+.screen-only {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 16px;
+}
+.screen-only h1 { font-size: 22px; color: #333; margin-bottom: 6px; }
+.screen-only p  { color: #666; font-size: 14px; margin-bottom: 10px; }
+.print-btn {
+  padding: 10px 28px; font-size: 15px;
+  background: #555; color: white;
+  border: none; border-radius: 8px; cursor: pointer;
+}
+.print-btn:hover { background: #333; }
+
+/* ── Print-inställningar ─────────────────────────── */
+@media print {
+  @page { size: A4 landscape; margin: 5mm; }
+  body  { background: white; }
+  .screen-only { display: none; }
+  .page { page-break-after: always; box-shadow: none; margin: 0; width: 100%; height: 100%; }
+  .page:last-child { page-break-after: auto; }
+}
+
+/* ── Sida (A4 liggande) ──────────────────────────── */
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2mm;
+  width: 287mm;
+  height: 200mm;
+  margin: 10mm auto 4mm;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+
+/* ── Kortenhet (ett kort = framsida + baksida) ──── */
+.card-unit {
+  display: flex;
+  overflow: hidden;
+  border: 0.4px solid #bbb;
+}
+
+/* ── FRAMSIDA ────────────────────────────────────── */
+.front {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 3.5mm 4mm 3.5mm 4mm;
+  border-right: 0.8px dashed #aaa;
+}
+.front.p { background: #FFDCE8; }
+.front.b { background: #DCF0FF; }
+
+.f-label {
+  font-size: 10pt;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+  padding-bottom: 1.5mm;
+}
+.front.p .f-label { color: #7B1030; }
+.front.b .f-label { color: #0C3060; }
+
+.f-sep {
+  height: 0.8px;
+  margin: 0 6mm 3mm;
+  border: none;
+}
+.front.p .f-sep { background: #C03060; }
+.front.b .f-sep { background: #1060A8; }
+
+.f-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-style: italic;
+  line-height: 1.45;
+  font-size: 13.5pt;
+}
+.front.p .f-text { color: #480818; }
+.front.b .f-text { color: #071840; }
+
+.f-text.big   { font-size: 20pt; font-weight: bold; font-style: normal; }
+.f-text.small { font-size: 9.5pt; font-style: italic; }
+
+/* ── BAKSIDA ─────────────────────────────────────── */
+.back {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4mm 3mm;
+}
+.back.p { background: #D04870; }
+.back.b { background: #1E78BC; }
+
+/* Övre etikett + underrubrik */
+.back-top { display: flex; flex-direction: column; align-items: center; gap: 2mm; }
+
+.b-label {
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 2.5px;
+  color: white;
+  text-align: center;
+}
+.b-sub {
+  font-size: 8pt;
+  color: white;
+  font-style: italic;
+  text-align: center;
+  opacity: .9;
+}
+
+/* Symbol i cirkel */
+.b-symbol {
+  width: 26mm;
+  height: 26mm;
+  border-radius: 50%;
+  background: rgba(255,255,255,.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28pt;
+  color: #FF1A1A;
+  flex-shrink: 0;
+}
+
+/* Nedre etikett (roterad 180°) */
+.back-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2mm;
+  transform: rotate(180deg);
+}
+</style>
+</head>
+<body>
+
+<div class="screen-only">
+  <h1>Sex, samtycke och relationer – Spelkort</h1>
+  <p>Skriv ut liggande A4 · Klipp längs kanterna · Vik vid den streckade linjen · Klistra ihop</p>
+  <button class="print-btn" onclick="window.print()">🖨️ Skriv ut</button>
+</div>
+
+<script>
+// ── Kortdata ─────────────────────────────────────────────────────────────────
+// color: 'p' = tjejkort (rosa)  |  'b' = killkort (blå)
+// big:  true = stor fetstil (t.ex. JAG VILL INTE!)
+// small: true = liten text (dikter/långa)
+// html: true = text innehåller HTML (fetstil etc.)
+
+const CARDS = [
+  // ═══════════════════════════════════════════════════════════
+  //  TJEJKORT  (28 st)
+  // ═══════════════════════════════════════════════════════════
+  {c:'p', t:'Vet du, jag blir alltid glad\nnär du är nära mig!'},
+  {c:'p', t:'Jag känner mig riktigt nervös nu,\nom jag ska vara ärlig!'},
+  {c:'p', t:'Snälla, se på mig!\nDitt leende känns så varmt och äkta!'},
+  {c:'p', t:'Det här är nytt för mig,\njag känner mig pirrig och yr!'},
+  {c:'p', t:'Min lilla kyckling,\nvad du är underbar!'},
+  {c:'p', t:'Med dig kan man alltid känna sig trygg,\ndu är alltid så snäll och mysig!'},
+  {c:'p', t:'JAG VILL INTE!', big:true},
+  {c:'p', t:'Respektera mig,\noch sluta tafsa!'},
+  {c:'p', t:'Ledsen, men det här känns\ninte rätt för mig!'},
+  {c:'p', t:'Nej, nu vill jag att du backar två steg!\nRakt ut genom dörren där!'},
+  {c:'p', t:'Nu tycker jag att det här\nbörjar bli lite obehagligt din typ!'},
+  {c:'p', t:'Åh, vilken lyssnare han är!\nJag älskar att bli lyssnad på!'},
+  {c:'p', t:'Nu sa jag NEJ!\nHur kan du få det till ett JA?'},
+  {c:'p', t:'Förlåt, nu förstår jag inte\nvad du håller på med!\nTa bort handen genast!'},
+  {c:'p', t:'Du, jag tror bestämt\natt jag har ändrat mig!'},
+  {c:'p', t:'Kom hit min pudding!\nJag vill krama och kyssa dig!'},
+  {c:'p', t:'Kan vi ta det liiiiiiite lugnare?'},
+  {c:'p', t:'Jag känner att vi måste prata ut\nmed varandra!\nDu ser mig inte!\nÄlskar du mig?'},
+  {c:'p', t:'Jag är så ledsen!\nKom och krama och kyss mig!\nKan vi inte ha lite försoningssex?'},
+  {c:'p', t:'Åh vilka axlar! Vilka armmuskler!\nDina rutor på magen\nfår mig att brinna av lust till dig!'},
+  {c:'p', t:'Din breda bringa och dina spelande muskler.\nDu är så het och läcker!\nKom genast hit! Jag vill ha dig!!'},
+  {c:'p', t:'Jag kan inte sova!\nJag vrider mig hit och dit.\nMin kropp skriker av förälskad\nlängtan efter dig!'},
+  {c:'p', small:true, html:true, t:'<strong>Dikt av Karin Boye:</strong>\nHur kan jag säga om din röst är vacker.\nJag vet ju bara, att den genomtränger mig\noch kommer mig att darra som ett löv\noch trasar sönder mig och spränger mig.\n\nVad vet jag om din hud och dina lemmar.\nDet bara skakar mig att de är dina,\nså att för mig finns ingen sömn och vila,\ntills de är mina.'},
+  {c:'p', t:'Kom!\nJag vill att du tar på mig!\nJag vill göra ALLT\nman kan göra med dig!'},
+  {c:'p', t:'Du läser mina känslor som vore jag en bok!\nDu och jag har en helt underbar\nkommunikation!'},
+  {c:'p', t:'Accepterar du mig, som jag är?\nEller vill du inte ha mig?'},
+  {c:'p', t:'Vilka läppar du har!\nJag längtar efter att få kyssa dig!'},
+  {c:'p', t:'Du är så skön, du luktar så gott,\nditt leende är så underbart.\nJag längtar så efter att få röra dig!'},
+
+  // ═══════════════════════════════════════════════════════════
+  //  KILLKORT  (28 st)
+  // ═══════════════════════════════════════════════════════════
+  {c:'b', t:'Är det jag gör nu okej för dig?'},
+  {c:'b', t:'Får jag sitta hos dig?\nDu är sååå härlig?'},
+  {c:'b', t:'Du kanske vill att jag ska ta nästa steg?\nLåt oss se nu,\n1. Vi har pussats\n2. Vi har smekt varandra\nNU vet jag vad jag ska göra!'},
+  {c:'b', t:'Tjenixen!\nJag tycker om att vara med dig pysen!'},
+  {c:'b', small:true, html:true, t:'<strong>Sång av Evert Taube:</strong>\n♪ Min älskling du är som en ros,\nen nyutsprungen skär,\nja, som den ljuvaste musik,\nmin älskade du är. ♪'},
+  {c:'b', t:'Jag undrar, varför du rodnar så\nnär jag tittar på dig?'},
+  {c:'b', t:'Vill du att vi fortsätter\noch tar nästa steg?\nHanden i lilla byxan du vet!'},
+  {c:'b', html:true, t:'<strong>Du gör följande:</strong>\nSkrattar högt och bullrigt,\noch ser sedan din älskade\ndjupt i ögonen!'},
+  {c:'b', t:'Vet du?\nJag tycker du är så spännande!'},
+  {c:'b', t:'Jag vill bara ha dig!'},
+  {c:'b', html:true, t:'<strong>Du gör följande:</strong>\nTitta på tjejen med ett erotiskt leende\noch säg sedan högt:\nMmmmmmmm!'},
+  {c:'b', t:'Du vet att du kan säga nej\nnär som helst!\nMen inga problem ännu, eller?'},
+  {c:'b', t:'Åh, om man bara fick\nsmeka hennes boppar!'},
+  {c:'b', t:'Du är inte alls min typ tjejen!\nHa, ha, jag bara skojar!\nDu är faktiskt helt underbar!'},
+  {c:'b', t:'Hm, varför rättar hon till\nhåret och sin blus?\nJag undrar om hon är förtjust i mig?'},
+  {c:'b', t:'JA! Jag vill!\nNu hoppar vi i säng!'},
+  {c:'b', t:'Nu säger jag det rakt ut!\nJag älskar dig!'},
+  {c:'b', t:'Får jag ta på dina bröst?\nJag är så himla frestad?'},
+  {c:'b', t:'Din rumpa är helt magisk!\nFår jag röra den?'},
+  {c:'b', t:'Du! Nu är jag hård som en morot\noch vill bara ha dig!'},
+  {c:'b', t:'Sväng med håret sådär igen.\nJag blir helt svag i benen!'},
+  {c:'b', t:'Åh!\nNär du har flätor,\nsmycken och kort-kort,\ndu är såååå sexig!'},
+  {c:'b', t:'Asså nu bara gör vi det!\nJag är eld och lågor!'},
+  {c:'b', small:true, html:true, t:'<strong>Dikt av Siv Andersson:</strong>\nI hjärtat finns ett rum,\nsom bara är för dig.\nOch var jag än tar plats,\nså finns du här hos mig.'},
+  {c:'b', small:true, html:true, t:'<strong>Från Tusen och en natt:</strong>\n"En människa kan dölja,\nförneka eller förvägra\nvarje hemlighet,\nutom kärleken."\nJag älskar dig!'},
+  {c:'b', small:true, t:'Jag är din trollkarl.\nTa min hand – så flyger vi till Saturnus,\ngenom nattsvart, stjärnklar himmel.\nVi landar på en skimrande klippa,\ni solens blekrosa sken.\nDär vill jag älska, hett och ömt med dig!'},
+  {c:'b', t:'Känner du att du vågar\nvara dig själv med mig?'},
+  {c:'b', t:'Världen bleknar bort\nnär du tittar på mig och ler!\nOm gud finns, är du det underbaraste,\nsom han har skapat!'},
+];
+
+// ── Generera sidor ───────────────────────────────────────────
+function nl2br(str) {
+  // Extra mellanrum efter fetstilsrubrik (<strong>...</strong>\n → rubrik + tomrad)
+  return str
+    .replace(/(<\/strong>)\n/g, '$1<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+function makeCardHTML(card) {
+  const isP   = card.c === 'p';
+  const sym   = isP ? '♥' : '♦';
+  const lbl   = isP ? 'TJEJKORT' : 'KILLKORT';
+  const fc    = isP ? 'p' : 'b';
+  const bc    = isP ? 'p' : 'b';
+
+  const textClass = card.big ? 'f-text big' : card.small ? 'f-text small' : 'f-text';
+  const textContent = `<span>${nl2br(card.t)}</span>`;
+
+  return `
+  <div class="card-unit">
+    <div class="front ${fc}">
+      <div class="f-label">${lbl}</div>
+      <hr class="f-sep">
+      <div class="${textClass}">${textContent}</div>
+    </div>
+    <div class="back ${bc}">
+      <div class="back-top">
+        <div class="b-label">${lbl}</div>
+        <div class="b-sub">Sex, samtycke och relationer</div>
+      </div>
+      <div class="b-symbol">${sym}</div>
+      <div class="back-bottom">
+        <div class="b-label">${lbl}</div>
+        <div class="b-sub">Sex, samtycke och relationer</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// Bygg sidor (4 kort per sida)
+const body = document.querySelector('body');
+for (let i = 0; i < CARDS.length; i += 4) {
+  const page = document.createElement('div');
+  page.className = 'page';
+  const batch = CARDS.slice(i, i + 4);
+  page.innerHTML = batch.map(makeCardHTML).join('');
+  body.appendChild(page);
+}
+</script>
+</body>
+</html>

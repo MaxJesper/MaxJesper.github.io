@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Sex, samtycke och relationer – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .game-card {
+      display: block;
+      background: linear-gradient(135deg, #fff0f5, #ffe0ec);
+      border: 1px solid #e8b0c8;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+      text-decoration: none;
+    }
+
+    .game-icon {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, #ffc2d4, #a8d4f8);
+    }
+
+    .game-body {
+      padding: 1rem;
+    }
+
+    .game-body h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.15rem;
+    }
+
+    .game-body p {
+      margin: 0;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="biologi-header">
+    <h1>Lärande spel</h1>
+    <p>Sex, samtycke och relationer</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <section style="margin-bottom: 1.5rem;">
+      <p>Här hittar du spel och övningar som tränar kommunikation, samtycke och relationer på ett engagerande sätt.</p>
+    </section>
+
+    <section class="games-grid">
+      <a class="game-card" href="./sex-samtycke-kort.html">
+        <div class="game-icon">💗 ♦</div>
+        <div class="game-body">
+          <h2>Samtycke och relationer – Kortspel</h2>
+          <p>Tjej- och killkort med fraser om känslor, gränser och kommunikation. Skrivs ut, viks och klipps till spelkort.</p>
+        </div>
+      </a>
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="./index.html" class="subject-btn">← Tillbaka</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
