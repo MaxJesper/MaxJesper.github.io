@@ -9,52 +9,128 @@
   <style>
     .games-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
       margin-top: 1rem;
     }
 
+    /* ── Spelkort ── */
     .game-card {
       display: block;
-      background: linear-gradient(135deg, #fff0f5, #ffe0ec);
-      border: 1px solid #e8b0c8;
+      background: #fff;
+      border: 1px solid #ddd;
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       text-decoration: none;
       color: inherit;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
     }
-
     .game-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
       text-decoration: none;
     }
 
+    /* ── Symbol-bild (liten) ── */
     .game-icon {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 5 / 3;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
-      background: linear-gradient(135deg, #ffc2d4, #a8d4f8);
+      gap: 0;
+      overflow: hidden;
     }
+    .icon-half {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+    }
+    .icon-half.pink { background: linear-gradient(135deg, #ffb6c8, #ff7fa0); }
+    .icon-half.blue { background: linear-gradient(135deg, #90c8f0, #5098d8); }
 
     .game-body {
-      padding: 1rem;
+      padding: 0.65rem 0.8rem 0.8rem;
     }
-
     .game-body h2 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.15rem;
+      margin: 0 0 0.3rem 0;
+      font-size: 0.95rem;
+      line-height: 1.3;
     }
-
     .game-body p {
       margin: 0;
-      color: #444;
+      color: #555;
+      font-size: 0.82rem;
+      line-height: 1.4;
     }
+
+    /* ── Spelregler-knapp ── */
+    .rules-btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      cursor: pointer;
+      color: #333;
+      transition: background 0.15s;
+    }
+    .rules-btn:hover { background: #e0e0e0; }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem 1.8rem;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      position: relative;
+    }
+    .modal h3 {
+      margin: 0 0 0.8rem 0;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .modal p {
+      margin: 0;
+      color: #333;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #666;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #000; }
   </style>
 </head>
 <body>
@@ -73,13 +149,24 @@
     </section>
 
     <section class="games-grid">
-      <a class="game-card" href="./sex-samtycke-kort.html">
-        <div class="game-icon">💗 ♦</div>
+
+      <!-- Kortspelet -->
+      <div class="game-card">
+        <a href="./sex-samtycke-kort.html" style="text-decoration:none; color:inherit;">
+          <div class="game-icon">
+            <div class="icon-half pink">♥</div>
+            <div class="icon-half blue">♦</div>
+          </div>
+        </a>
         <div class="game-body">
-          <h2>Samtycke och relationer – Kortspel</h2>
-          <p>Tjej- och killkort med fraser om känslor, gränser och kommunikation. Skrivs ut, viks och klipps till spelkort.</p>
+          <a href="./sex-samtycke-kort.html" style="text-decoration:none; color:inherit;">
+            <h2>Samtycke och relationer – Kortspel</h2>
+            <p>Tjej- och killkort med fraser om känslor, gränser och kommunikation. Skriv ut, vik och klipp.</p>
+          </a>
+          <button class="rules-btn" onclick="openRules()">📋 Spelregler</button>
         </div>
-      </a>
+      </div>
+
     </section>
 
     <p style="margin-top: 1.5rem;">
@@ -87,6 +174,29 @@
     </p>
   </main>
 
+  <!-- Spelregler-modal -->
+  <div class="modal-backdrop" id="rulesModal" onclick="closeOnBackdrop(event)">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+      <button class="modal-close" onclick="closeRules()" aria-label="Stäng">✕</button>
+      <h3 id="rulesTitle">📋 Spelregler</h3>
+      <p>I tur och ordning tar en tjej och en kille upp vars ett kort och läser för varandra. Tjejerna sitter på ena sidan om bordet och killarna på den andra. Kort som har använts läggs undan av en person i varje lag som har valts ut för detta.</p>
+    </div>
+  </div>
+
   <script src="/js/menu.js"></script>
+  <script>
+    function openRules() {
+      document.getElementById('rulesModal').classList.add('open');
+    }
+    function closeRules() {
+      document.getElementById('rulesModal').classList.remove('open');
+    }
+    function closeOnBackdrop(e) {
+      if (e.target === document.getElementById('rulesModal')) closeRules();
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeRules();
+    });
+  </script>
 </body>
 </html>
