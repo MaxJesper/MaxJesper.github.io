@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <title>Sex, samtycke och relationer – Kort</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* Tvinga webbläsaren att skriva ut bakgrundsfärger */
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
 
 body { font-family: Georgia, serif; background: #e8e8e8; }
 
@@ -27,10 +34,19 @@ body { font-family: Georgia, serif; background: #e8e8e8; }
 
 /* ── Print-inställningar ─────────────────────────── */
 @media print {
-  @page { size: A4 landscape; margin: 5mm; }
-  body  { background: white; }
+  @page {
+    size: A4 landscape;
+    margin: 5mm;
+  }
+  body { background: white; margin: 0; padding: 0; }
   .screen-only { display: none; }
-  .page { page-break-after: always; box-shadow: none; margin: 0; width: 100%; height: 100%; }
+  .page {
+    page-break-after: always;
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 287mm !important;
+    height: 200mm !important;
+  }
   .page:last-child { page-break-after: auto; }
 }
 
@@ -158,6 +174,7 @@ body { font-family: Georgia, serif; background: #e8e8e8; }
 <div class="screen-only">
   <h1>Sex, samtycke och relationer – Spelkort</h1>
   <p>Skriv ut liggande A4 · Klipp längs kanterna · Vik vid den streckade linjen · Klistra ihop</p>
+  <p style="color:#b00; font-size:13px; margin-top:6px;">⚠️ Viktigt: Slå på <strong>Bakgrundsgrafik</strong> i utskriftsinställningarna för att få färgerna.</p>
   <button class="print-btn" onclick="window.print()">🖨️ Skriv ut</button>
 </div>
 
