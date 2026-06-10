@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Genetik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body { --listen-color:#15803d; --listen-border:#bbf7d0; --listen-hover-bg:#f0fdf4; }
+    main {
+      font-size: 1.1em;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .guide-intro {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #15803d;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .milestone > summary::-webkit-details-marker { display: none; }
+
+    .milestone > summary::before {
+      content: "▸";
+      color: #15803d;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #15803d;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .milestone .m-title {
+      font-size: 1.1rem;
+      flex: 1;
+    }
+
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+
+    .milestone .m-body p {
+      margin: 0.6rem 0;
+      line-height: 1.55;
+    }
+
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure {
+      margin: 0.9rem 0;
+      text-align: left;
+    }
+
+    .milestone figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+
+    .milestone figcaption {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #f0eaff;
+      border-left: 4px solid #15803d;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #15803d;
+    }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+    }
+
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning: "; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    /* Varning/info-ruta för astrologi-vs-astronomi */
+    .info-box {
+      background: #fff8e6;
+      border: 1px solid #f0c860;
+      border-left: 4px solid #d4a017;
+      border-radius: 8px;
+      padding: 0.7rem 0.9rem;
+      margin: 0.9rem 0;
+      font-size: 0.96rem;
+    }
+    .info-box strong { color: #7a5a00; }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+
+    .next-steps a:hover {
+      background: #e4d7fb;
+      transform: translateY(-1px);
+    }
+
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #15803d;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    /* Skalatabell */
+    .scale-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 0.9rem 0;
+    }
+    .scale-table th, .scale-table td {
+      border: 1px solid #d8d8d8;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+    }
+    .scale-table th {
+      background: #f0eaff;
+      color: #166534;
+      font-weight: 700;
+    }
+    .scale-table tr:nth-child(even) td { background: #faf8ff; }
+
+    .swipe-toast {
+      position: fixed;
+      bottom: 1.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(74, 31, 140, 0.9);
+      color: #fff;
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      font-family: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 1000;
+      white-space: nowrap;
+      max-width: 85vw;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .swipe-toast.visible { opacity: 1; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    /* ===== Källhänvisningar ===== */
+    a.cite {
+      font-size: 0.78rem;
+      color: #15803d;
+      font-weight: 700;
+      vertical-align: super;
+      text-decoration: none;
+      margin-left: 0.05rem;
+    }
+    a.cite:hover { text-decoration: underline; }
+
+    .references {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #d8d8d8;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .references h2 {
+      font-size: 1rem;
+      color: #166534;
+      margin: 0 0 0.6rem;
+    }
+    .references ol {
+      margin: 0 0 0 1.3rem;
+    }
+    .references li {
+      margin-bottom: 0.4rem;
+    }
+    .references a {
+      color: #15803d;
+    }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="biologi-header">
+    <h1>Studieguide</h1>
+    <p>Genetik</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#15803d; cursor:pointer;">Öppna alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp och leder dig sedan vidare till övningar eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fetstil i texten och återkommer i checklistan. Fördjupningar är klickbara rutor som fälls ut för den som vill gå djupare.</p>
+          <div class="lang-selector-mount"></div>
+    </section>
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" id="m1">
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Cellen och cellkärnan</span>
+      </summary>
+      <div class="m-body">
+        <p>Din kropp är byggd av ofattbart många små byggstenar som kallas <strong class="term">celler</strong> – ungefär 37 biljoner stycken. Cellen är den minsta enhet som lever: den tar upp näring, gör av med energi och kan dela sig. Olika celler har olika jobb, men nästan alla har samma grundplan.</p>
+        <p>Inuti nästan varje cell finns en <strong class="term">cellkärna</strong>. Den fungerar som cellens kontrollcentrum och bestämmer vad cellen ska göra. I kärnan ligger cellens <strong class="term">arvsmassa</strong> – all den information som behövs för att bygga och driva en hel organism. Arvsmassan består av ett ämne som heter DNA, och det är där genetiken börjar.</p>
+        <p>Att informationen ligger samlad och skyddad i kärnan är viktigt: härifrån styr cellen vilka ämnen den ska tillverka, utan att själva ritningen slits ut. I nästa milstolpe zoomar vi in i kärnan och ser hur arvsmassan är förpackad.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Cellen är kroppens minsta levande byggsten. I cellkärnan finns arvsmassan (DNA), som styr vilka ämnen cellen tillverkar.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Kromosomer och DNA</span>
+      </summary>
+      <div class="m-body">
+        <p>Arvsmassan i kärnan är gjord av <strong class="term">DNA</strong> (deoxiribonukleinsyra). En DNA-molekyl är formad som en lång, spiralvriden stege – en <strong class="term">dubbelspiral</strong>. Den modellen beskrevs av James Watson och Francis Crick 1953 <a href="#ref-1" class="cite">[1]</a>.</p>
+        <p>Inför en celldelning packas varje lång DNA-molekyl ihop hårt till en kompakt struktur som kallas <strong class="term">kromosom</strong>. En kromosom är alltså inget annat än hopvikt DNA. Människan har <strong class="term">46 kromosomer</strong> i de flesta celler, ordnade i 23 par. Av paren är 22 vanliga <strong class="term">autosomer</strong> och ett par är <strong class="term">könskromosomer</strong> (X och Y).</p>
+        <p>I varje par kommer den ena kromosomen från modern och den andra från fadern. De två i ett par kallas <strong class="term">homologa kromosomer</strong>: de är lika långa och bär gener för samma egenskaper i samma ordning. Hela uppsättningen av allt DNA kallas vår <strong class="term">genom</strong> och innehåller ungefär 3 miljarder steg <a href="#ref-2" class="cite">[2]</a>.</p>
+        <p>Stegens "pinnar" består av <strong class="term">kvävebaser</strong>, och två baser bildar tillsammans ett <strong class="term">baspar</strong>. Det finns fyra baser: A, T, G och C. De passar ihop parvis efter en fast regel – <strong class="term">A med T</strong> och <strong class="term">G med C</strong>. Ordningen av baserna längs stegen är själva koden.</p>
+        <figure>
+          <img src="/images/biologi/genetik/begreppshierarki.svg" alt="Inzoomning från cell till cellkärna, kromosom, DNA, gen och baspar" />
+          <figcaption><strong>Begreppshierarkin</strong> – cellen rymmer kärnan, kärnan kromosomerna, kromosomen DNA:t, och DNA:t generna. Varje steg är en inzoomning på det föregående.</figcaption>
+        </figure>
+
+        <details class="deepen">
+          <summary>Varför passar bara A med T och G med C?</summary>
+          <p>Baserna binder ihop sig med svaga <em>vätebindningar</em>, och bara vissa par har rätt form och rätt antal bindningar för att passa: A och T håller ihop med två bindningar, G och C med tre. Ett A får helt enkelt inte plats mittemot ett G.</p>
+          <p>Den här regeln, som kallas <em>komplementaritet</em>, är genial: om man känner den ena steghalvan vet man automatiskt den andra. Det är just detta som gör att DNA kan kopieras exakt inför varje celldelning – varje halva fungerar som mall för en ny.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Gener och arvsanlag</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">gen</strong> är ett bestämt avsnitt av en DNA-molekyl. Varje gen är ett slags recept – den innehåller instruktioner för att bygga ett visst <strong class="term">protein</strong>. En enda DNA-molekyl rymmer många gener, och människan har totalt ungefär 20 000 gener <a href="#ref-2" class="cite">[2]</a>.</p>
+        <p>I vardagligt tal kallas en gen ofta för ett <strong class="term">arvsanlag</strong>, eller bara "anlag". Det är samma sak: ett anlag för en egenskap är en gen som påverkar just den egenskapen. Platsen där en viss gen sitter på kromosomen kallas genens <strong class="term">locus</strong>.</p>
+        <p>Eftersom kromosomerna sitter i par har du två exemplar av varje gen – ett på kromosomen från mamman och ett på kromosomen från pappan. De två exemplaren behöver inte vara exakt lika, och det är den lilla skillnaden som gör att vi alla blir olika. De olika varianterna tittar vi närmare på i nästa milstolpe.</p>
+        <p>Det är värt att veta att långt ifrån allt DNA är gener. Stora delar av arvsmassan kodar inte för något protein alls, utan har andra uppgifter eller verkar sakna funktion.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En gen (arvsanlag) är ett avsnitt DNA som är recept på ett protein. Du har två exemplar av varje gen – ett från vardera föräldern.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Alleler, genotyp och fenotyp</span>
+      </summary>
+      <div class="m-body">
+        <p>De olika varianterna av en och samma gen kallas <strong class="term">alleler</strong>. Du har två alleler för varje gen, en från varje förälder. Ofta är den ena allelen starkare än den andra: en <strong class="term">dominant allel</strong> slår igenom även om du bara har en kopia, medan en <strong class="term">recessiv allel</strong> bara visar sig om du har den i dubbel uppsättning. Dominanta alleler skrivs med stor bokstav (A) och recessiva med liten (a).</p>
+        <p>Har du två likadana alleler (AA eller aa) är du <strong class="term">homozygot</strong> för genen. Har du två olika (Aa) är du <strong class="term">heterozygot</strong>. En frisk person som bär på en dold recessiv sjukdomsallel kallas <strong class="term">bärare</strong>.</p>
+        <p>Här är två viktiga begrepp som ofta blandas ihop. <strong class="term">Genotyp</strong> är vilka alleler du faktiskt har (t.ex. Aa) – det syns inte utanpå. <strong class="term">Fenotyp</strong> är den egenskap man kan se eller mäta (t.ex. svart päls). Samma fenotyp kan komma från olika genotyper: både AA och Aa ger svart päls om A är dominant.</p>
+        <p>Alla egenskaper följer dock inte den enkla dominansregeln. Vid <strong class="term">ofullständig dominans</strong> blir den heterozygota fenotypen ett mellanting – korsar man en röd och en vit blomma kan avkomman bli rosa. Vid <strong class="term">kodominans</strong> visar sig båda allelerna fullt ut samtidigt. Det tydligaste exemplet är blodgrupperna.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En allel är en variant av en gen. Genotyp = vilka alleler du har; fenotyp = det man ser. Dominant slår igenom i enkel uppsättning, recessiv kräver dubbel. Ibland gäller i stället ofullständig dominans eller kodominans.
+        </div>
+
+        <details class="deepen">
+          <summary>Blodgrupperna – kodominans i praktiken</summary>
+          <p>I <strong>AB0-systemet</strong> finns tre alleler för samma gen: A, B och 0. Allelerna A och B är kodominanta – har du båda (genotyp AB) tillverkar dina röda blodkroppar <em>både</em> A- och B-molekyler, och du får blodgrupp AB. Allelen 0 är recessiv och ger ingen molekyl alls <a href="#ref-4" class="cite">[4]</a>.</p>
+          <p>Det betyder att blodgrupp A kan ha genotypen AA eller A0, blodgrupp B kan vara BB eller B0, medan blodgrupp 0 alltid är 00. Systemet är livsviktigt vid blodtransfusioner. Ett annat system, <strong>Rh-systemet</strong>, talar om ifall en viss molekyl (Rh-faktorn) finns på blodkropparna: den som har den är Rh-positiv, den som saknar den Rh-negativ.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Proteinsyntesen</span>
+      </summary>
+      <div class="m-body">
+        <p>Varför är proteiner så viktiga? De är inte bara byggmaterial i celler – många proteiner är <strong class="term">enzymer</strong> som styr kroppens kemiska reaktioner, och flera hormoner är också proteiner. Det är till stor del våra proteiner som gör oss till dem vi är. Tillverkningen av ett protein utifrån en gen kallas <strong class="term">proteinsyntes</strong> och sker i två steg.</p>
+        <p>DNA:t får aldrig lämna cellkärnan. Därför görs först en arbetskopia av den aktuella genen. Detta första steg kallas <strong class="term">transkription</strong>: en molekyl som heter <strong class="term">mRNA</strong> byggs som en spegelbild av genen. mRNA liknar en enkel DNA-sträng, men använder basen U (uracil) där DNA har T.</p>
+        <p>mRNA:t lämnar sedan kärnan och åker till en <strong class="term">ribosom</strong> i cellen. Där sker det andra steget, <strong class="term">translation</strong>: ribosomen läser mRNA:t tre baser i taget. Varje sådan trippel kallas ett <strong class="term">kodon</strong> och motsvarar en bestämd <strong class="term">aminosyra</strong>. Aminosyrorna kopplas ihop i rätt ordning till en lång kedja – och den färdiga kedjan är proteinet.</p>
+        <p>Kopplingen mellan kodon och aminosyra kallas <strong class="term">den genetiska koden</strong>, och den är nästan exakt likadan hos alla levande organismer, från bakterie till människa. Det är ett starkt tecken på att allt liv har ett gemensamt ursprung.</p>
+        <figure>
+          <img src="/images/biologi/genetik/dna-mrna-protein.svg" alt="Flöde från DNA i kärnan via mRNA till protein vid ribosomen" />
+          <figcaption><strong>Proteinsyntesen i två steg.</strong> Transkription: DNA → mRNA inne i kärnan. Translation: ribosomen läser mRNA:t och bygger proteinet av aminosyror.</figcaption>
+        </figure>
+
+        <details class="deepen">
+          <summary>Hur kan fyra baser räcka för 20 aminosyror?</summary>
+          <p>Det finns 20 aminosyror men bara fyra baser. Lösningen är att baserna läses tre i taget. Med tre positioner och fyra möjliga baser blir det 4 × 4 × 4 = 64 olika kodon – gott om plats för 20 aminosyror.</p>
+          <p>Att det blir fler kodon än aminosyror betyder att flera kodon kan koda för samma aminosyra. Ett särskilt kodon, AUG, fungerar som startsignal, och tre kodon fungerar som stopp. På så vis vet ribosomen både var den ska börja och sluta läsa.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 ========== -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Mitos och meios</span>
+      </summary>
+      <div class="m-body">
+        <p>Det finns två sorters celldelning, och skillnaden mellan dem är central i genetiken.</p>
+        <p>Den vanliga celldelningen kallas <strong class="term">mitos</strong>. Den används när kroppen växer och när slitna celler byts ut. Före delningen kopieras allt DNA, och cellen delar sig sedan i <strong class="term">två identiska dotterceller</strong> som var och en får fulla 46 kromosomer – exakt samma uppsättning som modercellen hade.</p>
+        <p>Den andra sorten, <strong class="term">meios</strong> (reduktionsdelning), sker bara i testiklar och äggstockar och bildar <strong class="term">könsceller</strong> – ägg och spermier. En könscell kallas <strong class="term">gamet</strong> och får bara <strong class="term">hälften</strong> av kromosomerna, alltså 23. Den är <strong class="term">haploid</strong>. När en spermie befruktar ett ägg smälter de två haploida cellerna samman till en <strong class="term">zygot</strong> med fulla 46 kromosomer – den är <strong class="term">diploid</strong> och blir kroppens allra första cell.</p>
+        <p>Meiosen gör mer än att halvera antalet: den blandar också om arvet, vilket är förklaringen till att syskon liknar varandra men aldrig är exakt lika (utom enäggstvillingar).</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Mitos ger två identiska celler med 46 kromosomer (tillväxt och reparation). Meios ger könsceller med 23 kromosomer. Ägg + spermie blir en zygot med 46.
+        </div>
+
+        <details class="deepen">
+          <summary>Varför blir syskon olika? Crossing-over och slumpen</summary>
+          <p>Under meiosen lägger sig de homologa kromosomerna intill varandra och kan <em>byta bitar</em> med varandra. Detta utbyte kallas <strong>crossing-over</strong> (överkorsning) och skapar helt nya kombinationer av alleler som inte fanns hos någon av föräldrarna.</p>
+          <p>Dessutom fördelas kromosomerna från mor och far slumpmässigt till könscellerna. Tillsammans gör dessa två mekanismer att varje ägg och varje spermie är genetiskt unik – och därmed varje barn.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 7 ========== -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Mutationer</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">mutation</strong> är en förändring i DNA:t. Den kan uppstå spontant när DNA kopieras inför en celldelning och kopian inte blir helt perfekt, eller orsakas av sådant som UV-ljus, radioaktiv strålning och vissa kemikalier.</p>
+        <p>Det är en vanlig missuppfattning att mutationer alltid är farliga. I själva verket är de allra flesta <strong class="term">neutrala</strong> och märks inte alls. Vissa är <strong class="term">skadliga</strong> och kan leda till sjukdom – en del cancerformer beror på mutationer i kroppens celler. Men en del mutationer är <strong class="term">fördelaktiga</strong>, och det är faktiskt dessa som är råvaran för all evolution: utan mutationer skulle det inte finnas någon ärftlig variation att utvecklas ur.</p>
+        <p>En avgörande detalj är <em>var</em> mutationen sker. En mutation i en vanlig kroppscell stannar hos individen själv. Bara om mutationen sker i en könscell kan den föras vidare till nästa generation – då finns den med i varenda cell hos det barn som bildas.</p>
+        <p>Förutom förändringar i enstaka gener kan det också bli fel på hela kromosomer, till exempel att en cell får fel antal. Sådana avvikelser tittar vi på i milstolpe 10.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En mutation är en förändring i DNA. De flesta är harmlösa, vissa skadliga, en del fördelaktiga. Bara mutationer i könsceller ärvs vidare.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 8 ========== -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Ärftlighetslära och korsningsscheman</span>
+      </summary>
+      <div class="m-body">
+        <p>Mycket av det vi vet om hur anlag ärvs kommer från munken <strong class="term">Gregor Mendel</strong>, som på 1800-talet korsade ärtväxter och upptäckte att egenskaper följer regelbundna mönster <a href="#ref-3" class="cite">[3]</a>. Det var Mendel som förstod att det finns dominanta och recessiva anlag.</p>
+        <p>För att räkna ut hur ett anlag kan ärvas använder man ett <strong class="term">korsningsschema</strong> (Punnett-schema). Ta kaniner, där svart päls (A) är dominant och vit (a) recessiv. Korsar man två heterozygota svarta kaniner (Aa × Aa) ger schemat fyra lika sannolika kombinationer: AA, Aa, Aa och aa. Tre av fyra blir svarta och en av fyra vit – förhållandet <strong class="term">3:1</strong>.</p>
+        <p>Tänk på att schemat visar <em>sannolikhet</em>, inte en garanti. En kull med fyra ungar består inte säkert av exakt tre svarta och en vit – precis som fyra slantsinglingar inte säkert ger exakt två krona.</p>
+        <figure>
+          <img src="/images/biologi/genetik/korsningsschema.svg" alt="Korsningsschema Aa gånger Aa med resultatet tre svarta mot en vit" />
+          <figcaption><strong>Korsningsschema Aa × Aa.</strong> Tre av fyra rutor ger svart päls, en ger vit – förhållandet 3:1.</figcaption>
+        </figure>
+
+        <details class="deepen">
+          <summary>Könsbestämning, könsbundet arv och släktträd</summary>
+          <p><strong>Hur könet bestäms.</strong> Det 23:e kromosomparet är könskromosomerna. Kvinnor har XX, män har XY. På Y-kromosomen sitter en gen som heter <em>SRY</em> och som startar den manliga utvecklingen <a href="#ref-5" class="cite">[5]</a>. Eftersom ägg alltid bär X men spermier antingen X eller Y, är det spermien som avgör barnets kön.</p>
+          <p><strong>Könsbundet arv.</strong> Vissa gener sitter bara på X-kromosomen. <em>Röd-grön färgblindhet</em> beror på en recessiv allel på X. En pojke (XY) har bara en X, så ett enda anlag räcker för att han ska bli färgblind. En flicka (XX) måste ärva anlaget på båda sina X. Därför är ungefär 8 % av männen men under 1 % av kvinnorna röd-grön-färgblinda <a href="#ref-6" class="cite">[6]</a>. Samma mönster gäller blödarsjuka.</p>
+          <p><strong>Dihybrid korsning.</strong> Följer man två egenskaper samtidigt (t.ex. AaBb × AaBb) blir det fler kombinationer, med det klassiska förhållandet 9:3:3:1 hos avkomman.</p>
+          <p><strong>Släktträd.</strong> För att spåra hur en egenskap går i arv i en familj ritar man ett släktträd: kvinnor som cirklar, män som fyrkanter, och ifyllda symboler för dem som har egenskapen. Då kan man räkna ut vem som är bärare.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 9 ========== -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Arv och miljö</span>
+      </summary>
+      <div class="m-body">
+        <p>Dina egenskaper bestäms inte av generna ensamma, utan av ett samspel mellan <strong class="term">arv och miljö</strong>. Du kan ärva anlag för starka muskler, men musklerna blir bara starka om du faktiskt använder dem. Generna sätter möjligheterna; miljön avgör hur mycket av dem som förverkligas.</p>
+        <p>Det är också viktigt att förstå skillnaden mellan <strong class="term">monogena</strong> och <strong class="term">polygena</strong> egenskaper. En monogen egenskap styrs av en enda gen och blir ofta antingen-eller, som kaninernas pälsfärg. En polygen egenskap styrs av många gener tillsammans och bildar en glidande skala – längd och hudfärg är typiska exempel.</p>
+        <p>Här är en vanlig läroboksmiss värd att rätta till: <strong class="term">ögonfärg är polygent</strong>, inte en enkel "brun dominant över blå". Just därför finns det så många nyanser av ögonfärg, och därför kan resultatet ibland överraska. Att framställa ögonfärg som ett enkelt monogent anlag är en förenkling som inte stämmer med verkligheten.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Egenskaper formas av arv och miljö tillsammans. Monogena egenskaper styrs av en gen, polygena av många. Längd, hudfärg och ögonfärg är polygena.
+        </div>
+
+        <details class="deepen">
+          <summary>Enäggstvillingar – samma gener, ändå olika</summary>
+          <p>Enäggstvillingar har identiskt DNA, men ändå är de aldrig exakt likadana. De kan skilja sig i längd, vikt, personlighet och hälsa. Det visar tydligt hur mycket miljön betyder.</p>
+          <p>En del av förklaringen är <em>epigenetik</em>: miljön kan sätta små kemiska "flaggor" på DNA:t som slår på eller av gener, utan att själva DNA-koden ändras. Två personer med samma gener kan därför använda dem olika.</p>
+        </details>        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 10 ========== -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Genetiska sjukdomar</span>
+      </summary>
+      <div class="m-body">
+        <p>En del sjukdomar beror på arvsmassan. De kan delas in efter hur de ärvs.</p>
+        <p><strong class="term">Recessivt ärftliga sjukdomar</strong> visar sig bara om man ärver sjukdomsallelen från båda föräldrarna. Ett exempel är cystisk fibros. Friska föräldrar kan vara <strong class="term">bärare</strong> utan att veta om det och få ett sjukt barn. <strong class="term">Könsbundna sjukdomar</strong>, som blödarsjuka och röd-grön färgblindhet, sitter på X-kromosomen och drabbar oftast pojkar (se milstolpe 8).</p>
+        <p>Andra tillstånd beror på fel antal kromosomer. <strong class="term">Downs syndrom</strong> orsakas av en extra kromosom nummer 21 – tre i stället för två, kallat <strong class="term">trisomi 21</strong>. Den extra kromosomen uppstår oftast genom ett fel i meiosen när könscellerna bildas <a href="#ref-7" class="cite">[7]</a>. En person med Downs syndrom har ofta vissa inlärningssvårigheter och kan behöva mer stöd, men lever i övrigt ett rikt liv.</p>
+        <p>Med en bild av alla kromosomer, en <strong class="term">karyotyp</strong>, kan man se sådana avvikelser. Under graviditeten kan <strong class="term">fosterdiagnostik</strong> undersöka om fostret har vissa anlag eller kromosomavvikelser <a href="#ref-10" class="cite">[10]</a>. Sådana undersökningar väcker svåra etiska frågor om vad man bör testa för och vilka beslut som följer.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Genetiska sjukdomar kan vara recessivt ärftliga (cystisk fibros), könsbundna (blödarsjuka) eller bero på fel antal kromosomer (Downs syndrom = trisomi 21).
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 11 ========== -->
+    <details class="milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Genteknik och CRISPR</span>
+      </summary>
+      <div class="m-body">
+        <p><strong class="term">Genteknik</strong> är ett samlingsnamn för metoder att undersöka, kopiera och förändra arvsmassa. Eftersom DNA är uppbyggt på samma sätt hos allt liv kan en gen flyttas från en art till en annan och fungera där. En organism som fått nya gener på det sättet kallas <strong class="term">GMO</strong> (genmodifierad organism).</p>
+        <p>Ett klassiskt exempel är insulin. Forskare för in den mänskliga insulingenen i en bakteries lilla DNA-ring, en <strong class="term">plasmid</strong>, med hjälp av <strong class="term">restriktionsenzymer</strong> som klipper DNA på bestämda ställen. Bakterien tar upp det hopsatta <strong class="term">hybrid-DNA:t</strong> och tillverkar sedan mänskligt insulin som kan användas som medicin.</p>
+        <p>Ett kraftfullt nyare verktyg är <strong class="term">CRISPR-Cas9</strong> – ofta kallat gensaxen. Den kan leta upp en exakt sekvens i DNA:t och klippa eller ändra den med hög precision <a href="#ref-8" class="cite">[8]</a>. Tekniken är så betydelsefull att Emmanuelle Charpentier och Jennifer Doudna fick Nobelpriset i kemi 2020 för den <a href="#ref-9" class="cite">[9]</a>.</p>
+        <p>Genteknik ger också <strong class="term">DNA-analys</strong> (DNA som "fingeravtryck" vid brott och släktskap) och <strong class="term">kloning</strong> – att skapa genetiskt identiska individer, som det berömda fåret Dolly.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Genteknik undersöker och flyttar gener mellan organismer. Bakterier kan tillverka insulin via hybrid-DNA, CRISPR-Cas9 redigerar DNA med hög precision, och DNA-analys och kloning är andra tillämpningar.
+        </div>
+        <details class="deepen">
+          <summary>Möjligheter och risker – en fråga att tänka själv kring</summary>
+          <p>Förespråkare lyfter fram att genteknik kan bota ärftliga sjukdomar, ge grödor som tål torka och minska behovet av bekämpningsmedel. Det är konkreta vinster för hälsa och miljö.</p>
+          <p>Kritiker pekar på riskerna: att förändrade gener sprids okontrollerat i naturen och hotar den biologiska mångfalden, och på de etiska gränserna – var går linjen mellan att bota sjukdom och att "designa" människor? Det här är frågor utan enkla svar, och olika människor väger för- och nackdelar olika. En viktig del av att förstå genetik är att kunna resonera kring dem.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Watson, J.D. &amp; Crick, F.H.C. (1953). <em>Molecular Structure of Nucleic Acids: A Structure for Deoxyribose Nucleic Acid.</em> Nature, 171, 737–738. <a href="https://doi.org/10.1038/171737a0" target="_blank" rel="noopener">doi:10.1038/171737a0</a></li>
+        <li id="ref-2">International Human Genome Sequencing Consortium (2004). <em>Finishing the euchromatic sequence of the human genome.</em> Nature, 431, 931–945. <a href="https://doi.org/10.1038/nature03001" target="_blank" rel="noopener">doi:10.1038/nature03001</a> (ca 20 000–25 000 gener; ~3 miljarder baspar)</li>
+        <li id="ref-3">Mendel, G. (1866). <em>Versuche über Pflanzen-Hybriden.</em> Verhandlungen des naturforschenden Vereines in Brünn, 4, 3–47.</li>
+        <li id="ref-4">Nobelförsamlingen. <em>The Nobel Prize in Physiology or Medicine 1930: Karl Landsteiner</em> (upptäckten av människans blodgrupper). <a href="https://www.nobelprize.org/prizes/medicine/1930/landsteiner/facts/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-5">Sinclair, A.H. m.fl. (1990). <em>A gene from the human sex-determining region encodes a protein with homology to a conserved DNA-binding motif.</em> Nature, 346, 240–244. <a href="https://doi.org/10.1038/346240a0" target="_blank" rel="noopener">doi:10.1038/346240a0</a> (SRY-genen)</li>
+        <li id="ref-6">Birch, J. (2012). <em>Worldwide prevalence of red-green color deficiency.</em> Journal of the Optical Society of America A, 29(3), 313–320. <a href="https://doi.org/10.1364/JOSAA.29.000313" target="_blank" rel="noopener">doi:10.1364/JOSAA.29.000313</a></li>
+        <li id="ref-7">Lejeune, J., Gautier, M. &amp; Turpin, R. (1959). <em>Étude des chromosomes somatiques de neuf enfants mongoliens.</em> Comptes rendus de l'Académie des sciences, 248, 1721–1722. (trisomi 21)</li>
+        <li id="ref-8">Jinek, M., Chylinski, K., Fonfara, I., Hauer, M., Doudna, J.A. &amp; Charpentier, E. (2012). <em>A Programmable Dual-RNA–Guided DNA Endonuclease in Adaptive Bacterial Immunity.</em> Science, 337, 816–821. <a href="https://doi.org/10.1126/science.1225829" target="_blank" rel="noopener">doi:10.1126/science.1225829</a></li>
+        <li id="ref-9">Kungl. Vetenskapsakademien. <em>The Nobel Prize in Chemistry 2020: Emmanuelle Charpentier &amp; Jennifer A. Doudna</em> (utveckling av CRISPR/Cas9). <a href="https://www.nobelprize.org/prizes/chemistry/2020/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-10">1177 Vårdguiden. <em>Fosterdiagnostik.</em> Region/Inera. <a href="https://www.1177.se/graviditet/undersokningar-under-graviditeten/fosterdiagnostik/" target="_blank" rel="noopener">1177.se</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#777;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Faktauppgifter bygger på ovanstående källor; ingen lärobokstext har kopierats.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js" data-audio-base="/biologi/genetik/audio/"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", openFromHash);
+      } else {
+        openFromHash();
+      }
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js"></script>
+</body>
+</html>

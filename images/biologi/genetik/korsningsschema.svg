@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="Segoe UI, Arial, sans-serif" role="img" aria-label="Korsningsschema Aa gånger Aa">
+  <rect x="0" y="0" width="620" height="400" fill="#f0fdf4" rx="14"/>
+  <text x="310" y="36" text-anchor="middle" font-size="21" font-weight="700" fill="#166534">Korsningsschema: Aa × Aa</text>
+  <text x="310" y="58" text-anchor="middle" font-size="13" fill="#3f6b4e">A = svart päls (dominant) · a = vit päls (recessiv)</text>
+
+  <!-- top gametes -->
+  <text x="245" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">A</text>
+  <text x="375" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">a</text>
+  <text x="150" y="170" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">A</text>
+  <text x="150" y="300" text-anchor="middle" font-size="18" font-weight="700" fill="#15803d">a</text>
+  <text x="120" y="80" text-anchor="middle" font-size="12.5" fill="#3f6b4e">förälder ↓</text>
+  <text x="310" y="80" text-anchor="middle" font-size="12.5" fill="#3f6b4e">förälder →</text>
+
+  <!-- grid -->
+  <g>
+    <rect x="180" y="110" width="130" height="130" fill="#15803d"/>
+    <rect x="310" y="110" width="130" height="130" fill="#34a35a"/>
+    <rect x="180" y="240" width="130" height="130" fill="#34a35a"/>
+    <rect x="310" y="240" width="130" height="130" fill="#dcfce7"/>
+    <g stroke="#166534" stroke-width="2.5" fill="none">
+      <rect x="180" y="110" width="260" height="260"/>
+      <line x1="310" y1="110" x2="310" y2="370"/>
+      <line x1="180" y1="240" x2="440" y2="240"/>
+    </g>
+  </g>
+
+  <!-- cell labels -->
+  <g font-size="26" font-weight="700" text-anchor="middle">
+    <text x="245" y="184" fill="#fff">AA</text>
+    <text x="375" y="184" fill="#fff">Aa</text>
+    <text x="245" y="314" fill="#fff">Aa</text>
+    <text x="375" y="314" fill="#15803d">aa</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="13">
+    <rect x="180" y="384" width="14" height="12" fill="#15803d"/>
+    <text x="200" y="394" fill="#14532d">svart (AA, Aa, Aa) = 3 av 4 · 75 %</text>
+    <rect x="430" y="384" width="14" height="12" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="450" y="394" fill="#14532d">vit (aa) = 1 av 4 · 25 %</text>
+  </g>
+
+  <!-- side note -->
+  <g>
+    <text x="540" y="150" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">Resultat</text>
+    <text x="540" y="174" text-anchor="middle" font-size="14" fill="#14532d">3 svarta</text>
+    <text x="540" y="196" text-anchor="middle" font-size="14" fill="#14532d">: 1 vit</text>
+    <text x="540" y="232" text-anchor="middle" font-size="11.5" fill="#3f6b4e">Det är en</text>
+    <text x="540" y="248" text-anchor="middle" font-size="11.5" fill="#3f6b4e">sannolikhet,</text>
+    <text x="540" y="264" text-anchor="middle" font-size="11.5" fill="#3f6b4e">inte en garanti.</text>
+  </g>
+</svg>
