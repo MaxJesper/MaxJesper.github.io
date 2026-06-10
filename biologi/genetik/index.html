@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biologi - Genetik</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genetik – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
-    main {
-      font-size: 1.2em;
+    body.area-genetik {
+      --area: #16a34a;
+      --area-strong: #15803d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
     }
 
-    .page-intro {
-      margin-bottom: 1.5rem;
-    }
+    main { font-size: 1.2em; }
 
-    .resource-grid {
+    /* ── Tvåkolumnslayout ── */
+    .area-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    @media (min-width: 960px) {
+      .area-layout {
+        grid-template-columns: 300px 1fr;
+        align-items: start;
+      }
+    }
+
+    .area-main { min-width: 0; }
+
+    /* ── Materiallistan: alltid vertikal ── */
+    .resource-grid {
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0;
     }
 
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -33,12 +54,8 @@
     .resource-box h2 {
       margin-top: 0;
       margin-bottom: 0.75rem;
-      font-size: 1.35rem;
-    }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
+      font-size: 1.2rem;
+      color: var(--area-strong);
     }
 
     .resource-box ul {
@@ -47,145 +64,440 @@
       margin: 0;
     }
 
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
+    .resource-box li { margin-bottom: 0.7rem; }
 
     .resource-box a {
       display: inline-block;
       text-decoration: none;
       font-weight: 600;
     }
+
+    /* ── Högerkolumn ── */
+    .area-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .area-hero-image img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+
+    .hero-caption p {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.55;
+    }
+
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    /* ── Begrepp ── */
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .concept-section h2 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .concept-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 2;
+      column-gap: 1rem;
+    }
+
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
+
+    .concept-list li {
+      font-size: 0.95rem;
+      color: #1f2937;
+      line-height: 1.35;
+      padding: 0.22rem 0;
+      break-inside: avoid;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .concept-list li::before {
+      content: "→";
+      color: var(--area);
+      font-size: 0.78rem;
+      flex-shrink: 0;
+    }
+
+    .concept-note {
+      margin: 0.8rem 0 0 0;
+      font-size: 0.82rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .concept-note a {
+      color: var(--area-strong);
+      font-weight: 600;
+    }
+
+    /* ── Inläsningstips ── */
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    /* ── Milstolpe-karta ── */
+    .milestone-map {
+      margin-top: 1.5rem;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .milestone-map h2 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1.1rem;
+      color: var(--area-strong);
+    }
+
+    .milestone-map p.map-intro {
+      margin: 0 0 0.9rem 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .milestone-map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .milestone-map-list li { margin: 0; }
+
+    .milestone-map-list a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--area-soft);
+      color: var(--area-strong);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .milestone-map-list a:hover {
+      background: var(--area-hover);
+      transform: translateY(-1px);
+    }
+
+    .milestone-map-list .m-num-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--area);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Roll-toggle ── */
+    .role-toggle {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin: 0 0 1rem auto;
+      padding: 0.5rem 0.75rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      width: fit-content;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .role-toggle button {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      color: var(--area-strong);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .role-toggle button:hover { background: var(--area-hover); }
+
+    .role-toggle button.active {
+      background: var(--area);
+      color: #fff;
+      border-color: var(--area);
+    }
+
+    .role-toggle span {
+      align-self: center;
+      color: var(--area-strong);
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    /* Lärare: lärarboken överst */
+    body[data-role="larare"] .resource-grid article:last-child {
+      order: -1;
+    }
+
+    /* ── Under konstruktion-badge ── */
+    .under-konstruktion {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #fde047;
+      border-radius: 999px;
+      padding: 0.15rem 0.6rem;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
   </style>
 </head>
-
-<body>
-
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
+<body class="area-genetik">
 
   <header class="biologi-header">
     <h1>Genetik</h1>
   </header>
 
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
   <main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
-    <a href="/biologi/evolution/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om DNA, arv, mutationer, proteinsyntesen och korsningsscheman.</p>
-    </section>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+      <a href="/biologi/evolution/" class="subject-btn">Nästa område →</a>
+    </p>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <ul>
-          <li><a href="/biologi/genetik/flashcards.html">Flashcards – Genetik</a></li>
-          <li><a href="/biologi/genetik/korsningsscheman.html">Korsningsscheman – monohybrid klyvning</a></li>
-          <li>
-            <a href="#" id="ai-genetik-link"
-               style="padding:6px 10px; border-radius:10px; border:2px solid #000;
-                      background:#fffd9e; color:#000; font-weight:800;">
-              🤖 AI-träning: Genetik & evolution
-            </a>
-          </li>
-        </ul>
-        <p id="ai-genetik-status" style="margin-top:8px; font-size:0.9em;"></p>
-      </article>
-    </section>
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
 
-    <hr style="margin: 2rem 0; border: none; border-top: 1px solid #e0e0e0;" />
+    <div class="lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
-    <!-- =================== Transkription =================== -->
-    <section class="video-section">
-      <h2 class="small-title">Transkription</h2>
-      <p class="small-text">
-        Transkription är processen där DNA kopieras till mRNA i cellkärnan.
-        RNA-polymeras skapar en komplementär mRNA-sträng som sedan transporteras ut till cytoplasman
-        för sammansättning av proteinet (translation).
-      </p>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a> <span class="under-konstruktion">kommer</span></li>
+              <li><a href="./checklista.html">Checklista</a> <span class="under-konstruktion">kommer</span></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a> <span class="under-konstruktion">kommer</span></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a> <span class="under-konstruktion">kommer</span></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+              <li><a href="./flashcards.html">Flashcards – Genetik</a></li>
+              <li><a href="./korsningsscheman.html">Korsningsscheman</a></li>
+            </ul>
+          </article>
 
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/jkkP8YeLDO0"
-                title="Transkription"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-        </iframe>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./begreppslista.html">Begreppslista – alla begrepp med förklaringar</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a> <span class="under-konstruktion">kommer</span></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Börja med att förstå kedjan: cell → cellkärna → kromosom → gen → mRNA → protein.</li>
+              <li>Lär dig skillnaden mellan DNA, gen och kromosom – de förväxlas ofta.</li>
+              <li>Håll isär transkription (DNA→mRNA) och translation (mRNA→protein).</li>
+              <li>Öva på Punnet-scheman – räkna ut sannolikheter för avkomman.</li>
+              <li>Koppla dominant/recessiv till konkreta exempel, t.ex. ögonfärg och blodgrupp.</li>
+              <li>Håll isär mitos (vanlig celldelning, 46→46) och meios (könsceller, 46→23).</li>
+              <li>Koppla genetiska sjukdomar till deras arvsmekanismer (autosomalt/könsbundet, dominant/recessivt).</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <img src="/images/biologi/genetik/introduktion.svg"
+               alt="Översiktskarta: från cellen och cellkärnan via kromosom och gen till mRNA, protein och funktion – med grenar för alleler, mitos/meios, mutationer och arv och miljö" />
+          <figcaption class="hero-caption">
+            <p>Genetiken handlar om hur information lagras i <strong>DNA</strong>, hur den ärftliga informationen förs vidare och hur cellens proteinfabrik läser av instruktionerna. Kartan ovan visar helheten: informationsflödet från cell till funktion, och de viktigaste sidospåren.</p>
+            <p>Området kräver att du håller många begrepp i huvudet samtidigt – men om du förstår kedjan cell→gen→protein sitter resten lättare på plats.</p>
+          </figcaption>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Cell">Cell</button></li>
+            <li><button class="concept-btn" data-concept="Cellkärna">Cellkärna</button></li>
+            <li><button class="concept-btn" data-concept="Kromosom">Kromosom</button></li>
+            <li><button class="concept-btn" data-concept="DNA">DNA</button></li>
+            <li><button class="concept-btn" data-concept="Gen">Gen</button></li>
+            <li><button class="concept-btn" data-concept="Allel">Allel</button></li>
+            <li><button class="concept-btn" data-concept="Dominant allel">Dominant allel</button></li>
+            <li><button class="concept-btn" data-concept="Recessiv allel">Recessiv allel</button></li>
+            <li><button class="concept-btn" data-concept="Genotyp">Genotyp</button></li>
+            <li><button class="concept-btn" data-concept="Fenotyp">Fenotyp</button></li>
+            <li><button class="concept-btn" data-concept="Homozygot">Homozygot</button></li>
+            <li><button class="concept-btn" data-concept="Heterozygot">Heterozygot</button></li>
+            <li><button class="concept-btn" data-concept="Transkription">Transkription</button></li>
+            <li><button class="concept-btn" data-concept="mRNA">mRNA</button></li>
+            <li><button class="concept-btn" data-concept="Translation">Translation</button></li>
+            <li><button class="concept-btn" data-concept="Ribosom">Ribosom</button></li>
+            <li><button class="concept-btn" data-concept="Proteinsyntes">Proteinsyntes</button></li>
+            <li><button class="concept-btn" data-concept="Mitos">Mitos</button></li>
+            <li><button class="concept-btn" data-concept="Meios">Meios</button></li>
+            <li><button class="concept-btn" data-concept="Mutation">Mutation</button></li>
+            <li><button class="concept-btn" data-concept="Genetisk sjukdom">Genetisk sjukdom</button></li>
+            <li><button class="concept-btn" data-concept="Könsbunden ärftlighet">Könsbunden ärftlighet</button></li>
+            <li><button class="concept-btn" data-concept="Arv och miljö">Arv och miljö</button></li>
+            <li><button class="concept-btn" data-concept="Punnet-schema">Punnet-schema</button></li>
+            <li><button class="concept-btn" data-concept="Kodominans">Kodominans</button></li>
+          </ul>
+          <p class="concept-note">Förkunskaper: <a href="/biologi/vad-ar-liv/">Vad är liv?</a></p>
+        </section>
       </div>
     </section>
 
-    <!-- =================== Translation =================== -->
-    <section class="video-section">
-      <h2 class="small-title">Translation</h2>
-      <p class="small-text">
-        När en mRNA-molekyl har tillverkats via transkription är nästa steg att denna ska läsas av en ribosom
-        och sätta samman aminosyror till ett protein. I cytoplasman finns aminosyrorna kopplade till en kort
-        tRNA-sträng som ser till att rätt aminosyra kopplar in som motsvarar koden i mRNA.
-      </p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/U8DJ0atQ0Y0"
-                title="Translation"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-
-    <!-- =================== Korsningsscheman =================== -->
-    <section class="video-section">
-      <h2 class="small-title">Korsningsscheman</h2>
-      <p class="small-text">
-        Här visas hur könscellerna spermier och ägg kombineras på olika sätt till befruktade celler
-        som slutligen blir fullvuxna individer.
-      </p>
-
-      <p class="small-text">
-        <a href="https://www.youtube.com/watch?v=aaTEL2xTpIo&t=16s" target="_blank" rel="noopener noreferrer">
-          Öppna videon om korsningsscheman på YouTube
-        </a>
-      </p>
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden: <em>(studieguiden byggs)</em></p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Cellen och cellkärnan</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Kromosomer och DNA</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Gener och arvsanlag</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Alleler, genotyp och fenotyp</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Proteinsyntesen</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Mitos och meios</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Mutationer</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Ärftlighetslära och korsningsscheman</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Arv och miljö</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Genetiska sjukdomar</a></li>
+      </ul>
     </section>
   </main>
 
   <script src="/js/menu.js"></script>
-
   <script>
-    const PROMPT_URL = "/biologi/genetik/prompts/genetik-evolution.txt";
+  window.BEGREPP = [
+    { "namn": "Cell", "definition": "Den minsta levande enheten. Alla levande organismer är uppbyggda av celler. En mänsklig kropp innehåller ungefär 37 biljoner celler av många olika typer.", "anchor": "./studieguide.html#m1" },
+    { "namn": "Cellkärna", "definition": "En membranomsluten struktur inne i cellen som innehåller arvsmassan (DNA). Cellkärnan styr cellens aktiviteter och fungerar som ett kontrollcentrum.", "anchor": "./studieguide.html#m1" },
+    { "namn": "Kromosom", "definition": "En kraftigt hopvecklad DNA-molekyl omgiven av proteiner. Människan har 46 kromosomer i de flesta celler, organiserade i 23 par.", "anchor": "./studieguide.html#m2" },
+    { "namn": "DNA", "definition": "Deoxyribonukleinsyra – den kemiska substans som bär på den genetiska informationen. DNA består av en dubbelspiral med baserna adenin (A), tymin (T), guanin (G) och cytosin (C).", "anchor": "./studieguide.html#m2" },
+    { "namn": "Gen", "definition": "En avgränsad sekvens av DNA som innehåller instruktioner för att bygga ett specifikt protein. Människan har uppskattningsvis 20 000–25 000 proteinkodande gener.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Allel", "definition": "En av de alternativa formerna av en gen. Varje person har två alleler av varje gen – en från modern och en från fadern.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Dominant allel", "definition": "En allel vars egenskap syns i fenotypen även om individen bara har en kopia av den. Betecknas med stor bokstav, t.ex. A.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Recessiv allel", "definition": "En allel vars egenskap bara syns i fenotypen om individen har två kopior av den (homozygot). Betecknas med liten bokstav, t.ex. a.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Genotyp", "definition": "Individens genetiska sammansättning, dvs. vilka alleler den bär på. Skrivs t.ex. AA, Aa eller aa.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Fenotyp", "definition": "Det observerbara utseendet och de mätbara egenskaperna hos en organism, bestämt av genotypen och miljöpåverkan.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Homozygot", "definition": "En individ med två identiska alleler av en gen (AA eller aa).", "anchor": "./studieguide.html#m4" },
+    { "namn": "Heterozygot", "definition": "En individ med två olika alleler av en gen (Aa). Kallas också bärare om den recessiva allelen kan orsaka sjukdom.", "anchor": "./studieguide.html#m4" },
+    { "namn": "Transkription", "definition": "Det första steget i proteinsyntesen. RNA-polymeras läser av DNA-sekvensen och skapar en komplementär mRNA-molekyl i cellkärnan.", "anchor": "./studieguide.html#m5" },
+    { "namn": "mRNA", "definition": "Budbärar-RNA. En enkelsträngad RNA-molekyl som bär instruktionerna från cellkärnan till ribosomerna i cytoplasman.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Translation", "definition": "Det andra steget i proteinsyntesen. Ribosomen läser av mRNA och sätter ihop aminosyror till ett protein.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Ribosom", "definition": "En liten struktur i cytoplasman som läser av mRNA och sätter ihop proteiner av aminosyror. Kallas cellens proteinfabrik.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Proteinsyntes", "definition": "Den totala processen där cellen bygger ett protein från DNA via transkription (DNA→mRNA) och translation (mRNA→protein).", "anchor": "./studieguide.html#m5" },
+    { "namn": "Mitos", "definition": "En typ av celldelning där en cell delar sig och bildar två genetiskt identiska dotterceller med 46 kromosomer. Används vid tillväxt och reparation.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Meios", "definition": "En typ av celldelning som producerar könsceller med halva antalet kromosomer (23). Skapar genetisk variation.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Mutation", "definition": "En permanent förändring i DNA-sekvensen. Kan uppstå spontant, av strålning eller kemikalier.", "anchor": "./studieguide.html#m7" },
+    { "namn": "Genetisk sjukdom", "definition": "En sjukdom orsakad av förändringar i arvsmassan. Kan vara nedärvd eller uppstå p.g.a. en ny mutation.", "anchor": "./studieguide.html#m7" },
+    { "namn": "Könsbunden ärftlighet", "definition": "Arv av egenskaper vars gener sitter på könskromosomerna (X eller Y). Drabbar ofta män och kvinnor på olika sätt.", "anchor": "./studieguide.html#m8" },
+    { "namn": "Arv och miljö", "definition": "Samspelet mellan genetiska faktorer (arv) och omgivningsfaktorer (miljö) som bestämmer en individs egenskaper.", "anchor": "./studieguide.html#m9" },
+    { "namn": "Punnet-schema", "definition": "Ett rutschema för att förutse sannolikheten för genotyper och fenotyper hos avkomman. Uppfunnet av Reginald Punnett.", "anchor": "./studieguide.html#m8" },
+    { "namn": "Kodominans", "definition": "När båda allelerna uttrycks fullt ut i heterozygoten. Exempel: blodgrupp AB, där både A och B uttrycks samtidigt.", "anchor": "./studieguide.html#m8" }
+  ];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script>
+    (function () {
+      var STORE_KEY = "genetik.role";
+      var btnElev   = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
 
-    async function openAITutor(statusEl) {
-      statusEl.textContent = "Laddar AI-träning…";
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active");
+          btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active");
+          btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
 
       try {
-        const r = await fetch(PROMPT_URL, { cache: "no-store" });
-        if (!r.ok) throw new Error("HTTP " + r.status);
+        var saved = localStorage.getItem(STORE_KEY);
+        if (saved === "larare") setRole("larare");
+      } catch (e) {}
 
-        const prompt = await r.text();
-
-        // Försök kopiera
-        await navigator.clipboard.writeText(prompt);
-
-        statusEl.textContent = "✅ Prompt kopierad! ChatGPT öppnas – klistra in (Ctrl/Cmd+V) och börja.";
-        window.open("https://chat.openai.com/", "_blank");
-      } catch (err) {
-        statusEl.textContent = "⚠️ Kunde inte kopiera automatiskt. Jag öppnar prompt-filen istället.";
-        window.open(PROMPT_URL, "_blank");
-        window.open("https://chat.openai.com/", "_blank");
-      }
-    }
-
-    // Övre knapp
-    const topLink = document.getElementById("ai-genetik-link");
-    const statusEl = document.getElementById("ai-genetik-status");
-    topLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      openAITutor(statusEl);
-    });
+      btnElev.addEventListener("click",   function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
   </script>
-
 </body>
 </html>

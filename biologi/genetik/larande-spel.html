@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Genetik – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-genetik {
+      --area: #16a34a;
+      --area-strong: #15803d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
+    }
+
+    .games-intro { margin-bottom: 1.5rem; }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* ── Spelkort ── */
+    .game-card {
+      display: block;
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+      text-decoration: none;
+    }
+
+    /* ── Symbolbild ── */
+    .game-icon {
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      background: linear-gradient(135deg, var(--area-soft), var(--area-hover));
+      border-bottom: 1px solid var(--area-border);
+    }
+
+    /* Flashcard-ikon: två kort i perspektiv */
+    .fc-icon {
+      position: relative;
+      width: 54px;
+      height: 38px;
+    }
+    .fc-icon .card-back {
+      position: absolute;
+      width: 46px;
+      height: 32px;
+      border-radius: 5px;
+      background: #bbf7d0;
+      border: 1.5px solid #16a34a;
+      top: 4px;
+      left: 8px;
+    }
+    .fc-icon .card-front {
+      position: absolute;
+      width: 46px;
+      height: 32px;
+      border-radius: 5px;
+      background: #fff;
+      border: 1.5px solid #16a34a;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #15803d;
+    }
+
+    /* Punnet-ikon */
+    .punnet-icon {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid #16a34a;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #16a34a;
+    }
+    .punnet-icon div {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #15803d;
+    }
+
+    .game-body {
+      padding: 0.65rem 0.8rem 0.8rem;
+    }
+    .game-body h2 {
+      margin: 0 0 0.3rem 0;
+      font-size: 0.95rem;
+      color: var(--area-strong);
+      line-height: 1.3;
+    }
+    .game-body p {
+      margin: 0;
+      color: #555;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body class="area-genetik">
+
+  <header class="biologi-header">
+    <h1>Lärande spel – Genetik</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p><a href="/biologi/genetik/" class="subject-btn">← Tillbaka till Genetik</a></p>
+
+    <section class="games-intro">
+      <p>Här hittar du interaktiva övningar som hjälper dig träna begrepp och korsningsscheman inom genetik.</p>
+    </section>
+
+    <section class="games-grid">
+
+      <!-- Flashcards -->
+      <a class="game-card" href="./flashcards.html">
+        <div class="game-icon">
+          <div class="fc-icon">
+            <div class="card-back"></div>
+            <div class="card-front">Aa</div>
+          </div>
+        </div>
+        <div class="game-body">
+          <h2>Flashcards – Genetik</h2>
+          <p>Träna begrepp inom genetik, genteknik och evolution med frågekort som du själv bläddrar igenom.</p>
+        </div>
+      </a>
+
+      <!-- Korsningsscheman -->
+      <a class="game-card" href="./korsningsscheman.html">
+        <div class="game-icon">
+          <div class="punnet-icon">
+            <div>A</div>
+            <div>a</div>
+            <div>Aa</div>
+            <div>aa</div>
+          </div>
+        </div>
+        <div class="game-body">
+          <h2>Korsningsscheman</h2>
+          <p>Öva på att tolka och konstruera Punnet-scheman för mono- och dihydrida korsningar.</p>
+        </div>
+      </a>
+
+    </section>
+
+    <p style="margin-top: 1.5rem;">
+      <a href="/biologi/genetik/" class="subject-btn">← Tillbaka till Genetik</a>
+    </p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
