@@ -24,12 +24,19 @@
   </g>
   <line x1="278" y1="150" x2="326" y2="150" stroke="#15803d" stroke-width="2.5" marker-end="url(#zoom)"/>
 
-  <!-- DNA helix -->
+  <!-- DNA double helix -->
   <g>
-    <path d="M360 112 C 400 138, 360 162, 400 188 M400 112 C 360 138, 400 162, 360 188" stroke="#15803d" stroke-width="3.5" fill="none"/>
-    <line x1="372" y1="124" x2="388" y2="124" stroke="#22c55e" stroke-width="3"/>
-    <line x1="368" y1="150" x2="392" y2="150" stroke="#22c55e" stroke-width="3"/>
-    <line x1="372" y1="176" x2="388" y2="176" stroke="#22c55e" stroke-width="3"/>
+    <polyline points="380.0,110.0 383.5,112.0 386.8,114.1 389.7,116.2 392.1,118.2 393.9,120.2 394.8,122.3 395.0,124.3 394.3,126.4 392.8,128.4 390.6,130.5 387.8,132.6 384.6,134.6 381.2,136.7 377.7,138.7 374.3,140.8 371.2,142.8 368.6,144.8 366.6,146.9 365.4,148.9 365.0,151.0 365.4,153.1 366.6,155.1 368.6,157.2 371.2,159.2 374.3,161.2 377.7,163.3 381.2,165.3 384.6,167.4 387.8,169.4 390.6,171.5 392.8,173.6 394.3,175.6 395.0,177.7 394.8,179.7 393.9,181.8 392.1,183.8 389.7,185.8 386.8,187.9 383.5,189.9 380.0,192.0" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round"/>
+    <polyline points="380.0,110.0 376.5,112.0 373.2,114.1 370.3,116.2 367.9,118.2 366.1,120.2 365.2,122.3 365.0,124.3 365.7,126.4 367.2,128.4 369.4,130.5 372.2,132.6 375.4,134.6 378.8,136.7 382.3,138.7 385.7,140.8 388.8,142.8 391.4,144.8 393.4,146.9 394.6,148.9 395.0,151.0 394.6,153.1 393.4,155.1 391.4,157.2 388.8,159.2 385.7,161.2 382.3,163.3 378.8,165.3 375.4,167.4 372.2,169.4 369.4,171.5 367.2,173.6 365.7,175.6 365.0,177.7 365.2,179.7 366.1,181.8 367.9,183.8 370.3,185.8 373.2,187.9 376.5,189.9 380.0,192.0" fill="none" stroke="#15803d" stroke-width="3" stroke-linecap="round"/>
+    <g stroke="#22c55e" stroke-width="2.5">
+      <line x1="386.8" y1="114.1" x2="373.2" y2="114.1"/>
+      <line x1="390.6" y1="130.5" x2="369.4" y2="130.5"/>
+      <line x1="377.7" y1="138.7" x2="382.3" y2="138.7"/>
+      <line x1="366.6" y1="146.9" x2="393.4" y2="146.9"/>
+      <line x1="377.7" y1="163.3" x2="382.3" y2="163.3"/>
+      <line x1="390.6" y1="171.5" x2="369.4" y2="171.5"/>
+      <line x1="386.8" y1="187.9" x2="373.2" y2="187.9"/>
+    </g>
     <text x="380" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#15803d">DNA</text>
     <text x="380" y="238" text-anchor="middle" font-size="11.5" fill="#3f6b4e">dubbelspiral</text>
   </g>
@@ -61,5 +68,5 @@
     <text x="736" y="238" text-anchor="middle" font-size="11.5" fill="#3f6b4e">A–T och G–C</text>
   </g>
 
-  <text x="410" y="284" text-anchor="middle" font-size="12.5" fill="#3f6b4e" font-style="italic">Varje steg är en inzoomning på det föregående: cellen rymmer kärnan, kärnan kromosomerna, kromosomen DNA:t, DNA:t generna.</text>
+  <text x="410" y="280" text-anchor="middle" font-size="12.5" fill="#3f6b4e">Cellkärnan rymmer kromosomerna · varje kromosom är en hårt hoppackad DNA-molekyl · ett avsnitt av DNA-stegen är en <tspan font-weight="700" fill="#15803d">gen</tspan> · och varje stegpinne är ett baspar (A–T, G–C).</text>
 </svg>
