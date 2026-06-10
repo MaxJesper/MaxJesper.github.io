@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Genetik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-genetik {
+      --area: #16a34a;
+      --area-strong: #15803d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: var(--area); color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-genetik">
+  <header class="biologi-header">
+    <h1>Begreppslista – Genetik</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <div class="lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp inom genetik med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <div id="begrepp-table-wrap">
+      <p style="color:#888; font-size:0.9rem;">Laddar begrepp…</p>
+    </div>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+  <script src="/js/language-selector.js"></script>
+  <script>
+    function renderTable(data, lang) {
+      var isSwedish = (!lang || lang === 'sv-SE');
+      var html = '<table class="begrepp-table"><thead><tr>';
+      html += '<th style="width:28%">Begrepp</th>';
+      if (!isSwedish) html += '<th style="width:28%">Begrepp (övers.)</th>';
+      html += '<th>Förklaring</th></tr></thead><tbody>';
+      data.forEach(function(item) {
+        html += '<tr><td>' + item.namn + '</td>';
+        if (!isSwedish) html += '<td>' + (item.namn_native || '') + '</td>';
+        html += '<td>' + item.definition + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('begrepp-table-wrap').innerHTML = html;
+    }
+
+    var BEGREPP = [
+      { "namn": "Cell", "definition": "Den minsta levande enheten. Alla levande organismer är uppbyggda av celler. En mänsklig kropp innehåller ungefär 37 biljoner celler av många olika typer.", "anchor": "./studieguide.html#m1" },
+      { "namn": "Cellkärna", "definition": "En membranomsluten struktur inne i cellen som innehåller arvsmassan (DNA). Cellkärnan styr cellens aktiviteter och fungerar som ett kontrollcentrum.", "anchor": "./studieguide.html#m1" },
+      { "namn": "Kromosom", "definition": "En kraftigt hopvecklad DNA-molekyl omgiven av proteiner. Människan har 46 kromosomer i de flesta celler, organiserade i 23 par. Könsceller har bara 23 kromosomer.", "anchor": "./studieguide.html#m2" },
+      { "namn": "Karyotyp", "definition": "En visuell bild av en individs kompletta kromosomsättning, ordnad i nummerordning. Används för att upptäcka kromosonavvikelser som trisomi 21 (Downs syndrom).", "anchor": "./studieguide.html#m7" },
+      { "namn": "DNA", "definition": "Deoxyribonukleinsyra – den kemiska substans som bär på den genetiska informationen. DNA består av en dubbelspiral av nukleotider med baserna adenin (A), tymin (T), guanin (G) och cytosin (C).", "anchor": "./studieguide.html#m2" },
+      { "namn": "Nukleotid", "definition": "DNA:s byggsten. Varje nukleotid består av ett sockersocker (deoxiribos), en fosfatgrupp och en kväverik bas (A, T, G eller C). Nukleotider kopplas samman i långa kedjor som bildar DNA-strängen.", "anchor": "./studieguide.html#m2" },
+      { "namn": "Dubbelhelix", "definition": "DNA:s tredimensionella form – två nukleotidkedjor som spiralviras runt varandra. Kedjorna hålls ihop av vätebindningar mellan komplementära baser: A parar med T, och G parar med C.", "anchor": "./studieguide.html#m2" },
+      { "namn": "Baspar", "definition": "Ett par av komplementära baser som binder till varandra i DNA-dubbelhelixen: adenin (A) binder till tymin (T), och guanin (G) binder till cytosin (C). Basparsregeln gör att varje DNA-sträng kan användas som mall vid kopiering.", "anchor": "./studieguide.html#m2" },
+      { "namn": "Gen", "definition": "En avgränsad sekvens av DNA som innehåller instruktioner för att bygga ett specifikt protein. Människan har uppskattningsvis 20 000–25 000 proteinkodande gener.", "anchor": "./studieguide.html#m3" },
+      { "namn": "Locus", "definition": "Den fasta position på en kromosom där en specifik gen sitter. Homologa kromosomers loci (plural) bär på allelerna av samma gen.", "anchor": "./studieguide.html#m3" },
+      { "namn": "Genom", "definition": "Den fullständiga uppsättningen av DNA i en organisms celler – alla kromosomer och alla gener. Det mänskliga genomet innehåller ungefär 3 miljarder baspar.", "anchor": "./studieguide.html#m3" },
+      { "namn": "RNA", "definition": "Ribonukleinsyra – ett molekylärt mellanled i informationsflödet från DNA till protein. RNA är enkelsträngat och använder basen uracil (U) istället för tymin (T).", "anchor": "./studieguide.html#m5" },
+      { "namn": "Transkription", "definition": "Det första steget i proteinsyntesen. I cellkärnan läser enzymet RNA-polymeras av DNA-sekvensen och skapar en komplementär mRNA-molekyl.", "anchor": "./studieguide.html#m5" },
+      { "namn": "mRNA", "definition": "Budbärar-RNA (messenger RNA). En enkelsträngad RNA-molekyl som är en kopia av en gen och bär instruktionerna från cellkärnan till ribosomerna i cytoplasman.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Kodon", "definition": "En sekvens av tre baser i mRNA som kodar för en specifik aminosyra. Exempelvis kodar AUG (startkodon) för aminosyran metionin. Det finns 64 möjliga kodoner för 20 aminosyror.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Den genetiska koden", "definition": "Det universella system som kopplar ihop tripletter av mRNA-baser (kodoner) med aminosyror. Koden är nästan identisk hos alla levande organismer, vilket tyder på gemensamt ursprung.", "anchor": "./studieguide.html#m5" },
+      { "namn": "tRNA", "definition": "Transport-RNA. Bärarmolekyl som för rätt aminosyra till ribosomen under translation. Varje tRNA har ett antikodon som parar med ett kodon på mRNA.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Antikodon", "definition": "En sekvens av tre baser på tRNA som är komplementär till ett specifikt kodon på mRNA. Basparningen säkerställer att rätt aminosyra kopplas in under translation.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Aminosyra", "definition": "Proteinets byggsten. Det finns 20 olika aminosyror. Ordningen av aminosyror i ett protein bestämmer dess tredimensionella form och funktion.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Translation", "definition": "Det andra steget i proteinsyntesen. Ribosomen läser av mRNA-sekvensen kodon för kodon och sätter ihop aminosyror i rätt ordning för att bilda ett protein.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Ribosom", "definition": "En liten struktur i cytoplasman som läser av mRNA och sätter ihop proteiner av aminosyror. Kallas ofta cellens proteinfabrik.", "anchor": "./studieguide.html#m5" },
+      { "namn": "Proteinsyntes", "definition": "Den totala processen där cellen bygger ett protein utifrån informationen i DNA. Sker i två steg: transkription (DNA → mRNA) och translation (mRNA → protein).", "anchor": "./studieguide.html#m5" },
+      { "namn": "Allel", "definition": "En av de alternativa formerna av en gen som kan finnas på ett specifikt locus på en kromosom. Varje person har två alleler av varje gen – en från modern och en från fadern.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Dominant allel", "definition": "En allel vars egenskap syns i fenotypen även om individen bara har en kopia av den. Betecknas med stor bokstav, t.ex. A.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Recessiv allel", "definition": "En allel vars egenskap bara syns i fenotypen om individen har två kopior av den (homozygot). Betecknas med liten bokstav, t.ex. a.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Kodominans", "definition": "När båda allelerna uttrycks fullt ut i heterozygoten. Exempel: blodgrupp AB, där både A- och B-allelen uttrycks samtidigt på röda blodkroppar.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Genotyp", "definition": "Individens genetiska sammansättning, dvs. vilka alleler den bär på. Skrivs t.ex. AA, Aa eller aa. Genotypen är inte alltid synlig utifrån.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Fenotyp", "definition": "Det observerbara utseendet och de mätbara egenskaperna hos en organism, som bestäms av genotypen och miljöpåverkan. Exempel: ögonfärg, blodgrupp, längd.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Homozygot", "definition": "En individ med två identiska alleler av en gen (AA eller aa).", "anchor": "./studieguide.html#m4" },
+      { "namn": "Heterozygot", "definition": "En individ med två olika alleler av en gen (Aa). Kallas också bärare om den recessiva allelen kan orsaka sjukdom när den uppträder i dubbel kopia.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Bärare", "definition": "En individ som är heterozygot (Aa) för en recessiv sjukdomsallel. Bäraren är frisk men kan föra sjukdomsallelen vidare till sina barn.", "anchor": "./studieguide.html#m4" },
+      { "namn": "Punnet-schema", "definition": "Ett rutschema som används för att förutse sannolikheten för olika genotyper och fenotyper hos avkomman, givet föräldrarnas genotyper. Uppfunnet av genetikern Reginald Punnett.", "anchor": "./studieguide.html#m8" },
+      { "namn": "Autosomalt arv", "definition": "Arv av egenskaper vars gen sitter på ett autosom (icke-könskromosom, kromosompar 1–22). Drabbar män och kvinnor lika. Kan vara dominant eller recessivt.", "anchor": "./studieguide.html#m8" },
+      { "namn": "Könsbunden ärftlighet", "definition": "Arv av egenskaper vars gener sitter på könskromosomerna (X eller Y). Eftersom män har XY och kvinnor XX bär sig könsbundna egenskaper (t.ex. färgblindhet) annorlunda hos de två könen.", "anchor": "./studieguide.html#m8" },
+      { "namn": "Mitos", "definition": "En typ av celldelning där en cell delar sig och bildar två genetiskt identiska dotterceller med samma antal kromosomer som modercellen (46 hos människan). Används vid tillväxt och reparation.", "anchor": "./studieguide.html#m6" },
+      { "namn": "Meios", "definition": "En typ av celldelning som producerar könsceller (ägg och spermier) med halva antalet kromosomer (23). Skapar genetisk variation genom rekombination.", "anchor": "./studieguide.html#m6" },
+      { "namn": "Haploïd", "definition": "En cell med en enkel uppsättning kromosomer (n). Mänskliga könsceller är haploïda med 23 kromosomer. Vid befruktning slås två haploïda celler samman till en diploïd cell.", "anchor": "./studieguide.html#m6" },
+      { "namn": "Diploïd", "definition": "En cell med två kopior av varje kromosom (2n). De flesta celler i kroppen är diploïda med 46 kromosomer (23 par).", "anchor": "./studieguide.html#m6" },
+      { "namn": "Crossing-over", "definition": "Utbyte av kromosomsegment mellan homologa kromosomer under meios. Skapar nya kombinationer av alleler och är en viktig källa till genetisk variation.", "anchor": "./studieguide.html#m6" },
+      { "namn": "Mutation", "definition": "En permanent förändring i DNA-sekvensen. Kan uppstå spontant, av strålning eller kemikalier. De flesta mutationer har liten effekt, men en del kan leda till sjukdom.", "anchor": "./studieguide.html#m7" },
+      { "namn": "Trisomi", "definition": "En individ har tre kopior av en kromosom istället för normala två. Trisomi 21 ger Downs syndrom. Uppkommer när kromosomdelningen vid meios misslyckas (non-disjunktion).", "anchor": "./studieguide.html#m7" },
+      { "namn": "Genetisk sjukdom", "definition": "En sjukdom som orsakas av förändringar i arvsmassan. Kan vara nedärvd (t.ex. cystisk fibros) eller uppstå p.g.a. en ny mutation (t.ex. Downs syndrom).", "anchor": "./studieguide.html#m7" },
+      { "namn": "Arv och miljö", "definition": "Samspelet mellan genetiska faktorer (arv) och omgivningsfaktorer (miljö) som tillsammans bestämmer en individs egenskaper. De flesta komplexa egenskaper – som längd och intelligens – påverkas av båda.", "anchor": "./studieguide.html#m9" },
+      { "namn": "Plasmid", "definition": "En liten, cirkulär DNA-molekyl som finns naturligt i bakterier, skild från bakteriens kromosom. Plasmider används inom genteknik som vektorer för att föra in främmande gener i celler.", "anchor": "./studieguide.html#m11" },
+      { "namn": "Restriktionsenzym", "definition": "Ett enzym som klipper DNA vid en specifik bassekvens. Används inom genteknik för att klippa ut och klistra in gensegment – ett slags molekylärt sax.", "anchor": "./studieguide.html#m11" },
+      { "namn": "Rekombinant DNA", "definition": "DNA som innehåller sekvenser från två eller fler olika källor, framställt med hjälp av restriktionsenzymer och ligas. Grundprincipen i genetisk modifiering.", "anchor": "./studieguide.html#m11" },
+      { "namn": "PCR", "definition": "Polymeraskedjereaktion – en metod för att kopiera upp en specifik DNA-sekvens miljoner gånger på kort tid. Används vid brottsutredningar, sjukdomsdiagnostik och forskning.", "anchor": "./studieguide.html#m11" },
+      { "namn": "GMO", "definition": "Genetiskt modifierad organism – en organism vars arvsmassa förändrats med genteknik, t.ex. för att producera insulin, tåla sjukdomar eller ge bättre skörd.", "anchor": "./studieguide.html#m11" },
+      { "namn": "CRISPR-Cas9", "definition": "Ett precist genetiskt verktyg som fungerar som en programmerbar DNA-sax. CRISPR kan hitta en exakt sekvens i genomet och klippa eller redigera den – möjliggör behandling av genetiska sjukdomar.", "anchor": "./studieguide.html#m11" }
+    ];
+
+    renderTable(BEGREPP, 'sv-SE');
+
+    window.addEventListener('begreppLangUpdate', function(e) {
+      renderTable(e.detail.data, e.detail.lang);
+    });
+  </script>
+</body>
+</html>
