@@ -424,6 +424,61 @@
           <summary>Hur kan fyra baser räcka för 20 aminosyror?</summary>
           <p>Det finns 20 aminosyror men bara fyra baser. Lösningen är att baserna läses tre i taget. Med tre positioner och fyra möjliga baser blir det 4 × 4 × 4 = 64 olika kodon – gott om plats för 20 aminosyror.</p>
           <p>Att det blir fler kodon än aminosyror betyder att flera kodon kan koda för samma aminosyra. Ett särskilt kodon, AUG, fungerar som startsignal, och tre kodon fungerar som stopp. På så vis vet ribosomen både var den ska börja och sluta läsa.</p>
+
+          <p>Hela "facit" för översättningen kallas <strong class="term">den genetiska koden</strong>. Tabellen nedan visar vilken aminosyra varje mRNA-kodon ger. Läs den genom att kombinera första basen (raden till vänster), andra basen (kolumnen) och tredje basen (raden till höger). Klicka på knapparna för att växla mellan fullständigt svenskt namn, trebokstavs- och enbokstavsbeteckning.</p>
+
+          <style>
+            .gcode-wrap{font-size:0.92rem;}
+            .gcode-btns{display:flex;gap:0.4rem;flex-wrap:wrap;margin:0.4rem 0 0.7rem;}
+            .gcode-btns button{padding:0.35rem 0.8rem;border:1px solid #86efac;background:#f0fdf4;color:#15803d;border-radius:999px;font:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;}
+            .gcode-btns button.active{background:#15803d;color:#fff;border-color:#15803d;}
+            .gcode-scroll{overflow-x:auto;}
+            table.gcode{border-collapse:collapse;margin:0 auto;background:#fff;}
+            table.gcode th,table.gcode td{border:1px solid #d6e3da;text-align:center;padding:0.25rem 0.3rem;}
+            table.gcode thead th{background:#dcfce7;color:#166534;font-size:0.82rem;}
+            table.gcode .pos{background:#bbf7d0;color:#14532d;font-size:1.4rem;font-weight:800;width:1.6rem;}
+            table.gcode .pos3{background:#ecfdf3;color:#15803d;font-weight:700;width:1.4rem;}
+            table.gcode td.cell{min-width:4.6rem;line-height:1.15;}
+            table.gcode td.cell .cdn{display:block;font-size:0.62rem;color:#94a3b8;letter-spacing:0.5px;}
+            table.gcode td.cell .aa{font-weight:600;color:#1f2937;}
+            table.gcode td.start{background:#dcfce7;}
+            table.gcode td.start .aa{color:#15803d;}
+            table.gcode td.stop .aa{color:#dc2626;}
+          </style>
+
+          <div class="gcode-wrap">
+            <div class="gcode-btns" id="gcBtns">
+              <button data-mode="sv" class="active">Svenskt namn</button>
+              <button data-mode="three">Trebokstav</button>
+              <button data-mode="one">Enbokstav</button>
+            </div>
+            <div class="gcode-scroll"><div id="gcTable"></div></div>
+            <p style="font-size:0.82rem;color:#555;margin-top:0.5rem;"><span style="color:#15803d;font-weight:700;">Grön</span> = startkodon AUG (metionin) · <span style="color:#dc2626;font-weight:700;">röd</span> = stoppkodon.</p>
+          </div>
+
+          <script>
+          (function(){
+            var AA={Phe:['F','Fenylalanin'],Leu:['L','Leucin'],Ile:['I','Isoleucin'],Met:['M','Metionin'],Val:['V','Valin'],Ser:['S','Serin'],Pro:['P','Prolin'],Thr:['T','Treonin'],Ala:['A','Alanin'],Tyr:['Y','Tyrosin'],His:['H','Histidin'],Gln:['Q','Glutamin'],Asn:['N','Asparagin'],Lys:['K','Lysin'],Asp:['D','Asparaginsyra'],Glu:['E','Glutaminsyra'],Cys:['C','Cystein'],Trp:['W','Tryptofan'],Arg:['R','Arginin'],Gly:['G','Glycin'],STOP:['*','Stopp']};
+            var CODE={UUU:'Phe',UUC:'Phe',UUA:'Leu',UUG:'Leu',UCU:'Ser',UCC:'Ser',UCA:'Ser',UCG:'Ser',UAU:'Tyr',UAC:'Tyr',UAA:'STOP',UAG:'STOP',UGU:'Cys',UGC:'Cys',UGA:'STOP',UGG:'Trp',CUU:'Leu',CUC:'Leu',CUA:'Leu',CUG:'Leu',CCU:'Pro',CCC:'Pro',CCA:'Pro',CCG:'Pro',CAU:'His',CAC:'His',CAA:'Gln',CAG:'Gln',CGU:'Arg',CGC:'Arg',CGA:'Arg',CGG:'Arg',AUU:'Ile',AUC:'Ile',AUA:'Ile',AUG:'Met',ACU:'Thr',ACC:'Thr',ACA:'Thr',ACG:'Thr',AAU:'Asn',AAC:'Asn',AAA:'Lys',AAG:'Lys',AGU:'Ser',AGC:'Ser',AGA:'Arg',AGG:'Arg',GUU:'Val',GUC:'Val',GUA:'Val',GUG:'Val',GCU:'Ala',GCC:'Ala',GCA:'Ala',GCG:'Ala',GAU:'Asp',GAC:'Asp',GAA:'Glu',GAG:'Glu',GGU:'Gly',GGC:'Gly',GGA:'Gly',GGG:'Gly'};
+            var B=['U','C','A','G'],mode='sv';
+            function label(aa){if(mode==='one')return AA[aa][0];if(mode==='three')return aa==='STOP'?'STOP':aa;return AA[aa][1];}
+            function render(){
+              var h='<table class="gcode"><thead><tr><th rowspan="2">1:a</th><th colspan="4">2:a basen</th><th rowspan="2">3:e</th></tr><tr><th>U</th><th>C</th><th>A</th><th>G</th></tr></thead><tbody>';
+              for(var i=0;i<4;i++){for(var k=0;k<4;k++){h+='<tr>';if(k===0)h+='<td class="pos" rowspan="4">'+B[i]+'</td>';
+                for(var j=0;j<4;j++){var c=B[i]+B[j]+B[k];var aa=CODE[c];var cls='cell'+(c==='AUG'?' start':'')+(aa==='STOP'?' stop':'');h+='<td class="'+cls+'"><span class="cdn">'+c+'</span><span class="aa">'+label(aa)+'</span></td>';}
+                h+='<td class="pos3">'+B[k]+'</td></tr>';}}
+              h+='</tbody></table>';
+              document.getElementById('gcTable').innerHTML=h;
+            }
+            var btns=document.getElementById('gcBtns');
+            btns.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;mode=b.getAttribute('data-mode');Array.prototype.forEach.call(btns.children,function(x){x.classList.toggle('active',x===b);});render();});
+            render();
+          })();
+          </script>
+
+          <p>Det märkliga – och djupt betydelsefulla – är att <strong class="term">den genetiska koden är i stort sett identisk hos allt liv på jorden</strong>. Bakterier, svampar, växter, djur och människor använder samma kodon för samma aminosyror. Ett AUG betyder metionin i en tarmbakterie likaväl som i en björk eller i dina egna celler.</p>
+          <p>Det finns ett fåtal små undantag. I mitokondriernas eget DNA, och hos vissa encelliga organismer, kan enstaka kodon läsas av lite annorlunda – ibland betyder ett kodon som annars är "stopp" i stället en aminosyra. Men dessa avvikelser är få och rör bara ett par kodon.</p>
+          <p>Att koden är så gott som universell är ett av de <strong class="term">starkaste bevisen för att allt liv har ett gemensamt ursprung</strong>. Hade livet uppstått flera gånger oberoende av varandra skulle vi vänta oss olika koder hos olika organismer. I stället pekar den gemensamma koden mot att alla nu levande varelser härstammar från en och samma <em>urcell</em> – en första cell som troligen uppstod i havet för ungefär 3,5–4 miljarder år sedan.</p>
         </details>        <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="./larande-spel.html"><span class="n-label">Träna</span>Begreppskort och spel</a>
