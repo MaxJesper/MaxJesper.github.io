@@ -1,98 +1,181 @@
-<svg viewBox="0 0 560 400" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif">
+<svg viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
 
-  <!-- Bakgrund -->
-  <rect width="560" height="400" fill="#f8faff" rx="12"/>
-
-  <!-- Rubrik -->
-  <text x="280" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1e3a8a">Galvaniskt element – kemisk energi blir elektrisk ström</text>
-
-  <!-- ══════════════════════════════════
-       ELEKTROLYTKAR
-  ══════════════════════════════════ -->
-  <rect x="100" y="160" width="360" height="160" rx="10" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
-  <text x="280" y="258" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="600">Elektrolyt (t.ex. ZnSO₄-lösning)</text>
-  <text x="280" y="276" text-anchor="middle" font-size="11" fill="#3b82f6">Zn²⁺ och SO₄²⁻ joner rör sig fritt</text>
-
-  <!-- ══════════════════════════════════
-       ZINKPLATTA (minuspol)
-  ══════════════════════════════════ -->
-  <rect x="130" y="100" width="50" height="200" rx="6" fill="#6b7280" stroke="#374151" stroke-width="1.5"/>
-  <text x="155" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">Zn</text>
-  <!-- Minus-symbol -->
-  <circle cx="155" cy="75" r="14" fill="#dc2626" stroke="#b91c1c" stroke-width="1.5"/>
-  <text x="155" y="80" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">−</text>
-  <text x="155" y="58" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700">MINUSPOL</text>
-
-  <!-- Zn löses: bubblor -->
-  <circle cx="143" cy="155" r="4" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.6"/>
-  <circle cx="158" cy="145" r="3" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.6"/>
-  <circle cx="167" cy="158" r="5" fill="none" stroke="#6b7280" stroke-width="1" opacity="0.6"/>
-  <text x="155" y="195" text-anchor="middle" font-size="9.5" fill="#374151">Zn → Zn²⁺ + 2e⁻</text>
-  <text x="155" y="208" text-anchor="middle" font-size="9" fill="#374151">(löses upp)</text>
-
-  <!-- ══════════════════════════════════
-       KOPPARPLATTA (pluspol)
-  ══════════════════════════════════ -->
-  <rect x="380" y="100" width="50" height="200" rx="6" fill="#b45309" stroke="#92400e" stroke-width="1.5"/>
-  <text x="405" y="95" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Cu</text>
-  <!-- Plus-symbol -->
-  <circle cx="405" cy="75" r="14" fill="#16a34a" stroke="#15803d" stroke-width="1.5"/>
-  <text x="405" y="80" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">+</text>
-  <text x="405" y="58" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="700">PLUSPOL</text>
-
-  <!-- Koppar fälls ut -->
-  <text x="405" y="195" text-anchor="middle" font-size="9.5" fill="#92400e">Cu²⁺ + 2e⁻ → Cu</text>
-  <text x="405" y="208" text-anchor="middle" font-size="9" fill="#92400e">(fälls ut)</text>
-
-  <!-- ══════════════════════════════════
-       LEDARE (trådarna ovan)
-  ══════════════════════════════════ -->
-  <path d="M155 100 L155 55 L280 55 L405 55 L405 100" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round"/>
-
-  <!-- Glödlampa i mitten av ledaren -->
-  <circle cx="280" cy="55" r="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
-  <text x="280" y="60" text-anchor="middle" font-size="14">💡</text>
-
-  <!-- Elektronpil 1: från Zn mot lampa -->
-  <path d="M185 52 L240 52" fill="none" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrowBlue)"/>
-  <!-- Elektronpil 2: från lampa mot Cu -->
-  <path d="M320 52 L375 52" fill="none" stroke="#1d4ed8" stroke-width="2" marker-end="url(#arrowBlue)"/>
-
-  <!-- Text "elektroner" -->
-  <text x="213" y="44" text-anchor="middle" font-size="10" fill="#1d4ed8">e⁻ →</text>
-  <text x="348" y="44" text-anchor="middle" font-size="10" fill="#1d4ed8">e⁻ →</text>
-
-  <!-- ══════════════════════════════════
-       JONRÖRELSER I ELEKTROLYTEN
-  ══════════════════════════════════ -->
-  <!-- Zn²⁺ rör sig höger (mot Cu) -->
-  <path d="M200 230 L240 230" fill="none" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrowDkBlue)" stroke-dasharray="4,3"/>
-  <text x="220" y="225" text-anchor="middle" font-size="9.5" fill="#1d4ed8">Zn²⁺ →</text>
-  <!-- SO₄²⁻ rör sig vänster (mot Zn) -->
-  <path d="M360 295 L320 295" fill="none" stroke="#9333ea" stroke-width="1.5" marker-end="url(#arrowPurple)" stroke-dasharray="4,3"/>
-  <text x="340" y="290" text-anchor="middle" font-size="9.5" fill="#7c3aed">← SO₄²⁻</text>
-
-  <!-- ══════════════════════════════════
-       PILSPETSAR (markers)
-  ══════════════════════════════════ -->
   <defs>
-    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#1d4ed8"/>
+    <!-- Pil för anodflöde -->
+    <marker id="arrowLeft" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+      <path d="M10,0 L0,4 L10,8 Z" fill="#c0a0a0"/>
     </marker>
-    <marker id="arrowDkBlue" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto">
-      <path d="M0,0 L0,5 L7,2.5 z" fill="#1d4ed8"/>
+    <!-- Pil för jonflöde -->
+    <marker id="arrowCurve" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 Z" fill="#374151"/>
     </marker>
-    <marker id="arrowPurple" markerWidth="7" markerHeight="7" refX="2" refY="2.5" orient="auto">
-      <path d="M7,0 L7,5 L0,2.5 z" fill="#7c3aed"/>
+    <!-- Pil för elektroner i ledare -->
+    <marker id="arrowElec" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 Z" fill="#374151"/>
     </marker>
+    <!-- Gradient Zn-elektrod -->
+    <linearGradient id="gradZn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <!-- Gradient Cu-elektrod -->
+    <linearGradient id="gradCu" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c2793c"/>
+      <stop offset="50%" stop-color="#f0a050"/>
+      <stop offset="100%" stop-color="#a0580a"/>
+    </linearGradient>
   </defs>
 
-  <!-- ══════════════════════════════════
-       FÖRKLARINGSRUTA NERE
-  ══════════════════════════════════ -->
-  <rect x="80" y="336" width="400" height="50" rx="8" fill="#fff" stroke="#bfdbfe" stroke-width="1.2"/>
-  <text x="280" y="354" text-anchor="middle" font-size="10.5" fill="#1e3a8a" font-weight="600">Den oädlare metallen (Zn) avger elektroner → elektroner flödar i ledaren → lyser lampan.</text>
-  <text x="280" y="370" text-anchor="middle" font-size="10.5" fill="#374151">Den ädlare metallen (Cu) tar emot elektroner och kopparjoner fälls ut på plattan.</text>
-  <text x="280" y="386" text-anchor="middle" font-size="10" fill="#6b7280" font-style="italic">Ju längre isär i spänningsserien, desto högre spänning.</text>
+  <!-- ══════════════════════════════════════
+       BAKGRUND
+  ══════════════════════════════════════ -->
+  <rect width="600" height="420" fill="#f0f4ff" rx="14"/>
+
+  <!-- ══════════════════════════════════════
+       VÄTSKEKAR (under vågtoppen)
+       Vänster = ZnSO₄ (ljusgrå), Höger = CuSO₄ (blå)
+  ══════════════════════════════════════ -->
+  <!-- Vänster lösning (ZnSO₄) -->
+  <rect x="30" y="180" width="263" height="200" fill="#dde3ec"/>
+  <!-- Höger lösning (CuSO₄) -->
+  <rect x="307" y="180" width="263" height="200" fill="#bdd5f0"/>
+
+  <!-- Botten och sidor av karet -->
+  <rect x="30" y="375" width="540" height="5" rx="2" fill="#6b7280"/>
+  <rect x="30" y="180" width="5" height="200" fill="#6b7280"/>
+  <rect x="565" y="180" width="5" height="200" fill="#6b7280"/>
+
+  <!-- Vågig vätskeyta – vänster -->
+  <path d="M30,180
+           Q50,168 70,180 Q90,192 110,180 Q130,168 150,180
+           Q170,192 190,180 Q210,168 230,180 Q250,192 270,180
+           L293,180 L293,180" fill="#dde3ec" stroke="#aab5c8" stroke-width="1.2"/>
+
+  <!-- Vågig vätskeyta – höger -->
+  <path d="M307,180
+           Q327,168 347,180 Q367,192 387,180 Q407,168 427,180
+           Q447,192 467,180 Q487,168 507,180 Q527,192 547,180
+           L570,180 L570,180" fill="#bdd5f0" stroke="#7aaed4" stroke-width="1.2"/>
+
+  <!-- Karets översta kant (linje) -->
+  <line x1="30" y1="180" x2="293" y2="180" stroke="#aab5c8" stroke-width="1.5"/>
+  <line x1="307" y1="180" x2="570" y2="180" stroke="#7aaed4" stroke-width="1.5"/>
+
+  <!-- ══════════════════════════════════════
+       PORÖS SKIVA (mittdelare)
+  ══════════════════════════════════════ -->
+  <rect x="287" y="165" width="26" height="215" rx="5" fill="#f4c0b8" stroke="#d08070" stroke-width="1.5"/>
+  <!-- Porösa hål i skivan -->
+  <circle cx="300" cy="215" r="3.5" fill="#d08070" opacity="0.5"/>
+  <circle cx="300" cy="235" r="3.5" fill="#d08070" opacity="0.5"/>
+  <circle cx="300" cy="255" r="3.5" fill="#d08070" opacity="0.5"/>
+  <circle cx="300" cy="275" r="3.5" fill="#d08070" opacity="0.5"/>
+  <circle cx="300" cy="295" r="3.5" fill="#d08070" opacity="0.5"/>
+
+  <!-- ══════════════════════════════════════
+       ANODFLÖDE-PIL
+  ══════════════════════════════════════ -->
+  <path d="M380,300 L320,300" stroke="#c0a0a0" stroke-width="18" stroke-linecap="round" marker-end="url(#arrowLeft)" opacity="0.55"/>
+  <text x="410" y="305" font-size="12" fill="#7c5050" font-weight="600">Anodflöde</text>
+
+  <!-- ══════════════════════════════════════
+       ZN-ELEKTROD (vänster)
+  ══════════════════════════════════════ -->
+  <rect x="132" y="190" width="38" height="155" rx="5" fill="url(#gradZn)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="151" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">Zn</text>
+  <text x="165" y="290" text-anchor="start" font-size="9.5" fill="#334155">(s)</text>
+  <!-- Anslutningspunkt -->
+  <circle cx="151" cy="190" r="5" fill="#374151"/>
+
+  <!-- ══════════════════════════════════════
+       CU-ELEKTROD (höger)
+  ══════════════════════════════════════ -->
+  <rect x="430" y="190" width="38" height="155" rx="5" fill="url(#gradCu)" stroke="#a16207" stroke-width="1.5"/>
+  <text x="449" y="278" text-anchor="middle" font-size="14" font-weight="700" fill="#7c2d12">Cu</text>
+  <text x="463" y="290" text-anchor="start" font-size="9.5" fill="#7c2d12">(s)</text>
+  <!-- Anslutningspunkt -->
+  <circle cx="449" cy="190" r="5" fill="#374151"/>
+
+  <!-- ══════════════════════════════════════
+       YTTRE LEDARE + LAMPA
+  ══════════════════════════════════════ -->
+  <!-- Vänster ledartråd: elektrod → upp → lampa -->
+  <polyline points="151,185 151,100 270,100" fill="none" stroke="#374151" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Höger ledartråd: lampa → upp → elektrod -->
+  <polyline points="330,100 449,100 449,185" fill="none" stroke="#374151" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Minus-tecken vid vänster anslutning -->
+  <text x="155" y="120" font-size="22" font-weight="900" fill="#374151">−</text>
+  <!-- Plus-tecken vid höger anslutning -->
+  <text x="428" y="120" font-size="20" font-weight="900" fill="#374151">+</text>
+
+  <!-- Glödlampa (mitten av tråden) -->
+  <!-- Sockel -->
+  <rect x="285" y="95" width="30" height="14" rx="3" fill="#8B5E3C"/>
+  <!-- Glödkupa -->
+  <ellipse cx="300" cy="82" rx="22" ry="20" fill="#FDE68A" stroke="#D97706" stroke-width="2"/>
+  <!-- Glödtråd -->
+  <path d="M291,82 Q295,74 300,82 Q305,90 309,82" fill="none" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Ljusstrålar -->
+  <line x1="300" y1="59" x2="300" y2="52" stroke="#FDE68A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="316" y1="64" x2="321" y2="58" stroke="#FDE68A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="284" y1="64" x2="279" y2="58" stroke="#FDE68A" stroke-width="2" stroke-linecap="round"/>
+  <line x1="322" y1="76" x2="329" y2="73" stroke="#FDE68A" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="278" y1="76" x2="271" y2="73" stroke="#FDE68A" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- ══════════════════════════════════════
+       ELEKTRONBUBBLOR (vänster: lämnar Zn)
+  ══════════════════════════════════════ -->
+  <circle cx="108" cy="148" r="16" fill="#f5f0d8" stroke="#b8a848" stroke-width="1.5"/>
+  <text x="108" y="145" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">e⁻</text>
+  <circle cx="85" cy="128" r="16" fill="#f5f0d8" stroke="#b8a848" stroke-width="1.5"/>
+  <text x="85" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">e⁻</text>
+  <!-- Pil från elektron-bubbla mot tråden -->
+  <path d="M120,138 L148,113" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowCurve)"/>
+
+  <!-- ══════════════════════════════════════
+       ELEKTRONBUBBLOR (höger: anländer Cu)
+  ══════════════════════════════════════ -->
+  <circle cx="490" cy="148" r="16" fill="#f5f0d8" stroke="#b8a848" stroke-width="1.5"/>
+  <text x="490" y="145" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">e⁻</text>
+  <circle cx="515" cy="128" r="16" fill="#f5f0d8" stroke="#b8a848" stroke-width="1.5"/>
+  <text x="515" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">e⁻</text>
+  <!-- Pil mot elektroden -->
+  <path d="M476,138 L452,113" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowCurve)"/>
+
+  <!-- ══════════════════════════════════════
+       JONBUBBLOR I LÖSNING
+  ══════════════════════════════════════ -->
+  <!-- Zn²⁺ bildas (vänster) -->
+  <circle cx="215" cy="295" r="22" fill="white" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="215" y="291" text-anchor="middle" font-size="11" font-weight="700" fill="#334155">Zn</text>
+  <text x="215" y="305" text-anchor="middle" font-size="10" fill="#334155">⁺²(aq)</text>
+  <!-- Böjd pil från Zn-platta mot jonbubbla -->
+  <path d="M175,310 Q190,340 210,315" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowCurve)"/>
+
+  <!-- Cu²⁺ förbrukas (höger) -->
+  <circle cx="395" cy="295" r="22" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="395" y="291" text-anchor="middle" font-size="11" font-weight="700" fill="#1e40af">Cu</text>
+  <text x="395" y="305" text-anchor="middle" font-size="10" fill="#1e40af">⁺²(aq)</text>
+  <!-- Böjd pil från jonbubbla mot Cu-platta -->
+  <path d="M418,275 Q440,260 447,280" fill="none" stroke="#374151" stroke-width="1.5" marker-end="url(#arrowCurve)"/>
+
+  <!-- ══════════════════════════════════════
+       ETIKETTER
+  ══════════════════════════════════════ -->
+  <!-- Zinkanod -->
+  <text x="151" y="42" text-anchor="middle" font-size="17" font-weight="800" fill="#1e293b">Zinkanod</text>
+  <!-- Kopparkatod -->
+  <text x="449" y="42" text-anchor="middle" font-size="17" font-weight="800" fill="#1e293b">Kopparkatod</text>
+
+  <!-- Porös skiva-etikett -->
+  <text x="300" y="155" text-anchor="middle" font-size="11" font-weight="600" fill="#7c5050">Porös</text>
+  <text x="300" y="167" text-anchor="middle" font-size="11" font-weight="600" fill="#7c5050">skiva</text>
+
+  <!-- ZnSO₄ (aq) -->
+  <text x="70" y="390" font-size="12" font-weight="600" fill="#475569">ZnSO₄ (aq)</text>
+  <!-- CuSO₄ (aq) -->
+  <text x="450" y="390" font-size="12" font-weight="600" fill="#1d4ed8">CuSO₄ (aq)</text>
 
 </svg>
