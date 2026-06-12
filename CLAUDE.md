@@ -349,3 +349,12 @@ En övningsbank i samma stil som laborationsbanken, liggande på kemi-, fysik- o
 
 ### Idé 15 – Tankekarta per område
 En visuell tankekarta som ger eleverna en överblick över allt som ingår i ett område innan studierna börjar. Kan vara interaktiv (klickbar) eller statisk. Ska göras tillsammans med Jesper.
+
+### Idé 16 – Övningar i genteknik byggda på kodontabellen
+Den klickbara genetiska kodtabellen finns nu som återanvändbar komponent (`/js/kodontabell.js`, monteras via `<div class="kodontabell-mount"></div>`). Komponenten exponerar `window.Kodontabell.CODE` och `.AA` så att övningar kan återanvända datan. När vi går igenom gentekniken tillsammans ska vi bygga interaktiva övningar på denna grund:
+
+- **Översätt mRNA→protein:** eleven får en mRNA-sekvens (t.ex. AUG-UUU-CAU-UAA) och skriver proteinet; automaträttning mot facit.
+- **Omvänd uppslagning:** "vilka kodon kan ge Leucin?" – tränar att läsa tabellen baklänges och förstå att flera kodon ger samma aminosyra.
+- **Mutationsövning (kopplad till CRISPR/mutationer):** byt en bas i en sekvens och se effekten – tyst mutation (samma aminosyra), missense (ny aminosyra) eller nonsens (stoppkodon). Knyter an till m7 (mutationer) och m11 (genteknik).
+
+Övningarna ska göras tillsammans med Jesper. Överväg samtidigt att länka kodontabellen från m11 (genteknik) och från övningsbanken.
