@@ -333,6 +333,61 @@
 
       .wheel svg{ width:100%; height:100%; display:block; }
 
+      /* Hostande dam bakom bilen – egen SVG-figur. Byter till
+         hostande pose + pratbubbla när motorn går (röken kommer). */
+      #lady{
+        position:absolute;
+        right:4px;
+        bottom:66px;
+        width:46px;
+        z-index:1;
+        pointer-events:none;
+      }
+
+      #lady svg{ width:100%; height:auto; display:block; }
+
+      .lady-cough{ display:none; }
+      .sim.engine-on .lady-calm{ display:none; }
+      .sim.engine-on .lady-cough{ display:block; }
+
+      .sim.engine-on #lady{
+        animation:ladyShake .34s ease-in-out infinite;
+        transform-origin:50% 100%;
+      }
+
+      @keyframes ladyShake{
+        0%,100%{ transform:translateX(0) rotate(0deg); }
+        25%{ transform:translateX(-1px) rotate(-2deg); }
+        75%{ transform:translateX(1px) rotate(2deg); }
+      }
+
+      .cough-bubble{
+        position:absolute;
+        top:-6px;
+        left:-34px;
+        background:#fff;
+        border:2px solid #5b626d;
+        border-radius:10px;
+        padding:2px 6px;
+        font:700 10px/1.05 Arial, sans-serif;
+        color:#374151;
+        text-align:center;
+        white-space:nowrap;
+        display:none;
+      }
+
+      .cough-bubble::after{
+        content:"";
+        position:absolute;
+        right:-7px;
+        bottom:6px;
+        border-left:8px solid #5b626d;
+        border-top:5px solid transparent;
+        border-bottom:5px solid transparent;
+      }
+
+      .sim.engine-on .cough-bubble{ display:block; }
+
       .epuff:nth-child(2){ animation-delay:.30s; }
       .epuff:nth-child(3){ animation-delay:.60s; }
       .epuff:nth-child(4){ animation-delay:.90s; }
@@ -719,6 +774,62 @@
             <div class="smoke s2"></div>
             <div class="smoke s3"></div>
           </div>
+        </div>
+
+        <div id="lady">
+          <div class="cough-bubble">Khö!<br>khö!</div>
+          <svg viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- käpp -->
+            <line x1="82" y1="120" x2="92" y2="208" stroke="#27a89a" stroke-width="5" stroke-linecap="round"/>
+            <!-- ben (gröna byxor) -->
+            <rect x="46" y="158" width="13" height="48" rx="6" fill="#7cbf4b"/>
+            <rect x="61" y="158" width="13" height="48" rx="6" fill="#6cae3e"/>
+            <!-- skor -->
+            <ellipse cx="50" cy="208" rx="12" ry="7" fill="#d94fa0"/>
+            <ellipse cx="70" cy="208" rx="12" ry="7" fill="#d94fa0"/>
+            <!-- klänning/kimono -->
+            <path d="M32 104 Q60 90 88 104 L96 160 Q60 172 24 160 Z" fill="#c45aa8" stroke="#9c3f86" stroke-width="2"/>
+            <!-- gult bälte -->
+            <path d="M27 146 Q60 158 93 146 L93 154 Q60 166 27 154 Z" fill="#f4c430"/>
+            <!-- hals -->
+            <rect x="54" y="70" width="12" height="16" fill="#f3c9a0"/>
+            <!-- huvud -->
+            <circle cx="60" cy="50" r="26" fill="#f3c9a0" stroke="#d9a877" stroke-width="1.5"/>
+            <!-- hårknut -->
+            <path d="M35 48 Q38 18 60 18 Q82 18 85 48 Q72 34 60 36 Q48 34 35 48 Z" fill="#cf7a32"/>
+            <circle cx="60" cy="16" r="10" fill="#cf7a32"/>
+            <!-- glasögon -->
+            <circle cx="51" cy="50" r="8" fill="#fff" stroke="#c07bbf" stroke-width="2.5"/>
+            <circle cx="71" cy="50" r="8" fill="#fff" stroke="#c07bbf" stroke-width="2.5"/>
+            <line x1="59" y1="50" x2="63" y2="50" stroke="#c07bbf" stroke-width="2.5"/>
+
+            <!-- LUGN pose -->
+            <g class="lady-calm">
+              <path d="M47 49 q4 3 8 0" fill="none" stroke="#7a4a2e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M67 49 q4 3 8 0" fill="none" stroke="#7a4a2e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M52 62 Q60 68 68 62" fill="none" stroke="#9b5b3a" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M40 108 Q62 120 84 110 L82 118 Q62 126 42 116 Z" fill="#f3c9a0"/>
+              <ellipse cx="84" cy="114" rx="7" ry="6" fill="#f3c9a0"/>
+            </g>
+
+            <!-- HOSTANDE pose -->
+            <g class="lady-cough">
+              <path d="M46 47 l9 5 M46 53 l9 -3" stroke="#7a4a2e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M75 47 l-9 5 M75 53 l-9 -3" stroke="#7a4a2e" stroke-width="2" stroke-linecap="round"/>
+              <ellipse cx="60" cy="64" rx="6" ry="5" fill="#8a3b32"/>
+              <!-- hand mot munnen -->
+              <path d="M40 108 Q54 104 60 80 L67 84 Q60 110 44 116 Z" fill="#f3c9a0"/>
+              <ellipse cx="61" cy="80" rx="7" ry="6" fill="#f3c9a0"/>
+              <!-- andra handen kvar på käppen -->
+              <ellipse cx="84" cy="116" rx="7" ry="6" fill="#f3c9a0"/>
+              <!-- små hostmoln -->
+              <g fill="#c4ccd1">
+                <circle cx="74" cy="66" r="5"/>
+                <circle cx="83" cy="62" r="4"/>
+                <circle cx="82" cy="71" r="3.5"/>
+              </g>
+            </g>
+          </svg>
         </div>
       </div>
     </section>
