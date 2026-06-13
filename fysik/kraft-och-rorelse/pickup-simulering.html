@@ -285,6 +285,43 @@
         100%{ transform:scale(1.6) translateY(-14px); opacity:0; }
       }
 
+      /* Avgasrök vid acceleration (baktill = höger sida) */
+      #exhaust{
+        position:absolute;
+        bottom:20px;
+        right:24px;
+        width:50px;
+        height:50px;
+        opacity:0;
+        z-index:1;
+        pointer-events:none;
+      }
+
+      .sim.engine-on #exhaust{ opacity:1; }
+
+      .epuff{
+        position:absolute;
+        bottom:0;
+        right:0;
+        width:15px;
+        height:15px;
+        border-radius:50%;
+        background:rgba(60,60,60,.5);
+        animation:exhaustPuff 1.1s linear infinite;
+        animation-play-state:paused;
+      }
+
+      .sim.engine-on .epuff{ animation-play-state:running; }
+
+      .epuff:nth-child(2){ animation-delay:.28s; }
+      .epuff:nth-child(3){ animation-delay:.55s; }
+      .epuff:nth-child(4){ animation-delay:.82s; }
+
+      @keyframes exhaustPuff{
+        0%{   transform:translate(0,0) scale(.4);    opacity:.55; }
+        100%{ transform:translate(42px,-34px) scale(1.8); opacity:0; }
+      }
+
       .sun{
         position:absolute;
         right:54px;
@@ -601,6 +638,12 @@
         <div id="truckWrap">
           <div id="cargo"></div>
           <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
+          <div id="exhaust">
+            <div class="epuff"></div>
+            <div class="epuff"></div>
+            <div class="epuff"></div>
+            <div class="epuff"></div>
+          </div>
           <div class="skidfx">
             <div class="mark"></div>
             <div class="mark m2"></div>
@@ -659,6 +702,125 @@
 
     els.surfNormal.addEventListener('click', () => setSurface('normal'));
     els.surfIce.addEventListener('click', () => setSurface('ice'));
+
+    /* ========================================================
+       Dieselmotorljud (syntetiserat, stor 60-tals diesel)
+       Web Audio: låg sågtands-/fyrkantston + förbränningsbrus,
+       amplitudmodulerat till "chug-chug" som rampar upp när
+       bilen accelererar. Inga ljudfiler behövs.
+       ======================================================== */
+    let audioCtx = null;
+    let engineNodes = null;
+    let engineOn = false;
+
+    function ensureAudio(){
+      if(!audioCtx){
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if(!AC) return null;
+        audioCtx = new AC();
+      }
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function makeNoiseBuffer(ctx){
+      const len = Math.floor(ctx.sampleRate * 2);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for(let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      return buf;
+    }
+
+    function startEngine(revDur){
+      const ctx = ensureAudio();
+      if(!ctx) return;
+      stopEngineNow();
+      const now = ctx.currentTime;
+      const dur = Math.max(0.5, revDur || 4);
+
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.0001, now);
+      master.gain.linearRampToValueAtTime(0.42, now + 0.15);
+      master.connect(ctx.destination);
+
+      // mörkt lågpass = grov dieselkaraktär, öppnar något vid rev
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(360, now);
+      lp.frequency.linearRampToValueAtTime(600, now + dur);
+      lp.Q.value = 0.8;
+      lp.connect(master);
+
+      // amplitudmodulering ("chug-chug")
+      const am = ctx.createGain();
+      am.gain.value = 0.0;
+      am.connect(lp);
+
+      // motorkropp – två låga toner som rampar upp i frekvens
+      const osc1 = ctx.createOscillator(); osc1.type = 'sawtooth';
+      const osc2 = ctx.createOscillator(); osc2.type = 'square';
+      osc1.frequency.setValueAtTime(64, now);
+      osc1.frequency.linearRampToValueAtTime(104, now + dur);
+      osc2.frequency.setValueAtTime(42, now);
+      osc2.frequency.linearRampToValueAtTime(70, now + dur);
+      osc1.connect(am); osc2.connect(am);
+
+      // förbränningsbrus (även det chug-modulerat)
+      const noise = ctx.createBufferSource();
+      noise.buffer = makeNoiseBuffer(ctx);
+      noise.loop = true;
+      const nlp = ctx.createBiquadFilter();
+      nlp.type = 'lowpass'; nlp.frequency.value = 320;
+      const ng = ctx.createGain(); ng.gain.value = 0.22;
+      noise.connect(nlp).connect(ng).connect(am);
+
+      // chug-LFO som driver am.gain mellan ~0,05 och ~0,95
+      const chug = ctx.createOscillator(); chug.type = 'sawtooth';
+      chug.frequency.setValueAtTime(8, now);              // tomgångschug
+      chug.frequency.linearRampToValueAtTime(20, now + dur); // varvar upp
+      const chugDepth = ctx.createGain(); chugDepth.gain.value = 0.45;
+      const chugBase = ctx.createConstantSource(); chugBase.offset.value = 0.5;
+      chug.connect(chugDepth).connect(am.gain);
+      chugBase.connect(am.gain);
+
+      osc1.start(now); osc2.start(now); chug.start(now); chugBase.start(now); noise.start(now);
+
+      engineNodes = { master, osc1, osc2, chug, chugBase, noise };
+    }
+
+    function stopEngineNow(){
+      if(!engineNodes) return;
+      const ns = engineNodes; engineNodes = null;
+      try{ ns.osc1.stop(); ns.osc2.stop(); ns.chug.stop(); ns.chugBase.stop(); ns.noise.stop(); }catch(e){}
+      try{ ns.master.disconnect(); }catch(e){}
+    }
+
+    function stopEngine(){
+      if(!engineNodes || !audioCtx){ return; }
+      const ctx = audioCtx, now = ctx.currentTime;
+      const ns = engineNodes; engineNodes = null;
+      try{
+        ns.master.gain.cancelScheduledValues(now);
+        ns.master.gain.setValueAtTime(ns.master.gain.value, now);
+        ns.master.gain.linearRampToValueAtTime(0.0001, now + 0.25);
+      }catch(e){}
+      setTimeout(() => {
+        try{ ns.osc1.stop(); ns.osc2.stop(); ns.chug.stop(); ns.chugBase.stop(); ns.noise.stop(); ns.master.disconnect(); }catch(e){}
+      }, 320);
+    }
+
+    // styr både ljud och avgasrök (engine-on-klassen driver rökanimationen)
+    function setEngine(on, revDur){
+      if(on === engineOn) return;
+      engineOn = on;
+      if(on){
+        els.sim.classList.add('engine-on');
+        try{ startEngine(revDur); }catch(e){}
+      } else {
+        els.sim.classList.remove('engine-on');
+        try{ stopEngine(); }catch(e){}
+      }
+    }
 
     function bindRange(range, out, fmt = v => v){
       const update = () => out.textContent = fmt(range.value);
@@ -736,6 +898,7 @@
       distAtBrake = 0;
 
       els.sim.classList.remove('braking');
+      setEngine(false);
       els.truckWrap.style.right = '36px';
       els.timeOut.textContent = '0.0 s';
       els.speedOut.textContent = '0.0 m/s';
@@ -754,6 +917,7 @@
       braking = true;
       distAtBrake = distM;
       els.sim.classList.add('braking');
+      setEngine(false);          // motorn släpps vid tvärnit → ljud + rök av
       setTvarnitaEnabled(false);
     }
 
@@ -782,6 +946,7 @@
       els.startBtn.disabled = true;
       els.startBtn.style.opacity = '.6';
       setTvarnitaEnabled(true);
+      setEngine(true, driveDuration);   // motorljud + avgasrök startar
 
       function frame(ts){
         if(last == null) last = ts;
@@ -824,12 +989,14 @@
         }
 
         const driving = !braking && t <= driveDuration;
+        setEngine(driving, driveDuration);   // av när motortiden tar slut
         const stopNow = (v <= 0) && (braking || t > driveDuration + 0.05);
 
         if(!stopNow){
           anim = requestAnimationFrame(frame);
         } else {
           els.sim.classList.remove('braking');
+          setEngine(false);
           anim = null;
           els.startBtn.disabled = false;
           els.startBtn.style.opacity = '1';
