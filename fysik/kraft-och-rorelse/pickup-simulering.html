@@ -337,8 +337,8 @@
          hostande pose + pratbubbla när motorn går (röken kommer). */
       #lady{
         position:absolute;
-        right:4px;
-        bottom:66px;
+        right:-6px;
+        bottom:96px;
         width:46px;
         z-index:1;
         pointer-events:none;
@@ -350,8 +350,10 @@
       .sim.engine-on .lady-calm{ display:none; }
       .sim.engine-on .lady-cough{ display:block; }
 
+      /* Skakar medan hon hostar OCH tonar bort efter ~2 s */
       .sim.engine-on #lady{
-        animation:ladyShake .34s ease-in-out infinite;
+        animation:ladyShake .34s ease-in-out infinite,
+                  ladyVanish 2.4s ease-in forwards;
         transform-origin:50% 100%;
       }
 
@@ -359,6 +361,11 @@
         0%,100%{ transform:translateX(0) rotate(0deg); }
         25%{ transform:translateX(-1px) rotate(-2deg); }
         75%{ transform:translateX(1px) rotate(2deg); }
+      }
+
+      @keyframes ladyVanish{
+        0%,67%{ opacity:1; }
+        100%{ opacity:0; }
       }
 
       .cough-bubble{
@@ -1075,8 +1082,8 @@
     const WHEEL = {
       // justerat 10 px (i bildens 1536×1024): båda ned, fram 10 px åt
       // vänster (mot fronten), bak 10 px åt höger
-      front: { fx: 0.1745, fy: 0.6008 },
-      rear:  { fx: 0.7812, fy: 0.5977 },
+      front: { fx: 0.1725, fy: 0.6037 },
+      rear:  { fx: 0.7812, fy: 0.6006 },
       rimDiaFrac: 0.100,
       tireDiaFrac: 0.135
     };
