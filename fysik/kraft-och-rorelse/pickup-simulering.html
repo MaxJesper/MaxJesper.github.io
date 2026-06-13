@@ -285,15 +285,17 @@
         100%{ transform:scale(1.6) translateY(-14px); opacity:0; }
       }
 
-      /* Avgasrök vid acceleration (baktill = höger sida) */
+      /* Avgasrök vid acceleration (baktill = höger sida).
+         OBS z-index måste vara ÖVER bilbilden (#truck = z-index 2),
+         annars göms röken bakom den ogenomskinliga bilden. */
       #exhaust{
         position:absolute;
-        bottom:20px;
-        right:24px;
+        bottom:24px;
+        right:30px;
         width:50px;
         height:50px;
         opacity:0;
-        z-index:1;
+        z-index:6;
         pointer-events:none;
       }
 
@@ -303,23 +305,35 @@
         position:absolute;
         bottom:0;
         right:0;
-        width:15px;
-        height:15px;
+        width:18px;
+        height:18px;
         border-radius:50%;
-        background:rgba(60,60,60,.5);
-        animation:exhaustPuff 1.1s linear infinite;
+        background:rgba(55,55,58,.6);
+        filter:blur(1px);
+        animation:exhaustPuff 1.2s linear infinite;
         animation-play-state:paused;
       }
 
       .sim.engine-on .epuff{ animation-play-state:running; }
 
-      .epuff:nth-child(2){ animation-delay:.28s; }
-      .epuff:nth-child(3){ animation-delay:.55s; }
-      .epuff:nth-child(4){ animation-delay:.82s; }
+      /* Roterande hjul som läggs exakt ovanpå bildens hjul.
+         Positioneras i JS utifrån bildens renderade storlek. */
+      .wheel{
+        position:absolute;
+        z-index:3;
+        pointer-events:none;
+        will-change:transform;
+      }
+
+      .wheel svg{ width:100%; height:100%; display:block; }
+
+      .epuff:nth-child(2){ animation-delay:.30s; }
+      .epuff:nth-child(3){ animation-delay:.60s; }
+      .epuff:nth-child(4){ animation-delay:.90s; }
 
       @keyframes exhaustPuff{
-        0%{   transform:translate(0,0) scale(.4);    opacity:.55; }
-        100%{ transform:translate(42px,-34px) scale(1.8); opacity:0; }
+        0%{   transform:translate(0,0) scale(.45);     opacity:.65; }
+        100%{ transform:translate(20px,-50px) scale(2.0); opacity:0; }
       }
 
       .sun{
@@ -644,6 +658,48 @@
             <div class="epuff"></div>
             <div class="epuff"></div>
           </div>
+          <div class="wheel" id="wheelFront">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="48" fill="#c9ced6" stroke="#5b626d" stroke-width="3"/>
+              <circle cx="50" cy="50" r="40" fill="#b8bec7" stroke="#868d99" stroke-width="2"/>
+              <g stroke="#7a818d" stroke-width="9" stroke-linecap="round">
+                <line x1="50" y1="50" x2="50" y2="16"/>
+                <line x1="50" y1="50" x2="82.3" y2="39.5"/>
+                <line x1="50" y1="50" x2="70" y2="77.5"/>
+                <line x1="50" y1="50" x2="30" y2="77.5"/>
+                <line x1="50" y1="50" x2="17.7" y2="39.5"/>
+              </g>
+              <g fill="#5b626d">
+                <circle cx="50" cy="28" r="3.4"/>
+                <circle cx="70.9" cy="43.2" r="3.4"/>
+                <circle cx="62.9" cy="67.8" r="3.4"/>
+                <circle cx="37.1" cy="67.8" r="3.4"/>
+                <circle cx="29.1" cy="43.2" r="3.4"/>
+              </g>
+              <circle cx="50" cy="50" r="11" fill="#9aa0aa" stroke="#5b626d" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="wheel" id="wheelRear">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="48" fill="#c9ced6" stroke="#5b626d" stroke-width="3"/>
+              <circle cx="50" cy="50" r="40" fill="#b8bec7" stroke="#868d99" stroke-width="2"/>
+              <g stroke="#7a818d" stroke-width="9" stroke-linecap="round">
+                <line x1="50" y1="50" x2="50" y2="16"/>
+                <line x1="50" y1="50" x2="82.3" y2="39.5"/>
+                <line x1="50" y1="50" x2="70" y2="77.5"/>
+                <line x1="50" y1="50" x2="30" y2="77.5"/>
+                <line x1="50" y1="50" x2="17.7" y2="39.5"/>
+              </g>
+              <g fill="#5b626d">
+                <circle cx="50" cy="28" r="3.4"/>
+                <circle cx="70.9" cy="43.2" r="3.4"/>
+                <circle cx="62.9" cy="67.8" r="3.4"/>
+                <circle cx="37.1" cy="67.8" r="3.4"/>
+                <circle cx="29.1" cy="43.2" r="3.4"/>
+              </g>
+              <circle cx="50" cy="50" r="11" fill="#9aa0aa" stroke="#5b626d" stroke-width="2"/>
+            </svg>
+          </div>
           <div class="skidfx">
             <div class="mark"></div>
             <div class="mark m2"></div>
@@ -672,6 +728,9 @@
       netOut: document.getElementById('netOut'),
       brakeOut: document.getElementById('brakeOut'),
       truckWrap: document.getElementById('truckWrap'),
+      truck: document.getElementById('truck'),
+      wheelFront: document.getElementById('wheelFront'),
+      wheelRear: document.getElementById('wheelRear'),
       roadline: document.getElementById('roadline'),
       cargo: document.getElementById('cargo'),
       startBtn: document.getElementById('startBtn'),
@@ -881,6 +940,53 @@
     els.mass.addEventListener('input', updateCargo);
     updateCargo();
 
+    /* ========================================================
+       Roterande hjul – overlay-ekerkapslar placeras exakt
+       ovanpå bildens hjul. Mått i andelar av bildens bredd/höjd
+       (uppmätta från pickup.png, 1536×1024):
+         fram:  cx 0.190, cy 0.598
+         bak:   cx 0.780, cy 0.598
+         kapseldiameter ≈ 0.100 av bildbredden
+         däckdiameter   ≈ 0.135 (för rullhastigheten)
+       ======================================================== */
+    const WHEEL = {
+      front: { fx: 0.190, fy: 0.598 },
+      rear:  { fx: 0.780, fy: 0.598 },
+      rimDiaFrac: 0.100,
+      tireDiaFrac: 0.135
+    };
+    let wheelDeg = 0;
+    let tireDiaPx = 47;
+
+    function layoutWheels(){
+      const imgW = els.truck.offsetWidth;
+      const imgH = els.truck.offsetHeight;
+      if(!imgW || !imgH) return;
+      const dia = WHEEL.rimDiaFrac * imgW;
+      tireDiaPx = WHEEL.tireDiaFrac * imgW;
+      [['front', els.wheelFront], ['rear', els.wheelRear]].forEach(([key, el]) => {
+        const w = WHEEL[key];
+        const cxPx = w.fx * imgW;                 // från truckWrap vänsterkant
+        const cyBottomPx = imgH * (1 - w.fy);     // från truckWrap underkant
+        el.style.width = dia + 'px';
+        el.style.height = dia + 'px';
+        el.style.left = (cxPx - dia / 2) + 'px';
+        el.style.bottom = (cyBottomPx - dia / 2) + 'px';
+      });
+      applyWheelRotation();
+    }
+
+    function applyWheelRotation(){
+      // bilen kör åt vänster → hjulen roterar moturs (negativ vinkel)
+      const tf = `rotate(${-wheelDeg}deg)`;
+      els.wheelFront.style.transform = tf;
+      els.wheelRear.style.transform = tf;
+    }
+
+    window.addEventListener('resize', layoutWheels);
+    if(els.truck.complete) layoutWheels();
+    els.truck.addEventListener('load', layoutWheels);
+
     let anim = null;
     let braking = false;       // hjulen låsta (tvärnit)
     let distM = 0;             // total körd sträcka (m)
@@ -909,6 +1015,8 @@
       els.startBtn.style.opacity = '1';
       setTvarnitaEnabled(false);
       els.roadline.style.backgroundPositionX = '0px';
+      wheelDeg = 0;
+      applyWheelRotation();
       updateCargo();
     }
 
@@ -979,6 +1087,12 @@
 
         roadOffset += v * dt * 26;
         els.roadline.style.backgroundPositionX = `${roadOffset}px`;
+
+        // Hjulrotation: rullar med vägen, men FRYSER vid tvärnit (låsta hjul)
+        if(!braking){
+          wheelDeg += (v * dt * 26) / (Math.PI * tireDiaPx) * 360;
+          applyWheelRotation();
+        }
 
         els.timeOut.textContent = `${t.toFixed(1)} s`;
         els.speedOut.textContent = `${v.toFixed(2)} m/s`;
