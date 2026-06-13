@@ -293,7 +293,7 @@
          körriktningen, eftersom bilen kör åt vänster). */
       #exhaust{
         position:absolute;
-        bottom:72px;
+        bottom:87px;
         right:4px;
         width:40px;
         height:40px;
@@ -304,20 +304,26 @@
 
       .sim.engine-on #exhaust{ opacity:1; }
 
-      /* OBS: röken får INTE vara lika mörk som asfalten – då blir den
-         osynlig. Mörkt sotgrå men ändå ljusare än vägen. */
+      /* Kontrast styr färgen: på NORMAL (mörk) väg är röken LJUS så den
+         syns mot asfalten; på HAL (ljus) väg är den MÖRKARE/sotigare. */
       .epuff{
         position:absolute;
         bottom:0;
         right:0;
-        width:20px;
-        height:20px;
+        width:34px;
+        height:34px;
         border-radius:50%;
-        background:rgba(98,101,107,.82);
-        box-shadow:0 0 6px 2px rgba(120,123,130,.35);
+        background:rgba(206,209,215,.9);                 /* ljus – för mörk väg */
+        box-shadow:0 0 12px 4px rgba(214,217,223,.45);
         filter:blur(1.5px);
         animation:exhaustPuff 1.2s linear infinite;
         animation-play-state:paused;
+      }
+
+      /* Hal vägbana är ljus → gör röken mörkare/sotigare så den syns */
+      .sim.ice .epuff{
+        background:rgba(70,73,80,.92);
+        box-shadow:0 0 12px 4px rgba(96,99,106,.5);
       }
 
       .sim.engine-on .epuff{ animation-play-state:running; }
@@ -398,8 +404,9 @@
       .epuff:nth-child(4){ animation-delay:.90s; }
 
       /* Bakåt = åt höger (positiv X), nästan vågrätt med en liten lyftning */
+      /* Bakåt (åt höger) och något uppåt – riktning som såg rätt ut */
       @keyframes exhaustPuff{
-        0%{   transform:translate(0,0) scale(.45);       opacity:.85; }
+        0%{   transform:translate(0,0) scale(.5);        opacity:.95; }
         100%{ transform:translate(54px,-14px) scale(2.3); opacity:0; }
       }
 
@@ -575,7 +582,7 @@
         }
 
         #exhaust{
-          bottom:60px;
+          bottom:75px;
           right:2px;
         }
 
