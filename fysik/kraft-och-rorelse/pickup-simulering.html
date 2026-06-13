@@ -1010,6 +1010,77 @@
       }
     }
 
+    /* ========================================================
+       Däckskrik vid tvärnit – bandpassat brus + tonalt gnissel.
+       Spelas tills bilen står still; volym/tonhöjd följer farten.
+       ======================================================== */
+    let skidNodes = null;
+
+    function startSkid(){
+      const ctx = ensureAudio();
+      if(!ctx) return;
+      stopSkidNow();
+      const now = ctx.currentTime;
+
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.0001, now);
+      master.gain.linearRampToValueAtTime(0.26, now + 0.08);
+      master.connect(ctx.destination);
+
+      // däckskrik: bandpassat vitt brus
+      const noise = ctx.createBufferSource();
+      noise.buffer = makeNoiseBuffer(ctx);
+      noise.loop = true;
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = 1900; bp.Q.value = 6;
+      const nGain = ctx.createGain(); nGain.gain.value = 0.5;
+      noise.connect(bp).connect(nGain).connect(master);
+
+      // tonalt gnissel (två lätt orena sågtandstoner)
+      const osc1 = ctx.createOscillator(); osc1.type = 'sawtooth'; osc1.frequency.value = 620;
+      const osc2 = ctx.createOscillator(); osc2.type = 'sawtooth'; osc2.frequency.value = 664;
+      const obp = ctx.createBiquadFilter(); obp.type = 'bandpass'; obp.frequency.value = 700; obp.Q.value = 5;
+      const oGain = ctx.createGain(); oGain.gain.value = 0.06;
+      osc1.connect(obp); osc2.connect(obp); obp.connect(oGain).connect(master);
+
+      // liten wobble på brusets centerfrekvens
+      const lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 11;
+      const lfoGain = ctx.createGain(); lfoGain.gain.value = 130;
+      lfo.connect(lfoGain).connect(bp.frequency);
+
+      noise.start(now); osc1.start(now); osc2.start(now); lfo.start(now);
+      skidNodes = { master, noise, osc1, osc2, lfo, bp };
+    }
+
+    function updateSkid(v){
+      if(!skidNodes || !audioCtx) return;
+      const now = audioCtx.currentTime;
+      const lvl = Math.max(0, Math.min(1, v / 10));
+      skidNodes.master.gain.setTargetAtTime(0.05 + 0.24 * lvl, now, 0.05);
+      skidNodes.bp.frequency.setTargetAtTime(1400 + Math.min(1200, v * 70), now, 0.05);
+    }
+
+    function stopSkidNow(){
+      if(!skidNodes) return;
+      const ns = skidNodes; skidNodes = null;
+      try{ ns.noise.stop(); ns.osc1.stop(); ns.osc2.stop(); ns.lfo.stop(); }catch(e){}
+      try{ ns.master.disconnect(); }catch(e){}
+    }
+
+    function stopSkid(){
+      if(!skidNodes || !audioCtx){ return; }
+      const ctx = audioCtx, now = ctx.currentTime;
+      const ns = skidNodes; skidNodes = null;
+      try{
+        ns.master.gain.cancelScheduledValues(now);
+        ns.master.gain.setValueAtTime(ns.master.gain.value, now);
+        ns.master.gain.linearRampToValueAtTime(0.0001, now + 0.18);
+      }catch(e){}
+      setTimeout(() => {
+        try{ ns.noise.stop(); ns.osc1.stop(); ns.osc2.stop(); ns.lfo.stop(); ns.master.disconnect(); }catch(e){}
+      }, 240);
+    }
+
     function bindRange(range, out, fmt = v => v){
       const update = () => out.textContent = fmt(range.value);
       range.addEventListener('input', update);
@@ -1137,6 +1208,7 @@
 
       els.sim.classList.remove('braking');
       setEngine(false);
+      stopSkid();
       clearTimeout(ladyTimer);
       els.lady.classList.remove('gone');   // damen tillbaka vid omstart
       els.truckWrap.style.right = '36px';
@@ -1160,6 +1232,7 @@
       distAtBrake = distM;
       els.sim.classList.add('braking');
       setEngine(false);          // motorn släpps vid tvärnit → ljud + rök av
+      startSkid();               // däckskrik tills bilen står still
       setTvarnitaEnabled(false);
     }
 
@@ -1231,6 +1304,8 @@
         if(!braking){
           wheelDeg += (v * dt * 26) / (Math.PI * tireDiaPx) * 360;
           applyWheelRotation();
+        } else {
+          updateSkid(v);   // däckskrikets volym/tonhöjd följer farten
         }
 
         els.timeOut.textContent = `${t.toFixed(1)} s`;
@@ -1250,6 +1325,7 @@
         } else {
           els.sim.classList.remove('braking');
           setEngine(false);
+          stopSkid();          // bilen står still → däckskriket tystnar
           anim = null;
           els.startBtn.disabled = false;
           els.startBtn.style.opacity = '1';
