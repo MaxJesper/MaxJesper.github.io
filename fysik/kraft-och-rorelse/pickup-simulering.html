@@ -290,8 +290,8 @@
          annars göms röken bakom den ogenomskinliga bilden. */
       #exhaust{
         position:absolute;
-        bottom:24px;
-        right:30px;
+        bottom:30px;
+        right:26px;
         width:50px;
         height:50px;
         opacity:0;
@@ -301,15 +301,18 @@
 
       .sim.engine-on #exhaust{ opacity:1; }
 
+      /* OBS: röken får INTE vara lika mörk som asfalten – då blir den
+         osynlig. Ljus sotgrå syns både mot mörk väg och ljus himmel. */
       .epuff{
         position:absolute;
         bottom:0;
         right:0;
-        width:18px;
-        height:18px;
+        width:20px;
+        height:20px;
         border-radius:50%;
-        background:rgba(55,55,58,.6);
-        filter:blur(1px);
+        background:rgba(125,128,134,.75);
+        box-shadow:0 0 6px 2px rgba(140,143,150,.35);
+        filter:blur(1.5px);
         animation:exhaustPuff 1.2s linear infinite;
         animation-play-state:paused;
       }
@@ -332,8 +335,8 @@
       .epuff:nth-child(4){ animation-delay:.90s; }
 
       @keyframes exhaustPuff{
-        0%{   transform:translate(0,0) scale(.45);     opacity:.65; }
-        100%{ transform:translate(20px,-50px) scale(2.0); opacity:0; }
+        0%{   transform:translate(0,0) scale(.45);      opacity:.8; }
+        100%{ transform:translate(16px,-64px) scale(2.3); opacity:0; }
       }
 
       .sun{
@@ -950,8 +953,8 @@
          däckdiameter   ≈ 0.135 (för rullhastigheten)
        ======================================================== */
     const WHEEL = {
-      front: { fx: 0.190, fy: 0.598 },
-      rear:  { fx: 0.780, fy: 0.598 },
+      front: { fx: 0.183, fy: 0.589 },
+      rear:  { fx: 0.776, fy: 0.585 },
       rimDiaFrac: 0.100,
       tireDiaFrac: 0.135
     };
