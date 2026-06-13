@@ -117,6 +117,37 @@
     
       .start{ background:var(--accent); color:#fff; }
       .reset{ background:#edf3fa; color:var(--text); }
+      .brake{ background:#d23b3b; color:#fff; }
+      .brake:disabled{ opacity:.45; cursor:not-allowed; }
+
+      /* Vägbane-väljare */
+      .surface-toggle{
+        display:flex;
+        gap:8px;
+      }
+
+      .surface-toggle button{
+        flex:1;
+        background:#edf3fa;
+        color:var(--text);
+        border:1px solid #d7e3f0;
+        box-shadow:none;
+        padding:9px 8px;
+        font-size:.88rem;
+      }
+
+      .surface-toggle button.active{
+        background:var(--accent);
+        color:#fff;
+        border-color:var(--accent);
+      }
+
+      .surface-note{
+        margin:8px 0 0;
+        font-size:.82rem;
+        color:var(--muted);
+        line-height:1.35;
+      }
     
       .formula{
         margin-top:10px;
@@ -134,7 +165,7 @@
     
       .hud{
         display:grid;
-        grid-template-columns:repeat(4, 1fr);
+        grid-template-columns:repeat(5, 1fr);
         gap:8px;
         margin:0 0 8px;
       }
@@ -170,6 +201,90 @@
         border:1px solid #dde6f0;
       }
     
+      /* Is-väg: ljusare, blålätt vägbana */
+      .sim.ice .road-main{
+        background:linear-gradient(180deg, #cdd9e6 0%, #bcccdd 48%, #a9bccf 100%);
+      }
+
+      .sim.ice .road-lane{
+        background:rgba(255,255,255,0.18);
+      }
+
+      .ice-badge,.brake-badge{
+        position:absolute;
+        left:14px;
+        top:12px;
+        padding:6px 12px;
+        border-radius:999px;
+        font-weight:700;
+        font-size:.85rem;
+        z-index:5;
+        display:none;
+      }
+
+      .ice-badge{
+        background:rgba(190,225,255,.92);
+        color:#1d4e7a;
+        border:1px solid #93c5fd;
+      }
+
+      .brake-badge{
+        left:auto;
+        right:14px;
+        background:rgba(210,59,59,.95);
+        color:#fff;
+        border:1px solid #b91c1c;
+      }
+
+      .sim.ice .ice-badge{ display:block; }
+      .sim.braking .brake-badge{ display:block; }
+
+      /* Skid-effekt under hjulen vid tvärnit */
+      .skidfx{
+        position:absolute;
+        bottom:3px;
+        right:24px;
+        width:190px;
+        height:12px;
+        opacity:0;
+        transition:opacity .12s ease;
+        z-index:1;
+        pointer-events:none;
+      }
+
+      .sim.braking .skidfx{ opacity:1; }
+
+      .skidfx .mark{
+        position:absolute;
+        bottom:0;
+        height:5px;
+        width:170px;
+        right:0;
+        background:linear-gradient(90deg, transparent 0%, rgba(20,20,20,.55) 70%);
+        border-radius:3px;
+      }
+
+      .skidfx .mark.m2{ bottom:0; right:96px; width:120px; }
+
+      .skidfx .smoke{
+        position:absolute;
+        bottom:6px;
+        right:6px;
+        width:20px;
+        height:20px;
+        border-radius:50%;
+        background:rgba(190,190,190,.55);
+        animation:puff .7s ease-out infinite;
+      }
+
+      .skidfx .smoke.s2{ right:30px; animation-delay:.18s; }
+      .skidfx .smoke.s3{ right:54px; animation-delay:.36s; }
+
+      @keyframes puff{
+        0%{ transform:scale(.5) translateY(0); opacity:.6; }
+        100%{ transform:scale(1.6) translateY(-14px); opacity:0; }
+      }
+
       .sun{
         position:absolute;
         right:54px;
@@ -342,7 +457,7 @@
         }
       
         .hud{
-          grid-template-columns:repeat(4, 1fr);
+          grid-template-columns:repeat(3, 1fr);
           gap:6px;
         }
       
@@ -428,8 +543,18 @@
         <input id="duration" type="range" min="0.5" max="10" step="0.1" value="4.0" />
       </div>
 
+      <div class="group">
+        <h2>Vägbana</h2>
+        <div class="surface-toggle">
+          <button id="surfNormal" class="active" type="button">🛣️ Normal</button>
+          <button id="surfIce" type="button">❄️ Hal (is)</button>
+        </div>
+        <p class="surface-note" id="surfNote">Torr asfalt – bra grepp (μ ≈ 0,8). Kort bromssträcka vid tvärnit.</p>
+      </div>
+
       <div class="buttons">
         <button class="start" id="startBtn">Starta bilen</button>
+        <button class="brake" id="tvarnitaBtn" disabled>Tvärnita 🛑</button>
         <button class="reset" id="resetBtn">Börja om</button>
       </div>
 
@@ -437,11 +562,17 @@
         <strong>Fysik:</strong><br>
         Nettokraft = motorkraft − friktion<br>
         Acceleration = nettokraft / massa<br><br>
-        När motorn slutar verka bromsas bilen av friktionen tills den stannar.<br><br>
 
-        Kraft = massa x acceleration<br>
-        F = m x a<br><br>
-        En större massa eller acceleration kräver att motorn har större kraft.
+        Kraft = massa × acceleration<br>
+        F = m × a<br><br>
+        En större massa eller acceleration kräver att motorn har större kraft.<br><br>
+
+        <strong>Tvärnit (släpfriktion):</strong><br>
+        När du tvärnitar låser sig hjulen och bilen glider mot vägen.
+        Bromskraften är då släpfriktionen:<br>
+        F<sub>broms</sub> = μ × m × g<br>
+        Det ger retardationen a = μ × g – som är <em>oberoende av massan</em>.
+        På is är greppet μ litet, så bilen sladdar mycket längre innan den stannar.
       </div>
     </section>
 
@@ -451,12 +582,15 @@
         <div class="metric"><div class="k">Hastighet</div><div class="v" id="speedOut">0.0 m/s</div></div>
         <div class="metric"><div class="k">Acceleration</div><div class="v" id="accOut">0.0 m/s²</div></div>
         <div class="metric"><div class="k">Nettokraft</div><div class="v" id="netOut">0 N</div></div>
+        <div class="metric"><div class="k">Bromssträcka</div><div class="v" id="brakeOut">– m</div></div>
       </div>
 
       <div class="sim" id="sim">
         <div class="sun"></div>
         <div class="cloud c1"></div>
         <div class="cloud c2"></div>
+        <div class="ice-badge">❄️ Hal vägbana</div>
+        <div class="brake-badge">🛑 Tvärnit – hjulen låsta!</div>
 
         <div class="road-main">
           <div class="road-lane">
@@ -467,6 +601,13 @@
         <div id="truckWrap">
           <div id="cargo"></div>
           <img id="truck" src="/images/fysik/kraft-och-rorelse/pickup.png" alt="Pickupbil">
+          <div class="skidfx">
+            <div class="mark"></div>
+            <div class="mark m2"></div>
+            <div class="smoke"></div>
+            <div class="smoke s2"></div>
+            <div class="smoke s3"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -486,13 +627,38 @@
       speedOut: document.getElementById('speedOut'),
       accOut: document.getElementById('accOut'),
       netOut: document.getElementById('netOut'),
+      brakeOut: document.getElementById('brakeOut'),
       truckWrap: document.getElementById('truckWrap'),
       roadline: document.getElementById('roadline'),
       cargo: document.getElementById('cargo'),
       startBtn: document.getElementById('startBtn'),
+      tvarnitaBtn: document.getElementById('tvarnitaBtn'),
       resetBtn: document.getElementById('resetBtn'),
+      surfNormal: document.getElementById('surfNormal'),
+      surfIce: document.getElementById('surfIce'),
+      surfNote: document.getElementById('surfNote'),
       sim: document.getElementById('sim'),
     };
+
+    // Tyngdacceleration och friktionstal (släpfriktion vid låsta hjul)
+    const G = 9.82;
+    const SURFACES = {
+      normal: { mu: 0.80, note: 'Torr asfalt – bra grepp (μ ≈ 0,8). Kort bromssträcka vid tvärnit.' },
+      ice:    { mu: 0.12, note: 'Is – dåligt grepp (μ ≈ 0,12). Hjulen låser sig och bilen sladdar långt.' }
+    };
+    let surface = 'normal';
+
+    function setSurface(key){
+      surface = key;
+      const isIce = key === 'ice';
+      els.surfIce.classList.toggle('active', isIce);
+      els.surfNormal.classList.toggle('active', !isIce);
+      els.sim.classList.toggle('ice', isIce);
+      els.surfNote.textContent = SURFACES[key].note;
+    }
+
+    els.surfNormal.addEventListener('click', () => setSurface('normal'));
+    els.surfIce.addEventListener('click', () => setSurface('ice'));
 
     function bindRange(range, out, fmt = v => v){
       const update = () => out.textContent = fmt(range.value);
@@ -554,20 +720,41 @@
     updateCargo();
 
     let anim = null;
+    let braking = false;       // hjulen låsta (tvärnit)
+    let distM = 0;             // total körd sträcka (m)
+    let distAtBrake = 0;       // sträcka när tvärniten påbörjades
+
+    function setTvarnitaEnabled(on){
+      els.tvarnitaBtn.disabled = !on;
+    }
 
     function resetSim(){
       if(anim) cancelAnimationFrame(anim);
       anim = null;
+      braking = false;
+      distM = 0;
+      distAtBrake = 0;
 
+      els.sim.classList.remove('braking');
       els.truckWrap.style.right = '36px';
       els.timeOut.textContent = '0.0 s';
       els.speedOut.textContent = '0.0 m/s';
       els.accOut.textContent = '0.0 m/s²';
       els.netOut.textContent = '0 N';
+      els.brakeOut.textContent = '– m';
       els.startBtn.disabled = false;
       els.startBtn.style.opacity = '1';
+      setTvarnitaEnabled(false);
       els.roadline.style.backgroundPositionX = '0px';
       updateCargo();
+    }
+
+    function tvarnita(){
+      if(!anim || braking) return;   // bara medan bilen rullar
+      braking = true;
+      distAtBrake = distM;
+      els.sim.classList.add('braking');
+      setTvarnitaEnabled(false);
     }
 
     function startSim(){
@@ -577,6 +764,12 @@
       const engineForce = Number(els.engine.value);
       const friction = Number(els.friction.value);
       const driveDuration = Number(els.duration.value);
+
+      braking = false;
+      distM = 0;
+      distAtBrake = 0;
+      els.sim.classList.remove('braking');
+      els.brakeOut.textContent = '– m';
 
       let t = 0;
       let x = 0;
@@ -588,6 +781,7 @@
 
       els.startBtn.disabled = true;
       els.startBtn.style.opacity = '.6';
+      setTvarnitaEnabled(true);
 
       function frame(ts){
         if(last == null) last = ts;
@@ -595,14 +789,25 @@
         last = ts;
         t += dt;
 
-        const driving = t <= driveDuration;
-        const netForce = driving ? (engineForce - friction) : (-friction);
-        const a = netForce / mass;
+        let netForce, a;
+        if(braking){
+          // Låsta hjul: släpfriktion mot vägen bromsar bilen
+          const slideForce = SURFACES[surface].mu * mass * G;
+          netForce = (v > 0) ? -slideForce : 0;
+          a = netForce / mass;
+        } else {
+          const driving = t <= driveDuration;
+          netForce = driving ? (engineForce - friction) : (-friction);
+          a = netForce / mass;
+        }
 
         v += a * dt;
         if(v < 0) v = 0;
 
-        x += v * dt * 16;
+        const ds = v * dt;          // sträcka detta tidssteg (m)
+        distM += ds;
+
+        x += ds * 16;
         if(x > maxTravel) x = maxTravel;
 
         els.truckWrap.style.right = `${36 + x}px`;
@@ -614,12 +819,21 @@
         els.speedOut.textContent = `${v.toFixed(2)} m/s`;
         els.accOut.textContent = `${a.toFixed(2)} m/s²`;
         els.netOut.textContent = `${Math.round(netForce)} N`;
+        if(braking){
+          els.brakeOut.textContent = `${(distM - distAtBrake).toFixed(1)} m`;
+        }
 
-        if(!(v <= 0 && !driving && t > driveDuration + 0.05)){
+        const driving = !braking && t <= driveDuration;
+        const stopNow = (v <= 0) && (braking || t > driveDuration + 0.05);
+
+        if(!stopNow){
           anim = requestAnimationFrame(frame);
         } else {
+          els.sim.classList.remove('braking');
+          anim = null;
           els.startBtn.disabled = false;
           els.startBtn.style.opacity = '1';
+          setTvarnitaEnabled(false);
         }
       }
 
@@ -627,8 +841,10 @@
     }
 
     els.startBtn.addEventListener('click', startSim);
+    els.tvarnitaBtn.addEventListener('click', tvarnita);
     els.resetBtn.addEventListener('click', resetSim);
 
+    setSurface('normal');
     resetSim();
   </script>
 </body>
