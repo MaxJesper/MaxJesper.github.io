@@ -288,12 +288,15 @@
       /* Avgasrök vid acceleration (baktill = höger sida).
          OBS z-index måste vara ÖVER bilbilden (#truck = z-index 2),
          annars göms röken bakom den ogenomskinliga bilden. */
+      /* Avgasröret sitter vid bilens BAKÄNDE (höger). Röken startar
+         precis bakom bakändan och driver BAKÅT (åt höger = motsatt
+         körriktningen, eftersom bilen kör åt vänster). */
       #exhaust{
         position:absolute;
-        bottom:30px;
-        right:26px;
-        width:50px;
-        height:50px;
+        bottom:72px;
+        right:4px;
+        width:40px;
+        height:40px;
         opacity:0;
         z-index:6;
         pointer-events:none;
@@ -302,7 +305,7 @@
       .sim.engine-on #exhaust{ opacity:1; }
 
       /* OBS: röken får INTE vara lika mörk som asfalten – då blir den
-         osynlig. Ljus sotgrå syns både mot mörk väg och ljus himmel. */
+         osynlig. Mörkt sotgrå men ändå ljusare än vägen. */
       .epuff{
         position:absolute;
         bottom:0;
@@ -310,8 +313,8 @@
         width:20px;
         height:20px;
         border-radius:50%;
-        background:rgba(125,128,134,.75);
-        box-shadow:0 0 6px 2px rgba(140,143,150,.35);
+        background:rgba(98,101,107,.82);
+        box-shadow:0 0 6px 2px rgba(120,123,130,.35);
         filter:blur(1.5px);
         animation:exhaustPuff 1.2s linear infinite;
         animation-play-state:paused;
@@ -334,9 +337,10 @@
       .epuff:nth-child(3){ animation-delay:.60s; }
       .epuff:nth-child(4){ animation-delay:.90s; }
 
+      /* Bakåt = åt höger (positiv X), nästan vågrätt med en liten lyftning */
       @keyframes exhaustPuff{
-        0%{   transform:translate(0,0) scale(.45);      opacity:.8; }
-        100%{ transform:translate(16px,-64px) scale(2.3); opacity:0; }
+        0%{   transform:translate(0,0) scale(.45);       opacity:.85; }
+        100%{ transform:translate(54px,-14px) scale(2.3); opacity:0; }
       }
 
       .sun{
@@ -509,7 +513,12 @@
           width:101px;
           height:61px;
         }
-      
+
+        #exhaust{
+          bottom:60px;
+          right:2px;
+        }
+
         .hud{
           grid-template-columns:repeat(3, 1fr);
           gap:6px;
@@ -953,8 +962,10 @@
          däckdiameter   ≈ 0.135 (för rullhastigheten)
        ======================================================== */
     const WHEEL = {
-      front: { fx: 0.183, fy: 0.589 },
-      rear:  { fx: 0.776, fy: 0.585 },
+      // justerat 10 px (i bildens 1536×1024): båda ned, fram 10 px åt
+      // vänster (mot fronten), bak 10 px åt höger
+      front: { fx: 0.1765, fy: 0.5988 },
+      rear:  { fx: 0.7825, fy: 0.5948 },
       rimDiaFrac: 0.100,
       tireDiaFrac: 0.135
     };
