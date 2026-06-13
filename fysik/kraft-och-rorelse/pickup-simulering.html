@@ -342,7 +342,11 @@
         width:46px;
         z-index:1;
         pointer-events:none;
+        transition:opacity .5s ease;
       }
+
+      /* När hon väl tonat bort (JS sätter klassen) stannar hon borta */
+      #lady.gone{ opacity:0; }
 
       #lady svg{ width:100%; height:auto; display:block; }
 
@@ -350,10 +354,9 @@
       .sim.engine-on .lady-calm{ display:none; }
       .sim.engine-on .lady-cough{ display:block; }
 
-      /* Skakar medan hon hostar OCH tonar bort efter ~2 s */
+      /* Skakar medan hon hostar (borttoningen sköts av JS) */
       .sim.engine-on #lady{
-        animation:ladyShake .34s ease-in-out infinite,
-                  ladyVanish 2.4s ease-in forwards;
+        animation:ladyShake .34s ease-in-out infinite;
         transform-origin:50% 100%;
       }
 
@@ -361,11 +364,6 @@
         0%,100%{ transform:translateX(0) rotate(0deg); }
         25%{ transform:translateX(-1px) rotate(-2deg); }
         75%{ transform:translateX(1px) rotate(2deg); }
-      }
-
-      @keyframes ladyVanish{
-        0%,67%{ opacity:1; }
-        100%{ opacity:0; }
       }
 
       .cough-bubble{
@@ -859,6 +857,7 @@
       brakeOut: document.getElementById('brakeOut'),
       truckWrap: document.getElementById('truckWrap'),
       truck: document.getElementById('truck'),
+      lady: document.getElementById('lady'),
       wheelFront: document.getElementById('wheelFront'),
       wheelRear: document.getElementById('wheelRear'),
       roadline: document.getElementById('roadline'),
@@ -1123,6 +1122,7 @@
     let braking = false;       // hjulen låsta (tvärnit)
     let distM = 0;             // total körd sträcka (m)
     let distAtBrake = 0;       // sträcka när tvärniten påbörjades
+    let ladyTimer = null;      // döljer damen efter ~2 s hostande
 
     function setTvarnitaEnabled(on){
       els.tvarnitaBtn.disabled = !on;
@@ -1137,6 +1137,8 @@
 
       els.sim.classList.remove('braking');
       setEngine(false);
+      clearTimeout(ladyTimer);
+      els.lady.classList.remove('gone');   // damen tillbaka vid omstart
       els.truckWrap.style.right = '36px';
       els.timeOut.textContent = '0.0 s';
       els.speedOut.textContent = '0.0 m/s';
@@ -1187,6 +1189,11 @@
       els.startBtn.style.opacity = '.6';
       setTvarnitaEnabled(true);
       setEngine(true, driveDuration);   // motorljud + avgasrök startar
+
+      // damen hostar och tonar bort efter ~2,4 s, och stannar borta
+      els.lady.classList.remove('gone');
+      clearTimeout(ladyTimer);
+      ladyTimer = setTimeout(() => els.lady.classList.add('gone'), 2400);
 
       function frame(ts){
         if(last == null) last = ts;
