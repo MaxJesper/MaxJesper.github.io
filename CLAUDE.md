@@ -358,3 +358,12 @@ Den klickbara genetiska kodtabellen finns nu som återanvändbar komponent (`/js
 - **Mutationsövning (kopplad till CRISPR/mutationer):** byt en bas i en sekvens och se effekten – tyst mutation (samma aminosyra), missense (ny aminosyra) eller nonsens (stoppkodon). Knyter an till m7 (mutationer) och m11 (genteknik).
 
 Övningarna ska göras tillsammans med Jesper. Överväg samtidigt att länka kodontabellen från m11 (genteknik) och från övningsbanken.
+
+### Idé 17 – Helhetsbild "från kromosom till protein" (genetik)
+Slå ihop den befintliga kedjan till **en enda egen översiktsbild** som binder samman: kromosom → DNA-dubbelhelix → baspar (A–T, G–C) → gen → mRNA → protein → funktion. Idén kom från "A Closer Look"-rutan på Human Genome Landmarks-postern, som visar just den helheten och brukar få polletten att trilla ner.
+
+- Återanvänd stilen/innehållet från `images/biologi/genetik/begreppshierarki.svg` (cell → kromosom → DNA → gen → baspar) och `images/biologi/genetik/dna-mrna-protein.svg` (DNA → mRNA → protein).
+- Resultatet ska vara helt egenritat (fritt att publicera) och kunna ligga som en sammanfattande bild i studieguiden (t.ex. slutet av M5 eller en egen översikt) och/eller på startsidan.
+
+### Idé 18 – Human Genome Landmarks-postern i Lektioner
+Postern finns inlagd som krediterad fördjupning i studieguidens M2 (`images/biologi/genetik/genome-landmarks-poster.jpg` + `.pdf`). När vi bygger **Lektioner** ska den även knytas in där – t.ex. som "utforska din egen kromosom"-uppgift eller som koppling mellan gener och sjukdomar i en genteknik-lektion. Källa måste alltid anges: U.S. Department of Energy Genomic Science program, genomicscience.energy.gov.
