@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kromosomer i siffror – Genetik – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-genetik {
+      --area: #16a34a;
+      --area-strong: #15803d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
+    }
+
+    main { max-width: 860px; }
+
+    .intro {
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .takeaway {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-left: 5px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin: 1.2rem 0 1.6rem;
+      line-height: 1.6;
+    }
+
+    .takeaway strong { color: var(--area-strong); }
+
+    h2 {
+      color: var(--area-strong);
+      margin: 1.8rem 0 0.3rem;
+    }
+
+    .tbl-note {
+      font-size: 0.86rem;
+      color: #6b7280;
+      margin: 0.2rem 0 0.7rem;
+      line-height: 1.45;
+    }
+
+    .tbl-scroll { overflow-x: auto; }
+
+    table.data {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    table.data caption {
+      text-align: left;
+      font-weight: 700;
+      color: var(--area-strong);
+      padding: 0.2rem 0 0.5rem;
+    }
+
+    table.data th, table.data td {
+      border: 1px solid #e5e7eb;
+      padding: 0.38rem 0.7rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    table.data thead th {
+      background: #dcfce7;
+      color: #166534;
+      text-align: right;
+      position: sticky;
+      top: 0;
+    }
+
+    table.data td:first-child, table.data th:first-child { text-align: left; }
+
+    table.data tbody tr:nth-child(even) { background: #f8fafc; }
+
+    table.data tr.highlight td {
+      background: var(--area-hover);
+      font-weight: 700;
+    }
+
+    .sources {
+      margin-top: 2rem;
+      font-size: 0.84rem;
+      color: #6b7280;
+      line-height: 1.5;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.8rem;
+    }
+
+    .sources a { color: var(--area-strong); }
+  </style>
+</head>
+<body class="area-genetik">
+
+  <header class="biologi-header">
+    <h1>Kromosomer i siffror</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p><a href="/biologi/genetik/studieguide.html#m2" class="subject-btn">← Tillbaka till studieguiden (M2)</a></p>
+
+    <p class="intro">Hur stor är en kromosom, och hur många gener bär den på? Och har en "mer avancerad"
+    organism fler kromosomer? Här kan du jämföra – både mellan människans egna kromosomer och mellan olika arter.</p>
+
+    <div class="takeaway">
+      <strong>Slutsats att ta med sig:</strong> antalet kromosomer säger ingenting om hur många gener en art har,
+      eller hur "avancerad" den är. Rågen har bara 14 kromosomer, människan 46 och en ormbunke över 1000 –
+      ändå har bananflugan (8 kromosomer) ungefär 14&nbsp;000 gener och granen (24 kromosomer) fler gener än vi.
+      Det är alltså <strong>generna</strong>, inte kromosomantalet, som bär informationen.
+    </div>
+
+    <h2>Människans 46 kromosomer</h2>
+    <p class="tbl-note">Antal gener och baspar per kromosom (par 1–22 samt X och Y). Gentalen kommer från en
+    sammanställning av identifierade gener och summerar till ungefär 32&nbsp;000; av dessa är
+    cirka 19&nbsp;000–20&nbsp;000 proteinkodande. Siffrorna är ungefärliga och varierar något mellan databaser.
+    Baspar anges i miljoner (referensgenomet GRCh38).</p>
+    <div class="tbl-scroll">
+      <table class="data">
+        <thead>
+          <tr><th>Kromosom</th><th>Gener (ca)</th><th>Baspar (miljoner)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>2 968</td><td>245</td></tr>
+          <tr><td>2</td><td>2 288</td><td>243</td></tr>
+          <tr><td>3</td><td>2 032</td><td>199</td></tr>
+          <tr><td>4</td><td>1 297</td><td>191</td></tr>
+          <tr><td>5</td><td>1 643</td><td>181</td></tr>
+          <tr><td>6</td><td>1 963</td><td>171</td></tr>
+          <tr><td>7</td><td>1 443</td><td>159</td></tr>
+          <tr><td>8</td><td>1 127</td><td>146</td></tr>
+          <tr><td>9</td><td>1 299</td><td>138</td></tr>
+          <tr><td>10</td><td>1 440</td><td>135</td></tr>
+          <tr><td>11</td><td>2 093</td><td>134</td></tr>
+          <tr><td>12</td><td>1 652</td><td>132</td></tr>
+          <tr><td>13</td><td>748</td><td>114</td></tr>
+          <tr><td>14</td><td>1 098</td><td>106</td></tr>
+          <tr><td>15</td><td>1 122</td><td>100</td></tr>
+          <tr><td>16</td><td>1 098</td><td>89</td></tr>
+          <tr><td>17</td><td>1 576</td><td>79</td></tr>
+          <tr><td>18</td><td>766</td><td>76</td></tr>
+          <tr><td>19</td><td>1 454</td><td>64</td></tr>
+          <tr><td>20</td><td>927</td><td>62</td></tr>
+          <tr><td>21</td><td>303</td><td>47</td></tr>
+          <tr><td>22</td><td>288</td><td>49</td></tr>
+          <tr><td>X</td><td>1 184</td><td>155</td></tr>
+          <tr><td>Y</td><td>231</td><td>58</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Antal kromosomer hos olika arter</h2>
+    <p class="tbl-note">Ordnade efter antal kromosomer. Lägg märke till att människan (46) ligger mitt i fältet –
+    flera "enklare" organismer har fler kromosomer än vi. Antalen avser kroppsceller (2n). För arter med stor
+    variation mellan arter/sorter anges ett ungefärligt värde (~).</p>
+    <div class="tbl-scroll">
+      <table class="data">
+        <thead>
+          <tr><th>Organism</th><th>Kromosomer (2n)</th><th>Kromosompar</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bananfluga</td><td>8</td><td>4</td></tr>
+          <tr><td>Råg</td><td>14</td><td>7</td></tr>
+          <tr><td>Snigel</td><td>24</td><td>12</td></tr>
+          <tr><td>Daggmask</td><td>32</td><td>16</td></tr>
+          <tr><td>Gris</td><td>38</td><td>19</td></tr>
+          <tr><td>Vete</td><td>42</td><td>21</td></tr>
+          <tr class="highlight"><td>Människa</td><td>46</td><td>23</td></tr>
+          <tr><td>Apa (människoapa)</td><td>48</td><td>24</td></tr>
+          <tr><td>Får</td><td>54</td><td>27</td></tr>
+          <tr><td>Häst</td><td>64</td><td>32</td></tr>
+          <tr><td>Marsvin</td><td>64</td><td>32</td></tr>
+          <tr><td>Kyckling</td><td>78</td><td>39</td></tr>
+          <tr><td>Duva</td><td>80</td><td>40</td></tr>
+          <tr><td>Karp</td><td>104</td><td>52</td></tr>
+          <tr><td>Fjäril</td><td>~380</td><td>~190</td></tr>
+          <tr><td>Ormbunke</td><td>~1200</td><td>~600</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sources">
+      <strong>Källor och noter:</strong> Människans per-kromosom-data: referensgenomet GRCh38 (Ensembl/Wikipedia,
+      <a href="https://en.wikipedia.org/wiki/Human_genome" target="_blank" rel="noopener">Human genome</a>).
+      Kromosomantal hos arter enligt standardreferenser. Två värden har justerats mot vedertagna uppgifter:
+      gris 2n=38 (inte 40) och tamduva 2n=80 (inte 16). Bananflugan (<em>Drosophila melanogaster</em>) har 8
+      kromosomer (4 par). Värden för "apa", "fjäril", "snigel" m.fl. varierar mellan arter och anges som typiska
+      eller ungefärliga.
+    </div>
+
+    <p style="margin-top:1.5rem;"><a href="/biologi/genetik/studieguide.html#m2" class="subject-btn">← Tillbaka till studieguiden (M2)</a></p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
