@@ -359,11 +359,13 @@ Den klickbara genetiska kodtabellen finns nu som återanvändbar komponent (`/js
 
 Övningarna ska göras tillsammans med Jesper. Överväg samtidigt att länka kodontabellen från m11 (genteknik) och från övningsbanken.
 
-### Idé 17 – Helhetsbild "från kromosom till protein" (genetik)
-Slå ihop den befintliga kedjan till **en enda egen översiktsbild** som binder samman: kromosom → DNA-dubbelhelix → baspar (A–T, G–C) → gen → mRNA → protein → funktion. Idén kom från "A Closer Look"-rutan på Human Genome Landmarks-postern, som visar just den helheten och brukar få polletten att trilla ner.
+### Idé 17 – Helhetsbild "från kromosom till baspar" (genetik)
+En egen översiktsbild som binder samman den **strukturella** kedjan: cell → kromosom → DNA-dubbelhelix → baspar (A–T, G–C) → gen. Idén kom från "A Closer Look"-rutan på Human Genome Landmarks-postern, som visar just den helheten och brukar få polletten att trilla ner.
 
-- Återanvänd stilen/innehållet från `images/biologi/genetik/begreppshierarki.svg` (cell → kromosom → DNA → gen → baspar) och `images/biologi/genetik/dna-mrna-protein.svg` (DNA → mRNA → protein).
-- Resultatet ska vara helt egenritat (fritt att publicera) och kunna ligga som en sammanfattande bild i studieguiden (t.ex. slutet av M5 eller en egen översikt) och/eller på startsidan.
+**Viktig avvägning (Jespers observation):** försök INTE tvinga in hela kedjan ända till protein i en enda bild. "A Closer Look" hoppar själv över mRNA och ribosomens proteinsyntes – och den delen har vi redan starka egna bilder för (`dna-mrna-protein.svg` och `ribosom.svg`). Låt alltså helhetsbilden fokusera på det strukturella (kromosom → DNA → baspar → gen) och låt proteinsyntesen ligga kvar i sina egna bilder. Ev. kan de två länkas visuellt med en liten "fortsättning: se proteinsyntesen".
+
+- Återanvänd stilen/innehållet från `images/biologi/genetik/begreppshierarki.svg` (cell → kromosom → DNA → gen → baspar).
+- Resultatet ska vara helt egenritat (fritt att publicera) och kunna ligga som en sammanfattande bild i studieguiden och/eller på startsidan.
 
 ### Idé 18 – Human Genome Landmarks-postern i Lektioner
 Postern finns inlagd som krediterad fördjupning i studieguidens M2 (`images/biologi/genetik/genome-landmarks-poster.jpg` + `.pdf`). När vi bygger **Lektioner** ska den även knytas in där – t.ex. som "utforska din egen kromosom"-uppgift eller som koppling mellan gener och sjukdomar i en genteknik-lektion. Källa måste alltid anges: U.S. Department of Energy Genomic Science program, genomicscience.energy.gov.
