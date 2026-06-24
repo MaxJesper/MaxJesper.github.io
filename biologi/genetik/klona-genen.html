@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Klona insulin-genen – Genetik – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-genetik {
+      --area: #16a34a;
+      --area-strong: #15803d;
+      --area-soft: #f0fdf4;
+      --area-border: #bbf7d0;
+      --area-hover: #dcfce7;
+      --ok: #15803d;
+      --ok-bg: #dcfce7;
+      --no: #b91c1c;
+      --no-bg: #fee2e2;
+    }
+
+    main { max-width: 760px; }
+
+    .intro {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      max-width: 620px;
+    }
+
+    /* ── Framstegsindikator ── */
+    .progress-wrap { margin: 0.6rem 0 1.4rem; max-width: 620px; }
+    .progress-label {
+      font-size: 0.82rem;
+      color: var(--area-strong);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .progress-track {
+      height: 9px;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--area);
+      border-radius: 99px;
+      transition: width 0.35s ease;
+    }
+
+    /* ── Spelkort ── */
+    .game-card {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-left: 5px solid var(--area);
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      padding: 1.2rem 1.4rem 1.4rem;
+      max-width: 620px;
+    }
+
+    .step-tag {
+      display: inline-block;
+      background: var(--area-hover);
+      color: var(--area-strong);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 99px;
+      margin-bottom: 0.6rem;
+    }
+
+    .game-card h2 {
+      margin: 0 0 0.5rem;
+      color: var(--area-strong);
+      font-size: 1.25rem;
+    }
+
+    .game-card p { line-height: 1.6; margin: 0.5rem 0; }
+
+    .seq {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 0.1rem 0.4rem;
+      font-size: 0.92rem;
+      letter-spacing: 0.06em;
+      word-break: break-all;
+    }
+    .seq .site { color: var(--no); font-weight: 700; }
+    .seq .gene { color: var(--area-strong); font-weight: 700; }
+
+    /* ── Svarsalternativ ── */
+    .options { display: flex; flex-direction: column; gap: 0.55rem; margin: 1rem 0 0.3rem; }
+    .opt {
+      text-align: left;
+      width: 100%;
+      background: #fff;
+      border: 1.5px solid var(--area-border);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.96rem;
+      line-height: 1.45;
+      cursor: pointer;
+      transition: background 0.12s ease, border-color 0.12s ease;
+      color: #1f2937;
+    }
+    .opt:hover:not(:disabled) { background: var(--area-soft); border-color: var(--area); }
+    .opt:disabled { cursor: default; opacity: 0.95; }
+    .opt.correct { background: var(--ok-bg); border-color: var(--ok); color: #14532d; font-weight: 600; }
+    .opt.wrong { background: var(--no-bg); border-color: var(--no); color: #7f1d1d; }
+
+    .opt .mono {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      letter-spacing: 0.05em;
+    }
+    .opt .mono .site { color: var(--no); font-weight: 700; }
+    .opt .mono .gene { color: var(--area-strong); font-weight: 700; }
+
+    /* ── Feedback ── */
+    .feedback {
+      margin-top: 0.9rem;
+      border-radius: 10px;
+      padding: 0.75rem 0.95rem;
+      line-height: 1.55;
+      font-size: 0.94rem;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--ok-bg); border: 1px solid var(--ok); color: #14532d; }
+    .feedback.no { background: var(--no-bg); border: 1px solid var(--no); color: #7f1d1d; }
+    .feedback strong { display: block; margin-bottom: 0.2rem; }
+
+    /* ── Knappar ── */
+    .btn-row { margin-top: 1.1rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .btn {
+      background: var(--area);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+    .btn:hover { background: var(--area-strong); }
+    .btn.secondary { background: #fff; color: var(--area-strong); border: 1.5px solid var(--area-border); }
+    .btn.secondary:hover { background: var(--area-soft); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── SVG-figurer ── */
+    .figure { display: flex; justify-content: center; margin: 1rem 0 0.3rem; }
+    .figure svg { max-width: 100%; height: auto; }
+
+    .clickable { cursor: pointer; }
+    .clickable:hover .hit { stroke: var(--area-strong); stroke-width: 3; }
+
+    .gel-band { cursor: pointer; transition: opacity 0.12s ease; }
+    .gel-band:hover { opacity: 0.75; }
+
+    /* ── Slutskärm ── */
+    .finish {
+      text-align: center;
+      background: linear-gradient(135deg, var(--area-soft), var(--area-hover));
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1.8rem 1.4rem;
+      max-width: 620px;
+    }
+    .finish .emoji { font-size: 3rem; }
+    .finish h2 { color: var(--area-strong); margin: 0.4rem 0 0.6rem; }
+    .recap {
+      text-align: left;
+      background: #fff;
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem auto 0;
+      max-width: 460px;
+      line-height: 1.7;
+      font-size: 0.92rem;
+    }
+    .recap ol { margin: 0; padding-left: 1.3rem; }
+
+    .hint {
+      font-size: 0.86rem;
+      color: #6b7280;
+      font-style: italic;
+      margin-top: 0.6rem;
+    }
+
+    .sources {
+      margin-top: 2rem;
+      font-size: 0.82rem;
+      color: #6b7280;
+      line-height: 1.5;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 0.8rem;
+      max-width: 620px;
+    }
+    .sources a { color: var(--area-strong); }
+  </style>
+</head>
+<body class="area-genetik">
+
+  <header class="biologi-header">
+    <h1>🧬 Klona insulin-genen</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p><a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a></p>
+
+    <p class="intro">Förr tog man insulin från slaktdjur. Idag låter vi <strong>bakterier</strong> tillverka
+      mänskligt insulin åt oss. Din uppgift: flytta över den mänskliga insulin-genen till en bakterie och få
+      cellen att uttrycka genen. Följ med genom hela kedjan – ett aktivt val i taget.</p>
+
+    <div class="progress-wrap">
+      <div class="progress-label" id="progress-label">Steg 1 av 8</div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <div id="stage"></div>
+
+    <div class="sources">
+      <strong>Om innehållet:</strong> Spelet är en pedagogisk förenkling av rekombinant DNA-teknik
+      (genkloning). Sekvenserna är förkortade exempel. Insulin var ett av de första läkemedlen som
+      framställdes med genteknik (godkänt 1982). Restriktionsenzymet <em>EcoRI</em> känner igen och klipper
+      den palindromiska sekvensen GAATTC och lämnar "klibbiga ändar" (sticky ends). Kopplas till studieguidens
+      M11 (genteknik).
+    </div>
+
+    <p style="margin-top:1.5rem;"><a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a></p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  (function () {
+    const stage = document.getElementById('stage');
+    const fill = document.getElementById('progress-fill');
+    const label = document.getElementById('progress-label');
+
+    // ── Spelets steg ──────────────────────────────────────────────
+    // Varje steg har en render-funktion. De flesta använder mcStep (flerval).
+    const steps = [];
+
+    /* Generisk flervalsfråga.
+       opts: [{html, ok, fb}]  fb = förklaring som visas när alternativet valts */
+    function mcStep({tag, title, body, prompt, opts, hint}) {
+      return function (root, onSolved) {
+        root.innerHTML = `
+          <div class="game-card">
+            <span class="step-tag">${tag}</span>
+            <h2>${title}</h2>
+            ${body || ''}
+            <p><strong>${prompt}</strong></p>
+            <div class="options"></div>
+            ${hint ? `<p class="hint">💡 ${hint}</p>` : ''}
+            <div class="feedback"></div>
+          </div>`;
+        const box = root.querySelector('.options');
+        const fb = root.querySelector('.feedback');
+        let done = false;
+        opts.forEach((o, i) => {
+          const b = document.createElement('button');
+          b.className = 'opt';
+          b.innerHTML = o.html;
+          b.addEventListener('click', () => {
+            if (done && o.ok !== true) return;        // efter rätt: lås felval
+            fb.className = 'feedback show ' + (o.ok ? 'ok' : 'no');
+            fb.innerHTML = `<strong>${o.ok ? '✅ Rätt!' : '❌ Inte riktigt'}</strong>${o.fb}`;
+            if (o.ok) {
+              done = true;
+              [...box.children].forEach(c => c.disabled = true);
+              b.classList.add('correct');
+              onSolved();
+            } else {
+              b.classList.add('wrong');
+              b.disabled = true;
+            }
+          });
+          box.appendChild(b);
+        });
+      };
+    }
+
+    // STEG 1 – Varför plasmid? -------------------------------------
+    steps.push(mcStep({
+      tag: 'Steg 1 · Verktyget',
+      title: 'Vektorn – en plasmid',
+      body: `<p>Vi vill att en bakterie ska läsa av den mänskliga insulin-genen och tillverka insulin.
+              Men hur får vi in genen i bakterien på ett sätt som cellen både kopierar och använder?</p>
+             <p>I bakterier finns små, ringformade DNA-molekyler som kallas <strong>plasmider</strong>.
+             De kopieras automatiskt när cellen delar sig.</p>`,
+      prompt: 'Varför använder vi en plasmid som "transportör" för genen?',
+      opts: [
+        { ok: true,
+          html: 'För att plasmiden är en ring av DNA som bakterien kopierar och vidareför till sina dotterceller – genen följer med.',
+          fb: 'Just det. Plasmiden fungerar som en <em>vektor</em>: en bärare som tar genen in i cellen, kopieras med varje delning och kan dessutom bära en promotor som sätter igång uttrycket.' },
+        { ok: false,
+          html: 'För att plasmiden bryter ner det mänskliga DNА:t så att bakterien slipper det.',
+          fb: 'Tvärtom – vi vill att genen ska <em>bevaras</em> och kopieras, inte brytas ner.' },
+        { ok: false,
+          html: 'För att plasmiden är ett protein som tillverkar insulin direkt.',
+          fb: 'En plasmid är inte ett protein utan en ringformad DNA-molekyl. Proteinet (insulin) tillverkas först när genen läses av.' }
+      ]
+    }));
+
+    // STEG 2 – Designa primer -------------------------------------
+    steps.push(mcStep({
+      tag: 'Steg 2 · Primerdesign',
+      title: 'Designa en primer med restriktionssite',
+      body: `<p>För att kunna klippa loss genen och sätta in den i plasmiden behöver genens ändar ha samma
+              "lås" som plasmiden öppnas med. Vi använder enzymet <strong>EcoRI</strong>, som klipper sekvensen
+              <span class="seq"><span class="site">GAATTC</span></span>.</p>
+             <p>Insulin-genen börjar:
+              <span class="seq"><span class="gene">ATGCCCTGTGGA…</span></span></p>
+             <p>När vi kopierar genen med PCR använder vi <em>primrar</em> – korta startbitar. Genom att bygga in
+             en restriktionssite i primern får den färdiga kopian rätt ändar.</p>`,
+      prompt: 'Vilken primer ger genen en EcoRI-ände?',
+      opts: [
+        { ok: true,
+          html: '<span class="mono"><span class="site">GAATTC</span><span class="gene">ATGCCCTGTGGA</span></span> – restriktionssite + början på genen',
+          fb: 'Snyggt. Primern matchar genens början <em>och</em> bär EcoRI-sitet, så att PCR-produkten kan klippas med EcoRI. (I verkligheten lägger man dessutom några extra "skydds-baser" före sitet, så att enzymet får plats att klippa.)' },
+        { ok: false,
+          html: '<span class="mono"><span class="gene">ATGCCCTGTGGA</span></span> – bara genens början',
+          fb: 'Den här primern saknar restriktionssite. Då har PCR-kopian inga klibbiga ändar och kan inte klippas in i plasmiden.' },
+        { ok: false,
+          html: '<span class="mono"><span class="site">AAGCTT</span><span class="gene">ATGCCCTGTGGA</span></span> – med HindIII-site',
+          fb: 'AAGCTT är HindIII:s site, inte EcoRI:s. Eftersom vi öppnar plasmiden med EcoRI måste genen också ha EcoRI-ändar – annars passar inte ändarna ihop.' }
+      ],
+      hint: 'Genen och plasmiden måste klippas med samma enzym för att ändarna ska passa ihop.'
+    }));
+
+    // STEG 3 – PCR -------------------------------------------------
+    steps.push(mcStep({
+      tag: 'Steg 3 · PCR',
+      title: 'Mångfaldiga genen med PCR',
+      body: `<p>Med PCR kopieras genen om och om igen. För varje cykel <strong>fördubblas</strong> antalet
+              kopior: 1 → 2 → 4 → 8 …</p>`,
+      prompt: 'Du startar med 1 kopia. Hur många finns efter 3 cykler?',
+      opts: [
+        { ok: false, html: '6 kopior', fb: 'Det blir inte 2 × 3. Antalet <em>fördubblas</em> varje cykel, det adderas inte.' },
+        { ok: true, html: '8 kopior', fb: '1 → 2 → 4 → 8. Fördubbling varje cykel ger 2³ = 8. Efter ~30 cykler finns miljarder kopior – tillräckligt att arbeta med.' },
+        { ok: false, html: '3 kopior', fb: 'Då hade bara en kopia tillkommit per cykel. PCR fördubblar i stället mängden varje gång.' }
+      ]
+    }));
+
+    // STEG 4 – Restriktionsklyvning -------------------------------
+    steps.push(function (root, onSolved) {
+      const svg = `
+        <div class="figure">
+          <svg viewBox="0 0 240 240" width="220" height="220" role="img" aria-label="Plasmidkarta med restriktionssites">
+            <circle cx="120" cy="120" r="86" fill="none" stroke="#15803d" stroke-width="4"/>
+            <circle cx="120" cy="120" r="86" fill="#f0fdf4" opacity="0.5"/>
+            <!-- EcoRI överst -->
+            <line x1="120" y1="34" x2="120" y2="58" stroke="#b91c1c" stroke-width="3"/>
+            <text x="120" y="26" font-size="12" fill="#b91c1c" text-anchor="middle" font-weight="700">EcoRI</text>
+            <text x="120" y="74" font-size="9" fill="#7f1d1d" text-anchor="middle">GAATTC</text>
+            <!-- HindIII nere till höger -->
+            <line x1="186" y1="174" x2="168" y2="158" stroke="#7c3aed" stroke-width="3"/>
+            <text x="196" y="186" font-size="12" fill="#7c3aed" text-anchor="middle" font-weight="700">HindIII</text>
+            <!-- resistensgen -->
+            <path d="M 70 178 A 86 86 0 0 1 60 96" fill="none" stroke="#f59e0b" stroke-width="8" opacity="0.7"/>
+            <text x="44" y="140" font-size="9" fill="#b45309" text-anchor="middle" transform="rotate(-90 44 140)">resistensgen</text>
+            <text x="120" y="124" font-size="11" fill="#15803d" text-anchor="middle" font-weight="700">Plasmid</text>
+          </svg>
+        </div>`;
+      root.innerHTML = `
+        <div class="game-card">
+          <span class="step-tag">Steg 4 · Klyvning</span>
+          <h2>Öppna plasmiden med rätt enzym</h2>
+          <p>Din PCR-kopia av genen har nu <strong>EcoRI-ändar</strong> i båda ändar. Plasmiden är en ring –
+             den måste öppnas på ett ställe så att genen får plats. Plasmidkartan visar var olika enzym klipper.</p>
+          ${svg}
+          <p><strong>Vilket enzym ska du öppna plasmiden med?</strong></p>
+          <div class="options"></div>
+          <p class="hint">💡 Klibbiga ändar passar bara ihop om de skapats av <em>samma</em> enzym.</p>
+          <div class="feedback"></div>
+        </div>`;
+      const opts = [
+        { ok: true, html: 'EcoRI', fb: 'Precis. Plasmiden får då exakt samma klibbiga ändar som genen, så att de passar ihop som pusselbitar. Att klippa båda med samma enzym är hela poängen.' },
+        { ok: false, html: 'HindIII', fb: 'HindIII ger andra klibbiga ändar (AAGCTT). De skulle inte matcha genens EcoRI-ändar, och genen skulle inte fastna i plasmiden.' },
+        { ok: false, html: 'Inget enzym – tryck bara in genen', fb: 'En sluten ring kan inte ta emot genen. Plasmiden måste öppnas, och öppningen måste ha ändar som passar genens.' }
+      ];
+      const box = root.querySelector('.options');
+      const fb = root.querySelector('.feedback');
+      let done = false;
+      opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.innerHTML = o.html;
+        b.addEventListener('click', () => {
+          if (done && !o.ok) return;
+          fb.className = 'feedback show ' + (o.ok ? 'ok' : 'no');
+          fb.innerHTML = `<strong>${o.ok ? '✅ Rätt!' : '❌ Inte riktigt'}</strong>${o.fb}`;
+          if (o.ok) { done = true; [...box.children].forEach(c => c.disabled = true); b.classList.add('correct'); onSolved(); }
+          else { b.classList.add('wrong'); b.disabled = true; }
+        });
+        box.appendChild(b);
+      });
+    });
+
+    // STEG 5 – Gelelektrofores (klicka på rätt band) ---------------
+    steps.push(function (root, onSolved) {
+      root.innerHTML = `
+        <div class="game-card">
+          <span class="step-tag">Steg 5 · Gelelektrofores</span>
+          <h2>Kontrollera fragmenten på gelen</h2>
+          <p>Innan vi går vidare kollar vi att klippningen lyckades. DNA-bitarna får vandra genom en gel i ett
+             elektriskt fält. <strong>Små fragment vandrar längre</strong> (snabbare genom gelen) än stora.</p>
+          <p>Plasmiden är stor (~4000 baspar). Den utklippta insulin-genen är liten (~330 baspar).</p>
+          <div class="figure">
+            <svg viewBox="0 0 240 220" width="220" height="200" role="img" aria-label="Gel med två band">
+              <rect x="40" y="10" width="160" height="200" rx="6" fill="#eef2f7" stroke="#cbd5e1"/>
+              <text x="30" y="22" font-size="11" fill="#475569">−</text>
+              <text x="30" y="206" font-size="13" fill="#475569">+</text>
+              <text x="120" y="26" font-size="9" fill="#64748b" text-anchor="middle">brunn ↓</text>
+              <rect x="100" y="14" width="40" height="6" fill="#94a3b8"/>
+              <!-- stort band, nära toppen -->
+              <g class="gel-band" data-band="stor">
+                <rect x="95" y="60" width="50" height="11" rx="3" fill="#15803d"/>
+                <text x="156" y="69" font-size="9" fill="#475569">band A</text>
+              </g>
+              <!-- litet band, långt ner -->
+              <g class="gel-band" data-band="liten">
+                <rect x="95" y="150" width="50" height="11" rx="3" fill="#15803d"/>
+                <text x="156" y="159" font-size="9" fill="#475569">band B</text>
+              </g>
+            </svg>
+          </div>
+          <p><strong>Klicka på bandet som är den utklippta insulin-genen.</strong></p>
+          <p class="hint">💡 Litet fragment = vandrar längst från brunnen (närmast +).</p>
+          <div class="feedback"></div>
+        </div>`;
+      const fb = root.querySelector('.feedback');
+      let done = false;
+      root.querySelectorAll('.gel-band').forEach(g => {
+        g.addEventListener('click', () => {
+          if (done) return;
+          const ok = g.dataset.band === 'liten';
+          fb.className = 'feedback show ' + (ok ? 'ok' : 'no');
+          if (ok) {
+            done = true;
+            g.querySelector('rect').setAttribute('fill', '#16a34a');
+            g.querySelector('rect').setAttribute('stroke', '#15803d');
+            g.querySelector('rect').setAttribute('stroke-width', '3');
+            fb.innerHTML = '<strong>✅ Rätt!</strong>Band B ligger längst ner – det är det lilla fragmentet (insulin-genen, ~330 bp). Det stora bandet A högre upp är den öppnade plasmiden. Klippningen fungerade!';
+            onSolved();
+          } else {
+            fb.innerHTML = '<strong>❌ Inte riktigt</strong>Band A ligger nära brunnen och har vandrat kort – det är ett <em>stort</em> fragment, alltså plasmiden. Den lilla genen vandrar längre. Försök igen.';
+          }
+        });
+      });
+    });
+
+    // STEG 6 – Ligering -------------------------------------------
+    steps.push(mcStep({
+      tag: 'Steg 6 · Ligering',
+      title: 'Limma ihop med DNA-ligas',
+      body: `<p>Nu ligger den öppnade plasmiden och insulin-genen i samma rör. Deras klibbiga ändar (skapade av
+              EcoRI) söker upp varandra och parar ihop sig genom basparning. Men ändarna sitter bara löst – DNA:t
+              är ännu inte en hel, sluten ring.</p>`,
+      prompt: 'Vad är enzymet DNA-ligas jobb här?',
+      opts: [
+        { ok: true,
+          html: 'Att koppla ihop sockerfosfat-ryggraden så att genen och plasmiden blir en enda sluten DNA-ring.',
+          fb: 'Just det. Basparningen håller ändarna på plats, men ligas "syr fast" ryggraden så att resultatet blir en stabil, sluten plasmid med insulin-genen inbyggd – en <em>rekombinant</em> plasmid.' },
+        { ok: false,
+          html: 'Att klippa upp DNA:t på nytt.',
+          fb: 'Det är restriktionsenzymets jobb (steg 4). Ligas gör motsatsen – det fogar samman.' },
+        { ok: false,
+          html: 'Att kopiera genen en gång till.',
+          fb: 'Kopieringen skedde i PCR-steget. Ligas kopierar inte, det förenar DNA-ändar.' }
+      ]
+    }));
+
+    // STEG 7 – Transformation -------------------------------------
+    steps.push(mcStep({
+      tag: 'Steg 7 · Transformation',
+      title: 'Få in plasmiden i bakterien',
+      body: `<p>Den färdiga rekombinanta plasmiden ska nu in i en bakterie (t.ex. <em>E. coli</em>). Att en cell
+              tar upp främmande DNA kallas <strong>transformation</strong>. Men bakteriens cellmembran släpper
+              inte gärna in stora DNA-ringar.</p>`,
+      prompt: 'Hur får man bakterien att ta upp plasmiden?',
+      opts: [
+        { ok: true,
+          html: 'Gör cellerna "kompetenta" (t.ex. med kalciumjoner) och ge dem en kort värmechock som öppnar membranet en aning.',
+          fb: 'Precis. Kalciumjoner + en snabb värmechock (eller en elektrisk puls, elektroporation) gör membranet genomsläppligt just så länge att plasmiden hinner in.' },
+        { ok: false,
+          html: 'Koka bakterierna så att plasmiden ramlar in.',
+          fb: 'Kokning dödar bakterierna. Värmechocken är kort och mild – den ska öppna membranet, inte förstöra cellen.' },
+        { ok: false,
+          html: 'Vänta tills plasmiden av sig själv passerar genom cellväggen.',
+          fb: 'Stora DNA-ringar tar sig inte spontant in i nämnvärd grad. Cellerna måste först göras mottagliga (kompetenta).' }
+      ]
+    }));
+
+    // STEG 8 – Selektion + uttryck --------------------------------
+    steps.push(function (root, onSolved) {
+      root.innerHTML = `
+        <div class="game-card">
+          <span class="step-tag">Steg 8 · Selektion & uttryck</span>
+          <h2>Vilka bakterier lyckades?</h2>
+          <p>Bara en bråkdel av bakterierna tog upp plasmiden. Hur hittar vi dem? Plasmiden bär – förutom
+             insulin-genen – en <strong>resistensgen</strong> mot ett antibiotikum. Vi odlar bakterierna på en
+             platta med det antibiotikumet.</p>
+          <div class="figure">
+            <svg viewBox="0 0 320 180" width="300" height="170" role="img" aria-label="Två odlingsplattor">
+              <!-- platta utan antibiotika -->
+              <circle cx="80" cy="95" r="60" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+              <g fill="#92400e">
+                <circle cx="60" cy="70" r="5"/><circle cx="95" cy="65" r="5"/><circle cx="110" cy="95" r="5"/>
+                <circle cx="70" cy="110" r="5"/><circle cx="95" cy="120" r="5"/><circle cx="55" cy="95" r="5"/>
+                <circle cx="85" cy="92" r="5"/><circle cx="118" cy="72" r="5"/>
+              </g>
+              <text x="80" y="172" font-size="12" fill="#475569" text-anchor="middle">utan antibiotika</text>
+              <!-- platta med antibiotika -->
+              <circle cx="240" cy="95" r="60" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <g fill="#1d4ed8">
+                <circle cx="225" cy="80" r="5"/><circle cx="258" cy="105" r="5"/><circle cx="240" cy="115" r="5"/>
+              </g>
+              <text x="240" y="172" font-size="12" fill="#475569" text-anchor="middle">med antibiotika</text>
+            </svg>
+          </div>
+          <p><strong>Vilken platta visar vilka bakterier som tagit upp plasmiden – och varför?</strong></p>
+          <div class="options"></div>
+          <div class="feedback"></div>
+        </div>`;
+      const opts = [
+        { ok: true,
+          html: 'Plattan <strong>med antibiotika</strong> – bara bakterier som fått plasmiden (och dess resistensgen) överlever och bildar kolonier.',
+          fb: 'Just det! Resistensgenen är en "biljett": utan plasmid dör bakterien på antibiotikaplattan. Kolonierna som växer där bär alltså plasmiden med insulin-genen. När en promotor på plasmiden sätter igång genen läses den av till mRNA och översätts till insulin – bakterien blir en liten insulinfabrik. 🎉' },
+        { ok: false,
+          html: 'Plattan <strong>utan antibiotika</strong> – där växer ju flest bakterier.',
+          fb: 'På den plattan växer <em>alla</em> bakterier, både de med och utan plasmid. Då kan vi inte skilja ut de lyckade. Det är just därför vi behöver antibiotikat som filter.' },
+        { ok: false,
+          html: 'Ingen av plattorna kan visa det – man måste gissa.',
+          fb: 'Jo – knepet är resistensgenen på plasmiden. Den gör antibiotikaplattan till ett urval (selektion) där bara bakterier med plasmid överlever.' }
+      ];
+      const box = root.querySelector('.options');
+      const fb = root.querySelector('.feedback');
+      let done = false;
+      opts.forEach(o => {
+        const b = document.createElement('button');
+        b.className = 'opt';
+        b.innerHTML = o.html;
+        b.addEventListener('click', () => {
+          if (done && !o.ok) return;
+          fb.className = 'feedback show ' + (o.ok ? 'ok' : 'no');
+          fb.innerHTML = `<strong>${o.ok ? '✅ Rätt!' : '❌ Inte riktigt'}</strong>${o.fb}`;
+          if (o.ok) { done = true; [...box.children].forEach(c => c.disabled = true); b.classList.add('correct'); onSolved(); }
+          else { b.classList.add('wrong'); b.disabled = true; }
+        });
+        box.appendChild(b);
+      });
+    });
+
+    // ── Slutskärm ────────────────────────────────────────────────
+    function renderFinish() {
+      label.textContent = 'Klart!';
+      fill.style.width = '100%';
+      stage.innerHTML = `
+        <div class="finish">
+          <div class="emoji">🎉🧬</div>
+          <h2>Du har klonat insulin-genen!</h2>
+          <p>Bakterien bär nu den mänskliga genen, läser av den och tillverkar insulin –
+             precis så som läkemedelsinsulin framställs på riktigt.</p>
+          <div class="recap">
+            <strong>Hela kedjan du gick igenom:</strong>
+            <ol>
+              <li>Valde plasmid som vektor</li>
+              <li>Designade primer med EcoRI-site</li>
+              <li>Mångfaldigade genen med PCR</li>
+              <li>Klippte plasmiden med samma enzym (EcoRI)</li>
+              <li>Kontrollerade fragmenten med gelelektrofores</li>
+              <li>Ligerade ihop genen och plasmiden</li>
+              <li>Transformerade bakterien</li>
+              <li>Selekterade med antibiotika → genuttryck → insulin</li>
+            </ol>
+          </div>
+          <div class="btn-row" style="justify-content:center;">
+            <button class="btn" id="restart">Spela igen</button>
+            <a class="btn secondary" href="./studieguide.html#m11">Läs mer om genteknik (M11)</a>
+          </div>
+        </div>`;
+      document.getElementById('restart').addEventListener('click', () => { current = 0; renderStep(); });
+    }
+
+    // ── Stegmotor ────────────────────────────────────────────────
+    let current = 0;
+    let solved = false;
+
+    function renderStep() {
+      if (current >= steps.length) { renderFinish(); return; }
+      solved = false;
+      label.textContent = `Steg ${current + 1} av ${steps.length}`;
+      fill.style.width = (current / steps.length * 100) + '%';
+
+      const root = document.createElement('div');
+      stage.innerHTML = '';
+      stage.appendChild(root);
+
+      steps[current](root, () => {
+        solved = true;
+        fill.style.width = ((current + 1) / steps.length * 100) + '%';
+        // Lägg till Nästa-knapp
+        if (!root.querySelector('.btn-row')) {
+          const card = root.querySelector('.game-card');
+          const row = document.createElement('div');
+          row.className = 'btn-row';
+          const next = document.createElement('button');
+          next.className = 'btn';
+          next.textContent = current === steps.length - 1 ? 'Se resultatet →' : 'Nästa steg →';
+          next.addEventListener('click', () => { current++; renderStep(); window.scrollTo({top:0,behavior:'smooth'}); });
+          row.appendChild(next);
+          card.appendChild(row);
+        }
+      });
+    }
+
+    renderStep();
+  })();
+  </script>
+</body>
+</html>
