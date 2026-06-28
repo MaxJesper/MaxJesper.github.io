@@ -320,6 +320,14 @@ En strukturerad lektionsplanering per område: mål, progression, förslag på l
 ### Idé 5 – Bra länkar till lärare
 Kurerade länksamlingar per område – filmer, simuleringar, externa resurser. Ska göras tillsammans med Jesper.
 
+**Kandidatkällor för filmankare (att utvärdera).** Källor att vaska igenom när vi fyller ankaren med film, enligt principen om språkberoende filmruta (se `pedagogik.md` punkt 6):
+
+- **Amoeba Sisters** (YouTube) – korta tecknade engelska biologi-/genetikanimationer, uppskattade av elever, fungerar bra med YouTube:s auto-textning/auto-dubbning. **Jesper ska titta igenom dem och välja ut vilka vi behåller** per milstolpe.
+- **Khan Academy** – fritt, ~50 språk, har genetikinnehåll (ännu inte använt av Jesper).
+- **PhET** – fria simuleringar, 90+ språk (Jesper använder redan).
+- **Studi.se** – svensk källa, namnges (kräver skolinloggning); endast svenskt språkspår.
+- **Egna filmer** – t.ex. *En cells sista måltid* (cellmembran/celldöd, M1). Starkast av alla eftersom de är språkoberoende, fria och personliga.
+
 ### Idé 6 – Fördjupningsmaterial på gymnasienivå
 Fördjupningssektion för elever som vill gå vidare mot gymnasienivå. Exempel för kemi: molräkning, balansering av kemiska formler, elektrokemisk cell-potentialberäkning. Ska göras tillsammans med Jesper.
 
