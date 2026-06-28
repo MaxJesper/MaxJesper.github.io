@@ -143,6 +143,18 @@ en hel lärarhandledning på en gång.
   *syftet* (vad eleven ska lära sig / varför aktiviteten finns) och *hur den går till*
   (kort genomförande). Det är detta som gör lärarlagret användbart i stället för bara en
   länksamling.
+- **Filmtips och media är språkberoende.** Filmrutan i ankaret är inte en enda hårdkodad
+  länk utan ett fält som kan ge olika källa per språk – på samma sätt som begreppen redan
+  hanteras per språk. Svenska kan peka på Studi (namngivet, kräver skolinloggning),
+  engelska och andra språk på en fri, globalt tillgänglig film. För bredd lutar vi oss mot
+  källor som skalar över språk av sig själva: YouTube med auto-dubbning/auto-textning (en
+  bra engelsk animation når då många språk), Khan Academy (~50 språk) och PhET-simuleringar
+  (90+ språk).
+- **Egna visualiseringar är ryggraden, externa filmer ett tillägg.** Egenritade bilder och
+  animationer bär över språkgränser med bara översatt bildtext – ingen betalvägg, inga döda
+  länkar, fritt att publicera. Sajten ska aldrig stå och falla med en extern tjänst. Hit
+  hör även lärarens egna filmer (t.ex. *En cells sista måltid*), som kan vara starka
+  ankare i sig.
 
 ### 7. Utvecklingen ska vara experimentell
 
