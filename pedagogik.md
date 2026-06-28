@@ -28,12 +28,33 @@ klassrummet. Större förbättringar görs först därefter.
 även om mycket kan bli bättre. Annars riskerar vi att polera ett område i evighet medan
 andra ligger orörda.
 
-### 2. Texten är ryggraden
+### 2. Texten är ryggraden – en delad karta för lärare och elev
 
 Texten är inte bara information. Den är den röda tråden som binder ihop hela
 arbetsområdet. Till texten kopplas filmer, laborationer, demonstrationer, AI, spel,
 diskussioner, läxor och bildstöd. Allt annat hänger på texten – om texten håller, håller
 strukturen.
+
+Texten har en **dubbel funktion**, och det är just det som ger den dess styrka:
+
+- **Ryggrad för lärarens lektioner.** Till texten knyts förslag på vad som kan göras på
+  lektionen – demonstrationer, laborationer, diskussioner, och länkar till filmer och
+  material även *utanför* vårt eget (en lärare använder allt möjligt). Texten ger ordningen
+  och sammanhanget; läraren väljer fritt vad som kopplas på.
+- **Ryggrad för elevens självstudier.** Samma text bär elevens egna studier mellan och
+  efter lektionerna.
+
+Det avgörande är att det är **en och samma karta**. Effekten blir störst när eleven märker
+att läraren följer samma plan: då upplevs självstudierna inte som extramaterial vid sidan
+om, utan som *själva kursen* – och eleven och läraren är på samma ställe i den. Det är en
+förtroende- och sammanhangseffekt som få läromedel skapar, eftersom de byggs antingen för
+eleven eller för läraren, sällan som en delad karta.
+
+**Kartan är inte ett manus.** En bra lärare tar omvägar – en film, en nyhet, en egen
+demonstration. Det är en funktion, inte ett avsteg. Det som håller förtroendet uppe är inte
+att läraren gör exakt det texten säger, utan att eleven känner igen samma milstolpar
+oavsett vilken väg läraren tar mellan dem. Texten ger landmärkena; läraren väljer vägen och
+kopplar fritt på externt material.
 
 ### 3. Plattformen ska stödja läraren
 
@@ -42,6 +63,23 @@ begrepp introduceras och varför, vilka missuppfattningar som är vanliga, vilka
 demonstrationer och laborationer som fungerar, vilka filmer som är bra, och när AI tillför
 något. Detta är troligen plattformens största särdrag jämfört med vanliga läromedel – de
 bygger för eleven, sällan för lärarens didaktiska beslut.
+
+**Läraren är grindvakten – och därmed motorn för spridning.** Eleverna styr sällan om
+sidan kommer in i klassrummet; det gör läraren. Om läraren känner att det blir *lättare*
+att planera och genomföra lektioner med sidans hjälp, kommer den att användas. Lärarstödet
+är därför inte bara en trevlig funktion vid sidan av elevmaterialet – det är plattformens
+viktigaste tillväxtmotor. Tre konsekvenser för hur vi prioriterar:
+
+- **Vinsten måste märkas direkt.** Skilj på att läraren *provar* sidan och att läraren
+  *kommer tillbaka*. Återkomsten avgörs av om sidan sparade planeringstid och fick
+  lektionen att flyta redan första gången. Hellre fem konkreta lektionsförslag som funkar
+  än en heltäckande men tung lärarhandledning ingen orkar läsa.
+- **Lärare litar på lärare.** En kollega som säger "den här sparade mig en kväll" väger
+  tyngre än all marknadsföring. Den lärare som redan gillar sidan är den viktigaste
+  kanalen – gör det lätt att visa och dela.
+- **Men eleverna får inte glömmas bort.** Läraren kommer bara tillbaka om sidan också
+  fungerade *för eleverna* på lektionen. Elevkvaliteten är nödvändig; läraren är den som
+  öppnar dörren. De två drar åt samma håll.
 
 ### 4. AI används där den gör verklig nytta
 
