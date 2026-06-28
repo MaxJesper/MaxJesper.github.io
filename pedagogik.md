@@ -96,11 +96,34 @@ enklare språk. När trösklarna passeras uppdaterar vi denna punkt.
 AI-genererade bilder är utkast. Alla viktiga bilder granskas. Målet är inte vackra bilder –
 målet är att eleven förstår snabbare. En enkel korrekt bild slår en vacker missvisande.
 
-### 6. Lärarstöd byggs in
+### 6. Lärarstöd byggs in – med "den räddade lektionen" som kärna
 
 Varje område kan på sikt innehålla ett lärarläge med syfte, vanliga missuppfattningar,
 demonstrationer, laborationer, filmer, diskussionsfrågor, läxor och AI-förslag. I V1 får
 det vara kort – det viktiga är att strukturen finns och kan fyllas på.
+
+**Det viktigaste i lärarläget är ankaret – den minsta fungerande lektionen.** När en lärare
+planerar räcker det ofta att någon säger: "den här filmen är bra, gör den här övningen, så
+är lektionen räddad" – resten runt omkring kan läraren improvisera. Det är *den* upplevelsen
+vi ska få att fungera. Värdet ligger inte i mängden material utan i en liten, pålitlig
+kärna per avsnitt.
+
+Därför ska varje milstolpe i studieguiden på sikt ha ett **ankare**: en rekommenderad film
+och en rekommenderad övning (ev. en demonstration), tydligt utpekade som "detta räcker för
+en fungerande lektion".
+
+Två hårda krav på ankaret:
+
+- **Det ska vara en rekommendation, inte en meny.** Det som är ont om är inte material –
+  det är förtroende. En lärare hittar själv hur många filmer som helst; det svåra är att
+  veta vilken som är bra. Ankaret ger ett tydligt, personligt omdöme ("ta *den här*"),
+  inte femton länkar att sålla bland. Att det kommer från en lärare som faktiskt provat
+  väger tyngre än en sökmotor.
+- **Det måste vara ärligt.** Rekommenderar vi en medioker film en gång är förtroendet
+  borta, och då är hela poängen förlorad. Hellre tomt på ett ställe än ett dåligt tips.
+
+Ankaret är också en naturlig byggsten i det iterativa arbetet: en milstolpe i taget, inte
+en hel lärarhandledning på en gång.
 
 ### 7. Utvecklingen ska vara experimentell
 
