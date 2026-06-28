@@ -125,6 +125,25 @@ Två hårda krav på ankaret:
 Ankaret är också en naturlig byggsten i det iterativa arbetet: en milstolpe i taget, inte
 en hel lärarhandledning på en gång.
 
+**Så här är lärarlagret strukturerat:**
+
+- **Indexerat per milstolpe.** Lärarlagret är en lista milstolpe för milstolpe (M1 och
+  framåt) under *För läraren*, som en spegel av studieguiden. Samma resurser nås även från
+  respektive milstolpe i studieguiden. Då kan läraren planera t.ex. M6 och på 30 sekunder
+  se: film, laboration, bild, vanliga missuppfattningar.
+- **Tre typer av aktivitet, sorterade efter vem som gör dem** (testfråga: *kan eleven göra
+  det själv?*):
+  1. *Förklarande media* (film/animation som lär ut begreppet) → vid milstolpen, synligt
+     för eleven, eftersom det stärker självstudierna.
+  2. *Laboration / klassrumsaktivitet* (t.ex. kindceller, lökrotspets, iris-foto) →
+     lärarlagret, eftersom läraren måste rigga material och leda den.
+  3. *Interaktiv digital övning* (t.ex. kariotyp-analys, kodontabell-övningar) → elevvänd,
+     ligger i spel-/övningsdelen och länkas från milstolpen.
+- **Varje övning och laboration har en kort lärartext.** Två–tre meningar som svarar på
+  *syftet* (vad eleven ska lära sig / varför aktiviteten finns) och *hur den går till*
+  (kort genomförande). Det är detta som gör lärarlagret användbart i stället för bara en
+  länksamling.
+
 ### 7. Utvecklingen ska vara experimentell
 
 När vi inte vet – testar vi. Elevernas återkoppling väger tyngre än våra antaganden.
