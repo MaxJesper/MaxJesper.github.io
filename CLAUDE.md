@@ -379,3 +379,16 @@ Ankarövning till M5 (proteinsyntesen), tänkt att läraren först visar en film
 4. Eleven **jämför sitt resultat med tre olika proteiner** (olika sekvens och olika funktion) och avgör **vilket protein** som byggts.
 
 Poängen är att knyta ihop hela kedjan – från DNA via komplementaritet och transkription till translation – och avsluta med koppling till **funktion** (protein → uppgift i kroppen). Automaträttning i varje steg så att ett fel inte fortplantar sig osynligt. Ska göras tillsammans med Jesper.
+
+### Idé 20 – Övning: upptäck mutationen (M7) — SKA BYGGAS
+Upptäckarövning till M7 (mutationer), byggd på kodontabellen (Idé 16). Eleven får en kort bit av en **frisk gen** och en **muterad** variant av samma gen – cirka 7–10 tripletter vardera – och ska **själv lista ut var mutationen skett och vad den orsakat** (vilken aminosyraförändring, eller en frameshift). Först upptäckt, sedan genomgång.
+
+Tanken är att täcka de olika mutationstyperna, var och en **kopplad till en känd sjukdom eller funktionsförlust** så att det känns konkret:
+
+- **Punktmutation / missense** – en bas byts, en aminosyra ändras.
+- **Tyst mutation** – en bas byts men aminosyran är densamma (visar kodens redundans).
+- **Deletion / frameshift** – en bas (eller några) försvinner och hela läsramen förskjuts.
+
+**Engagerande ankarexempel – färgblindhet:** "Här är en gen som sitter på X-kromosomen. Jämför den med samma gen hos en röd-grön färgblind person. Förklara vad som har hänt." Eleven jämför sekvenserna och beskriver förändringen; läraren går sedan igenom och sätter namn på den ("det här kallas en deletion"). Knyter ihop M7 (mutationer) med M8 (könsbundet arv/färgblindhet).
+
+Automaträttning där det går; annars elevens egen förklaring + lärarens genomgång. Ska göras tillsammans med Jesper.
