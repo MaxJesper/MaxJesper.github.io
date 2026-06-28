@@ -369,3 +369,13 @@ En egen översiktsbild som binder samman den **strukturella** kedjan: cell → k
 
 ### Idé 18 – Human Genome Landmarks-postern i Lektioner
 Postern finns inlagd som krediterad fördjupning i studieguidens M2 (`images/biologi/genetik/genome-landmarks-poster.jpg` + `.pdf`). När vi bygger **Lektioner** ska den även knytas in där – t.ex. som "utforska din egen kromosom"-uppgift eller som koppling mellan gener och sjukdomar i en genteknik-lektion. Källa måste alltid anges: U.S. Department of Energy Genomic Science program, genomicscience.energy.gov.
+
+### Idé 19 – Övning: hela kedjan DNA → mRNA → protein → funktion (M5) — BESLUTAD, SKA BYGGAS
+Ankarövning till M5 (proteinsyntesen), tänkt att läraren först visar en film om proteinsyntes och sedan låter eleven göra övningen. Bygger på den klickbara kodontabellen (`/js/kodontabell.js`, se Idé 16). Eleven arbetar sig genom hela informationsflödet i fyra steg:
+
+1. Eleven får en **DNA-mall-sträng** och skriver ned den **komplementära DNA-strängen** (A–T, G–C).
+2. Utifrån den skriver eleven **mRNA-sekvensen** (T → U vid transkription).
+3. Eleven **läser i kodontabellen** kodon för kodon och översätter mRNA → **aminosyrasekvens (protein)**.
+4. Eleven **jämför sitt resultat med tre olika proteiner** (olika sekvens och olika funktion) och avgör **vilket protein** som byggts.
+
+Poängen är att knyta ihop hela kedjan – från DNA via komplementaritet och transkription till translation – och avsluta med koppling till **funktion** (protein → uppgift i kroppen). Automaträttning i varje steg så att ett fel inte fortplantar sig osynligt. Ska göras tillsammans med Jesper.
