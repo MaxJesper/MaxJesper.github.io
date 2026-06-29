@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Status – NO-sidan</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#fff; --ink:#1f2937; --muted:#64748b;
+    --line:#e5e9f0; --ok:#16a34a; --ok-bg:#ecfdf5; --wip:#ca8a04; --wip-bg:#fef9c3;
+    --no:#cbd5e1; --no-bg:#f8fafc;
+    --fysik:#2e4a8a; --kemi:#0f766e; --biologi:#15803d;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.45;}
+  .wrap{max-width:1100px;margin:0 auto;padding:1.5rem 1.25rem 4rem;}
+  h1{font-size:1.6rem;margin:0 0 .25rem;}
+  .sub{color:var(--muted);margin:0 0 1.5rem;font-size:.9rem;}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .tile .num{font-size:2rem;font-weight:700;line-height:1;}
+  .tile .lbl{color:var(--muted);font-size:.82rem;margin-top:.35rem;}
+  .tile.ok .num{color:var(--ok);} .tile.wip .num{color:var(--wip);} .tile.no .num{color:#94a3b8;}
+  .tile.ank .num{color:#dc2626;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:.5rem 1rem;font-size:.82rem;color:var(--muted);margin-bottom:1.25rem;}
+  .legend b{color:var(--ink);font-weight:600;}
+  .chip{display:inline-flex;align-items:center;gap:.35rem;}
+  .dot{width:.85rem;height:.85rem;border-radius:4px;display:inline-block;}
+  .dot.ok{background:var(--ok);} .dot.wip{background:var(--wip);} .dot.no{background:var(--no);}
+
+  .amne-h{display:flex;align-items:center;gap:.6rem;margin:1.75rem 0 .6rem;}
+  .amne-h .bar{width:6px;height:1.3rem;border-radius:3px;}
+  .amne-h h2{font-size:1.15rem;margin:0;}
+  .amne-h .count{color:var(--muted);font-size:.85rem;font-weight:400;}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  th,td{padding:.5rem .4rem;text-align:center;font-size:.8rem;border-bottom:1px solid var(--line);}
+  th{background:#f1f5f9;color:var(--muted);font-weight:600;position:sticky;top:0;}
+  td.area{text-align:left;font-weight:600;white-space:nowrap;padding-left:.8rem;}
+  tr:last-child td{border-bottom:none;}
+  .cell{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border-radius:7px;font-size:.8rem;}
+  .cell.ok{background:var(--ok-bg);color:var(--ok);}
+  .cell.wip{background:var(--wip-bg);color:var(--wip);}
+  .cell.no{background:var(--no-bg);color:#b6c0cd;}
+  .cell.txt{background:var(--ok-bg);color:var(--ok);font-size:.62rem;font-weight:700;width:auto;padding:0 .35rem;}
+  .prog{font-size:.72rem;color:var(--muted);}
+  .barwrap{width:54px;height:6px;background:#eef2f7;border-radius:4px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:.35rem;}
+  .barfill{height:100%;background:var(--ok);border-radius:4px;}
+  .foot{margin-top:2rem;font-size:.82rem;color:var(--muted);}
+  .foot code{background:#eef2f7;padding:.1rem .35rem;border-radius:5px;}
+  @media(max-width:640px){ th,td{font-size:.7rem;padding:.4rem .2rem;} td.area{font-size:.72rem;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Statusöversikt – NO-sidan</h1>
+  <p class="sub" id="datestamp">Ögonblicksbild · 29 områden</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="legend">
+    <span class="chip"><span class="dot ok"></span><b>Klart</b></span>
+    <span class="chip"><span class="dot wip"></span><b>Under konstruktion</b> (skal)</span>
+    <span class="chip"><span class="dot no"></span><b>Saknas</b></span>
+    <span class="chip">Lyssna: <b>mp3</b> inspelad · <b>tts</b> syntetisk</span>
+    <span class="chip"><b>Ankare</b> = minsta fungerande lektion (nästa front)</span>
+  </div>
+
+  <div id="content"></div>
+
+  <p class="foot">
+    Kolumnerna följer <code>pedagogik.md</code>. <b>Lärardel</b> = befintlig
+    <i>Material för läraren</i>-box; <b>Ankare</b> (rekommenderad film + övning per milstolpe)
+    är nästa steg och saknas ännu överallt. Uppdateras tillsammans med <code>status.md</code> –
+    håll de två i synk.
+  </p>
+</div>
+
+<script>
+// Kolumner: sg=studieguide, ins=instudering, prov, fac=facit, spel, beg=begrepp,
+// lys=lyssna(mp3/tts/""), lax=läxor, lar=lärardel, ank=ankare
+// status: 1=klart, 0.5=under konstruktion, 0=saknas. lys/ank är specialfält.
+const COLS = [
+  ["sg","Studie&shy;guide"],["ins","Instud."],["prov","Prov"],["fac","Facit"],
+  ["spel","Spel"],["beg","Begrepp"],["lys","Lyssna"],["lax","Läxor"],
+  ["lar","Lärardel"],["ank","Ankare"]
+];
+const KÄRNA = ["sg","ins","prov","fac","spel","beg"]; // det som räknas till "elevdel klar"
+const DATA = {
+ "Fysik": [
+  ["arbete-energi-effekt",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["atomfysik",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["elektricitet",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}],
+  ["kraft-och-rorelse",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}],
+  ["ljud",{sg:0,ins:0,prov:0,fac:0,spel:1,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["ljus",{sg:0,ins:0,prov:0,fac:0,spel:1,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["magnetism-induktion",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"mp3",lax:0,lar:1,ank:0}],
+  ["materia",{sg:0,ins:1,prov:1,fac:1,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["tryck",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["universum",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}]
+ ],
+ "Kemi": [
+  ["atomer",{sg:0,ins:0,prov:0,fac:1,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["elektrokemi",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}],
+  ["jonforeningar",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["kolforeningar",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["matens-kemi",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["periodiska-systemet",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}],
+  ["separationsprocesser",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["syror-och-baser",{sg:1,ins:1,prov:1,fac:1,spel:1,beg:1,lys:"tts",lax:0,lar:1,ank:0}]
+ ],
+ "Biologi": [
+  ["Sex-och-relationer",{sg:0,ins:0,prov:0,fac:0,spel:1,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["ekologi",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["evolution",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["genetik",{sg:1,ins:0.5,prov:0.5,fac:0.5,spel:1,beg:1,lys:"tts",lax:1,lar:1,ank:0}],
+  ["hjarta-blod-lungor",{sg:0,ins:1,prov:1,fac:1,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["immunologi",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["infektionssjukdomar",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["matspjalkningen",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["nervsystemet",{sg:0,ins:0,prov:0,fac:0,spel:1,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["sinnena",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}],
+  ["vad-ar-liv",{sg:0,ins:0,prov:0,fac:0,spel:0,beg:0,lys:"",lax:0,lar:0,ank:0}]
+ ]
+};
+const AMNECOL = {Fysik:"var(--fysik)",Kemi:"var(--kemi)",Biologi:"var(--biologi)"};
+
+function cellHtml(key,val){
+  if(key==="lys"){
+    if(val) return `<span class="cell txt">${val}</span>`;
+    return `<span class="cell no">–</span>`;
+  }
+  if(val===1) return `<span class="cell ok">✓</span>`;
+  if(val===0.5) return `<span class="cell wip">🚧</span>`;
+  return `<span class="cell no">–</span>`;
+}
+function kärnaProg(o){
+  let done=0; KÄRNA.forEach(k=>{ if(o[k]===1) done++; });
+  return Math.round(done/KÄRNA.length*100);
+}
+
+let total=0, komplett=0, pabörjad=0, tom=0, ankare=0;
+const content=document.getElementById("content");
+for(const [amne,rows] of Object.entries(DATA)){
+  let head=`<div class="amne-h"><span class="bar" style="background:${AMNECOL[amne]}"></span>
+    <h2 style="color:${AMNECOL[amne]}">${amne}</h2><span class="count">${rows.length} områden</span></div>`;
+  let t=`<table><thead><tr><th class="area" style="text-align:left">Område</th>
+    <th>Klar%</th>`+COLS.map(c=>`<th>${c[1]}</th>`).join("")+`</tr></thead><tbody>`;
+  rows.forEach(([namn,o])=>{
+    total++;
+    const p=kärnaProg(o);
+    if(o.ank===1) ankare++;
+    if(p===100) komplett++;
+    else if(Object.values(o).some(v=>v===1||v===0.5)) pabörjad++;
+    else tom++;
+    t+=`<tr><td class="area">${namn}</td>
+      <td><span class="barwrap"><span class="barfill" style="width:${p}%"></span></span><span class="prog">${p}%</span></td>`;
+    COLS.forEach(c=> t+=`<td>${cellHtml(c[0],o[c[0]])}</td>`);
+    t+=`</tr>`;
+  });
+  t+=`</tbody></table>`;
+  content.insertAdjacentHTML("beforeend",head+t);
+}
+
+const tiles=[
+  ["ok",komplett,"Komplett elevdel"],
+  ["wip",pabörjad,"Påbörjade"],
+  ["no",tom,"Tomma (bara index)"],
+  ["ank",ankare+" / "+total,"Områden med ankare"]
+];
+document.getElementById("tiles").innerHTML=tiles.map(t=>
+  `<div class="tile ${t[0]}"><div class="num">${t[1]}</div><div class="lbl">${t[2]}</div></div>`).join("");
+document.getElementById("datestamp").textContent=
+  "Ögonblicksbild 2026-06-28 · "+total+" områden";
+</script>
+</body>
+</html>

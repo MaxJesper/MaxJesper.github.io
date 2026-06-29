@@ -131,6 +131,40 @@
       margin: 0.55rem 0 0;
     }
 
+    /* Bildrutor i läxan */
+    .laxa-figs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin: 0.5rem 0 0;
+    }
+
+    @media (min-width: 620px) {
+      .laxa-figs { grid-template-columns: 1fr 1fr; }
+    }
+
+    .laxa-figs figure {
+      margin: 0;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 10px;
+      padding: 0.6rem;
+    }
+
+    .laxa-figs img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .laxa-figs figcaption {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4b5563;
+      line-height: 1.4;
+    }
+
     /* Plats för kommande lektion/övning */
     .laxa-todo {
       margin-top: 1rem;
@@ -220,6 +254,22 @@
           <p class="concept-hint">Tips: skriv begreppen i din egen ordlista och förklara dem med egna ord.</p>
         </li>
       </ol>
+
+      <h3>Bilder att ha koll på</h3>
+      <div class="laxa-figs">
+        <figure>
+          <img src="/images/biologi/genetik/karyotyp.svg" alt="Karyotyp med 23 kromosompar – 22 autosompar och könskromosomerna XY/XX" />
+          <figcaption>Karyotyp: 46 kromosomer = 23 par. Par 1–22 är autosomer, par 23 är könskromosomerna (XY eller XX).</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/biologi/genetik/dna-baspar.svg" alt="DNA-dubbelspiral med baspar A–T och G–C" />
+          <figcaption>DNA:s baspar: A binder alltid till T, G binder alltid till C.</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/biologi/genetik/homologa-kromosomer.svg" alt="Homologt kromosompar med gener och alleler" />
+          <figcaption>Homologa kromosomer: samma gener på samma plats, men allelerna kan skilja sig.</figcaption>
+        </figure>
+      </div>
 
       <div class="laxa-todo">Här kopplas veckans lektion och eventuell övning in efterhand.</div>
     </section>
