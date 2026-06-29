@@ -229,16 +229,18 @@ Inga externa bibliotek i produktion. Vanilj-HTML + CSS + små JS-filer för meny
 
 ## 8. Upphovsrätt, licens och skydd mot AI-skrapning
 
-### Licens
+### Licens – Med ensamrätt (beslut 2026)
 
-Hela sajten publiceras under **Creative Commons Erkännande-IckeKommersiell-DelaLika 4.0 (CC BY-NC-SA 4.0)**. Licenslänken finns i den gemensamma footern på varje sida. Ingen separat licens-sida krävs, men licensen får aldrig försvagas eller tas bort från enskilda sidor.
+Sajten är **inte** längre publicerad under en öppen Creative Commons-licens. Under uppbyggnad och stealth gäller **full upphovsrätt – "Med ensamrätt" (all rights reserved)**. Skälet är att hålla alla framtida vägar öppna: en eventuell försäljning till ett förlag, eller en egen betalmodell. Den tidigare CC BY-NC-SA-licensen gav lärare och skolor (de tänkta kunderna) rätt att använda allt gratis för alltid, vilket krockar med möjligheten att ta betalt. En öppen licens är lätt att lägga till senare, men svår att ta tillbaka.
 
-Formatet i footern är alltid:
+Jesper äger upphovsrätten oavsett licens (sajten är ett privat verk, ej knutet till skola/arbetsgivare – se avsnitt 0). Att dela länken med egna elever är åtkomst, inte licensiering.
 
-> © 2026 Jesper Tordsson · Licens: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.sv)  
-> Fri att använda och anpassa i undervisning. Ej tillåten för kommersiella syften.
+Formatet i footern är:
 
-Footern byggs automatiskt av `/js/menu.js` och kräver bara att sidan har `<script src="/js/menu.js"></script>` och CSS från `/css/style.css`. Nya sidor ärver detta gratis.
+> © 2026 Jesper Tordsson. Med ensamrätt.  
+> Allt innehåll är upphovsrättsskyddat. Får inte kopieras, spridas eller bearbetas utan tillstånd.
+
+Det *slutgiltiga* licensvalet inför en bredare/publik lansering tas medvetet senare (helt sluten, öppen icke-kommersiell, eller dubbel-licensiering), helst med juridisk rådgivning. Footern byggs automatiskt av `/js/menu.js` och kräver bara att sidan har `<script src="/js/menu.js"></script>` och CSS från `/css/style.css`. Nya sidor ärver detta gratis.
 
 ### robots.txt
 

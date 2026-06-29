@@ -95,14 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
     footer.innerHTML = `
       <div class="footer-inner">
         <p>
-          © 2026 Jesper Tordsson ·
-          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.sv"
-             rel="license" target="_blank" title="Creative Commons – Erkännande-IckeKommersiell-DelaLika 4.0">
-            Licens: CC BY-NC-SA 4.0
-          </a>
+          © 2026 Jesper Tordsson. Med ensamrätt.
         </p>
         <p class="footer-sub">
-          Fri att använda och anpassa i undervisning. Ej tillåten för kommersiella syften.
+          Allt innehåll är upphovsrättsskyddat. Får inte kopieras, spridas eller bearbetas utan tillstånd.
         </p>
       </div>
     `;

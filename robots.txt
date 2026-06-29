@@ -1,8 +1,10 @@
 # robots.txt för MaxJesper.github.io
 #
 # Sajten är ett läromedel för högstadiet, upphovsrättsligt skyddat
-# och licensierat under CC BY-NC-SA 4.0. Sajten välkomnar vanliga
-# sökmotorers indexering men ber AI-tränings-crawlers att avstå.
+# med ensamrätt (all rights reserved). Under uppbyggnad hålls sidorna
+# utanför sökresultat via noindex (sätts på sidnivå). Vanliga sökmotorer
+# tillåts ändå crawla – det krävs för att de ska kunna läsa noindex –
+# medan AI-tränings-crawlers ombeds avstå helt.
 
 # Kända AI-tränings- och LLM-crawlers
 User-agent: GPTBot
