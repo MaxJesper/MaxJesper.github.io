@@ -91,6 +91,22 @@ tillåtelse från skolhuvudmän kan ändra bilden. Vi bevakar aktivt fallen där
 hjälpa svagare elever: översättning till modersmål, oändligt tålamod, omformulering på
 enklare språk. När trösklarna passeras uppdaterar vi denna punkt.
 
+**Elevernas egen inställning är ett skäl att vänta.** En del elever är skeptiska eller
+oroliga inför AI – av principiella skäl, av existentiell oro (att utbildning eller mening
+blir meningslös, i värsta fall framtidsskräck), eller av omtanke om miljön (energi- och
+vattenåtgång). De farhågorna är rimliga reaktioner på en osäker framtid och ska bemötas
+ärligt, inte avfärdas. Att respektera dessa elever betyder att inte tvinga på dem AI där
+det inte tydligt behövs. Det är ytterligare ett argument för att **vänta med direkta
+AI-övningar** och i stället satsa på riktigt bra interaktiva övningar som klarar sig utan
+AI. Vi låter andra rusa före och göra misstagen, och inför AI först när nyttan klart
+överväger. Agens är dessutom motgiftet mot oro: en elev som *förstår* blir den som kan
+styra verktyget i stället för att styras av det – vilket gör vanlig undervisning viktigare,
+inte mindre viktig.
+
+**Undvik AI-stämpeln.** Material som *känns* AI-genererat – vissa dekorativa smileys,
+översvallande tonfall, schablonartade fraser – får en del elever att reagera negativt. Allt
+innehåll ska ha en mänsklig, författad röst och hållas rent från sådana markörer.
+
 ### 5. Bilder är pedagogiska verktyg
 
 AI-genererade bilder är utkast. Alla viktiga bilder granskas. Målet är inte vackra bilder –
