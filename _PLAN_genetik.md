@@ -24,7 +24,15 @@ Detta lyfter genetik från "påbörjad" till "komplett elevdel" i statusöversik
 
 1. ✅ **Instuderingsfrågor** – KLART. 45 egna frågor + facit (M1–M11, 4 fördjupning),
    renderade via `render-instudering.js` + `data/instuderingsfragor.json`.
-2. ▶️ **Övningsprov + facit** – eget prov, samma teknik. Ersätter 🚧-skal. *(näst på tur)*
+2. ✅ **Övningsprov + facit** – KLART. 18 egna frågor i tre nivåer (E/C/A, inkl. en
+   matchningsfråga), `data/ovningsprov.json` + `facit.html`. Alla **utskriftssidor** klara
+   (prov, facit, instudering elev/lärare) med knappar i moderdokumenten.
+
+   ➡️ **Genetik är nu komplett på elevsidan.** Kvar för fullt V1: ett ankare per milstolpe.
+
+   *Svårighetsnivå-utkast (för senare balansering):* provet är redan delat i E/C/A. För
+   instuderingsfrågorna finns en lätt nivåmarkering ("Fördjupning:" på 4 frågor) – kan
+   formaliseras till E/C/A-taggar på samma sätt när vi finjusterar.
    *Nivå:* E-kärnan separat, gymnasienära begrepp (locus, kodominans, antikodon, PCR m.fl.)
    som fördjupnings-/överkursfrågor.
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – Genetik (Lärare)</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+</head>
+
+<body>
+  <header class="biologi-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>Genetik – lärare (med facit)</p>
+  </header>
+
+  <main>
+    <div id="study-container"></div>
+  </main>
+
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "./data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "print-teacher"
+    });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
+  </script>
+</body>
+</html>

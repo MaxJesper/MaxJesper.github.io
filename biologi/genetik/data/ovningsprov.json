@@ -1,0 +1,49 @@
+{
+  "sections": [
+    {
+      "title": "Del I – E-nivå (grundläggande)",
+      "questions": [
+        {
+          "type": "match",
+          "title": "Para ihop varje begrepp med rätt förklaring. Skriv siffran i rutan.",
+          "left": ["Gen", "Kromosom", "DNA", "Dominant allel", "Mutation"],
+          "right": [
+            "1. Hårt hoppackad DNA-molekyl; människan har 46 stycken",
+            "2. Ett avsnitt av DNA som är recept på ett protein",
+            "3. Molekylen som bär arvsanlagen, formad som en dubbelspiral",
+            "4. En allel vars egenskap syns redan i enkel uppsättning",
+            "5. En förändring i DNA-sekvensen"
+          ],
+          "a": "Gen – 2, Kromosom – 1, DNA – 3, Dominant allel – 4, Mutation – 5"
+        },
+        { "q": "Hur många kromosomer har en vanlig kroppscell hos människan, och hur många har en könscell?", "a": "En kroppscell har 46 kromosomer, en könscell har 23.", "lines": 2 },
+        { "q": "Vilka av DNA:s baser parar ihop sig med varandra?", "a": "A parar med T, och G parar med C.", "lines": 2 },
+        { "q": "Vad är en gen, och vad används den till?", "a": "En gen är ett avsnitt av DNA som fungerar som recept på ett bestämt protein.", "lines": 2 },
+        { "q": "Förklara skillnaden mellan genotyp och fenotyp.", "a": "Genotypen är vilka alleler en individ bär (t.ex. Aa). Fenotypen är de synliga egenskaperna, som beror på genotyp och miljö.", "lines": 3 },
+        { "q": "Vad menas med att en allel är dominant respektive recessiv?", "a": "En dominant allel syns i fenotypen redan i enkel uppsättning. En recessiv syns bara om individen har två kopior av den.", "lines": 3 },
+        { "q": "Vad är skillnaden mellan mitos och meios?", "a": "Mitos ger två identiska celler med 46 kromosomer (tillväxt och reparation). Meios bildar könsceller med 23 kromosomer.", "lines": 3 },
+        { "q": "Vad är en mutation, och måste den alltid vara skadlig?", "a": "En mutation är en förändring i DNA. Den måste inte vara skadlig – de flesta är neutrala, vissa skadliga och en del fördelaktiga.", "lines": 3 }
+      ]
+    },
+    {
+      "title": "Del II – C-nivå (förklara och tillämpa)",
+      "questions": [
+        { "q": "Förklara proteinsyntesens två steg, och var i cellen de äger rum.", "a": "Transkription sker i cellkärnan: DNA skrivs av till mRNA. Translation sker vid ribosomen i cytoplasman: mRNA:t läses kodon för kodon och aminosyror sätts ihop till ett protein.", "lines": 4 },
+        { "q": "Två heterozygota svarta kaniner (Aa) korsas, där svart (A) är dominant över vit (a). Visa korsningen och förklara vilket förhållande avkomman får.", "a": "Aa × Aa ger AA, Aa, Aa och aa. Tre av fyra blir svarta och en av fyra vit – förhållandet 3:1. Schemat visar sannolikhet, inte en garanti.", "lines": 5 },
+        { "q": "Varför är betydligt fler män än kvinnor röd-grön färgblinda?", "a": "Anlaget är recessivt och sitter på X-kromosomen. En man (XY) har bara en X, så ett enda anlag räcker. En kvinna (XX) måste ärva anlaget på båda sina X-kromosomer.", "lines": 4 },
+        { "q": "Förklara varför bara mutationer i könsceller kan ärvas vidare till nästa generation.", "a": "Ett barn bildas ur en könscell (ägg eller spermie). En mutation i en vanlig kroppscell finns inte i könscellerna och förs därför inte vidare; bara en mutation i en könscell hamnar i varje cell hos barnet.", "lines": 4 },
+        { "q": "Hur kan man få en bakterie att tillverka mänskligt insulin? Beskriv stegen.", "a": "Den mänskliga insulingenen klipps ut och förs in i en bakteries plasmid med hjälp av restriktionsenzymer. Bakterien tar upp det hopsatta hybrid-DNA:t och börjar tillverka insulin, som kan renas fram och användas som medicin.", "lines": 5 }
+      ]
+    },
+    {
+      "title": "Del III – A-nivå (resonera och dra slutsatser)",
+      "questions": [
+        { "q": "En lärobok skriver att \"brun ögonfärg är dominant över blå\". Förklara varför det är en förenkling.", "a": "Ögonfärg är en polygen egenskap – många gener samverkar. Därför finns det en glidande skala av nyanser, och resultatet kan ibland överraska. En enkel dominant/recessiv-modell med en gen fångar inte detta.", "lines": 4 },
+        { "q": "En mutation byter ut en bas i en gen, men proteinet blir ändå exakt likadant. Förklara hur det är möjligt.", "a": "Den genetiska koden är redundant: flera olika kodon kan koda för samma aminosyra. Om basbytet ger ett kodon som råkar koda för samma aminosyra blir proteinet oförändrat. Detta kallas en tyst mutation.", "lines": 4 },
+        { "q": "Resonera kring ett argument för och ett argument emot att använda CRISPR-Cas9 på människor.", "a": "För: tekniken kan bota svåra ärftliga sjukdomar. Emot: det finns etiska gränser – var går linjen mellan att bota och att \"designa\" människor – och förändringar i könsceller ärvs vidare. Ett genomtänkt svar väger båda sidor.", "lines": 5 },
+        { "q": "Förklara sambandet gen → protein → egenskap med ett eget exempel.", "a": "En gen är receptet på ett protein, och proteinet utför en uppgift som ger en egenskap. Exempel: en gen kodar för ett pigmentprotein i håret; proteinet bildar färgämne; egenskapen blir mörkt hår. (Andra rimliga exempel godtas.)", "lines": 4 },
+        { "q": "Den genetiska koden är nästan identisk hos allt liv på jorden. Varför tyder det på ett gemensamt ursprung?", "a": "Samma kodon ger samma aminosyra hos bakterier, växter, djur och människor. Hade livet uppstått flera gånger oberoende skulle vi vänta oss olika koder. Den gemensamma koden pekar i stället mot att allt liv härstammar från en och samma urcell.", "lines": 4 }
+      ]
+    }
+  ]
+}

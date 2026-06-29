@@ -14,9 +14,9 @@ som Ankaret – ankaret (rekommenderad film + övning per milstolpe) är nästa 
 
 ## Sammanfattning
 
-- **Komplett elevdel (7):** elektricitet, kraft-och-rorelse, magnetism-induktion,
-  universum, elektrokemi, periodiska-systemet, syror-och-baser.
-- **Påbörjade (8):** genetik (instudering/prov/facit är skal), materia, hjarta-blod-lungor
+- **Komplett elevdel (8):** elektricitet, kraft-och-rorelse, magnetism-induktion,
+  universum, elektrokemi, periodiska-systemet, syror-och-baser, **genetik** (första i biologi).
+- **Påbörjade (7):** materia, hjarta-blod-lungor
   (saknar studieguide), samt ljud, ljus, atomer, Sex-och-relationer, nervsystemet (endast
   spel/enstaka del).
 - **Tomma – bara index (14):** arbete-energi-effekt, atomfysik, tryck, jonforeningar,
@@ -61,7 +61,7 @@ Totalt 29 områden.
 | Sex-och-relationer | — | — | — | — | ✓ | — | — | — | — | — |
 | ekologi | — | — | — | — | — | — | — | — | — | — |
 | evolution | — | — | — | — | — | — | — | — | — | — |
-| genetik | ✓ | ✓ | 🚧 | 🚧 | ✓ | ✓ | tts | ✓ | ✓ | — |
+| genetik | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | tts | ✓ | ✓ | — |
 | hjarta-blod-lungor | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
 | immunologi | — | — | — | — | — | — | — | — | — | — |
 | infektionssjukdomar | — | — | — | — | — | — | — | — | — | — |
@@ -72,8 +72,8 @@ Totalt 29 områden.
 
 ## Noteringar att följa upp
 
-- **genetik** är på väg att bli elevdels-klar: instuderingsfrågorna är nu på plats (45
-  egna frågor), prov och facit är fortfarande 🚧-skal – närmast att lyfta till komplett.
+- **genetik** är nu komplett på elevsidan (studieguide, begrepp, instudering, prov + facit,
+  spel, lyssna, läxor). Kvar för fullt V1: ett **ankare** per milstolpe (lärarlagret).
 - **materia** och **hjarta-blod-lungor** har prov/instudering men saknar studieguide
   (ryggraden) – ovanlig ordning, värt att komplettera bakifrån.
 - **atomer** har en facit men inget tillhörande prov – kontrollera om det är en rest.

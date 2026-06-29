@@ -3,40 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Facit – Genetik</title>
+  <title>Facit – Genetik (Utskrift)</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/prov.css" />
-  <style>
-    body.area-genetik{--area:#16a34a;--area-strong:#15803d;--area-soft:#f0fdf4;--area-border:#bbf7d0;}
-  </style>
 </head>
 
-<body class="area-genetik">
+<body>
   <header class="biologi-header">
     <h1>FACIT</h1>
     <p>Övningsprov – Genetik</p>
   </header>
 
-  <button class="hamburger" onclick="toggleMenu()">☰</button>
-  <nav id="side-menu"></nav>
-
   <main>
-    <div class="prov-actions">
-      <a href="./ovningsprov.html" class="subject-btn">← Tillbaka till prov</a>
-      <a href="./facit-print.html" target="_blank" rel="noopener" class="subject-btn print-green">🖨️ Skriv ut facit</a>
-    </div>
-
     <div id="prov-container"></div>
   </main>
 
-  <script src="/js/menu.js"></script>
   <script src="/js/render-prov.js"></script>
   <script>
     renderProv({
       jsonPath: "./data/ovningsprov.json",
       mountId: "prov-container",
-      mode: "facit"
+      mode: "print-facit"
     });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
   </script>
 </body>
 </html>
