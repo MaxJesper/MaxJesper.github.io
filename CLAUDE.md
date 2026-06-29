@@ -326,7 +326,9 @@ Kurerade länksamlingar per område – filmer, simuleringar, externa resurser. 
 - **Khan Academy** – fritt, ~50 språk, har genetikinnehåll (ännu inte använt av Jesper).
 - **PhET** – fria simuleringar, 90+ språk (Jesper använder redan).
 - **Studi.se** – svensk källa, namnges (kräver skolinloggning); endast svenskt språkspår.
-- **Egna filmer** – t.ex. *En cells sista måltid* (cellmembran/celldöd, M1). Starkast av alla eftersom de är språkoberoende, fria och personliga.
+- **Egna filmer** – starkast av alla eftersom de är språkoberoende, fria och personliga.
+
+**Påminnelse – filmen *Ett encelligt djurs dramatiska död* (Jespers egen):** hör till området **Vad är liv?**, inte genetik (även om filen ligger i `Desktop/Genetik`). Filmen (mp4) + en nedladdad text (*"Ett eukaryot encelligt djurs dramatiska död 400 x – Google Dokument"*) finns i `Desktop/Genetik`. Innehåll: encelligt eukaryot djur överhettas, tappar vattenbalansen, äter en bakterie ("cellens sista måltid", 35 s in), sväller och dör 2.26 min in när membranet brister. Bär: cellmembran, osmoreglering, storlek bakterie vs eukaryot, mitokondriernas endosymbios. Ska in som ankare i **Vad är liv?** när vi bygger det området.
 
 ### Idé 6 – Fördjupningsmaterial på gymnasienivå
 Fördjupningssektion för elever som vill gå vidare mot gymnasienivå. Exempel för kemi: molräkning, balansering av kemiska formler, elektrokemisk cell-potentialberäkning. Ska göras tillsammans med Jesper.

@@ -22,9 +22,9 @@ Status-symboler: ✅ klart · ▶️ näst på tur · ⏳ kan göras nu · ⛔ v
 
 Detta lyfter genetik från "påbörjad" till "komplett elevdel" i statusöversikten.
 
-1. **Instuderingsfrågor** – egna frågor + facit, renderade via befintlig `render-instudering.js`
-   + JSON. Ersätter dagens 🚧-skal.
-2. **Övningsprov + facit** – eget prov, samma teknik. Ersätter 🚧-skal.
+1. ✅ **Instuderingsfrågor** – KLART. 45 egna frågor + facit (M1–M11, 4 fördjupning),
+   renderade via `render-instudering.js` + `data/instuderingsfragor.json`.
+2. ▶️ **Övningsprov + facit** – eget prov, samma teknik. Ersätter 🚧-skal. *(näst på tur)*
    *Nivå:* E-kärnan separat, gymnasienära begrepp (locus, kodominans, antikodon, PCR m.fl.)
    som fördjupnings-/överkursfrågor.
 

@@ -61,7 +61,7 @@ Totalt 29 områden.
 | Sex-och-relationer | — | — | — | — | ✓ | — | — | — | — | — |
 | ekologi | — | — | — | — | — | — | — | — | — | — |
 | evolution | — | — | — | — | — | — | — | — | — | — |
-| genetik | ✓ | 🚧 | 🚧 | 🚧 | ✓ | ✓ | tts | ✓ | ✓ | — |
+| genetik | ✓ | ✓ | 🚧 | 🚧 | ✓ | ✓ | tts | ✓ | ✓ | — |
 | hjarta-blod-lungor | — | ✓ | ✓ | ✓ | — | — | — | — | — | — |
 | immunologi | — | — | — | — | — | — | — | — | — | — |
 | infektionssjukdomar | — | — | — | — | — | — | — | — | — | — |
@@ -72,8 +72,8 @@ Totalt 29 områden.
 
 ## Noteringar att följa upp
 
-- **genetik** är så gott som elevdels-klar men instudering/prov/facit är fortfarande
-  🚧-skal – närmast att lyfta till komplett.
+- **genetik** är på väg att bli elevdels-klar: instuderingsfrågorna är nu på plats (45
+  egna frågor), prov och facit är fortfarande 🚧-skal – närmast att lyfta till komplett.
 - **materia** och **hjarta-blod-lungor** har prov/instudering men saknar studieguide
   (ryggraden) – ovanlig ordning, värt att komplettera bakifrån.
 - **atomer** har en facit men inget tillhörande prov – kontrollera om det är en rest.
