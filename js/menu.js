@@ -1,3 +1,15 @@
+// --- STEALTH: håll sidan utanför sökmotorer medan den byggs. ---
+// Ta bort detta block (eller sätt STEALTH = false) för full publik synlighet.
+(function () {
+  const STEALTH = true;
+  if (STEALTH && document.head && !document.querySelector('meta[name="robots"]')) {
+    const m = document.createElement("meta");
+    m.name = "robots";
+    m.content = "noindex, nofollow";
+    document.head.appendChild(m);
+  }
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
   const menu = document.getElementById("side-menu");
 
