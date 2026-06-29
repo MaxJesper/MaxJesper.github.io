@@ -17,8 +17,19 @@ Sajten bygger på samma pedagogiska rakhet som TEFY-serien (Studentlitteratur, 1
 - **Fetstil i löpande text** på nyckelbegrepp när de introduceras. Begreppen ska återkomma i checklistan och i en sammanfattning.
 - **Funktionella bilder, aldrig dekorativa.** Varje bild ska göra ett pedagogiskt jobb (schema, experiment, mönster).
 - **Svenska, svensk stavning, gemen stil på rubriker efter första versal.**
+- **Mänsklig röst – ingen AI-stämpel.** Allt innehåll ska kännas författat av en människa. Undvik det som får material att *kännas* AI-genererat och som en del elever reagerar negativt på: dekorativa smileys/emojis i brödtext och frågor, översvallande eller peppigt tonfall, och schablonartade fraser ("i en värld där…", "låt oss dyka in i…", "det är viktigt att notera att…"). Funktionella ikoner som redan är etablerade i sidmallarna (t.ex. 🖨️ på en utskriftsknapp) räknas som gränssnitt, inte som brödtext, och är okej.
 
 Motexempel att undvika: nyare läromedel (t.ex. Gleerups) där varje nytt begrepp inleds med flera retoriska meningar och tar sidor att komma fram till en definition.
+
+### Bildstil – enhetlig och åldersanpassad
+
+Plattformen ska ha *en* igenkännbar bildstil, så att alla områden känns som samma verk (igenkänningsfaktorn). Husstilen är **rena, flata, schematiska illustrationer** – helst egenritad SVG – i områdets egen färg (`--area`-variablerna). Den är saklig, skalbar, ägbar (egenritad → fri att publicera) och språkoberoende (bara bildtexten översätts). Genetikens diagram (`begreppshierarki.svg`, `dna-baspar.svg` m.fl.) och områdets tankekarta är referens för stilen.
+
+**Undvik det barnsliga.** Akvarell- och barnbokslook, dekorativa illustrationer och gulliga figurer hör inte hemma här. Högstadieelever – särskilt åk 8–9 – är på väg att bli vuxna och kan aktivt ta avstånd från material som känns "för barn". En neutral, saklig stil respekterar dem.
+
+**Att göra om:** `images/fysik/kraft-och-rorelse/kraft-och-rorelse-startbild.png` (akvarell, "Gunilla Mann"-stil) ska ersättas med en bild i husstilen.
+
+Grundprincipen – enhetlig, saklig, åldersanpassad – ligger fast. Detaljerna kan finslipas senare med hjälp utifrån (elever, bildlärare).
 
 ---
 
