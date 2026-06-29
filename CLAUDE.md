@@ -410,6 +410,8 @@ Bygger på **tankekartan/områdesöversikten** (jfr Idé 15 – "Tankekarta per 
 
 Eleven drar/placerar korten rätt. **Målet:** lära sig **ordningen på skeendena** och få en första överblick *innan* allt gås igenom grundligt senare. Låg tröskel, överblick före djup. Ska göras tillsammans med Jesper.
 
+**Status:** en klickbar tankekarta finns nu (`biologi/genetik/tankekarta.html`) – de 11 milstolparna grupperade i fem teman, varje ruta länkar till rätt avsnitt i studieguiden. Ren som standard, med en **väljare** ("Visa var i studieguiden") som lägger på M1–M11-etiketter. Återstår: själva drag-och-placera-övningen, samt **att återkomma till samma bild i ett repetitionsavsnitt i slutet** där M-etiketterna är inskrivna fast (Jespers idé). Kartan behöver också länkas in från index/studieguiden.
+
 ### Idé 22 – M1: lärarmaterial + cellorgan-namnövning — SKA BYGGAS
 **Till läraren (M1), bilder som Jesper tar:**
 - Mikroskopbilder på olika celltyper: neuron, kindepitelcell, levercell.
