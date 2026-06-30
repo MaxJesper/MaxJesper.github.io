@@ -530,6 +530,26 @@
   <script src="/js/concepts-popup.js"></script>
   <script src="/js/language-selector.js"></script>
   <script>
+    /* ENDA KÄLLA: hämta begreppen från data/begrepp.json (samma fil som begreppslistan).
+       Den inbäddade window.BEGREPP ovan används bara som reserv om fetch misslyckas
+       (t.ex. vid lokal förhandsvisning via file://). På den publicerade sajten är
+       begrepp.json alltid den enda listan att underhålla. */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", {
+            detail: { data: data, lang: "sv-SE" }
+          }));
+        }
+      })
+      .catch(function (e) {
+        console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e);
+      });
+  </script>
+  <script>
     (function () {
       var STORE_KEY = "genetik.role";
       var btnElev   = document.getElementById("role-elev");

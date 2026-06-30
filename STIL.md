@@ -341,6 +341,18 @@ Jesper bestämmer prioritetsordningen. Om ingen ordning anges löser Claude det 
 
 **Varför:** Claude har begränsat "arbetsminne" (kontext). Stora parallella uppgifter ökar risken för fel – som att stjärnpositioner i Karlavagnen hamnar fel för att uppgiften bundlades med tio andra saker. Numrering och stegvis hantering är den enklaste motåtgärden.
 
+### Modernisering av äldre områden
+
+Nya funktioner och konventioner uppstår löpande (t.ex. begrepp i milstolpeordning, inbäddad begreppslista som hämtar `begrepp.json`, tankekarta, lärarlager). För att alla områden till slut ska ha allt – utan att bakåtstädning sväljer det framåtriktade bygget – gäller:
+
+1. **Nya områden byggs alltid till nuvarande standard** (avsnitt 11 + V1-checklistan i `pedagogik.md`). Då skapas ingen ny skuld.
+2. **Standarden är levande.** När en ny konvention beslutas skrivs den in här, så att den blir måttstock för både nya och äldre områden.
+3. **Bakåtmodernisering sker ett område i taget**, i avgränsade pass *mellan* det framåtriktade arbetet – aldrig som en reflex efter varje ny finess, och aldrig som en enda stor slutomgång.
+4. **Opportunistiskt:** rör vi ett äldre område av annan anledning, lyfter vi det samtidigt till standard.
+5. **Spårning:** `status.md` / `Status-NOsida.html` visar vilka områden som är moderniserade.
+
+Återkommande kontroller vid ett moderniseringspass (exempel): begreppslistorna (startsida, för läraren och ev. språkvarianter) följer milstolpeordning; startsidans popup hämtar `begrepp.json` (en källa); studieguiden har tankekarta, lyssna-funktion och ankare per milstolpe.
+
 ### När bör Jesper starta en ny session?
 
 Claude ska påminna om att starta ny session när något av följande gäller:
