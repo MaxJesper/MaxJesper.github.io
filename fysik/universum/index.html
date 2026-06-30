@@ -444,9 +444,9 @@
           <h2>Viktiga begrepp att lära sig</h2>
           <ul class="concept-list">
             <li><button class="concept-btn" data-concept="Vintergatan">Vintergatan</button></li>
-            <li><button class="concept-btn" data-concept="Galax">Galax</button></li>
             <li><button class="concept-btn" data-concept="Ljusår">Ljusår</button></li>
             <li><button class="concept-btn" data-concept="Solsystem">Solsystem</button></li>
+            <li><button class="concept-btn" data-concept="Exoplanet">Exoplanet</button></li>
             <li><button class="concept-btn" data-concept="Kärnfusion">Kärnfusion</button></li>
             <li><button class="concept-btn" data-concept="Solvinden">Solvinden</button></li>
             <li><button class="concept-btn" data-concept="Norrsken">Norrsken</button></li>
@@ -455,8 +455,8 @@
             <li><button class="concept-btn" data-concept="Supernova">Supernova</button></li>
             <li><button class="concept-btn" data-concept="Neutronstjärna">Neutronstjärna</button></li>
             <li><button class="concept-btn" data-concept="Svart hål">Svart hål</button></li>
+            <li><button class="concept-btn" data-concept="Galax">Galax</button></li>
             <li><button class="concept-btn" data-concept="Big Bang">Big Bang</button></li>
-            <li><button class="concept-btn" data-concept="Exoplanet">Exoplanet</button></li>
           </ul>
         </section>
       </div>
@@ -498,77 +498,21 @@
   <script src="/js/menu.js"></script>
   <script>
   window.BEGREPP = [
-  {
-    "namn": "Vintergatan",
-    "definition": "Den galax vi lever i. Vintergatan är en spiralgalax med mer än 200 miljarder stjärnor. Vår sol befinner sig i en av spiralarmarna, ungefär 26 000 ljusår från galaxens centrum.",
-    "anchor": "./studieguide.html#m1"
-  },
-  {
-    "namn": "Galax",
-    "definition": "En enorm samling stjärnor, gas och stoft som hålls ihop av gravitationen. Det finns uppskattningsvis mer än en biljon galaxer i det observerbara universum. Galaxer kan vara spiralformade, elliptiska eller oregelbundna.",
-    "anchor": "./studieguide.html#m8"
-  },
-  {
-    "namn": "Ljusår",
-    "definition": "Den sträcka ljuset tillryggalägger på ett år – ungefär 9 500 miljarder kilometer. Ljuset färdas med 300 000 km per sekund. Ljusår används för att mäta de enorma avstånden i rymden.",
-    "anchor": "./studieguide.html#m2"
-  },
-  {
-    "namn": "Solsystem",
-    "definition": "Vårt solsystem består av solen och de åtta planeter som kretsar runt den, samt månar, asteroider, kometer och andra himlakroppar. De fyra inre planeterna är stenplaneter; de fyra yttre är gasjättar.",
-    "anchor": "./studieguide.html#m3"
-  },
-  {
-    "namn": "Kärnfusion",
-    "definition": "Den process som driver stjärnor. I solens kärna slår vätekärnor ihop sig och bildar heliumkärnor vid 15 miljoner graders temperatur. Varje fusion frigör enorm energi i form av strålning och värme.",
-    "anchor": "./studieguide.html#m4"
-  },
-  {
-    "namn": "Solvinden",
-    "definition": "En ström av laddade partiklar som hela tiden flödar ut från solen. Jordens magnetfält avleder de flesta partiklarna, men vid polerna kan de tränga in i atmosfären och skapa norrsken.",
-    "anchor": "./studieguide.html#m4"
-  },
-  {
-    "namn": "Norrsken",
-    "definition": "Lysande ljusfenomen vid polerna som uppstår när laddade partiklar från solvinden krockar med luftmolekyler i atmosfären. På norra halvklotet kallas det norrsken (aurora borealis).",
-    "anchor": "./studieguide.html#m4"
-  },
-  {
-    "namn": "Röd jätte",
-    "definition": "Det stadium en stjärna hamnar i när vätebränslet i kärnan tar slut. Stjärnan sväller enormt – yttemperaturen sjunker och färgen blir rödaktig, men den totala ljusstyrkan ökar kraftigt. Solen kommer att bli en röd jätte om ca 5 miljarder år.",
-    "anchor": "./studieguide.html#m6"
-  },
-  {
-    "namn": "Supernova",
-    "definition": "En gigantisk stjärnexplosion som inträffar när en tung stjärna (mer än ca 8 solmassor) dör. Under explosionens bråkdel av en sekund frigörs lika mycket energi som solen ger ifrån sig under hela sitt liv. Ljuset kan synas mitt på dagen.",
-    "anchor": "./studieguide.html#m7"
-  },
-  {
-    "namn": "Svart hål",
-    "definition": "Ett objekt med så stark gravitation att inte ens ljus kan fly. Bildas när en mycket massiv stjärna kollapsar efter en supernova. Gränsen där ingenting kan undkomma kallas händelsehorisonten. Svarta hål kan inte ses direkt men avslöjas av deras påverkan på omgivningen.",
-    "anchor": "./studieguide.html#m7"
-  },
-  {
-    "namn": "Neutronstjärna",
-    "definition": "Det extremt täta restobjekt som kan bli kvar efter en supernova. Elektroner och protoner har pressats ihop till neutroner. En handfull material väger en miljard ton. En snurrande neutronstjärna som sänder ut regelbundna radiopulser kallas pulsar.",
-    "anchor": "./studieguide.html#m7"
-  },
-  {
-    "namn": "Nebulosa",
-    "definition": "Ett stort moln av gas och stoft i rymden. Nebulosor är stjärnornas \"vaggar\" – under rätt förhållanden börjar gravitationen samla gasmoln som till slut tänder igång kärnfusion och bildar en ny stjärna.",
-    "anchor": "./studieguide.html#m6"
-  },
-  {
-    "namn": "Big Bang",
-    "definition": "Den dominerande teorin om universums uppkomst. För ungefär 13,8 miljarder år sedan uppstod allt materia, energi, rum och tid i en extremt het och tät punkt som snabbt expanderade. Universum fortsätter att expandera än i dag.",
-    "anchor": "./studieguide.html#m9"
-  },
-  {
-    "namn": "Exoplanet",
-    "definition": "En planet som kretsar runt en annan stjärna än vår sol. Sedan 1990-talet har astronomerna hittat tusentals exoplaneter. De flesta påvisas indirekt – antingen via ett litet ljusfall när planeten passerar framför stjärnan, eller via stjärnans lilla gungrörelse.",
-    "anchor": "./studieguide.html#m3"
-  }
-];
+    {"namn": "Vintergatan", "definition": "Den galax vi lever i. Vintergatan är en spiralgalax med mer än 200 miljarder stjärnor. Vår sol befinner sig i en av spiralarmarna, ungefär 26 000 ljusår från galaxens centrum.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Ljusår", "definition": "Den sträcka ljuset tillryggalägger på ett år – ungefär 9 500 miljarder kilometer. Ljuset färdas med 300 000 km per sekund. Ljusår används för att mäta de enorma avstånden i rymden.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Solsystem", "definition": "Vårt solsystem består av solen och de åtta planeter som kretsar runt den, samt månar, asteroider, kometer och andra himlakroppar. De fyra inre planeterna är stenplaneter; de fyra yttre är gasjättar.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Exoplanet", "definition": "En planet som kretsar runt en annan stjärna än vår sol. Sedan 1990-talet har astronomerna hittat tusentals exoplaneter. De flesta påvisas indirekt – antingen via ett litet ljusfall när planeten passerar framför stjärnan, eller via stjärnans lilla gungrörelse.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Kärnfusion", "definition": "Den process som driver stjärnor. I solens kärna slår vätekärnor ihop sig och bildar heliumkärnor vid 15 miljoner graders temperatur. Varje fusion frigör enorm energi i form av strålning och värme.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Solvinden", "definition": "En ström av laddade partiklar som hela tiden flödar ut från solen. Jordens magnetfält avleder de flesta partiklarna, men vid polerna kan de tränga in i atmosfären och skapa norrsken.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Norrsken", "definition": "Lysande ljusfenomen vid polerna som uppstår när laddade partiklar från solvinden krockar med luftmolekyler i atmosfären. På norra halvklotet kallas det norrsken (aurora borealis).", "anchor": "./studieguide.html#m4"},
+    {"namn": "Röd jätte", "definition": "Det stadium en stjärna hamnar i när vätebränslet i kärnan tar slut. Stjärnan sväller enormt – yttemperaturen sjunker och färgen blir rödaktig, men den totala ljusstyrkan ökar kraftigt. Solen kommer att bli en röd jätte om ca 5 miljarder år.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Nebulosa", "definition": "Ett stort moln av gas och stoft i rymden. Nebulosor är stjärnornas \"vaggar\" – under rätt förhållanden börjar gravitationen samla gasmoln som till slut tänder igång kärnfusion och bildar en ny stjärna.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Supernova", "definition": "En gigantisk stjärnexplosion som inträffar när en tung stjärna (mer än ca 8 solmassor) dör. Under explosionens bråkdel av en sekund frigörs lika mycket energi som solen ger ifrån sig under hela sitt liv. Ljuset kan synas mitt på dagen.", "anchor": "./studieguide.html#m7"},
+    {"namn": "Svart hål", "definition": "Ett objekt med så stark gravitation att inte ens ljus kan fly. Bildas när en mycket massiv stjärna kollapsar efter en supernova. Gränsen där ingenting kan undkomma kallas händelsehorisonten. Svarta hål kan inte ses direkt men avslöjas av deras påverkan på omgivningen.", "anchor": "./studieguide.html#m7"},
+    {"namn": "Neutronstjärna", "definition": "Det extremt täta restobjekt som kan bli kvar efter en supernova. Elektroner och protoner har pressats ihop till neutroner. En handfull material väger en miljard ton. En snurrande neutronstjärna som sänder ut regelbundna radiopulser kallas pulsar.", "anchor": "./studieguide.html#m7"},
+    {"namn": "Galax", "definition": "En enorm samling stjärnor, gas och stoft som hålls ihop av gravitationen. Det finns uppskattningsvis mer än en biljon galaxer i det observerbara universum. Galaxer kan vara spiralformade, elliptiska eller oregelbundna.", "anchor": "./studieguide.html#m8"},
+    {"namn": "Big Bang", "definition": "Den dominerande teorin om universums uppkomst. För ungefär 13,8 miljarder år sedan uppstod allt materia, energi, rum och tid i en extremt het och tät punkt som snabbt expanderade. Universum fortsätter att expandera än i dag.", "anchor": "./studieguide.html#m9"}
+  ];
   </script>
   <script src="/js/concepts-popup.js"></script>
   <script>
@@ -600,5 +544,19 @@
     })();
   </script>
   <script src="/js/language-selector.js"></script>
+  <script>
+    /* ENDA KÄLLA: hämta begreppen från data/begrepp.json. Inbäddad window.BEGREPP är reserv. */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reserv.", e); });
+  </script>
+
 </body>
 </html>
