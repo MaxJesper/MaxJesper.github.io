@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menstruationscykeln – övning – Sex och relationer</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-sex-och-relationer {
+      --area: #a3335e;
+      --area-strong: #7c1d45;
+      --area-soft: #fdf2f6;
+      --area-border: #f0c6d6;
+      --area-hover: #fae3ec;
+      --ok: #15803d;
+      --ok-soft: #dcfce7;
+      --no: #b91c1c;
+      --no-soft: #fee2e2;
+    }
+
+    main { max-width: 900px; }
+
+    /* ── Panel ── */
+    .panel {
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem 1.3rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 1.2rem;
+    }
+    .panel h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.15rem;
+      color: var(--area-strong);
+    }
+    .panel p { margin: 0 0 0.6rem 0; }
+
+    /* ── Statusrad ── */
+    .statusbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1.2rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 0.55rem 0.9rem;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+    .statusbar .stat { font-variant-numeric: tabular-nums; }
+    .statusbar .stat b { color: var(--area-strong); }
+    .statusbar .spacer { flex: 1 1 auto; }
+
+    /* ── Knappar ── */
+    .btn {
+      font: inherit;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--area-border);
+      background: #fff;
+      color: var(--area-strong);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn:hover { background: var(--area-hover); }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary {
+      background: var(--area);
+      border-color: var(--area);
+      color: #fff;
+    }
+    .btn.primary:hover { background: var(--area-strong); }
+    .btn:disabled { opacity: 0.45; cursor: default; }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.9rem;
+    }
+
+    /* ── Nivåval ── */
+    .level-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.9rem;
+    }
+    .level-card {
+      text-align: left;
+      background: #fff;
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .level-card:hover {
+      background: var(--area-soft);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+    .level-card h3 {
+      margin: 0 0 0.25rem 0;
+      font-size: 1rem;
+      color: var(--area-strong);
+    }
+    .level-card p { margin: 0; font-size: 0.87rem; color: #555; line-height: 1.45; }
+    .level-card .best {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--area);
+      font-weight: 600;
+    }
+
+    /* ── Uppgiftsrad ── */
+    .prompt {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--area-strong);
+      margin: 0 0 0.2rem 0;
+    }
+    .prompt-sub { margin: 0 0 0.9rem 0; font-size: 0.9rem; color: #555; }
+
+    .feedback {
+      min-height: 1.6em;
+      margin-top: 0.7rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .feedback.ok { color: var(--ok); }
+    .feedback.no { color: var(--no); }
+
+    /* ── Nivå 1: anatomi ── */
+    .figure-wrap {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 0.5rem;
+    }
+    #anatomi { width: 100%; height: auto; display: block; touch-action: manipulation; }
+    #anatomi .hit {
+      fill: transparent;
+      stroke: transparent;
+      cursor: pointer;
+      outline: none;
+    }
+    #anatomi .hit:hover { fill: rgba(163, 51, 94, 0.14); }
+    #anatomi .hit:focus-visible { stroke: var(--area-strong); stroke-width: 2.5; stroke-dasharray: 5 4; }
+    #anatomi .hit.solved { fill: rgba(21, 128, 61, 0.16); cursor: default; }
+    #anatomi .hit.wrong { fill: rgba(185, 28, 28, 0.22); }
+    #anatomi .hit.reveal { fill: rgba(217, 119, 6, 0.25); }
+    .fig-label {
+      font-size: 13px;
+      fill: var(--area-strong);
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .found-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+      list-style: none;
+      padding: 0;
+    }
+    .found-list li {
+      font-size: 0.82rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: #f1f1f1;
+      color: #777;
+      border: 1px solid #e0e0e0;
+    }
+    .found-list li.done { background: var(--ok-soft); color: var(--ok); border-color: #bbf7d0; }
+    .found-list li.helped { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+
+    /* ── Nivå 2: tidslinje ── */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+    }
+    .day-col { display: flex; flex-direction: column; gap: 0.5rem; }
+    .day-head {
+      background: var(--area);
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+      padding: 0.4rem 0.3rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .slot {
+      border: 2px dashed var(--area-border);
+      border-radius: 10px;
+      background: #fff;
+      min-height: 62px;
+      padding: 0.4rem 0.45rem;
+      font-size: 0.84rem;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+      color: #999;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .slot .slot-hint { font-size: 0.75rem; font-style: italic; }
+    .slot.armed { border-color: var(--area); background: var(--area-soft); }
+    .slot.filled {
+      border-style: solid;
+      border-color: var(--ok);
+      background: var(--ok-soft);
+      color: #14532d;
+      font-weight: 600;
+      cursor: default;
+    }
+    .slot.shake { animation: shake 0.3s; border-color: var(--no); background: var(--no-soft); }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .card-chip {
+      font: inherit;
+      font-size: 0.88rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--area-border);
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .card-chip:hover { background: var(--area-hover); }
+    .card-chip.selected {
+      background: var(--area);
+      border-color: var(--area);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .card-chip.used { display: none; }
+
+    .row-label {
+      font-weight: 700;
+      color: var(--area-strong);
+      font-size: 0.92rem;
+      margin: 1rem 0 0.2rem;
+    }
+
+    /* ── Nivå 3: flervalsfrågor ── */
+    .options { display: grid; gap: 0.5rem; margin-top: 0.8rem; }
+    .option {
+      font: inherit;
+      text-align: left;
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--area-border);
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .option:hover { background: var(--area-soft); }
+    .option.correct { background: var(--ok-soft); border-color: var(--ok); color: #14532d; font-weight: 600; }
+    .option.wrong { background: var(--no-soft); border-color: var(--no); color: #7f1d1d; }
+    .option:disabled { cursor: default; }
+
+    /* ── Resultat ── */
+    .result-big {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--area-strong);
+      margin: 0.3rem 0;
+    }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+    .result-box {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 10px;
+      padding: 0.7rem;
+      text-align: center;
+    }
+    .result-box span { display: block; font-size: 0.8rem; color: #666; }
+    .result-box b { font-size: 1.25rem; color: var(--area-strong); font-variant-numeric: tabular-nums; }
+
+    .miss-list { margin: 0.5rem 0 0 1.1rem; font-size: 0.92rem; }
+    .miss-list li { margin-bottom: 0.3rem; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 640px) {
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+      .statusbar { font-size: 0.88rem; }
+    }
+  </style>
+</head>
+
+<body class="area-sex-och-relationer">
+
+  <header class="biologi-header">
+    <h1>Menstruationscykeln</h1>
+    <p>Sex och relationer</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+
+    <!-- ============ STARTSIDA ============ -->
+    <section id="screen-start">
+      <div class="panel">
+        <h2>Träna på menstruationscykeln</h2>
+        <p>Övningen har tre nivåer. Du får poäng för varje rätt svar och tiden räknas – precis som i Seterra. Klarar du hela banan snabbare nästa gång?</p>
+        <p style="font-size:0.9rem; color:#555;">Rätt på första försöket ger 10 poäng, rätt på andra försöket 5 poäng.</p>
+
+        <div class="level-grid">
+          <button class="level-card" onclick="startGame(['anatomi'])">
+            <h3>Nivå 1 – Sätt ut delarna</h3>
+            <p>Klicka på rätt del i bilden: äggstock, äggledare, livmoder, slemhinna, livmoderhals och slida.</p>
+            <span class="best" data-best="anatomi"></span>
+          </button>
+
+          <button class="level-card" onclick="startGame(['tidslinje'])">
+            <h3>Nivå 2 – Cykelns tidslinje</h3>
+            <p>Placera faserna och händelserna på rätt dagar i cykeln, dag 1 till 28.</p>
+            <span class="best" data-best="tidslinje"></span>
+          </button>
+
+          <button class="level-card" onclick="startGame(['fragor'])">
+            <h3>Nivå 3 – Frågor</h3>
+            <p>Tolv flervalsfrågor om hormoner, ägglossning och vad som händer i cykeln.</p>
+            <span class="best" data-best="fragor"></span>
+          </button>
+
+          <button class="level-card" onclick="startGame(['anatomi','tidslinje','fragor'])">
+            <h3>Hela banan</h3>
+            <p>Alla tre nivåer efter varandra på tid. Det här är utmaningen.</p>
+            <span class="best" data-best="alla"></span>
+          </button>
+        </div>
+      </div>
+
+      <p><a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a></p>
+    </section>
+
+    <!-- ============ SPELVY ============ -->
+    <section id="screen-play" class="hidden">
+
+      <div class="statusbar">
+        <span class="stat">Tid <b id="stat-time">0:00</b></span>
+        <span class="stat">Poäng <b id="stat-score">0</b></span>
+        <span class="stat">Uppgift <b id="stat-progress">1 / 6</b></span>
+        <span class="spacer"></span>
+        <button class="btn" id="btn-hint" onclick="giveHint()">Visa svaret</button>
+        <button class="btn" onclick="quitGame()">Avbryt</button>
+      </div>
+
+      <!-- Nivå 1 -->
+      <div class="panel hidden" id="part-anatomi">
+        <p class="prompt" id="anatomi-prompt">&nbsp;</p>
+        <p class="prompt-sub">Klicka på rätt del i bilden.</p>
+
+        <div class="figure-wrap">
+          <!-- Egenritad schematisk bild: livmoder, äggledare, äggstockar, slemhinna, livmoderhals, slida -->
+          <svg id="anatomi" viewBox="0 0 620 430" xmlns="http://www.w3.org/2000/svg"
+               role="img" aria-label="Schematisk bild av livmoder, äggledare, äggstockar, livmoderhals och slida">
+
+            <!-- Livmoderkropp -->
+            <path d="M215 150 C215 118 250 104 310 104 C370 104 405 118 405 150
+                     L385 268 C381 292 366 302 310 302 C254 302 239 292 235 268 Z"
+                  fill="#f7d9e4" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+
+            <!-- Livmoderslemhinna (inre foder) -->
+            <path d="M247 160 C247 140 272 132 310 132 C348 132 373 140 373 160
+                     L357 258 C354 274 344 280 310 280 C276 280 266 274 263 258 Z"
+                  fill="#e79ab7" stroke="#a3335e" stroke-width="2"/>
+
+            <!-- Äggledare vänster -->
+            <path d="M217 150 C180 112 148 100 116 108" fill="none" stroke="#a3335e"
+                  stroke-width="9" stroke-linecap="round"/>
+            <path d="M217 150 C180 112 148 100 116 108" fill="none" stroke="#f7d9e4"
+                  stroke-width="4" stroke-linecap="round"/>
+            <!-- Fransar vänster -->
+            <path d="M116 108 L100 94 M116 108 L96 106 M116 108 L102 122"
+                  stroke="#a3335e" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+            <!-- Äggledare höger -->
+            <path d="M403 150 C440 112 472 100 504 108" fill="none" stroke="#a3335e"
+                  stroke-width="9" stroke-linecap="round"/>
+            <path d="M403 150 C440 112 472 100 504 108" fill="none" stroke="#f7d9e4"
+                  stroke-width="4" stroke-linecap="round"/>
+            <path d="M504 108 L520 94 M504 108 L524 106 M504 108 L518 122"
+                  stroke="#a3335e" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+            <!-- Äggstock vänster -->
+            <ellipse cx="86" cy="140" rx="40" ry="27" fill="#f5c7a0" stroke="#a3335e" stroke-width="3"/>
+            <circle cx="74" cy="136" r="6" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+            <circle cx="96" cy="148" r="4.5" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+
+            <!-- Äggstock höger -->
+            <ellipse cx="534" cy="140" rx="40" ry="27" fill="#f5c7a0" stroke="#a3335e" stroke-width="3"/>
+            <circle cx="546" cy="136" r="6" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+            <circle cx="524" cy="148" r="4.5" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+
+            <!-- Livmoderhals -->
+            <path d="M272 302 L348 302 L340 348 L280 348 Z"
+                  fill="#eab9cb" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M310 306 L310 344" stroke="#a3335e" stroke-width="2" stroke-dasharray="4 4"/>
+
+            <!-- Slida -->
+            <path d="M280 348 L340 348 L352 414 L268 414 Z"
+                  fill="#f7d9e4" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+
+            <!-- Klickytor -->
+            <ellipse class="hit" id="hit-aggstock" data-part="aggstock" cx="86" cy="140" rx="46" ry="33"
+                     tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
+            <ellipse class="hit" id="hit-aggstock2" data-part="aggstock" cx="534" cy="140" rx="46" ry="33"
+                     tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
+            <path class="hit" id="hit-aggledare" data-part="aggledare"
+                  d="M214 164 C176 124 146 112 110 122 L122 90 C160 82 194 100 228 140 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+            <path class="hit" id="hit-aggledare2" data-part="aggledare"
+                  d="M406 164 C444 124 474 112 510 122 L498 90 C460 82 426 100 392 140 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+            <path class="hit" id="hit-livmoder" data-part="livmoder"
+                  d="M215 150 C215 118 250 104 310 104 C370 104 405 118 405 150 L385 268
+                     C381 292 366 302 310 302 C254 302 239 292 235 268 Z
+                     M247 160 L263 258 C266 274 276 280 310 280 C344 280 354 274 357 258 L373 160
+                     C373 140 348 132 310 132 C272 132 247 140 247 160 Z"
+                  fill-rule="evenodd" tabindex="0" role="button" aria-label="Del av bilden"></path>
+            <path class="hit" id="hit-slemhinna" data-part="slemhinna"
+                  d="M247 160 C247 140 272 132 310 132 C348 132 373 140 373 160
+                     L357 258 C354 274 344 280 310 280 C276 280 266 274 263 258 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+            <path class="hit" id="hit-livmoderhals" data-part="livmoderhals"
+                  d="M272 302 L348 302 L340 348 L280 348 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+            <path class="hit" id="hit-slida" data-part="slida"
+                  d="M280 348 L340 348 L352 414 L268 414 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+
+            <!-- Etiketter fylls i av JS när en del är klar -->
+            <g id="anatomi-labels"></g>
+          </svg>
+        </div>
+
+        <ul class="found-list" id="anatomi-found"></ul>
+        <p class="feedback" id="anatomi-feedback">&nbsp;</p>
+      </div>
+
+      <!-- Nivå 2 -->
+      <div class="panel hidden" id="part-tidslinje">
+        <p class="prompt">Bygg cykeln – dag 1 till 28</p>
+        <p class="prompt-sub">Välj en ruta nedanför och klicka sedan på den plats i tidslinjen där den hör hemma. Dag 1 är första mensdagen.</p>
+
+        <div class="timeline" id="timeline"></div>
+
+        <p class="row-label">Faser</p>
+        <div class="cards" id="cards-fas"></div>
+
+        <p class="row-label">Vad händer i kroppen</p>
+        <div class="cards" id="cards-handelse"></div>
+
+        <p class="feedback" id="tidslinje-feedback">&nbsp;</p>
+      </div>
+
+      <!-- Nivå 3 -->
+      <div class="panel hidden" id="part-fragor">
+        <p class="prompt" id="fraga-text">&nbsp;</p>
+        <div class="options" id="fraga-options"></div>
+        <p class="feedback" id="fraga-feedback">&nbsp;</p>
+        <div class="btn-row">
+          <button class="btn primary hidden" id="btn-next" onclick="nextQuestion()">Nästa fråga →</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============ RESULTAT ============ -->
+    <section id="screen-result" class="hidden">
+      <div class="panel">
+        <h2>Resultat</h2>
+        <p class="result-big" id="result-title">Klart!</p>
+
+        <div class="result-grid">
+          <div class="result-box"><span>Tid</span><b id="result-time">0:00</b></div>
+          <div class="result-box"><span>Poäng</span><b id="result-score">0</b></div>
+          <div class="result-box"><span>Av max</span><b id="result-max">0</b></div>
+          <div class="result-box"><span>Rätt direkt</span><b id="result-first">0</b></div>
+        </div>
+
+        <p id="result-best" style="font-weight:600; color:var(--area-strong);"></p>
+
+        <div id="result-misses"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" onclick="restartSame()">Spela igen</button>
+          <button class="btn" onclick="goStart()">Välj annan nivå</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  "use strict";
+
+  /* ==========================================================
+     Data
+     ========================================================== */
+
+  const ANATOMI = [
+    { part: "aggstock",     namn: "Äggstocken",           facit: "Här mognar äggen. Vid ägglossningen släpps ett ägg." },
+    { part: "aggledare",    namn: "Äggledaren",           facit: "Ägget fångas upp här och vandrar mot livmodern. Här kan det befruktas." },
+    { part: "livmoder",     namn: "Livmodern",            facit: "Muskelrummet där ett befruktat ägg kan växa fast." },
+    { part: "slemhinna",    namn: "Livmoderslemhinnan",   facit: "Byggs upp varje cykel och stöts bort vid mens." },
+    { part: "livmoderhals", namn: "Livmoderhalsen",       facit: "Den nedre, smala delen av livmodern, ut mot slidan." },
+    { part: "slida",        namn: "Slidan",               facit: "Kanalen ut från livmoderhalsen. Mensblodet passerar här." }
+  ];
+
+  const KOLUMNER = [
+    { dagar: "Dag 1–5",   fas: "Mens",         handelse: "Slemhinnan stöts bort" },
+    { dagar: "Dag 6–13",  fas: "Follikelfas",  handelse: "Slemhinnan byggs upp igen" },
+    { dagar: "Dag 14",    fas: "Ägglossning",  handelse: "Ägget släpps från äggstocken" },
+    { dagar: "Dag 15–28", fas: "Lutealfas",    handelse: "Gulkroppen bildar progesteron" }
+  ];
+
+  const FRAGOR = [
+    { q: "Hur lång är en vanlig menstruationscykel?",
+      alt: ["Ungefär 28 dagar, men det varierar mellan personer", "Exakt 30 dagar för alla", "Ungefär 7 dagar", "Ett halvår"],
+      ratt: 0 },
+    { q: "Vilken dag räknas som dag 1 i cykeln?",
+      alt: ["Första dagen med mensblödning", "Dagen efter att mensen slutat", "Dagen för ägglossning", "Den första dagen i månaden"],
+      ratt: 0 },
+    { q: "Vad är mens?",
+      alt: ["Livmoderslemhinnan stöts bort och lämnar kroppen som en blödning", "Ett ägg lämnar kroppen genom slidan", "Blod från äggstocken rinner ut", "Kroppen gör sig av med gammalt urin"],
+      ratt: 0 },
+    { q: "Ungefär vilken dag sker ägglossningen i en cykel på 28 dagar?",
+      alt: ["Dag 14", "Dag 1", "Dag 5", "Dag 28"],
+      ratt: 0 },
+    { q: "Vad händer vid ägglossningen?",
+      alt: ["Ett ägg släpps från äggstocken och fångas upp av äggledaren", "Livmodern stöter bort slemhinnan", "Ett ägg bildas för första gången", "Mensen börjar"],
+      ratt: 0 },
+    { q: "Var kan ägget bli befruktat av en spermie?",
+      alt: ["I äggledaren", "I slidan", "I äggstocken", "I livmoderhalsen"],
+      ratt: 0 },
+    { q: "Vilken körtel i hjärnan skickar ut hormonerna FSH och LH?",
+      alt: ["Hypofysen", "Sköldkörteln", "Binjuren", "Bukspottkörteln"],
+      ratt: 0 },
+    { q: "Vad kallas äggblåsan i äggstocken där ägget mognar?",
+      alt: ["Follikeln", "Gulkroppen", "Äggledartratten", "Slemhinnan"],
+      ratt: 0 },
+    { q: "Vad gör hormonet östrogen under follikelfasen?",
+      alt: ["Bygger upp livmoderslemhinnan igen", "Stöter bort slemhinnan", "Stoppar ägglossningen helt", "Får mensen att börja"],
+      ratt: 0 },
+    { q: "Vad bildas av follikeln efter att ägget har släppts?",
+      alt: ["Gulkroppen, som bildar progesteron", "En ny äggstock", "Ett nytt ägg direkt", "Livmoderhalsen"],
+      ratt: 0 },
+    { q: "Vad händer om ägget inte blir befruktat?",
+      alt: ["Progesteronet sjunker, slemhinnan stöts bort och mensen börjar igen", "Ägget stannar kvar i livmodern till nästa cykel", "Cykeln stannar av i flera månader", "Slemhinnan byggs upp ännu mer"],
+      ratt: 0 },
+    { q: "Vad stämmer om olika personers menscykler?",
+      alt: ["De kan vara olika långa, och det är helt normalt", "Alla har exakt lika lång cykel", "Cykeln är alltid 28 dagar från första mensen", "Cykeln är lika lång hela livet"],
+      ratt: 0 }
+  ];
+
+  /* ==========================================================
+     Speltillstånd
+     ========================================================== */
+
+  let plan = [];          // t.ex. ['anatomi','tidslinje','fragor']
+  let planIndex = 0;
+  let score = 0, maxScore = 0, firstTry = 0, done = 0, total = 0;
+  let misses = [];
+  let startTime = 0, timerId = null;
+  let hintUsedOnCurrent = false, triesOnCurrent = 0;
+
+  // nivå 1
+  let anatomiKvar = [], anatomiAktuell = null;
+  // nivå 2
+  let valdKort = null, tidslinjeKvar = 0;
+  // nivå 3
+  let fragaOrdning = [], fragaIndex = 0;
+
+  const $ = id => document.getElementById(id);
+
+  function fmtTime(ms) {
+    const s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function planKey() {
+    return plan.length === 3 ? "alla" : plan[0];
+  }
+
+  function bestKey() {
+    return "menscykel-basta-" + planKey();
+  }
+
+  function readBest() {
+    try { return JSON.parse(localStorage.getItem(bestKeyFor(planKey())) || "null"); }
+    catch (e) { return null; }
+  }
+
+  function bestKeyFor(k) { return "menscykel-basta-" + k; }
+
+  function saveBest(rec) {
+    try { localStorage.setItem(bestKeyFor(planKey()), JSON.stringify(rec)); }
+    catch (e) { /* privat läge – strunt samma */ }
+  }
+
+  function showBestOnStart() {
+    document.querySelectorAll("[data-best]").forEach(el => {
+      let rec = null;
+      try { rec = JSON.parse(localStorage.getItem(bestKeyFor(el.dataset.best)) || "null"); }
+      catch (e) { rec = null; }
+      el.textContent = rec ? ("Bästa: " + rec.score + " p på " + rec.time) : "";
+    });
+  }
+
+  /* ==========================================================
+     Spelstyrning
+     ========================================================== */
+
+  function startGame(delar) {
+    plan = delar.slice();
+    planIndex = 0;
+    score = 0; firstTry = 0; done = 0; misses = [];
+    total = 0;
+    if (plan.includes("anatomi"))   total += ANATOMI.length;
+    if (plan.includes("tidslinje")) total += KOLUMNER.length * 2;
+    if (plan.includes("fragor"))    total += FRAGOR.length;
+    maxScore = total * 10;
+
+    $("screen-start").classList.add("hidden");
+    $("screen-result").classList.add("hidden");
+    $("screen-play").classList.remove("hidden");
+
+    startTime = Date.now();
+    clearInterval(timerId);
+    timerId = setInterval(() => { $("stat-time").textContent = fmtTime(Date.now() - startTime); }, 500);
+
+    updateStatus();
+    startPart();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function startPart() {
+    ["anatomi", "tidslinje", "fragor"].forEach(p => $("part-" + p).classList.add("hidden"));
+    const del = plan[planIndex];
+    $("part-" + del).classList.remove("hidden");
+    $("btn-hint").classList.toggle("hidden", del === "fragor");
+    if (del === "anatomi") initAnatomi();
+    if (del === "tidslinje") initTidslinje();
+    if (del === "fragor") initFragor();
+  }
+
+  function nextPart() {
+    planIndex++;
+    if (planIndex >= plan.length) { finishGame(); }
+    else { startPart(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  }
+
+  function updateStatus() {
+    $("stat-score").textContent = score;
+    $("stat-progress").textContent = Math.min(done + 1, total) + " / " + total;
+  }
+
+  function award() {
+    // 10 p direkt, 5 p på andra försöket, 0 därefter eller om svaret visats
+    let p = 0;
+    if (!hintUsedOnCurrent) {
+      if (triesOnCurrent === 0) { p = 10; firstTry++; }
+      else if (triesOnCurrent === 1) { p = 5; }
+    }
+    score += p;
+    done++;
+    hintUsedOnCurrent = false;
+    triesOnCurrent = 0;
+    updateStatus();
+    return p;
+  }
+
+  function quitGame() {
+    clearInterval(timerId);
+    goStart();
+  }
+
+  function goStart() {
+    $("screen-play").classList.add("hidden");
+    $("screen-result").classList.add("hidden");
+    $("screen-start").classList.remove("hidden");
+    showBestOnStart();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function restartSame() { startGame(plan); }
+
+  function finishGame() {
+    clearInterval(timerId);
+    const ms = Date.now() - startTime;
+    const tid = fmtTime(ms);
+
+    $("screen-play").classList.add("hidden");
+    $("screen-result").classList.remove("hidden");
+
+    $("result-time").textContent = tid;
+    $("result-score").textContent = score;
+    $("result-max").textContent = maxScore;
+    $("result-first").textContent = firstTry + " / " + total;
+
+    const andel = score / maxScore;
+    $("result-title").textContent =
+      andel === 1 ? "Allt rätt på första försöket!" :
+      andel >= 0.8 ? "Snyggt jobbat!" :
+      andel >= 0.5 ? "Bra början – kör en gång till." :
+                     "Träna igen, det sitter snart.";
+
+    const gammalt = readBest();
+    const battre = !gammalt || score > gammalt.score || (score === gammalt.score && ms < gammalt.ms);
+    if (battre) {
+      saveBest({ score: score, time: tid, ms: ms });
+      $("result-best").textContent = gammalt ? "Nytt personbästa!" : "Ditt första resultat är sparat.";
+    } else {
+      $("result-best").textContent = "Ditt bästa hittills: " + gammalt.score + " p på " + gammalt.time + ".";
+    }
+
+    if (misses.length) {
+      $("result-misses").innerHTML =
+        "<p style='margin-top:1rem;font-weight:600;'>Det här kan du repetera:</p><ul class='miss-list'>" +
+        misses.map(m => "<li>" + m + "</li>").join("") + "</ul>";
+    } else {
+      $("result-misses").innerHTML = "";
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  /* ==========================================================
+     Nivå 1 – anatomi
+     ========================================================== */
+
+  function initAnatomi() {
+    anatomiKvar = shuffle(ANATOMI);
+    $("anatomi-labels").innerHTML = "";
+    document.querySelectorAll("#anatomi .hit").forEach(h => {
+      h.classList.remove("solved", "wrong", "reveal");
+      if (!h.dataset.bound) {
+        h.dataset.bound = "1";
+        h.addEventListener("click", onAnatomiClick);
+        h.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAnatomiClick.call(h); }
+        });
+      }
+    });
+    $("anatomi-found").innerHTML = ANATOMI.map(a =>
+      "<li data-found='" + a.part + "'>" + a.namn + "</li>").join("");
+    nextAnatomi();
+  }
+
+  function nextAnatomi() {
+    if (!anatomiKvar.length) { setTimeout(nextPart, 700); return; }
+    anatomiAktuell = anatomiKvar[0];
+    hintUsedOnCurrent = false;
+    triesOnCurrent = 0;
+    $("anatomi-prompt").textContent = "Var är " + anatomiAktuell.namn.toLowerCase() + "?";
+    $("anatomi-feedback").textContent = " ";
+    $("anatomi-feedback").className = "feedback";
+  }
+
+  function onAnatomiClick() {
+    if (!anatomiAktuell || this.classList.contains("solved")) return;
+    const part = this.dataset.part;
+    if (part === anatomiAktuell.part) {
+      markAnatomiKlar(anatomiAktuell, hintUsedOnCurrent);
+      const p = award();
+      $("anatomi-feedback").className = "feedback ok";
+      $("anatomi-feedback").textContent =
+        (p ? "Rätt! +" + p + " p. " : "Rätt. ") + anatomiAktuell.facit;
+      anatomiKvar.shift();
+      setTimeout(nextAnatomi, 1100);
+    } else {
+      triesOnCurrent++;
+      this.classList.add("wrong");
+      setTimeout(() => this.classList.remove("wrong"), 450);
+      $("anatomi-feedback").className = "feedback no";
+      $("anatomi-feedback").textContent = triesOnCurrent === 1
+        ? "Inte riktigt – försök igen."
+        : "Fortfarande fel. Du kan trycka på Visa svaret.";
+    }
+  }
+
+  function markAnatomiKlar(item, medHjalp) {
+    document.querySelectorAll("#anatomi .hit[data-part='" + item.part + "']").forEach(h => {
+      h.classList.remove("reveal", "wrong");
+      h.classList.add("solved");
+      // etikett mitt i formen
+      const bb = h.getBBox();
+      const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      t.setAttribute("x", bb.x + bb.width / 2);
+      t.setAttribute("y", bb.y + bb.height / 2 + 4);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("class", "fig-label");
+      t.textContent = item.namn;
+      $("anatomi-labels").appendChild(t);
+    });
+    const li = document.querySelector("[data-found='" + item.part + "']");
+    if (li) li.className = medHjalp ? "helped" : "done";
+    if (medHjalp) misses.push(item.namn + " – " + item.facit);
+  }
+
+  /* ==========================================================
+     Nivå 2 – tidslinje
+     ========================================================== */
+
+  function initTidslinje() {
+    valdKort = null;
+    tidslinjeKvar = KOLUMNER.length * 2;
+
+    $("timeline").innerHTML = KOLUMNER.map((k, i) =>
+      "<div class='day-col'>" +
+        "<div class='day-head'>" + k.dagar + "</div>" +
+        "<div class='slot' data-typ='fas' data-kol='" + i + "' onclick='dropCard(this)'>" +
+          "<span class='slot-hint'>fasens namn</span></div>" +
+        "<div class='slot' data-typ='handelse' data-kol='" + i + "' onclick='dropCard(this)'>" +
+          "<span class='slot-hint'>vad som händer</span></div>" +
+      "</div>").join("");
+
+    const fasKort = shuffle(KOLUMNER.map((k, i) => ({ typ: "fas", kol: i, text: k.fas })));
+    const hKort = shuffle(KOLUMNER.map((k, i) => ({ typ: "handelse", kol: i, text: k.handelse })));
+
+    $("cards-fas").innerHTML = fasKort.map(c =>
+      "<button class='card-chip' data-typ='fas' data-kol='" + c.kol + "' onclick='pickCard(this)'>" +
+        c.text + "</button>").join("");
+    $("cards-handelse").innerHTML = hKort.map(c =>
+      "<button class='card-chip' data-typ='handelse' data-kol='" + c.kol + "' onclick='pickCard(this)'>" +
+        c.text + "</button>").join("");
+
+    hintUsedOnCurrent = false;
+    triesOnCurrent = 0;
+    setTidslinjeFeedback("", "");
+  }
+
+  function setTidslinjeFeedback(txt, cls) {
+    $("tidslinje-feedback").textContent = txt || " ";
+    $("tidslinje-feedback").className = "feedback " + (cls || "");
+  }
+
+  function pickCard(btn) {
+    document.querySelectorAll(".card-chip").forEach(c => c.classList.remove("selected"));
+    btn.classList.add("selected");
+    valdKort = btn;
+    document.querySelectorAll(".slot").forEach(s => {
+      s.classList.toggle("armed", !s.classList.contains("filled") && s.dataset.typ === btn.dataset.typ);
+    });
+    setTidslinjeFeedback("Klicka nu på rätt plats i tidslinjen.", "");
+  }
+
+  function dropCard(slot) {
+    if (!valdKort) { setTidslinjeFeedback("Välj först en ruta längre ner.", "no"); return; }
+    if (slot.classList.contains("filled")) return;
+    if (slot.dataset.typ !== valdKort.dataset.typ) {
+      setTidslinjeFeedback("Den rutan hör hemma på den andra raden.", "no");
+      return;
+    }
+
+    if (slot.dataset.kol === valdKort.dataset.kol) {
+      slot.textContent = valdKort.textContent;
+      slot.classList.remove("armed");
+      slot.classList.add("filled");
+      valdKort.classList.add("used");
+      const p = award();
+      setTidslinjeFeedback(p ? "Rätt! +" + p + " p." : "Rätt.", "ok");
+      valdKort = null;
+      document.querySelectorAll(".slot").forEach(s => s.classList.remove("armed"));
+      tidslinjeKvar--;
+      if (tidslinjeKvar === 0) setTimeout(nextPart, 900);
+    } else {
+      triesOnCurrent++;
+      slot.classList.add("shake");
+      setTimeout(() => slot.classList.remove("shake"), 350);
+      setTidslinjeFeedback("Fel dagar – tänk på ordningen i cykeln.", "no");
+    }
+  }
+
+  /* ==========================================================
+     Nivå 3 – flervalsfrågor
+     ========================================================== */
+
+  function initFragor() {
+    fragaOrdning = shuffle(FRAGOR.map((f, i) => i));
+    fragaIndex = 0;
+    visaFraga();
+  }
+
+  function visaFraga() {
+    const f = FRAGOR[fragaOrdning[fragaIndex]];
+    hintUsedOnCurrent = false;
+    triesOnCurrent = 0;
+
+    $("fraga-text").textContent = f.q;
+    $("fraga-feedback").textContent = " ";
+    $("fraga-feedback").className = "feedback";
+    $("btn-next").classList.add("hidden");
+
+    const ordning = shuffle(f.alt.map((t, i) => i));
+    $("fraga-options").innerHTML = ordning.map(i =>
+      "<button class='option' data-ratt='" + (i === f.ratt) + "' onclick='svaraFraga(this)'>" +
+        f.alt[i] + "</button>").join("");
+  }
+
+  function svaraFraga(btn) {
+    const ratt = btn.dataset.ratt === "true";
+    const f = FRAGOR[fragaOrdning[fragaIndex]];
+
+    if (ratt) {
+      btn.classList.add("correct");
+      document.querySelectorAll("#fraga-options .option").forEach(o => o.disabled = true);
+      const p = award();
+      $("fraga-feedback").className = "feedback ok";
+      $("fraga-feedback").textContent = p ? "Rätt! +" + p + " p." : "Rätt.";
+      if (triesOnCurrent > 0 || p === 0) { /* redan noterat nedan */ }
+      $("btn-next").classList.remove("hidden");
+    } else {
+      triesOnCurrent++;
+      btn.classList.add("wrong");
+      btn.disabled = true;
+      $("fraga-feedback").className = "feedback no";
+      if (triesOnCurrent >= 2) {
+        misses.push(f.q + " Rätt svar: " + f.alt[f.ratt]);
+        document.querySelectorAll("#fraga-options .option").forEach(o => {
+          if (o.dataset.ratt === "true") o.classList.add("correct");
+          o.disabled = true;
+        });
+        hintUsedOnCurrent = true;
+        award();
+        $("fraga-feedback").textContent = "Rätt svar: " + f.alt[f.ratt];
+        $("btn-next").classList.remove("hidden");
+      } else {
+        $("fraga-feedback").textContent = "Inte rätt – försök en gång till.";
+      }
+    }
+  }
+
+  function nextQuestion() {
+    fragaIndex++;
+    if (fragaIndex >= fragaOrdning.length) { nextPart(); }
+    else { visaFraga(); }
+  }
+
+  /* ==========================================================
+     Visa svaret (gäller nivå 1 och 2)
+     ========================================================== */
+
+  function giveHint() {
+    const del = plan[planIndex];
+
+    if (del === "anatomi" && anatomiAktuell) {
+      hintUsedOnCurrent = true;
+      markAnatomiKlar(anatomiAktuell, true);
+      award();
+      $("anatomi-feedback").className = "feedback";
+      $("anatomi-feedback").textContent = anatomiAktuell.namn + ": " + anatomiAktuell.facit;
+      anatomiKvar.shift();
+      setTimeout(nextAnatomi, 1400);
+      return;
+    }
+
+    if (del === "tidslinje") {
+      const kvar = document.querySelector(".slot:not(.filled)");
+      if (!kvar) return;
+      const typ = kvar.dataset.typ, kol = kvar.dataset.kol;
+      const kort = document.querySelector(".card-chip[data-typ='" + typ + "'][data-kol='" + kol + "']:not(.used)");
+      if (!kort) return;
+      const slot = document.querySelector(".slot[data-typ='" + typ + "'][data-kol='" + kol + "']");
+      slot.textContent = kort.textContent;
+      slot.classList.add("filled");
+      slot.classList.remove("armed");
+      kort.classList.add("used");
+      misses.push(KOLUMNER[kol].dagar + ": " + kort.textContent);
+      hintUsedOnCurrent = true;
+      award();
+      valdKort = null;
+      document.querySelectorAll(".card-chip").forEach(c => c.classList.remove("selected"));
+      document.querySelectorAll(".slot").forEach(s => s.classList.remove("armed"));
+      setTidslinjeFeedback("Svaret är ifyllt: " + KOLUMNER[kol].dagar + ".", "");
+      tidslinjeKvar--;
+      if (tidslinjeKvar === 0) setTimeout(nextPart, 900);
+    }
+  }
+
+  /* ========================================================== */
+
+  showBestOnStart();
+  </script>
+</body>
+</html>
