@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Träd och blad – Ekologi</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  :root {
+    --gron: #3f6b34;
+    --gron-stark: #2f5228;
+    --gron-mjuk: #f1f6ed;
+    --gron-kant: #cadcbf;
+    --ok: #15803d;
+    --ok-mjuk: #dcfce7;
+    --fel: #b91c1c;
+    --fel-mjuk: #fee2e2;
+    --text: #212529;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body.trad-sida {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+    font-size: 17px;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 1.5rem 1.2rem 2rem; }
+
+  /* plats åt den fasta resultatraden så att sajtens sidfot inte hamnar under den */
+  body.trad-sida { padding-bottom: 4.5rem; }
+
+  header.top {
+    background: var(--gron);
+    color: #fff;
+    padding: 1.6rem 1.2rem;
+  }
+  header.top .inner { max-width: 960px; margin: 0 auto; }
+  header.top h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.15rem; }
+  header.top p { opacity: 0.9; font-size: 0.95rem; }
+
+  h2 {
+    font-size: 1.3rem;
+    color: var(--gron-stark);
+    margin: 2rem 0 0.7rem;
+  }
+  h3 { font-size: 1.05rem; color: var(--gron-stark); margin: 1.2rem 0 0.4rem; }
+  p { margin-bottom: 0.8rem; }
+  .intro p { max-width: 62ch; }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--gron-kant);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  .panel.soft { background: var(--gron-mjuk); }
+
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--gron-kant);
+    background: #fff;
+    color: var(--gron-stark);
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--gron-mjuk); }
+  .btn.primary { background: var(--gron); border-color: var(--gron); color: #fff; }
+  .btn.primary:hover { background: var(--gron-stark); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.9rem;
+  }
+  .level-card {
+    font: inherit; text-align: left; cursor: pointer;
+    background: #fff; border: 1px solid var(--gron-kant);
+    border-radius: 12px; padding: 0.9rem 1rem;
+  }
+  .level-card:hover { background: var(--gron-mjuk); }
+  .level-card h3 { margin: 0 0 0.25rem; font-size: 1rem; }
+  .level-card p { margin: 0; font-size: 0.86rem; color: #555; }
+
+  /* ── Bladrutnät ── */
+  .leaf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+  .leaf-card {
+    border: 1px solid var(--gron-kant);
+    border-radius: 12px;
+    background: #fff;
+    padding: 0.4rem 0.35rem 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, transform 0.1s;
+  }
+  .leaf-card:hover { background: var(--gron-mjuk); border-color: var(--gron); }
+  .leaf-card.armed { border-color: var(--gron); background: var(--gron-mjuk); }
+  .leaf-card.klar { border-color: var(--ok); background: var(--ok-mjuk); cursor: default; }
+  .leaf-card.fel { border-color: var(--fel); background: var(--fel-mjuk); }
+  .leaf-card svg { width: 100%; height: 108px; display: block; }
+  .leaf-card .namn {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gron-stark);
+    min-height: 1.35em;
+    line-height: 1.3;
+  }
+  .leaf-card .namn.tom { color: #b0b0b0; font-weight: 400; font-style: italic; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+  .chip {
+    font: inherit; font-size: 0.92rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--gron-kant);
+    background: #fff; cursor: pointer;
+  }
+  .chip:hover { background: var(--gron-mjuk); }
+  .chip.vald { background: var(--gron); border-color: var(--gron); color: #fff; }
+  .chip.klar { display: none; }
+
+  .fakta-prompt {
+    background: var(--gron-mjuk);
+    border: 1px solid var(--gron-kant);
+    border-left: 5px solid var(--gron);
+    border-radius: 0;
+    padding: 0.8rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--gron-stark);
+    margin-top: 0.5rem;
+  }
+
+  .besked { min-height: 1.6em; margin-top: 0.7rem; font-weight: 600; }
+  .besked.ok { color: var(--ok); }
+  .besked.nej { color: var(--fel); }
+
+  /* ── Resultatrad längst ned ── */
+  .scorebar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    background: #fff;
+    border-top: 2px solid var(--gron);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.07);
+    z-index: 50;
+  }
+  .scorebar .inner {
+    max-width: 960px; margin: 0 auto;
+    padding: 0.6rem 1.2rem;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.6rem;
+    font-size: 1rem;
+  }
+  .scorebar .siffra { font-variant-numeric: tabular-nums; font-weight: 700; }
+  .scorebar .ratt .siffra { color: var(--ok); }
+  .scorebar .fel .siffra { color: var(--fel); }
+  .scorebar .tid .siffra { color: var(--gron-stark); }
+  .scorebar .poang .siffra { color: var(--gron-stark); }
+  .scorebar .del { color: #666; font-size: 0.9rem; }
+  .scorebar .spacer { flex: 1 1 auto; }
+
+  /* ── Fördjupning ── */
+  .fordjup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+  }
+  .fordjup-btn {
+    font: inherit; cursor: pointer;
+    border: 1px solid var(--gron-kant);
+    border-radius: 12px; background: #fff;
+    padding: 0.3rem 0.2rem 0.45rem;
+    text-align: center;
+  }
+  .fordjup-btn:hover { background: var(--gron-mjuk); }
+  .fordjup-btn.aktiv { border-color: var(--gron); background: var(--gron-mjuk); }
+  .fordjup-btn svg { width: 100%; height: 78px; display: block; }
+  .fordjup-btn span { font-size: 0.8rem; font-weight: 600; color: var(--gron-stark); }
+
+  .fordjup-text {
+    margin-top: 1rem;
+    border: 1px solid var(--gron-kant);
+    border-left: 5px solid var(--gron);
+    background: var(--gron-mjuk);
+    padding: 1rem 1.1rem;
+  }
+  .fordjup-text h3 { margin-top: 0; }
+  .fordjup-text .latin { font-style: italic; color: #666; font-size: 0.9rem; font-weight: 400; }
+  .fordjup-text .nytta {
+    margin-top: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    background: #fff;
+    border: 1px solid var(--gron-kant);
+    font-size: 0.96rem;
+  }
+  .fordjup-text .nytta strong { color: var(--gron-stark); }
+
+  .fordjup-text .kannetecken {
+    margin-top: 0.6rem; padding-top: 0.6rem;
+    border-top: 1px solid var(--gron-kant);
+    font-size: 0.94rem;
+  }
+
+  /* ── Foton ── */
+  .foto-rad {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    margin: 0.2rem 0 0.9rem;
+  }
+  .foto-rad.tva { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .foto { margin: 0; }
+  .foto img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid var(--gron-kant);
+    display: block;
+  }
+  .foto figcaption {
+    font-size: 0.84rem;
+    color: #666;
+    margin-top: 0.3rem;
+    line-height: 1.4;
+  }
+
+
+  .ek-figur {
+    margin: 1.6rem 0 0.5rem;
+    padding: 0;
+  }
+  .ek-figur .ek-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .ek-figur figcaption {
+    max-width: 62ch;
+    margin: 0.4rem auto 0;
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.55;
+  }
+
+
+  .doldt { display: none !important; }
+  .note { font-size: 0.88rem; color: #666; }
+
+  @media print {
+    .scorebar, .btn, .btn-row, #ovning, .no-print { display: none !important; }
+    body { font-size: 11pt; }
+    .fordjup-text { break-inside: avoid; }
+    .ek-figur { break-inside: avoid; }
+  }
+</style>
+</head>
+<body class="trad-sida">
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<header class="biologi-header">
+  <h1>Träd och blad</h1>
+  <p>Ekologi</p>
+</header>
+
+<div class="wrap">
+
+  <p style="margin-bottom:1.2rem;">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+  </p>
+
+  <!-- ================= INTRODUKTION ================= -->
+  <section class="intro">
+    <h2>Träden och deras plats i naturen</h2>
+
+    <p>Ett träd är en producent, men också en livsmiljö. På och i ett enda gammalt träd kan hundratals arter av insekter, svampar, lavar och mossor leva, och när trädet dör fortsätter veden att vara mat och bostad i decennier. Vilka trädarter som växer i en skog avgör därför vilka andra arter som finns där. Ek är extremfallet: omkring 1 500 svenska arter är knutna till ek, fler än till något annat träd.</p>
+
+    <p><strong>Pionjärträd</strong> som björk, asp, sälg och gråal har små, lättspridda frön, växer snabbt och kräver mycket ljus. De kommer först efter en brand eller ett hygge. <strong>Sekundärträd</strong> som bok och gran tål skugga som unga, växer långsammare och lever längre. De kommer in under pionjärerna och tar sedan över – därför blir en björkskog med tiden ofta en granskog.</p>
+
+    <p>Träden påverkar också marken de står i. Klibbalen gödslar sin egen mark med kväve från bakterier i rötterna. Bokens sega löv bryts ner långsamt och gör marken sur och artfattig, medan lönn, alm och lind ger snabb förna och mullrik jord med rik vårflora. Och de sprider sig olika: vinden bär björkens och lönnens vingade frön, fåglarna sprider rönnens bär, och möss och nötskrikor gömmer ekollon och hasselnötter som de sedan glömmer bort.</p>
+
+    <p class="note">Under exkursionen: titta på bladets form, kanten (hel, sågad eller flikig), bladbasen, om bladen sitter mitt emot varandra eller växelvis – och på vilken mark trädet står.</p>
+  </section>
+
+  <!-- ================= EKENS ARTER ================= -->
+  <figure class="ek-figur">
+      <svg class="ek-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="ektitel">
+      <title id="ektitel">Ett gammalt ekträd omgivet av tio arter som lever av eller på det: kattuggla, nötskrika, ekorre, vildsvin, ekvecklare, ekoxe, läderbagge, svavelticka, lavar och mossor samt större hackspett.</title>
+      <style>
+        .lbl { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #2f5228; }
+        .sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; font-size: 11.5px; fill: #5a5a52; }
+        .lnk { stroke: #cadcbf; stroke-width: 2; stroke-dasharray: 5 5; }
+        .disc { fill: #f6faf3; stroke: #cadcbf; stroke-width: 1.5; }
+      </style>
+
+      <g class="lnk">
+        <line x1="335" y1="80"  x2="450" y2="290"/>
+        <line x1="565" y1="80"  x2="450" y2="290"/>
+        <line x1="725" y1="174" x2="450" y2="290"/>
+        <line x1="790" y1="300" x2="450" y2="290"/>
+        <line x1="725" y1="426" x2="450" y2="290"/>
+        <line x1="555" y1="504" x2="450" y2="290"/>
+        <line x1="345" y1="504" x2="450" y2="290"/>
+        <line x1="175" y1="426" x2="450" y2="290"/>
+        <line x1="110" y1="300" x2="450" y2="290"/>
+        <line x1="175" y1="174" x2="450" y2="290"/>
+      </g>
+
+      <!-- ===================== EKEN ===================== -->
+      <g>
+        <g fill="#5f8f4e">
+          <ellipse cx="450" cy="238" rx="92" ry="66"/>
+          <circle cx="380" cy="256" r="52"/>
+          <circle cx="520" cy="256" r="52"/>
+          <circle cx="406" cy="206" r="44"/>
+          <circle cx="494" cy="206" r="44"/>
+          <circle cx="450" cy="190" r="40"/>
+          <circle cx="352" cy="228" r="32"/>
+          <circle cx="548" cy="228" r="32"/>
+        </g>
+        <g fill="#4d7a3f">
+          <circle cx="398" cy="244" r="24"/>
+          <circle cx="472" cy="222" r="20"/>
+          <circle cx="512" cy="262" r="18"/>
+        </g>
+
+        <path d="M433,300 C429,330 427,358 425,392 C423,416 419,428 410,438
+                 L490,438 C481,428 477,416 475,392 C473,358 471,330 467,300 Z"
+              fill="#7a5230"/>
+        <path d="M438,302 C430,286 416,274 400,268 M462,302 C470,286 484,274 500,268"
+              stroke="#7a5230" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <g stroke="#5e3d22" stroke-width="2" fill="none" opacity="0.6">
+          <path d="M441,306 C438,344 435,388 431,430"/>
+          <path d="M452,304 C451,344 450,388 450,432"/>
+          <path d="M462,306 C464,344 466,388 468,430"/>
+        </g>
+        <ellipse cx="450" cy="366" rx="12" ry="18" fill="#3b2a1c"/>
+        <ellipse cx="450" cy="372" rx="7" ry="9" fill="#241a11"/>
+        <path d="M410,438 C397,444 384,446 371,444 M490,438 C503,444 516,446 529,444"
+              stroke="#7a5230" stroke-width="9" fill="none" stroke-linecap="round"/>
+        <g>
+          <ellipse cx="392" cy="292" rx="7" ry="9" fill="#b98a4e"/>
+          <path d="M385,288 a7,5 0 0 1 14,0 z" fill="#7a5230"/>
+          <ellipse cx="508" cy="284" rx="7" ry="9" fill="#b98a4e"/>
+          <path d="M501,280 a7,5 0 0 1 14,0 z" fill="#7a5230"/>
+        </g>
+        <text x="450" y="474" text-anchor="middle" class="lbl" style="font-size:18px">Ek</text>
+      </g>
+
+      <!-- ===================== 1. KATTUGGLA (335,80) ===================== -->
+      <g transform="translate(285,30)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <ellipse cx="50" cy="62" rx="19" ry="21" fill="#8a6b4a"/>
+        <path d="M32,58 C30,72 38,82 50,84 C62,82 70,72 68,58" fill="#7a5b3d"/>
+        <circle cx="50" cy="38" r="19" fill="#a3835f"/>
+        <path d="M34,25 l7,9 M66,25 l-7,9" stroke="#a3835f" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="42" cy="37" r="6.5" fill="#f7f1e6"/>
+        <circle cx="58" cy="37" r="6.5" fill="#f7f1e6"/>
+        <circle cx="42" cy="37" r="3.2" fill="#2c2117"/>
+        <circle cx="58" cy="37" r="3.2" fill="#2c2117"/>
+        <path d="M50,42 l-3.5,6 h7 z" fill="#d9a441"/>
+        <g stroke="#6d5238" stroke-width="1.6" opacity="0.55">
+          <path d="M42,60 h16 M40,68 h20 M43,76 h14"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Kattuggla</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">bor i hål i gamla träd</text>
+      </g>
+
+      <!-- ===================== 2. NÖTSKRIKA (565,80) ===================== -->
+      <g transform="translate(515,30)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M70,54 l22,11 l-4,-16 z" fill="#b07a56"/>
+        <ellipse cx="54" cy="56" rx="19" ry="13" fill="#c98f6a"/>
+        <rect x="48" y="50" width="15" height="8" rx="2" fill="#4a6fa5"/>
+        <g stroke="#22304a" stroke-width="1.6"><path d="M52,50 v8 M56,50 v8 M60,50 v8"/></g>
+        <circle cx="36" cy="44" r="11" fill="#c98f6a"/>
+        <path d="M30,35 q4,-6 9,-3 q-3,3 -3,6 z" fill="#a97a56"/>
+        <circle cx="34" cy="42" r="2" fill="#241a11"/>
+        <path d="M26,45 l-9,3 l9,3 z" fill="#3a3a3a"/>
+        <ellipse cx="14" cy="49" rx="5" ry="6.5" fill="#b98a4e"/>
+        <path d="M9,46 a5,4 0 0 1 10,0 z" fill="#7a5230"/>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Nötskrika</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">gömmer ekollon i marken</text>
+      </g>
+
+      <!-- ===================== 3. EKORRE (725,174) ===================== -->
+      <g transform="translate(675,124)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M60,76 C88,72 90,32 62,22 C80,38 76,58 56,64 Z" fill="#a2643a"/>
+        <ellipse cx="46" cy="58" rx="15" ry="19" fill="#b5713f"/>
+        <ellipse cx="44" cy="64" rx="9" ry="12" fill="#e0c0a0"/>
+        <circle cx="42" cy="34" r="11" fill="#b5713f"/>
+        <path d="M33,26 l1,-10 l7,7 z M50,25 l5,-9 l2,9 z" fill="#a2643a"/>
+        <circle cx="38" cy="33" r="2" fill="#241a11"/>
+        <ellipse cx="40" cy="49" rx="5" ry="6" fill="#b98a4e"/>
+        <path d="M35,46 a5,4 0 0 1 10,0 z" fill="#7a5230"/>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Ekorre</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">äter ekollon</text>
+      </g>
+
+      <!-- ===================== 4. VILDSVIN (790,300) ===================== -->
+      <g transform="translate(740,250)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M32,50 C32,39 44,33 58,33 C72,33 82,40 82,50 C82,60 72,66 58,66
+                 C44,66 32,60 32,50 Z" fill="#6b5747"/>
+        <path d="M34,42 C26,43 18,49 17,55 C16,60 24,63 33,61 Z" fill="#5a483a"/>
+        <ellipse cx="18" cy="56" rx="4.5" ry="4" fill="#3b2a1c"/>
+        <path d="M24,53 l-6,-4 l1,5 z" fill="#f2ece0"/>
+        <path d="M40,35 l1,-9 l8,7 z" fill="#5a483a"/>
+        <circle cx="32" cy="46" r="1.8" fill="#241a11"/>
+        <g stroke="#5a483a" stroke-width="6" stroke-linecap="round">
+          <path d="M42,64 v13 M54,66 v12 M66,65 v13 M76,61 v13"/>
+        </g>
+        <path d="M78,52 c6,2 7,8 3,11" stroke="#5a483a" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Vildsvin</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">bökar upp ollon ur marken</text>
+      </g>
+
+      <!-- ===================== 5. EKVECKLARE (725,426) ===================== -->
+      <g transform="translate(675,376)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M50,22 C63,27 72,39 72,52 C72,65 63,76 50,80 C37,76 28,65 28,52
+                 C28,39 37,27 50,22 Z" fill="#5f8f4e"/>
+        <path d="M50,22 v58" stroke="#2f5228" stroke-width="1.6"/>
+        <g stroke="#2f5228" stroke-width="1.1" opacity="0.6" fill="none">
+          <path d="M50,36 l14,-2 M50,36 l-14,-2 M50,50 l17,0 M50,50 l-17,0 M50,64 l13,3 M50,64 l-13,3"/>
+        </g>
+        <!-- avätna kanter -->
+        <g fill="#f6faf3">
+          <circle cx="71" cy="46" r="7"/>
+          <circle cx="66" cy="66" r="6"/>
+          <circle cx="30" cy="58" r="6.5"/>
+        </g>
+        <!-- larv -->
+        <g>
+          <ellipse cx="36" cy="42" rx="6" ry="5" fill="#8aa84c"/>
+          <ellipse cx="44" cy="39" rx="6.5" ry="5.5" fill="#9dbb5c"/>
+          <ellipse cx="52" cy="37" rx="6.5" ry="5.5" fill="#8aa84c"/>
+          <ellipse cx="60" cy="36" rx="6" ry="5" fill="#9dbb5c"/>
+          <circle cx="66" cy="35" r="5" fill="#4a5f24"/>
+          <circle cx="67.5" cy="33.5" r="1.4" fill="#fff"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Ekvecklare</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">larverna äter upp löven</text>
+      </g>
+
+      <!-- ===================== 6. EKOXE (555,504) ===================== -->
+      <g transform="translate(505,454)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <!-- käkar som horn -->
+        <path d="M45,30 C40,20 32,10 20,4 C24,12 27,17 30,21
+                 C25,18 21,14 17,10 C19,20 26,28 36,33 Z" fill="#2f2016"/>
+        <path d="M35,20 C31,16 27,13 23,11 C28,15 31,18 34,22 Z" fill="#2f2016"/>
+        <path d="M55,30 C60,20 68,10 80,4 C76,12 73,17 70,21
+                 C75,18 79,14 83,10 C81,20 74,28 64,33 Z" fill="#2f2016"/>
+        <path d="M65,20 C69,16 73,13 77,11 C72,15 69,18 66,22 Z" fill="#2f2016"/>
+        <ellipse cx="50" cy="33" rx="9" ry="6.5" fill="#33241a"/>
+        <ellipse cx="50" cy="44" rx="13" ry="8" fill="#3b2a1c"/>
+        <ellipse cx="50" cy="64" rx="17" ry="21" fill="#5a3a22"/>
+        <path d="M50,44 v41" stroke="#33241a" stroke-width="2.2"/>
+        <ellipse cx="42" cy="60" rx="5" ry="10" fill="#6d4728" opacity="0.75"/>
+        <g stroke="#33241a" stroke-width="3" stroke-linecap="round">
+          <path d="M36,50 l-13,-6 M34,62 l-15,2 M36,74 l-12,9"/>
+          <path d="M64,50 l13,-6 M66,62 l15,2 M64,74 l12,9"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Ekoxe</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">larverna lever i död ekved</text>
+      </g>
+
+      <!-- ===================== 7. LÄDERBAGGE (345,504) ===================== -->
+      <g transform="translate(295,454)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <g fill="#8a6b4a" opacity="0.8">
+          <circle cx="30" cy="80" r="4"/><circle cx="40" cy="84" r="3"/><circle cx="52" cy="82" r="4.5"/>
+          <circle cx="63" cy="85" r="3"/><circle cx="72" cy="80" r="3.5"/><circle cx="46" cy="76" r="2.5"/>
+          <circle cx="24" cy="84" r="2.5"/><circle cx="80" cy="85" r="2.5"/>
+        </g>
+        <g stroke="#241a11" stroke-width="2.4" stroke-linecap="round" fill="none">
+          <path d="M45,26 C42,22 40,20 37,19 M55,26 C58,22 60,20 63,19"/>
+        </g>
+        <circle cx="36" cy="18.5" r="2.6" fill="#241a11"/>
+        <circle cx="64" cy="18.5" r="2.6" fill="#241a11"/>
+        <ellipse cx="50" cy="30" rx="7.5" ry="6" fill="#241a11"/>
+        <ellipse cx="50" cy="40" rx="13" ry="8" fill="#2c2117"/>
+        <ellipse cx="50" cy="58" rx="18" ry="19" fill="#3b2a1c"/>
+        <path d="M50,40 v36" stroke="#241a11" stroke-width="2"/>
+        <ellipse cx="42" cy="54" rx="6" ry="9" fill="#4d3722" opacity="0.7"/>
+        <g stroke="#2c2117" stroke-width="2.8" stroke-linecap="round">
+          <path d="M34,46 l-12,-5 M32,58 l-13,3 M35,68 l-11,8"/>
+          <path d="M66,46 l12,-5 M68,58 l13,3 M65,68 l11,8"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Läderbagge</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">lever i mulmen inne i stammen</text>
+      </g>
+
+      <!-- ===================== 8. SVAVELTICKA (175,426) ===================== -->
+      <g transform="translate(125,376)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M28,16 h20 v68 h-20 z" fill="#7a5230"/>
+        <g stroke="#5e3d22" stroke-width="1.6" opacity="0.55">
+          <path d="M33,18 v64 M39,18 v64 M45,18 v64"/>
+        </g>
+        <path d="M48,32 C64,24 80,30 78,40 C72,46 56,46 48,42 Z" fill="#e8a92e"/>
+        <path d="M48,48 C66,42 82,48 79,57 C72,63 56,62 48,58 Z" fill="#f0bc4e"/>
+        <path d="M48,64 C62,60 76,65 73,72 C66,77 55,76 48,72 Z" fill="#e8a92e"/>
+        <g stroke="#c98a1c" stroke-width="1.2" fill="none" opacity="0.85">
+          <path d="M52,38 C60,34 68,34 74,37 M52,54 C62,50 70,51 76,54 M52,69 C60,66 66,67 71,70"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Svavelticka</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">bryter ner veden inifrån</text>
+      </g>
+
+      <!-- ===================== 9. LAVAR OCH MOSSOR (110,300) ===================== -->
+      <g transform="translate(60,250)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M22,18 h56 v64 h-56 z" fill="#7a5230"/>
+        <g stroke="#5e3d22" stroke-width="1.6" opacity="0.5">
+          <path d="M31,18 v64 M43,18 v64 M57,18 v64 M69,18 v64"/>
+        </g>
+        <path d="M28,34 C34,25 46,25 50,32 C58,26 68,32 66,42 C70,50 62,57 54,54
+                 C48,60 34,57 32,49 C24,47 24,38 28,34 Z" fill="#9db08e"/>
+        <g fill="#879b78">
+          <ellipse cx="38" cy="38" rx="6" ry="4"/>
+          <ellipse cx="55" cy="44" rx="7" ry="4.5"/>
+          <ellipse cx="43" cy="50" rx="5" ry="3.5"/>
+        </g>
+        <g stroke="#4d7a3f" stroke-width="2.4" stroke-linecap="round">
+          <path d="M30,82 v-12 M36,82 v-16 M42,82 v-11 M48,82 v-15 M54,82 v-12 M60,82 v-16 M66,82 v-11"/>
+        </g>
+        <g fill="#5f8f4e">
+          <circle cx="36" cy="64" r="3"/><circle cx="48" cy="65" r="3"/><circle cx="60" cy="64" r="3"/>
+        </g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Lavar och mossor</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">växer på den skrovliga barken</text>
+      </g>
+
+      <!-- ===================== 10. STÖRRE HACKSPETT (175,174) ===================== -->
+      <g transform="translate(125,124)">
+        <circle class="disc" cx="50" cy="50" r="41"/>
+        <path d="M16,16 h18 v68 h-18 z" fill="#7a5230"/>
+        <g stroke="#5e3d22" stroke-width="1.5" opacity="0.55"><path d="M22,18 v64 M28,18 v64"/></g>
+        <path d="M46,72 l4,16 l7,-13 z" fill="#2c2c2c"/>
+        <ellipse cx="53" cy="54" rx="14" ry="20" fill="#f2ece0"/>
+        <path d="M53,36 C63,38 69,48 67,60 C65,70 59,74 53,74 Z" fill="#2c2c2c"/>
+        <g stroke="#f2ece0" stroke-width="2.4"><path d="M59,44 l5,3 M61,52 l5,3 M61,60 l5,3"/></g>
+        <circle cx="45" cy="38" r="10" fill="#f2ece0"/>
+        <path d="M45,28 C52,29 55,34 54,40 C51,45 45,46 41,44 Z" fill="#2c2c2c"/>
+        <path d="M51,30 a6,5 0 0 1 5,6 l-6,-1 z" fill="#c0392b"/>
+        <circle cx="43" cy="37" r="1.8" fill="#241a11"/>
+        <path d="M36,38 l-10,3 l10,3 z" fill="#4a4a4a"/>
+        <g stroke="#3b2a1c" stroke-width="1.4"><path d="M28,36 l-4,-3 M28,44 l-4,3"/></g>
+        <text x="50" y="108" text-anchor="middle" class="lbl">Större hackspett</text>
+        <text x="50" y="123" text-anchor="middle" class="sub">hackar fram insekter ur barken</text>
+      </g>
+
+      </svg>
+
+    <figcaption>
+      Ett gammalt ekträd är en hel livsmiljö. Här är tio av de omkring 1 500 arter som är
+      knutna till ek i Sverige. Flest av dem lever på det som ett ungt träd saknar: grov
+      skrovlig bark, döda grenar, håligheter och mulm – smulet, mjukt trämjöl inne i stammen.
+      Därför är en enda gammal ek värd mer för mångfalden än många unga tillsammans.
+    </figcaption>
+  </figure>
+
+  <!-- ================= ÖVNING ================= -->
+  <section id="ovning">
+    <h2>Övning: känn igen träden</h2>
+
+    <div class="panel" id="start-panel">
+      <p>Övningen har två delar. Först parar du ihop <strong>namnet</strong> med rätt blad. Sedan får du en <strong>faktamening</strong> i taget och klickar på det träd den hör till. Rätt, fel, tid och poäng räknas och visas längst ned på sidan.</p>
+      <p class="note">Rätt på första försöket ger 10 poäng, sedan 5 och 3. Bladen ligger i ny ordning varje gång du börjar om – och blandas om igen inför del 2 – så det går inte att lära sig platserna i stället för bladen.</p>
+
+      <div class="level-grid">
+        <button class="level-card" onclick="startaOvning(1)">
+          <h3>Grundnivå</h3>
+          <p>De nio träden på exkursionen: klibbal, gråal, avenbok, ek, vårtbjörk, bok, rönn, lönn och hassel.</p>
+        </button>
+        <button class="level-card" onclick="startaOvning(2)">
+          <h3>Expertnivå</h3>
+          <p>Tolv träd till, bland annat asp, lind, alm, ask, oxel och de tre barrträden.</p>
+        </button>
+        <button class="level-card" onclick="startaOvning(0)">
+          <h3>Alla 21 träden</h3>
+          <p>Hela listan på en gång. Ta i så fall gott om tid.</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel doldt" id="spel-panel">
+      <div id="del1">
+        <h3>Del 1 – vilket namn hör till vilket blad?</h3>
+        <p class="note">Klicka på ett namn och sedan på bladet. Ett fel svar räknas, men du kan försöka igen.</p>
+        <div class="chips" id="namn-chips"></div>
+      </div>
+
+      <div id="del2" class="doldt">
+        <h3>Del 2 – vilket träd passar faktan?</h3>
+        <div class="fakta-prompt" id="fakta-prompt">&nbsp;</div>
+      </div>
+
+      <div class="leaf-grid" id="leaf-grid"></div>
+      <p class="besked" id="besked">&nbsp;</p>
+
+      <div class="btn-row">
+        <button class="btn" onclick="avbryt()">Avbryt</button>
+      </div>
+    </div>
+
+    <div class="panel doldt" id="klar-panel">
+      <h3 id="klar-rubrik">Klart</h3>
+      <p id="klar-text"></p>
+      <div id="klar-basta"></div>
+      <div id="klar-fel"></div>
+      <div class="btn-row">
+        <button class="btn primary" onclick="startaOvning(sisteNiva)">Kör samma igen</button>
+        <button class="btn" onclick="tillStart()">Välj annan nivå</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FÖRDJUPNING ================= -->
+  <section>
+    <h2>Fördjupning: en art i taget</h2>
+    <p>Klicka på ett blad för att läsa mer om trädet – hur det lever, vad det används till och vad du känner igen det på. De fyra sista arterna är sådana som växer på området men inte ingår i övningen.</p>
+    <div class="fordjup-grid" id="fordjup-grid"></div>
+    <div class="fordjup-text doldt" id="fordjup-text"></div>
+  </section>
+
+  <p class="note" style="margin-top:2rem;">Foton: Jesper Tordsson. Bladen är schematiska teckningar, ritade för att visa form, kant och nervmönster – inte exakta avbildningar. Storleksförhållandet mellan arterna stämmer inte.</p>
+
+</div>
+
+<!-- ================= RESULTATRAD ================= -->
+<div class="scorebar" id="scorebar">
+  <div class="inner">
+    <span class="ratt">Rätt: <span class="siffra" id="s-ratt">0</span></span>
+    <span class="fel">Fel: <span class="siffra" id="s-fel">0</span></span>
+    <span class="tid">Tid: <span class="siffra" id="s-tid">0:00</span></span>
+    <span class="poang">Poäng: <span class="siffra" id="s-poang">0</span></span>
+    <span class="del" id="s-del">Välj en nivå för att börja</span>
+    <span class="spacer"></span>
+    <span class="del" id="s-kvar"></span>
+  </div>
+</div>
+
+<script src="/js/menu.js"></script>
+<script>
+"use strict";
+
+/* =====================================================================
+   Bladgenerator – bygger schematiska bladsiluetter
+   ===================================================================== */
+const VB = { w: 100, h: 140, cx: 50, y0: 16 };
+function frac(x) { return x - Math.floor(x); }
+function pt(a) { return a[0].toFixed(1) + "," + a[1].toFixed(1); }
+
+function profileR(sp, t) {
+  let r = Math.pow(Math.sin(Math.PI * Math.pow(t, sp.p)), sp.q);
+  if (sp.lobes) r *= 1 + sp.lobes[1] * Math.cos(2 * Math.PI * sp.lobes[0] * t + (sp.lobePhase || 0));
+  if (sp.teeth) r *= 1 + sp.teeth[1] * frac(t * sp.teeth[0]);
+  if (sp.tipBlunt && t > 0.55) r = Math.max(r, sp.tipBlunt * (1 - 0.15 * (t - 0.55) / 0.45));
+  return Math.max(r, 0);
+}
+
+function simpleLeaf(sp) {
+  const L = sp.L || 100, W = sp.W || 32, cx = VB.cx, y0 = VB.y0;
+  const N = 150, right = [], left = [];
+  for (let i = 0; i <= N; i++) {
+    const t = i / N, r = profileR(sp, t) * W;
+    const y = y0 + L - t * L;
+    const skew = sp.asym ? sp.asym * Math.max(0, 1 - t * 4) * 9 : 0;
+    right.push([cx + r, y - skew]);
+    left.push([cx - r, y + skew]);
+  }
+  let d = "M " + pt(right[0]);
+  for (let i = 1; i < right.length; i++) d += " L " + pt(right[i]);
+  if (sp.tipNotch) d += " L " + pt([cx, y0 + sp.tipNotch]);
+  for (let i = left.length - 1; i >= 0; i--) d += " L " + pt(left[i]);
+  if (sp.notch) d += " L " + pt([cx, y0 + L - sp.notch]);
+  d += " Z";
+
+  let veins = "";
+  const n = sp.veins || 6;
+  for (let k = 1; k <= n; k++) {
+    const t = (k / (n + 1)) * 0.92 + 0.04;
+    const r = profileR(sp, t) * W * 0.82;
+    const y = y0 + L - t * L;
+    veins += '<path d="M ' + cx + ',' + y.toFixed(1) + ' L ' + (cx + r).toFixed(1) + ',' + (y - L * 0.06).toFixed(1) + '"/>' +
+             '<path d="M ' + cx + ',' + y.toFixed(1) + ' L ' + (cx - r).toFixed(1) + ',' + (y - L * 0.06).toFixed(1) + '"/>';
+  }
+  let stalk = '<path d="M ' + cx + ',' + (y0 + L).toFixed(1) + ' L ' + cx + ',' + (y0 + L + (sp.stalk || 16)).toFixed(1) + '"/>';
+  if (sp.glands) {
+    const gy = y0 + L + (sp.stalk || 16) * 0.45;
+    stalk += '<circle cx="' + (cx - 3.5) + '" cy="' + gy.toFixed(1) + '" r="2.6"/>' +
+             '<circle cx="' + (cx + 3.5) + '" cy="' + (gy + 3).toFixed(1) + '" r="2.6"/>';
+  }
+  const mid = '<path d="M ' + cx + ',' + (y0 + (sp.tipNotch || 2)).toFixed(1) + ' L ' + cx + ',' + (y0 + L - (sp.notch || 0)).toFixed(1) + '"/>';
+  return { outline: d, veins: veins, mid: mid, stalk: stalk };
+}
+
+function palmateLeaf(sp) {
+  const cx = VB.cx, yb = VB.y0 + 108, R = sp.R || 76;
+  const nodes = [
+    [-100, 0.22], [-84, 0.60], [-62, 0.30],
+    [-40, 0.90], [-20, 0.36],
+    [0, 1.00],
+    [20, 0.36], [40, 0.90],
+    [62, 0.30], [84, 0.60], [100, 0.22]
+  ];
+  const P = nodes.map(function (n) {
+    const rad = n[0] * Math.PI / 180, r = R * n[1];
+    return [cx + r * Math.sin(rad), yb - r * Math.cos(rad)];
+  });
+  let d = "M " + pt(P[0]);
+  for (let i = 1; i < P.length; i++) d += " L " + pt(P[i]);
+  d += " L " + pt([cx, yb]) + " Z";
+  let veins = "";
+  [[-84, 0.48], [-40, 0.74], [0, 0.82], [40, 0.74], [84, 0.48]].forEach(function (v) {
+    const rad = v[0] * Math.PI / 180, r = R * v[1];
+    veins += '<path d="M ' + cx + ',' + yb + ' L ' + (cx + r * Math.sin(rad)).toFixed(1) + ',' + (yb - r * Math.cos(rad)).toFixed(1) + '"/>';
+  });
+  return { outline: d, veins: veins, mid: "", stalk: '<path d="M ' + cx + ',' + yb + ' L ' + cx + ',' + (yb + 14) + '"/>' };
+}
+
+function compoundLeaf(sp) {
+  const cx = VB.cx, yTop = VB.y0 + 4, yBot = VB.y0 + 104;
+  const pairs = sp.pairs || 6, len = sp.leafletLen || 20, wid = sp.leafletW || 6.5;
+  let shapes = "";
+  const rachis = '<path d="M ' + cx + ',' + yTop + ' L ' + cx + ',' + (yBot + 16) + '"/>';
+
+  function leaflet(x, y, dir, scale) {
+    const l = len * scale, w = wid * scale;
+    const tipx = x + dir * l, tipy = y - l * 0.42;
+    return '<path d="M ' + x.toFixed(1) + ',' + y.toFixed(1) +
+      ' C ' + (x + dir * l * 0.35).toFixed(1) + ',' + (y - w).toFixed(1) +
+      ' ' + (x + dir * l * 0.75).toFixed(1) + ',' + (y - l * 0.30 - w * 0.6).toFixed(1) +
+      ' ' + tipx.toFixed(1) + ',' + tipy.toFixed(1) +
+      ' C ' + (x + dir * l * 0.72).toFixed(1) + ',' + (y - l * 0.22 + w * 0.8).toFixed(1) +
+      ' ' + (x + dir * l * 0.30).toFixed(1) + ',' + (y + w * 0.7).toFixed(1) +
+      ' ' + x.toFixed(1) + ',' + y.toFixed(1) + ' Z"/>';
+  }
+
+  for (let i = 0; i < pairs; i++) {
+    const f = i / (pairs - 1);
+    const y = yTop + 14 + f * (yBot - yTop - 16);
+    const scale = 0.72 + 0.42 * Math.sin(Math.PI * (0.25 + 0.72 * (1 - f)));
+    shapes += leaflet(cx, y, 1, scale) + leaflet(cx, y, -1, scale);
+  }
+  const l = len * 0.95, w = wid * 0.95, x = cx, y = yTop + 12;
+  shapes += '<path d="M ' + x + ',' + y + ' C ' + (x - w) + ',' + (y - l * 0.4) + ' ' + (x - w * 0.7) + ',' + (y - l * 0.8) +
+            ' ' + x + ',' + (y - l).toFixed(1) + ' C ' + (x + w * 0.7) + ',' + (y - l * 0.8) + ' ' + (x + w) + ',' + (y - l * 0.4) +
+            ' ' + x + ',' + y + ' Z"/>';
+  return { outline: shapes, veins: "", mid: rachis, stalk: "", multi: true };
+}
+
+function needleLeaf(sp) {
+  const cx = VB.cx, yTop = VB.y0 + 6, yBot = VB.y0 + 112;
+  let shapes = "";
+  const stem = sp.needle === "tall" ? "" : '<path d="M ' + cx + ',' + yTop + ' L ' + cx + ',' + yBot + '"/>';
+
+  if (sp.needle === "gran") {
+    for (let y = yTop + 6; y < yBot; y += 6) {
+      [-1, 1].forEach(function (dir) {
+        shapes += '<path d="M ' + cx + ',' + y + ' L ' + (cx + dir * 22).toFixed(1) + ',' + (y + 6).toFixed(1) + '"/>';
+        shapes += '<path d="M ' + cx + ',' + (y + 3).toFixed(1) + ' L ' + (cx + dir * 15).toFixed(1) + ',' + (y - 3).toFixed(1) + '"/>';
+      });
+    }
+  } else if (sp.needle === "tall") {
+    const yb = yBot - 4;
+    shapes += '<path d="M ' + cx + ',' + yb + ' C ' + (cx - 10) + ',' + (yb - 30) + ' ' + (cx - 18) + ',' + (yb - 62) + ' ' + (cx - 15) + ',' + (yTop + 4) + '"/>';
+    shapes += '<path d="M ' + cx + ',' + yb + ' C ' + (cx + 10) + ',' + (yb - 30) + ' ' + (cx + 18) + ',' + (yb - 62) + ' ' + (cx + 15) + ',' + (yTop + 4) + '"/>';
+    shapes += '<path d="M ' + (cx - 5) + ',' + yb + ' L ' + (cx + 5) + ',' + yb + ' L ' + (cx + 5) + ',' + (yb + 9) + ' L ' + (cx - 5) + ',' + (yb + 9) + ' Z"/>';
+  } else {
+    for (let y = yTop + 10; y < yBot; y += 14) {
+      [[-1, -0.35], [1, -0.35], [0, 0.9]].forEach(function (v) {
+        shapes += '<path d="M ' + cx + ',' + y + ' L ' + (cx + v[0] * 20).toFixed(1) + ',' + (y + v[1] * 16 - 8).toFixed(1) + '"/>';
+      });
+    }
+  }
+  return { outline: shapes, veins: "", mid: stem, stalk: "", needles: true };
+}
+
+function leafSVG(sp) {
+  const g = sp.needle ? needleLeaf(sp) : sp.kind === "palmate" ? palmateLeaf(sp) :
+            sp.kind === "compound" ? compoundLeaf(sp) : simpleLeaf(sp);
+  const fill = "#5f8f4e", stroke = "#2f5228";
+  let body;
+  if (g.needles) {
+    body = '<g fill="none" stroke="' + stroke + '" stroke-width="2.4" stroke-linecap="round">' + g.mid + g.outline + '</g>';
+  } else if (g.multi) {
+    body = '<g fill="none" stroke="' + stroke + '" stroke-width="1.6">' + g.mid + '</g>' +
+           '<g fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.4">' + g.outline + '</g>';
+  } else {
+    body = '<path d="' + g.outline + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2" stroke-linejoin="round"/>' +
+           '<g fill="none" stroke="' + stroke + '" stroke-width="1.2" opacity="0.55">' + g.mid + g.veins + '</g>' +
+           '<g fill="none" stroke="' + stroke + '" stroke-width="2" stroke-linecap="round">' + g.stalk + '</g>';
+  }
+  return '<svg viewBox="0 0 ' + VB.w + ' ' + VB.h + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + body + '</svg>';
+}
+
+/* =====================================================================
+   Arter
+   ===================================================================== */
+const ARTER = [
+  { id: "klibbal", namn: "Klibbal", latin: "Alnus glutinosa", niva: 1,
+    fakta: "Växer i blöt mark och gödslar jorden med kväve.",
+    kanne: "Runt blad med tvärt avhuggen eller urnupen spets. Unga blad är klibbiga.",
+    text: "Klibbal växer där marken är blöt: vid åar och sjökanter och i sumpskog. I rötterna sitter knölar med bakterier som binder kväve ur luften, så alen gödslar sin egen mark – därför är alkärr ofta frodiga med högörter. Veden ruttnar inte under vatten och har använts till pålar och brobyggen. Bladen faller gröna på hösten utan att trädet först drar tillbaka näringen, vilket ger en kväverik förna som bryts ner snabbt. Hanhängena blommar mycket tidigt på våren, före löven, eftersom pollen sprids med vinden. De små kottarna sitter kvar hela vintern och är viktig föda för grönsiska och steglits.",
+    nytta: "Alveden murknar inte under vatten – Venedig och gamla svenska bryggor, brunnskar och pålbroar vilar på al. Alspån är det klassiska rökspånet till fisk, och barken har använts till garvning och till svart och brunt färgbad för garn. Veden brinner fort men rent, och alkol var eftertraktat till krut.",
+    blad: { p: 1.55, q: 0.80, W: 34, L: 88, teeth: [15, 0.09], tipNotch: 9, tipBlunt: 0.42, veins: 6, stalk: 18 } },
+
+  { id: "graal", namn: "Gråal", latin: "Alnus incana", niva: 1,
+    fakta: "Pionjär på torrare mark; bladets undersida är grå.",
+    kanne: "Spetsigt blad med dubbelsågad kant och gråluden undersida.",
+    text: "Gråal binder kväve precis som klibbalen men klarar torrare och magrare mark. Den är ett utpräglat pionjärträd: den kommer snabbt in på öppen mark som gamla åkrar, vägkanter och rasbranter, och den skjuter rikligt med rotskott så att den snabbt bildar täta bestånd. Eftersom den både binder kväve och växer fort förbättrar den marken för de träd som kommer efter. Gråal är vanligast i norra Sverige medan klibbal dominerar i söder. Bladet skiljs från klibbalens på den spetsiga toppen och den grå, luddiga undersidan.",
+    nytta: "Samma användning som klibbal: rökspån, garvning och färgning. Gråalens största nytta ligger dock i marken – eftersom den binder kväve planteras den för att förbättra magra marker och binda slänter och rasbranter. Lövet togs förr som vinterfoder åt får och getter.",
+    blad: { p: 0.90, q: 0.80, W: 31, L: 98, teeth: [20, 0.10], veins: 8, stalk: 16 } },
+
+  { id: "avenbok", namn: "Avenbok", latin: "Carpinus betulus", niva: 1,
+    fakta: "Tål mycket skugga; stammen ser ut att ha muskler.",
+    kanne: "Raka, tydliga sidonerver som går ut till varje tand i den dubbelsågade kanten.",
+    text: "Avenbok är trots namnet inte släkt med bok utan hör till björkfamiljen. Stammen är kannelerad – den ser ut att ha spända muskler – och veden är den hårdaste och tyngsta i Sverige. Den har använts till kugghjul, hyvelbänkar och verktygsskaft. Trädet tål djup skugga och kan stå kvar länge i undervegetationen i en bokskog och vänta på en lucka. Nöten sitter i ett trebladigt skärmblad som fungerar som en vinge och får den att snurra bort från moderträdet. I Sverige är avenbok i stort sett bara skånsk.",
+    nytta: "Sveriges hårdaste och tyngsta virke. Före stålets tid gjordes kugghjulen i väderkvarnar och vattenhjul av avenbok eftersom veden tål nötning år efter år; likaså hyvelbänksskivor, klubbor, skärbrädor och verktygsskaft. Den ger också hög värme som brasved. Nötterna är ätliga men små.",
+    blad: { p: 0.78, q: 0.70, W: 27, L: 104, teeth: [26, 0.08], veins: 11, stalk: 12 } },
+
+  { id: "ek", namn: "Ek", latin: "Quercus robur", niva: 1,
+    fakta: "Fler arter lever på detta träd än på något annat svenskt träd.",
+    kanne: "Flikigt blad med rundade flikar, öronlik bas och mycket kort skaft.",
+    text: "Skogsek kan bli över tusen år och är Sveriges viktigaste träd för biologisk mångfald: omkring 1 500 arter av insekter, lavar, svampar och mossor är knutna till ek, och många av dem lever bara på gamla, grova träd med död ved och håligheter. Ekollon är höstmat för nötskrika, ekorre och vildsvin. Nötskrikan bär bort ollon och gömmer dem i marken, och de gömmor som glöms bort blir nya ekar – det är så eken sprider sig uppför en sluttning. Eken kräver ljus för att föryngra sig och trängs undan av bok där boken kan växa. Historiskt var ekarna kungens egendom och fick inte fällas av bönder, eftersom flottan behövde dem.",
+    nytta: "Ekfat ger smak åt vin och whisky. Barken är rik på garvsyra och var basen i garveriindustrin – därav ordet garva. Ekollon är beska av just garvsyran men kan urlakas i vatten och rostas till ekollonkaffe eller malas till mjöl, vilket gjordes under svältår. Virket är hårt och rötbeständigt: skeppsbygge, husstommar, golv och möbler.",
+    blad: { p: 1.30, q: 0.62, W: 32, L: 100, lobes: [5.5, 0.30], lobePhase: 0.6, veins: 0, stalk: 8, notch: 4 } },
+
+  { id: "vartbjork", namn: "Vårtbjörk", latin: "Betula pendula", niva: 1,
+    fakta: "Tar snabbt över öppen mark efter brand eller hygge.",
+    kanne: "Trekantigt, dubbelsågat blad, långt skaft och små hartsvårtor på kvistarna.",
+    text: "Björken är ett typiskt pionjärträd. Fröna är små och vingade och sprids med vinden långa sträckor, så björk kommer snabbt in på hyggen och brandfält. Den kräver mycket ljus, växer fort och blir sällan äldre än 100–150 år; sedan tar skuggtåliga arter över. Björklöv är tunna och bryts ner lätt, vilket ger mullrik jord – björk används därför för att förbättra granmarker. Vårtbjörk känns igen på hängande grenar och små hartsvårtor på de unga kvistarna. Glasbjörk har rundare blad, hårig kvist och växer på blötare mark. Under barken sitter näver, som är nästan vattentät och har använts till tak, kärl och skor.",
+    nytta: "Björksav tappas tidigt på våren, drickbar som den är eller inkokt till björksirap. Näver har blivit tak, skor, kontar och kärl, och ur näver bränns tjära. Björklöv ger te som traditionellt använts vattendrivande, och björkris blir bastukvastar. Veden är vår bästa brasved och råvara till möbler, plywood och pappersmassa.",
+    blad: { p: 0.50, q: 1.25, W: 35, L: 94, teeth: [20, 0.12], veins: 6, stalk: 22, notch: 2 } },
+
+  { id: "bok", namn: "Bok", latin: "Fagus sylvatica", niva: 1,
+    fakta: "Skuggar ut nästan allt; marken under är ofta bar.",
+    kanne: "Hel, lätt vågig kant med små hår, glänsande ovansida, slät grå stam.",
+    text: "Bok är motsatsen till ett pionjärträd. Den tål djup skugga som ung och bildar sedan ett så tätt krontak att nästan inget växer på marken – i en bokskog i juli är marken ofta täckt av bara bruna löv. Löven är sega och innehåller garvsyra; de bryts ner långsamt och gör marken sur, vilket ytterligare begränsar markfloran. Vårfloran hinner blomma innan löven slår ut. Bokollon är feta och viktig föda för fåglar och vildsvin, men bok blommar rikligt bara vissa år, så kallade ollonår, vilket gör att fröätarna inte hinner äta upp allt. Bok är i Sverige nästan bara ett skånskt träd.",
+    nytta: "Bokollon pressades till bokollonolja och var svinens föda under ollonåren; råa i mängd är de olämpliga eftersom de innehåller fagin. Bokveden är hård och jämn – möbler, golv, köksredskap och leksaker – och den bästa veden att röka mat med. Bok ångböjs lätt, vilket är hemligheten bakom de böjda kaféstolarna.",
+    blad: { p: 0.95, q: 0.72, W: 29, L: 96, teeth: [30, 0.03], veins: 8, stalk: 12 } },
+
+  { id: "ronn", namn: "Rönn", latin: "Sorbus aucuparia", niva: 1,
+    fakta: "Bären sprids av fåglar som äter dem.",
+    kanne: "Sammansatt blad med många sågade småblad på en gemensam stjälk.",
+    text: "Rönnen har sammansatta blad: det som ser ut som många små blad är i själva verket ett enda blad. Den är ljusälskande och växer nästan överallt, ända upp i fjällbjörkskogen. De röda bären sprids av trastar, sidensvansar och andra fåglar som äter dem och släpper fröna med spillningen någon annanstans – därför dyker rönnplantor upp under stolpar, staket och grenar där fåglar brukar sitta. Bären innehåller parasorbinsyra och smakar beskt; efter frost blir de mildare. De vita blomflockarna på försommaren är en viktig nektarkälla för insekter.",
+    nytta: "Rönnbär är rika på C-vitamin och blir milda efter frost; de kokas till gelé som klassiskt tillbehör till vilt. Råa i mängd ger parasorbinsyran magont, men frost eller kokning bryter ner den. Veden är seg och blev redskapsskaft och slagor. I folktron var rönnen ett skyddsträd som gärna fick stå kvar vid gården.",
+    blad: { kind: "compound", pairs: 6, leafletLen: 22, leafletW: 7 } },
+
+  { id: "lonn", namn: "Lönn", latin: "Acer platanoides", niva: 1,
+    fakta: "Fröna har vingar och snurrar som helikoptrar.",
+    kanne: "Handflikigt blad med fem flikar som har långt utdragna spetsar.",
+    text: "Skogslönn har handflikiga blad med fem spetsiga flikar; nerverna strålar ut från bladskaftet som fingrar från en handflata. Fröna sitter två och två med varsin vinge och snurrar när de faller, vilket bär dem en bit från moderträdet. Lönnen blommar tidigt, före lövsprickningen, med gulgröna blommor som ger en av vårens första stora nektarskördar för bin och humlor. Löven innehåller mycket näring och bryts ner snabbt till mull, så marken under en lönn har ofta rik örtflora. Lönnen tål halvskugga och är vanlig i lundar, alléer och parker.",
+    nytta: "Också vår skogslönn kan tappas på sav och kokas till sirap, precis som den nordamerikanska sockerlönnen – savens sockerhalt är bara lägre. Veden är ljus, hård och vacker och används till möbler, golv, svarvade föremål och instrument; fiolers bakstycken görs ofta av lönn. Blommorna ger tidig honung.",
+    foton: [{"src": "./bilder/lonn.jpg", "text": "Skogslönn med näsor – vingfrukterna som snurrar när de faller."}],
+    blad: { kind: "palmate", R: 76 } },
+
+  { id: "hassel", namn: "Hassel", latin: "Corylus avellana", niva: 1,
+    fakta: "Nötterna göms av möss och nötskrikor – de glömda blir nya buskar.",
+    kanne: "Nästan runt, strävt hårigt blad med hjärtlik bas och kort, tvär spets.",
+    text: "Hassel är oftast en flerstammig buske i lundar och skogsbryn. Den blommar mycket tidigt: hanhängena dammar gult i februari och mars, långt före löven, eftersom pollen sprids med vinden och kommer fram bättre i en kal buske. Honblommorna är små röda trådar som är lätta att missa. Nötterna samlas och göms av möss, ekorrar och nötskrikor, och de gömmor som glöms bort gror. Hassel har växt i Sverige sedan strax efter istiden och var under stenåldern en viktig födokälla för människor. Buskens hasselris har använts till tunnband, korgar och käppar.",
+    nytta: "Hasselnötter är fettrik och lagringsbar mat och har varit det sedan stenåldern. Hasselriset är följsamt och starkt: tunnband, korgar, flätverk i väggar, käppar och slagrutor. Hassel hamlades i skottskogsbruk och gav nytt virke om och om igen från samma stubbe.",
+    blad: { p: 1.15, q: 0.48, W: 39, L: 84, teeth: [22, 0.09], notch: 11, veins: 6, stalk: 16 } },
+
+  { id: "asp", namn: "Asp", latin: "Populus tremula", niva: 2,
+    fakta: "Bladskaftet är plattat, därför darrar löven i minsta vind.",
+    kanne: "Runt blad med grova, buktande tänder och långt, plattat skaft.",
+    text: "Aspens bladskaft är plattat i sidled, vilket gör att bladet vickar i minsta vindpust – därav uttrycket att darra som ett asplöv. Asp är ett pionjärträd som sprider sig både med luftburna frön och med rotskott; en aspdunge kan därför vara en enda individ. Aspen är oerhört viktig för mångfalden: hackspettar hackar bo i den mjuka veden och håligheterna används sedan av ugglor, mesar och fladdermöss. På gamla aspar växer sällsynta lavar. Bävern föredrar asp framför de flesta andra träd.",
+    nytta: "Aspveden är ljus, luktfri och blir inte skållhet – därför är den standard i bastulavar. Den blir också tändstickor, träull och pappersmassa. Barken är besk men innehåller salicin, samma slags ämne som gjort sälg och pil till värkmedicin.",
+    blad: { p: 1.00, q: 0.52, W: 35, L: 86, teeth: [11, 0.10], notch: 7, veins: 5, stalk: 24 } },
+
+  { id: "salg", namn: "Sälg", latin: "Salix caprea", niva: 2,
+    fakta: "Årets viktigaste tidiga nektarkälla för humlor och bin.",
+    kanne: "Avlångt blad med gråluden undersida och kort, vriden spets.",
+    text: "Sälgen blommar före lövsprickningen med videkissar – hanträdens gula, honträdens grågröna. Eftersom den blommar så tidigt är den avgörande för humledrottningar och honungsbin som just vaknat: ett enda blommande sälgträd kan försörja flera humlesamhällen under uppstarten. Därför avråds man från att plocka stora mängder videkissar. Sälg är ett pionjärträd som växer snabbt på öppen, gärna fuktig mark. Den är dessutom värdväxt för många fjärilslarver.",
+    nytta: "Sälgens bark innehåller salicin, ursprunget till acetylsalicylsyra (aspirin) – barken tuggades mot värk och feber långt före apoteken. Videkissarna ger årets första honung. Riset är segt och blir korgar och flätverk, och sälg växer så fort att den odlas som energiskog.",
+    blad: { p: 1.00, q: 0.88, W: 23, L: 106, teeth: [40, 0.02], veins: 9, stalk: 10 } },
+
+  { id: "lind", namn: "Lind", latin: "Tilia cordata", niva: 2,
+    fakta: "Hjärtformat blad; blommar sent på sommaren och doftar starkt.",
+    kanne: "Hjärtformat blad med snett urnupen bas och sågad kant.",
+    text: "Linden blommar först i juli, långt efter de andra träden, med små gulvita blommor som doftar kraftigt och surrar av bin. Blomställningen sitter fast i ett smalt skärmblad som fungerar som en vinge när frukten faller. Bladen bryts ner snabbt och ger mullrik jord med rik markflora. Lindens bast – innerbarken – har använts till rep och mattor, och den mjuka veden till träsnideri. Linden tål beskärning bra och är därför vanlig i alléer och som hamlat träd; hamlade lindar kan bli mycket gamla och hysa sällsynta insekter och lavar.",
+    nytta: "Lindblomste av de doftande blommorna är ett av Europas mest använda örtteer, traditionellt vid förkylning och för att svettas ut feber. De unga bladen är milda och går att äta i sallad. Lindbast – innerbarken – blötlades och tvinnades till rep och mattor. Veden är mjuk, jämn och spricker inte, vilket gjort den till skulptörernas favorit i altarskåp och orgelfasader.",
+    blad: { p: 0.72, q: 0.58, W: 36, L: 90, teeth: [18, 0.10], notch: 12, asym: 0.35, veins: 6, stalk: 20 } },
+
+  { id: "alm", namn: "Alm", latin: "Ulmus glabra", niva: 2,
+    fakta: "Bladbasen är sned; arten har nästan utrotats av almsjukan.",
+    kanne: "Strävt blad med tydligt sned bas – ena halvan går längre ner än den andra.",
+    text: "Alm känns igen på den sneda bladbasen: den ena bladhalvan går längre ner på skaftet än den andra. Bladet är strävt som sandpapper. Alm blommar mycket tidigt, före löven, och fröna sitter mitt i en rund vinge. Sedan 1980-talet har almsjukan – en svamp som sprids av almsplintborrar – dödat större delen av Sveriges almar, och arten är i dag rödlistad som akut hotad. Gotland har med hårt arbete lyckats hålla sjukdomen tillbaka. Alm har historiskt varit ett viktigt lövfoderträd; löven hamlades och torkades till vinterfoder.",
+    nytta: "Almveden är seg och svårkluven och tål växlande fukt: hjulnav, båtdelar och urborrade almstockar som vattenledningar. Innerbarken maldes till nödbröd under svältår och har använts som slemlösande medel, och lövet hamlades till vinterfoder åt kreatur.",
+    foton: [{"src": "./bilder/alm.jpg", "text": "Alm. Titta på bladbasen: den ena halvan går längre ner än den andra."}],
+    blad: { p: 0.85, q: 0.72, W: 30, L: 96, teeth: [24, 0.10], asym: 0.85, veins: 10, stalk: 8 } },
+
+  { id: "fagelbar", namn: "Fågelbär", latin: "Prunus avium", niva: 2,
+    fakta: "Vildkörsbär – två små körtlar sitter på bladskaftet.",
+    kanne: "Hängande blad med sågad kant och två röda körtlar högst upp på skaftet.",
+    text: "Fågelbär är vårt vilda körsbär och stamfader till odlade sötkörsbär. På bladskaftet, precis nedanför bladet, sitter två små röda körtlar som utsöndrar socker – de lockar myror som i gengäld håller borta växtätande insekter. Barken är blank och rödbrun med tydliga tvärstreck (barkporer). Bären äts av fåglar som sprider kärnorna. Trädet blommar rikligt i maj och är en viktig nektarkälla. Veden är eftertraktad i möbelsnickeri.",
+    nytta: "Bären är vårt vilda körsbär – små och syrliga men fullt ätliga, bra till saft och likör. Veden är rödbrun och stabil och hör till de finare möbelträslagen; den blir också fanér och pipor. Blommorna ger rikligt med nektar i maj.",
+    blad: { p: 1.15, q: 0.72, W: 29, L: 100, teeth: [18, 0.08], veins: 8, stalk: 22, glands: true } },
+
+  { id: "hagg", namn: "Hägg", latin: "Prunus padus", niva: 2,
+    fakta: "Vita blomklasar som doftar starkt i maj; ofta full av larvspinn.",
+    kanne: "Elliptiskt blad med fint sågad kant och tunn, matt yta.",
+    text: "Hägg blommar i maj med långa vita klasar som doftar sött och kraftigt. Bären är svarta och beska men äts av fåglar. Häggen angrips ofta av häggspinnmalens larver, som kan spinna in hela busken i vitt nät och äta upp alla löv – trädet ser ut att vara dött men skjuter nya blad senare samma sommar. Hägg växer gärna fuktigt, i strandsnår och lundar. Barken luktar bittermandel om man skrapar på den, vilket kommer av vätecyanidföreningar i barken.",
+    nytta: "Häggbär är beska men har använts till saft och som brännvinskrydda. Var försiktig: kärnor, bark och blad innehåller cyanidbildande ämnen, så bären ska inte ätas i mängd med kärnan kvar. Barken har traditionellt kokats till avkok mot värk, och veden är hård och fint ådrad och lämpar sig för svarvning.",
+    foton: [{"src": "./bilder/hagg.jpg", "text": "Hägg med mogna svarta bär i hängande klasar."}],
+    blad: { p: 0.95, q: 0.75, W: 28, L: 100, teeth: [36, 0.04], veins: 9, stalk: 12 } },
+
+  { id: "ask", namn: "Ask", latin: "Fraxinus excelsior", niva: 2,
+    fakta: "Sammansatt blad; askskottsjukan har dödat en stor del av bestånden.",
+    kanne: "Sammansatt blad med smala, spetsiga småblad. Svarta knoppar på vintern.",
+    text: "Asken har sammansatta blad med smala spetsiga småblad och känns igen på vintern på sina kolsvarta knoppar. Den slår ut mycket sent på våren och fäller löven tidigt, vilket ger ljus åt markfloran under en stor del av säsongen – asklundar har ofta rik vårflora. Sedan 2000-talets början har askskottsjukan, orsakad av en införd svamp, dödat en stor andel av Sveriges askar, och arten är rödlistad. Enstaka träd verkar vara motståndskraftiga och är viktiga för artens framtid. I nordisk mytologi är världsträdet Yggdrasil en ask.",
+    nytta: "Askens ved är seg och stöttålig – det klassiska virket i yxskaft, verktygsskaft, skidor, klubbor och möbler. Bladen har använts till te och som lövfoder, och askens sockerhaltiga sav, manna, har använts som milt laxermedel. Askhamling var länge en viktig del av vinterfodret i Sverige.",
+    foton: [{"src": "./bilder/ask.jpg", "text": "Ask. Ett enda blad består av många smala, sågade småblad."}],
+    blad: { kind: "compound", pairs: 5, leafletLen: 26, leafletW: 6 } },
+
+  { id: "oxel", namn: "Oxel", latin: "Sorbus intermedia", niva: 2,
+    fakta: "Bladets undersida är vitluden; tål salt och avgaser i städer.",
+    kanne: "Brett blad med grunda flikar och tydligt vitluden undersida.",
+    text: "Oxel har brett äggformade blad med grunda flikar och en vitluden undersida som blänker när vinden vänder bladen. Arten har uppkommit genom hybridisering och förökar sig till stor del utan befruktning, vilket gör att alla oxlar liknar varandra. Den tål vind, salt och luftföroreningar och är därför vanlig som gatuträd. De röda frukterna sitter kvar långt in på vintern och är viktig föda för trastar. Naturligt växer oxel främst i Östersjölandskapen, på Öland och Gotland.",
+    nytta: "Oxelbär är mjöliga och kärva men blir ätliga efter frost och har använts till mos, mjöl och brännvin. Veden är mycket hård och blev kuggar, verktyg och vävstolsdelar. I dag är trädets största nytta att det tål salt, vind och avgaser och därför fungerar som gatuträd.",
+    blad: { p: 1.10, q: 0.60, W: 33, L: 94, lobes: [9, 0.13], teeth: [18, 0.07], veins: 8, stalk: 14 } },
+
+  { id: "apel", namn: "Apel", latin: "Malus sylvestris", niva: 2,
+    fakta: "Det vilda äppelträdet; blommorna pollineras av insekter.",
+    kanne: "Ovalt, sågat blad med luden undersida. Ofta törniga kortskott.",
+    text: "Vildapel är det vilda äppelträdet och en av de arter som odlade äpplen härstammar från. Den blommar i maj med vitrosa blommor som är helt beroende av insekter för pollinering – till skillnad från vindpollinerade träd som al, björk och hassel. Frukterna är små och sura men äts av rådjur, vildsvin och fåglar, som sprider kärnorna. Vildapel är ett litet träd som behöver ljus och därför oftast växer i bryn och hagmarker. Många av de aplar man ser i skogsbryn är förvildade odlade äpplen snarare än äkta vildapel.",
+    nytta: "Vildaplarnas små sura äpplen är ätliga och rika på pektin – de har använts för att få hemkokt gelé att stelna, och till must och cider. Veden är hård och doftar gott när den brinner; äppelträ är ett uppskattat rökträ. Vildapel används dessutom som grundstam att ympa odlade äppelsorter på.",
+    blad: { p: 1.00, q: 0.68, W: 30, L: 92, teeth: [22, 0.06], veins: 7, stalk: 14 } },
+
+  { id: "gran", namn: "Gran", latin: "Picea abies", niva: 2,
+    fakta: "Korta vassa barr runt hela skottet; tål skugga och skuggar själv hårt.",
+    kanne: "Barren är korta, fyrkantiga och sitter runt hela kvisten. Hängande kottar.",
+    text: "Granen har korta, vassa barr som sitter runt hela skottet, och kottarna hänger nedåt. Den är skuggtålig och kan stå och vänta i undervegetationen i årtionden för att sedan skjuta i höjden när det blir en lucka. Samtidigt skuggar den själv marken hårt, och de sura barren bryts ner långsamt, så granskogens mark är artfattig och sur. Granen har grunda rötter och blåser lätt omkull. Den invandrade sent till Sverige, norrifrån, och nådde södra Sverige först för ett par tusen år sedan.",
+    nytta: "Granskott plockas i maj och blir sirap, te eller krydda och innehåller C-vitamin. Kådan har använts som tuggummi, sårsalva och tätning, och granrötter tvinnades till rep och band. Virket är Sveriges viktigaste byggmaterial och råvara till papper – och långsamvuxen gran ger det bästa klangvirket i violiner och gitarrer.",
+    blad: { needle: "gran" } },
+
+  { id: "tall", namn: "Tall", latin: "Pinus sylvestris", niva: 2,
+    fakta: "Barren sitter två och två; klarar torr, mager och solig mark.",
+    kanne: "Två långa barr i varje knippe. Orangeröd bark högt upp på stammen.",
+    text: "Tallens barr sitter två och två i ett knippe – det skiljer den från granen. Tallen kräver ljus men klarar torr och mager mark där andra träd inte klarar sig, som hällmarker och sandtallhedar. Överlevande gamla tallar kan bli 500 år, och den döda tallveden (torrakor och lågor) är livsmiljö för mängder av insekter och svampar. Barken är tjock och skyddar mot skogsbrand, så tallen överlever bränder som dödar granen. Tjära och terpentin har utvunnits ur tallens kåda.",
+    nytta: "Tallbarr ger C-vitaminrikt te. Innerbarken skalades av på våren, torkades och maldes till barkbröd, en traditionsmat i norra Sverige och hos samerna. Ur kådan framställs tjära, terpentin och kolofonium; tjärbränning var länge en av landets största exportvaror. Kärnveden, furu, är hållbar och används till allt från hus till möbler.",
+    blad: { needle: "tall" } },
+
+  { id: "en", namn: "En", latin: "Juniperus communis", niva: 2,
+    fakta: "Barren sitter tre och tre; 'bären' är egentligen kottar.",
+    kanne: "Vassa barr i kransar om tre, med en vit rand på ovansidan.",
+    text: "Enen är en buske eller ett litet träd med vassa barr som sitter tre och tre i kransar, med en vit vaxrand på ovansidan. Det som ser ut som blåsvarta bär är egentligen kottar med sammanvuxna fjäll; de tar två till tre år på sig att mogna och sprids av fåglar. Enen är en av Sveriges mest spridda arter och växer från Skåne till fjällen. Den är ljuskrävande och försvinner när skogen sluter sig, och den är därför ett tecken på gammal betesmark eller öppen hällmark. Enbär används som krydda och till enbärsdricka.",
+    nytta: "Enbär är kryddan i surkål, viltgrytor och gin – det är enbären som ger ginen dess smak – och de kokas till enbärsdricka. Virket är hårt, doftande och rötbeständigt: smörkärnor, ostkar, skedar och gärdesgårdsstolpar. Enris ströddes på golvet till fest och användes för att röka kött. Enbär bör undvikas i större mängd under graviditet och vid njurproblem.",
+    blad: { needle: "en" } },
+
+  { id: "hagtorn", namn: "Hagtorn", latin: "Crataegus sp.", niva: 3,
+    fakta: "Törnig buske med flikiga blad och röda bär i klasar.",
+    kanne: "Flikiga blad med grova tänder, långa vassa tornar och klasar av röda bär.",
+    text: "Hagtorn är en törnig buske eller ett litet träd i bryn, hagar och häckar. Tornarna är omvandlade kortskott och gör busken till en fristad där småfåglar kan bygga bo utom räckhåll för katter och kråkor. Den blommar rikligt i maj–juni med vita blommor som lockar mängder av insekter, och de röda bären sitter kvar långt in på vintern och blir vinterfoder åt trastar och sidensvansar. Hagtorn tål hård beskärning och har därför i århundraden använts till levande stängsel runt betesmarker. Arterna i släktet är svåra att skilja åt, och de korsar sig dessutom med varandra.",
+    nytta: "Blad, blommor och bär används i te, och de späda vårbladen kallades förr bröd och ost och åts direkt av barn. Bären blir gelé och mos. Hagtorn hör till Europas mest undersökta medicinalväxter och används traditionellt för hjärta och blodomlopp, bland annat vid lätt hjärtsvikt; effekten anses mild och kommer först efter lång tids bruk. Eftersom hagtorn kan påverka hjärt- och blodtrycksmediciner bör den som äter sådana tala med läkare först. Veden är en av våra hårdaste och används till verktygsskaft och svarvning.",
+    foton: [{"src": "./bilder/hagtorn.jpg", "text": "Hagtorn med djupt flikiga blad och omogna bär."}, {"src": "./bilder/hagtorn-bar.jpg", "text": "Hagtornsbär strax före mognaden. Blad, blommor och bär används i te."}],
+    blad: { p: 1.20, q: 0.55, W: 31, L: 82, lobes: [3.5, 0.34], lobePhase: 0.4, teeth: [14, 0.10], veins: 0, stalk: 16 } },
+
+  { id: "kornell", namn: "Skogskornell", latin: "Cornus sanguinea", niva: 3,
+    fakta: "Motsatta blad med bågformiga nerver och blodröda vinterkvistar.",
+    kanne: "Motsatta blad där nerverna böjer sig i bågar mot bladspetsen. Röda skaft och kvistar.",
+    text: "Skogskornell är en buske i bryn och lundar, lätt att känna igen på nervmönstret: sidonerverna löper i mjuka bågar mot bladspetsen i stället för rakt ut mot kanten. Bladen sitter motsatta, två och två. Kvistarna blir blodröda på vintern, vilket gett arten dess latinska namn sanguinea. Busken sprider sig med rotskott och bildar täta snår som ger skydd åt småfåglar. De svarta bären äts av fåglar på hösten, och lövet bryts ner snabbt.",
+    nytta: "Skogskornellens svarta bär är beska och illasmakande och ska inte ätas. Veden är däremot mycket hård och rak – kornellsläktet gav förhistoriska pilar och spjutskaft. Busken planteras för att binda jord och för de röda vinterkvistarnas skull, och bären är viktig fågelmat på hösten.",
+    foton: [{"src": "./bilder/kornell.jpg", "text": "Skogskornell – motsatta blad med bågformiga nerver, röda skaft och svarta bär."}],
+    blad: { p: 0.95, q: 0.72, W: 30, L: 92, veins: 5, stalk: 14 } },
+
+  { id: "kastanj", namn: "Äkta kastanj", latin: "Castanea sativa", niva: 3,
+    fakta: "Långa blad med grova borsttänder; ger de kastanjer man rostar.",
+    kanne: "Långsmala blad med grova, borstspetsade tänder och tydliga raka sidonerver.",
+    text: "Äkta kastanj hör hemma i södra Europa och är i Sverige planterad i parker och trädgårdar, framför allt i Skåne. Den är släkt med bok och ek, vilket syns på nötterna: de sitter i ett taggigt hylle som spricker upp i fyra flikar. Trädet blir mycket gammalt och grovt. Blomningen är sen, i juli, med långa gulvita hängen som doftar starkt och pollineras av insekter – ovanligt för ett träd i bokfamiljen, där de flesta är vindpollinerade. Förväxla den inte med hästkastanj, som har handflikiga blad och tillhör en helt annan familj.",
+    nytta: "Äkta kastanj ger de kastanjer man rostar och äter, en stapelföda i Sydeuropas bergsbygder där de även mals till mjöl för bröd och pasta. Blanda inte ihop den med hästkastanj, vars frukter är giftiga. Virket är rikt på garvsyra och därför ovanligt rötbeständigt: stängselstolpar, tunnstavar och tak. I Sverige mognar frukterna sällan.",
+    foton: [{"src": "./bilder/kastanj.jpg", "text": "Äkta kastanj. Långa blad med grova, borstspetsade tänder."}],
+    blad: { p: 0.95, q: 0.95, W: 22, L: 112, teeth: [20, 0.16], veins: 12, stalk: 10 } },
+
+  { id: "vitpil", namn: "Vitpil", latin: "Salix alba", niva: 3,
+    fakta: "Stort pilträd med smala silverglänsande blad och djupt fårad bark.",
+    kanne: "Mycket smala blad med silverglänsande undersida. Grov, djupt fårad bark.",
+    text: "Vitpil är vårt största pilträd och står gärna vid vatten, i alléer och som skydd kring gårdar. Namnet kommer av bladens silvervita undersida, som gör att hela kronan skiftar i ljust när det blåser. Barken blir tidigt djupt fårad, och gamla pilar blir ofta ihåliga men lever vidare – de håligheterna är värdefulla boplatser för fladdermöss, ugglor och insekter. Pil hamlas ofta, det vill säga toppas med jämna mellanrum, vilket ger knotiga stammar som blir livsmiljöer i sig. Grenar som bryts av och hamnar i fuktig jord slår lätt rot och bildar nya träd.",
+    nytta: "Pilbarkens salicin är ursprunget till acetylsalicylsyra – namnet aspirin har sin rot i pilens släktnamn Salix. Barken kokades till avkok mot feber och värk långt före tabletterna. Pilkvistar är segt korgmaterial, pil planteras i rader som vindskydd (de skånska pilevallarna) och odlas som energiskog, och den lätta sega veden har använts till träskor och cricketslagträn.",
+    foton: [{"src": "./bilder/vitpil.jpg", "text": "Vitpil med smala, silverglänsande blad och djupt fårad bark."}],
+    blad: { p: 1.05, q: 1.05, W: 15, L: 112, teeth: [48, 0.03], veins: 10, stalk: 8 } }
+];
+
+/* =====================================================================
+   Övningen
+   ===================================================================== */
+let aktiva = [], sisteNiva = 1;
+let del = 1, valdChip = null;
+let ratt = 0, fel = 0, klara = 0, poang = 0, maxPoang = 0;
+let forsok = {};
+let faktaKo = [], faktaAktuell = null;
+let felArter = {};
+let startTid = 0, timerId = null;
+
+/* Poäng: 10 för rätt på första försöket, sedan 5, 3 och 0. */
+function poangFor(nyckel) {
+  const f = forsok[nyckel] || 0;
+  return f === 0 ? 10 : f === 1 ? 5 : f === 2 ? 3 : 0;
+}
+
+function $(id) { return document.getElementById(id); }
+
+function blanda(a) {
+  const b = a.slice();
+  for (let i = b.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = b[i]; b[i] = b[j]; b[j] = t;
+  }
+  return b;
+}
+
+function tidText(ms) {
+  const s = Math.floor(ms / 1000);
+  return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+}
+
+function uppdateraRad() {
+  $("s-ratt").textContent = ratt;
+  $("s-fel").textContent = fel;
+  $("s-poang").textContent = poang;
+  $("s-del").textContent = del === 1 ? "Del 1 – namn" : "Del 2 – fakta";
+  $("s-kvar").textContent = del === 1
+    ? (aktiva.length - klara) + " blad kvar att namnge"
+    : faktaKo.length + " faktameningar kvar";
+}
+
+function startaOvning(niva) {
+  sisteNiva = niva;
+  // Bladen blandas om vid varje start, så att eleven lär sig bladet och inte platsen
+  aktiva = blanda(ARTER.filter(function (a) { return niva === 0 ? a.niva <= 2 : a.niva === niva; }));
+  del = 1; valdChip = null; ratt = 0; fel = 0; klara = 0;
+  poang = 0; forsok = {}; felArter = {};
+  maxPoang = aktiva.length * 2 * 10;
+
+  $("start-panel").classList.add("doldt");
+  $("klar-panel").classList.add("doldt");
+  $("spel-panel").classList.remove("doldt");
+  $("del1").classList.remove("doldt");
+  $("del2").classList.add("doldt");
+
+  ritaBlad(false);
+  $("namn-chips").innerHTML = blanda(aktiva).map(function (a) {
+    return '<button class="chip" data-id="' + a.id + '" onclick="valjChip(this)">' + a.namn + '</button>';
+  }).join("");
+  saggBesked("", "");
+
+  startTid = Date.now();
+  clearInterval(timerId);
+  timerId = setInterval(function () { $("s-tid").textContent = tidText(Date.now() - startTid); }, 500);
+  uppdateraRad();
+  $("spel-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function ritaBlad(visaNamn) {
+  $("leaf-grid").innerHTML = aktiva.map(function (a) {
+    return '<div class="leaf-card" data-id="' + a.id + '" onclick="klickaBlad(this)">' +
+      leafSVG(a.blad) +
+      '<div class="namn' + (visaNamn ? '' : ' tom') + '">' + (visaNamn ? a.namn : '?') + '</div>' +
+      '</div>';
+  }).join("");
+}
+
+function saggBesked(txt, kl) {
+  $("besked").textContent = txt || " ";
+  $("besked").className = "besked " + (kl || "");
+}
+
+function valjChip(btn) {
+  const alla = document.querySelectorAll(".chip");
+  for (let i = 0; i < alla.length; i++) alla[i].classList.remove("vald");
+  btn.classList.add("vald");
+  valdChip = btn;
+  const kort = document.querySelectorAll(".leaf-card");
+  for (let i = 0; i < kort.length; i++) {
+    if (!kort[i].classList.contains("klar")) kort[i].classList.add("armed");
+  }
+  saggBesked("Klicka nu på det blad som hör till " + btn.textContent + ".", "");
+}
+
+function klickaBlad(kort) {
+  if (del === 1) {
+    if (!valdChip) { saggBesked("Välj först ett namn i listan under bladen.", "nej"); return; }
+    if (kort.classList.contains("klar")) return;
+
+    if (kort.dataset.id === valdChip.dataset.id) {
+      const art = hitta(kort.dataset.id);
+      kort.classList.remove("armed");
+      kort.classList.add("klar");
+      kort.querySelector(".namn").className = "namn";
+      kort.querySelector(".namn").textContent = art.namn;
+      valdChip.classList.add("klar");
+      const p = poangFor("n:" + art.id);
+      poang += p;
+      valdChip = null;
+      ratt++; klara++;
+      const kortAlla = document.querySelectorAll(".leaf-card");
+      for (let i = 0; i < kortAlla.length; i++) kortAlla[i].classList.remove("armed");
+      saggBesked("Rätt: " + art.namn + " (+" + p + " p). " + art.kanne, "ok");
+      uppdateraRad();
+      if (klara === aktiva.length) setTimeout(startaDel2, 1200);
+    } else {
+      fel++;
+      const nyckel = "n:" + valdChip.dataset.id;
+      forsok[nyckel] = (forsok[nyckel] || 0) + 1;
+      felArter[valdChip.dataset.id] = true;
+      kort.classList.add("fel");
+      setTimeout(function () { kort.classList.remove("fel"); }, 500);
+      saggBesked("Nej, det är inte " + valdChip.textContent + ". Försök igen.", "nej");
+      uppdateraRad();
+    }
+    return;
+  }
+
+  // Del 2 – fakta
+  if (!faktaAktuell) return;
+  if (kort.dataset.id === faktaAktuell.id) {
+    ratt++;
+    const p = poangFor("f:" + faktaAktuell.id);
+    poang += p;
+    kort.classList.add("klar");
+    setTimeout(function () { kort.classList.remove("klar"); }, 700);
+    saggBesked("Rätt – " + faktaAktuell.namn + " (+" + p + " p).", "ok");
+    faktaKo.shift();
+    uppdateraRad();
+    setTimeout(nastaFakta, 800);
+  } else {
+    fel++;
+    const nyckel = "f:" + faktaAktuell.id;
+    forsok[nyckel] = (forsok[nyckel] || 0) + 1;
+    felArter[faktaAktuell.id] = true;
+    kort.classList.add("fel");
+    setTimeout(function () { kort.classList.remove("fel"); }, 500);
+    saggBesked("Nej, det stämmer inte på " + hitta(kort.dataset.id).namn + ".", "nej");
+    uppdateraRad();
+  }
+}
+
+function hitta(id) {
+  for (let i = 0; i < ARTER.length; i++) if (ARTER[i].id === id) return ARTER[i];
+  return null;
+}
+
+function startaDel2() {
+  del = 2;
+  $("del1").classList.add("doldt");
+  $("del2").classList.remove("doldt");
+  aktiva = blanda(aktiva);   // ny ordning inför faktadelen
+  ritaBlad(true);
+  faktaKo = blanda(aktiva);
+  saggBesked("", "");
+  nastaFakta();
+  uppdateraRad();
+}
+
+function nastaFakta() {
+  if (!faktaKo.length) { avsluta(); return; }
+  faktaAktuell = faktaKo[0];
+  $("fakta-prompt").textContent = faktaAktuell.fakta;
+  uppdateraRad();
+}
+
+function bastaNyckel() {
+  return "trad-basta-" + (sisteNiva === 0 ? "alla" : sisteNiva);
+}
+
+function laesBasta() {
+  try { return JSON.parse(localStorage.getItem(bastaNyckel()) || "null"); }
+  catch (e) { return null; }
+}
+
+function sparaBasta(p, ms, tid) {
+  const gammalt = laesBasta();
+  const battre = !gammalt || p > gammalt.poang || (p === gammalt.poang && ms < gammalt.ms);
+  if (battre) {
+    try { localStorage.setItem(bastaNyckel(), JSON.stringify({ poang: p, ms: ms, tid: tid })); }
+    catch (e) { /* privat läge */ }
+    return gammalt
+      ? "<p style='font-weight:600;color:var(--gron-stark);'>Nytt personbästa – tidigare " +
+        gammalt.poang + " p på " + gammalt.tid + ".</p>"
+      : "<p style='font-weight:600;color:var(--gron-stark);'>Resultatet är sparat som ditt personbästa.</p>";
+  }
+  return "<p style='color:#555;'>Ditt bästa hittills på den här nivån: " +
+    gammalt.poang + " p på " + gammalt.tid + ".</p>";
+}
+
+function avsluta() {
+  clearInterval(timerId);
+  faktaAktuell = null;
+  del = 0;
+  const ms = Date.now() - startTid;
+  const tid = tidText(ms);
+  $("s-tid").textContent = tid;
+  $("spel-panel").classList.add("doldt");
+  $("klar-panel").classList.remove("doldt");
+
+  const max = aktiva.length * 2;
+  $("klar-rubrik").textContent = poang === maxPoang ? "Fullpoäng – allt rätt på första försöket!" : "Klart";
+  $("klar-text").textContent = "Du klarade " + max + " uppgifter på tiden " + tid +
+    ", med " + poang + " poäng av " + maxPoang + " och " + fel + " fel på vägen.";
+  $("klar-basta").innerHTML = sparaBasta(poang, ms, tid);
+
+  const lista = Object.keys(felArter);
+  if (lista.length) {
+    $("klar-fel").innerHTML = "<p style='margin-top:0.8rem;font-weight:600;'>Repetera de här:</p><ul style='margin-left:1.2rem;'>" +
+      lista.map(function (id) {
+        const a = hitta(id);
+        return "<li><strong>" + a.namn + "</strong> – " + a.kanne + "</li>";
+      }).join("") + "</ul>";
+  } else {
+    $("klar-fel").innerHTML = "";
+  }
+  $("s-del").textContent = "Klart";
+  $("s-kvar").textContent = "";
+  $("klar-panel").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function avbryt() {
+  clearInterval(timerId);
+  tillStart();
+}
+
+function tillStart() {
+  $("spel-panel").classList.add("doldt");
+  $("klar-panel").classList.add("doldt");
+  $("start-panel").classList.remove("doldt");
+  $("s-del").textContent = "Välj en nivå för att börja";
+  $("s-kvar").textContent = "";
+  $("start-panel").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/* =====================================================================
+   Fördjupning
+   ===================================================================== */
+function byggFordjupning() {
+  $("fordjup-grid").innerHTML = ARTER.map(function (a) {
+    return '<button class="fordjup-btn" data-id="' + a.id + '" onclick="visaFordjupning(this)">' +
+      leafSVG(a.blad) + '<span>' + a.namn + '</span></button>';
+  }).join("");
+}
+
+function visaFordjupning(btn) {
+  const a = hitta(btn.dataset.id);
+  const knappar = document.querySelectorAll(".fordjup-btn");
+  for (let i = 0; i < knappar.length; i++) knappar[i].classList.remove("aktiv");
+  btn.classList.add("aktiv");
+  const ruta = $("fordjup-text");
+  ruta.classList.remove("doldt");
+
+  let foton = "";
+  if (a.foton && a.foton.length) {
+    foton = '<div class="foto-rad' + (a.foton.length > 1 ? " tva" : "") + '">' +
+      a.foton.map(function (f) {
+        return '<figure class="foto"><img src="' + f.src + '" alt="' + a.namn + '" loading="lazy">' +
+               '<figcaption>' + f.text + '</figcaption></figure>';
+      }).join("") + "</div>";
+  }
+
+  ruta.innerHTML = "<h3>" + a.namn + ' <span class="latin">' + a.latin + "</span></h3>" +
+    foton +
+    "<p>" + a.text + "</p>" +
+    '<p class="nytta"><strong>Till nytta:</strong> ' + (a.nytta || "") + "</p>" +
+    '<p class="kannetecken"><strong>Känns igen på:</strong> ' + a.kanne + "</p>";
+  ruta.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+byggFordjupning();
+</script>
+</body>
+</html>

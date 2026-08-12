@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Ekologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-ekologi {
+      --area: #3f6b34;
+      --area-strong: #2f5228;
+      --area-soft: #f1f6ed;
+      --area-border: #cadcbf;
+    }
+
+    main { font-size: 1.1em; }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .game-card {
+      display: block;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+    }
+
+    .game-icon {
+      width: 100%;
+      aspect-ratio: 5 / 3;
+      background: var(--area-soft);
+      border-bottom: 1px solid var(--area-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .game-icon svg { width: 72%; height: 82%; }
+
+    .game-body { padding: 0.7rem 0.85rem 0.9rem; }
+    .game-body h2 {
+      margin: 0 0 0.3rem 0;
+      font-size: 1rem;
+      line-height: 1.3;
+      color: var(--area-strong);
+    }
+    .game-body p {
+      margin: 0;
+      color: #555;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    .game-body a { text-decoration: none; color: inherit; }
+
+    .kommer {
+      margin-top: 1.5rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .kommer strong { color: var(--area-strong); }
+  </style>
+</head>
+
+<body class="area-ekologi">
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <header class="biologi-header">
+    <h1>Lärande spel</h1>
+    <p>Ekologi</p>
+  </header>
+
+  <main>
+    <p style="margin-bottom: 1.2rem;">
+      <a href="./index.html" class="subject-btn">← Tillbaka till Ekologi</a>
+    </p>
+
+    <section style="margin-bottom: 1.2rem;">
+      <p>Här hittar du övningar som tränar arter, samband och kretslopp i naturen.</p>
+    </section>
+
+    <section class="games-grid">
+
+      <!-- Träd och blad -->
+      <div class="game-card">
+        <a href="./trad-och-blad.html">
+          <div class="game-icon">
+            <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M50,116 C34,110 26,96 26,80 C26,58 38,36 50,24 C62,36 74,58 74,80
+                       C74,96 66,110 50,116 Z"
+                    fill="#5f8f4e" stroke="#2f5228" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M50,24 V116" stroke="#2f5228" stroke-width="2"/>
+              <g stroke="#2f5228" stroke-width="1.6" opacity="0.6" fill="none">
+                <path d="M50,44 l14,4 M50,44 l-14,4 M50,62 l17,5 M50,62 l-17,5
+                         M50,80 l17,6 M50,80 l-17,6 M50,98 l13,5 M50,98 l-13,5"/>
+              </g>
+              <path d="M50,116 V132" stroke="#2f5228" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </a>
+        <div class="game-body">
+          <a href="./trad-och-blad.html">
+            <h2>Träd och blad</h2>
+            <p>Känn igen 21 träd på bladet, para ihop fakta med rätt art och läs fördjupning om
+              varje träd. Tid och poäng räknas.</p>
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="kommer">
+      <strong>På gång:</strong> fler övningar om ekosystem, näringskedjor och kretslopp.
+    </div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
