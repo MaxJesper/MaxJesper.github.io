@@ -595,10 +595,10 @@
         </button>
         <button class="level-card" onclick="startaOvning(2)">
           <h3>Expertnivå</h3>
-          <p>Tolv träd till, bland annat asp, lind, alm, ask, oxel och de tre barrträden.</p>
+          <p>Tretton arter till, bland annat asp, lind, alm, ask, oxel, fläder och de tre barrträden.</p>
         </button>
         <button class="level-card" onclick="startaOvning(0)">
-          <h3>Alla 21 träden</h3>
+          <h3>Alla 22 arterna</h3>
           <p>Hela listan på en gång. Ta i så fall gott om tid.</p>
         </button>
       </div>
@@ -977,6 +977,14 @@ const ARTER = [
     text: "Enen är en buske eller ett litet träd med vassa barr som sitter tre och tre i kransar, med en vit vaxrand på ovansidan. Det som ser ut som blåsvarta bär är egentligen kottar med sammanvuxna fjäll; de tar två till tre år på sig att mogna och sprids av fåglar. Enen är en av Sveriges mest spridda arter och växer från Skåne till fjällen. Den är ljuskrävande och försvinner när skogen sluter sig, och den är därför ett tecken på gammal betesmark eller öppen hällmark. Enbär används som krydda och till enbärsdricka.",
     nytta: "Enbär är kryddan i surkål, viltgrytor och gin – det är enbären som ger ginen dess smak – och de kokas till enbärsdricka. Virket är hårt, doftande och rötbeständigt: smörkärnor, ostkar, skedar och gärdesgårdsstolpar. Enris ströddes på golvet till fest och användes för att röka kött. Enbär bör undvikas i större mängd under graviditet och vid njurproblem.",
     blad: { needle: "en" } },
+
+  { id: "flader", namn: "Fläder", latin: "Sambucus nigra", niva: 2,
+    fakta: "Stora vita blomflock i juni och svarta bär på hösten.",
+    kanne: "Motsatta, sammansatta blad med 5–7 grova småblad. Grenarna är fyllda med mjuk märg.",
+    text: "Fläder är en snabbväxande buske som kräver kväverik mark, och den är därför en god indikator på störd och gödslad jord – den dyker upp på gårdsplaner, rivningstomter, i gödslade bryn och där djur har uppehållit sig. Bladen sitter motsatta och är sammansatta med fem till sju grova småblad som luktar skarpt om man gnuggar dem. De stora vita blomflocken i juni pollineras av insekter, och de svarta bären äts av trastar och starar som sprider fröna. Grenarna har mjuk märg i mitten, och busken skjuter snabbt nya skott från basen om den bryts ned eller huggs.",
+    nytta: "Fläderblommorna plockas i juni och blir saft, must och friterade fläderpannkakor. Bären ska alltid kokas – råa innehåller de ämnen som ger illamående – men kokta blir de saft, gelé och fläderbärssoppa, en klassisk och C-vitaminrik förkylningsdryck. Märgen i grenarna är så mjuk att den lätt petas ut, vilket gjort flädergrenar till pipor, blåsrör och tappar. I folktron bodde fläder-mor i busken, och man bad om lov innan man skar en gren.",
+    foton: [{"src": "./bilder/flader.jpg", "text": "Fläder. Bladen sitter motsatta och består av 5–7 grova, sågade småblad."}, {"src": "./bilder/flader-bar.jpg", "text": "Bärklasarna i augusti. De svartnar när de mognar och äts av trastar."}],
+    blad: { kind: "compound", pairs: 3, leafletLen: 31, leafletW: 11 } },
 
   { id: "hagtorn", namn: "Hagtorn", latin: "Crataegus sp.", niva: 3,
     fakta: "Törnig buske med flikiga blad och röda bär i klasar.",
