@@ -83,12 +83,34 @@
   }
   .level-card {
     font: inherit; text-align: left; cursor: pointer;
-    background: #fff; border: 1px solid var(--gron-kant);
-    border-radius: 12px; padding: 0.9rem 1rem;
+    background: var(--gron-mjuk);
+    border: 2px solid var(--gron-kant);
+    border-radius: 12px;
+    padding: 0.9rem 1rem 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
   }
-  .level-card:hover { background: var(--gron-mjuk); }
+  .level-card:hover {
+    background: #e6efdf;
+    border-color: var(--gron);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.10);
+  }
+  .level-card:active { transform: translateY(0); }
+  .level-card:focus-visible { outline: 3px solid var(--gron); outline-offset: 2px; }
   .level-card h3 { margin: 0 0 0.25rem; font-size: 1rem; }
-  .level-card p { margin: 0; font-size: 0.86rem; color: #555; }
+  .level-card p { margin: 0; font-size: 0.86rem; color: #4a4a44; }
+  .level-card .starta {
+    display: inline-block;
+    margin-top: 0.7rem;
+    background: var(--gron);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+  }
+  .level-card:hover .starta { background: var(--gron-stark); }
 
   /* ── Bladrutnät ── */
   .leaf-grid {
@@ -588,18 +610,22 @@
       <p>Övningen har två delar. Först parar du ihop <strong>namnet</strong> med rätt blad. Sedan får du en <strong>faktamening</strong> i taget och klickar på det träd den hör till. Rätt, fel, tid och poäng räknas och visas längst ned på sidan.</p>
       <p class="note">Rätt på första försöket ger 10 poäng, sedan 5 och 3. Bladen ligger i ny ordning varje gång du börjar om – och blandas om igen inför del 2 – så det går inte att lära sig platserna i stället för bladen.</p>
 
-      <div class="level-grid">
+      <p style="margin-top:1.1rem; font-weight:600; color:var(--gron-stark);">Välj nivå för att börja:</p>
+        <div class="level-grid">
         <button class="level-card" onclick="startaOvning(1)">
           <h3>Grundnivå</h3>
           <p>De nio träden på exkursionen: klibbal, gråal, avenbok, ek, vårtbjörk, bok, rönn, lönn och hassel.</p>
+            <span class="starta">Starta →</span>
         </button>
         <button class="level-card" onclick="startaOvning(2)">
           <h3>Expertnivå</h3>
           <p>Tretton arter till, bland annat asp, lind, alm, ask, oxel, fläder och de tre barrträden.</p>
+            <span class="starta">Starta →</span>
         </button>
         <button class="level-card" onclick="startaOvning(0)">
           <h3>Alla 22 arterna</h3>
           <p>Hela listan på en gång. Ta i så fall gott om tid.</p>
+            <span class="starta">Starta →</span>
         </button>
       </div>
     </div>
