@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Livet och cellen – spel | Vad är liv?</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  /* ===== Spelets egna stilar (scoped under #spel) ===== */
+  #spel{
+    --gron:#2e8b6f; --gron-m:#3fae8b; --gron-l:#e6f5ef;
+    --bla:#3b7dd8; --bla-l:#e8f1fc;
+    --gul:#f0a500; --gul-l:#fff4dd;
+    --ratt:#2e9e5b; --ratt-l:#e4f6ea;
+    --fel:#d64545; --fel-l:#fce8e8;
+    --ink:#243033; --mut:#5c6b6e; --linje:#dfe6e4;
+    max-width:760px; margin:1rem auto 3rem; color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  #spel *{box-sizing:border-box}
+  #spel .kort{
+    background:#fff;border:1px solid var(--linje);border-radius:18px;
+    padding:1.6rem;box-shadow:0 4px 20px rgba(36,48,51,.06);
+  }
+
+  /* Toppinfo: poäng + progress */
+  #spel .hud{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap}
+  #spel .hud .del-namn{font-weight:700;font-size:1.05rem}
+  #spel .hud .poang{margin-left:auto;background:var(--gul-l);color:#9a6b00;
+    font-weight:700;padding:.35rem .8rem;border-radius:999px;font-size:.95rem}
+  #spel .streak{background:var(--gron-l);color:var(--gron);font-weight:700;
+    padding:.35rem .8rem;border-radius:999px;font-size:.95rem}
+  #spel .progress{height:9px;background:#eef1f0;border-radius:999px;overflow:hidden;margin-bottom:1.4rem}
+  #spel .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--gron-m),var(--gron));width:0;transition:width .35s ease}
+
+  /* Frågekort */
+  #spel .fraga{font-size:1.3rem;font-weight:600;line-height:1.35;margin:0 0 .4rem}
+  #spel .instruktion{color:var(--mut);margin:0 0 1.2rem}
+
+  /* Svarsknappar */
+  #spel .val{display:grid;gap:.7rem}
+  #spel .val.tva{grid-template-columns:1fr 1fr}
+  @media(max-width:520px){#spel .val.tva{grid-template-columns:1fr}}
+  #spel button.svar{
+    text-align:left;background:#fff;border:2px solid var(--linje);border-radius:14px;
+    padding:.95rem 1.1rem;font-size:1.05rem;color:var(--ink);cursor:pointer;
+    transition:border-color .12s,background .12s,transform .05s;font-family:inherit;
+  }
+  #spel button.svar:hover:not(:disabled){border-color:var(--gron-m);background:var(--gron-l)}
+  #spel button.svar:active:not(:disabled){transform:scale(.99)}
+  #spel button.svar.ratt{border-color:var(--ratt);background:var(--ratt-l);font-weight:600}
+  #spel button.svar.fel{border-color:var(--fel);background:var(--fel-l)}
+  #spel button.svar:disabled{cursor:default;opacity:1}
+
+  /* Feedback */
+  #spel .feedback{margin-top:1.1rem;padding:1rem 1.1rem;border-radius:14px;display:none;line-height:1.45}
+  #spel .feedback.visa{display:block}
+  #spel .feedback.bra{background:var(--ratt-l);border:1px solid #b7e2c5}
+  #spel .feedback.oj{background:var(--fel-l);border:1px solid #f0bcbc}
+  #spel .feedback b{display:block;margin-bottom:.15rem}
+  #spel .nasta{margin-top:1rem;display:flex;justify-content:flex-end}
+  #spel button.knapp{
+    background:var(--gron);color:#fff;border:none;border-radius:999px;
+    padding:.7rem 1.6rem;font-size:1.02rem;font-weight:600;cursor:pointer;font-family:inherit;
+  }
+  #spel button.knapp:hover{background:#26745c}
+  #spel button.knapp.sekundar{background:#fff;color:var(--gron);border:2px solid var(--gron)}
+  #spel button.knapp.sekundar:hover{background:var(--gron-l)}
+
+  /* Startmeny */
+  #spel .val-niva{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.4rem}
+  @media(max-width:560px){#spel .val-niva{grid-template-columns:1fr}}
+  #spel .niva-kort{
+    border:2px solid var(--linje);border-radius:16px;padding:1.3rem;cursor:pointer;
+    background:#fff;transition:border-color .12s,transform .08s,box-shadow .12s;
+  }
+  #spel .niva-kort:hover{border-color:var(--gron-m);transform:translateY(-2px);box-shadow:0 8px 22px rgba(36,48,51,.08)}
+  #spel .niva-kort .emoji{font-size:2rem}
+  #spel .niva-kort h3{margin:.4rem 0 .3rem;font-size:1.2rem}
+  #spel .niva-kort p{margin:0;color:var(--mut);font-size:.96rem;line-height:1.4}
+  #spel .start-alla{margin-top:1rem;text-align:center}
+
+  /* SVG-cell (klicka på delen) */
+  #spel .cell-scen{background:var(--bla-l);border-radius:16px;padding:.6rem;margin-bottom:.4rem}
+  #spel svg .del{cursor:pointer;transition:opacity .12s}
+  #spel svg .del:hover{opacity:.75}
+  #spel svg .del.traff{stroke:#1c7a44 !important;stroke-width:5 !important}
+  #spel svg .del.traff *:not(.hit){stroke:#1c7a44 !important;stroke-width:4 !important}
+  #spel .cell-etikett{text-align:center;color:var(--mut);font-size:.85rem;margin:.2rem 0 0}
+
+  /* Slutbild */
+  #spel .slut{text-align:center}
+  #spel .slut .emoji{font-size:3rem}
+  #spel .slut h2{font-size:1.7rem;margin:.4rem 0}
+  #spel .slut .resultat{font-size:1.15rem;color:var(--mut);margin-bottom:.4rem}
+  #spel .slut .snurra{font-size:1.05rem;margin:1rem 0 1.4rem;font-weight:600;color:var(--gron)}
+  #spel .slut-knappar{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="biologi-header">
+  <h1>Livet och cellen</h1>
+  <p>Ett spel om vad som är liv och om cellens delar</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+  </p>
+
+  <div id="spel"><!-- allt renderas här av JavaScript --></div>
+</main>
+
+<script>
+/* =========================================================
+   INNEHÅLL
+   ========================================================= */
+
+// --- DEL 1: Vad är liv? ---
+const del1 = [
+  // Levande eller inte?
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Har den här alla sex kännetecken för liv?",
+    text:"En humla", knappar:["Levande","Inte levande"], ratt:0,
+    forkl:"En humla är levande – den består av celler, kan fortplanta sig, tar upp och ger ifrån sig ämnen, behöver energi och reagerar på sin omgivning." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Tänk på de sex kännetecknen.",
+    text:"Solen", knappar:["Levande","Inte levande"], ratt:1,
+    forkl:"Solen är inte levande. Den kan inte fortplanta sig och den består inte av celler." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Tänk på de sex kännetecknen.",
+    text:"En ros", knappar:["Levande","Inte levande"], ratt:0,
+    forkl:"En ros är levande – en växt har alla sex kännetecken." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"En knepig! Den kan 'röra sig' och 'tanka bränsle'.",
+    text:"En bil", knappar:["Levande","Inte levande"], ratt:1,
+    forkl:"En bil är inte levande. Den kan inte fortplanta sig och den är inte uppbyggd av celler." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Den är pytteliten – syns bara i mikroskop.",
+    text:"En bakterie", knappar:["Levande","Inte levande"], ratt:0,
+    forkl:"En bakterie är levande. Det är en encellig organism – den består av en enda cell." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Tänk efter vad som hänt med dem.",
+    text:"Höstlöv på marken", knappar:["Levande","Inte levande"], ratt:1,
+    forkl:"Nedfallna höstlöv är inte längre levande. De har slutat ta upp ämnen och använder inte längre energi." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Ett encelligt djur i vattnet.",
+    text:"En amöba", knappar:["Levande","Inte levande"], ratt:0,
+    forkl:"En amöba är levande. Den är ett encelligt djur som hittar mat, försvarar sig och förökar sig genom delning." },
+  { typ:"sort", fraga:"Levande eller inte levande?", instr:"Tänk på de sex kännetecknen.",
+    text:"Vatten", knappar:["Levande","Inte levande"], ratt:1,
+    forkl:"Vatten är inte levande – det består inte av celler och kan inte fortplanta sig." },
+
+  // Vilket kännetecken?
+  { typ:"mc", fraga:"Vilket kännetecken visas?", instr:"En växt tar upp vatten och näring genom sina rötter.",
+    val:["Tar upp ämnen från omgivningen","Ger ämnen till omgivningen","Reagerar på sin omgivning","Kan fortplanta sig"], ratt:0,
+    forkl:"Att ta in vatten och näring är att ta upp ämnen från omgivningen." },
+  { typ:"mc", fraga:"Vilket kännetecken visas?", instr:"Du andas ut gasen koldioxid.",
+    val:["Tar upp ämnen från omgivningen","Ger ämnen till omgivningen","Behöver energi","Består av celler"], ratt:1,
+    forkl:"När du andas ut koldioxid ger du ifrån dig ämnen till omgivningen." },
+  { typ:"mc", fraga:"Vilket kännetecken visas?", instr:"En sparv flyger undan när den ser en sparvhök.",
+    val:["Kan fortplanta sig","Behöver energi","Reagerar på sin omgivning","Ger ämnen till omgivningen"], ratt:2,
+    forkl:"Att söka skydd för en fara är att reagera på sin omgivning." },
+  { typ:"mc", fraga:"Vilket kännetecken visas?", instr:"Nya kaniner föds och gamla dör.",
+    val:["Kan fortplanta sig","Reagerar på sin omgivning","Tar upp ämnen","Består av celler"], ratt:0,
+    forkl:"Att det föds nya individer är att organismerna kan fortplanta sig." },
+  { typ:"mc", fraga:"Vilket kännetecken visas?", instr:"Djur äter energirik föda för att orka vara aktiva.",
+    val:["Ger ämnen till omgivningen","Behöver energi","Kan fortplanta sig","Reagerar på sin omgivning"], ratt:1,
+    forkl:"Det krävs energi för att leva och vara aktiv – därför äter djur energirik föda." },
+
+  // Cellen, vävnad, organ
+  { typ:"mc", fraga:"Cellen", instr:"Vad kallas den minsta delen som har liv?",
+    val:["Cellen","Vävnaden","Organet","Atomen"], ratt:0,
+    forkl:"Cellen är den minsta delen som har liv. De flesta celler är så små att man behöver mikroskop för att se dem." },
+  { typ:"mc", fraga:"Cellen", instr:"Vad kallas en organism som består av en enda cell?",
+    val:["Flercellig","Encellig","Vävnad","Organ"], ratt:1,
+    forkl:"En organism med bara en cell är encellig, till exempel bakterier och amöbor." },
+  { typ:"mc", fraga:"Cellen", instr:"Hur förökar sig amöban?",
+    val:["Den lägger ägg","Den delar sig","Den fröar sig","Den knoppas av en annan amöba"], ratt:1,
+    forkl:"Amöban förökar sig genom delning: en fullvuxen cell delar sig och blir två nya celler." },
+  { typ:"mc", fraga:"Från cell till organ", instr:"Celler som liknar varandra och har samma uppgift bildar tillsammans en ...?",
+    val:["Vävnad","Organ","Organism","Kärna"], ratt:0,
+    forkl:"Likadana celler med samma uppgift bildar en vävnad, till exempel muskelvävnad." },
+  { typ:"mc", fraga:"Från cell till organ", instr:"Olika vävnader bygger tillsammans upp ett ...?",
+    val:["Cell","Vävnad","Organ","Ämne"], ratt:2,
+    forkl:"Flera olika vävnader bygger upp ett organ. Hjärtat är ett organ av bl.a. muskel- och nervvävnad." },
+  { typ:"mc", fraga:"Från cell till organ", instr:"Vilket av dessa är ett organ?",
+    val:["Muskelcell","Nervvävnad","Hjärtat","Mitokondrie"], ratt:2,
+    forkl:"Hjärtat är ett organ. Lever, lungor och njurar är andra exempel på organ." },
+  { typ:"mc", fraga:"Ordval", instr:"Vad kan en levande varelse också kallas?",
+    val:["Ett organ","En organism","En vävnad","En cellkärna"], ratt:1,
+    forkl:"En levande varelse kallas också för en organism." },
+];
+
+// --- DEL 2: Cellens delar ---
+const del2 = [
+  // Funktion → organell
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken organell är cellens 'kraftverk' och frigör energi?",
+    val:["Cellkärnan","Mitokondrien","Ribosomen","Vakuolen"], ratt:1,
+    forkl:"Mitokondrien är cellens kraftverk. Där frigörs energi som cellen behöver." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken organell styr cellen och innehåller arvsmassan (DNA)?",
+    val:["Cellmembranet","Cytoplasman","Cellkärnan","Kloroplasten"], ratt:2,
+    forkl:"Cellkärnan styr cellen och innehåller arvsmassan, alltså DNA." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Var sker fotosyntesen i en växtcell?",
+    val:["I kloroplasten","I mitokondrien","I cellkärnan","I vakuolen"], ratt:0,
+    forkl:"Fotosyntesen sker i kloroplasterna, som fångar solljuset. De gör växtcellen grön." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken del bestämmer vad som får komma in i och ut ur cellen?",
+    val:["Cellväggen","Cellmembranet","Cytoplasman","Ribosomen"], ratt:1,
+    forkl:"Cellmembranet är cellens yttre hölje och styr vilka ämnen som släpps in och ut." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vad kallas den geléartade vätskan där organellerna ligger?",
+    val:["Cytoplasman","Vakuolen","Cellkärnan","Kloroplasten"], ratt:0,
+    forkl:"Cytoplasman är den geléartade vätskan som fyller cellen och där organellerna ligger." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken organell tillverkar proteiner?",
+    val:["Ribosomen","Vakuolen","Cellväggen","Mitokondrien"], ratt:0,
+    forkl:"Ribosomerna är cellens små proteinfabriker – de bygger proteiner." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vad ger växtcellen dess fasta, kantiga form?",
+    val:["Cellmembranet","Cellväggen","Vakuolen","Cytoplasman"], ratt:1,
+    forkl:"Cellväggen är ett styvt skal utanpå växtcellen. Den ger stöd och en kantig form." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken stor vätskefylld blåsa lagrar ämnen och ger växtcellen stadga?",
+    val:["Vakuolen","Mitokondrien","Cellkärnan","Ribosomen"], ratt:0,
+    forkl:"Den stora vakuolen är fylld med vätska. Den lagrar ämnen och ger växtcellen stadga." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vilken organell paketerar ämnen och skickar dem vidare i cellen?",
+    val:["Golgiapparaten","Mitokondrien","Ribosomen","Vakuolen"], ratt:0,
+    forkl:"Golgiapparaten paketerar ämnen (t.ex. proteiner) och skickar dem vidare dit de behövs. Den ser ut som en trave böjda blåsor." },
+  { typ:"mc", fraga:"Vad gör organellen?", instr:"Vad kallas systemet av slingrande kanaler runt cellkärnan där ämnen transporteras?",
+    val:["Det endoplasmatiska nätverket (ER)","Golgiapparaten","Cytoplasman","Vakuolen"], ratt:0,
+    forkl:"Det endoplasmatiska nätverket (ER) är ett system av kanaler runt cellkärnan där ämnen transporteras och proteiner bearbetas." },
+
+  // Djur, växt eller båda?
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller är den typisk bara för växtceller?",
+    text:"Cellkärna", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:0,
+    forkl:"Cellkärnan finns i både djur- och växtceller." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Kloroplast", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:1,
+    forkl:"Kloroplaster finns bara i växtceller. Djurceller kan inte göra fotosyntes." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Mitokondrie", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:0,
+    forkl:"Mitokondrier finns i både djur- och växtceller – alla celler behöver energi." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Cellvägg", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:1,
+    forkl:"Cellväggen är typisk för växtceller. Djurceller har ingen cellvägg, bara cellmembran." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Cellmembran", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:0,
+    forkl:"Cellmembranet finns i både djur- och växtceller." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"En stor central sådan – i vilken cell?",
+    text:"Stor vakuol", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:1,
+    forkl:"En stor, central vakuol är typisk för växtceller. Den tar ofta upp en stor del av cellen." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Golgiapparat", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:0,
+    forkl:"Golgiapparaten finns i både djur- och växtceller." },
+  { typ:"sort", fraga:"Djurcell, växtcell eller båda?", instr:"Finns organellen i alla celler, eller bara i växtceller?",
+    text:"Endoplasmatiskt nätverk (ER)", knappar:["Både djur- och växtcell","Typisk för växtcell"], ratt:0,
+    forkl:"Det endoplasmatiska nätverket finns i både djur- och växtceller." },
+
+  // Klicka på delen – djurcell
+  { typ:"hotspot", cell:"djur", fraga:"Klicka på rätt del", instr:"Klicka på <b>cellkärnan</b> i djurcellen.",
+    mal:"cellkarna", malnamn:"Cellkärnan",
+    forkl:"Cellkärnan ligger som en tydlig rund del inne i cellen och styr allt som händer." },
+  { typ:"hotspot", cell:"djur", fraga:"Klicka på rätt del", instr:"Klicka på en <b>mitokondrie</b> i djurcellen.",
+    mal:"mitokondrie", malnamn:"Mitokondrien",
+    forkl:"Mitokondrierna är de bönformade delarna – cellens kraftverk." },
+  { typ:"hotspot", cell:"djur", fraga:"Klicka på rätt del", instr:"Klicka på <b>cellmembranet</b> – djurcellens yttre gräns.",
+    mal:"cellmembran", malnamn:"Cellmembranet",
+    forkl:"Cellmembranet är den yttre kanten runt hela cellen och bestämmer vad som får passera." },
+  { typ:"hotspot", cell:"djur", fraga:"Klicka på rätt del", instr:"Klicka på <b>Golgiapparaten</b> (traven av böjda blåsor) i djurcellen.",
+    mal:"golgi", malnamn:"Golgiapparaten",
+    forkl:"Golgiapparaten ser ut som en trave böjda blåsor. Den paketerar och skickar vidare ämnen." },
+  { typ:"hotspot", cell:"djur", fraga:"Klicka på rätt del", instr:"Klicka på det <b>endoplasmatiska nätverket</b> (de slingrande linjerna runt cellkärnan).",
+    mal:"er", malnamn:"Det endoplasmatiska nätverket",
+    forkl:"Det endoplasmatiska nätverket (ER) är systemet av slingrande kanaler runt cellkärnan." },
+
+  // Klicka på delen – växtcell
+  { typ:"hotspot", cell:"vaxt", fraga:"Klicka på rätt del", instr:"Klicka på <b>cellväggen</b> i växtcellen.",
+    mal:"cellvagg", malnamn:"Cellväggen",
+    forkl:"Cellväggen är det tjocka, styva skalet ytterst på växtcellen." },
+  { typ:"hotspot", cell:"vaxt", fraga:"Klicka på rätt del", instr:"Klicka på en <b>kloroplast</b> i växtcellen.",
+    mal:"kloroplast", malnamn:"Kloroplasten",
+    forkl:"Kloroplasterna är de gröna delarna där fotosyntesen sker." },
+  { typ:"hotspot", cell:"vaxt", fraga:"Klicka på rätt del", instr:"Klicka på den stora <b>vakuolen</b> i växtcellen.",
+    mal:"vakuol", malnamn:"Vakuolen",
+    forkl:"Vakuolen är den stora vätskefyllda blåsan som tar upp mycket av växtcellen." },
+];
+
+/* =========================================================
+   SVG-CELLER
+   ========================================================= */
+function svgDjurcell(){
+  return `
+  <svg viewBox="0 0 400 340" role="img" aria-label="Djurcell">
+    <defs>
+      <radialGradient id="cytoDjur" cx="45%" cy="38%" r="72%">
+        <stop offset="0%" stop-color="#fdf6cf"/>
+        <stop offset="100%" stop-color="#f1de88"/>
+      </radialGradient>
+    </defs>
+    <!-- cellmembran + cytoplasma -->
+    <path class="del" data-id="cellmembran"
+      d="M200,32 C282,28 352,72 363,152 C372,208 351,270 297,302 C245,332 171,332 121,300 C73,270 45,207 57,151 C69,86 128,40 200,32 Z"
+      fill="url(#cytoDjur)" stroke="#e2bf5b" stroke-width="5"/>
+
+    <!-- endoplasmatiskt nätverk (ER) -->
+    <g class="del" data-id="er">
+      <path class="hit" d="M110,150 C110,90 258,86 258,150 C258,214 110,210 110,150 Z" fill="none" stroke="transparent" stroke-width="15" pointer-events="stroke"/>
+      <g fill="none" stroke="#d7a86a" stroke-width="2.4" opacity=".85">
+        <path d="M110,150 C110,90 258,86 258,150 C258,214 110,210 110,150 Z"/>
+        <path d="M124,150 C124,104 244,100 244,150 C244,200 124,196 124,150 Z"/>
+        <path d="M138,150 C138,116 230,114 230,150 C230,186 138,184 138,150 Z"/>
+      </g>
+    </g>
+
+    <!-- Golgiapparat -->
+    <g class="del" data-id="golgi">
+      <path class="hit" d="M121,283 q34,-21 66,0" fill="none" stroke="transparent" stroke-width="28" pointer-events="stroke"/>
+      <g fill="none" stroke="#cf9b63" stroke-width="3" stroke-linecap="round">
+        <path d="M116,272 q36,-22 72,0"/>
+        <path d="M121,283 q34,-20 62,0"/>
+        <path d="M126,293 q30,-18 52,0"/>
+      </g>
+    </g>
+
+    <!-- lysosom + liten vesikel (dekor) -->
+    <circle cx="150" cy="300" r="9" fill="#c9518f" pointer-events="none"/>
+    <circle cx="225" cy="298" r="6" fill="#c98a5a" pointer-events="none"/>
+
+    <!-- ribosomer -->
+    <g class="del" data-id="ribosom">
+      <circle cx="262" cy="118" r="5" fill="#d9506a"/>
+      <circle cx="274" cy="130" r="5" fill="#d9506a"/>
+      <circle cx="258" cy="188" r="5" fill="#d9506a"/>
+      <circle cx="246" cy="202" r="5" fill="#d9506a"/>
+    </g>
+
+    <!-- mitokondrier -->
+    <g class="del" data-id="mitokondrie">
+      <g transform="rotate(-20 128 236)">
+        <ellipse cx="128" cy="236" rx="42" ry="21" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
+        <path d="M94,236 q11,-13 22,0 q11,13 22,0 q11,-13 22,0" fill="none" stroke="#5aa7bf" stroke-width="2.3" pointer-events="none"/>
+      </g>
+      <g transform="rotate(18 288 214)">
+        <ellipse cx="288" cy="214" rx="40" ry="20" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
+        <path d="M256,214 q10,-12 20,0 q10,12 20,0 q10,-12 20,0" fill="none" stroke="#5aa7bf" stroke-width="2.3" pointer-events="none"/>
+      </g>
+    </g>
+
+    <!-- cellkärna -->
+    <circle class="del" data-id="cellkarna" cx="182" cy="150" r="47" fill="#bfe4f0" stroke="#6badc4" stroke-width="5"/>
+    <g pointer-events="none" stroke="#6ba9c4" stroke-width="2" stroke-linecap="round" opacity=".7">
+      <line x1="166" y1="140" x2="176" y2="146"/>
+      <line x1="186" y1="137" x2="194" y2="144"/>
+      <line x1="172" y1="156" x2="182" y2="160"/>
+      <line x1="190" y1="158" x2="198" y2="163"/>
+      <line x1="178" y1="169" x2="188" y2="173"/>
+    </g>
+  </svg>`;
+}
+function svgVaxtcell(){
+  return `
+  <svg viewBox="0 0 400 340" role="img" aria-label="Växtcell">
+    <defs>
+      <radialGradient id="cytoVaxt" cx="45%" cy="38%" r="72%">
+        <stop offset="0%" stop-color="#fdf6cf"/>
+        <stop offset="100%" stop-color="#f1de88"/>
+      </radialGradient>
+    </defs>
+    <!-- cellvägg -->
+    <polygon class="del" data-id="cellvagg"
+      points="150,26 300,40 376,175 300,314 118,306 34,158"
+      fill="#f3a25a" stroke="#e5854a" stroke-width="7" stroke-linejoin="round"/>
+    <!-- cellmembran + cytoplasma -->
+    <polygon class="del" data-id="cellmembran"
+      points="154,46 290,58 358,175 290,296 130,289 56,162"
+      fill="url(#cytoVaxt)" stroke="#e2bf5b" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- stor vakuol -->
+    <path class="del" data-id="vakuol"
+      d="M292,150 C324,152 338,190 326,232 C314,272 262,280 232,260 C205,242 205,180 236,162 C255,151 274,149 292,150 Z"
+      fill="#bfe0ea" stroke="#7cb8cf" stroke-width="3"/>
+    <path d="M244,178 q22,-9 44,0" fill="none" stroke="#9ecdde" stroke-width="2" pointer-events="none"/>
+    <path d="M248,190 q20,-8 38,0" fill="none" stroke="#9ecdde" stroke-width="2" pointer-events="none"/>
+
+    <!-- endoplasmatiskt nätverk (ER) -->
+    <g class="del" data-id="er">
+      <path class="hit" d="M118,120 C118,80 246,78 246,120 C246,162 118,160 118,120 Z" fill="none" stroke="transparent" stroke-width="14" pointer-events="stroke"/>
+      <g fill="none" stroke="#d7a86a" stroke-width="2.3" opacity=".85">
+        <path d="M118,120 C118,80 246,78 246,120 C246,162 118,160 118,120 Z"/>
+        <path d="M132,120 C132,90 232,88 232,120 C232,150 132,148 132,120 Z"/>
+      </g>
+    </g>
+
+    <!-- Golgiapparat -->
+    <g class="del" data-id="golgi">
+      <path class="hit" d="M96,201 q28,-16 56,0" fill="none" stroke="transparent" stroke-width="22" pointer-events="stroke"/>
+      <g fill="none" stroke="#cf9b63" stroke-width="2.6" stroke-linecap="round">
+        <path d="M92,196 q30,-17 60,0"/>
+        <path d="M96,205 q28,-16 52,0"/>
+      </g>
+    </g>
+
+    <!-- ribosomer -->
+    <g class="del" data-id="ribosom">
+      <circle cx="238" cy="104" r="4.6" fill="#d9506a"/>
+      <circle cx="249" cy="116" r="4.6" fill="#d9506a"/>
+      <circle cx="230" cy="140" r="4.6" fill="#d9506a"/>
+    </g>
+
+    <!-- mitokondrie -->
+    <g class="del" data-id="mitokondrie" transform="rotate(-15 112 232)">
+      <ellipse cx="112" cy="232" rx="36" ry="18" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
+      <path d="M84,232 q9,-11 18,0 q9,11 18,0 q9,-11 18,0" fill="none" stroke="#5aa7bf" stroke-width="2.1" pointer-events="none"/>
+    </g>
+
+    <!-- kloroplaster -->
+    <g class="del" data-id="kloroplast">
+      <g transform="rotate(-18 128 262)">
+        <ellipse cx="128" cy="262" rx="42" ry="22" fill="#5fb85a" stroke="#2f7d3a" stroke-width="3"/>
+        <g fill="#2f8f43" pointer-events="none">
+          <ellipse cx="110" cy="262" rx="6" ry="11"/>
+          <ellipse cx="128" cy="262" rx="6" ry="11"/>
+          <ellipse cx="146" cy="262" rx="6" ry="11"/>
+        </g>
+      </g>
+      <g transform="rotate(14 296 108)">
+        <ellipse cx="296" cy="108" rx="37" ry="19" fill="#5fb85a" stroke="#2f7d3a" stroke-width="3"/>
+        <g fill="#2f8f43" pointer-events="none">
+          <ellipse cx="281" cy="108" rx="5.5" ry="9"/>
+          <ellipse cx="296" cy="108" rx="5.5" ry="9"/>
+          <ellipse cx="311" cy="108" rx="5.5" ry="9"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- cellkärna -->
+    <circle class="del" data-id="cellkarna" cx="182" cy="120" r="40" fill="#bfe4f0" stroke="#6badc4" stroke-width="5"/>
+    <g pointer-events="none" stroke="#6ba9c4" stroke-width="2" stroke-linecap="round" opacity=".7">
+      <line x1="168" y1="111" x2="178" y2="117"/>
+      <line x1="188" y1="109" x2="196" y2="116"/>
+      <line x1="174" y1="127" x2="184" y2="131"/>
+      <line x1="192" y1="129" x2="200" y2="134"/>
+    </g>
+  </svg>`;
+}
+
+/* =========================================================
+   SPELMOTOR
+   ========================================================= */
+const spel = document.getElementById("spel");
+let ko = [], index = 0, poang = 0, streak = 0, besvarad = false, delnamn = "";
+
+function blanda(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function start(){
+  spel.innerHTML = `
+    <div class="kort">
+      <h2 style="margin:.2rem 0 .4rem;font-size:1.5rem">Välkommen! 🔬</h2>
+      <p style="color:#5c6b6e;margin:0 0 .2rem;line-height:1.5">
+        Det här spelet har två delar. Välj var du vill börja – eller kör allt på en gång.
+      </p>
+      <div class="val-niva">
+        <div class="niva-kort" onclick="korDel(1)">
+          <div class="emoji">🌱</div>
+          <h3>Del 1 – Vad är liv?</h3>
+          <p>Livets sex kännetecken, levande eller inte, och cellen som livets minsta del.</p>
+        </div>
+        <div class="niva-kort" onclick="korDel(2)">
+          <div class="emoji">🧫</div>
+          <h3>Del 2 – Cellens delar</h3>
+          <p>Organellerna i djur- och växtceller, vad de gör och var de finns.</p>
+        </div>
+      </div>
+      <div class="start-alla">
+        <button class="knapp" onclick="korDel(0)">▶ Spela hela spelet</button>
+      </div>
+    </div>`;
+}
+
+function korDel(vilken){
+  if(vilken===1){ ko = blanda(del1); delnamn = "Del 1 – Vad är liv?"; }
+  else if(vilken===2){ ko = blanda(del2); delnamn = "Del 2 – Cellens delar"; }
+  else { ko = blanda(del1).concat(blanda(del2)); delnamn = "Hela spelet"; }
+  index = 0; poang = 0; streak = 0;
+  visaFraga();
+}
+
+function visaFraga(){
+  besvarad = false;
+  const f = ko[index];
+  const totalt = ko.length;
+  const procent = Math.round((index)/totalt*100);
+
+  let svarHtml = "";
+  if(f.typ==="sort"){
+    svarHtml = `<div class="val tva">` +
+      f.knappar.map((k,i)=>`<button class="svar" onclick="svara(${i})">${k}</button>`).join("") +
+      `</div>`;
+  } else if(f.typ==="mc"){
+    const ordning = blanda(f.val.map((v,i)=>i));
+    svarHtml = `<div class="val">` +
+      ordning.map(i=>`<button class="svar" data-i="${i}" onclick="svara(${i})">${f.val[i]}</button>`).join("") +
+      `</div>`;
+  } else if(f.typ==="hotspot"){
+    const cellSvg = f.cell==="djur" ? svgDjurcell() : svgVaxtcell();
+    svarHtml = `<div class="cell-scen">${cellSvg}</div>
+      <p class="cell-etikett">${f.cell==="djur"?"Djurcell":"Växtcell"}</p>`;
+  }
+
+  spel.innerHTML = `
+    <div class="kort">
+      <div class="hud">
+        <span class="del-namn">${delnamn}</span>
+        <span class="streak">Fråga ${index+1} / ${totalt}</span>
+        <span class="poang">⭐ ${poang} p</span>
+      </div>
+      <div class="progress"><i style="width:${procent}%"></i></div>
+      <p class="fraga">${f.fraga}</p>
+      <p class="instruktion">${f.instr}${f.typ==="sort"?`<br><b style="color:#243033;font-size:1.15rem">${f.text}</b>`:""}</p>
+      ${svarHtml}
+      <div class="feedback" id="fb"></div>
+      <div class="nasta" id="nasta"></div>
+    </div>`;
+
+  if(f.typ==="hotspot"){
+    spel.querySelectorAll("svg .del").forEach(el=>{
+      el.addEventListener("click",()=>klickDel(el));
+    });
+  }
+}
+
+function svara(valt){
+  if(besvarad) return;
+  besvarad = true;
+  const f = ko[index];
+  const ratt = (valt===f.ratt);
+  registrera(ratt);
+
+  spel.querySelectorAll("button.svar").forEach(b=>{
+    b.disabled = true;
+    const bi = b.dataset.i!==undefined ? Number(b.dataset.i) : [...b.parentNode.children].indexOf(b);
+    if(bi===f.ratt) b.classList.add("ratt");
+    else if(bi===valt) b.classList.add("fel");
+  });
+  visaFeedback(ratt, f);
+}
+
+function klickDel(el){
+  if(besvarad) return;
+  const f = ko[index];
+  const id = el.dataset.id;
+  if(id===f.mal){
+    besvarad = true;
+    el.classList.add("traff");
+    spel.querySelectorAll("svg .del").forEach(d=>d.style.pointerEvents="none");
+    registrera(true);
+    visaFeedback(true, f);
+  } else {
+    // fel del: blinka rött, men låt eleven försöka igen
+    el.style.transition="none";
+    const original = el.getAttribute("stroke");
+    el.setAttribute("stroke","#d64545");
+    el.setAttribute("stroke-width","6");
+    setTimeout(()=>{ el.style.transition=""; el.setAttribute("stroke",original); el.removeAttribute("stroke-width"); el.setAttribute("stroke-width","4"); },450);
+    const fb = document.getElementById("fb");
+    fb.className="feedback oj visa";
+    fb.innerHTML = `<b>Inte riktigt 🤔</b>Det där var inte ${f.malnamn.toLowerCase()}. Titta en gång till och prova igen.`;
+  }
+}
+
+function registrera(ratt){
+  if(ratt){ streak++; poang += 10 + Math.min(streak-1,5)*2; }
+  else { streak = 0; }
+}
+
+function visaFeedback(ratt, f){
+  const fb = document.getElementById("fb");
+  fb.className = "feedback visa " + (ratt?"bra":"oj");
+  fb.innerHTML = (ratt
+      ? `<b>Rätt! ✅${streak>=3?` &nbsp;🔥 ${streak} i rad!`:""}</b>`
+      : `<b>Inte riktigt ❌</b>`) + f.forkl;
+  const nasta = document.getElementById("nasta");
+  const sista = (index === ko.length-1);
+  nasta.innerHTML = `<button class="knapp" onclick="framat()">${sista?"Se resultat":"Nästa fråga →"}</button>`;
+}
+
+function framat(){
+  if(index < ko.length-1){ index++; visaFraga(); }
+  else visaSlut();
+}
+
+function visaSlut(){
+  const totalt = ko.length;
+  const max = 0; // beräknas ej exakt (streakbonus) – visa poäng + andel rätt via poang/bas
+  // uppskatta antal rätt: varje rätt ger minst 10 p; enklare att räkna rätt separat vore bättre,
+  // men vi visar poäng och en peppande kommentar utifrån poäng/fråga.
+  const snitt = poang / totalt;
+  let emoji, titel, snurra;
+  if(snitt >= 11){ emoji="🏆"; titel="Cellmästare!"; snurra="Fantastiskt jobbat – du kan det här!"; }
+  else if(snitt >= 8){ emoji="🌟"; titel="Snyggt jobbat!"; snurra="Du har bra koll. Kör en runda till och sikta ännu högre!"; }
+  else if(snitt >= 5){ emoji="👍"; titel="Bra början!"; snurra="Du är på gång. Läs förklaringarna och prova igen!"; }
+  else { emoji="🌱"; titel="Fortsätt öva!"; snurra="Öva lite till – varje runda gör dig bättre. Du fixar det!"; }
+
+  spel.innerHTML = `
+    <div class="kort slut">
+      <div class="emoji">${emoji}</div>
+      <h2>${titel}</h2>
+      <p class="resultat">Du fick <b>${poang} poäng</b> på ${totalt} frågor.</p>
+      <p class="snurra">${snurra}</p>
+      <div class="slut-knappar">
+        <button class="knapp" onclick="start()">▶ Spela igen</button>
+        <button class="knapp sekundar" onclick="location.href='./larande-spel.html'">Till lärande spel</button>
+      </div>
+    </div>`;
+}
+
+// starta
+start();
+</script>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
