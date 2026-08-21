@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>[Namn] – Legitimerad psykolog | Utredningar & behandling</title>
+<title>Kerstin Klang – Legitimerad psykolog | Utredningar & behandling</title>
 <meta name="description" content="Legitimerad psykolog med lång erfarenhet av psykologiska utredningar och behandling med KBT, ACT och lösningsfokuserad terapi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,6 +69,14 @@
   .card li{color:var(--muted);font-size:.96rem;padding-left:20px;position:relative;margin-bottom:6px}
   .card li::before{content:"";position:absolute;left:0;top:.65em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
 
+  /* Priser */
+  .priser{margin-top:26px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px 26px;max-width:520px}
+  .priser h3{font-size:1.25rem;margin-bottom:6px}
+  .pris-rad{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:12px 0;border-bottom:1px solid var(--line)}
+  .pris-rad:last-child{border-bottom:none}
+  .pris-rad span{color:var(--muted)}
+  .pris-rad strong{font-weight:600;font-size:1.1rem;white-space:nowrap}
+
   /* Kontakt */
   .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;max-width:620px;margin-top:8px}
   @media(max-width:640px){.contact-grid{grid-template-columns:1fr}}
@@ -86,7 +94,7 @@
 
 <header class="site">
   <div class="wrap">
-    <div class="brand">[Namn]</div>
+    <div class="brand">Kerstin Klang</div>
     <nav>
       <a href="#om">Om mig</a>
       <a href="#tjanster">Tjänster</a>
@@ -113,8 +121,6 @@
       </div>
       <div class="prose">
         <p>Jag är legitimerad psykolog med lång erfarenhet av både psykologiska utredningar och behandling. I mitt arbete möter jag varje person utifrån dennes egna förutsättningar, med lyhördhet, respekt och ett tydligt fokus på det som känns viktigt för dig.</p>
-        <p>Min ambition är att skapa en trygg och förtroendefull miljö där du känner dig sedd. Genom åren har jag hjälpt människor att förstå sig själva bättre, hitta nya sätt att hantera svårigheter och ta steg mot förändring som håller över tid.</p>
-        <p class="placeholder">[Här kan du fylla i mer om din bakgrund – t.ex. utbildning, antal års erfarenhet, tidigare arbetsplatser, särskilda inriktningar eller vilka åldersgrupper du arbetar med.]</p>
       </div>
     </div>
   </section>
@@ -131,13 +137,14 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
           </div>
           <h3>Psykologiska utredningar</h3>
-          <p>Noggranna och strukturerade utredningar som ger en tydlig bild och konkreta rekommendationer att gå vidare med.</p>
+          <p>Jag utreder ADHD, autism, intellektuell funktionsnedsättning och personlighetsstörning hos både barn och vuxna.</p>
           <ul>
             <li>Kartläggning och bedömning</li>
             <li>Återkoppling på ett begripligt sätt</li>
             <li>Skriftligt utlåtande</li>
+            <li>Remiss till psykiatriker</li>
           </ul>
-          <p class="placeholder" style="margin-top:12px">[Fyll i vilka typer av utredningar du erbjuder.]</p>
+          <p style="margin-top:12px;color:var(--muted)">Remiss skickas till önskad klinik för vidare insatser vid fastställd diagnos.</p>
         </div>
         <div class="card">
           <div class="ico">
@@ -150,8 +157,14 @@
             <li>ACT – acceptance and commitment therapy</li>
             <li>Lösningsfokuserad terapi</li>
           </ul>
-          <p class="placeholder" style="margin-top:12px">[Fyll i vad behandlingen kan gälla, t.ex. oro, stress, nedstämdhet.]</p>
         </div>
+      </div>
+
+      <div class="priser">
+        <h3>Priser</h3>
+        <div class="pris-rad"><span>Utredning, vuxen</span><strong>11 000 kr</strong></div>
+        <div class="pris-rad"><span>Utredning, barn</span><strong>13 000 kr</strong></div>
+        <div class="pris-rad"><span>Terapisamtal</span><strong>1 000 kr</strong></div>
       </div>
     </div>
   </section>
@@ -163,10 +176,10 @@
         <p>Välkommen att höra av dig för en tid eller med frågor.</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-item"><span>E-post</span><strong class="placeholder">[din@epost.se]</strong></div>
-        <div class="contact-item"><span>Telefon</span><strong class="placeholder">[070-000 00 00]</strong></div>
-        <div class="contact-item"><span>Mottagning</span><strong class="placeholder">[Mottagningens namn / ort]</strong></div>
-        <div class="contact-item"><span>Adress</span><strong class="placeholder">[Gatuadress, postnr ort]</strong></div>
+        <div class="contact-item"><span>E-post</span><strong><a href="mailto:kerstinmklang@gmail.com">kerstinmklang@gmail.com</a></strong></div>
+        <div class="contact-item"><span>Telefon</span><strong><a href="tel:+46703501585">070-350 15 85</a></strong></div>
+        <div class="contact-item"><span>Mottagning</span><strong>KBT i Skåne AB</strong></div>
+        <div class="contact-item"><span>Adress</span><strong>Ö Vallgatan 35 B, 223 61 Lund</strong></div>
       </div>
       <div class="note">Obs: Skicka inga känsliga personuppgifter via e-post. Vid akuta ärenden, ring 1177 eller 112.</div>
     </div>
@@ -175,7 +188,7 @@
 
 <footer class="site">
   <div class="wrap">
-    © <span id="year"></span> [Namn], Legitimerad psykolog · [Ort]
+    © <span id="year"></span> Kerstin Klang, Legitimerad psykolog · KBT i Skåne AB, Lund
   </div>
 </footer>
 
