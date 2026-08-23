@@ -1,89 +1,109 @@
-# Checklista – standardisering av NO-plattformens områden
+# Checklista & backlog – NO-plattformen
 
-*Autogenererad 2026-08-23 av Claude. Uppdateras löpande – be Claude regenerera när nya områden/funktioner tillkommit.*
+*Autogenererad 2026-08-23 av Claude. En sanningskälla: standarder, status per område och öppna punkter. Ersätter de tidigare `_TODO_standardisering-studieguider.md` och `_TODO_fanerozoikum-fragespel.md` (kan tas bort när du vill). Be Claude regenerera när nya områden/funktioner tillkommit.*
 
-## Arbetssätt
+## Arbetssätt & mål
 
-Mål: först bygga ut alla ~26–29 områden, sedan strömlinjeforma så att samma grunder och funktioner finns överallt. När en **ny funktion** införs i ett område ska den (a) läggas till i alla nya områden framåt och (b) bakåtfyllas i tidigare områden. Använd denna lista för att pricka av – och för korrekturläsning.
+Först bygga ut alla ~29 områden, sedan strömlinjeforma så samma grunder/funktioner finns överallt. När en NY funktion införs ska den (a) med i alla nya områden framåt och (b) bakåtfyllas i tidigare. Jesper slutgranskar all text själv. Översättning av hela texter (studieguider) är ett SENARE steg – svenska texten ska vara godkänd först. Git: Jesper pushar alltid själv.
 
-Legend: ✓ = finns, ✗ = saknas.
+## Standardkomponenter per område
 
-## Standardkomponenter (ska finnas i varje område)
+**Kärn-HTML (13):** `index.html`, `studieguide.html`, `begreppslista.html`, `begreppskort.html`, `checklista.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `ovningsprov-print.html`, `facit.html`, `facit-print.html`, `larande-spel.html`. **Rekommenderad:** `korsord.html`.
 
-**Kärn-HTML (13 st):** `index.html`, `ovningsprov-print.html`, `checklista.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `begreppslista.html`, `begreppskort.html`, `studieguide.html`, `facit-print.html`, `facit.html`, `larande-spel.html`.
+**Data (5):** `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json`.
 
-**Rekommenderad extra:** `korsord.html` (finns i vissa områden).
+**Språk (10):** en, es, ar, so, fa, am, ps, pl, bs, ur (`begrepp.<språk>.json`, utöver svenska basen).
 
-**Data (5 st):** `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json`.
+**Genomgående funktioner:** språkväljare (`js/language-selector.js`), uppläsning (`js/lyssna.js`, `data-audio-base`), begreppspopup (`js/concepts-popup.js` + `data-concept`).
 
-**Språk (begrepp-översättningar, 10 st):** en, es, ar, so, fa, am, ps, pl, bs, ur (utöver svenska basen `begrepp.json`).
+## Fasta regler (från CLAUDE.md)
 
-**Genomgående funktioner:** språkväljare (`js/language-selector.js`, monteras på index + begreppslista, TTS-mount på studieguide), uppläsning (`js/lyssna.js`), begrepp-popup.
+- **Utskrifter:** `*-print-elev/-larare.html`, `ovningsprov-print.html`, `facit-print.html`. Utskriftslänkar finns BARA som knapp inne i moderdokumentet – aldrig som egna länkar i index-lärarmenyn. Print-sidor kör `window.print()` automatiskt.
 
-**Områdesspecifikt (bonus, ej krav):** interaktiva spel t.ex. `ohms-lag-spel.html`, `bygg-ett-batteri.html`, `syra-eller-bas.html`, laborationssidor.
+- **Index-layout:** tvåkolumn `area-layout` (300px + 1fr); `area-main` med `resource-grid` (staplade boxar Elever/Läraren, `border-left:4px var(--area)`); `area-right` med hero-bild + `concept-section`.
+
+- **Begrepp:** 12–16(+) viktigaste per område i `data/begrepp.json` (`namn`/`definition`/`anchor` → `#m`), `data-concept` måste matcha `namn` exakt.
+
+- **Begreppskort:** nås via `larande-spel.html`, data i `data/begreppskort.json` (nivå 1 + nivå 2).
+
+- **Lyssna:** varje `studieguide.html` har lyssna-knapp per milstolpe; mp3 i `audio/` annars TTS-fallback.
+
+- **Originalitet:** studieguider/frågor/prov ska vara EGET formulerade – aldrig kopiera lärobokstext (Gleerups, TEFY, Puls, Spektrum …). Varje studieguide avslutas med källförteckning.
+
+- **Stil (TEFY, inte Gleerups):** effektiva texter rakt på förklaringar; bygg förståelse först; bilder ska ÖKA förståelse, inte vara dekoration.
+
+- **Mallar att kopiera från:** kraft-och-rorelse, periodiska-systemet, genetik (mest kompletta).
 
 ## Statusöversikt
 
-| Område | Kärn-HTML (13) | Data (5) | Språk (10) | Korsord | Områdesspecifikt |
+| Område | Kärn-HTML (13) | Data (5) | Språk (10) | Korsord | Audio |
 |---|---|---|---|---|---|
-| biologi/Sex-och-relationer | 2/13 | 0/5 | 0/10 | ✗ | `menstruationscykeln.html`, `sex-samtycke-kort.html` |
-| biologi/ekologi | 2/13 | 0/5 | 0/10 | ✗ | `trad-och-blad.html` |
-| biologi/evolution | 1/13 | 0/5 | 0/10 | ✗ | `Fanerozoikum-lar-mer.html`, `Fanerozoikum.html`, `nardada.html`, `nardada_regler.html` |
-| biologi/genetik | 13/13 | 5/5 | 0/10 | ✗ | `backupfile.html`, `backupindex.html`, `flashcards.html`, `klona-genen.html`, `korsningsscheman.html`, `kromosomer-i-siffror.html`, `laxor.html`, `tankekarta.html` |
-| biologi/hjarta-blod-lungor | 11/13 | 4/5 | 0/10 | ✓ | `blodets-vag.html`, `bygg-blodet.html` |
-| biologi/immunologi | 1/13 | 0/5 | 0/10 | ✗ | – |
-| biologi/infektionssjukdomar | 1/13 | 0/5 | 0/10 | ✗ | – |
-| biologi/matspjalkningen | 1/13 | 0/5 | 0/10 | ✗ | – |
-| biologi/nervsystemet | 1/13 | 0/5 | 0/10 | ✗ | `Flervalsfrågor.html`, `nervsystemet_flashcards.html` |
-| biologi/sinnena | 1/13 | 0/5 | 0/10 | ✗ | – |
-| biologi/vad-ar-liv | 1/13 | 0/5 | 0/10 | ✗ | – |
-| fysik/arbete-energi-effekt | 1/13 | 0/5 | 0/10 | ✗ | – |
-| fysik/atomfysik | 1/13 | 0/5 | 0/10 | ✗ | – |
-| fysik/elektricitet | 13/13 | 5/5 | 10/10 | ✗ | `ohms-lag-spel.html` |
-| fysik/kraft-och-rorelse | 13/13 | 5/5 | 10/10 | ✓ | `filmer.html`, `fragespel.html`, `gungbrada.html`, `pickup-simulering.html` |
-| fysik/ljud | 1/13 | 0/5 | 0/10 | ✗ | `flashcards-ljud.html` |
-| fysik/ljus | 1/13 | 0/5 | 0/10 | ✗ | `flashcards-ljus.html` |
-| fysik/magnetism-induktion | 13/13 | 5/5 | 10/10 | ✓ | `laborationer.html`, `laborationshandledningar.html`, `ohms-lag-spel.html` |
-| fysik/materia | 9/13 | 3/5 | 0/10 | ✗ | `memory.html` |
-| fysik/tryck | 1/13 | 0/5 | 0/10 | ✗ | – |
-| fysik/universum | 13/13 | 5/5 | 10/10 | ✗ | `grupparbete.html`, `laborationer.html`, `stjarnbilder-spel.html`, `stjarnbilder.html` |
-| kemi/atomer | 1/13 | 0/5 | 0/10 | ✗ | `flashcards.html` |
-| kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | `adel-eller-oadel.html`, `bygg-ett-batteri.html` |
-| kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | `laborationer-print.html`, `laborationer.html` |
-| kemi/kolforeningar | 1/13 | 0/5 | 0/10 | ✗ | – |
-| kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | – |
-| kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | `bildstod.html`, `memory.html`, `trana-med-ai.html` |
-| kemi/separationsprocesser | 1/13 | 0/5 | 0/10 | ✗ | – |
-| kemi/syror-och-baser | 13/13 | 5/5 | 10/10 | ✗ | `syra-eller-bas.html` |
+| biologi/Sex-och-relationer | 2/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/ekologi | 2/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/evolution | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/genetik | 13/13 | 5/5 | 0/10 | ✗ | ✓ |
+| biologi/hjarta-blod-lungor | 11/13 | 4/5 | 0/10 | ✓ | ✗ |
+| biologi/immunologi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/infektionssjukdomar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/liv-och-cellen | 3/13 | 1/5 | 0/10 | ✗ | ✗ |
+| biologi/matspjalkningen | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/nervsystemet | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/sinnena | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/arbete-energi-effekt | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/atomfysik | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/elektricitet | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
+| fysik/kraft-och-rorelse | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
+| fysik/ljud | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/ljus | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/magnetism-induktion | 13/13 | 5/5 | 10/10 | ✓ | ✓ |
+| fysik/materia | 9/13 | 3/5 | 0/10 | ✗ | ✗ |
+| fysik/tryck | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| fysik/universum | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
+| kemi/atomer | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
+| kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/kolforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
+| kemi/separationsprocesser | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/syror-och-baser | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
 
-## Luckor per område (vad som saknas mot standarden)
+## Öppna punkter (backlog)
 
-- **biologi/Sex-och-relationer** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/ekologi** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/evolution** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/genetik** — saknar → språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/hjarta-blod-lungor** — saknar → HTML: `begreppslista.html`, `studieguide.html` · data: `data/begrepp.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/immunologi** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/infektionssjukdomar** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/matspjalkningen** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/nervsystemet** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/sinnena** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **biologi/vad-ar-liv** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/arbete-energi-effekt** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/atomfysik** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/elektricitet** — ✓ komplett mot standarden (korsord saknas, valfritt)
-- **fysik/kraft-och-rorelse** — ✓ komplett mot standarden
-- **fysik/ljud** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/ljus** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/magnetism-induktion** — ✓ komplett mot standarden
-- **fysik/materia** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `larande-spel.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/tryck** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **fysik/universum** — ✓ komplett mot standarden (korsord saknas, valfritt)
-- **kemi/atomer** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **kemi/elektrokemi** — ✓ komplett mot standarden
-- **kemi/jonforeningar** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **kemi/kolforeningar** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **kemi/matens-kemi** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **kemi/periodiska-systemet** — ✓ komplett mot standarden
-- **kemi/separationsprocesser** — saknar → HTML: `begreppskort.html`, `begreppslista.html`, `checklista.html`, `facit-print.html`, `facit.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `instuderingsfragor.html`, `larande-spel.html`, `ovningsprov-print.html`, `ovningsprov.html`, `studieguide.html` · data: `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json` · språk (10): en, es, ar, so, fa, am, ps, pl, bs, ur
-- **kemi/syror-och-baser** — ✓ komplett mot standarden (korsord saknas, valfritt)
+### Klart sedan juni 2026
+
+- elektricitet färdigt (instud., prov, facit, begreppskort). Utskriftsnamn enhetliga. Flerspråk ombyggt + utbyggt till 7 områden × 10 språk (inkl. urdu). `larande-spel.html.bak` och `periodiska/Old/` borttagna.
+
+### Städning kvar
+
+- `kemi/periodiska-systemet/begrepp.json` i roten – dubblett av `data/begrepp.json`, ta bort (säkerställ inga länkar).
+
+- `kemi/periodiska-systemet/sprak/` (prs, uk, en, fa, ar, so) – gammalt språksystem, ersatt av `data/begrepp.*.json`. Ta bort när inget länkar dit (t.ex. bildstod).
+
+- `biologi/genetik/`: gamla `backupfile.html` / `backupindex.html` kan rensas.
+
+### Sprid funktioner till fler områden
+
+- **Audio/lyssna:** finns bara i magnetism-induktion – generalisera + spela in per milstolpe i övriga.
+
+- **Korsord:** saknas i elektricitet, universum, syror-och-baser.
+
+- **Laborationer, 'träna med AI', bildstöd:** rulla ut från de områden som har dem.
+
+### Konkreta byggen
+
+- **Fanerozoikum-frågespel** (`biologi/evolution/Fanerozoikum.html`): porta chansa/säkra, timer+buzzer, poäng (localStorage), segeröverlay, lösenordsskyddad inställningspanel (lösen 'JTo') från `fysik/kraft-och-rorelse/fragespel.html`.
+
+- **Provfrågor:** prov-formatet har ändrats sedan juni – räkna om antal frågor per nytt format och fyll på där det är tunt (magnetism, periodiska).
+
+### Liv och cellen (åk 7) – NYTT, grund byggd aug 2026
+
+- Klart: område omdöpt (vad-ar-liv → liv-och-cellen), studieguide (6 milstolpar, egen text), `data/begrepp.json` (24 begrepp), index i standardlayout, spelet Livet och cellen kvar.
+
+- Återstår: checklista, instuderingsfrågor, övningsprov + facit, begreppslista, begreppskort, print-sidor, ev. korsord; översättningar (`begrepp.<språk>.json`).
+
+- Lägg till filer: filmen `biologi/liv-och-cellen/film/encelligt-djurs-dramatiska-dod.mp4` och bilden `images/biologi/liv-och-cellen/toffeldjur.jpg` (ankare finns redan i studieguidens M4).
+
+
+*Större idéer/backlog (läxbank, laborationsbank, PPT till lärare, AI-coaching, nationella prov m.m.) ligger kvar i `CLAUDE.md` under 'Idéer och påminnelser'.*
+

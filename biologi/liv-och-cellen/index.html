@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liv och cellen – Biologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-liv-och-cellen {
+      --area: #0f9d76;
+      --area-strong: #0b7a5c;
+      --area-soft: #eafaf4;
+      --area-border: #b6ead9;
+      --area-hover: #d6f5ea;
+    }
+
+    main { font-size: 1.2em; }
+
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) {
+      .area-layout { grid-template-columns: 300px 1fr; align-items: start; }
+    }
+    .area-main { min-width: 0; }
+
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: var(--area-strong); }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
+
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image svg { width: 90%; max-width: 90%; height: auto; display: block; margin: 0 auto; }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
+    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 1rem; }
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
+    .concept-list li {
+      font-size: 0.95rem; color: #1f2937; line-height: 1.35; padding: 0.22rem 0;
+      break-inside: avoid; display: flex; align-items: baseline; gap: 0.3rem;
+    }
+    .concept-list li::before { content: "→"; color: var(--area); font-size: 0.78rem; flex-shrink: 0; }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem;
+      background: var(--area-soft); color: var(--area-strong); border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none;
+      font-size: 0.93rem; font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--area);
+      color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+
+    .role-toggle {
+      display: flex; gap: 0.5rem; align-items: center; margin: 0 0 1rem auto; padding: 0.5rem 0.75rem;
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 999px;
+      width: fit-content; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    .role-toggle button {
+      background: #fff; border: 1px solid var(--area-border); border-radius: 999px;
+      padding: 0.45rem 1.1rem; color: var(--area-strong); cursor: pointer; font-size: 1rem;
+      font-weight: 600; font-family: inherit; transition: background 0.15s ease, color 0.15s ease;
+    }
+    .role-toggle button:hover { background: var(--area-hover); }
+    .role-toggle button.active { background: var(--area); color: #fff; border-color: var(--area); }
+    .role-toggle span { align-self: center; color: var(--area-strong); font-size: 0.95rem; font-weight: 600; margin-right: 0.3rem; }
+    body[data-role="larare"] .resource-grid article:last-child { order: -1; }
+
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="area-liv-och-cellen">
+
+  <header class="biologi-header">
+    <h1>Liv och cellen</h1>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+      <a href="/biologi/ekologi/" class="subject-btn">Nästa område →</a>
+    </p>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
+
+    <div class="lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+              <li class="todo">Checklista <span class="under-konstruktion">under konstruktion</span></li>
+              <li class="todo">Instuderingsfrågor <span class="under-konstruktion">under konstruktion</span></li>
+              <li class="todo">Övningsprov <span class="under-konstruktion">under konstruktion</span></li>
+            </ul>
+          </article>
+
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li class="todo">Begreppslista <span class="under-konstruktion">under konstruktion</span></li>
+              <li class="todo">Facit till övningsprovet <span class="under-konstruktion">under konstruktion</span></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Lär dig först <strong>livets sex kännetecken</strong> – de återkommer överallt.</li>
+              <li>Håll isär <em>encellig</em> och <em>flercellig</em>, och kedjan cell → vävnad → organ.</li>
+              <li>Lär dig organellerna genom vad de <em>gör</em> först, sätt namnen sedan.</li>
+              <li>Kom ihåg vad som är typiskt för <strong>växtceller</strong>: cellvägg, kloroplaster och stor vakuol.</li>
+              <li>Öva på cellbilderna i spelet tills du klarar att sätta ut alla delar.</li>
+              <li>Skilj på <strong>bakterie</strong> (encellig, levande) och <strong>virus</strong> (inte en cell, oftast inte levande).</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Illustration av en djurcell med cellmembran, cellkärna, mitokondrier och ribosomer">
+            <defs>
+              <radialGradient id="cyto" cx="45%" cy="38%" r="72%">
+                <stop offset="0%" stop-color="#fdf6cf"/>
+                <stop offset="100%" stop-color="#f1de88"/>
+              </radialGradient>
+            </defs>
+            <path d="M200,26 C280,22 348,64 358,140 C366,196 344,254 292,286 C242,314 168,314 120,284 C74,254 46,194 58,140 C70,78 130,34 200,26 Z"
+                  fill="url(#cyto)" stroke="#e2bf5b" stroke-width="5"/>
+            <g transform="rotate(-20 120 214)">
+              <ellipse cx="120" cy="214" rx="40" ry="20" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
+              <path d="M88,214 q10,-12 20,0 q10,12 20,0 q10,-12 20,0" fill="none" stroke="#5aa7bf" stroke-width="2.2"/>
+            </g>
+            <g transform="rotate(16 286 196)">
+              <ellipse cx="286" cy="196" rx="38" ry="19" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
+              <path d="M256,196 q9,-11 19,0 q9,11 19,0 q9,-11 19,0" fill="none" stroke="#5aa7bf" stroke-width="2.2"/>
+            </g>
+            <circle cx="256" cy="112" r="5" fill="#d9506a"/><circle cx="270" cy="126" r="5" fill="#d9506a"/>
+            <circle cx="250" cy="184" r="5" fill="#d9506a"/><circle cx="150" cy="96" r="5" fill="#d9506a"/>
+            <circle cx="184" cy="142" r="46" fill="#bfe4f0" stroke="#6badc4" stroke-width="5"/>
+            <circle cx="184" cy="142" r="14" fill="#8fc9db"/>
+          </svg>
+          <figcaption class="hero-caption">
+            <h3>En cell – livets minsta byggsten</h3>
+            <p>Allt levande är byggt av celler. Bilden visar en <strong>djurcell</strong>: ytterst cellmembranet (portvakten), i mitten den blå cellkärnan (kontrollcentrum med DNA), de bönformade mitokondrierna (kraftverk) och de små röda ribosomerna (proteinfabriker).</p>
+            <p>I studieguiden lär du dig alla delarna – och i spelet får du klicka ut dem själv i både djur- och växtceller.</p>
+          </figcaption>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Organism">Organism</button></li>
+            <li><button class="concept-btn" data-concept="Cell">Cell</button></li>
+            <li><button class="concept-btn" data-concept="Encellig">Encellig</button></li>
+            <li><button class="concept-btn" data-concept="Flercellig">Flercellig</button></li>
+            <li><button class="concept-btn" data-concept="Celldelning">Celldelning</button></li>
+            <li><button class="concept-btn" data-concept="Vävnad">Vävnad</button></li>
+            <li><button class="concept-btn" data-concept="Organ">Organ</button></li>
+            <li><button class="concept-btn" data-concept="Cellmembran">Cellmembran</button></li>
+            <li><button class="concept-btn" data-concept="Cellkärna">Cellkärna</button></li>
+            <li><button class="concept-btn" data-concept="Cytoplasma">Cytoplasma</button></li>
+            <li><button class="concept-btn" data-concept="Mitokondrie">Mitokondrie</button></li>
+            <li><button class="concept-btn" data-concept="Ribosom">Ribosom</button></li>
+            <li><button class="concept-btn" data-concept="Cellvägg">Cellvägg</button></li>
+            <li><button class="concept-btn" data-concept="Kloroplast">Kloroplast</button></li>
+            <li><button class="concept-btn" data-concept="Vakuol">Vakuol</button></li>
+            <li><button class="concept-btn" data-concept="Fotosyntes">Fotosyntes</button></li>
+            <li><button class="concept-btn" data-concept="DNA">DNA</button></li>
+            <li><button class="concept-btn" data-concept="Bakterie">Bakterie</button></li>
+            <li><button class="concept-btn" data-concept="Virus">Virus</button></li>
+            <li><button class="concept-btn" data-concept="Nedbrytare">Nedbrytare</button></li>
+            <li><button class="concept-btn" data-concept="Antibiotika">Antibiotika</button></li>
+            <li><button class="concept-btn" data-concept="Art">Art</button></li>
+            <li><button class="concept-btn" data-concept="Hybrid">Hybrid</button></li>
+            <li><button class="concept-btn" data-concept="Domän">Domän</button></li>
+          </ul>
+          <p class="concept-note">Detta är åk 7:s första biologiområde och en förkunskap till <a href="/biologi/genetik/">Genetik</a>.</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vad är liv?</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Cellen – livets minsta byggsten</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Cellens delar – organellerna</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Livet i mikroskopet</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Bakterier och virus</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Att sortera och namnge livet</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  window.BEGREPP = [
+    { "namn": "Organism", "definition": "En levande varelse. En organism har alla livets sex kännetecken: den består av celler, kan fortplanta sig, tar upp och ger ifrån sig ämnen, behöver energi och reagerar på sin omgivning.", "anchor": "./studieguide.html#m1" },
+    { "namn": "Cell", "definition": "Den minsta delen som lever. Alla organismer är byggda av celler. De flesta celler är så små att man behöver mikroskop för att se dem.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Encellig", "definition": "En organism som består av en enda cell, till exempel en bakterie eller ett toffeldjur.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Flercellig", "definition": "En organism som är byggd av många celler som samarbetar och är specialiserade på olika uppgifter.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Celldelning", "definition": "När en cell delar sig och blir två. Så växer kroppen, byter ut slitna celler och så förökar sig encelliga organismer.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Vävnad", "definition": "Många likadana celler med samma uppgift som tillsammans bildar en enhet, till exempel muskelvävnad.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Organ", "definition": "En kroppsdel som är uppbyggd av flera olika vävnader och har en bestämd uppgift, till exempel hjärtat.", "anchor": "./studieguide.html#m2" },
+    { "namn": "Cellmembran", "definition": "Cellens yttre hölje och portvakt – bestämmer vilka ämnen som får komma in och ut. Finns i alla celler.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Cellkärna", "definition": "Cellens kontrollcentrum. Innehåller arvsmassan (DNA) och styr cellen. Finns i djur- och växtceller men inte i bakterier.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Cytoplasma", "definition": "Den geléartade vätskan inuti cellen där organellerna ligger.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Mitokondrie", "definition": "Cellens kraftverk – frigör den energi cellen behöver. Finns i både djur- och växtceller.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Ribosom", "definition": "Cellens proteinfabrik – bygger ihop proteiner.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Cellvägg", "definition": "Ett styvt skal utanpå cellmembranet som ger form och stöd. Finns hos växtceller men inte hos djurceller.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Kloroplast", "definition": "Den gröna organellen i växtceller där fotosyntesen sker och fångar ljusenergi. Djurceller saknar kloroplaster.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Vakuol", "definition": "En vätskefylld blåsa i cellen. I växtceller ofta stor; lagrar ämnen och ger cellen spänst.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Fotosyntes", "definition": "Processen i växternas kloroplaster där ljusenergi fångas och används för att bygga energirika ämnen.", "anchor": "./studieguide.html#m3" },
+    { "namn": "DNA", "definition": "Arvsmassan i cellkärnan – ritningen som bestämmer cellens och organismens egenskaper.", "anchor": "./studieguide.html#m3" },
+    { "namn": "Bakterie", "definition": "En encellig organism, mycket mindre än våra celler och utan cellkärna. Många är nyttiga nedbrytare; en del orsakar sjukdomar.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Virus", "definition": "Ett smittämne som inte består av celler och oftast inte räknas som levande. Måste kapa en cell för att föröka sig. Antibiotika hjälper inte mot virus.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Nedbrytare", "definition": "Organismer, t.ex. bakterier och svampar, som bryter ner döda växter och djur till ny näring.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Antibiotika", "definition": "Läkemedel som dödar eller hämmar bakterier, t.ex. penicillin. Biter inte på virus och bör användas sparsamt.", "anchor": "./studieguide.html#m5" },
+    { "namn": "Art", "definition": "Organismer som kan få fruktsam avkomma tillsammans under naturliga förhållanden. Människan är arten Homo sapiens.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Hybrid", "definition": "En blandning mellan två olika arter, t.ex. en mula. Hybrider är ofta ofruktsamma.", "anchor": "./studieguide.html#m6" },
+    { "namn": "Domän", "definition": "Den största indelningen av allt levande: vanliga bakterier, arkéer och organismer med cellkärna.", "anchor": "./studieguide.html#m6" }
+  ];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
+  <script>
+    (function () {
+      var STORE_KEY = "liv-och-cellen.role";
+      var btnElev = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active"); btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active"); btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+      try { if (localStorage.getItem(STORE_KEY) === "larare") setRole("larare"); } catch (e) {}
+      btnElev.addEventListener("click", function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
+</body>
+</html>

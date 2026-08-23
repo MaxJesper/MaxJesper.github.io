@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Liv och cellen</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body { --listen-color:#0b7a5c; --listen-border:#b6ead9; --listen-hover-bg:#eafaf4; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro {
+      background: #eafaf4;
+      border: 1px solid #b6ead9;
+      border-left: 4px solid #0b7a5c;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .milestone > summary::-webkit-details-marker { display: none; }
+    .milestone > summary::before {
+      content: "▸";
+      color: #0b7a5c;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #0b7a5c;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .milestone .m-title { font-size: 1.1rem; flex: 1; }
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+    .milestone .m-body p { margin: 0.6rem 0; line-height: 1.55; }
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure { margin: 0.9rem 0; text-align: left; }
+    .milestone figure img,
+    .milestone figure video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+    .milestone figcaption {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #eafaf4;
+      border-left: 4px solid #0b7a5c;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0b7a5c;
+    }
+
+    .lab-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid #ea7317;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+    .lab-box > strong.lab-rubrik {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.3rem;
+    }
+    .lab-box ol, .lab-box ul { margin: 0.4rem 0 0.2rem 1.2rem; }
+    .lab-box li { margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #a37a00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+    }
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning:"; display: block; margin-bottom: 0.15rem; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .todo-note {
+      display: block;
+      font-size: 0.82rem;
+      color: #92400e;
+      background: #fef9c3;
+      border: 1px dashed #f0c040;
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      margin-top: 0.5rem;
+      font-style: normal;
+    }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #eafaf4;
+      border: 1px solid #b6ead9;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .next-steps a:hover { background: #d6f5ea; transform: translateY(-1px); }
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #0b7a5c;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 0.9rem 0;
+    }
+    .compare-table th, .compare-table td {
+      border: 1px solid #d8d8d8;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+    }
+    .compare-table th { background: #eafaf4; color: #0b7a5c; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #f5fbf8; }
+    .compare-table td.ja { color: #0b7a5c; font-weight: 700; }
+    .compare-table td.nej { color: #b91c1c; }
+
+    a.cite {
+      font-size: 0.78rem;
+      color: #0b7a5c;
+      font-weight: 700;
+      vertical-align: super;
+      text-decoration: none;
+      margin-left: 0.05rem;
+    }
+    a.cite:hover { text-decoration: underline; }
+
+    .references {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #d8d8d8;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .references h2 { font-size: 1rem; color: #0b7a5c; margin: 0 0 0.6rem; }
+    .references ol { margin: 0 0 0 1.3rem; }
+    .references li { margin-bottom: 0.4rem; }
+    .references a { color: #0b7a5c; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="biologi-header">
+    <h1>Studieguide</h1>
+    <p>Liv och cellen</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eafaf4; border:1px solid #b6ead9; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#0b7a5c; cursor:pointer;">Öppna alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar något viktigt och leder dig sedan vidare till övningar, spel eller fördjupning.</p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De orangea rutorna är laborationer som hör till avsnittet.</p>
+      <div class="lang-selector-mount"></div>
+    </section>
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" id="m1" open>
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Vad är liv?</span>
+      </summary>
+      <div class="m-body">
+        <p>Ordet <strong class="term">biologi</strong> betyder "läran om livet". Men vad är egentligen liv? Fundera först själv: solen, en robot, vatten, en insekt, en ros och nedfallna höstlöv – vilka av dem lever?</p>
+        <p>Det finns ingen enda enkel mening som fångar vad liv är. I stället brukar man säga att allt levande delar en uppsättning <strong class="term">kännetecken</strong>. Något räknas som levande först när det har <em>alla</em> kännetecknen på en gång. Här är de sex vi utgår från:</p>
+        <p>Levande varelser <strong class="term">består av celler</strong>, de <strong class="term">kan fortplanta sig</strong> (nya individer föds och gamla dör), de <strong class="term">tar upp ämnen</strong> från omgivningen (en växt suger vatten genom rötterna, du äter och andas in syre), de <strong class="term">ger ifrån sig ämnen</strong> (du andas ut koldioxid, kroppen gör sig av med det den inte behöver), de <strong class="term">behöver energi</strong> för att leva och vara aktiva, och de <strong class="term">reagerar på sin omgivning</strong> (en växt vänder bladen mot ljuset, en sparv flyr när den ser en hök).</p>
+        <p>Testar vi exemplen mot listan är det bara <strong class="term">insekten och rosen</strong> som har alla sex. Solen, roboten och vattnet består inte av celler och kan inte fortplanta sig. Höstlöven på marken <em>har</em> varit levande, men nu har de slutat ta upp ämnen och använder inte längre energi – därför räknas de inte längre som liv. En levande varelse kallas också en <strong class="term">organism</strong>.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Allt levande har sex kännetecken samtidigt: det består av celler, kan fortplanta sig, tar upp och ger ifrån sig ämnen, behöver energi och reagerar på sin omgivning. En levande varelse kallas en organism.
+        </div>
+        <div class="next-steps">
+          <a href="./livet-och-cellen.html"><span class="n-label">Träna</span>Spelet Livet och cellen (Del 1)</a>
+          <a href="./larande-spel.html"><span class="n-label">Fler spel</span>Lärande spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Cellen – livets minsta byggsten</span>
+      </summary>
+      <div class="m-body">
+        <p>Det första kännetecknet – att bestå av celler – är själva nyckeln. En <strong class="term">cell</strong> är den minsta delen som lever. De flesta celler är så små att du behöver ett <strong class="term">mikroskop</strong> för att se dem: delar du en millimeter i hundra bitar är du ungefär på rätt storlek.</p>
+        <p>De enklaste organismerna klarar sig med en enda cell. De kallas <strong class="term">encelliga</strong> – hit hör bakterier och encelliga djur som amöban. Den enda cellen måste sköta allt själv: hitta mat, försvara sig och föröka sig. En amöba förökar sig genom <strong class="term">celldelning</strong> – en fullvuxen cell delar sig och blir två nya.</p>
+        <p>Större varelser är <strong class="term">flercelliga</strong> och byggda av många celler som samarbetar. Din kropp har över hundra tusen miljarder celler av omkring 200 olika slag – muskelceller som drar ihop sig, nervceller som skickar signaler, benceller som bygger skelettet. Att cellerna är <em>specialiserade</em> på olika uppgifter är hela styrkan med att vara flercellig.</p>
+        <p>Cellerna är dessutom organiserade i nivåer. Många likadana celler med samma uppgift bildar tillsammans en <strong class="term">vävnad</strong> – till exempel muskelvävnad. Flera olika vävnader bygger i sin tur upp ett <strong class="term">organ</strong>. Hjärtat är ett organ av bland annat muskelvävnad och nervvävnad; lever, lungor och njurar är andra exempel.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Cellen är den minsta levande delen. Encelliga organismer består av en enda cell, flercelliga av många specialiserade celler. Likadana celler bildar en vävnad, och olika vävnader bygger upp ett organ.
+        </div>
+        <div class="next-steps">
+          <a href="#m3"><span class="n-label">Fortsätt</span>Cellens delar</a>
+          <a href="./livet-och-cellen.html"><span class="n-label">Träna</span>Spelet Livet och cellen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Cellens delar – organellerna</span>
+      </summary>
+      <div class="m-body">
+        <p>Zoomar man in i en cell hittar man en rad små "organ" med var sin uppgift. De kallas <strong class="term">organeller</strong>. Att kunna rita en cell och sätta namn på delarna är ett av målen i det här området – börja därför med att lära dig vad varje del <em>gör</em>, så sitter namnen lättare.</p>
+        <p>Ytterst har varje cell ett <strong class="term">cellmembran</strong>. Det håller ihop cellen och fungerar som en portvakt: det bestämmer vilka ämnen som får komma in och ut. Innanför membranet finns en geléartad vätska, <strong class="term">cytoplasman</strong>, där de andra delarna ligger. Cellens kontrollcentrum är <strong class="term">cellkärnan</strong>. Den styr cellen och innehåller arvsmassan, <strong class="term">DNA</strong>, som är ritningen för allt cellen gör.</p>
+        <p>Två organeller gör vardagsjobbet. <strong class="term">Mitokondrien</strong> är cellens kraftverk – där frigörs energin som cellen behöver för att leva. <strong class="term">Ribosomerna</strong> är cellens små proteinfabriker; de bygger proteiner, de ämnen som utför det mesta i kroppen.</p>
+        <p>En växtcell har allt detta – men också tre delar till som djurceller saknar. Utanpå cellmembranet ligger en styv <strong class="term">cellvägg</strong> som ger växtcellen dess fasta, kantiga form och stöd. Inuti finns gröna <strong class="term">kloroplaster</strong>, och det är i dem <strong class="term">fotosyntesen</strong> sker: de fångar ljusenergi från solen. Djur kan inte använda ljus som energikälla. Dessutom har växtcellen ofta en stor <strong class="term">vakuol</strong> – en vätskefylld blåsa som lagrar ämnen och ger cellen spänst.</p>
+        <table class="compare-table">
+          <thead>
+            <tr><th>Del</th><th>Djurcell</th><th>Växtcell</th><th>Uppgift</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cellmembran</td><td class="ja">Ja</td><td class="ja">Ja</td><td>Portvakt – släpper in och ut ämnen</td></tr>
+            <tr><td>Cellkärna</td><td class="ja">Ja</td><td class="ja">Ja</td><td>Styr cellen, innehåller DNA</td></tr>
+            <tr><td>Cytoplasma</td><td class="ja">Ja</td><td class="ja">Ja</td><td>Vätskan där organellerna ligger</td></tr>
+            <tr><td>Mitokondrie</td><td class="ja">Ja</td><td class="ja">Ja</td><td>Kraftverk – frigör energi</td></tr>
+            <tr><td>Ribosom</td><td class="ja">Ja</td><td class="ja">Ja</td><td>Bygger proteiner</td></tr>
+            <tr><td>Cellvägg</td><td class="nej">Nej</td><td class="ja">Ja</td><td>Styvt skal – form och stöd</td></tr>
+            <tr><td>Kloroplast</td><td class="nej">Nej</td><td class="ja">Ja</td><td>Fotosyntes – fångar ljusenergi</td></tr>
+            <tr><td>Vakuol (stor)</td><td class="nej">Nej</td><td class="ja">Ja</td><td>Lagrar ämnen, ger spänst</td></tr>
+          </tbody>
+        </table>
+        <p>Ett bra sätt att befästa delarna är att öva på en cellbild där du klickar på eller skriver in rätt namn. I spelet <a href="./livet-och-cellen.html">Livet och cellen</a> får du klicka ut organellerna i både en djur- och en växtcell.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Alla celler har cellmembran, cytoplasma, cellkärna, mitokondrier och ribosomer. Växtceller har dessutom cellvägg, kloroplaster (fotosyntes) och en stor vakuol.
+        </div>
+        <details class="deepen">
+          <summary>Fler delar du kan stöta på</summary>
+          <p><strong>Golgiapparaten</strong> ser ut som en trave böjda blåsor och paketerar ämnen och skickar dem vidare i cellen. <strong>Det endoplasmatiska nätverket (ER)</strong> är ett system av slingrande kanaler runt cellkärnan där ämnen transporteras och proteiner bearbetas. Du behöver inte kunna dem utantill i det här området, men de finns med i cellbilderna så att du känner igen dem.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./livet-och-cellen.html"><span class="n-label">Träna</span>Klicka ut organellerna</a>
+          <a href="#m4"><span class="n-label">Fortsätt</span>Livet i mikroskopet</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Livet i mikroskopet</span>
+      </summary>
+      <div class="m-body">
+        <p>Nu blir cellerna på riktigt. Med skolans mikroskop kan du se celler som annars är helt osynliga – och du kan titta på levande encelliga djur som simmar omkring. Här är de undersökningar vi gör.</p>
+
+        <div class="lab-box">
+          <strong class="lab-rubrik">Laboration 1 · Dina egna kindceller</strong>
+          <p>Du skrapar försiktigt insidan av kinden med en sked eller topspinne och stryker av på ett objektglas. En droppe färg (t.ex. metylenblått) gör cellkärnan tydlig.</p>
+          <ol>
+            <li>Leta upp enstaka celler vid låg förstoring, ställ sedan skärpan i högre förstoring.</li>
+            <li>Rita en cell och sätt ut <em>cellmembran</em>, <em>cytoplasma</em> och <em>cellkärna</em>.</li>
+            <li>Fundera: varför ser du ingen cellvägg och inga kloroplaster? (För att det är en <em>djurcell</em>.)</li>
+          </ol>
+        </div>
+
+        <div class="lab-box">
+          <strong class="lab-rubrik">Laboration 2 · Färdiga preparat och lökens rotspets</strong>
+          <p>Vi tittar också på färdiga preparat i mikroskopet. Ett viktigt är en <strong class="term">rotspets av lök</strong>, där cellerna delar sig flitigt. Här kan du se växtceller med tydlig kantig form – och om du letar hittar du celler mitt i en celldelning.</p>
+          <p class="todo-note">Samma lökrotspets möter du igen i årskurs 9, när vi arbetar med genetik och celldelning (mitos). Det du ser här lägger grunden för det.</p>
+        </div>
+
+        <div class="lab-box">
+          <strong class="lab-rubrik">Laboration 3 · Höinfusion – en droppe full av liv</strong>
+          <p>Lägg lite hö i ett glas vatten och låt det stå några dagar i rumsvärme. Snart myllrar vattnet av <strong class="term">encelliga organismer</strong> som lever av bakterierna som växer i höet.</p>
+          <ol>
+            <li>Ta en droppe från ytan, lägg på ett objektglas med täckglas.</li>
+            <li>Sök vid låg förstoring efter något som rör sig – ställ sedan in skärpan.</li>
+            <li>Se om du känner igen ett <em>toffeldjur</em>: det är avlångt som en tofflans sula och simmar genom att vifta med tusentals små flimmerhår.</li>
+          </ol>
+        </div>
+
+        <p>Ett toffeldjur är ett <strong class="term">encelligt djur</strong> – en enda cell som ändå jagar, äter, håller sin vattenbalans och förökar sig. Nedan ser du ett toffeldjur fotograferat genom mikroskopet i just ett sådant preparat.</p>
+        <figure>
+          <img src="/images/biologi/liv-och-cellen/toffeldjur.jpg" alt="Toffeldjur (en encellig organism) fotograferat genom mikroskop i ett höinfusionspreparat" />
+          <figcaption><strong>Toffeldjur.</strong> Ett encelligt djur, format som en toffelsula, som simmar med hjälp av flimmerhår. Egen mikroskopbild från vårt höinfusionspreparat.
+            <span class="todo-note">Bildfil att lägga till: <code>images/biologi/liv-och-cellen/toffeldjur.jpg</code></span>
+          </figcaption>
+        </figure>
+
+        <p>Till sist tittar vi på en film jag själv har spelat in – <em>ett encelligt djurs dramatiska död</em>. I den ser du på nära håll hur en enda cell kämpar för sin överlevnad när värmen från mikroskopet rubbar dess vattenbalans: den sväller, slukar en förbisimmande bakterie (cellens sista måltid) och till slut brister cellmembranet så att innehållet rinner ut. Titta särskilt efter <strong class="term">cellmembranet</strong> och hur cellen sköter sin <strong class="term">vattenbalans</strong>.</p>
+        <figure>
+          <video controls preload="none" poster="/images/biologi/liv-och-cellen/toffeldjur.jpg">
+            <source src="./film/encelligt-djurs-dramatiska-dod.mp4" type="video/mp4" />
+            Din webbläsare kan inte spela upp filmen. Ladda ned den i stället: <a href="./film/encelligt-djurs-dramatiska-dod.mp4">encelligt-djurs-dramatiska-dod.mp4</a>.
+          </video>
+          <figcaption><strong>Ett encelligt djurs dramatiska död (400×).</strong> Egen film. Cellen överhettas, tappar vattenbalansen, äter en bakterie och brister till slut när membranet ger vika.
+            <span class="todo-note">Filmfil att lägga till: <code>biologi/liv-och-cellen/film/encelligt-djurs-dramatiska-dod.mp4</code></span>
+          </figcaption>
+        </figure>
+
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          I mikroskopet kan du se dina egna kindceller (djurceller), växtceller i lökens rotspets och levande encelliga djur i en höinfusion. Ett toffeldjur är ett encelligt djur som sköter allt liv i en enda cell.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m5"><span class="n-label">Fortsätt</span>Bakterier och virus</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Bakterier och virus</span>
+      </summary>
+      <div class="m-body">
+        <p>En <strong class="term">bakterie</strong> är en enda liten cell, mycket mindre än våra egna. Bakterier finns överallt och förökar sig genom delning – under goda förhållanden kan en bakterie bli två på så lite som 20 minuter, så antalet växer explosionsartat.</p>
+        <p>De flesta bakterier är nyttiga eller ofarliga. Många är viktiga <strong class="term">nedbrytare</strong>: de bryter ner döda växter och djur till näring som blir ny jord. På och i din kropp lever mängder av bakterier som hjälper dig, till exempel genom att bilda vitaminer i tarmen. Bara en del bakterier gör oss sjuka, och mot sådana bakteriesjukdomar kan läkaren skriva ut <strong class="term">antibiotika</strong>, till exempel penicillin.</p>
+        <p>Ett <strong class="term">virus</strong> är något helt annat. Ett virus består inte av celler och räknas oftast inte som levande. Det är egentligen bara ett skal med lite arvsmassa inuti, och det kan inte föröka sig på egen hand. I stället kapar viruset en levande cell och lurar den att tillverka nya viruspartiklar. Vanlig förkylning orsakas av virus – och därför hjälper inte penicillin mot en förkylning, eftersom antibiotika bara biter på bakterier.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Bakterier är encelliga och förökar sig genom delning; många är nyttiga nedbrytare, en del orsakar sjukdomar som antibiotika biter på. Virus består inte av celler, räknas inte som levande och måste kapa en cell för att föröka sig.
+        </div>
+        <details class="deepen">
+          <summary>Antibiotikaresistens – varför vi ska vara sparsamma</summary>
+          <p>Ibland förändras en bakteries arvsmassa av en slump (en <em>mutation</em>) så att den tål antibiotikan. Eftersom bakterier förökar sig så snabbt kan en enda sådan tålig bakterie på kort tid bli miljontals. Ju oftare vi använder antibiotika, desto större blir chansen att just de resistenta bakterierna gynnas. Därför ska antibiotika användas bara när det verkligen behövs.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m6"><span class="n-label">Fortsätt</span>Att sortera livet</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 ========== -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Att sortera och namnge livet</span>
+      </summary>
+      <div class="m-body">
+        <p>Det finns ofattbart många sorters organismer – biologerna har hittills beskrivit över 1,5 miljoner <strong class="term">arter</strong>, och det finns troligen många miljoner kvar att upptäcka. För att hålla ordning på allt behöver man sortera och namnge.</p>
+        <p>En <strong class="term">art</strong> är en grupp organismer som kan få ungar tillsammans under naturliga förhållanden – ungar som i sin tur kan få egna ungar. En talgoxe och en blåmes ser lika ut men är olika arter, för de får inga gemensamma ungar. En häst och en åsna kan få en unge (en mula), men mulan blir aldrig själv förälder – därför räknas häst och åsna som olika arter. En blandning mellan två arter kallas en <strong class="term">hybrid</strong>.</p>
+        <p>På 1700-talet skapade svensken <strong class="term">Carl von Linné</strong> ett system för att sortera och namnge arter. Han gav varje art ett vetenskapligt namn med <strong class="term">två ord</strong>: det första talar om vilket släkte arten tillhör, det andra pekar ut just den arten. Systemet används i hela världen än idag – människan heter till exempel <em>Homo sapiens</em>.</p>
+        <p>I den största indelningen delas allt levande numera in i tre stora huvudgrupper, så kallade <strong class="term">domäner</strong>: vanliga bakterier, arkéer (en grupp märkliga bakterieliknande organismer som ofta lever i extrema miljöer) och en tredje domän som rymmer alla organismer med cellkärna – alltså växter, svampar och djur, oss själva inräknade.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En art är organismer som kan få fruktsam avkomma tillsammans. Linné gav arterna vetenskapliga namn med två ord. Allt levande delas in i tre domäner, varav en rymmer alla organismer med cellkärna.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./livet-och-cellen.html"><span class="n-label">Träna</span>Lärande spel</a>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Hooke, R. (1665). <em>Micrographia.</em> London: Royal Society. (Första gången ordet <em>cell</em> användes om det man såg i mikroskop.)</li>
+        <li id="ref-2">Nationalencyklopedin. <em>Cell, encellig organism, art, domän.</em> <a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a></li>
+        <li id="ref-3">1177 Vårdguiden. <em>Antibiotika och antibiotikaresistens.</em> <a href="https://www.1177.se" target="_blank" rel="noopener">1177.se</a></li>
+        <li id="ref-4">Systema Naturae – Carl von Linnés system för att namnge arter med två ord (binär nomenklatur), infört från 1735 och framåt.</li>
+      </ol>
+      <p style="font-size:0.82rem;color:#777;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Faktauppgifter bygger på allmän biologisk kunskap och ovanstående källor; ingen lärobokstext har kopierats.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js" data-audio-base="/biologi/liv-och-cellen/audio/"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var hash = window.location.hash;
+        var match = hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 50);
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", openFromHash);
+      } else {
+        openFromHash();
+      }
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js"></script>
+</body>
+</html>
