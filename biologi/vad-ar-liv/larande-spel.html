@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Vad är liv?</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    .page-intro { margin-bottom: 1.5rem; }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 300px));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .resource-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .resource-thumb-link { display: block; text-decoration: none; }
+
+    .resource-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border: 1px solid #cfe3d6;
+      border-radius: 12px;
+      display: block;
+      background: #eef7f1;
+    }
+
+    .resource-title-link { text-decoration: none; color: inherit; }
+    .resource-title-link h2 { margin: 0; font-size: 1.15rem; }
+    .resource-title-link:hover h2 { text-decoration: underline; }
+
+    .resource-box p { margin: 0; color: #444; line-height: 1.35; }
+
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin: 0; }
+    .resource-box ul a { display: inline-block; text-decoration: none; font-weight: 600; }
+
+    .study-tips {
+      margin-top: 1.5rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+  </style>
+</head>
+<body>
+
+<header class="biologi-header">
+  <h1>Lärande spel</h1>
+  <p>Vad är liv?</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>
+    <a href="./" class="subject-btn">← Tillbaka</a>
+  </p>
+
+  <section class="page-intro">
+    <p>
+      Här hittar du lärande spel och övningar som hjälper dig att träna
+      begrepp och samband om livets kännetecken och cellens delar på ett aktivt sätt.
+    </p>
+  </section>
+
+  <section class="resource-grid">
+
+    <article class="resource-box">
+      <a class="resource-thumb-link" href="./livet-och-cellen.html" aria-label="Öppna spelet Livet och cellen">
+        <svg class="resource-thumb" viewBox="0 0 320 200" role="img" aria-label="Illustration av en cell">
+          <rect width="320" height="200" fill="#eaf3ff"/>
+          <!-- djurcell -->
+          <ellipse cx="98" cy="100" rx="82" ry="74" fill="#f1de88" stroke="#e2bf5b" stroke-width="4"/>
+          <ellipse cx="70" cy="128" rx="26" ry="13" fill="#a9dcec" stroke="#5aa7bf" stroke-width="2.5" transform="rotate(-18 70 128)"/>
+          <circle cx="96" cy="84" r="26" fill="#bfe4f0" stroke="#6badc4" stroke-width="4"/>
+          <circle cx="132" cy="70" r="3.5" fill="#d9506a"/><circle cx="140" cy="80" r="3.5" fill="#d9506a"/>
+          <!-- växtcell -->
+          <polygon points="228,34 288,44 312,100 288,158 220,152 196,96"
+                   fill="#f3a25a" stroke="#e5854a" stroke-width="5" stroke-linejoin="round"/>
+          <polygon points="230,46 282,55 302,100 282,148 224,142 206,98"
+                   fill="#f1de88" stroke="#e2bf5b" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="272" cy="128" rx="30" ry="30" fill="#bfe0ea" stroke="#7cb8cf" stroke-width="2.5"/>
+          <ellipse cx="238" cy="126" rx="20" ry="11" fill="#5fb85a" stroke="#2f7d3a" stroke-width="2.5" transform="rotate(-18 238 126)"/>
+          <circle cx="244" cy="82" r="20" fill="#bfe4f0" stroke="#6badc4" stroke-width="4"/>
+        </svg>
+      </a>
+      <a class="resource-title-link" href="./livet-och-cellen.html">
+        <h2>Livet och cellen</h2>
+      </a>
+      <p>Ett spel i två delar: livets sex kännetecken och skillnaden mellan levande och icke-levande – och cellens organeller i djur- och växtceller. Med klickbara celler och direkt återkoppling.</p>
+      <ul>
+        <li><a href="./livet-och-cellen.html">Öppna spelet</a></li>
+      </ul>
+    </article>
+
+  </section>
+
+  <section class="study-tips">
+    <details>
+      <summary>Tips</summary>
+      <ul>
+        <li>Börja med Del 1 för att befästa vad som kännetecknar liv och vad en cell är.</li>
+        <li>Fortsätt med Del 2 för att lära dig organellerna och vad de gör.</li>
+        <li>I de klickbara cellerna får du prova igen om du klickar fel – ta hjälp av färgerna.</li>
+        <li>Kör "Spela hela spelet" som repetition inför provet.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kerstin Klang – Legitimerad psykolog | Utredningar & behandling</title>
+<meta name="description" content="Legitimerad psykolog med lång erfarenhet av psykologiska utredningar och behandling med KBT, ACT och lösningsfokuserad terapi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f4ef;          /* varm beige */
+    --surface:#ffffff;
+    --ink:#2c3639;         /* mörk grågrön */
+    --muted:#5f6f6f;
+    --accent:#6f9c93;      /* dämpad salviagrön */
+    --accent-deep:#4f7871;
+    --line:#e4ded3;
+    --shadow:0 1px 2px rgba(44,54,57,.04),0 8px 24px rgba(44,54,57,.06);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.2;letter-spacing:-.01em}
+  a{color:var(--accent-deep);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+  /* Header / nav */
+  header.site{position:sticky;top:0;z-index:10;background:rgba(246,244,239,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600}
+  nav a{margin-left:26px;color:var(--muted);font-size:.95rem}
+  nav a:hover{color:var(--ink);text-decoration:none}
+  @media(max-width:640px){nav{display:none}}
+
+  /* Hero */
+  .hero{padding:88px 0 64px;text-align:center}
+  .eyebrow{display:inline-block;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);background:#eaf1ef;padding:6px 14px;border-radius:999px;margin-bottom:22px}
+  .hero h1{font-size:clamp(2.1rem,5vw,3.2rem);margin-bottom:18px}
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:620px;margin:0 auto 32px}
+  .btn{display:inline-block;background:var(--accent-deep);color:#fff;padding:13px 28px;border-radius:999px;font-weight:500;font-size:1rem;box-shadow:var(--shadow);transition:background .2s}
+  .btn:hover{background:#3f625c;text-decoration:none}
+
+  /* Sections */
+  section{padding:56px 0}
+  section.alt{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .section-head{margin-bottom:34px}
+  .section-head h2{font-size:1.9rem;margin-bottom:8px}
+  .section-head p{color:var(--muted)}
+
+  .prose p{margin-bottom:16px;max-width:680px}
+
+  /* Tjänstekort */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  section.alt .card{background:var(--bg)}
+  .card .ico{width:44px;height:44px;border-radius:12px;background:#eaf1ef;display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--accent-deep)}
+  .card h3{font-size:1.25rem;margin-bottom:10px}
+  .card p{color:var(--muted);font-size:.98rem}
+  .card ul{list-style:none;margin-top:12px}
+  .card li{color:var(--muted);font-size:.96rem;padding-left:20px;position:relative;margin-bottom:6px}
+  .card li::before{content:"";position:absolute;left:0;top:.65em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+  /* Priser */
+  .priser{margin-top:26px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px 26px;max-width:520px}
+  .priser h3{font-size:1.25rem;margin-bottom:6px}
+  .pris-rad{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:12px 0;border-bottom:1px solid var(--line)}
+  .pris-rad:last-child{border-bottom:none}
+  .pris-rad span{color:var(--muted)}
+  .pris-rad strong{font-weight:400;font-size:1.1rem;white-space:nowrap}
+
+  /* Kontakt */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;max-width:620px;margin-top:8px}
+  @media(max-width:640px){.contact-grid{grid-template-columns:1fr}}
+  .contact-item{padding:16px 0;border-bottom:1px solid var(--line)}
+  .contact-item span{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:4px}
+  .contact-item strong{font-weight:500;font-size:1.05rem}
+  .note{margin-top:28px;font-size:.9rem;color:var(--muted);background:#eaf1ef;border-radius:12px;padding:14px 18px}
+
+  footer.site{padding:34px 0;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+
+  .placeholder{color:#b06a5a}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Kerstin Klang</div>
+    <nav>
+      <a href="#om">Om mig</a>
+      <a href="#tjanster">Tjänster</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Legitimerad psykolog</span>
+      <h1>Psykologiska utredningar och behandling med omtanke</h1>
+      <p class="lead">Med lång erfarenhet erbjuder jag noggranna psykologiska utredningar samt behandling grundad i KBT, ACT och lösningsfokuserad terapi.</p>
+      <a class="btn" href="#kontakt">Boka tid</a>
+    </div>
+  </section>
+
+  <section id="om" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Om mig</h2>
+        <p>Erfarenhet, trygghet och ett personligt bemötande.</p>
+      </div>
+      <div class="prose">
+        <p>Jag är legitimerad psykolog med lång erfarenhet av både psykologiska utredningar och behandling. I mitt arbete möter jag varje person utifrån dennes egna förutsättningar, med lyhördhet, respekt och ett tydligt fokus på det som känns viktigt för dig.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tjanster">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Tjänster</h2>
+        <p>Det här kan jag hjälpa dig med.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+          </div>
+          <h3>Psykologiska utredningar</h3>
+          <p>Jag utreder ADHD, autism, intellektuell funktionsnedsättning och personlighetsstörning hos både barn och vuxna.</p>
+          <ul>
+            <li>Kartläggning och bedömning</li>
+            <li>Återkoppling på ett begripligt sätt</li>
+            <li>Skriftligt utlåtande</li>
+            <li>Remiss till psykiatriker</li>
+          </ul>
+          <p style="margin-top:12px;color:var(--muted)">Remiss skickas till önskad klinik för vidare insatser vid fastställd diagnos.</p>
+        </div>
+        <div class="card">
+          <div class="ico">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          </div>
+          <h3>Behandling</h3>
+          <p>Individuellt anpassad behandling som utgår från dina behov och mål, med metoder som har god vetenskaplig grund.</p>
+          <ul>
+            <li>KBT – kognitiv beteendeterapi</li>
+            <li>ACT – acceptance and commitment therapy</li>
+            <li>Lösningsfokuserad terapi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="priser">
+        <h3>Priser</h3>
+        <div class="pris-rad"><span>Utredning, vuxen</span><strong>11 000 kr</strong></div>
+        <div class="pris-rad"><span>Utredning, barn</span><strong>13 000 kr</strong></div>
+        <div class="pris-rad"><span>Terapisamtal</span><strong>1 000 kr</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kontakt</h2>
+        <p>Välkommen att höra av dig för en tid eller med frågor.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-item"><span>E-post</span><strong><a href="mailto:kerstinmklang@gmail.com">kerstinmklang@gmail.com</a></strong></div>
+        <div class="contact-item"><span>Telefon</span><strong><a href="tel:+46703501585">070-350 15 85</a></strong></div>
+        <div class="contact-item"><span>Mottagning</span><strong>KBT i Skåne AB</strong></div>
+        <div class="contact-item"><span>Adress</span><strong>Ö Vallgatan 35 B, 223 61 Lund</strong></div>
+      </div>
+      <div class="note">Obs: Skicka inga känsliga personuppgifter via e-post. Vid akuta ärenden, ring 1177 eller 112.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    © <span id="year"></span> Kerstin Klang, Legitimerad psykolog · KBT i Skåne AB, Lund
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
