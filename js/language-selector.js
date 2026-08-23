@@ -21,7 +21,8 @@
     { code: 'pl-PL', label: '🇵🇱 Polska (Polski)',            prefix: 'pl' },
     { code: 'en-GB', label: '🇬🇧 Engelska (English)',         prefix: 'en' },
     { code: 'bs',    label: '🇧🇦 Bosniska (Bosanski)',        prefix: 'bs' },
-    { code: 'es-ES', label: '🇪🇸 Spanska (Español)',         prefix: 'es' }
+    { code: 'es-ES', label: '🇪🇸 Spanska (Español)',         prefix: 'es' },
+    { code: 'ur-PK', label: '🇵🇰 Urdu (اردو)',              prefix: 'ur' }
   ];
 
   var CSS = [
@@ -42,7 +43,7 @@
   // Mappar TTS-språkkod → filprefix för begrepp-JSON (t.ex. 'ar-SA' → 'ar')
   var LANG_PREFIX = {
     'sv-SE': 'sv', 'ar-SA': 'ar', 'so': 'so', 'fa': 'fa',
-    'am-ET': 'am', 'ps-AF': 'ps', 'pl-PL': 'pl', 'en-GB': 'en', 'bs': 'bs', 'es-ES': 'es'
+    'am-ET': 'am', 'ps-AF': 'ps', 'pl-PL': 'pl', 'en-GB': 'en', 'bs': 'bs', 'es-ES': 'es', 'ur-PK': 'ur'
   };
 
   // Cache: {basePath+prefix → data[]}
