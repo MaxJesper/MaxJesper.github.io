@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instuderingsfrågor – Liv och cellen</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/instudering.css" />
+  <style>
+    body.area-liv-och-cellen{--area:#0f9d76;--area-strong:#0b7a5c;--area-soft:#eafaf4;--area-border:#b6ead9;}
+  </style>
+</head>
+
+<body class="area-liv-och-cellen">
+  <header class="biologi-header">
+    <h1>Instuderingsfrågor</h1>
+    <p>Liv och cellen</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="study-info" role="note" aria-label="Tips">
+      <strong>TIPS:</strong> Klicka på en fråga för att visa eller dölja svaret. Skriv gärna
+      ditt eget svar i rutan först – och jämför sedan med facit. Använd <strong>piltangenter ↑/↓</strong>
+      för att gå mellan frågor.
+    </div>
+
+    <div class="study-actions">
+      <a href="./" class="subject-btn">← Tillbaka till Liv och cellen</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <a href="./instuderingsfragor-print-elev.html" target="_blank" rel="noopener" class="subject-btn print-green">🖨️ Utskrift – elev</a>
+      <a href="./instuderingsfragor-print-larare.html" target="_blank" rel="noopener" class="subject-btn print-green">🖨️ Utskrift – lärare</a>
+    </div>
+
+    <div id="study-container" aria-live="polite"></div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-instudering.js"></script>
+  <script>
+    renderStudySet({
+      jsonPath: "./data/instuderingsfragor.json",
+      mountId: "study-container",
+      mode: "interactive"
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Kol och kolföreningar</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body { --listen-color:#6d28d9; --listen-border:#ddd6fe; --listen-hover-bg:#f5f3ff; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro {
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      border-left: 4px solid #6d28d9;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+    .milestone > summary {
+      list-style: none; cursor: pointer; padding: 1rem 1.1rem;
+      display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: #1a1a2e;
+    }
+    .milestone > summary::-webkit-details-marker { display: none; }
+    .milestone > summary::before {
+      content: "▸"; color: #6d28d9; font-size: 0.95rem;
+      transition: transform 0.15s ease; display: inline-block;
+    }
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+    .milestone .m-num {
+      font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: #6d28d9; font-weight: 700; white-space: nowrap;
+    }
+    .milestone .m-title { font-size: 1.1rem; flex: 1; }
+    .milestone .m-body { padding: 0 1.1rem 1.1rem 1.1rem; border-top: 1px solid #eee; padding-top: 0.9rem; }
+    .milestone .m-body p { margin: 0.6rem 0; line-height: 1.55; }
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .formula { font-family: "Cambria Math", Georgia, serif; white-space: nowrap; }
+    .struct {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      background: #faf9ff; border: 1px solid #ece9fb; border-radius: 8px;
+      padding: 0.7rem 0.9rem; margin: 0.8rem 0; line-height: 1.5; font-size: 0.95rem;
+      white-space: pre; overflow-x: auto;
+    }
+
+    .fact-box {
+      background: #f5f3ff; border-left: 4px solid #6d28d9; border-radius: 6px;
+      padding: 0.75rem 0.95rem; margin: 0.9rem 0; font-size: 0.98rem;
+    }
+    .fact-box strong {
+      display: block; margin-bottom: 0.25rem; font-size: 0.8rem;
+      letter-spacing: 1px; text-transform: uppercase; color: #6d28d9;
+    }
+
+    .safety-box {
+      background: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #ea7317;
+      border-radius: 8px; padding: 0.7rem 0.95rem; margin: 0.9rem 0; font-size: 0.96rem;
+    }
+    .safety-box strong { color: #b45309; }
+
+    .deepen {
+      background: #fffbe7; border-left: 4px solid #d4a017; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.8rem 0; font-size: 0.96rem;
+    }
+    .deepen > summary {
+      cursor: pointer; list-style: none; font-weight: 700; color: #a37a00;
+      font-size: 0.88rem; letter-spacing: 1px; text-transform: uppercase; padding: 0.1rem 0;
+    }
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning:"; display: block; margin-bottom: 0.15rem; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; margin-top: 1rem; }
+    .next-steps a {
+      display: block; padding: 0.7rem 0.9rem; background: #f5f3ff; border: 1px solid #ddd6fe;
+      border-radius: 8px; text-decoration: none; color: #1a1a2e; font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .next-steps a:hover { background: #ede9fe; transform: translateY(-1px); }
+    .next-steps a .n-label {
+      display: block; font-size: 0.72rem; letter-spacing: 1.4px; text-transform: uppercase;
+      color: #6d28d9; font-weight: 700; margin-bottom: 0.2rem;
+    }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 0.9rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.45rem 0.7rem; text-align: left; }
+    .compare-table th { background: #f5f3ff; color: #6d28d9; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #faf9ff; }
+
+    a.cite { font-size: 0.78rem; color: #6d28d9; font-weight: 700; vertical-align: super; text-decoration: none; margin-left: 0.05rem; }
+    a.cite:hover { text-decoration: underline; }
+
+    .references { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #d8d8d8; font-size: 0.9rem; line-height: 1.65; }
+    .references h2 { font-size: 1rem; color: #6d28d9; margin: 0 0 0.6rem; }
+    .references ol { margin: 0 0 0 1.3rem; }
+    .references li { margin-bottom: 0.4rem; }
+    .references a { color: #6d28d9; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+    @media (max-width: 520px) { main { font-size: 1.05em; } .milestone .m-title { font-size: 1rem; } }
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Studieguide</h1>
+    <p>Kol och kolföreningar</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#6d28d9; cursor:pointer;">Öppna alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe bygger vidare på den förra – från kolatomen och rent kol till de olika grupperna av kolföreningar.</p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De gula rutorna är fördjupning för den som vill komma längre.</p>
+      <div class="lang-selector-mount"></div>
+    </section>
+
+    <!-- M1 -->
+    <details class="milestone" id="m1" open>
+      <summary><span class="m-num">Milstolpe 1</span><span class="m-title">Organisk kemi och kolatomen</span></summary>
+      <div class="m-body">
+        <p>Den gren av kemin som handlar om kolets föreningar kallas <strong class="term">organisk kemi</strong>. Namnet kommer från att man förr trodde att sådana ämnen bara kunde bildas av levande organismer, med hjälp av en särskild "livskraft". På 1800-talet lyckades man dock framställa ett organiskt ämne på konstgjord väg, och därmed föll den idén. Idag kallas organisk kemi ofta helt enkelt <strong class="term">kolföreningarnas kemi</strong>.</p>
+        <p>Att just kol kan bilda så många ämnen – man känner till flera miljoner – beror på en unik egenskap hos <strong class="term">kolatomen</strong>: den kan bilda <strong class="term">fyra bindningar</strong>. Kolatomen kan binda till andra kolatomer och samtidigt till atomer av andra grundämnen. På så sätt kan kolatomerna kopplas ihop till långa kedjor, grenar och ringar, och det ger nästan oändliga möjligheter till nya ämnen.</p>
+        <p>För att visa hur atomerna sitter ihop ritar man en <strong class="term">strukturformel</strong>. Tänk dig att varje kolatom har fyra "armar" som var och en måste hålla i en annan atom. Metan, <span class="formula">CH₄</span>, är det enklaste exemplet: en kolatom i mitten som håller fyra väteatomer.</p>
+        <div class="struct">      H
+      |
+  H — C — H      = metan (CH₄)
+      |
+      H</div>
+        <p>Förutom kol innehåller kolföreningarna ofta <strong class="term">väte</strong>, och dessutom kan syre, kväve och andra grundämnen ingå. Vilken grupp en kolförening tillhör beror på vilka grundämnen den innehåller och hur atomerna sitter ihop.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Organisk kemi är kolföreningarnas kemi. Kolatomen kan bilda fyra bindningar och kan därför kopplas ihop till kedjor, grenar och ringar – det är förklaringen till att det finns miljontals kolföreningar. En strukturformel visar hur atomerna binder till varandra.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m2"><span class="n-label">Fortsätt</span>Rent kol i olika former</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M2 -->
+    <details class="milestone" id="m2">
+      <summary><span class="m-num">Milstolpe 2</span><span class="m-title">Rent kol i olika former</span></summary>
+      <div class="m-body">
+        <p>Rent kol – alltså ämnen som bara består av kolatomer – förekommer i flera helt olika former. Att formerna är så olika beror på att kolatomerna är sammanbundna på olika sätt.</p>
+        <p><strong class="term">Diamant</strong> är det hårdaste ämne vi känner till. I en diamant är varje kolatom hårt bunden till fyra andra kolatomer i ett fast, tredimensionellt mönster. De starka bindningarna åt alla håll gör diamanten stenhård. Slipade diamanter används som smycken, men diamant används också i verktyg som ska borra och skära i hårda material.</p>
+        <p><strong class="term">Grafit</strong> är tvärtom ett mjukt ämne som lätt svärtar av sig. Här sitter kolatomerna i plana skikt som är starkt bundna inuti varje skikt, men skikten glider lätt mot varandra. Därför fungerar grafit som "stiftet" i en blyertspenna – lager av kol lossnar och fastnar på pappret – och som smörjmedel.</p>
+        <p>En tredje form är <strong class="term">fullerener</strong>, som upptäcktes så sent som på 1980–90-talet. Här är kolatomerna sammanbundna till klotformade molekyler som påminner om en fotboll, uppbyggda av fem- och sexhörningar. Fullerenerna är mycket stabila, och forskare hoppas kunna använda dem för att skapa nya material.</p>
+        <div class="compare-table-wrap" style="overflow-x:auto;">
+        <table class="compare-table">
+          <thead><tr><th>Form</th><th>Hur kolatomerna sitter</th><th>Egenskap / användning</th></tr></thead>
+          <tbody>
+            <tr><td>Diamant</td><td>Varje kolatom bunden till fyra andra, i alla riktningar</td><td>Hårdast av allt – smycken, borr- och skärverktyg</td></tr>
+            <tr><td>Grafit</td><td>Plana skikt som glider mot varandra</td><td>Mjukt, svärtar av sig – blyertsstift, smörjmedel</td></tr>
+            <tr><td>Fullerener</td><td>Klotformade molekyler (fotbollsform)</td><td>Stabila – nya material på forskningsstadiet</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <details class="deepen">
+          <summary>Tekniskt kol och aktivt kol</summary>
+          <p>Om man hettar upp organiskt material utan lufttillförsel (så kallad <strong>torrdestillation</strong>) blir kol kvar som återstod. Träkol framställs så. Hettar man i stället upp finmalet kol i vattenånga får man <strong>aktivt kol</strong>, som är extremt poröst och har enorm yta. Tack vare den stora ytan kan aktivt kol suga åt sig färg-, lukt- och smakämnen – och till och med giftiga ämnen i magen. Därför finns aktivt kol i köksfläktfilter, i gasmasker och som medicin vid förgiftningar.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m3"><span class="n-label">Fortsätt</span>Alkanerna</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M3 -->
+    <details class="milestone" id="m3">
+      <summary><span class="m-num">Milstolpe 3</span><span class="m-title">Alkaner – den mättade metanserien</span></summary>
+      <div class="m-body">
+        <p>De enklaste kolföreningarna kallas <strong class="term">kolväten</strong> – de innehåller bara kol och väte. Den viktigaste gruppen av kolväten är <strong class="term">alkanerna</strong>, som också kallas <strong class="term">metanserien</strong>. Alla ämnen i serien är byggda efter samma mönster: en kedja av kolatomer där varje kolatom binder så många väteatomer som möjligt.</p>
+        <p>Serien börjar med metan (en kolatom) och fortsätter med etan (två), propan (tre) och så vidare. För varje steg läggs en kolatom till. Namnen på de tio första alkanerna är värda att kunna:</p>
+        <div style="overflow-x:auto;">
+        <table class="compare-table">
+          <thead><tr><th>Namn</th><th>Kolatomer</th><th>Molekylformel</th><th>Kokpunkt</th><th>Tillstånd i rumstemp.</th></tr></thead>
+          <tbody>
+            <tr><td>Metan</td><td>1</td><td class="formula">CH₄</td><td>−162 °C</td><td>Gas</td></tr>
+            <tr><td>Etan</td><td>2</td><td class="formula">C₂H₆</td><td>−89 °C</td><td>Gas</td></tr>
+            <tr><td>Propan</td><td>3</td><td class="formula">C₃H₈</td><td>−42 °C</td><td>Gas</td></tr>
+            <tr><td>Butan</td><td>4</td><td class="formula">C₄H₁₀</td><td>0 °C</td><td>Gas</td></tr>
+            <tr><td>Pentan</td><td>5</td><td class="formula">C₅H₁₂</td><td>+36 °C</td><td>Vätska</td></tr>
+            <tr><td>Hexan</td><td>6</td><td class="formula">C₆H₁₄</td><td>+69 °C</td><td>Vätska</td></tr>
+            <tr><td>Heptan</td><td>7</td><td class="formula">C₇H₁₆</td><td>+98 °C</td><td>Vätska</td></tr>
+            <tr><td>Oktan</td><td>8</td><td class="formula">C₈H₁₈</td><td>+126 °C</td><td>Vätska</td></tr>
+            <tr><td>Nonan</td><td>9</td><td class="formula">C₉H₂₀</td><td>+151 °C</td><td>Vätska</td></tr>
+            <tr><td>Dekan</td><td>10</td><td class="formula">C₁₀H₂₂</td><td>+174 °C</td><td>Vätska</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>Ser du mönstret i formlerna? För varje kolatom (C) som läggs till kommer det två väteatomer (H) till. Alla alkaner följer regeln <span class="formula">C<sub>n</sub>H<sub>2n+2</sub></span>. Ju längre kedjan är, desto högre blir kokpunkten: de fyra första är gaser, de följande vätskor, och riktigt långa kedjor (som paraffin och asfalt) är fasta ämnen.</p>
+        <p>I alkanerna binder varje kolatom till fyra andra atomer med vanliga <strong class="term">enkelbindningar</strong>. Kolatomerna kan inte binda fler atomer – de är "fulltankade" med väte. Sådana kolväten kallas därför <strong class="term">mättade</strong>.</p>
+        <p>Ett och samma antal kolatomer kan sitta ihop på olika sätt – i en rak kedja eller i en grenad. Rak och grenad butan har till exempel samma molekylformel (<span class="formula">C₄H₁₀</span>) men lite olika egenskaper. Ju fler kolatomer, desto fler sätt att grena kedjan.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Alkaner (metanserien) är mättade kolväten med bara enkelbindningar och följer formeln C<sub>n</sub>H<sub>2n+2</sub>. De tio första är metan, etan, propan, butan, pentan, hexan, heptan, oktan, nonan och dekan. Kokpunkten stiger med kedjelängden.
+        </div>
+        <details class="deepen">
+          <summary>Kolväten som bränslen – från naturgas till råolja</summary>
+          <p>De flesta av våra bränslen är kolväten. <strong>Naturgas</strong> består mest av metan. <strong>Gasol</strong> är hoppressad propan och butan. <strong>Bensin</strong> är en blandning av flytande kolväten (bl.a. heptan och oktan). Alla utvinns ur <strong>råolja</strong> (petroleum), som är en blandning av hundratals olika kolväten. På raffinaderiet delas råoljan upp med <strong>fraktionerad destillation</strong>: oljan värms tills den kokar, och de olika kolvätena skiljs åt efter kokpunkt – tunga ämnen (asfalt, tjockolja) längst ner, lätta gaser högst upp. Vid förbränning bildas koldioxid, som bidrar till växthuseffekten.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m4"><span class="n-label">Fortsätt</span>Alkener och alkyner</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M4 -->
+    <details class="milestone" id="m4">
+      <summary><span class="m-num">Milstolpe 4</span><span class="m-title">Alkener och alkyner – omättade kolväten</span></summary>
+      <div class="m-body">
+        <p>I alkanerna binder varje kolatom fyra andra atomer med enkelbindningar. Men två kolatomer kan också dela på fler bindningar med varandra. Kolväten som innehåller en <strong class="term">dubbelbindning</strong> eller en <strong class="term">trippelbindning</strong> kallas <strong class="term">omättade</strong>.</p>
+        <p>Kolväten med en dubbelbindning bildar gruppen <strong class="term">alkener</strong>. Det enklaste är <strong class="term">eten</strong>, <span class="formula">C₂H₄</span>, där de två kolatomerna hålls ihop av en dubbelbindning. Eten är en färglös gas och en viktig råvara vid tillverkning av plast.</p>
+        <div class="struct">  H       H
+   \\     /
+    C  =  C          = eten (C₂H₄), en alken
+   /       \\
+  H         H</div>
+        <p>Kolväten med en trippelbindning bildar gruppen <strong class="term">alkyner</strong>. Det enklaste är <strong class="term">etyn</strong>, <span class="formula">C₂H₂</span>, där kolatomerna delar på hela tre bindningar. Etyn kallas oftast <strong class="term">acetylen</strong>. Gasen brinner med en mycket het låga (omkring 3200 °C när den förbränns med rent syre) och används därför vid svetsning och skärning av metall.</p>
+        <div class="struct">  H — C ≡ C — H       = etyn (C₂H₂), en alkyn</div>
+        <p>Att en bindning är dubbel eller trippel gör ämnet mer reaktivt: dubbelbindningen i eten kan brytas upp så att två nya atomer kan bindas in i molekylen. Det är just den egenskapen som gör omättade kolväten så användbara i industrin.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Omättade kolväten har en dubbel- eller trippelbindning mellan kolatomer. Alkener har en dubbelbindning (enklast: eten, C₂H₄). Alkyner har en trippelbindning (enklast: etyn/acetylen, C₂H₂). Alkaner, som bara har enkelbindningar, är däremot mättade.
+        </div>
+        <details class="deepen">
+          <summary>Ringformiga och aromatiska kolväten</summary>
+          <p>Kolatomerna kan också kopplas ihop till <strong>ringar</strong> i stället för kedjor. Ett viktigt exempel är <strong>bensen</strong>, <span class="formula">C₆H₆</span>, en ring av sex kolatomer. Sådana ringformiga kolväten kallas ofta <strong>aromatiska</strong>. Många av dem, bland annat bensen, är cancerframkallande och måste hanteras försiktigt.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m5"><span class="n-label">Fortsätt</span>Alkoholer</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M5 -->
+    <details class="milestone" id="m5">
+      <summary><span class="m-num">Milstolpe 5</span><span class="m-title">Alkoholer</span></summary>
+      <div class="m-body">
+        <p>Hittills har vi bara haft kol och väte. Nu tar vi in <strong class="term">syre</strong>. Om man byter ut en väteatom i ett kolväte mot en <strong class="term">OH-grupp</strong> (en hydroxylgrupp, alltså en syreatom och en väteatom) får man en <strong class="term">alkohol</strong>. OH-gruppen är det som gör ett ämne till en alkohol.</p>
+        <p>Alkoholerna får sina namn från kolvätet de bygger på (stamkolvätet) genom att lägga till ändelsen <strong class="term">-ol</strong>. Byter man ut ett väte i metan (<span class="formula">CH₄</span>) mot en OH-grupp får man <strong class="term">metanol</strong>, <span class="formula">CH₃OH</span>. Byter man ut ett väte i etan (<span class="formula">C₂H₆</span>) får man <strong class="term">etanol</strong>, <span class="formula">C₂H₅OH</span>.</p>
+        <div class="struct">      H                       H   H
+      |                       |   |
+  H — C — OH             H —  C — C — OH
+      |                       |   |
+      H                       H   H
+   metanol (CH₃OH)        etanol (C₂H₅OH)</div>
+        <p>Etanol är alkoholen i vin och sprit. Den bildas naturligt när jästsvampar omvandlar socker – till exempel när saft från bär börjar jäsa. Etanol används också som lösningsmedel och bränsle. Alkoholer har i regel stark lukt och brännande smak, och de flesta är mer eller mindre giftiga.</p>
+        <div class="safety-box">
+          <strong>Farligt:</strong> <strong class="term">Metanol</strong> (träsprit) liknar vanlig sprit i lukt och smak men är mycket giftig – redan små mängder kan ge blindhet eller döden. Metanol och etanol ser lika ut men får aldrig förväxlas.
+        </div>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En alkohol är ett kolväte där en väteatom bytts mot en OH-grupp (hydroxylgrupp). Alkoholer namnges med ändelsen -ol: metanol (CH₃OH) och etanol (C₂H₅OH). Etanol finns i sprit; metanol är mycket giftig.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m6"><span class="n-label">Fortsätt</span>Flervärda alkoholer</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M6 -->
+    <details class="milestone" id="m6">
+      <summary><span class="m-num">Milstolpe 6</span><span class="m-title">Flervärda alkoholer</span></summary>
+      <div class="m-body">
+        <p>Metanol och etanol har var sin ensam OH-grupp. En alkohol kan emellertid ha <strong class="term">flera OH-grupper</strong> – då kallas den en <strong class="term">flervärd alkohol</strong>. Antalet OH-grupper avgör hur "värd" alkoholen är: en OH-grupp ger en envärd alkohol, två ger en tvåvärd och så vidare.</p>
+        <p>Den vanligaste tvåvärda alkoholen är <strong class="term">glykol</strong> (etandiol), som har två OH-grupper. Glykol sänker vätskans fryspunkt kraftigt och används därför som <strong class="term">frostskyddsmedel</strong> i bilars kylare och i spolarvätska. Glykol är giftigt att få i sig.</p>
+        <p>Den vanligaste trevärda alkoholen är <strong class="term">glycerol</strong> (glycerin), som har tre OH-grupper. Glycerol är en tjock, söt och ofarlig vätska som drar åt sig vatten. Därför används den som fuktbevarande ämne i hudkräm, tandkräm och livsmedel. Glycerol ingår också som en byggsten i alla fetter (se milstolpe 8).</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En flervärd alkohol har flera OH-grupper. Glykol (två OH-grupper) används som frostskydd i bilkylare. Glycerol (tre OH-grupper) används i hudkräm och livsmedel och ingår i fetter.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m7"><span class="n-label">Fortsätt</span>Organiska syror</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M7 -->
+    <details class="milestone" id="m7">
+      <summary><span class="m-num">Milstolpe 7</span><span class="m-title">Organiska syror</span></summary>
+      <div class="m-body">
+        <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
+        <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
+        <div class="struct">      H   O
+      |   ||
+  H — C — C — O — H      = ättiksyra / etansyra (CH₃COOH)
+      |
+      H</div>
+        <p>Organiska syror finns i mängder av livsmedel: citronsyra i citrusfrukter, mjölksyra i filmjölk och i trötta muskler, äppelsyra i frukt. De är oftast svaga syror, men i koncentrerad form kan de ändå vara frätande.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En organisk syra (karboxylsyra) känns igen på karboxylgruppen −COOH, som gör lösningen sur. De namnges med ändelsen -syra: myrsyra (metansyra, HCOOH) och ättiksyra (etansyra, CH₃COOH). Ättika är utspädd ättiksyra.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m8"><span class="n-label">Fortsätt</span>Estrar</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M8 -->
+    <details class="milestone" id="m8">
+      <summary><span class="m-num">Milstolpe 8</span><span class="m-title">Estrar</span></summary>
+      <div class="m-body">
+        <p>Nu kan vi kombinera två av grupperna vi lärt oss. När en <strong class="term">alkohol</strong> reagerar med en <strong class="term">organisk syra</strong> bildas ett nytt ämne som kallas en <strong class="term">ester</strong>, och samtidigt frigörs en vattenmolekyl. Reaktionen kallas <strong class="term">förestring</strong>:</p>
+        <div class="struct">  alkohol  +  organisk syra   →   ester  +  vatten</div>
+        <p>Många estrar har en stark, god doft och finns naturligt i frukter och blommor – det är estrar som ger bananer, jordgubbar och äpplen mycket av sin doft och smak. Därför används estrar som doft- och smakämnen i livsmedel och parfym.</p>
+        <p>Estrar är också något mycket vardagligare: <strong class="term">fetter</strong> och oljor är estrar. Ett fett är en ester av den trevärda alkoholen glycerol och tre långa organiska syror (fettsyror). När kroppen tar upp fett bryts esterbindningarna och glycerolen och fettsyrorna frigörs igen.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En ester bildas när en alkohol reagerar med en organisk syra, samtidigt som vatten frigörs (förestring). Många estrar doftar frukt och används som smak- och doftämnen. Fetter är estrar av glycerol och fettsyror.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m9"><span class="n-label">Fördjupning</span>Aminosyror</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M9 -->
+    <details class="milestone" id="m9">
+      <summary><span class="m-num">Milstolpe 9 · Fördjupning</span><span class="m-title">Aminosyror</span></summary>
+      <div class="m-body">
+        <p>Det här avsnittet är för dig som vill komma längre och koppla ihop kolkemin med biologin. Vi utgår från ett ämne du redan känner: <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>.</p>
+        <p>Tänk dig att vi byter ut en av väteatomerna på ättiksyrans kolkedja mot en <strong class="term">aminogrupp</strong>, <span class="formula">−NH₂</span> (en kvävegrupp). Då har vi gjort en <strong class="term">aminosyra</strong>. Den enklaste aminosyran heter <strong class="term">glycin</strong> och är just en sådan modifierad ättiksyra: <span class="formula">NH₂−CH₂−COOH</span>.</p>
+        <div class="struct">      H   O                     H   H   O
+      |   ||                    |   |   ||
+  H — C — C — O — H        H —  N — C — C — O — H
+      |                            |
+      H                            H
+   ättiksyra (CH₃COOH)      glycin, den enklaste aminosyran
+                            (en ättiksyra där ett väte
+                             bytts mot en aminogrupp −NH₂)</div>
+        <p>Det utmärkande för en aminosyra är alltså att den bär <em>två</em> grupper samtidigt: en <strong class="term">karboxylgrupp</strong> (−COOH, den sura delen) och en <strong class="term">aminogrupp</strong> (−NH₂, kvävedelen). Det finns 20 olika aminosyror, som skiljer sig åt i resten av molekylen.</p>
+        <p>Poängen med aminosyrorna är att de är byggstenarna i <strong class="term">proteiner</strong>. Karboxylgruppen på en aminosyra kan kopplas till aminogruppen på nästa – och släpper då ifrån sig vatten, precis som vid förestringen i förra milstolpen. På så sätt kan tusentals aminosyror länkas ihop till långa proteinkedjor. Vilka aminosyror som sitter i vilken ordning bestäms av arvsmassan (DNA) – och där möter kolkemin genetiken.</p>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          En aminosyra är i grunden en organisk syra (som ättiksyra) där ett väte bytts mot en aminogrupp −NH₂. Den har alltså både en karboxylgrupp (−COOH) och en aminogrupp (−NH₂). Aminosyror är byggstenarna i proteiner.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="/biologi/genetik/studieguide.html#m5"><span class="n-label">Koppling</span>Proteinsyntesen (Genetik)</a>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Nationalencyklopedin. <em>Organisk kemi, kolväten, alkoholer, karboxylsyror, estrar, aminosyror, diamant, grafit, fulleren.</em> <a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a></li>
+        <li id="ref-2">Kungl. Vetenskapsakademien. <em>Nobelpriset i kemi 1996: Curl, Kroto &amp; Smalley</em> (upptäckten av fullerener). <a href="https://www.nobelprize.org/prizes/chemistry/1996/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-3">Kokpunkter för alkaner: CRC Handbook of Chemistry and Physics (standardvärden vid normalt lufttryck).</li>
+      </ol>
+      <p style="font-size:0.82rem;color:#777;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js" data-audio-base="/kemi/kol-och-kolforeningar/audio/"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash);
+      else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js"></script>
+</body>
+</html>
