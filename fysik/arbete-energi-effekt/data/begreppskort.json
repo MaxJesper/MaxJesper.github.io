@@ -1,0 +1,38 @@
+{
+  "title": "Begreppskort – Arbete, energi och effekt",
+  "intro": "Fyra grundbegrepp i området. Vänd kortet för definition, formel, enhet och ett exempel.",
+  "cards": [
+    {
+      "term": "Kraft",
+      "storhet": "F",
+      "def": "En påverkan som kan sätta ett föremål i rörelse, bromsa det, ändra dess riktning eller forma om det.",
+      "formel": ["F = m · a", "Tyngd: F = m · g"],
+      "enhet": "newton (N). 1 N = 1 kg · m/s².",
+      "mer": "1 N är ungefär tyngden av ett äpple på 100 g. På jorden är g ≈ 9,82 N/kg, så tyngden av 1 kg är ungefär 9,82 N."
+    },
+    {
+      "term": "Arbete",
+      "storhet": "W",
+      "def": "Energi som överförs när en kraft flyttar ett föremål en sträcka i kraftens riktning.",
+      "formel": ["W = F · s"],
+      "enhet": "joule (J). 1 J = 1 N · m.",
+      "mer": "Är kraften vinkelrät mot rörelsen uträttas inget arbete. Att lyfta 1 kg rakt upp 1 m kräver ungefär 9,8 J."
+    },
+    {
+      "term": "Energi",
+      "storhet": "E",
+      "def": "Förmågan att uträtta arbete. Energi kan omvandlas mellan olika former, men aldrig skapas eller förstöras.",
+      "formel": ["Lägesenergi: E = m · g · h", "Rörelseenergi: E = ½ · m · v²"],
+      "enhet": "joule (J). För elenergi används även kilowattimme (kWh); 1 kWh = 3,6 MJ.",
+      "mer": "Energiprincipen: den totala energin är konstant. När något faller omvandlas lägesenergi till rörelseenergi."
+    },
+    {
+      "term": "Effekt",
+      "storhet": "P",
+      "def": "Hur mycket energi som omvandlas, eller hur mycket arbete som uträttas, per sekund. Effekt är energi per tid.",
+      "formel": ["P = W / t", "Elektrisk effekt: P = U · I"],
+      "enhet": "watt (W). 1 W = 1 J/s.",
+      "mer": "En starkare motor uträttar samma arbete på kortare tid. En lampa på 60 W omvandlar 60 J varje sekund. Obs: storheten arbete (W) och enheten watt (W) skrivs likadant men betyder olika saker."
+    }
+  ]
+}

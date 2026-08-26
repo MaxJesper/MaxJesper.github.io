@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Energiformer – matchningsspel – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root { --area: #b45309; --area-bg: #fffbeb; --area-line: #f59e0b; }
+
+    .spel-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .spel-intro { max-width: 820px; margin-bottom: 1rem; color: #333; }
+
+    .spel-stats {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;
+    }
+    .stat-badge {
+      background: #fff; border: 1px solid #e2d6bf; border-radius: 999px;
+      padding: 0.35rem 0.9rem; font-weight: 700; color: #333;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .match-grid {
+      display: grid; grid-template-columns: minmax(160px, 260px) 1fr; gap: 1rem;
+      align-items: start;
+    }
+    @media (max-width: 680px) { .match-grid { grid-template-columns: 1fr; } }
+
+    .kol-rubrik {
+      font-size: 0.8rem; font-weight: 800; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--area); margin-bottom: 0.5rem;
+    }
+    .kol { display: grid; gap: 0.6rem; }
+
+    .val-btn {
+      text-align: left; border: 2px solid #d9c9a3; background: #fff; color: #111;
+      border-radius: 10px; padding: 0.75rem 0.9rem; font-size: 1.02rem;
+      font-weight: 600; cursor: pointer; line-height: 1.35; width: 100%;
+      transition: border-color .12s ease, background .12s ease, box-shadow .12s ease;
+    }
+    .val-btn.term { font-weight: 800; }
+    .val-btn:hover { border-color: var(--area-line); }
+    .val-btn.vald {
+      border-color: var(--area); background: var(--area-bg);
+      box-shadow: 0 0 0 3px rgba(180,83,9,0.15);
+    }
+    .val-btn.klar {
+      border-color: #15803d; background: #dcfce7; color: #14532d;
+      cursor: default; opacity: 0.85;
+    }
+    .val-btn.fel { animation: skaka .4s ease 1; border-color: #b91c1c; background: #fee2e2; }
+    .val-btn:disabled { cursor: default; }
+
+    @keyframes skaka {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    .spel-knappar { margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .spel-knappar button {
+      padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid #cbb98f;
+      background: #fff; color: #111; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    .spel-knappar button.primar { background: var(--area); border-color: var(--area); color: #fff; }
+
+    .klart-ruta {
+      margin-top: 1.5rem; border: 1px solid #86efac; background: #ecfdf5;
+      border-radius: 12px; padding: 1rem 1.25rem;
+    }
+    .klart-ruta h2 { margin: 0 0 0.4rem; font-size: 1.3rem; }
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Energiformer</h1>
+  <p>Matcha varje energiform med rätt definition</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="spel-topbar">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <p class="spel-intro" id="intro"></p>
+
+  <div class="spel-stats" aria-live="polite">
+    <span class="stat-badge">Par kvar: <span id="parKvar">–</span></span>
+    <span class="stat-badge">Rätt: <span id="ratt">0</span></span>
+    <span class="stat-badge">Fel: <span id="fel">0</span></span>
+    <span class="stat-badge">Tid: <span id="tid">0:00</span></span>
+  </div>
+
+  <div class="match-grid">
+    <div>
+      <div class="kol-rubrik">Energiform</div>
+      <div class="kol" id="kolTerm"></div>
+    </div>
+    <div>
+      <div class="kol-rubrik">Definition</div>
+      <div class="kol" id="kolDef"></div>
+    </div>
+  </div>
+
+  <div class="klart-ruta hidden" id="klartRuta">
+    <h2>Klart!</h2>
+    <p id="klartText"></p>
+  </div>
+
+  <div class="spel-knappar">
+    <button id="omBtn" type="button" class="primar">Blanda om och spela igen</button>
+  </div>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const JSON_PATH = "./data/energiformer.json";
+  let pairs = [];
+  let ratt = 0, fel = 0, parKvar = 0;
+  let valdTerm = null, valdDef = null;
+  let last = false;
+  let startTs = 0, timerId = 0, timerRunning = false;
+
+  const el = (id) => document.getElementById(id);
+
+  function escapeHtml(str) {
+    return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function formatTid(ms) {
+    const s = Math.floor(ms / 1000);
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true;
+    startTs = performance.now();
+    timerId = setInterval(() => { el("tid").textContent = formatTid(performance.now() - startTs); }, 250);
+  }
+  function stopTimer() { timerRunning = false; clearInterval(timerId); }
+
+  function bygg() {
+    stopTimer();
+    timerRunning = false;
+    el("tid").textContent = "0:00";
+    ratt = 0; fel = 0; parKvar = pairs.length;
+    valdTerm = null; valdDef = null;
+    el("ratt").textContent = "0";
+    el("fel").textContent = "0";
+    el("parKvar").textContent = parKvar;
+    el("klartRuta").classList.add("hidden");
+
+    const kolTerm = el("kolTerm"); const kolDef = el("kolDef");
+    kolTerm.innerHTML = ""; kolDef.innerHTML = "";
+
+    shuffle(pairs.map((p, i) => i)).forEach(i => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "val-btn term";
+      b.dataset.mid = i; b.textContent = pairs[i].term;
+      b.addEventListener("click", () => valjTerm(b));
+      kolTerm.appendChild(b);
+    });
+
+    shuffle(pairs.map((p, i) => i)).forEach(i => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "val-btn def";
+      b.dataset.mid = i; b.innerHTML = escapeHtml(pairs[i].def);
+      b.addEventListener("click", () => valjDef(b));
+      kolDef.appendChild(b);
+    });
+  }
+
+  function rensaVald() {
+    if (valdTerm) valdTerm.classList.remove("vald");
+    if (valdDef) valdDef.classList.remove("vald");
+    valdTerm = null; valdDef = null;
+  }
+
+  function valjTerm(b) {
+    if (b.classList.contains("klar")) return;
+    startTimer();
+    if (valdTerm) valdTerm.classList.remove("vald");
+    valdTerm = b; b.classList.add("vald");
+    if (valdDef) kontrollera();
+  }
+
+  function valjDef(b) {
+    if (b.classList.contains("klar")) return;
+    startTimer();
+    if (valdDef) valdDef.classList.remove("vald");
+    valdDef = b; b.classList.add("vald");
+    if (valdTerm) kontrollera();
+  }
+
+  function kontrollera() {
+    const t = valdTerm, d = valdDef;
+    if (t.dataset.mid === d.dataset.mid) {
+      t.classList.remove("vald"); d.classList.remove("vald");
+      t.classList.add("klar"); d.classList.add("klar");
+      t.disabled = true; d.disabled = true;
+      ratt++; parKvar--;
+      el("ratt").textContent = ratt;
+      el("parKvar").textContent = parKvar;
+      valdTerm = null; valdDef = null;
+      if (parKvar === 0) klart();
+    } else {
+      fel++; el("fel").textContent = fel;
+      t.classList.add("fel"); d.classList.add("fel");
+      const t0 = t, d0 = d;
+      setTimeout(() => {
+        t0.classList.remove("fel", "vald");
+        d0.classList.remove("fel", "vald");
+      }, 420);
+      valdTerm = null; valdDef = null;
+    }
+  }
+
+  function klart() {
+    stopTimer();
+    const tid = el("tid").textContent;
+    const utanFel = fel === 0 ? " helt utan fel" : " med " + fel + (fel === 1 ? " fel" : " fel");
+    el("klartText").textContent = "Du matchade alla " + pairs.length + " energiformerna på " + tid + utanFel + ".";
+    el("klartRuta").classList.remove("hidden");
+  }
+
+  el("omBtn").addEventListener("click", bygg);
+
+  window.addEventListener("load", async () => {
+    try {
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error("Kunde inte läsa " + JSON_PATH + " (" + res.status + ")");
+      const data = await res.json();
+      pairs = Array.isArray(data.pairs) ? data.pairs : [];
+      if (data.intro) el("intro").textContent = data.intro;
+      bygg();
+    } catch (err) {
+      console.error(err);
+      el("intro").textContent = "Det gick inte att ladda energiformerna.";
+    }
+  });
+</script>
+
+</body>
+</html>
