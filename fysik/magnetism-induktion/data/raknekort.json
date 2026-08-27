@@ -1,0 +1,15 @@
+{
+  "title": "Räknekort – Transformatorn",
+  "intro": "Träna att räkna på transformatorn. Läs uppgiften och försök själv först. Vänd sedan kortet för formel, uträkning med enheter och svar.",
+  "omraden": [
+    {
+      "namn": "Transformatorn",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du på transformatorn", "formel": ["Spänning och varvtal: U₁ / U₂ = N₁ / N₂", "Ideal transformator: Effekt ut = Effekt in", "Med förluster: Effekt ut = verkningsgrad · Effekt in"], "forklaring": "En transformator ändrar spänningen med hjälp av två spolar med olika antal varv. Förhållandet mellan spänningarna (U) är samma som förhållandet mellan antalet varv (N). En ideal transformator tappar ingen energi, men en verklig har en verkningsgrad." },
+        { "typ": "uppgift", "fraga": "En transformators primärspole har 500 varv och matas med 230 V. Sekundärspolen har 50 varv. Vilken spänning får sekundärsidan?", "formel": ["U₁ / U₂ = N₁ / N₂", "ger U₂ = U₁ · N₂ / N₁"], "utrakning": ["U₂ = 230 V · 50 / 500 = 23 V"], "svar": "U₂ = 23 V", "forklaring": "Färre varv på sekundärsidan ger lägre spänning — det är en nedtransformator." },
+        { "typ": "uppgift", "fraga": "En transformator ökar spänningen från 110 V till 220 V. Ingångseffekten är 500 W och verkningsgraden är 95 %. Hur stor är utgångseffekten?", "formel": ["Effekt ut = verkningsgrad · Effekt in"], "utrakning": ["Effekt ut = 0,95 · 500 W = 475 W"], "svar": "Utgångseffekt = 475 W", "forklaring": "Spänningen dubblas, men effekten kan inte öka. Med 95 % verkningsgrad blir 25 W värmeförlust." },
+        { "typ": "uppgift", "fraga": "En ideal transformator har ingångseffekten 400 W. På sekundärsidan är spänningen 20 V. Hur stor är strömmen på sekundärsidan?", "formel": ["Ideal: Effekt ut = Effekt in", "I = P / U"], "utrakning": ["Effekt ut = 400 W", "I = P / U = 400 W / 20 V = 20 A"], "svar": "I = 20 A", "forklaring": "Låg spänning på sekundärsidan ger hög ström, eftersom effekten är oförändrad." }
+      ]
+    }
+  ]
+}
