@@ -1,0 +1,41 @@
+{
+  "title": "Bygg en energikedja",
+  "intro": "Ställ energiövergångarna i rätt ordning. Klicka på byggdelarna i den ordning energin omvandlas, och tryck sedan på Kontrollera.",
+  "kedjor": [
+    {
+      "situation": "En ficklampa med batteri lyser.",
+      "kedja": ["Kemisk energi", "Elektrisk energi", "Strålningsenergi"],
+      "forklaring": "Batteriet lagrar kemisk energi, som blir elektrisk energi i kretsen, som i lampan blir ljus (strålningsenergi)."
+    },
+    {
+      "situation": "Vatten faller genom ett vattenkraftverk och blir el.",
+      "kedja": ["Lägesenergi", "Rörelseenergi", "Elektrisk energi"],
+      "forklaring": "Vattnets höjd ger lägesenergi, som blir rörelseenergi när vattnet faller, och generatorn gör rörelsen till elektrisk energi."
+    },
+    {
+      "situation": "En solcell laddar upp ett batteri.",
+      "kedja": ["Strålningsenergi", "Elektrisk energi", "Kemisk energi"],
+      "forklaring": "Solcellen omvandlar ljusets strålningsenergi till elektrisk energi, som lagras som kemisk energi i batteriet."
+    },
+    {
+      "situation": "Du äter frukost och cyklar sedan uppför en backe.",
+      "kedja": ["Kemisk energi", "Rörelseenergi", "Lägesenergi"],
+      "forklaring": "Maten ger kemisk energi, som kroppen gör om till rörelse, och när du kommer högre upp ökar lägesenergin."
+    },
+    {
+      "situation": "En berg- och dalbanevagn släpps från toppen och bromsar in på slutet.",
+      "kedja": ["Lägesenergi", "Rörelseenergi", "Värmeenergi"],
+      "forklaring": "Vagnens lägesenergi på toppen blir rörelseenergi i nedförsbacken, och bromsarna omvandlar rörelsen till värme."
+    },
+    {
+      "situation": "Ett barn landar på en studsmatta och skjuts upp igen.",
+      "kedja": ["Rörelseenergi", "Elastisk energi", "Rörelseenergi", "Lägesenergi"],
+      "forklaring": "Barnets rörelse spänner duken (elastisk energi), som skjuter upp barnet (rörelseenergi), som stiger och får lägesenergi högst upp."
+    },
+    {
+      "situation": "Ett vindkraftverk laddar en mobiltelefon.",
+      "kedja": ["Rörelseenergi", "Elektrisk energi", "Kemisk energi"],
+      "forklaring": "Vindens rörelseenergi blir elektrisk energi i generatorn, som lagras som kemisk energi i telefonens batteri."
+    }
+  ]
+}

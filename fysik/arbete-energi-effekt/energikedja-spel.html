@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bygg en energikedja – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root { --area: #b45309; --area-bg: #fffbeb; --area-line: #f59e0b; }
+
+    .spel-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .spel-intro { max-width: 820px; margin-bottom: 1rem; color: #333; }
+    .quiz-scen { max-width: 800px; }
+
+    .quiz-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-weight: 700; color: #555; margin-bottom: 0.75rem; font-variant-numeric: tabular-nums; }
+
+    .kedja-kort { background: #fff; border: 1px solid #e2d6bf; border-top: 6px solid var(--area-line); border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); padding: 1.5rem 1.5rem 1.75rem; }
+    .kedja-fall { font-size: 1.3rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.25rem; }
+
+    .kedja-etikett { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--area); margin: 1rem 0 0.5rem; }
+
+    .kedja-rad { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; min-height: 56px; }
+    .pil { color: var(--area-line); font-weight: 800; font-size: 1.4rem; }
+
+    .slot {
+      border: 2px dashed #cbb98f; border-radius: 10px; min-width: 130px; min-height: 46px;
+      display: flex; align-items: center; justify-content: center; padding: 0.4rem 0.8rem;
+      color: #999; font-weight: 600; background: #fdfcf8; text-align: center;
+    }
+    .slot.fylld { border-style: solid; border-color: var(--area); background: var(--area-bg); color: #111; cursor: pointer; }
+    .slot.ratt { border-color: #15803d; background: #dcfce7; color: #14532d; }
+    .slot.fel { border-color: #b91c1c; background: #fee2e2; color: #7f1d1d; }
+
+    .delar { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .del-btn {
+      border: 2px solid #d9c9a3; background: #fff; color: #111; border-radius: 10px;
+      padding: 0.6rem 1rem; font-size: 1.02rem; font-weight: 700; cursor: pointer;
+    }
+    .del-btn:hover:not(:disabled) { border-color: var(--area-line); }
+    .del-btn:disabled { opacity: 0.35; cursor: default; }
+
+    .kedja-svar { margin-top: 1rem; }
+    .forklaring { border-left: 4px solid var(--area-line); background: var(--area-bg); border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; font-size: 1.05rem; line-height: 1.5; }
+    .rattelse { font-weight: 600; color: #7f1d1d; }
+
+    .quiz-knappar { margin-top: 1.25rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .quiz-knappar button { padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid #cbb98f; background: #fff; color: #111; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .quiz-knappar button.primar { background: var(--area); border-color: var(--area); color: #fff; }
+    .quiz-knappar button:disabled { opacity: 0.45; cursor: default; }
+
+    .slut-ruta { background: #fff; border: 1px solid #e2d6bf; border-top: 6px solid var(--area-line); border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); padding: 1.75rem; text-align: center; }
+    .slut-ruta h2 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+    .slut-poang { font-size: 2.4rem; font-weight: 800; color: var(--area); margin: 0.5rem 0; }
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Bygg en energikedja</h1>
+  <p>Ställ energiövergångarna i rätt ordning</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="spel-topbar">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <p class="spel-intro" id="intro"></p>
+
+  <div class="quiz-scen">
+    <div id="spelOmrade">
+      <div class="quiz-meta">
+        <span id="progress">Kedja 1</span>
+        <span>Rätt på första försöket: <span id="poang">0</span></span>
+      </div>
+
+      <div class="kedja-kort">
+        <div class="kedja-fall" id="fall">Laddar …</div>
+
+        <div class="kedja-etikett">Din energikedja</div>
+        <div class="kedja-rad" id="kedjaRad"></div>
+
+        <div class="kedja-etikett">Byggdelar</div>
+        <div class="delar" id="delar"></div>
+
+        <div class="kedja-svar hidden" id="svar">
+          <p class="rattelse hidden" id="rattelse">Inte riktigt. De gröna sitter rätt – ändra de röda och försök igen.</p>
+          <div class="forklaring hidden" id="forklaring"></div>
+        </div>
+      </div>
+
+      <div class="quiz-knappar">
+        <button id="angraBtn" type="button">Ångra senaste</button>
+        <button id="kontrolleraBtn" type="button" class="primar" disabled>Kontrollera</button>
+        <button id="nastaBtn" type="button" class="hidden">Nästa kedja →</button>
+      </div>
+    </div>
+
+    <div class="slut-ruta hidden" id="slutRuta">
+      <h2>Klart!</h2>
+      <div class="slut-poang" id="slutPoang"></div>
+      <p id="slutText"></p>
+      <div class="quiz-knappar" style="justify-content:center;">
+        <button id="omBtn" type="button" class="primar">Spela igen</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const JSON_PATH = "./data/energikedja.json";
+  let kedjor = [];
+  let ordning = [];
+  let pos = 0, poang = 0;
+  let facit = [];      // rätt ordning (labels)
+  let delar = [];      // {id, label}
+  let placerade = [];  // {id, label}
+  let forsok = 0;      // antal kontroller på aktuell kedja
+  let klar = false;    // aktuell kedja löst
+
+  const el = (id) => document.getElementById(id);
+  function escapeHtml(s){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+  function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+  function start(){
+    ordning = shuffle(kedjor.map((k,i)=>i));
+    pos = 0; poang = 0;
+    el("poang").textContent = "0";
+    el("slutRuta").classList.add("hidden");
+    el("spelOmrade").classList.remove("hidden");
+    laddaKedja();
+  }
+
+  function laddaKedja(){
+    const k = kedjor[ordning[pos]];
+    facit = k.kedja.slice();
+    delar = shuffle(facit.map((label,i)=>({id:i,label})));
+    placerade = [];
+    forsok = 0; klar = false;
+
+    el("progress").textContent = "Kedja " + (pos+1) + " av " + ordning.length;
+    el("fall").textContent = k.situation;
+    el("svar").classList.add("hidden");
+    el("rattelse").classList.add("hidden");
+    el("forklaring").classList.add("hidden");
+    el("nastaBtn").classList.add("hidden");
+    el("kontrolleraBtn").classList.remove("hidden");
+    render();
+  }
+
+  function render(){
+    // slots
+    const rad = el("kedjaRad"); rad.innerHTML = "";
+    for(let i=0;i<facit.length;i++){
+      if(i>0){ const p=document.createElement("span"); p.className="pil"; p.textContent="→"; rad.appendChild(p); }
+      const slot=document.createElement("div");
+      slot.className="slot";
+      if(i<placerade.length){
+        slot.classList.add("fylld");
+        slot.textContent=placerade[i].label;
+        if(!klar){ slot.title="Klicka för att ta bort"; slot.addEventListener("click",()=>taBort(i)); }
+      } else {
+        slot.textContent="?";
+      }
+      rad.appendChild(slot);
+    }
+    // delar
+    const d=el("delar"); d.innerHTML="";
+    delar.forEach(t=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="del-btn"; b.textContent=t.label;
+      const anvand = placerade.some(p=>p.id===t.id);
+      b.disabled = anvand || klar;
+      b.addEventListener("click",()=>placera(t.id));
+      d.appendChild(b);
+    });
+    el("kontrolleraBtn").disabled = (placerade.length!==facit.length) || klar;
+    el("angraBtn").disabled = (placerade.length===0) || klar;
+  }
+
+  function placera(id){
+    if(klar) return;
+    if(placerade.length>=facit.length) return;
+    if(placerade.some(p=>p.id===id)) return;
+    const t=delar.find(x=>x.id===id);
+    placerade.push({id:t.id,label:t.label});
+    el("svar").classList.add("hidden");
+    el("rattelse").classList.add("hidden");
+    render();
+  }
+
+  function taBort(i){
+    if(klar) return;
+    placerade.splice(i,1);
+    el("svar").classList.add("hidden");
+    el("rattelse").classList.add("hidden");
+    render();
+  }
+
+  function angra(){
+    if(klar || placerade.length===0) return;
+    placerade.pop();
+    render();
+  }
+
+  function kontrollera(){
+    if(placerade.length!==facit.length) return;
+    forsok++;
+    const slots = el("kedjaRad").querySelectorAll(".slot");
+    let alltRatt = true;
+    for(let i=0;i<facit.length;i++){
+      const ratt = placerade[i].label===facit[i];
+      slots[i].classList.remove("fylld");
+      slots[i].classList.add(ratt?"ratt":"fel");
+      if(!ratt) alltRatt=false;
+    }
+    el("svar").classList.remove("hidden");
+    if(alltRatt){
+      klar=true;
+      if(forsok===1){ poang++; el("poang").textContent=poang; }
+      el("rattelse").classList.add("hidden");
+      const k=kedjor[ordning[pos]];
+      el("forklaring").textContent = k.forklaring;
+      el("forklaring").classList.remove("hidden");
+      el("kontrolleraBtn").classList.add("hidden");
+      el("angraBtn").disabled=true;
+      el("nastaBtn").classList.remove("hidden");
+      el("nastaBtn").textContent = (pos+1<ordning.length) ? "Nästa kedja →" : "Se resultat →";
+      document.querySelectorAll("#delar .del-btn").forEach(b=>b.disabled=true);
+    } else {
+      el("rattelse").classList.remove("hidden");
+      el("forklaring").classList.add("hidden");
+    }
+  }
+
+  function nasta(){
+    pos++;
+    if(pos<ordning.length) laddaKedja();
+    else slut();
+  }
+
+  function slut(){
+    el("spelOmrade").classList.add("hidden");
+    el("slutRuta").classList.remove("hidden");
+    const antal=ordning.length;
+    el("slutPoang").textContent = poang + " / " + antal;
+    let omdome;
+    const andel = poang/antal;
+    if(andel===1) omdome="Alla kedjor rätt på första försöket. Starkt jobbat.";
+    else if(andel>=0.6) omdome="Bra. Repetera de kedjor som krävde flera försök.";
+    else omdome="Gå igenom energiformerna och energiövergångarna, och prova igen.";
+    el("slutText").textContent=omdome;
+  }
+
+  el("angraBtn").addEventListener("click",angra);
+  el("kontrolleraBtn").addEventListener("click",kontrollera);
+  el("nastaBtn").addEventListener("click",nasta);
+  el("omBtn").addEventListener("click",start);
+
+  window.addEventListener("load", async () => {
+    try{
+      const res=await fetch(JSON_PATH,{cache:"no-store"});
+      if(!res.ok) throw new Error("Kunde inte läsa "+JSON_PATH+" ("+res.status+")");
+      const data=await res.json();
+      kedjor=Array.isArray(data.kedjor)?data.kedjor:[];
+      if(data.intro) el("intro").textContent=data.intro;
+      start();
+    }catch(err){
+      console.error(err);
+      el("fall").textContent="Det gick inte att ladda spelet.";
+    }
+  });
+</script>
+
+</body>
+</html>
