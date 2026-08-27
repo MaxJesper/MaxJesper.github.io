@@ -120,7 +120,14 @@
     if(!k) return;
 
     el("omradeLabel").textContent = omr.namn;
-    el("typLabel").textContent = (k.typ === "formel") ? "Formel" : "Uppgift";
+    if (k.typ === "formel") {
+      el("typLabel").textContent = "Formel";
+    } else {
+      const antalUppgifter = omr.kort.filter(c => c.typ !== "formel").length;
+      let nr = 0;
+      for (let i = 0; i <= kortIndex; i++) { if (omr.kort[i].typ !== "formel") nr++; }
+      el("typLabel").textContent = `Uppgift ${nr} av ${antalUppgifter}`;
+    }
 
     // Framsida
     let fram = "";
@@ -150,12 +157,20 @@
     el("baksida").classList.toggle("hidden", !flipped);
     el("flipBtn").textContent = flipped ? "Dölj svaret" : "Vänd kortet";
 
-    el("progress").textContent = `Kort ${kortIndex+1} av ${omr.kort.length}`;
+    el("progress").textContent = "";
     renderValjare();
   }
 
-  function next(){ const n = omraden[omrIndex].kort.length; kortIndex = (kortIndex+1)%n; flipped = false; render(); }
-  function prev(){ const n = omraden[omrIndex].kort.length; kortIndex = (kortIndex-1+n)%n; flipped = false; render(); }
+  function next(){
+    kortIndex++;
+    if (kortIndex >= omraden[omrIndex].kort.length) { omrIndex = (omrIndex + 1) % omraden.length; kortIndex = 0; }
+    flipped = false; render();
+  }
+  function prev(){
+    kortIndex--;
+    if (kortIndex < 0) { omrIndex = (omrIndex - 1 + omraden.length) % omraden.length; kortIndex = omraden[omrIndex].kort.length - 1; }
+    flipped = false; render();
+  }
   function flip(){ flipped = !flipped; render(); }
 
   el("nextBtn").addEventListener("click", next);
