@@ -62,7 +62,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 - **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar), begrepp (28), index klara. Återstår: checklista, instuderingsfrågor, övningsprov+facit, begreppslista, begreppskort, print-sidor, lärande spel; översättningar. Källa: TEFY (uppladdad PDF).
 
-- **liv-och-cellen:** komplett struktur klar. Återstår: översättningar (`begrepp.<språk>.json`); lägg till film-mp4 (`biologi/liv-och-cellen/film/encelligt-djurs-dramatiska-dod.mp4`) + toffeldjursbild (`images/biologi/liv-och-cellen/toffeldjur.jpg`).
+- **liv-och-cellen:** komplett struktur klar. Filmerna inlagda (komprimerade 250x + 400x i `film/`). Återstår: översättningar (`begrepp.<språk>.json`) + toffeldjursbild (`images/biologi/liv-och-cellen/toffeldjur.jpg`).
 
 ### Städning kvar
 
