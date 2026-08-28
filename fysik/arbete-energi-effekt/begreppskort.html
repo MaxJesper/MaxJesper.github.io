@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppskort: Arbete, energi och effekt – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root { --area: #b45309; --area-bg: #fffbeb; --area-line: #f59e0b; }
+
+    .kort-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .kort-intro { max-width: 760px; margin-bottom: 1.25rem; color: #333; }
+
+    .kort-scen { max-width: 760px; margin: 0 auto; }
+
+    .studiekort {
+      background: #fff;
+      border: 1px solid #e2d6bf;
+      border-top: 6px solid var(--area-line);
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      padding: 1.75rem 1.75rem 2rem;
+      min-height: 320px;
+    }
+
+    .kort-huvud {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .kort-term { font-size: 2rem; font-weight: 800; color: var(--area); line-height: 1.1; }
+
+    .kort-storhet {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #555;
+      background: var(--area-bg);
+      border: 1px solid #f0e2c4;
+      border-radius: 999px;
+      padding: 4px 12px;
+      white-space: nowrap;
+    }
+
+    .kort-fram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 150px;
+      text-align: center;
+      color: #666;
+      font-size: 1.05rem;
+      font-style: italic;
+    }
+
+    .kort-rad { margin-bottom: 1rem; }
+    .kort-rad:last-child { margin-bottom: 0; }
+
+    .kort-etikett {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--area);
+      margin-bottom: 0.25rem;
+    }
+
+    .kort-def { font-size: 1.2rem; line-height: 1.5; }
+
+    .kort-formel {
+      font-family: "Cambria Math", Georgia, "Times New Roman", serif;
+      font-size: 1.25rem;
+      background: var(--area-bg);
+      border-left: 4px solid var(--area-line);
+      border-radius: 0 8px 8px 0;
+      padding: 0.5rem 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .kort-enhet { font-size: 1.05rem; }
+    .kort-mer { font-size: 1.02rem; color: #333; line-height: 1.5; }
+
+    .kort-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .kort-controls button {
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      border: 1px solid #cbb98f;
+      background: #fff;
+      color: #111;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .kort-controls button.primar {
+      background: var(--area);
+      border-color: var(--area);
+      color: #fff;
+    }
+
+    .kort-controls button:hover { filter: brightness(0.97); }
+    .kort-controls button:focus-visible { outline: 3px solid rgba(180,83,9,0.35); outline-offset: 2px; }
+
+    .kort-progress { font-weight: 700; color: #555; font-variant-numeric: tabular-nums; }
+
+    .kort-oversikt {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
+    .kort-chip {
+      border: 1px solid #cbb98f;
+      background: #fff;
+      color: #333;
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .kort-chip.aktiv { background: var(--area); border-color: var(--area); color: #fff; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Begreppskort</h1>
+  <p>Arbete, energi och effekt</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="kort-topbar">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+    <span class="kort-progress" id="progress">–</span>
+  </div>
+
+  <p class="kort-intro" id="intro"></p>
+
+  <div class="kort-scen">
+    <div class="studiekort" id="card">
+      <div class="kort-huvud">
+        <span class="kort-term" id="term">Laddar …</span>
+        <span class="kort-storhet hidden" id="storhet"></span>
+      </div>
+
+      <div class="kort-fram" id="fram">Klicka på <strong>&nbsp;Vänd kortet&nbsp;</strong> för att se definition, formel och enhet.</div>
+
+      <div class="kort-baksida hidden" id="baksida">
+        <div class="kort-rad">
+          <div class="kort-etikett">Definition</div>
+          <div class="kort-def" id="def"></div>
+        </div>
+        <div class="kort-rad">
+          <div class="kort-etikett">Formel</div>
+          <div id="formel"></div>
+        </div>
+        <div class="kort-rad">
+          <div class="kort-etikett">Enhet</div>
+          <div class="kort-enhet" id="enhet"></div>
+        </div>
+        <div class="kort-rad">
+          <div class="kort-etikett">Bra att veta</div>
+          <div class="kort-mer" id="mer"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kort-controls">
+      <button id="prevBtn" type="button">← Föregående</button>
+      <button id="flipBtn" type="button" class="primar">Vänd kortet</button>
+      <button id="nextBtn" type="button">Nästa →</button>
+    </div>
+
+    <div class="kort-oversikt" id="oversikt"></div>
+  </div>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const JSON_PATH = "./data/begreppskort.json";
+  let cards = [];
+  let index = 0;
+  let flipped = false;
+
+  const el = (id) => document.getElementById(id);
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  }
+
+  function renderOversikt() {
+    const wrap = el("oversikt");
+    wrap.innerHTML = "";
+    cards.forEach((c, i) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "kort-chip" + (i === index ? " aktiv" : "");
+      chip.textContent = c.term;
+      chip.addEventListener("click", () => { index = i; flipped = false; render(); });
+      wrap.appendChild(chip);
+    });
+  }
+
+  function render() {
+    const c = cards[index];
+    if (!c) return;
+
+    el("term").textContent = c.term;
+    if (c.storhet) {
+      el("storhet").textContent = "Storhet: " + c.storhet;
+      el("storhet").classList.remove("hidden");
+    } else {
+      el("storhet").classList.add("hidden");
+    }
+
+    el("def").textContent = c.def || "";
+    const formler = Array.isArray(c.formel) ? c.formel : (c.formel ? [c.formel] : []);
+    el("formel").innerHTML = formler.map(f => `<div class="kort-formel">${escapeHtml(f)}</div>`).join("");
+    el("enhet").textContent = c.enhet || "";
+    el("mer").textContent = c.mer || "";
+
+    el("fram").classList.toggle("hidden", flipped);
+    el("baksida").classList.toggle("hidden", !flipped);
+    el("flipBtn").textContent = flipped ? "Dölj svaret" : "Vänd kortet";
+
+    el("progress").textContent = `Kort ${index + 1} av ${cards.length}`;
+
+    document.querySelectorAll(".kort-chip").forEach((chip, i) => {
+      chip.classList.toggle("aktiv", i === index);
+    });
+  }
+
+  function next() { index = (index + 1) % cards.length; flipped = false; render(); }
+  function prev() { index = (index - 1 + cards.length) % cards.length; flipped = false; render(); }
+  function flip() { flipped = !flipped; render(); }
+
+  el("nextBtn").addEventListener("click", next);
+  el("prevBtn").addEventListener("click", prev);
+  el("flipBtn").addEventListener("click", flip);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") next();
+    else if (e.key === "ArrowLeft") prev();
+    else if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+  });
+
+  window.addEventListener("load", async () => {
+    try {
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error("Kunde inte läsa " + JSON_PATH + " (" + res.status + ")");
+      const data = await res.json();
+      cards = Array.isArray(data.cards) ? data.cards : [];
+      if (data.intro) el("intro").textContent = data.intro;
+      renderOversikt();
+      render();
+    } catch (err) {
+      console.error(err);
+      el("term").textContent = "Fel";
+      el("fram").textContent = "Det gick inte att ladda begreppskorten.";
+    }
+  });
+</script>
+
+</body>
+</html>

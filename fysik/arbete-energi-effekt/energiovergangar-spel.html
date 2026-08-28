@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Energiövergångar – quiz – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root { --area: #b45309; --area-bg: #fffbeb; --area-line: #f59e0b; }
+
+    .spel-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;
+    }
+    .spel-intro { max-width: 820px; margin-bottom: 1rem; color: #333; }
+
+    .quiz-scen { max-width: 760px; }
+
+    .quiz-meta {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+      font-weight: 700; color: #555; margin-bottom: 0.75rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .quiz-kort {
+      background: #fff; border: 1px solid #e2d6bf; border-top: 6px solid var(--area-line);
+      border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); padding: 1.5rem 1.5rem 1.75rem;
+    }
+
+    .quiz-fall {
+      font-size: 1.3rem; font-weight: 700; line-height: 1.4; margin-bottom: 1.25rem;
+    }
+    .quiz-fraga { font-size: 0.95rem; color: #666; font-weight: 600; margin-bottom: 1rem; }
+
+    .quiz-alt { display: grid; gap: 0.6rem; }
+    .alt-btn {
+      text-align: left; border: 2px solid #d9c9a3; background: #fff; color: #111;
+      border-radius: 10px; padding: 0.8rem 1rem; font-size: 1.05rem; font-weight: 600;
+      cursor: pointer; line-height: 1.35; width: 100%;
+      transition: border-color .12s ease, background .12s ease;
+    }
+    .alt-btn:hover:not(:disabled) { border-color: var(--area-line); }
+    .alt-btn:disabled { cursor: default; }
+    .alt-btn.ratt { border-color: #15803d; background: #dcfce7; color: #14532d; }
+    .alt-btn.fel { border-color: #b91c1c; background: #fee2e2; color: #7f1d1d; }
+
+    .forklaring {
+      margin-top: 1.1rem; border-left: 4px solid var(--area-line); background: var(--area-bg);
+      border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; font-size: 1.05rem; line-height: 1.5;
+    }
+    .forklaring strong { color: var(--area); }
+
+    .quiz-knappar { margin-top: 1.25rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .quiz-knappar button {
+      padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid #cbb98f;
+      background: #fff; color: #111; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    .quiz-knappar button.primar { background: var(--area); border-color: var(--area); color: #fff; }
+
+    .slut-ruta {
+      background: #fff; border: 1px solid #e2d6bf; border-top: 6px solid var(--area-line);
+      border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); padding: 1.75rem;
+      text-align: center;
+    }
+    .slut-ruta h2 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+    .slut-poang { font-size: 2.4rem; font-weight: 800; color: var(--area); margin: 0.5rem 0; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Energiövergångar</h1>
+  <p>Vilka energiomvandlingar sker?</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="spel-topbar">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <p class="spel-intro" id="intro"></p>
+
+  <div class="quiz-scen">
+    <div id="quizOmrade">
+      <div class="quiz-meta">
+        <span id="progress">Fråga 1</span>
+        <span>Rätt: <span id="poang">0</span></span>
+      </div>
+
+      <div class="quiz-kort">
+        <div class="quiz-fall" id="fall">Laddar …</div>
+        <div class="quiz-fraga">Vilken energiövergång sker?</div>
+        <div class="quiz-alt" id="alternativ"></div>
+        <div class="forklaring hidden" id="forklaring"></div>
+      </div>
+
+      <div class="quiz-knappar">
+        <button id="nastaBtn" type="button" class="primar hidden">Nästa fråga →</button>
+      </div>
+    </div>
+
+    <div class="slut-ruta hidden" id="slutRuta">
+      <h2>Bra jobbat!</h2>
+      <div class="slut-poang" id="slutPoang"></div>
+      <p id="slutText"></p>
+      <div class="quiz-knappar" style="justify-content:center;">
+        <button id="omBtn" type="button" class="primar">Spela igen</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const JSON_PATH = "./data/energiovergangar.json";
+  let fall = [];
+  let ordning = [];
+  let pos = 0, poang = 0, besvarad = false;
+
+  const el = (id) => document.getElementById(id);
+
+  function escapeHtml(str) {
+    return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function start() {
+    ordning = shuffle(fall.map((f, i) => i));
+    pos = 0; poang = 0;
+    el("poang").textContent = "0";
+    el("slutRuta").classList.add("hidden");
+    el("quizOmrade").classList.remove("hidden");
+    visaFraga();
+  }
+
+  function visaFraga() {
+    besvarad = false;
+    const f = fall[ordning[pos]];
+    el("progress").textContent = "Fråga " + (pos + 1) + " av " + ordning.length;
+    el("fall").textContent = f.situation;
+    el("forklaring").classList.add("hidden");
+    el("nastaBtn").classList.add("hidden");
+
+    const alt = el("alternativ");
+    alt.innerHTML = "";
+    const svar = shuffle([f.ratt, ...f.fel]);
+    svar.forEach(text => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "alt-btn";
+      b.innerHTML = escapeHtml(text);
+      b.addEventListener("click", () => svara(b, text, f));
+      alt.appendChild(b);
+    });
+  }
+
+  function svara(btn, text, f) {
+    if (besvarad) return;
+    besvarad = true;
+
+    const knappar = el("alternativ").querySelectorAll(".alt-btn");
+    knappar.forEach(b => {
+      b.disabled = true;
+      if (b.textContent === f.ratt) b.classList.add("ratt");
+    });
+
+    if (text === f.ratt) {
+      poang++;
+      el("poang").textContent = poang;
+    } else {
+      btn.classList.add("fel");
+    }
+
+    el("forklaring").innerHTML = "<strong>Rätt svar:</strong> " + escapeHtml(f.ratt) + ". " + escapeHtml(f.forklaring);
+    el("forklaring").classList.remove("hidden");
+    el("nastaBtn").classList.remove("hidden");
+    el("nastaBtn").textContent = (pos + 1 < ordning.length) ? "Nästa fråga →" : "Se resultat →";
+  }
+
+  function nasta() {
+    pos++;
+    if (pos < ordning.length) visaFraga();
+    else slut();
+  }
+
+  function slut() {
+    el("quizOmrade").classList.add("hidden");
+    el("slutRuta").classList.remove("hidden");
+    const antal = ordning.length;
+    el("slutPoang").textContent = poang + " / " + antal;
+    let omdome;
+    const andel = poang / antal;
+    if (andel === 1) omdome = "Alla rätt. Du har full koll på energiövergångarna.";
+    else if (andel >= 0.75) omdome = "Snyggt. Repetera de fall där du tvekade.";
+    else if (andel >= 0.5) omdome = "På god väg. Gå igenom begreppskorten och prova igen.";
+    else omdome = "Repetera energiformerna och energiprincipen, och prova igen.";
+    el("slutText").textContent = omdome;
+  }
+
+  el("nastaBtn").addEventListener("click", nasta);
+  el("omBtn").addEventListener("click", start);
+
+  window.addEventListener("load", async () => {
+    try {
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error("Kunde inte läsa " + JSON_PATH + " (" + res.status + ")");
+      const data = await res.json();
+      fall = Array.isArray(data.fall) ? data.fall : [];
+      if (data.intro) el("intro").textContent = data.intro;
+      start();
+    } catch (err) {
+      console.error(err);
+      el("fall").textContent = "Det gick inte att ladda övningen.";
+    }
+  });
+</script>
+
+</body>
+</html>

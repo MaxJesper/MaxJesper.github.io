@@ -1,0 +1,78 @@
+{
+  "title": "Energiövergångar – vilka omvandlingar sker?",
+  "intro": "Läs varje fall och välj vilken energiövergång som sker. Efter ditt svar visas en kort förklaring.",
+  "fall": [
+    {
+      "situation": "Ett äpple lossnar och faller från en gren.",
+      "ratt": "Lägesenergi → rörelseenergi",
+      "fel": ["Rörelseenergi → lägesenergi", "Kemisk energi → rörelseenergi", "Värmeenergi → lägesenergi"],
+      "forklaring": "När höjden minskar omvandlas lägesenergin (E = m · g · h) till rörelseenergi (E = ½ · m · v²)."
+    },
+    {
+      "situation": "En bil bromsar in tills den står stilla.",
+      "ratt": "Rörelseenergi → värmeenergi",
+      "fel": ["Värmeenergi → rörelseenergi", "Rörelseenergi → lägesenergi", "Kemisk energi → värmeenergi"],
+      "forklaring": "Bromsarna och däcken blir varma. Bilens rörelseenergi omvandlas till värme."
+    },
+    {
+      "situation": "En solcell driver en miniräknare i solljus.",
+      "ratt": "Strålningsenergi → elektrisk energi",
+      "fel": ["Elektrisk energi → strålningsenergi", "Kemisk energi → elektrisk energi", "Värmeenergi → elektrisk energi"],
+      "forklaring": "Solcellen omvandlar ljusets strålningsenergi till elektrisk energi."
+    },
+    {
+      "situation": "Du spänner en pilbåge och släpper pilen.",
+      "ratt": "Elastisk energi → rörelseenergi",
+      "fel": ["Rörelseenergi → elastisk energi", "Lägesenergi → rörelseenergi", "Kemisk energi → elastisk energi"],
+      "forklaring": "Den spända bågen lagrar elastisk energi, som omvandlas till pilens rörelseenergi när du släpper."
+    },
+    {
+      "situation": "En vanlig glödlampa lyser.",
+      "ratt": "Elektrisk energi → strålningsenergi och värmeenergi",
+      "fel": ["Strålningsenergi → elektrisk energi", "Elektrisk energi → ljudenergi", "Kemisk energi → strålningsenergi"],
+      "forklaring": "Strömmen ger ljus, men glödlampan blir också varm. Därför bildas både strålningsenergi och värmeenergi."
+    },
+    {
+      "situation": "En ficklampa med batteri lyser.",
+      "ratt": "Kemisk energi → elektrisk energi → strålningsenergi",
+      "fel": ["Elektrisk energi → kemisk energi → strålningsenergi", "Strålningsenergi → elektrisk energi → kemisk energi", "Kemisk energi → ljudenergi → strålningsenergi"],
+      "forklaring": "Batteriets kemiska energi blir elektrisk energi, som i lampan blir ljus (strålningsenergi)."
+    },
+    {
+      "situation": "Ved brinner i en brasa.",
+      "ratt": "Kemisk energi → värmeenergi och strålningsenergi",
+      "fel": ["Värmeenergi → kemisk energi", "Elektrisk energi → värmeenergi", "Rörelseenergi → värmeenergi"],
+      "forklaring": "Vid förbränning frigörs vedens kemiska energi som värme och ljus."
+    },
+    {
+      "situation": "En högtalare spelar musik.",
+      "ratt": "Elektrisk energi → ljudenergi",
+      "fel": ["Ljudenergi → elektrisk energi", "Elektrisk energi → strålningsenergi", "Kemisk energi → ljudenergi"],
+      "forklaring": "Högtalaren omvandlar den elektriska signalen till svängningar i luften, alltså ljudenergi."
+    },
+    {
+      "situation": "Du äter frukost och cyklar sedan till skolan.",
+      "ratt": "Kemisk energi → rörelseenergi och värmeenergi",
+      "fel": ["Rörelseenergi → kemisk energi", "Elektrisk energi → rörelseenergi", "Lägesenergi → rörelseenergi"],
+      "forklaring": "Maten ger kemisk energi som kroppen omvandlar till rörelse. En del blir alltid värme."
+    },
+    {
+      "situation": "Vatten faller genom en dammlucka och driver turbinen i ett vattenkraftverk.",
+      "ratt": "Lägesenergi → rörelseenergi → elektrisk energi",
+      "fel": ["Elektrisk energi → rörelseenergi → lägesenergi", "Rörelseenergi → lägesenergi → elektrisk energi", "Kemisk energi → rörelseenergi → elektrisk energi"],
+      "forklaring": "Vattnets höjd ger lägesenergi som blir rörelse när det faller. Generatorn gör rörelsen till elektrisk energi."
+    },
+    {
+      "situation": "En studsmatta är nedtryckt och skjuter upp ett barn, som stiger uppåt.",
+      "ratt": "Elastisk energi → rörelseenergi → lägesenergi",
+      "fel": ["Lägesenergi → elastisk energi → värmeenergi", "Kemisk energi → rörelseenergi → lägesenergi", "Rörelseenergi → elastisk energi → kemisk energi"],
+      "forklaring": "Den spända duken (elastisk energi) skjuter upp barnet (rörelseenergi), som stiger och får lägesenergi högst upp."
+    },
+    {
+      "situation": "Ett vindkraftverk producerar el en blåsig dag.",
+      "ratt": "Rörelseenergi → elektrisk energi",
+      "fel": ["Elektrisk energi → rörelseenergi", "Strålningsenergi → elektrisk energi", "Lägesenergi → elektrisk energi"],
+      "forklaring": "Vindens rörelseenergi snurrar bladen, och generatorn omvandlar rörelsen till elektrisk energi."
+    }
+  ]
+}

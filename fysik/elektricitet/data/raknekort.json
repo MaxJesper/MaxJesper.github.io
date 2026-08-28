@@ -1,0 +1,29 @@
+{
+  "title": "Räknekort – Elektricitet",
+  "intro": "Träna att räkna på elektricitet. Välj område, läs uppgiften och försök själv först. Vänd sedan kortet för formel, uträkning med enheter och svar. I hemmet är spänningen 230 V.",
+  "omraden": [
+    {
+      "namn": "Ohms lag (U = R · I)",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du med Ohms lag", "formel": ["U = R · I", "ger I = U / R och R = U / I"], "forklaring": "Ohms lag binder ihop spänningen U (volt, V), resistansen R (ohm, Ω) och strömmen I (ampere, A). Täck över den storhet du söker, så ser du hur du ska räkna." },
+        { "typ": "uppgift", "fraga": "En glödlampa har spänningen 12 V och drar strömmen 0,5 A. Hur stort är motståndet (resistansen)?", "formel": ["U = R · I", "ger R = U / I"], "utrakning": ["R = U / I = 12 V / 0,5 A = 24 Ω"], "svar": "R = 24 Ω", "forklaring": "Lös ut R genom att dela spänningen med strömmen." },
+        { "typ": "uppgift", "fraga": "En resistor har resistansen 50 Ω och är ansluten till 10 V. Hur stor ström går genom den?", "formel": ["U = R · I", "ger I = U / R"], "utrakning": ["I = U / R = 10 V / 50 Ω = 0,2 A"], "svar": "I = 0,2 A", "forklaring": "Lös ut I genom att dela spänningen med resistansen." },
+        { "typ": "uppgift", "fraga": "En apparat har resistansen 25 Ω och drar strömmen 3 A. Vilken är spänningen över apparaten?", "formel": ["U = R · I"], "utrakning": ["U = R · I = 25 Ω · 3 A = 75 V"], "svar": "U = 75 V", "forklaring": "Resistans gånger ström ger spänningen." },
+        { "typ": "uppgift", "fraga": "En spole har resistansen 40 Ω och är ansluten till 120 V. Hur stor är strömmen genom spolen?", "formel": ["U = R · I", "ger I = U / R"], "utrakning": ["I = U / R = 120 V / 40 Ω = 3 A"], "svar": "I = 3 A", "forklaring": "Lös ut I genom att dela spänningen med resistansen." },
+        { "typ": "uppgift", "fraga": "En apparat har resistansen 10 Ω och drar strömmen 2 A. Hur stor är effekten som apparaten förbrukar?", "formel": ["U = R · I", "P = U · I"], "utrakning": ["U = R · I = 10 Ω · 2 A = 20 V", "P = U · I = 20 V · 2 A = 40 W"], "svar": "P = 40 W", "forklaring": "Räkna först spänningen med Ohms lag, sedan effekten. Genvägen är P = R · I²." }
+      ]
+    },
+    {
+      "namn": "El i hemmet & säkringar",
+      "kort": [
+        { "typ": "formel", "titel": "Säkringar och effekt i hemmet", "formel": ["Total effekt = summan av apparaternas effekt", "I = P / U", "Säkringen klarar det om I ≤ säkringens ampere"], "forklaring": "Hemma är spänningen 230 V. En säkring på t.ex. 10 A bryter strömmen om den blir större än 10 A. Räkna ut strömmen med I = P / U och jämför med säkringens ampere. En säkring på I ampere klarar effekten P = 230 · I watt." },
+        { "typ": "uppgift", "fraga": "I ett kök används en mikro på 800 W, en vattenkokare på 1500 W och en kaffebryggare på 1000 W samtidigt. Vad är den totala effekten?", "formel": ["Total effekt = summan av effekterna"], "utrakning": ["P = 800 W + 1500 W + 1000 W = 3300 W"], "svar": "P = 3300 W", "forklaring": "Lägg ihop apparaternas effekter." },
+        { "typ": "uppgift", "fraga": "Klarar en säkring på 10 A att mikron, vattenkokaren och kaffebryggaren (tillsammans 3300 W) är på samtidigt? (230 V)", "formel": ["I = P / U", "jämför med 10 A"], "utrakning": ["I = P / U = 3300 W / 230 V ≈ 14,3 A", "14,3 A > 10 A"], "svar": "Nej – strömmen blir 14,3 A, säkringen går", "forklaring": "Strömmen blir större än 10 A, så säkringen bryter. Man kan inte köra alla tre samtidigt på samma säkring." },
+        { "typ": "uppgift", "fraga": "I ett badrum används en hårtork på 1200 W och ett element på 500 W samtidigt. Vad är den totala effekten, och klarar en 10 A-säkring det? (230 V)", "formel": ["Total effekt = summan", "I = P / U"], "utrakning": ["P = 1200 W + 500 W = 1700 W", "I = 1700 W / 230 V ≈ 7,4 A", "7,4 A < 10 A"], "svar": "1700 W, ja – 7,4 A < 10 A", "forklaring": "Strömmen är mindre än 10 A, så säkringen klarar det." },
+        { "typ": "uppgift", "fraga": "Ett vardagsrum har en TV på 150 W, en stereo på 80 W och tre lampor på 60 W vardera. Klarar en säkring på 6 A att allt är igång samtidigt? (230 V)", "formel": ["Total effekt = summan", "I = P / U"], "utrakning": ["P = 150 W + 80 W + 3 · 60 W = 410 W", "I = 410 W / 230 V ≈ 1,8 A", "1,8 A < 6 A"], "svar": "Ja – 1,8 A < 6 A", "forklaring": "Glöm inte att räkna alla tre lamporna. Strömmen är liten, så säkringen klarar det lätt." },
+        { "typ": "uppgift", "fraga": "En apparat har resistansen 46 Ω och är kopplad till 230 V. Hur stor ström drar den, och vilken säkring behövs?", "formel": ["I = U / R", "välj säkring över strömmen"], "utrakning": ["I = U / R = 230 V / 46 Ω = 5 A", "Välj en säkring över 5 A, t.ex. 6 A"], "svar": "I = 5 A, en 6 A-säkring räcker", "forklaring": "Räkna strömmen med Ohms lag och välj närmast större standardsäkring." },
+        { "typ": "uppgift", "fraga": "Du ska använda en apparat på 1500 W och en på 2000 W samtidigt (230 V). Vilken säkring behövs?", "formel": ["Total effekt = summan", "I = P / U"], "utrakning": ["P = 1500 W + 2000 W = 3500 W", "I = 3500 W / 230 V ≈ 15,2 A", "Välj en 16 A-säkring"], "svar": "≈ 15,2 A → en 16 A-säkring", "forklaring": "En 10 A-säkring räcker inte. Välj närmast större standardsäkring, 16 A." }
+      ]
+    }
+  ]
+}

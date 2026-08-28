@@ -1,0 +1,117 @@
+{
+  "title": "Räknekort – arbete, energi och effekt",
+  "intro": "Träna att räkna. Välj område, läs uppgiften och försök själv först. Vänd sedan kortet för formel, uträkning med enheter och svar. Svårigheten stiger inom varje område. Tyngdaccelerationen sätts till g = 10 N/kg.",
+  "omraden": [
+    {
+      "namn": "Kraft (tyngd)",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du kraft (tyngd)", "formel": ["F = m · g", "g = 10 N/kg"], "forklaring": "Tyngden F är den kraft som gravitationen drar ett föremål med. Massan m är i kilogram (kg) och g är tyngdaccelerationen, ungefär 10 N/kg på jorden. Svaret blir i newton (N)." },
+        { "typ": "uppgift", "fraga": "En väska har massan 3 kg. Hur stor är tyngden? (g = 10 N/kg)", "formel": ["F = m · g"], "utrakning": ["F = m · g = 3 kg · 10 N/kg = 30 N"], "svar": "F = 30 N", "forklaring": "Massan gånger tyngdaccelerationen ger tyngden." },
+        { "typ": "uppgift", "fraga": "Ett paket har massan 12 kg. Beräkna tyngdkraften. (g = 10 N/kg)", "formel": ["F = m · g"], "utrakning": ["F = m · g = 12 kg · 10 N/kg = 120 N"], "svar": "F = 120 N", "forklaring": "Samma formel, större massa ger större tyngd." },
+        { "typ": "uppgift", "fraga": "Tyngden på en sten är 50 N. Hur stor är massan? (g = 10 N/kg)", "formel": ["F = m · g", "ger m = F / g"], "utrakning": ["m = F / g = 50 N / 10 N/kg = 5 kg"], "svar": "m = 5 kg", "forklaring": "Lös ut m ur F = m · g genom att dela båda leden med g." },
+        { "typ": "uppgift", "fraga": "På månen väger en massa på 6 kg bara 10 N. Hur stor är tyngdaccelerationen på månen?", "formel": ["F = m · g", "ger g = F / m"], "utrakning": ["g = F / m = 10 N / 6 kg ≈ 1,7 N/kg"], "svar": "g ≈ 1,7 N/kg", "forklaring": "Lös ut g. Månens tyngdacceleration är mycket mindre än jordens 10 N/kg." }
+      ]
+    },
+    {
+      "namn": "Arbete",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du arbete", "formel": ["W = F · s"], "forklaring": "Arbetet W är energin som överförs när kraften F flyttar ett föremål sträckan s i kraftens riktning. F är i newton (N), s i meter (m) och W i joule (J)." },
+        { "typ": "uppgift", "fraga": "Du drar en låda med kraften 20 N sträckan 3 m. Hur stort arbete uträttas?", "formel": ["W = F · s"], "utrakning": ["W = F · s = 20 N · 3 m = 60 J"], "svar": "W = 60 J", "forklaring": "Kraft gånger sträcka ger arbetet." },
+        { "typ": "uppgift", "fraga": "En kran lyfter med kraften 500 N i 4 m. Beräkna arbetet.", "formel": ["W = F · s"], "utrakning": ["W = F · s = 500 N · 4 m = 2000 J"], "svar": "W = 2000 J", "forklaring": "2000 J kan även skrivas 2 kJ (kilojoule)." },
+        { "typ": "uppgift", "fraga": "Du lyfter en väska med massan 5 kg rakt upp 2 m. Hur stort är arbetet? (g = 10 N/kg)", "formel": ["W = F · s", "F = m · g"], "utrakning": ["F = m · g = 5 kg · 10 N/kg = 50 N", "W = F · s = 50 N · 2 m = 100 J"], "svar": "W = 100 J", "forklaring": "Räkna först ut tyngden, som är kraften du lyfter med, och sätt sedan in i arbetsformeln." },
+        { "typ": "uppgift", "fraga": "Ett arbete på 240 J utförs med kraften 30 N. Hur lång är sträckan?", "formel": ["W = F · s", "ger s = W / F"], "utrakning": ["s = W / F = 240 J / 30 N = 8 m"], "svar": "s = 8 m", "forklaring": "Lös ut s genom att dela arbetet med kraften." }
+      ]
+    },
+    {
+      "namn": "Effekt",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du effekt", "formel": ["P = W / t"], "forklaring": "Effekten P är energin (arbetet) W som omvandlas per tid t. W är i joule (J), t i sekunder (s) och P i watt (W). 1 W = 1 J/s." },
+        { "typ": "uppgift", "fraga": "En motor uträttar arbetet 600 J på 3 s. Hur stor är effekten?", "formel": ["P = W / t"], "utrakning": ["P = W / t = 600 J / 3 s = 200 W"], "svar": "P = 200 W", "forklaring": "Arbete delat med tid ger effekten." },
+        { "typ": "uppgift", "fraga": "En lampa omvandlar 1200 J på 20 s. Beräkna effekten.", "formel": ["P = W / t"], "utrakning": ["P = W / t = 1200 J / 20 s = 60 W"], "svar": "P = 60 W", "forklaring": "En 60 W-lampa omvandlar alltså 60 J varje sekund." },
+        { "typ": "uppgift", "fraga": "En apparat har effekten 50 W. Hur mycket energi omvandlar den på 10 s?", "formel": ["P = W / t", "ger W = P · t"], "utrakning": ["W = P · t = 50 W · 10 s = 500 J"], "svar": "W = 500 J", "forklaring": "Lös ut W genom att multiplicera effekten med tiden." },
+        { "typ": "uppgift", "fraga": "Hur lång tid tar det för en 40 W-lampa att omvandla 800 J?", "formel": ["P = W / t", "ger t = W / P"], "utrakning": ["t = W / P = 800 J / 40 W = 20 s"], "svar": "t = 20 s", "forklaring": "Lös ut t genom att dela energin med effekten." }
+      ]
+    },
+    {
+      "namn": "Elektrisk effekt",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du elektrisk effekt", "formel": ["P = U · I"], "forklaring": "Den elektriska effekten P är spänningen U gånger strömmen I. U är i volt (V), I i ampere (A) och P i watt (W)." },
+        { "typ": "uppgift", "fraga": "En lampa har spänningen 230 V och strömmen 0,2 A. Hur stor är effekten?", "formel": ["P = U · I"], "utrakning": ["P = U · I = 230 V · 0,2 A = 46 W"], "svar": "P = 46 W", "forklaring": "Spänning gånger ström ger den elektriska effekten." },
+        { "typ": "uppgift", "fraga": "En motor drivs av 12 V och 5 A. Beräkna effekten.", "formel": ["P = U · I"], "utrakning": ["P = U · I = 12 V · 5 A = 60 W"], "svar": "P = 60 W", "forklaring": "Samma formel med andra värden." },
+        { "typ": "uppgift", "fraga": "En hårtork på 1150 W ansluts till 230 V. Hur stor blir strömmen?", "formel": ["P = U · I", "ger I = P / U"], "utrakning": ["I = P / U = 1150 W / 230 V = 5 A"], "svar": "I = 5 A", "forklaring": "Lös ut I genom att dela effekten med spänningen." },
+        { "typ": "uppgift", "fraga": "En apparat har effekten 60 W och strömmen 0,5 A. Vilken spänning matas den med?", "formel": ["P = U · I", "ger U = P / I"], "utrakning": ["U = P / I = 60 W / 0,5 A = 120 V"], "svar": "U = 120 V", "forklaring": "Lös ut U genom att dela effekten med strömmen." },
+        { "typ": "uppgift", "fraga": "En apparat är ansluten till 230 V och drar strömmen 2 A. Hur stor är effekten?", "formel": ["P = U · I"], "utrakning": ["P = U · I = 230 V · 2 A = 460 W"], "svar": "P = 460 W", "forklaring": "Spänning gånger ström ger effekten." },
+        { "typ": "uppgift", "fraga": "En hårtork har effekten 1800 W och är ansluten till 230 V. Hur stor ström drar den?", "formel": ["P = U · I", "ger I = P / U"], "utrakning": ["I = P / U = 1800 W / 230 V ≈ 7,8 A"], "svar": "I ≈ 7,8 A", "forklaring": "Lös ut I. Därför sitter hårtorkar ofta på en egen säkring." },
+        { "typ": "uppgift", "fraga": "En apparat har effekten 1500 W och drar 6 A. Vilken spänning arbetar den med?", "formel": ["P = U · I", "ger U = P / I"], "utrakning": ["U = P / I = 1500 W / 6 A = 250 V"], "svar": "U = 250 V", "forklaring": "Lös ut U." },
+        { "typ": "uppgift", "fraga": "Ett kylskåp har effekten 200 W och är anslutet till 230 V. Hur stor är strömmen?", "formel": ["P = U · I", "ger I = P / U"], "utrakning": ["I = P / U = 200 W / 230 V ≈ 0,87 A"], "svar": "I ≈ 0,87 A", "forklaring": "Lös ut I. Ett kylskåp drar ganska lite ström." },
+        { "typ": "uppgift", "fraga": "Ett kraftverk genererar 10 MW och skickar ut det med spänningen 400 kV. Hur stor är strömmen i ledningen?", "formel": ["P = U · I", "ger I = P / U"], "utrakning": ["I = P / U = 10 000 000 W / 400 000 V = 25 A"], "svar": "I = 25 A", "forklaring": "Hög spänning ger liten ström för samma effekt. Därför används hög spänning i kraftledningar — det minskar förlusterna." }
+      ]
+    },
+    {
+      "namn": "Lägesenergi",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du lägesenergi", "formel": ["E_p = m · g · h", "g = 10 N/kg"], "forklaring": "Lägesenergin E_p beror på massan m (kg), tyngdaccelerationen g och höjden h (m) över marken. Svaret blir i joule (J). Ju större massa och ju högre höjd, desto mer lägesenergi." },
+        { "typ": "uppgift", "fraga": "En bok med massan 2 kg ligger på en hylla 3 m upp. Hur stor är lägesenergin? (g = 10 N/kg)", "formel": ["E_p = m · g · h"], "utrakning": ["E_p = m · g · h = 2 kg · 10 N/kg · 3 m = 60 J"], "svar": "E_p = 60 J", "forklaring": "Multiplicera massa, tyngdacceleration och höjd." },
+        { "typ": "uppgift", "fraga": "En sten med massan 5 kg ligger på en klippa 8 m över marken. Beräkna lägesenergin. (g = 10 N/kg)", "formel": ["E_p = m · g · h"], "utrakning": ["E_p = m · g · h = 5 kg · 10 N/kg · 8 m = 400 J"], "svar": "E_p = 400 J", "forklaring": "Samma formel med större höjd och massa." },
+        { "typ": "uppgift", "fraga": "En vattenmassa på 20 kg har lägesenergin 4000 J. Hur högt upp är den? (g = 10 N/kg)", "formel": ["E_p = m · g · h", "ger h = E_p / (m · g)"], "utrakning": ["h = E_p / (m · g) = 4000 J / (20 kg · 10 N/kg)", "h = 4000 J / 200 N = 20 m"], "svar": "h = 20 m", "forklaring": "Räkna först ut m · g i nämnaren, dela sedan." },
+        { "typ": "uppgift", "fraga": "Ett föremål 5 m upp har lägesenergin 250 J. Hur stor är massan? (g = 10 N/kg)", "formel": ["E_p = m · g · h", "ger m = E_p / (g · h)"], "utrakning": ["m = E_p / (g · h) = 250 J / (10 N/kg · 5 m)", "m = 250 J / 50 = 5 kg"], "svar": "m = 5 kg", "forklaring": "Lös ut m genom att dela lägesenergin med g · h." }
+      ]
+    },
+    {
+      "namn": "Elektrisk energi (kWh)",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du elektrisk energi i kWh", "formel": ["E = P · t"], "forklaring": "Elenergi mäts hemma i kilowattimme (kWh). Om effekten P är i kilowatt (kW) och tiden t i timmar (h), blir energin E i kWh. 1 kWh är energin när 1 kW används i 1 timme. Watt görs om till kilowatt genom att dela med 1000." },
+        { "typ": "uppgift", "fraga": "En värmefläkt på 2 kW är på i 3 timmar. Hur mycket energi används? (i kWh)", "formel": ["E = P · t"], "utrakning": ["E = P · t = 2 kW · 3 h = 6 kWh"], "svar": "E = 6 kWh", "forklaring": "Effekt i kW gånger tid i timmar ger energin i kWh." },
+        { "typ": "uppgift", "fraga": "En ugn på 3 kW används i 0,5 timme. Beräkna energin.", "formel": ["E = P · t"], "utrakning": ["E = P · t = 3 kW · 0,5 h = 1,5 kWh"], "svar": "E = 1,5 kWh", "forklaring": "Halva timmen ger halva energin jämfört med en hel timme." },
+        { "typ": "uppgift", "fraga": "En lampa på 60 W lyser i 10 timmar. Hur många kWh blir det?", "formel": ["E = P · t", "P i kilowatt"], "utrakning": ["P = 60 W = 0,06 kW", "E = P · t = 0,06 kW · 10 h = 0,6 kWh"], "svar": "E = 0,6 kWh", "forklaring": "Gör om watt till kilowatt (dela med 1000) innan du räknar i kWh." },
+        { "typ": "uppgift", "fraga": "El kostar 2 kr per kWh. Vad kostar det att köra en tork på 2 kW i 3 timmar?", "formel": ["E = P · t", "Kostnad = E · pris"], "utrakning": ["E = P · t = 2 kW · 3 h = 6 kWh", "Kostnad = 6 kWh · 2 kr/kWh = 12 kr"], "svar": "12 kr", "forklaring": "Räkna först ut energin i kWh, gånger priset per kWh." },
+        { "typ": "uppgift", "fraga": "En glödlampa har effekten 60 W och lyser i 2 timmar. Hur mycket energi använder den? (svara i kWh)", "formel": ["E = P · t"], "utrakning": ["P = 60 W = 0,06 kW", "E = P · t = 0,06 kW · 2 h = 0,12 kWh"], "svar": "E = 0,12 kWh", "forklaring": "Gör om watt till kilowatt först. 0,12 kWh är också 432 000 J." },
+        { "typ": "uppgift", "fraga": "En TV drar 120 W. Hur mycket energi använder den om den är på i 5 timmar? (svara i kWh)", "formel": ["E = P · t"], "utrakning": ["P = 120 W = 0,12 kW", "E = 0,12 kW · 5 h = 0,6 kWh"], "svar": "E = 0,6 kWh", "forklaring": "Effekt i kilowatt gånger tid i timmar ger energin i kWh." },
+        { "typ": "uppgift", "fraga": "Elpriset är 1,50 kr per kWh. Vad kostar det att ha en 40 W lampa tänd i 8 timmar?", "formel": ["E = P · t", "Kostnad = E · pris"], "utrakning": ["E = 0,04 kW · 8 h = 0,32 kWh", "Kostnad = 0,32 kWh · 1,50 kr/kWh = 0,48 kr"], "svar": "0,48 kr", "forklaring": "Räkna först energin i kWh, gånger priset per kWh." },
+        { "typ": "uppgift", "fraga": "Ett element använder 1,5 kW. Hur många joule energi använder det om det är på i 4 timmar?", "formel": ["E = P · t", "svar i joule: watt och sekunder"], "utrakning": ["t = 4 h = 4 · 3600 s = 14 400 s", "E = P · t = 1500 W · 14 400 s = 21 600 000 J"], "svar": "E = 21 600 000 J (21,6 MJ)", "forklaring": "För svar i joule måste effekten vara i watt och tiden i sekunder. Samma energi är 6 kWh." },
+        { "typ": "uppgift", "fraga": "En tvättmaskin använder 2,5 kWh per tvätt och körs 3 gånger i veckan. Hur mycket energi använder den i genomsnitt per dag?", "formel": ["Per vecka / 7 dagar"], "utrakning": ["Per vecka = 3 · 2,5 kWh = 7,5 kWh", "Per dag = 7,5 kWh / 7 ≈ 1,07 kWh"], "svar": "≈ 1,07 kWh per dag", "forklaring": "Räkna först veckans energi och dela sedan på 7 dagar." },
+        { "typ": "uppgift", "fraga": "Ett hushåll använder 500 kWh på en månad. Hur mycket energi är det i joule?", "formel": ["1 kWh = 3 600 000 J"], "utrakning": ["E = 500 · 3 600 000 J = 1 800 000 000 J"], "svar": "E = 1,8 · 10⁹ J (1,8 GJ)", "forklaring": "1 kWh är 1000 W under 3600 s, alltså 3,6 MJ. Multiplicera med antalet kWh." },
+        { "typ": "uppgift", "fraga": "En frys använder 0,8 kWh per dygn. Hur mycket energi förbrukar den på ett år?", "formel": ["E = förbrukning per dygn · antal dygn"], "utrakning": ["E = 0,8 kWh · 365 = 292 kWh"], "svar": "E = 292 kWh per år", "forklaring": "Ett år har 365 dygn." }
+      ]
+    },
+    {
+      "namn": "Rörelseenergi (överkurs)",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du rörelseenergi", "formel": ["E_k = ½ · m · v²"], "forklaring": "Rörelseenergin E_k beror på massan m (kg) och farten v (m/s). Farten är i kvadrat, så dubbel fart ger fyra gånger så stor rörelseenergi. Svaret blir i joule (J). Detta är överkurs på högstadiet." },
+        { "typ": "uppgift", "fraga": "En boll med massan 2 kg rör sig med farten 3 m/s. Hur stor är rörelseenergin?", "formel": ["E_k = ½ · m · v²"], "utrakning": ["E_k = ½ · m · v² = ½ · 2 kg · (3 m/s)²", "E_k = ½ · 2 · 9 = 9 J"], "svar": "E_k = 9 J", "forklaring": "Kvadrera farten först (3² = 9), multiplicera sedan." },
+        { "typ": "uppgift", "fraga": "En cyklist med massan 60 kg cyklar 5 m/s. Beräkna rörelseenergin.", "formel": ["E_k = ½ · m · v²"], "utrakning": ["E_k = ½ · 60 kg · (5 m/s)²", "E_k = ½ · 60 · 25 = 750 J"], "svar": "E_k = 750 J", "forklaring": "5² = 25, sedan halva av 60 · 25." },
+        { "typ": "uppgift", "fraga": "Samma cyklist (60 kg) ökar farten till 10 m/s. Hur stor blir rörelseenergin nu?", "formel": ["E_k = ½ · m · v²"], "utrakning": ["E_k = ½ · 60 kg · (10 m/s)²", "E_k = ½ · 60 · 100 = 3000 J"], "svar": "E_k = 3000 J", "forklaring": "Farten dubblades men rörelseenergin blev fyra gånger så stor, eftersom v står i kvadrat." },
+        { "typ": "uppgift", "fraga": "En vagn med massan 8 kg har rörelseenergin 100 J. Hur fort rör den sig?", "formel": ["E_k = ½ · m · v²", "ger v = √(2 · E_k / m)"], "utrakning": ["v = √(2 · E_k / m) = √(2 · 100 J / 8 kg)", "v = √25 = 5 m/s"], "svar": "v = 5 m/s", "forklaring": "Multiplicera med 2, dela med massan, och dra roten ur." }
+      ]
+    },
+    {
+      "namn": "Verkningsgrad",
+      "kort": [
+        { "typ": "formel", "titel": "Så räknar du verkningsgrad", "formel": ["η = nyttig energi / tillförd energi"], "forklaring": "Verkningsgraden η visar hur stor del av den tillförda energin som blir nyttig. Resten blir oftast värme. Svaret är ett tal mellan 0 och 1, eller i procent om du multiplicerar med 100. Nyttig och tillförd energi ska ha samma enhet." },
+        { "typ": "uppgift", "fraga": "En lampa får 100 J och ger 20 J som ljus. Vad är verkningsgraden?", "formel": ["η = nyttig / tillförd"], "utrakning": ["η = nyttig / tillförd = 20 J / 100 J = 0,2 = 20 %"], "svar": "η = 0,2 = 20 %", "forklaring": "Bara en femtedel blir ljus, resten blir värme." },
+        { "typ": "uppgift", "fraga": "En motor tillförs 500 J och ger 350 J som rörelse. Beräkna verkningsgraden.", "formel": ["η = nyttig / tillförd"], "utrakning": ["η = nyttig / tillförd = 350 J / 500 J = 0,7 = 70 %"], "svar": "η = 0,7 = 70 %", "forklaring": "70 % blir nyttig rörelse, 30 % blir värme." },
+        { "typ": "uppgift", "fraga": "En apparat har verkningsgraden 80 % och tillförs 200 J. Hur mycket blir nyttig energi?", "formel": ["η = nyttig / tillförd", "ger nyttig = η · tillförd"], "utrakning": ["nyttig = η · tillförd = 0,80 · 200 J = 160 J"], "svar": "nyttig energi = 160 J", "forklaring": "Skriv om 80 % som 0,80 och multiplicera med tillförd energi." },
+        { "typ": "uppgift", "fraga": "En elmotor ger 60 J nyttigt arbete vid verkningsgraden 0,25. Hur mycket energi tillfördes?", "formel": ["η = nyttig / tillförd", "ger tillförd = nyttig / η"], "utrakning": ["tillförd = nyttig / η = 60 J / 0,25 = 240 J"], "svar": "tillförd energi = 240 J", "forklaring": "Lös ut tillförd energi genom att dela nyttig energi med verkningsgraden." },
+        { "typ": "uppgift", "fraga": "En elmotor tar emot 1000 W och ger 800 W som mekanisk effekt. Vad är verkningsgraden?", "formel": ["η = nyttig / tillförd"], "utrakning": ["η = 800 W / 1000 W = 0,8 = 80 %"], "svar": "η = 0,8 = 80 %", "forklaring": "80 % blir rörelse, resten värme." },
+        { "typ": "uppgift", "fraga": "En apparat tar in 600 W och har verkningsgraden 90 %. Hur stor är den nyttiga effekten?", "formel": ["η = nyttig / tillförd", "ger nyttig = η · tillförd"], "utrakning": ["nyttig = 0,90 · 600 W = 540 W"], "svar": "nyttig effekt = 540 W", "forklaring": "Skriv 90 % som 0,90 och multiplicera med den tillförda effekten." },
+        { "typ": "uppgift", "fraga": "En glödlampa drar 60 W, men bara 10 % blir ljus. Hur mycket energi per sekund blir värme?", "formel": ["Värmeandel = 100 % − 10 % = 90 %", "P_värme = 0,90 · P"], "utrakning": ["P_värme = 0,90 · 60 W = 54 W"], "svar": "54 W (54 J varje sekund)", "forklaring": "90 % av effekten blir värme. Därför blir gamla glödlampor så varma." },
+        { "typ": "uppgift", "fraga": "En solpanel tar emot 500 W solenergi och levererar 150 W el. Vad är verkningsgraden?", "formel": ["η = nyttig / tillförd"], "utrakning": ["η = 150 W / 500 W = 0,3 = 30 %"], "svar": "η = 0,3 = 30 %", "forklaring": "Solceller har ofta ganska låg verkningsgrad." },
+        { "typ": "uppgift", "fraga": "En generator levererar 1500 W el, men ingångseffekten är 2000 W. Hur stor är verkningsgraden?", "formel": ["η = nyttig / tillförd"], "utrakning": ["η = 1500 W / 2000 W = 0,75 = 75 %"], "svar": "η = 0,75 = 75 %", "forklaring": "500 W försvinner, mest som värme." }
+      ]
+    },
+    {
+      "namn": "Kombinerat (utmaning)",
+      "kort": [
+        { "typ": "formel", "titel": "Kombinerade uppgifter", "formel": ["Energiprincipen: E_p ↔ E_k", "Ofta: m · g · h = ½ · m · v²"], "forklaring": "Här kombineras flera samband. Läs noga, ta reda på vad som är känt och vad som söks, och lös ett steg i taget. Många bygger på energiprincipen: lägesenergi kan bli rörelseenergi och tvärtom. Flera uppgifter är överkurs." },
+        { "typ": "uppgift", "fraga": "En väska med massan 20 kg lyfts 1 m upp till ett rullband på flygplatsen. Hur mycket lägesenergi har tillförts väskan? (g = 10 N/kg)", "formel": ["E_p = m · g · h"], "utrakning": ["E_p = m · g · h = 20 kg · 10 N/kg · 1 m = 200 J"], "svar": "E_p = 200 J", "forklaring": "Lägesenergin ökar med höjden. De 200 J är också precis det arbete som lyftet uträttade." },
+        { "typ": "uppgift", "fraga": "En hiss lyfter en last på 50 kg rakt upp 6 m på 4 s. Hur stor är hissens effekt? (g = 10 N/kg)", "formel": ["F = m · g", "W = F · s", "P = W / t"], "utrakning": ["F = m · g = 50 kg · 10 N/kg = 500 N", "W = F · s = 500 N · 6 m = 3000 J", "P = W / t = 3000 J / 4 s = 750 W"], "svar": "P = 750 W", "forklaring": "Tre steg: räkna tyngden, sedan arbetet, sedan effekten." },
+        { "typ": "uppgift", "fraga": "En vagn med massan 4 kg står högst upp i en backe, 3 m hög. Hur stor blir rörelseenergin längst ner om all lägesenergi blir rörelseenergi? (g = 10 N/kg) — överkurs", "formel": ["E_k = E_p = m · g · h"], "utrakning": ["E_p = m · g · h = 4 kg · 10 N/kg · 3 m = 120 J", "E_k = 120 J"], "svar": "E_k = 120 J", "forklaring": "Energiprincipen: utan friktion är rörelseenergin längst ner lika stor som lägesenergin på toppen." },
+        { "typ": "uppgift", "fraga": "En sten med massan 2 kg faller från 5 m höjd. Hur stor fart har den strax innan den träffar marken? (g = 10 N/kg, bortse från luftmotstånd) — överkurs", "formel": ["E_p = E_k", "m · g · h = ½ · m · v²", "ger v = √(2 · g · h)"], "utrakning": ["v = √(2 · g · h) = √(2 · 10 N/kg · 5 m)", "v = √100 = 10 m/s"], "svar": "v = 10 m/s", "forklaring": "All lägesenergi blir rörelseenergi. Massan förkortas bort, så farten beror bara på höjden." },
+        { "typ": "uppgift", "fraga": "En boll kastas rakt upp med farten 10 m/s. Hur högt når den? (g = 10 N/kg, bortse från luftmotstånd) — överkurs", "formel": ["E_k = E_p", "½ · m · v² = m · g · h", "ger h = v² / (2 · g)"], "utrakning": ["h = v² / (2 · g) = (10 m/s)² / (2 · 10 N/kg)", "h = 100 / 20 = 5 m"], "svar": "h = 5 m", "forklaring": "Rörelseenergin uppåt blir lägesenergi högst upp. Massan spelar ingen roll." },
+        { "typ": "uppgift", "fraga": "En vattenkokare på 2 kW är på i 0,05 h (3 minuter). Bara 90 % av energin blir nyttig värme till vattnet. Hur mycket nyttig energi får vattnet? (i kWh)", "formel": ["E = P · t", "nyttig = η · E"], "utrakning": ["E = P · t = 2 kW · 0,05 h = 0,1 kWh", "nyttig = η · E = 0,90 · 0,1 kWh = 0,09 kWh"], "svar": "nyttig energi = 0,09 kWh", "forklaring": "Räkna först ut den tillförda energin, ta sedan 90 % av den." },
+        { "typ": "uppgift", "fraga": "En lampa med effekten 75 W har verkningsgraden 80 %. Vad kostar det att använda lampan i 10 timmar om elpriset är 1,50 kr per kWh? — utmaning", "formel": ["E = P · t", "Kostnad = E · pris"], "utrakning": ["E = 0,075 kW · 10 h = 0,75 kWh", "Kostnad = 0,75 kWh · 1,50 kr/kWh ≈ 1,13 kr"], "svar": "≈ 1,13 kr", "forklaring": "Du betalar för energin lampan drar (75 W), oavsett verkningsgrad. De 80 % säger bara hur mycket som blir ljus — en lurig uppgift." },
+        { "typ": "uppgift", "fraga": "En vattenkokare på 2000 W tar 3 minuter att koka upp vatten. Tänk dig att lika mycket energi i stället användes för att lyfta personer på 70 kg rakt upp 5 m (t.ex. uppför en trappa). Hur många personer kan lyftas? (g = 10 N/kg) — utmaning", "formel": ["E = P · t", "Arbete per person: W = m · g · h", "Antal = E / W"], "utrakning": ["E = P · t = 2000 W · 180 s = 360 000 J", "W = m · g · h = 70 kg · 10 N/kg · 5 m = 3500 J", "Antal = 360 000 J / 3500 J ≈ 102"], "svar": "ungefär 102 personer", "forklaring": "Räkna först energin (3 min = 180 s), sedan arbetet för att lyfta en person, och dela. Det visar hur mycket energi som går åt att koka vatten." }
+      ]
+    }
+  ]
+}

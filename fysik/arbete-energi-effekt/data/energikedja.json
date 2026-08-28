@@ -1,0 +1,88 @@
+{
+  "title": "Bygg en energikedja",
+  "intro": "Ställ energiövergångarna i rätt ordning. Klicka på byggdelarna i den ordning energin omvandlas, och tryck sedan på Kontrollera. Välj nivå för längre och svårare kedjor.",
+  "nivaer": {
+    "1": {
+      "namn": "Nivå 1",
+      "beskrivning": "Kortare kedjor, 3–4 steg",
+      "kedjor": [
+        {
+          "situation": "En ficklampa med batteri lyser.",
+          "kedja": ["Kemisk energi", "Elektrisk energi", "Strålningsenergi"],
+          "forklaring": "Batteriet lagrar kemisk energi, som blir elektrisk energi i kretsen, som i lampan blir ljus (strålningsenergi)."
+        },
+        {
+          "situation": "Vatten faller genom ett vattenkraftverk och blir el.",
+          "kedja": ["Lägesenergi", "Rörelseenergi", "Elektrisk energi"],
+          "forklaring": "Vattnets höjd ger lägesenergi, som blir rörelseenergi när vattnet faller, och generatorn gör rörelsen till elektrisk energi."
+        },
+        {
+          "situation": "En solcell laddar upp ett batteri.",
+          "kedja": ["Strålningsenergi", "Elektrisk energi", "Kemisk energi"],
+          "forklaring": "Solcellen omvandlar ljusets strålningsenergi till elektrisk energi, som lagras som kemisk energi i batteriet."
+        },
+        {
+          "situation": "Du äter frukost och cyklar sedan uppför en backe.",
+          "kedja": ["Kemisk energi", "Rörelseenergi", "Lägesenergi"],
+          "forklaring": "Maten ger kemisk energi, som kroppen gör om till rörelse, och när du kommer högre upp ökar lägesenergin."
+        },
+        {
+          "situation": "En berg- och dalbanevagn släpps från toppen och bromsar in på slutet.",
+          "kedja": ["Lägesenergi", "Rörelseenergi", "Värmeenergi"],
+          "forklaring": "Vagnens lägesenergi på toppen blir rörelseenergi i nedförsbacken, och bromsarna omvandlar rörelsen till värme."
+        },
+        {
+          "situation": "Ett barn faller ner mot en studsmatta, landar och skjuts upp igen.",
+          "kedja": ["Rörelseenergi", "Elastisk energi", "Rörelseenergi", "Lägesenergi"],
+          "forklaring": "Vi börjar när barnet redan faller nedåt och därför har rörelseenergi. Rörelsen spänner duken (elastisk energi), som skjuter upp barnet (rörelseenergi), som stiger och får lägesenergi högst upp."
+        },
+        {
+          "situation": "Ett vindkraftverk laddar en mobiltelefon.",
+          "kedja": ["Rörelseenergi", "Elektrisk energi", "Kemisk energi"],
+          "forklaring": "Vindens rörelseenergi blir elektrisk energi i generatorn, som lagras som kemisk energi i telefonens batteri."
+        }
+      ]
+    },
+    "2": {
+      "namn": "Nivå 2",
+      "beskrivning": "Längre och svårare kedjor, 4–6 steg",
+      "kedjor": [
+        {
+          "situation": "I ett kärnkraftverk klyvs atomkärnor. Värmen kokar vatten till ånga som driver en turbin, och elen laddar till slut en mobiltelefon.",
+          "kedja": ["Kärnenergi", "Värmeenergi", "Rörelseenergi", "Elektrisk energi", "Kemisk energi"],
+          "forklaring": "Kärnklyvningen frigör kärnenergi som värme. Värmen ger ånga som får turbinen att röra sig, generatorn gör rörelsen till el, och batteriet lagrar den som kemisk energi."
+        },
+        {
+          "situation": "Solen lyser på en åker. Du äter brödet och cyklar sedan uppför en backe.",
+          "kedja": ["Strålningsenergi", "Kemisk energi", "Rörelseenergi", "Lägesenergi"],
+          "forklaring": "Växten fångar solens strålningsenergi och lagrar den som kemisk energi. Maten ger dig rörelse, och uppför backen ökar lägesenergin."
+        },
+        {
+          "situation": "Solen värmer havet så att vatten avdunstar och regnar ner över bergen. Vattnet samlas i en damm och driver ett vattenkraftverk som lyser en lampa.",
+          "kedja": ["Strålningsenergi", "Lägesenergi", "Rörelseenergi", "Elektrisk energi", "Strålningsenergi"],
+          "forklaring": "Solens strålning lyfter vattnet högt upp (lägesenergi). När det faller blir det rörelse, generatorn ger el, och lampan ger ljus igen. En förenklad bild av vattnets kretslopp."
+        },
+        {
+          "situation": "Kol förbränns i ett kraftverk. Elen laddar ett elbilsbatteri, och sedan kör bilen i väg.",
+          "kedja": ["Kemisk energi", "Värmeenergi", "Rörelseenergi", "Elektrisk energi", "Kemisk energi", "Rörelseenergi"],
+          "forklaring": "Kolets kemiska energi blir värme vid förbränningen. Ångan driver turbinen (rörelse), generatorn ger el, batteriet lagrar den som kemisk energi, och motorn gör den till rörelse igen."
+        },
+        {
+          "situation": "I ett kärnkraftverk värms vatten till ånga som driver en generator. Elen får en högtalare att spela musik.",
+          "kedja": ["Kärnenergi", "Värmeenergi", "Rörelseenergi", "Elektrisk energi", "Ljudenergi"],
+          "forklaring": "Kärnenergin blir värme, värmen ger ånga som driver turbinen (rörelse), generatorn ger el, och högtalaren gör elen till ljud."
+        },
+        {
+          "situation": "Ett barn står stilla på en avsats, hoppar ner mot en studsmatta, landar och skjuts upp igen.",
+          "kedja": ["Lägesenergi", "Rörelseenergi", "Elastisk energi", "Rörelseenergi", "Lägesenergi"],
+          "forklaring": "Barnet börjar stilla högt upp på avsatsen och har då lägesenergi. I fallet blir den rörelse, duken spänns (elastisk energi) och skjuter upp barnet (rörelse), som stiger och får lägesenergi igen."
+        },
+        {
+          "situation": "Du vevar en vevficklampa, som lyser upp rummet.",
+          "kedja": ["Kemisk energi", "Rörelseenergi", "Elektrisk energi", "Strålningsenergi"],
+          "forklaring": "Maten du ätit ger kemisk energi. Handen vevar (rörelse), en liten generator ger el, och lampan ger ljus."
+        }
+      ]
+    }
+  }
+}
