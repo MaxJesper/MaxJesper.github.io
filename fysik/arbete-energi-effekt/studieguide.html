@@ -55,6 +55,13 @@
     }
     .calc-box .steg { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.95rem; margin: 0.2rem 0; }
 
+    .minnesregel {
+      background: #fff8e6; border: 1px solid #f0d68a; border-left: 4px solid #d4a017;
+      border-radius: 8px; padding: 0.7rem 1rem; margin: 0.9rem 0; font-size: 0.97rem;
+    }
+    .minnesregel > strong { display: block; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #8a6d1a; margin-bottom: 0.3rem; }
+    .minnesregel .ex { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.93rem; }
+
     .fact-box {
       background: #eef2fb; border-left: 4px solid #2e4a8a; border-radius: 6px;
       padding: 0.75rem 0.95rem; margin: 0.9rem 0; font-size: 0.98rem;
@@ -133,19 +140,24 @@
     <details class="milestone" id="m1" open>
       <summary><span class="m-num">Milstolpe 1</span><span class="m-title">Vad är arbete?</span></summary>
       <div class="m-body">
-        <p>I vardagsspråket är "arbete" nästan vad som helst som känns jobbigt. I fysiken betyder det något mycket mer bestämt. Ett <strong class="term">mekaniskt arbete</strong> utförs bara när en <strong class="term">kraft</strong> flyttar något en <strong class="term">sträcka i kraftens riktning</strong>. Lyfter du en kasse gör du ett arbete på den; står du bara och håller kassen stilla gör du inget mekaniskt arbete alls, hur trött du än blir.</p>
+        <p>I vardagsspråket kan "arbete" vara nästan vad som helst som känns ansträngande. I fysiken betyder det något mycket mer bestämt. Ett <strong class="term">mekaniskt arbete</strong> utförs bara när en <strong class="term">kraft</strong> flyttar något en <strong class="term">sträcka i kraftens riktning</strong>. Lyfter du en kasse gör du ett arbete på den; står du bara och håller kassen stilla gör du inget mekaniskt arbete alls, hur trött du än blir.</p>
         <p>Ju större kraft och ju längre sträcka, desto större arbete. Det räknas ut med en enkel formel:</p>
         <div class="formula-box">
-          <span class="f">Arbete = kraft · väg</span>
+          <span class="f">Arbete = kraft · väg&nbsp;&nbsp;(W = F · s)</span>
           <span class="u">Enhet: newtonmeter (Nm). 1 Nm kallas också 1 joule (J), så <strong>1 Nm = 1 J</strong>.</span>
         </div>
         <p>Med "väg" menas alltså den sträcka som föremålet flyttas i kraftens riktning. Tyngdkraften på ett föremål räknas ut som massan (i kg) gånger ungefär 10 – ett föremål på 1 kg dras nedåt med cirka 10 N.</p>
+        <div class="minnesregel">
+          <strong>Minnesregel – så skriver du ett räkneexempel</strong>
+          Skriv alltid i tre steg: <strong>formeln först</strong>, sedan <strong>mätetalen med enheter</strong>, och sist <strong>svaret med enhet</strong>. Enheterna räknas med hela vägen.
+          <p class="ex" style="margin:0.45rem 0 0;">F = m · g = 20 kg · 10 N/kg = 200 N&nbsp;&nbsp;(g = 10 N/kg)</p>
+        </div>
         <div class="calc-box">
           <strong class="calc-rubrik">Räkneexempel</strong>
           <p>Du lyfter en låda som väger 20 kg upp på en hylla 1,5 m upp. Hur stort arbete gör du?</p>
-          <p class="steg">Tyngdkraften: F = 20 · 10 = 200 N</p>
-          <p class="steg">Arbete: W = kraft · väg = 200 · 1,5 = 300 Nm = 300 J</p>
-          <p>Du utför alltså ett arbete på 300 joule.</p>
+          <p class="steg">F = m · g = 20 kg · 10 N/kg = 200 N&nbsp;&nbsp;(g = 10 N/kg)</p>
+          <p class="steg">W = F · s = 200 N · 1,5 m = 300 Nm = 300 J</p>
+          <p>Svar: Arbetet blir 300 J.</p>
         </div>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -236,16 +248,16 @@
       <div class="m-body">
         <p>Två personer kan utföra exakt samma arbete – men den som gör det på kortare tid arbetar <em>effektivare</em>. I fysiken fångar man det med begreppet <strong class="term">effekt</strong>: hur mycket arbete (eller energi) som uträttas per sekund.</p>
         <div class="formula-box">
-          <span class="f">Effekt = arbete / tid</span>
+          <span class="f">Effekt = arbete / tid&nbsp;&nbsp;(P = W / t)</span>
           <span class="u">Enhet: watt (W). <strong>1 W = 1 J/s = 1 Nm/s.</strong></span>
         </div>
         <div class="calc-box">
           <strong class="calc-rubrik">Räkneexempel</strong>
           <p>En lyftkran lyfter en last som väger 400 kg upp till 3 meters höjd på 6 sekunder. Hur stor är kranens effekt?</p>
-          <p class="steg">Tyngdkraften: F = 400 · 10 = 4000 N</p>
-          <p class="steg">Arbete: W = 4000 · 3 = 12 000 J</p>
-          <p class="steg">Effekt: P = 12 000 / 6 = 2000 W = 2 kW</p>
-          <p>Kranens effekt är alltså 2000 watt, eller 2 kilowatt.</p>
+          <p class="steg">F = m · g = 400 kg · 10 N/kg = 4000 N&nbsp;&nbsp;(g = 10 N/kg)</p>
+          <p class="steg">W = F · s = 4000 N · 3 m = 12 000 Nm = 12 000 J</p>
+          <p class="steg">P = W / t = 12 000 J / 6 s = 2000 J/s = 2000 W = 2 kW</p>
+          <p>Svar: Kranens effekt är 2000 W (2 kW).</p>
         </div>
         <p>Effekt är samma sak som anges på hemmets apparater: en hårfön på 1000 W omvandlar 1000 joule varje sekund. En äldre enhet för effekt är <strong class="term">hästkraft</strong> (hk), som James Watt införde när han jämförde sina ångmaskiner med hästar. En hästkraft motsvarar 736 W.</p>
         <div class="fact-box">
@@ -272,8 +284,8 @@
         <div class="calc-box">
           <strong class="calc-rubrik">Räkneexempel</strong>
           <p>En elmotor tillförs 500 J elektrisk energi och ger 450 J nyttig rörelseenergi. Vad är verkningsgraden?</p>
-          <p class="steg">Verkningsgrad = 450 / 500 = 0,9 = 90 %</p>
-          <p>De 50 joule som "saknas" har blivit värme i motorn.</p>
+          <p class="steg">Verkningsgrad = nyttig energi / tillförd energi = 450 J / 500 J = 0,9 = 90 %</p>
+          <p>Svar: Verkningsgraden är 90 %. De 50 J som "saknas" har blivit värme i motorn.</p>
         </div>
         <div class="fact-box">
           <strong>Sammanfattning</strong>

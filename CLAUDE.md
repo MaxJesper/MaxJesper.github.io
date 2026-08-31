@@ -270,6 +270,26 @@ Syftet är att Jesper ska kunna publicera och använda materialet utan risk för
 
 ---
 
+## Räkneexempel – standardformat
+
+Alla räkneexempel (studieguider, räknekort, prov) skrivs i tre steg, och enheterna räknas med hela vägen:
+
+1. **Formeln först** (i symboler).
+2. **Insättning av mätetal med enheter.**
+3. **Svar med enhet** (på egen "Svar:"-rad).
+
+Exempel:
+
+```
+F = m · g = 20 kg · 10 N/kg = 200 N   (g = 10 N/kg)
+W = F · s = 200 N · 1,5 m = 300 Nm = 300 J
+Svar: Arbetet blir 300 J.
+```
+
+Tyngdfaktorn skrivs g = 10 N/kg. I studieguider introduceras formatet med en tydlig "Minnesregel"-ruta vid det första räkneexemplet.
+
+---
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang
