@@ -1,0 +1,48 @@
+{
+  "sections": [
+    {
+      "title": "Del I – E-nivå (grundläggande)",
+      "questions": [
+        {
+          "type": "match",
+          "title": "Para ihop varje storhet med rätt enhet. Skriv siffran i rutan.",
+          "left": ["Kraft", "Arbete", "Effekt", "Elenergi (elräkningen)", "Massa"],
+          "right": [
+            "1. watt (W)",
+            "2. newton (N)",
+            "3. kilowattimme (kWh)",
+            "4. kilogram (kg)",
+            "5. joule (J)"
+          ],
+          "a": "Kraft – 2, Arbete – 5, Effekt – 1, Elenergi – 3, Massa – 4"
+        },
+        { "q": "En låda väger 10 kg och ligger på ett bord. (a) Hur stor är lådans massa? (b) Hur stor är lådans tyngd? (g = 10 N/kg)", "a": "(a) Massan är 10 kg – den ändras inte. (b) Tyngden är en kraft: F = m · g = 10 kg · 10 N/kg = 100 N.", "lines": 3 },
+        { "q": "Avgör i vilka av följande situationer det utförs ett fysikaliskt arbete: (a) du lyfter en bok från golvet upp på bordet, (b) du håller boken stilla i handen, (c) du skjuter en kälke framåt så att den rör sig.", "a": "Arbete utförs i a och c, eftersom en kraft flyttar något en sträcka. I b flyttas boken inte, så inget arbete utförs.", "lines": 3 },
+        { "q": "Du drar en pulka med kraften 60 N en sträcka på 15 m i kraftens riktning. Hur stort arbete utför du?", "a": "W = F · s = 60 N · 15 m = 900 Nm = 900 J.", "lines": 2 },
+        { "q": "Ge exempel på vilken energiform som främst är lagrad i: (a) ett laddat batteri, (b) en sten högt uppe på en klippa, (c) en rullande fotboll.", "a": "(a) kemisk energi, (b) lägesenergi, (c) rörelseenergi.", "lines": 3 },
+        { "q": "Formulera energiprincipen med egna ord.", "a": "Energi kan varken skapas eller förstöras, bara omvandlas mellan olika former. Den totala energimängden är alltid bevarad.", "lines": 2 },
+        { "q": "Berätta kortfattat vilken betydelse solen har för energin på jorden.", "a": "Nästan all energi kommer i grunden från solen. Solen driver vindar och vattnets kretslopp (vind- och vattenkraft), får växter att växa (mat och biobränsle), och för länge sedan bildades kol och olja av växter och djur som levde av solens energi.", "lines": 3 },
+        { "q": "Vad menas med effekt, och vilken enhet mäts den i?", "a": "Effekt är hur mycket arbete eller energi som uträttas per sekund (effekt = arbete / tid). Enheten är watt (W), där 1 W = 1 J/s.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "Del II – C-nivå (förklara och tillämpa)",
+      "questions": [
+        { "q": "En hiss lyfter en person så att arbetet 12 000 J utförs på 8 s. Hur stor är hissens effekt?", "a": "P = W / t = 12 000 J / 8 s = 1 500 W.", "lines": 3 },
+        { "q": "En tvättmaskin med effekten 2,5 kW körs i 2 timmar. (a) Hur mycket energi använder den? (b) Vad kostar det att köra maskinen om 1 kWh kostar 2 kr?", "a": "(a) E = P · t = 2,5 kW · 2 h = 5 kWh. (b) kostnad = 5 kWh · 2 kr/kWh = 10 kr.", "lines": 4 },
+        { "q": "En vagn dras uppför ett lutande plan med kraften 1,5 N. Planet är 4 m långt och 2 m högt. (a) Hur stort arbete uträttas när vagnen dras uppför hela planet? (b) Hur stor är vagnens tyngd? Ledtråd: arbetet blir lika stort som om vagnen lyfts rakt upp till 2 m.", "a": "(a) W = F · s = 1,5 N · 4 m = 6 Nm = 6 J. (b) Samma arbete rakt upp: W = tyngd · höjd, alltså 6 J = F · 2 m. F = 6 J / 2 m = 3 N. Vagnens tyngd är 3 N. (Det lutande planet ger mindre kraft, men över längre väg – mekanikens gyllene regel.)", "lines": 5 },
+        { "q": "Ett vattenkraftverk ger elektrisk energi till våra hus. Beskriv de energiomvandlingar som sker, från vattnet i magasinet till elen i ledningen.", "a": "Vattnets lägesenergi (högt i magasinet) → rörelseenergi (vattnet faller och driver en turbin) → elektrisk energi (turbinen driver en generator som ger el).", "lines": 4 },
+        { "q": "Vilka energiomvandlingar sker när man gungar på en gunga? Beskriv en hel gungtur.", "a": "Längst upp i vändläget står gungan nästan stilla och har mest lägesenergi. På väg ner omvandlas lägesenergin till rörelseenergi, som är störst längst ner. På väg upp på andra sidan omvandlas rörelseenergin tillbaka till lägesenergi. Lite energi omvandlas hela tiden till värme, så gungan stannar till slut om man inte håller igång den.", "lines": 4 }
+      ]
+    },
+    {
+      "title": "Del III – A-nivå (resonera och dra slutsatser)",
+      "questions": [
+        { "q": "Två kompisar går upp för trapporna till ett utsiktstorn. Viktor säger: ”Jag utförde ett större arbete när vi gick upp.” Emilia säger: ”Min effekt var större.” Kan båda ha rätt, eller har någon helt fel? Förklara hur du tänker.", "a": "Båda kan ha rätt samtidigt. Arbetet beror på tyngd och höjd (W = F · s): väger Viktor mer utför han ett större arbete upp för samma trappa. Effekten beror på hur snabbt arbetet görs (P = W / t): går Emilia upp snabbare kan hennes effekt vara större även om hennes arbete är mindre. Storheterna mäter olika saker.", "lines": 5 },
+        { "q": "En kompis säger: ”En maskin med hög verkningsgrad kan komma upp i 100 % om den bara är riktigt välbyggd.” Håller påståendet? Motivera fysikaliskt.", "a": "Nej. Vid varje energiomvandling bildas alltid lite värme som inte blir den nyttiga energin. Därför är en del av den tillförda energin alltid förlorad, och verkningsgraden kan komma nära men aldrig nå 100 %.", "lines": 4 },
+        { "q": "Frances ska gunga på en gungbräda. Anton (40 kg) sitter 2,0 m från vridningspunkten och Estelle (20 kg) sitter 4,0 m från vridningspunkten, på samma sida. Frances väger 40 kg och sätter sig på andra sidan. Hur långt från vridningspunkten ska Frances sätta sig för att brädan ska bli i jämvikt? Visa hur du tänker. (g = 10 N/kg)", "a": "Jämvikt råder när kraft · avstånd (momentet) är lika stort på båda sidor. Anton: 400 N · 2,0 m = 800 Nm. Estelle: 200 N · 4,0 m = 800 Nm. Tillsammans: 800 + 800 = 1 600 Nm. Frances tyngd: F = 40 kg · 10 N/kg = 400 N. Avstånd = 1 600 Nm / 400 N = 4,0 m. Frances ska sitta 4,0 m från vridningspunkten.", "lines": 6 },
+        { "q": "Lisa (massa 50 kg) bär en ryggsäck som väger 10 kg upp till toppen av ett 40 m högt utsiktstorn. (g = 10 N/kg, bortse från luftmotstånd.) Vilket eller vilka påståenden är rätt? Visa dina beräkningar. (1) Arbetet Lisa utför för att ta sig själv och ryggsäcken upp är 24 000 J. (2) Ryggsäckens lägesenergi på toppen är 4 000 J. (3) Om Lisa med ryggsäck tar sig upp på 2 minuter är hennes effekt 200 W. (4) Släpper hon ryggsäcken från toppen har den efter halva fallet (20 m) rörelseenergin 2 000 J. (5) En kompis som väger 60 kg måste utföra ett mindre arbete än Lisa för att gå upp samma torn.", "a": "Rätt är påstående 1, 2, 3 och 4. Påstående 5 är fel. (1) Total massa 60 kg → tyngd F = 60 · 10 = 600 N. W = F · s = 600 N · 40 m = 24 000 J. Rätt. (2) Ryggsäcken: F = 10 · 10 = 100 N, E = F · h = 100 N · 40 m = 4 000 J. Rätt. (3) 2 min = 120 s. P = W / t = 24 000 J / 120 s = 200 W. Rätt. (4) Efter halva höjden har halva lägesenergin omvandlats: 100 N · 20 m = 2 000 J rörelseenergi. Rätt. (5) Kompisen (60 kg) väger lika mycket som Lisa med ryggsäck, så arbetet blir lika stort (24 000 J) – inte mindre. Fel.", "lines": 8 }
+      ]
+    }
+  ]
+}

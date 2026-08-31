@@ -257,6 +257,39 @@ Tills filer finns används syntetisk röst (TTS) som standard.
 
 ---
 
+## Videoruta – klicka-för-att-ladda YouTube (GDPR-vänligt)
+
+Återanvändbar komponent för att bädda in YouTube-klipp utan att kontakta Google innan eleven klickar på play. Ingen spårning och inga cookies förrän filmen startas (använder `youtube-nocookie.com`).
+
+- Filer: `/js/videoruta.js` + `/css/videoruta.css`.
+- Länka båda i `<head>`/före `</body>` och lägg en tom div där klippet ska visas:
+
+```html
+<div class="videoruta"
+     data-yt="9gUdDM6LZGo"
+     data-start="2738"
+     data-titel="Energiprincipen förklarad"
+     data-text="Kort beskrivning under rubriken."
+     data-flagga="🇸🇪"></div>
+```
+
+Attribut: `data-yt` (krävs, video-id), `data-start` (starttid i sek), `data-titel`, `data-text`, `data-flagga` (språk-emoji). Första användning: `fysik/arbete-energi-effekt/for-lararen.html`.
+
+## För läraren-sidor
+
+Sidor med lärarstöd (t.ex. videoklipp för genomgångar) heter `for-lararen.html` i områdesmappen. De **länkas inte från elevernas meny** utan bara från en egen "För läraren"-ruta på områdets index, och har `<meta name="robots" content="noindex, nofollow">`. Detta är i nuläget bara en mjuk spärr – eleverna kan nå sidan om de har länken. När vi lägger upp material som inte bör spridas fritt får vi lägga på ett riktigt kodord/lösenord (t.ex. via Cloudflare Access). Första sidan: `fysik/arbete-energi-effekt/for-lararen.html`.
+
+## Övningsprov + facit + instuderingsfrågor + checklista (tunna mallar)
+
+Dessa fyra sidtyper är tunna HTML-mallar som renderar JSON via delad JS. Klona från en färdig area (fysik: `fysik/kraft-och-rorelse/`; biologi: `biologi/genetik/`) och byt bara ut områdesnamnet i `<title>` och `<header><p>`.
+
+- `checklista.html` → `js/render-checklista.js`, data `{sections:[{title, note?, items:[]}]}`.
+- `instuderingsfragor.html` (+ `-print-elev`, `-print-larare`) → `js/render-instudering.js`, data `{groups:[{title, items:[{q,a,lines?}]}]}`.
+- `ovningsprov.html` (+ `-print`), `facit.html` (+ `-print`) → `js/render-prov.js`, data `{sections:[{title, questions:[]}]}`. Frågetyper: vanlig `{q,a,lines}` eller `{type:"match", title, left:[], right:[], a}`. OBS: render-prov escapar HTML och gör inte radbrytningar i facit – skriv räknefacit på en rad med `·` och `→`.
+- Prov-sidorna kan ha ett `formelblad` (statisk `<section class="formelblad">` före `#prov-container`), som även skrivs ut.
+
+Ett övningsprov ska träna **samma förmågor** som ett riktigt prov i området, men med **egna uppgifter och siffror** (aldrig kopiera). Facit i räkneexempel-format (formel → insättning med enheter → svar med enhet).
+
 ## Originalitet – inga kopior av lärobokstext
 
 När Claude skapar **studieguider**, **instuderingsfrågor** och **övningsprov** gäller att all text ska vara ny och självständigt formulerad. Det är inte tillåtet att kopiera eller nära citera text från läroböcker (t.ex. TEFY, Puls, Spektrum eller andra förlag).
