@@ -112,6 +112,24 @@
 
     details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
     @media (max-width: 520px) { main { font-size: 1.05em; } .milestone .m-title { font-size: 1rem; } }
+
+    .mol-fig { margin: 1rem 0; overflow-x: auto; }
+    .mol-fig .mol-row { display: flex; flex-wrap: wrap; gap: 1.6rem; justify-content: center; align-items: flex-end; }
+    .mol-fig .mol { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
+    .mol-fig img { height: 108px; width: auto; }
+    .mol-fig .mol-name { font-size: 0.88rem; color: #4a4a5a; }
+    .mol-fig figcaption { font-size: 0.9rem; color: #555; margin-top: 0.6rem; text-align: center; }
+    .mol-sub { font-size: 1rem; color: #6d28d9; margin: 1.1rem 0 0.4rem; }
+    .name-tables { display: flex; gap: 1rem; flex-wrap: wrap; margin: 0.6rem 0; }
+    .name-tables table { flex: 1; min-width: 240px; }
+    .rxn { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; justify-content: center; }
+    .rxn .mol { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+    .rxn .mol img { height: 96px; width: auto; }
+    .rxn .mol span { font-size: 0.82rem; color: #4a4a5a; }
+    .rxn .op { font-size: 1.6rem; color: #6d28d9; font-weight: 600; }
+    .rxn .arrow { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+    .rxn .arrow .cat { font-size: 0.78rem; color: #6d28d9; margin-bottom: 0.1rem; white-space: nowrap; }
+    .rxn .arrow .a { font-size: 1.8rem; color: #6d28d9; }
   </style>
 </head>
 <body>
@@ -213,7 +231,21 @@
         </table>
         </div>
         <p>Ser du mönstret i formlerna? För varje kolatom (C) som läggs till kommer det två väteatomer (H) till. Alla alkaner följer regeln <span class="formula">C<sub>n</sub>H<sub>2n+2</sub></span>. Ju längre kedjan är, desto högre blir kokpunkten: de fyra första är gaser, de följande vätskor, och riktigt långa kedjor (som paraffin och asfalt) är fasta ämnen.</p>
+<figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"><span class="mol-name">Metan</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etan.svg" alt="Strukturformel för Etan"><span class="mol-name">Etan</span></div></div><figcaption>De två minsta alkanerna. Varje kolatom binder fyra grannar med enkelbindningar.</figcaption></figure>
         <p>I alkanerna binder varje kolatom till fyra andra atomer med vanliga <strong class="term">enkelbindningar</strong>. Kolatomerna kan inte binda fler atomer – de är "fulltankade" med väte. Sådana kolväten kallas därför <strong class="term">mättade</strong>.</p>
+<h3 class="mol-sub">Systematisk namngivning – "förnamn" och "efternamn"</h3>
+        <p>Namnet på ett kolväte byggs av två delar. <strong>Förnamnet</strong> talar om hur många kolatomer den längsta kedjan har, och <strong>efternamnet</strong> talar om vilken sorts bindningar som finns.</p>
+        <div class="name-tables">
+          <table class="compare-table"><thead><tr><th>Antal kolatomer</th><th>"Förnamn"</th></tr></thead><tbody><tr><td>1</td><td>met-</td></tr><tr><td>2</td><td>et-</td></tr><tr><td>3</td><td>prop-</td></tr><tr><td>4</td><td>but-</td></tr><tr><td>5</td><td>pent-</td></tr><tr><td>6</td><td>hex-</td></tr><tr><td>7</td><td>hept-</td></tr><tr><td>8</td><td>okt-</td></tr><tr><td>9</td><td>non-</td></tr><tr><td>10</td><td>dek-</td></tr></tbody></table>
+          <table class="compare-table"><thead><tr><th>Bindningar</th><th>"Efternamn"</th></tr></thead><tbody>
+            <tr><td>bara enkelbindningar</td><td>-an</td></tr>
+            <tr><td>dubbelbindning</td><td>-en</td></tr>
+            <tr><td>trippelbindning</td><td>-yn</td></tr>
+            <tr><td>gren (sidogrupp)</td><td>-yl</td></tr>
+          </tbody></table>
+        </div>
+        <p>Exempel: <em>pent</em> + <em>-an</em> = pentan (fem kol, bara enkelbindningar). <em>Prop</em> + <em>-en</em> = propen (tre kol, en dubbelbindning). En kort sidogren på ett kol kallas en <em>metylgrupp</em> (met + -yl).</p>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/2-metylbutan.svg" alt="Strukturformel för 2-metylbutan"><span class="mol-name">2-metylbutan</span></div></div><figcaption>Här sitter en metylgrupp (–yl) som gren på huvudkedjan.</figcaption></figure>
         <p>Ett och samma antal kolatomer kan sitta ihop på olika sätt – i en rak kedja eller i en grenad. Rak och grenad butan har till exempel samma molekylformel (<span class="formula">C₄H₁₀</span>) men lite olika egenskaper. Ju fler kolatomer, desto fler sätt att grena kedjan.</p>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -236,13 +268,11 @@
       <div class="m-body">
         <p>I alkanerna binder varje kolatom fyra andra atomer med enkelbindningar. Men två kolatomer kan också dela på fler bindningar med varandra. Kolväten som innehåller en <strong class="term">dubbelbindning</strong> eller en <strong class="term">trippelbindning</strong> kallas <strong class="term">omättade</strong>.</p>
         <p>Kolväten med en dubbelbindning bildar gruppen <strong class="term">alkener</strong>. Det enklaste är <strong class="term">eten</strong>, <span class="formula">C₂H₄</span>, där de två kolatomerna hålls ihop av en dubbelbindning. Eten är en färglös gas och en viktig råvara vid tillverkning av plast.</p>
-        <div class="struct">  H       H
-   \\     /
-    C  =  C          = eten (C₂H₄), en alken
-   /       \\
-  H         H</div>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/eten.svg" alt="Strukturformel för Eten"><span class="mol-name">Eten</span></div></div><figcaption>Eten (C₂H₄): två kolatomer med en dubbelbindning.</figcaption></figure>
         <p>Kolväten med en trippelbindning bildar gruppen <strong class="term">alkyner</strong>. Det enklaste är <strong class="term">etyn</strong>, <span class="formula">C₂H₂</span>, där kolatomerna delar på hela tre bindningar. Etyn kallas oftast <strong class="term">acetylen</strong>. Gasen brinner med en mycket het låga (omkring 3200 °C när den förbränns med rent syre) och används därför vid svetsning och skärning av metall.</p>
-        <div class="struct">  H — C ≡ C — H       = etyn (C₂H₂), en alkyn</div>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etyn.svg" alt="Strukturformel för Etyn"><span class="mol-name">Etyn</span></div></div><figcaption>Etyn/acetylen (C₂H₂): kolatomerna delar på tre bindningar.</figcaption></figure>
+        <p>En något större alkyn är <strong class="term">propyn</strong> (<span class="formula">C₃H₄</span>): en kedja på tre kolatomer med en trippelbindning i änden. Namnet följer samma mönster – <em>prop</em> (tre kol) + <em>-yn</em> (trippelbindning).</p>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propyn.svg" alt="Strukturformel för Propyn"><span class="mol-name">Propyn</span></div></div><figcaption>Propyn (C₃H₄): trippelbindning i änden av en kedja på tre kol.</figcaption></figure>
         <p>Att en bindning är dubbel eller trippel gör ämnet mer reaktivt: dubbelbindningen i eten kan brytas upp så att två nya atomer kan bindas in i molekylen. Det är just den egenskapen som gör omättade kolväten så användbara i industrin.</p>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
@@ -265,12 +295,7 @@
       <div class="m-body">
         <p>Hittills har vi bara haft kol och väte. Nu tar vi in <strong class="term">syre</strong>. Om man byter ut en väteatom i ett kolväte mot en <strong class="term">OH-grupp</strong> (en hydroxylgrupp, alltså en syreatom och en väteatom) får man en <strong class="term">alkohol</strong>. OH-gruppen är det som gör ett ämne till en alkohol.</p>
         <p>Alkoholerna får sina namn från kolvätet de bygger på (stamkolvätet) genom att lägga till ändelsen <strong class="term">-ol</strong>. Byter man ut ett väte i metan (<span class="formula">CH₄</span>) mot en OH-grupp får man <strong class="term">metanol</strong>, <span class="formula">CH₃OH</span>. Byter man ut ett väte i etan (<span class="formula">C₂H₆</span>) får man <strong class="term">etanol</strong>, <span class="formula">C₂H₅OH</span>.</p>
-        <div class="struct">      H                       H   H
-      |                       |   |
-  H — C — OH             H —  C — C — OH
-      |                       |   |
-      H                       H   H
-   metanol (CH₃OH)        etanol (C₂H₅OH)</div>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metanol.svg" alt="Strukturformel för Metanol"><span class="mol-name">Metanol</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="Strukturformel för Etanol"><span class="mol-name">Etanol</span></div></div><figcaption>Ett väte i metan respektive etan har bytts mot en OH-grupp. O–H-bindningen är utritad för tydlighet.</figcaption></figure>
         <p>Etanol är alkoholen i vin och sprit. Den bildas naturligt när jästsvampar omvandlar socker – till exempel när saft från bär börjar jäsa. Etanol används också som lösningsmedel och bränsle. Alkoholer har i regel stark lukt och brännande smak, och de flesta är mer eller mindre giftiga.</p>
         <div class="safety-box">
           <strong>Farligt:</strong> <strong class="term">Metanol</strong> (träsprit) liknar vanlig sprit i lukt och smak men är mycket giftig – redan små mängder kan ge blindhet eller döden. Metanol och etanol ser lika ut men får aldrig förväxlas.
@@ -297,6 +322,7 @@
         <p>Metanol och etanol har var sin ensam OH-grupp. En alkohol kan emellertid ha <strong class="term">flera OH-grupper</strong> – då kallas den en <strong class="term">flervärd alkohol</strong>. Antalet OH-grupper avgör hur "värd" alkoholen är: en OH-grupp ger en envärd alkohol, två ger en tvåvärd och så vidare.</p>
         <p>Den vanligaste tvåvärda alkoholen är <strong class="term">glykol</strong> (etandiol), som har två OH-grupper. Glykol sänker vätskans fryspunkt kraftigt och används därför som <strong class="term">frostskyddsmedel</strong> i bilars kylare och i spolarvätska. Glykol är giftigt att få i sig.</p>
         <p>Den vanligaste trevärda alkoholen är <strong class="term">glycerol</strong> (glycerin), som har tre OH-grupper. Glycerol är en tjock, söt och ofarlig vätska som drar åt sig vatten. Därför används den som fuktbevarande ämne i hudkräm, tandkräm och livsmedel. Glycerol ingår också som en byggsten i alla fetter (se milstolpe 8).</p>
+<figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glykol.svg" alt="Strukturformel för Glykol (2 OH)"><span class="mol-name">Glykol (2 OH)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glycerol.svg" alt="Strukturformel för Glycerol (3 OH)"><span class="mol-name">Glycerol (3 OH)</span></div></div><figcaption>Flervärda alkoholer: glykol har två OH-grupper, glycerol tre. Här skrivs OH-grupperna som –OH.</figcaption></figure>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
           En flervärd alkohol har flera OH-grupper. Glykol (två OH-grupper) används som frostskydd i bilkylare. Glycerol (tre OH-grupper) används i hudkräm och livsmedel och ingår i fetter.
@@ -314,11 +340,7 @@
       <div class="m-body">
         <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
         <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
-        <div class="struct">      H   O
-      |   ||
-  H — C — C — O — H      = ättiksyra / etansyra (CH₃COOH)
-      |
-      H</div>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" alt="Strukturformel för Metansyra (myrsyra)"><span class="mol-name">Metansyra (myrsyra)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Etansyra (ättiksyra)"><span class="mol-name">Etansyra (ättiksyra)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" alt="Strukturformel för Butansyra (smörsyra)"><span class="mol-name">Butansyra (smörsyra)</span></div></div><figcaption>Tre organiska syror. Alla bär samma karboxylgrupp (–COOH) längst till höger; det som skiljer dem är kolkedjans längd.</figcaption></figure>
         <p>Organiska syror finns i mängder av livsmedel: citronsyra i citrusfrukter, mjölksyra i filmjölk och i trötta muskler, äppelsyra i frukt. De är oftast svaga syror, men i koncentrerad form kan de ändå vara frätande.</p>
         <p>Det finns ett fint samband mellan alkoholerna och syrorna: en organisk syra kan bildas när en <strong class="term">alkohol oxideras</strong> (reagerar med syre). Det är just därför ett glas vin som får stå framme till slut smakar surt – etanolen oxideras långsamt till ättiksyra. Sambandet syns också i namnen: etan<em>ol</em> och etan<em>syra</em> (ättiksyra) bygger båda på kolvätet etan.</p>
         <div class="fact-box">
@@ -337,7 +359,20 @@
       <summary><span class="m-num">Milstolpe 8</span><span class="m-title">Estrar</span></summary>
       <div class="m-body">
         <p>Nu kan vi kombinera två av grupperna vi lärt oss. När en <strong class="term">alkohol</strong> reagerar med en <strong class="term">organisk syra</strong> bildas ett nytt ämne som kallas en <strong class="term">ester</strong>, och samtidigt frigörs en vattenmolekyl. Reaktionen kallas <strong class="term">förestring</strong>:</p>
-        <div class="struct">  alkohol  +  organisk syra   →   ester  +  vatten</div>
+        <figure class="mol-fig">
+          <div class="rxn">
+            <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="etanol"><span>etanol</span></div>
+            <span class="op">+</span>
+            <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" alt="butansyra"><span>butansyra</span></div>
+            <span class="arrow"><span class="cat">H₂SO₄</span><span class="a">→</span></span>
+            <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylbutanoat.svg" alt="etylbutanoat"><span>etylbutanoat</span></div>
+            <span class="op">+</span>
+            <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/vatten.svg" alt="vatten"><span>vatten</span></div>
+          </div>
+          <figcaption>Förestring: en alkohol och en organisk syra bildar en ester och vatten. Svavelsyra (H₂SO₄) är katalysator – den skyndar på reaktionen utan att förbrukas.</figcaption>
+        </figure>
+        <p>Estrar namnges i två delar, efter de två ämnen de bildats av. Först kommer <strong>alkoholdelen</strong> som en <em>-yl</em>-grupp (från alkoholens stamkolväte), sedan <strong>syradelen</strong> med ändelsen <em>-oat</em>. Etanol ger alltså <em>etyl</em> och butansyra ger <em>butanoat</em> – tillsammans <strong class="term">etylbutanoat</strong>, en ester som doftar ananas.</p>
+        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylbutanoat.svg" alt="Strukturformel för Etylbutanoat"><span class="mol-name">Etylbutanoat</span></div></div><figcaption>Estergruppen (–C(=O)–O–) sitter i mitten: butanoyldelen till vänster, etyldelen till höger.</figcaption></figure>
         <p>Många estrar har en stark, god doft och finns naturligt i frukter och blommor – det är estrar som ger bananer, jordgubbar och äpplen mycket av sin doft och smak. Därför används estrar som doft- och smakämnen i livsmedel och parfym.</p>
         <p>Estrar är också något mycket vardagligare: <strong class="term">fetter</strong> och oljor är estrar. Ett fett är en ester av den trevärda alkoholen glycerol och tre långa organiska syror (fettsyror). När kroppen tar upp fett bryts esterbindningarna och glycerolen och fettsyrorna frigörs igen.</p>
         <div class="fact-box">
