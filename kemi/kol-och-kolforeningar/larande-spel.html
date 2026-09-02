@@ -70,9 +70,9 @@
   </header>
 
   <div class="tabs">
-    <button class="tab active" data-tab="rita">✏️ Lär dig rita</button>
-    <button class="tab" data-tab="namn">🔤 Namnge föreningen</button>
-    <button class="tab" data-tab="formel">🧩 Bygg molekylformel</button>
+    <button class="tab active" data-tab="rita">Lär dig rita strukturformler</button>
+    <button class="tab" data-tab="namn">Namnge föreningen</button>
+    <button class="tab" data-tab="formel">Bygg molekylformler</button>
   </div>
 
   <!-- TAB 1 -->
@@ -82,10 +82,10 @@
       <div class="stage anim" id="tut-stage"></div>
       <div class="caption"><span class="stepno" id="tut-stepno"></span><span id="tut-caption"></span></div>
       <div class="controls">
-        <button class="btn" id="tut-prev">◀ Föregående</button>
-        <button class="btn primary" id="tut-next">Nästa steg ▶</button>
-        <button class="btn" id="tut-play">▶ Spela</button>
-        <button class="btn" id="tut-reset">↺ Börja om</button>
+        <button class="btn" id="tut-prev">Föregående</button>
+        <button class="btn primary" id="tut-next">Nästa steg</button>
+        <button class="btn" id="tut-play">Spela</button>
+        <button class="btn" id="tut-reset">Börja om</button>
         <div class="dots" id="tut-dots"></div>
       </div>
     </div>
@@ -97,7 +97,7 @@
       <div style="font-size:.85rem;color:#666;margin-bottom:.4rem">Jag vill träna på:</div>
       <div class="chips" id="namn-kat"></div>
       <div class="rowflex" style="margin-bottom:.4rem">
-        <button class="chip" id="namn-rules-btn">📖 Namngivningsregler</button>
+        <button class="chip" id="namn-rules-btn">Namngivningsregler</button>
         <span class="score" id="namn-score" style="margin-left:auto">Rätt: 0 / 0</span>
       </div>
       <div id="namn-rules" class="caption rules" hidden></div>
@@ -106,7 +106,7 @@
       <input class="answer" id="namn-input" placeholder="Skriv namnet (stor/liten bokstav spelar ingen roll)…" autocomplete="off" />
       <div class="controls" style="margin-top:.7rem">
         <button class="btn primary" id="namn-check">Rätta</button>
-        <button class="btn" id="namn-next">Nästa ▶</button>
+        <button class="btn" id="namn-next">Nästa</button>
       </div>
       <div class="feedback" id="namn-feedback"></div>
       <div class="fact" id="namn-fact"></div>
@@ -128,10 +128,10 @@
       <div class="pad" id="formel-dig"></div>
       <div class="pad" id="formel-grp"></div>
       <div class="controls" style="margin-top:.4rem">
-        <button class="btn" id="formel-back">⌫ Sudda</button>
+        <button class="btn" id="formel-back">Sudda</button>
         <button class="btn" id="formel-clear">Rensa</button>
         <button class="btn primary" id="formel-check">Rätta</button>
-        <button class="btn" id="formel-next">Nästa ▶</button>
+        <button class="btn" id="formel-next">Nästa</button>
       </div>
       <div class="feedback" id="formel-feedback"></div>
       <div id="formel-result"></div>
@@ -410,6 +410,38 @@ const POOL=[
   P("ester",["etyletanoat","etylacetat"],"etyletanoat (etylacetat)",()=>esterBuild(2,2),["C4H8O2"],"CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar."),
   P("ester",["metylbutanoat"],"metylbutanoat",()=>esterBuild(4,1),["C5H10O2"],"C<sub>3</sub>H<sub>7</sub>COOCH<sub>3</sub>","En ester av butansyra och metanol. Doftar äpple – smak- och doftämne."),
   P("ester",["etylbutanoat"],"etylbutanoat",()=>esterBuild(4,2),["C6H12O2"],"C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av butansyra och etanol. Doftar ananas – smak- och doftämne."),
+  // FLER – ALKANER
+  P("alkan",["heptan"],"heptan",()=>chain(7,[1,1,1,1,1,1]),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Vätska som ingår i bensin."),
+  P("alkan",["oktan"],"oktan",()=>chain(8,[1,1,1,1,1,1,1]),["C8H18"],"C<sub>8</sub>H<sub>18</sub>","Vätska i bensin; bensinens oktantal handlar om hur jämnt den förbränns."),
+  // FLER – ALKENER
+  P("alken",["hex-1-en","1-hexen"],"hex-1-en",()=>chain(6,[2,1,1,1,1]),["C6H12"],"C<sub>6</sub>H<sub>12</sub>","Sex kol med dubbelbindning i änden. Råvara i plastindustrin."),
+  P("alken",["hept-1-en","1-hepten"],"hept-1-en",()=>chain(7,[2,1,1,1,1,1]),["C7H14"],"C<sub>7</sub>H<sub>14</sub>","Sju kol med dubbelbindning i änden."),
+  P("alken",["okt-1-en","1-okten"],"okt-1-en",()=>chain(8,[2,1,1,1,1,1,1]),["C8H16"],"C<sub>8</sub>H<sub>16</sub>","Åtta kol med dubbelbindning i änden. Används vid plasttillverkning."),
+  // FLER – ALKYNER
+  P("alkyn",["pent-1-yn","1-pentyn"],"pent-1-yn",()=>chain(5,[3,1,1,1]),["C5H8"],"C<sub>5</sub>H<sub>8</sub>","Fem kol med trippelbindning i änden."),
+  P("alkyn",["hex-1-yn","1-hexyn"],"hex-1-yn",()=>chain(6,[3,1,1,1,1]),["C6H10"],"C<sub>6</sub>H<sub>10</sub>","Sex kol med trippelbindning i änden."),
+  P("alkyn",["hept-1-yn","1-heptyn"],"hept-1-yn",()=>chain(7,[3,1,1,1,1,1]),["C7H12"],"C<sub>7</sub>H<sub>12</sub>","Sju kol med trippelbindning i änden."),
+  P("alkyn",["okt-1-yn","1-oktyn"],"okt-1-yn",()=>chain(8,[3,1,1,1,1,1,1]),["C8H14"],"C<sub>8</sub>H<sub>14</sub>","Åtta kol med trippelbindning i änden."),
+  // FLER – ALKOHOLER
+  P("alkohol",["hexanol"],"hexanol",()=>alkohol(6),["C6H13OH","C6H14O"],"C<sub>6</sub>H<sub>13</sub>OH","Alkohol med sex kol; doft- och lösningsmedel."),
+  P("alkohol",["heptanol"],"heptanol",()=>alkohol(7),["C7H15OH","C7H16O"],"C<sub>7</sub>H<sub>15</sub>OH","Alkohol med sju kol; doftämne."),
+  P("alkohol",["oktanol"],"oktanol",()=>alkohol(8),["C8H17OH","C8H18O"],"C<sub>8</sub>H<sub>17</sub>OH","Alkohol med åtta kol; används i parfym och som lösningsmedel."),
+  // FLER – FLERVÄRDA
+  P("flervard",["butan-1,2-diol","1,2-butandiol"],"butan-1,2-diol",()=>polyol(4,[0,1]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. Lösningsmedel och fuktbindare.",1.25),
+  P("flervard",["pentan-1,5-diol","1,5-pentandiol"],"pentan-1,5-diol",()=>polyol(5,[0,4]),["C5H10(OH)2","C5H12O2"],"C<sub>5</sub>H<sub>10</sub>(OH)<sub>2</sub>","OH på kol 1 och 5 (ytterkolen). Mjukgörare och plastråvara.",1.25),
+  P("flervard",["hexan-1,6-diol","1,6-hexandiol"],"hexan-1,6-diol",()=>polyol(6,[0,5]),["C6H12(OH)2","C6H14O2"],"C<sub>6</sub>H<sub>12</sub>(OH)<sub>2</sub>","OH på kol 1 och 6. Råvara för plast och lim.",1.25),
+  // FLER – SYROR
+  P("syra",["hexansyra","kapronsyra"],"hexansyra (kallas kapronsyra)",()=>syra(6),["C5H11COOH","C6H12O2"],"C<sub>5</sub>H<sub>11</sub>COOH","Luktar get; finns i getost."),
+  P("syra",["heptansyra"],"heptansyra",()=>syra(7),["C6H13COOH","C7H14O2"],"C<sub>6</sub>H<sub>13</sub>COOH","En fettsyra med sju kol."),
+  P("syra",["oktansyra","kaprylsyra"],"oktansyra (kallas kaprylsyra)",()=>syra(8),["C7H15COOH","C8H16O2"],"C<sub>7</sub>H<sub>15</sub>COOH","En fettsyra med åtta kol; finns i kokosolja."),
+  // FLER – GRENADE
+  P("grenat",["2-metylhexan"],"2-metylhexan",()=>grenAlkan(6,2),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 2 i en hexankedja. Finns i bensin."),
+  P("grenat",["3-metylhexan"],"3-metylhexan",()=>grenAlkan(6,3),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 3. Finns i bensin."),
+  P("grenat",["2-metylheptan"],"2-metylheptan",()=>grenAlkan(7,2),["C8H18"],"C<sub>8</sub>H<sub>18</sub>","Metylgren på kol 2 i en heptankedja."),
+  // FLER – ESTRAR
+  P("ester",["metylpropanoat"],"metylpropanoat",()=>esterBuild(3,1),["C4H8O2"],"C<sub>2</sub>H<sub>5</sub>COOCH<sub>3</sub>","Ester av propansyra och metanol. Doftar."),
+  P("ester",["etylpropanoat"],"etylpropanoat",()=>esterBuild(3,2),["C5H10O2"],"C<sub>2</sub>H<sub>5</sub>COOC<sub>2</sub>H<sub>5</sub>","Ester av propansyra och etanol. Fruktdoft."),
+  P("ester",["propyletanoat","propylacetat"],"propyletanoat (propylacetat)",()=>esterBuild(2,3),["C5H10O2"],"CH<sub>3</sub>COOC<sub>3</sub>H<sub>7</sub>","Ester av etansyra och propanol. Doftar päron."),
   // AMINOSYRA
   P("aminosyra",["glycin"],"glycin",()=>glycin(),["C2H5NO2","NH2CH2COOH"],"NH<sub>2</sub>CH<sub>2</sub>COOH","Den enklaste av de 20 aminosyror som bygger upp våra proteiner. En ättiksyra där ett väte bytts mot en aminogrupp –NH₂. Smakförstärkare."),
 ];
@@ -460,9 +492,9 @@ document.getElementById("tut-next").onclick=()=>{if(curStep<maxStep){curStep++;a
 document.getElementById("tut-prev").onclick=()=>{if(curStep>1){curStep--;applyStep();}};
 document.getElementById("tut-reset").onclick=()=>{curStep=1;applyStep();};
 document.getElementById("tut-play").onclick=function(){
-  if(playing){clearInterval(playTimer);playing=false;this.textContent="▶ Spela";return;}
-  if(curStep>=maxStep)curStep=1; applyStep(); playing=true; this.textContent="⏸ Pausa";
-  playTimer=setInterval(()=>{if(curStep>=maxStep){clearInterval(playTimer);playing=false;this.textContent="▶ Spela";return;}curStep++;applyStep();},1400);
+  if(playing){clearInterval(playTimer);playing=false;this.textContent="Spela";return;}
+  if(curStep>=maxStep)curStep=1; applyStep(); playing=true; this.textContent="Pausa";
+  playTimer=setInterval(()=>{if(curStep>=maxStep){clearInterval(playTimer);playing=false;this.textContent="Spela";return;}curStep++;applyStep();},1400);
 };
 (function(){const chips=document.getElementById("tut-chips");
   TUTORIALS.forEach(t=>{const b=document.createElement("button");b.className="chip";b.dataset.key=t.key;b.textContent=t.label;b.onclick=()=>loadTut(t.key);chips.appendChild(b);});
@@ -486,8 +518,8 @@ function checkNamn(){
   namnAnswered=true; namnTotal++;
   const fb=document.getElementById("namn-feedback");
   const ok=namnItem.answers.some(a=>a.replace(/\s/g,"")===val);
-  if(ok){ namnRight++; fb.textContent="✓ Rätt! ("+namnItem.visa+")"; fb.className="feedback ok"; }
-  else { fb.textContent="✗ Fel. Rätt svar: "+namnItem.visa; fb.className="feedback no"; }
+  if(ok){ namnRight++; fb.textContent="Rätt! ("+namnItem.visa+")"; fb.className="feedback ok"; }
+  else { fb.textContent="Fel. Rätt svar: "+namnItem.visa; fb.className="feedback no"; }
   if(namnItem.fakta) document.getElementById("namn-fact").textContent=namnItem.fakta;
   document.getElementById("namn-score").textContent="Rätt: "+namnRight+" / "+namnTotal;
 }
@@ -521,8 +553,8 @@ function checkFormel(){
   formelAnswered=true; formelTotal++;
   const fb=document.getElementById("formel-feedback");
   const ok=formelItem.formel.some(f=>normF(f)===normF(formelStr));
-  if(ok){ formelRight++; fb.textContent="✓ Rätt!"; fb.className="feedback ok"; }
-  else { fb.textContent="✗ Fel. Rätt svar visas nedan."; fb.className="feedback no"; }
+  if(ok){ formelRight++; fb.textContent="Rätt!"; fb.className="feedback ok"; }
+  else { fb.textContent="Fel. Rätt svar visas nedan."; fb.className="feedback no"; }
   document.getElementById("formel-score").textContent="Rätt: "+formelRight+" / "+formelTotal;
   document.getElementById("formel-result").innerHTML=
     '<div class="result-box"><div class="rf">'+formelItem.fv+'</div>'+renderSVG(formelItem.g(),formelItem.xs||1)+
