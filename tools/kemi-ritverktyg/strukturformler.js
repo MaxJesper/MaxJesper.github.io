@@ -80,6 +80,19 @@ function etylbutanoat(){
   addH(C4,[[0,-1],[0,1]]); addH(C5,[[0,-1],[0,1],[1,0]]);
   return {atoms:A,bonds:B};
 }
+function glycin(){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  const N={el:"N",col:0,row:0},C1={el:"C",col:1,row:0},C2={el:"C",col:2,row:0};
+  A.push(N,C1,C2);B.push([0,1,1],[1,2,1]);
+  const Oc={el:"O",col:2,row:-1};A.push(Oc);B.push([idx(C2),idx(Oc),2]);
+  const Oh={el:"O",col:3,row:0};A.push(Oh);B.push([idx(C2),idx(Oh),1]);
+  const Hh={el:"H",col:4,row:0};A.push(Hh);B.push([idx(Oh),idx(Hh),1]);
+  const Nl={el:"H",col:-1,row:0};A.push(Nl);B.push([idx(N),idx(Nl),1]);
+  const Nu={el:"H",col:0,row:-1};A.push(Nu);B.push([idx(N),idx(Nu),1]);
+  const Cu={el:"H",col:1,row:-1};A.push(Cu);B.push([idx(C1),idx(Cu),1]);
+  const Cd={el:"H",col:1,row:1};A.push(Cd);B.push([idx(C1),idx(Cd),1]);
+  return {atoms:A,bonds:B};
+}
 function vatten(){ return {atoms:[{el:"O",col:0,row:0},{el:"H",col:-1,row:0},{el:"H",col:1,row:0}], bonds:[[0,1,1],[0,2,1]]}; }
 function metylbutan(){ // 2-metylbutan, gren nedåt (visar -yl)
   const A=[],B=[],idx=x=>A.indexOf(x);
@@ -109,6 +122,7 @@ const items=[
   {fil:"etylbutanoat",namn:"Etylbutanoat",summa:"C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub>",g:etylbutanoat()},
   {fil:"vatten",namn:"Vatten",summa:"H<sub>2</sub>O",g:vatten()},
   {fil:"2-metylbutan",namn:"2-metylbutan",summa:"C<sub>5</sub>H<sub>12</sub>",g:metylbutan()},
+  {fil:"glycin",namn:"Glycin",summa:"NH<sub>2</sub>CH<sub>2</sub>COOH",g:glycin()},
 ];
 function glykol(){const A=[],C1={el:"C",col:0,row:0},C2={el:"C",col:1,row:0},Hu1={el:"H",col:0,row:-1},Hu2={el:"H",col:1,row:-1},O1={el:"OH",col:0,row:1},O2={el:"OH",col:1,row:1},Hl={el:"H",col:-1,row:0},Hr={el:"H",col:2,row:0};A.push(C1,C2,Hu1,Hu2,O1,O2,Hl,Hr);const i=x=>A.indexOf(x);return{atoms:A,bonds:[[i(C1),i(C2),1],[i(C1),i(Hu1),1],[i(C2),i(Hu2),1],[i(C1),i(O1),1],[i(C2),i(O2),1],[i(C1),i(Hl),1],[i(C2),i(Hr),1]]};}
 function glycerol(){const A=[],C1={el:"C",col:0,row:0},C2={el:"C",col:1,row:0},C3={el:"C",col:2,row:0},Hu1={el:"H",col:0,row:-1},Hu2={el:"H",col:1,row:-1},Hu3={el:"H",col:2,row:-1},O1={el:"OH",col:0,row:1},O2={el:"OH",col:1,row:1},O3={el:"OH",col:2,row:1},Hl={el:"H",col:-1,row:0},Hr={el:"H",col:3,row:0};A.push(C1,C2,C3,Hu1,Hu2,Hu3,O1,O2,O3,Hl,Hr);const i=x=>A.indexOf(x);return{atoms:A,bonds:[[i(C1),i(C2),1],[i(C2),i(C3),1],[i(C1),i(Hu1),1],[i(C2),i(Hu2),1],[i(C3),i(Hu3),1],[i(C1),i(O1),1],[i(C2),i(O2),1],[i(C3),i(O3),1],[i(C1),i(Hl),1],[i(C3),i(Hr),1]]};}
