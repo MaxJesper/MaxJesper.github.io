@@ -75,7 +75,7 @@
     <button class="tab" data-tab="formel">🧩 Bygg molekylformel</button>
   </div>
 
-  <!-- TAB 1: LÄR DIG RITA -->
+  <!-- TAB 1 -->
   <section id="tab-rita">
     <div class="card">
       <div class="chips" id="tut-chips"></div>
@@ -91,19 +91,17 @@
     </div>
   </section>
 
-  <!-- TAB 2: NAMNGE -->
+  <!-- TAB 2 -->
   <section id="tab-namn" hidden>
     <div class="card">
-      <div class="chips">
-        <button class="chip active" data-niva="1" id="lvl1">Nivå 1 – grunderna</button>
-        <button class="chip" data-niva="2" id="lvl2">Nivå 2 – svårare</button>
-        <button class="chip" id="namn-rules-btn" style="margin-left:auto">📖 Namngivningsregler</button>
+      <div style="font-size:.85rem;color:#666;margin-bottom:.4rem">Jag vill träna på:</div>
+      <div class="chips" id="namn-kat"></div>
+      <div class="rowflex" style="margin-bottom:.4rem">
+        <button class="chip" id="namn-rules-btn">📖 Namngivningsregler</button>
+        <span class="score" id="namn-score" style="margin-left:auto">Rätt: 0 / 0</span>
       </div>
       <div id="namn-rules" class="caption rules" hidden></div>
-      <div class="rowflex" style="margin-bottom:.6rem">
-        <strong>Vad heter föreningen?</strong>
-        <span class="score" id="namn-score">Rätt: 0 / 0</span>
-      </div>
+      <div class="rowflex" style="margin:.4rem 0 .6rem"><strong>Vad heter föreningen?</strong></div>
       <div class="q-structure anim" id="namn-structure"></div>
       <input class="answer" id="namn-input" placeholder="Skriv namnet (stor/liten bokstav spelar ingen roll)…" autocomplete="off" />
       <div class="controls" style="margin-top:.7rem">
@@ -115,12 +113,14 @@
     </div>
   </section>
 
-  <!-- TAB 3: BYGG FORMEL -->
+  <!-- TAB 3 -->
   <section id="tab-formel" hidden>
     <div class="card">
+      <div style="font-size:.85rem;color:#666;margin-bottom:.4rem">Jag vill träna på:</div>
+      <div class="chips" id="formel-kat"></div>
       <div class="rowflex" style="margin-bottom:.6rem">
         <span>Bygg molekylformeln för <strong id="formel-namn" style="color:var(--lila-mork)"></strong></span>
-        <span class="score" id="formel-score">Rätt: 0 / 0</span>
+        <span class="score" id="formel-score" style="margin-left:auto">Rätt: 0 / 0</span>
       </div>
       <div class="built" id="formel-built"><span class="cursor">|</span></div>
       <div class="hint">Klicka: grundämne → antal → nästa grundämne → antal → ev. grupp (t.ex. OH eller COOH). Siffrorna skrivs nedsänkta.</div>
@@ -218,17 +218,36 @@ function polyol(n, ohCarbons){
   return {atoms:A,bonds:B};
 }
 function glycerol(){ return polyol(3,[0,1,2]); }
-function ester(){ // etylbutanoat
+function grenAlkan(n,pos){ // rak kedja n kol med en metylgren (nedåt) på kol 'pos' (1-indexerat)
   const A=[],B=[],idx=x=>A.indexOf(x);
-  for(let i=0;i<4;i++)A.push({el:"C",col:i,row:0});
-  B.push({a:0,b:1,order:1},{a:1,b:2,order:1},{a:2,b:3,order:1});
-  const Oc={el:"O",col:3,row:-1};A.push(Oc);B.push({a:3,b:idx(Oc),order:2});
-  const O1={el:"O",col:4,row:0};A.push(O1);B.push({a:3,b:idx(O1),order:1});
-  const C4={el:"C",col:5,row:0};A.push(C4);B.push({a:idx(O1),b:idx(C4),order:1});
-  const C5={el:"C",col:6,row:0};A.push(C5);B.push({a:idx(C4),b:idx(C5),order:1});
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const bc=pos-1;
+  const Cb={el:"C",col:bc,row:2};A.push(Cb);B.push({a:bc,b:idx(Cb),order:1});
   const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
-  addH(A[0],[[-1,0],[0,-1],[0,1]]);addH(A[1],[[0,-1],[0,1]]);addH(A[2],[[0,-1],[0,1]]);
-  addH(C4,[[0,-1],[0,1]]);addH(C5,[[0,-1],[0,1],[1,0]]);
+  for(let i=0;i<n;i++){const first=i===0,last=i===n-1;
+    let dirs = (i===bc) ? [[0,-1]] : [[0,-1],[0,1]];
+    if(first) dirs.push([-1,0]); if(last) dirs.push([1,0]);
+    addH(A[i],dirs);
+  }
+  addH(Cb,[[0,1],[-1,0],[1,0]]);
+  return {atoms:A,bonds:B};
+}
+function esterBuild(acidN, alcoholN){ // syra (acidN kol) förestrad med alkohol (alcoholN kol)
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<acidN;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<acidN-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=acidN-1;
+  const Oc={el:"O",col:cc,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const O1={el:"O",col:acidN,row:0};A.push(O1);B.push({a:cc,b:idx(O1),order:1});
+  const alc=[];
+  for(let j=0;j<alcoholN;j++){const c={el:"C",col:acidN+1+j,row:0};A.push(c);alc.push(c);}
+  B.push({a:idx(O1),b:idx(alc[0]),order:1});
+  for(let j=0;j<alcoholN-1;j++)B.push({a:idx(alc[j]),b:idx(alc[j+1]),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<cc;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  if(acidN===1){ addH(A[cc],[[-1,0]]); }
+  for(let j=0;j<alcoholN;j++){const last=j===alcoholN-1; addH(alc[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
   return {atoms:A,bonds:B};
 }
 function glycin(){
@@ -242,23 +261,6 @@ function glycin(){
   const Nu={el:"H",col:0,row:-1};A.push(Nu);B.push({a:idx(N),b:idx(Nu),order:1});
   const Cu={el:"H",col:1,row:-1};A.push(Cu);B.push({a:idx(C1),b:idx(Cu),order:1});
   const Cd={el:"H",col:1,row:1};A.push(Cd);B.push({a:idx(C1),b:idx(Cd),order:1});
-  return {atoms:A,bonds:B};
-}
-function metylbutan(){
-  const A=[],B=[],idx=x=>A.indexOf(x);
-  for(let i=0;i<4;i++)A.push({el:"C",col:i,row:0});B.push({a:0,b:1,order:1},{a:1,b:2,order:1},{a:2,b:3,order:1});
-  const Cb={el:"C",col:1,row:2};A.push(Cb);B.push({a:1,b:idx(Cb),order:1});
-  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
-  addH(A[0],[[-1,0],[0,-1],[0,1]]);addH(A[1],[[0,-1]]);addH(A[2],[[0,-1],[0,1]]);addH(A[3],[[0,-1],[0,1],[1,0]]);
-  addH(Cb,[[0,1],[-1,0],[1,0]]);
-  return {atoms:A,bonds:B};
-}
-function isobutan(){
-  const A=[],B=[],idx=x=>A.indexOf(x);
-  const C0={el:"C",col:0,row:0},C1={el:"C",col:1,row:0},C2={el:"C",col:2,row:0},Cb={el:"C",col:1,row:-2};
-  A.push(C0,C1,C2,Cb);B.push({a:0,b:1,order:1},{a:1,b:2,order:1},{a:1,b:idx(Cb),order:1});
-  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
-  addH(C0,[[-1,0],[0,-1],[0,1]]);addH(C1,[[0,1]]);addH(C2,[[1,0],[0,-1],[0,1]]);addH(Cb,[[0,-1],[-1,0],[1,0]]);
   return {atoms:A,bonds:B};
 }
 
@@ -298,9 +300,7 @@ function tutSyra(n,namn){
 function tutAlken(){
   const A=[],B=[],idx=x=>A.indexOf(x);
   const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1},C2={el:"C",col:2,row:0,step:1};
-  A.push(C0,C1,C2);
-  B.push({a:1,b:2,order:1,step:1});
-  B.push({a:0,b:1,order:2,step:2});
+  A.push(C0,C1,C2); B.push({a:1,b:2,order:1,step:1}); B.push({a:0,b:1,order:2,step:2});
   const E=45;
   [[180-E],[180+E]].forEach(([th])=>{const r=th*Math.PI/180;const h={el:"H",col:0+Math.cos(r),row:-Math.sin(r),step:4};A.push(h);B.push({a:0,b:idx(h),order:1,step:3});});
   {const h={el:"H",col:1,row:-1,step:4};A.push(h);B.push({a:1,b:idx(h),order:1,step:3});}
@@ -314,9 +314,7 @@ function tutAlken(){
 function tutAlkyn(){
   const A=[],B=[],idx=x=>A.indexOf(x);
   const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1},C2={el:"C",col:2,row:0,step:1};
-  A.push(C0,C1,C2);
-  B.push({a:0,b:1,order:1,step:1});
-  B.push({a:1,b:2,order:3,step:2});
+  A.push(C0,C1,C2); B.push({a:0,b:1,order:1,step:1}); B.push({a:1,b:2,order:3,step:2});
   [[-1,0],[0,-1],[0,1]].forEach(([dx,dy])=>{const h={el:"H",col:0+dx,row:dy,step:4};A.push(h);B.push({a:0,b:idx(h),order:1,step:3});});
   {const h={el:"H",col:3,row:0,step:4};A.push(h);B.push({a:2,b:idx(h),order:1,step:3});}
   return {g:{atoms:A,bonds:B}, captions:[
@@ -338,44 +336,84 @@ function tutFlervard(){
     `Rita ut resten av bindningarna så att varje kol får fyra.`,
     `Sätt väte (H) på alla lediga bindningar. Klart!`]};
 }
+function tutEster(){ // etyletanoat: syra + alkohol -> ester
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1};A.push(C0,C1);B.push({a:0,b:1,order:1,step:1});
+  const O1={el:"O",col:2,row:0,step:2};A.push(O1);B.push({a:1,b:idx(O1),order:1,step:2});
+  const C2={el:"C",col:3,row:0,step:2},C3={el:"C",col:4,row:0,step:2};A.push(C2,C3);
+  B.push({a:idx(O1),b:idx(C2),order:1,step:2});B.push({a:idx(C2),b:idx(C3),order:1,step:2});
+  const Oc={el:"O",col:1,row:-1,step:3};A.push(Oc);B.push({a:1,b:idx(Oc),order:2,step:3});
+  const addH=(ci,dirs,st)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy,step:st};A.push(h);B.push({a:idx(ci),b:idx(h),order:1,step:st});});
+  addH(C0,[[-1,0],[0,-1],[0,1]],4); addH(C2,[[0,-1],[0,1]],4); addH(C3,[[0,-1],[0,1],[1,0]],4);
+  return {g:{atoms:A,bonds:B}, captions:[
+    `Estern etyletanoat bildas av en syra och en alkohol. Rita först syrans kol (etansyrans två kol).`,
+    `Sätt syrans –O– och koppla på alkoholens kol (etanolens två kol) efter syret.`,
+    `Sätt en dubbelbunden syreatom uppåt på syrans kol – nu finns estergruppen –C(=O)–O–.`,
+    `Sätt väte (H) på alla lediga bindningar. Klart! (Vid förestringen avgick också en vattenmolekyl.)`]};
+}
 const TUTORIALS=[
   {key:"butanol", label:"Butanol (alkohol)", make:()=>tutAlkohol(4,"Butanol")},
   {key:"butansyra", label:"Butansyra (syra)", make:()=>tutSyra(4,"Butansyra")},
   {key:"propen", label:"Propen (alken)", make:tutAlken},
   {key:"propyn", label:"Propyn (alkyn)", make:tutAlkyn},
   {key:"glykol", label:"Etandiol/glykol (flervärd)", make:tutFlervard},
+  {key:"ester", label:"Etyletanoat (ester)", make:tutEster},
 ];
 
 /* ===================== ÖVNINGSDATA ===================== */
+function P(kat,answers,visa,g,formel,fv,fakta,xs){return {kat,answers,visa,g,formel,fv,fakta,xs:xs||1};}
 const POOL=[
-  // Nivå 1
-  {niva:1, answers:["metan"], visa:"metan", g:()=>chain(1,[]), xs:1, formel:["CH4"], fv:"CH<sub>4</sub>", fakta:"Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. Är också en stark växthusgas."},
-  {niva:1, answers:["propan"], visa:"propan", g:()=>chain(3,[1,1]), xs:1, formel:["C3H8"], fv:"C<sub>3</sub>H<sub>8</sub>", fakta:"Ingår i gasol och används i gasolkök, campingkök och gasgrillar. Förvaras hoppressad till vätska i tuben."},
-  {niva:1, answers:["butan"], visa:"butan", g:()=>chain(4,[1,1,1]), xs:1, formel:["C4H10"], fv:"C<sub>4</sub>H<sub>10</sub>", fakta:"Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck."},
-  {niva:1, answers:["eten","etylen"], visa:"eten (kallas även etylen)", g:()=>chain(2,[2]), xs:1, formel:["C2H4"], fv:"C<sub>2</sub>H<sub>4</sub>", fakta:"Färglös gas och råvara för polyeten, världens vanligaste plast. Bildas också naturligt av frukt och får annan frukt att mogna snabbare."},
-  {niva:1, answers:["propen","propylen"], visa:"propen (kallas även propylen)", g:()=>chain(3,[2,1]), xs:1, formel:["C3H6"], fv:"C<sub>3</sub>H<sub>6</sub>", fakta:"Råvara för plasten polypropen, som finns i bland annat matlådor, mattor och rep."},
-  {niva:1, answers:["etyn","acetylen"], visa:"etyn (även kallad acetylen)", g:()=>chain(2,[3]), xs:1, formel:["C2H2"], fv:"C<sub>2</sub>H<sub>2</sub>", fakta:"Kallas oftast acetylen. Brinner mycket hett (över 3000 °C med rent syre) och används därför vid svetsning och skärning av metall."},
-  {niva:1, answers:["propyn"], visa:"propyn", g:()=>chain(3,[1,3]), xs:1, formel:["C3H4"], fv:"C<sub>3</sub>H<sub>4</sub>", fakta:"En alkyn med en trippelbindning, släkting till acetylen. Används som byggsten vid framställning av andra ämnen i industrin."},
-  {niva:1, answers:["metanol"], visa:"metanol", g:()=>alkohol(1), xs:1, formel:["CH3OH","CH4O"], fv:"CH<sub>3</sub>OH", fakta:"Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Används som bränsle, lösningsmedel och råvara i industrin."},
-  {niva:1, answers:["etanol"], visa:"etanol (sprit/alkohol till vardags)", g:()=>alkohol(2), xs:1, formel:["C2H5OH","C2H6O"], fv:"C<sub>2</sub>H<sub>5</sub>OH", fakta:"Alkoholen i öl, vin och sprit, som jästsvampar bildar av socker. Används också som bränsle (E85) samt som lösnings- och desinfektionsmedel."},
-  {niva:1, answers:["propanol"], visa:"propanol", g:()=>alkohol(3), xs:1, formel:["C3H7OH","C3H8O"], fv:"C<sub>3</sub>H<sub>7</sub>OH", fakta:"Används som lösningsmedel samt i handsprit och ytdesinfektion."},
-  {niva:1, answers:["butanol"], visa:"butanol", g:()=>alkohol(4), xs:1, formel:["C4H9OH","C4H10O"], fv:"C<sub>4</sub>H<sub>9</sub>OH", fakta:"Används som lösningsmedel, bland annat i färg och lack, och som råvara i industrin."},
-  {niva:1, answers:["metansyra","myrsyra"], visa:"metansyra (kallas myrsyra)", g:()=>syra(1), xs:1, formel:["HCOOH","CH2O2"], fv:"HCOOH", fakta:"Myror och brännässlor använder den för att svida. Används också som konserveringsmedel i djurfoder."},
-  {niva:1, answers:["etansyra","ättiksyra"], visa:"etansyra (kallas ättiksyra till vardags)", g:()=>syra(2), xs:1, formel:["CH3COOH","C2H4O2"], fv:"CH<sub>3</sub>COOH", fakta:"Ger ättika (utspädd ättiksyra) dess sura smak och lukt. Bildas när vin får surna, och används vid konservering och i industrin."},
-  {niva:1, answers:["butansyra","smörsyra"], visa:"butansyra (kallas smörsyra)", g:()=>syra(4), xs:1, formel:["C3H7COOH","C4H8O2"], fv:"C<sub>3</sub>H<sub>7</sub>COOH", fakta:"Luktar härsket smör och svettiga fötter. Bildas när smör härsknar och finns bland annat i parmesanost."},
-  // Nivå 2
-  {niva:2, answers:["but-2-en","2-buten","buten-2"], visa:"but-2-en", g:()=>chain(4,[1,2,1]), xs:1, fakta:"Dubbelbindningen sitter mellan kol 2 och 3 – därför siffran 2 i namnet. En gas som används som råvara i plast- och kemiindustrin."},
-  {niva:2, answers:["pent-2-en","2-penten"], visa:"pent-2-en", g:()=>chain(5,[1,2,1,1]), xs:1, fakta:"Fem kol med dubbelbindning mellan kol 2 och 3."},
-  {niva:2, answers:["but-2-yn","2-butyn"], visa:"but-2-yn", g:()=>chain(4,[1,3,1]), xs:1, fakta:"Trippelbindning mellan kol 2 och 3."},
-  {niva:2, answers:["2-metylpropan","metylpropan","isobutan"], visa:"2-metylpropan (kallas isobutan)", g:()=>isobutan(), xs:1, fakta:"En grenad variant av butan; metylgruppen (–yl) sitter på kol 2. Ingår i gasol och används som köldmedium och drivgas i sprayburkar."},
-  {niva:2, answers:["2-metylbutan","isopentan"], visa:"2-metylbutan (kallas isopentan)", g:()=>metylbutan(), xs:1, fakta:"En metylgren på kol 2 i en butankedja. En lättflyktig vätska som bland annat används som jäsmedel (blåsmedel) vid tillverkning av frigolit."},
-  {niva:2, answers:["etandiol","1,2-etandiol","etan-1,2-diol","etandiol-1,2","glykol","etylenglykol"], visa:"1,2-etandiol (kallas etylenglykol eller glykol)", g:()=>polyol(2,[0,1]), xs:1.25, fakta:"OH-grupperna sitter på kol 1 och 2. En klar, söt och giftig vätska som används som frostskydd i bilarnas kylare och i spolarvätska."},
-  {niva:2, answers:["propan-1,2-diol","1,2-propandiol","propylenglykol"], visa:"propan-1,2-diol (propylenglykol)", g:()=>polyol(3,[0,1]), xs:1.25, fakta:"OH-grupperna sitter på kol 1 och 2. En ofarligare släkting till glykol med många användningar: lösningsmedel i läkemedel, fuktbindare i hudkräm och smink, livsmedelstillsats (E1520) i tuggummi och godis, fuktbevarare i snus, samt mjukgörare och frostskyddsvätska."},
-  {niva:2, answers:["propan-1,3-diol","1,3-propandiol"], visa:"propan-1,3-diol", g:()=>polyol(3,[0,2]), xs:1.25, fakta:"OH-grupperna sitter på kol 1 och 3 (ytterkolen). Används bland annat i kosmetika och kan tillverkas från förnybara råvaror."},
-  {niva:2, answers:["propan-1,2,3-triol","1,2,3-propantriol","propantriol","glycerol","glycerin"], visa:"propan-1,2,3-triol (kallas glycerol)", g:()=>glycerol(), xs:1.25, fakta:"OH på alla tre kolen. En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm, tandkräm och livsmedel, och byggsten i alla fetter."},
-  {niva:2, answers:["etylbutanoat"], visa:"etylbutanoat", g:()=>ester(), xs:1, fakta:"En ester av etanol (etyl) och butansyra (butanoat). Doftar ananas och används som doft- och smakämne."},
-  {niva:2, answers:["glycin"], visa:"glycin", g:()=>glycin(), xs:1, fakta:"Den enklaste av de 20 aminosyror som bygger upp våra proteiner. En ättiksyra där ett väte bytts mot en aminogrupp –NH₂. Används även som smakförstärkare."},
+  // ALKANER
+  P("alkan",["metan"],"metan",()=>chain(1,[]),["CH4"],"CH<sub>4</sub>","Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. En stark växthusgas."),
+  P("alkan",["etan"],"etan",()=>chain(2,[1]),["C2H6"],"C<sub>2</sub>H<sub>6</sub>","En gas i naturgas. Används mest som råvara för att tillverka eten och plast."),
+  P("alkan",["propan"],"propan",()=>chain(3,[1,1]),["C3H8"],"C<sub>3</sub>H<sub>8</sub>","Ingår i gasol och används i gasolkök, campingkök och gasgrillar."),
+  P("alkan",["butan"],"butan",()=>chain(4,[1,1,1]),["C4H10"],"C<sub>4</sub>H<sub>10</sub>","Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck."),
+  P("alkan",["pentan"],"pentan",()=>chain(5,[1,1,1,1]),["C5H12"],"C<sub>5</sub>H<sub>12</sub>","En lättflyktig vätska som ingår i bensin."),
+  P("alkan",["hexan"],"hexan",()=>chain(6,[1,1,1,1,1]),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Vätska i bensin; används också som lösningsmedel i industrin."),
+  // ALKENER
+  P("alken",["eten","etylen"],"eten (kallas även etylen)",()=>chain(2,[2]),["C2H4"],"C<sub>2</sub>H<sub>4</sub>","Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna."),
+  P("alken",["propen","propylen"],"propen (kallas även propylen)",()=>chain(3,[2,1]),["C3H6"],"C<sub>3</sub>H<sub>6</sub>","Råvara för plasten polypropen, som finns i matlådor, mattor och rep."),
+  P("alken",["but-1-en","1-buten","buten"],"but-1-en",()=>chain(4,[2,1,1]),["C4H8"],"C<sub>4</sub>H<sub>8</sub>","Dubbelbindning mellan kol 1 och 2. Råvara i plastindustrin."),
+  P("alken",["but-2-en","2-buten"],"but-2-en",()=>chain(4,[1,2,1]),["C4H8"],"C<sub>4</sub>H<sub>8</sub>","Dubbelbindning mellan kol 2 och 3 – därför siffran 2 i namnet."),
+  P("alken",["pent-1-en","1-penten"],"pent-1-en",()=>chain(5,[2,1,1,1]),["C5H10"],"C<sub>5</sub>H<sub>10</sub>","Fem kol med dubbelbindning mellan kol 1 och 2."),
+  P("alken",["pent-2-en","2-penten"],"pent-2-en",()=>chain(5,[1,2,1,1]),["C5H10"],"C<sub>5</sub>H<sub>10</sub>","Fem kol med dubbelbindning mellan kol 2 och 3."),
+  // ALKYNER
+  P("alkyn",["etyn","acetylen"],"etyn (även kallad acetylen)",()=>chain(2,[3]),["C2H2"],"C<sub>2</sub>H<sub>2</sub>","Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall."),
+  P("alkyn",["propyn"],"propyn",()=>chain(3,[1,3]),["C3H4"],"C<sub>3</sub>H<sub>4</sub>","En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri."),
+  P("alkyn",["but-1-yn","1-butyn"],"but-1-yn",()=>chain(4,[3,1,1]),["C4H6"],"C<sub>4</sub>H<sub>6</sub>","Trippelbindning mellan kol 1 och 2."),
+  P("alkyn",["but-2-yn","2-butyn"],"but-2-yn",()=>chain(4,[1,3,1]),["C4H6"],"C<sub>4</sub>H<sub>6</sub>","Trippelbindning mellan kol 2 och 3."),
+  // ALKOHOLER
+  P("alkohol",["metanol"],"metanol",()=>alkohol(1),["CH3OH","CH4O"],"CH<sub>3</sub>OH","Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel."),
+  P("alkohol",["etanol"],"etanol (sprit/alkohol till vardags)",()=>alkohol(2),["C2H5OH","C2H6O"],"C<sub>2</sub>H<sub>5</sub>OH","Alkoholen i öl, vin och sprit, som jäst bildar av socker. Även bränsle (E85) och desinfektionsmedel."),
+  P("alkohol",["propanol"],"propanol",()=>alkohol(3),["C3H7OH","C3H8O"],"C<sub>3</sub>H<sub>7</sub>OH","Lösningsmedel samt i handsprit och ytdesinfektion."),
+  P("alkohol",["butanol"],"butanol",()=>alkohol(4),["C4H9OH","C4H10O"],"C<sub>4</sub>H<sub>9</sub>OH","Lösningsmedel, bland annat i färg och lack."),
+  P("alkohol",["pentanol"],"pentanol",()=>alkohol(5),["C5H11OH","C5H12O"],"C<sub>5</sub>H<sub>11</sub>OH","En alkohol med fem kol; används som lösnings- och doftämne."),
+  // FLERVÄRDA
+  P("flervard",["etandiol","1,2-etandiol","etan-1,2-diol","glykol","etylenglykol"],"1,2-etandiol (kallas etylenglykol eller glykol)",()=>polyol(2,[0,1]),["C2H4(OH)2","C2H6O2"],"C<sub>2</sub>H<sub>4</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska.",1.25),
+  P("flervard",["propan-1,2-diol","1,2-propandiol","propylenglykol"],"propan-1,2-diol (propylenglykol)",()=>polyol(3,[0,1]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. En ofarligare släkting till glykol: lösningsmedel i läkemedel, fuktbindare i kosmetika, livsmedelstillsats (E1520), fuktbevarare i snus, mjukgörare och frostskydd.",1.25),
+  P("flervard",["propan-1,3-diol","1,3-propandiol"],"propan-1,3-diol",()=>polyol(3,[0,2]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 3 (ytterkolen). Används i kosmetika och kan göras av förnybara råvaror.",1.25),
+  P("flervard",["butan-1,4-diol","1,4-butandiol"],"butan-1,4-diol",()=>polyol(4,[0,3]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 4 (ytterkolen). Råvara för plast och lösningsmedel.",1.25),
+  P("flervard",["propan-1,2,3-triol","1,2,3-propantriol","propantriol","glycerol","glycerin"],"propan-1,2,3-triol (kallas glycerol)",()=>glycerol(),["C3H5(OH)3","C3H8O3"],"C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub>","OH på alla tre kolen. En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter.",1.25),
+  // SYROR
+  P("syra",["metansyra","myrsyra"],"metansyra (kallas myrsyra)",()=>syra(1),["HCOOH","CH2O2"],"HCOOH","Myror och brännässlor svider med den. Även konserveringsmedel i djurfoder."),
+  P("syra",["etansyra","ättiksyra"],"etansyra (kallas ättiksyra till vardags)",()=>syra(2),["CH3COOH","C2H4O2"],"CH<sub>3</sub>COOH","Ger ättika dess sura smak. Bildas när vin surnar. Konservering och industri."),
+  P("syra",["propansyra","propionsyra"],"propansyra (kallas propionsyra)",()=>syra(3),["C2H5COOH","C3H6O2"],"C<sub>2</sub>H<sub>5</sub>COOH","Konserveringsmedel i bröd (E280) som motverkar mögel."),
+  P("syra",["butansyra","smörsyra"],"butansyra (kallas smörsyra)",()=>syra(4),["C3H7COOH","C4H8O2"],"C<sub>3</sub>H<sub>7</sub>COOH","Luktar härsket smör och svettiga fötter. Finns bl.a. i parmesanost."),
+  P("syra",["pentansyra","valeriansyra"],"pentansyra (kallas valeriansyra)",()=>syra(5),["C4H9COOH","C5H10O2"],"C<sub>4</sub>H<sub>9</sub>COOH","Luktar illa; finns i växten vänderot (valeriana)."),
+  // GRENADE
+  P("grenat",["2-metylpropan","metylpropan","isobutan"],"2-metylpropan (kallas isobutan)",()=>grenAlkan(3,2),["C4H10"],"C<sub>4</sub>H<sub>10</sub>","Grenad variant av butan; metylgrupp (–yl) på kol 2. Köldmedium och drivgas i sprayburkar."),
+  P("grenat",["2-metylbutan","isopentan"],"2-metylbutan (kallas isopentan)",()=>grenAlkan(4,2),["C5H12"],"C<sub>5</sub>H<sub>12</sub>","Metylgren på kol 2. Jäsmedel (blåsmedel) vid tillverkning av frigolit."),
+  P("grenat",["2-metylpentan","isohexan"],"2-metylpentan (kallas isohexan)",()=>grenAlkan(5,2),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 2 i en pentankedja. Finns i bensin."),
+  P("grenat",["3-metylpentan"],"3-metylpentan",()=>grenAlkan(5,3),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 3 (mitten). Finns i bensin."),
+  // ESTRAR
+  P("ester",["metylmetanoat","metylformiat"],"metylmetanoat (metylformiat)",()=>esterBuild(1,1),["C2H4O2"],"HCOOCH<sub>3</sub>","En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin."),
+  P("ester",["etyletanoat","etylacetat"],"etyletanoat (etylacetat)",()=>esterBuild(2,2),["C4H8O2"],"CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar."),
+  P("ester",["metylbutanoat"],"metylbutanoat",()=>esterBuild(4,1),["C5H10O2"],"C<sub>3</sub>H<sub>7</sub>COOCH<sub>3</sub>","En ester av butansyra och metanol. Doftar äpple – smak- och doftämne."),
+  P("ester",["etylbutanoat"],"etylbutanoat",()=>esterBuild(4,2),["C6H12O2"],"C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av butansyra och etanol. Doftar ananas – smak- och doftämne."),
+  // AMINOSYRA
+  P("aminosyra",["glycin"],"glycin",()=>glycin(),["C2H5NO2","NH2CH2COOH"],"NH<sub>2</sub>CH<sub>2</sub>COOH","Den enklaste av de 20 aminosyror som bygger upp våra proteiner. En ättiksyra där ett väte bytts mot en aminogrupp –NH₂. Smakförstärkare."),
 ];
+const KATS=[["alla","Blanda allt"],["alkan","Alkaner"],["alken","Alkener"],["alkyn","Alkyner"],["alkohol","Alkoholer"],["flervard","Flervärda alkoholer"],["syra","Organiska syror"],["grenat","Grenade kolväten"],["ester","Estrar"]];
 
 const RULES=`<strong>Så namnger man kolväten:</strong>
 <ol>
@@ -395,8 +433,11 @@ document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
   const id=t.dataset.tab;
   ["rita","namn","formel"].forEach(k=>document.getElementById("tab-"+k).hidden=(k!==id));
 }));
+function shuffle(a){return a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function poolByKat(kat){return kat==="alla"?POOL.slice():POOL.filter(p=>p.kat===kat);}
 
-/* ===================== TUTORIAL-SPELARE ===================== */
+/* ===================== TUTORIAL ===================== */
 let curTut=null, curStep=1, maxStep=1, playing=false, playTimer=null;
 const stage=document.getElementById("tut-stage");
 function loadTut(key){
@@ -404,9 +445,9 @@ function loadTut(key){
   maxStep=curTut.captions.length; curStep=1;
   stage.innerHTML=renderSVG(curTut.g, curTut.xscale||1);
   document.querySelectorAll("#tut-chips .chip").forEach(c=>c.classList.toggle("active",c.dataset.key===key));
-  buildDots(); applyStep();
+  const d=document.getElementById("tut-dots");d.innerHTML="";for(let i=1;i<=maxStep;i++){const s=document.createElement("span");s.className="dot";d.appendChild(s);}
+  applyStep();
 }
-function buildDots(){const d=document.getElementById("tut-dots");d.innerHTML="";for(let i=1;i<=maxStep;i++){const s=document.createElement("span");s.className="dot";d.appendChild(s);}}
 function applyStep(){
   stage.querySelectorAll("[data-step]").forEach(el=>{el.style.opacity=(+el.getAttribute("data-step"))<=curStep?1:0;});
   document.getElementById("tut-stepno").textContent="Steg "+curStep+" av "+maxStep;
@@ -423,18 +464,14 @@ document.getElementById("tut-play").onclick=function(){
   if(curStep>=maxStep)curStep=1; applyStep(); playing=true; this.textContent="⏸ Pausa";
   playTimer=setInterval(()=>{if(curStep>=maxStep){clearInterval(playTimer);playing=false;this.textContent="▶ Spela";return;}curStep++;applyStep();},1400);
 };
-(function initTut(){
-  const chips=document.getElementById("tut-chips");
+(function(){const chips=document.getElementById("tut-chips");
   TUTORIALS.forEach(t=>{const b=document.createElement("button");b.className="chip";b.dataset.key=t.key;b.textContent=t.label;b.onclick=()=>loadTut(t.key);chips.appendChild(b);});
-  loadTut(TUTORIALS[0].key);
-})();
+  loadTut(TUTORIALS[0].key);})();
 
 /* ===================== NAMNGE ===================== */
-let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnNiva=1;
-function shuffle(a){return a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);}
-function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnKat="alla";
 function nextNamn(){
-  if(namnQueue.length===0) namnQueue=shuffle(POOL.filter(p=>p.niva===namnNiva));
+  if(namnQueue.length===0) namnQueue=shuffle(poolByKat(namnKat));
   namnItem=namnQueue.pop(); namnAnswered=false;
   document.getElementById("namn-structure").innerHTML=renderSVG(namnItem.g(), namnItem.xs||1);
   document.getElementById("namn-input").value="";
@@ -457,24 +494,22 @@ function checkNamn(){
 document.getElementById("namn-check").onclick=checkNamn;
 document.getElementById("namn-next").onclick=nextNamn;
 document.getElementById("namn-input").addEventListener("keydown",e=>{if(e.key==="Enter"){namnAnswered?nextNamn():checkNamn();}});
-document.getElementById("lvl1").onclick=()=>setNiva(1);
-document.getElementById("lvl2").onclick=()=>setNiva(2);
-function setNiva(n){ namnNiva=n; namnQueue=[]; namnRight=0; namnTotal=0;
-  document.getElementById("lvl1").classList.toggle("active",n===1);
-  document.getElementById("lvl2").classList.toggle("active",n===2);
-  document.getElementById("namn-score").textContent="Rätt: 0 / 0"; nextNamn();
-}
 document.getElementById("namn-rules").innerHTML=RULES;
 document.getElementById("namn-rules-btn").onclick=()=>{const r=document.getElementById("namn-rules");r.hidden=!r.hidden;};
+(function(){const c=document.getElementById("namn-kat");
+  KATS.forEach(([k,lbl],i)=>{const b=document.createElement("button");b.className="chip"+(i===0?" active":"");b.dataset.k=k;b.textContent=lbl;
+    b.onclick=()=>{namnKat=k;namnQueue=[];namnRight=0;namnTotal=0;document.getElementById("namn-score").textContent="Rätt: 0 / 0";
+      c.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));nextNamn();};
+    c.appendChild(b);});})();
 nextNamn();
 
 /* ===================== BYGG FORMEL ===================== */
-let formelItem=null, formelStr="", formelRight=0, formelTotal=0, formelAnswered=false, formelQueue=[];
+let formelItem=null, formelStr="", formelRight=0, formelTotal=0, formelAnswered=false, formelQueue=[], formelKat="alla";
 function normF(s){return s.replace(/\s/g,"").toUpperCase();}
 function subscriptify(s){return s.replace(/(\d+)/g,'<sub>$1</sub>');}
 function renderBuilt(){document.getElementById("formel-built").innerHTML=subscriptify(formelStr||"")+'<span class="cursor">|</span>';}
 function nextFormel(){
-  if(formelQueue.length===0) formelQueue=shuffle(POOL.filter(p=>p.niva===1));
+  if(formelQueue.length===0) formelQueue=shuffle(poolByKat(formelKat).filter(p=>p.formel));
   formelItem=formelQueue.pop(); formelStr=""; formelAnswered=false;
   document.getElementById("formel-namn").textContent=cap(formelItem.answers[0]);
   document.getElementById("formel-feedback").textContent="";
@@ -493,11 +528,16 @@ function checkFormel(){
     '<div class="result-box"><div class="rf">'+formelItem.fv+'</div>'+renderSVG(formelItem.g(),formelItem.xs||1)+
     (formelItem.fakta?'<div class="fact">'+formelItem.fakta+'</div>':'')+'</div>';
 }
-(function initFormel(){
+(function(){
   const elem=document.getElementById("formel-elem"), dig=document.getElementById("formel-dig"), grp=document.getElementById("formel-grp");
-  ["C","H","O"].forEach(e=>{const b=document.createElement("button");b.textContent=e;b.onclick=()=>{if(!formelAnswered){formelStr+=e;renderBuilt();}};elem.appendChild(b);});
+  ["C","H","O","N"].forEach(e=>{const b=document.createElement("button");b.textContent=e;b.onclick=()=>{if(!formelAnswered){formelStr+=e;renderBuilt();}};elem.appendChild(b);});
   for(let n=1;n<=9;n++){const b=document.createElement("button");b.textContent=n;b.onclick=()=>{if(!formelAnswered){formelStr+=n;renderBuilt();}};dig.appendChild(b);}
   [["OH","OH"],["COOH","COOH"],["(",""],[")",""]].forEach(([lbl,val])=>{const b=document.createElement("button");b.className="grp";b.textContent=lbl;b.onclick=()=>{if(!formelAnswered){formelStr+=(val||lbl);renderBuilt();}};grp.appendChild(b);});
+  const kc=document.getElementById("formel-kat");
+  KATS.forEach(([k,lbl],i)=>{const b=document.createElement("button");b.className="chip"+(i===0?" active":"");b.dataset.k=k;b.textContent=lbl;
+    b.onclick=()=>{formelKat=k;formelQueue=[];formelRight=0;formelTotal=0;document.getElementById("formel-score").textContent="Rätt: 0 / 0";
+      kc.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));nextFormel();};
+    kc.appendChild(b);});
 })();
 document.getElementById("formel-back").onclick=()=>{if(!formelAnswered){formelStr=formelStr.slice(0,-1);renderBuilt();}};
 document.getElementById("formel-clear").onclick=()=>{if(!formelAnswered){formelStr="";renderBuilt();}};
