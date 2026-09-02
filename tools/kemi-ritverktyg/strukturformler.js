@@ -93,11 +93,14 @@ function glycin(){
   const Cd={el:"H",col:1,row:1};A.push(Cd);B.push([idx(C1),idx(Cd),1]);
   return {atoms:A,bonds:B};
 }
-function vatten(){ return {atoms:[{el:"O",col:0,row:0},{el:"H",col:-1,row:0},{el:"H",col:1,row:0}], bonds:[[0,1,1],[0,2,1]]}; }
+function vatten(){ // böjd, bindningsvinkel 104,5°
+  const h=52.25*Math.PI/180, s=Math.sin(h), c=Math.cos(h);
+  return {atoms:[{el:"O",col:0,row:0},{el:"H",col:-s,row:c},{el:"H",col:s,row:c}], bonds:[[0,1,1],[0,2,1]]};
+}
 function metylbutan(){ // 2-metylbutan, gren nedåt (visar -yl)
   const A=[],B=[],idx=x=>A.indexOf(x);
   for(let i=0;i<4;i++)A.push({el:"C",col:i,row:0}); B.push([0,1,1],[1,2,1],[2,3,1]);
-  const Cb={el:"C",col:1,row:1};A.push(Cb);B.push([1,idx(Cb),1]);
+  const Cb={el:"C",col:1,row:2};A.push(Cb);B.push([1,idx(Cb),1]); // förlängd grenbindning så väten får plats
   const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push([idx(ci),idx(h),1]);});
   addH(A[0],[[-1,0],[0,-1],[0,1]]); addH(A[1],[[0,-1]]); addH(A[2],[[0,-1],[0,1]]); addH(A[3],[[0,-1],[0,1],[1,0]]);
   addH(Cb,[[0,1],[-1,0],[1,0]]);
@@ -130,11 +133,24 @@ function glycerol(){const A=[],C1={el:"C",col:0,row:0},C2={el:"C",col:1,row:0},C
 // normalisera bindningsformat till {a,b,order}
 function norm(g){ return {atoms:g.atoms, bonds:g.bonds.map(b=>Array.isArray(b)?{a:b[0],b:b[1],order:b[2]}:b)}; }
 
+// --- kemiregler: kontroll av valens och positionskrock ---
+const VALENS={C:4,N:3,O:2,H:1};
+function kontroll(name,g){
+  const sum={},pos={};
+  for(let i=0;i<g.atoms.length;i++){const a=g.atoms[i],key=a.col.toFixed(3)+","+a.row.toFixed(3);
+    if(pos[key]!==undefined) console.log(`  KROCK ${name}: atom ${pos[key]} och ${i} pa samma plats (${key})`);
+    else pos[key]=i; sum[i]=0;}
+  for(const b of g.bonds){sum[b.a]+=b.order;sum[b.b]+=b.order;}
+  for(let i=0;i<g.atoms.length;i++){const el=g.atoms[i].el; if(VALENS[el]!==undefined && sum[i]!==VALENS[el])
+    console.log(`  VALENS ${name}: ${el} (atom ${i}) har ${sum[i]} bindningar, ska ha ${VALENS[el]}`);}
+}
+
 const OUT="/sessions/rcw-011wjks3rqhysgzpypskpjsn/mnt/Documents/github/images/kemi/kol-och-kolforeningar/strukturformler";
 fs.mkdirSync(OUT,{recursive:true});
 let cards="";
 for(const it of items){
   const g=norm(it.g);
+  kontroll(it.fil,g);
   const svg=render(g.atoms,g.bonds,it.xscale||1);
   fs.writeFileSync(path.join(OUT,it.fil+".svg"),svg);
   cards+=`<figure class="card"><div class="draw">${svg}</div><figcaption><h3>${it.namn}</h3><p class="f">${it.summa||""}</p><code>${it.fil}.svg</code></figcaption></figure>`;
