@@ -33,7 +33,7 @@ function chain({n,bonds}){
       const ELEV=45, angs=hasNext?[180-ELEV,180+ELEV]:[ELEV,-ELEV];
       for(const th of angs){const r=th*Math.PI/180;offs.push({dx:Math.cos(r),dy:-Math.sin(r)});}
     } else {
-      let dirs=hc===4?["up","down","left","right"]:hc===3?["up","down",free]:hc===2?["up","down"]:hc===1?[free]:[];
+      let dirs=hc===4?["up","down","left","right"]:hc===3?["up","down",free]:hc===2?["up","down"]:hc===1?(nN===1?[free]:["up"]):[];
       for(const d of dirs) offs.push({dx:d==="left"?-1:d==="right"?1:0,dy:d==="up"?-1:d==="down"?1:0});
     }
     for(const o of offs){atoms.push({el:"H",col:i+o.dx,row:o.dy});bl.push({a:i,b:atoms.length-1,order:1});}
