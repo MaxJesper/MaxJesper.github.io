@@ -59,6 +59,15 @@
   .rules ol{margin:.3rem 0 .3rem 1.1rem;padding:0}
   .rules li{margin:.35rem 0}
   .rules .src{font-size:.8rem;color:#777;margin-top:.4rem}
+  .ogrupp{border:1px solid #e6e2f5;border-radius:12px;padding:1rem;margin:.9rem 0;background:#fff}
+  .ogrupp h3{margin:0 0 .3rem;color:var(--lila-mork)}
+  .okann{font-size:.95rem;margin-bottom:.4rem}
+  .ostage{display:flex;justify-content:center;background:#fff;border:1px dashed #e0daf3;border-radius:10px;padding:.5rem;overflow-x:auto}
+  .ostage svg{max-width:100%;height:auto;max-height:150px}
+  .oex{font-size:.85rem;color:#666;margin:.3rem 0 .2rem;text-align:center}
+  .ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
+  .ocard{border:1px solid #e6e2f5;border-radius:10px;padding:.7rem;background:#fff}
+  .oname{text-align:center;font-weight:600;margin-top:.3rem}
 </style>
 </head>
 <body>
@@ -73,12 +82,16 @@
     <button class="tab active" data-tab="rita">Lär dig rita strukturformler</button>
     <button class="tab" data-tab="namn">Namnge föreningen</button>
     <button class="tab" data-tab="formel">Bygg molekylformler</button>
+    <button class="tab" data-tab="overkurs">Överkurs</button>
   </div>
 
   <!-- TAB 1 -->
   <section id="tab-rita">
     <div class="card">
-      <div class="chips" id="tut-chips"></div>
+      <div style="font-size:.85rem;color:#666;margin-bottom:.4rem">Grupp:</div>
+      <div class="chips" id="tut-kat"></div>
+      <div style="font-size:.85rem;color:#666;margin:.1rem 0 .4rem">Förening / antal kol:</div>
+      <div class="chips" id="tut-len"></div>
       <div class="stage anim" id="tut-stage"></div>
       <div class="caption"><span class="stepno" id="tut-stepno"></span><span id="tut-caption"></span></div>
       <div class="controls">
@@ -136,6 +149,11 @@
       <div class="feedback" id="formel-feedback"></div>
       <div id="formel-result"></div>
     </div>
+  </section>
+
+  <!-- TAB 4 -->
+  <section id="tab-overkurs" hidden>
+    <div class="card"><div style="font-size:.85rem;color:#666;margin-bottom:.2rem">Utöver grundkursen finns fler grupper av kolföreningar. Här är en kort presentation.</div><div id="ok-content"></div></div>
   </section>
 </div>
 
@@ -264,6 +282,69 @@ function glycin(){
   return {atoms:A,bonds:B};
 }
 
+function eterBuild(nL,nR){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<nL;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<nL-1;i++)B.push({a:i,b:i+1,order:1});
+  const O={el:"O",col:nL,row:0};A.push(O);B.push({a:nL-1,b:idx(O),order:1});
+  const R=[];for(let j=0;j<nR;j++){const c={el:"C",col:nL+1+j,row:0};A.push(c);R.push(c);}
+  B.push({a:idx(O),b:idx(R[0]),order:1});
+  for(let j=0;j<nR-1;j++)B.push({a:idx(R[j]),b:idx(R[j+1]),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<nL;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  for(let j=0;j<nR;j++){const last=j===nR-1; addH(R[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
+  return {atoms:A,bonds:B};
+}
+function aldehyd(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=n-1;
+  const Oc={el:"O",col:cc,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const Hc={el:"H",col:cc+1,row:0};A.push(Hc);B.push({a:cc,b:idx(Hc),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<cc;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  if(n===1){addH(A[cc],[[-1,0]]);}
+  return {atoms:A,bonds:B};
+}
+function keton(nL,nR){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<nL;i++)A.push({el:"C",col:i,row:0});
+  const CO={el:"C",col:nL,row:0};A.push(CO);
+  for(let i=0;i<nL-1;i++)B.push({a:i,b:i+1,order:1});
+  B.push({a:nL-1,b:idx(CO),order:1});
+  const Oc={el:"O",col:nL,row:-1};A.push(Oc);B.push({a:idx(CO),b:idx(Oc),order:2});
+  const R=[];for(let j=0;j<nR;j++){const c={el:"C",col:nL+1+j,row:0};A.push(c);R.push(c);}
+  B.push({a:idx(CO),b:idx(R[0]),order:1});
+  for(let j=0;j<nR-1;j++)B.push({a:idx(R[j]),b:idx(R[j+1]),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<nL;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  for(let j=0;j<nR;j++){const last=j===nR-1; addH(R[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
+  return {atoms:A,bonds:B};
+}
+function amin(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const N={el:"N",col:n,row:0};A.push(N);B.push({a:n-1,b:idx(N),order:1});
+  const Nh1={el:"H",col:n+1,row:0};A.push(Nh1);B.push({a:idx(N),b:idx(Nh1),order:1});
+  const Nh2={el:"H",col:n,row:1};A.push(Nh2);B.push({a:idx(N),b:idx(Nh2),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<n;i++){const first=i===0; addH(A[i], (n===1||first)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  return {atoms:A,bonds:B};
+}
+function veteperoxid(){
+  return {atoms:[{el:"O",col:0,row:0},{el:"O",col:1,row:0},{el:"H",col:-1,row:0},{el:"H",col:2,row:0}],
+          bonds:[{a:0,b:1,order:1},{a:0,b:2,order:1},{a:1,b:3,order:1}]};
+}
+function dimetylperoxid(){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  const C0={el:"C",col:0,row:0},O1={el:"O",col:1,row:0},O2={el:"O",col:2,row:0},C1={el:"C",col:3,row:0};
+  A.push(C0,O1,O2,C1);B.push({a:0,b:1,order:1},{a:1,b:2,order:1},{a:2,b:3,order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  addH(C0,[[-1,0],[0,-1],[0,1]]);addH(C1,[[1,0],[0,-1],[0,1]]);
+  return {atoms:A,bonds:B};
+}
 /* ===================== TUTORIALS ===================== */
 function tutAlkohol(n,namn){
   const A=[],B=[],idx=x=>A.indexOf(x);
@@ -290,36 +371,44 @@ function tutSyra(n,namn){
   for(let i=0;i<n;i++){ if(i===cc) continue;
     let dirs=(i===0)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
     for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy,step:5};A.push(h);B.push({a:i,b:idx(h),order:1,step:5});}}
+  if(n===1){const h={el:"H",col:-1,row:0,step:5};A.push(h);B.push({a:cc,b:idx(h),order:1,step:5});}
   return {g:{atoms:A,bonds:B}, captions:[
-    `${namn} har ${n} kol. Rita ut kolkedjan med bindningar.`,
+    `${namn} har ${n===1?"ett kol":n+" kol"}. Rita ut ${n===1?"kolet":"kolkedjan med bindningar"}.`,
     `En syra har en –O–H-grupp. Sätt den efter det sista kolet.`,
     `Rikta två bindningar (en dubbelbindning) uppåt från det sista kolet.`,
     `Sätt en syreatom (O) på dubbelbindningen. Nu finns karboxylgruppen –COOH.`,
     `Sätt väte (H) på alla övriga lediga bindningar. Klart!`]};
 }
-function tutAlken(){
-  const A=[],B=[],idx=x=>A.indexOf(x);
-  const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1},C2={el:"C",col:2,row:0,step:1};
-  A.push(C0,C1,C2); B.push({a:1,b:2,order:1,step:1}); B.push({a:0,b:1,order:2,step:2});
-  const E=45;
+function tutAlken(n,namn){
+  const A=[],B=[],idx=x=>A.indexOf(x),E=45;
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0,step:1});
+  for(let i=1;i<n-1;i++)B.push({a:i,b:i+1,order:1,step:1});
+  B.push({a:0,b:1,order:2,step:2});
   [[180-E],[180+E]].forEach(([th])=>{const r=th*Math.PI/180;const h={el:"H",col:0+Math.cos(r),row:-Math.sin(r),step:4};A.push(h);B.push({a:0,b:idx(h),order:1,step:3});});
-  {const h={el:"H",col:1,row:-1,step:4};A.push(h);B.push({a:1,b:idx(h),order:1,step:3});}
-  [[0,-1],[0,1],[1,0]].forEach(([dx,dy])=>{const h={el:"H",col:2+dx,row:dy,step:4};A.push(h);B.push({a:2,b:idx(h),order:1,step:3});});
+  if(n===2){[[E],[-E]].forEach(([th])=>{const r=th*Math.PI/180;const h={el:"H",col:1+Math.cos(r),row:-Math.sin(r),step:4};A.push(h);B.push({a:1,b:idx(h),order:1,step:3});});}
+  else {
+    {const h={el:"H",col:1,row:-1,step:4};A.push(h);B.push({a:1,b:idx(h),order:1,step:3});}
+    for(let i=2;i<n;i++){const last=i===n-1;let dirs=last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]];
+      for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy,step:4};A.push(h);B.push({a:i,b:idx(h),order:1,step:3});}}
+  }
   return {g:{atoms:A,bonds:B}, captions:[
-    `Propen har tre kol. Rita ut kolen (och bindningen mellan de två sista).`,
+    `${namn} har ${n} kol. Rita ut kolen${n>2?" och bindningarna mellan de bakre kolen":""}.`,
     `En alken har en dubbelbindning. Förbind de två första kolen med en dubbelbindning.`,
     `Rita ut resten av bindningarna så att varje kol får fyra.`,
-    `Sätt väte (H) på alla lediga bindningar. Vid dubbelbindningens ände sitter vätena i en vinkel. Klart!`]};
+    `Sätt väte (H) på alla lediga bindningar. Vid dubbelbindningens ände sitter vätena i vinkel. Klart!`]};
 }
-function tutAlkyn(){
+function tutAlkyn(n,namn){
   const A=[],B=[],idx=x=>A.indexOf(x);
-  const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1},C2={el:"C",col:2,row:0,step:1};
-  A.push(C0,C1,C2); B.push({a:0,b:1,order:1,step:1}); B.push({a:1,b:2,order:3,step:2});
-  [[-1,0],[0,-1],[0,1]].forEach(([dx,dy])=>{const h={el:"H",col:0+dx,row:dy,step:4};A.push(h);B.push({a:0,b:idx(h),order:1,step:3});});
-  {const h={el:"H",col:3,row:0,step:4};A.push(h);B.push({a:2,b:idx(h),order:1,step:3});}
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0,step:1});
+  for(let i=1;i<n-1;i++)B.push({a:i,b:i+1,order:1,step:1});
+  B.push({a:0,b:1,order:3,step:2});
+  {const h={el:"H",col:-1,row:0,step:4};A.push(h);B.push({a:0,b:idx(h),order:1,step:3});}
+  if(n===2){const h={el:"H",col:2,row:0,step:4};A.push(h);B.push({a:1,b:idx(h),order:1,step:3});}
+  else {for(let i=2;i<n;i++){const last=i===n-1;let dirs=last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]];
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy,step:4};A.push(h);B.push({a:i,b:idx(h),order:1,step:3});}}}
   return {g:{atoms:A,bonds:B}, captions:[
-    `Propyn har tre kol. Rita ut kolen och bindningen mellan de två första.`,
-    `En alkyn har en trippelbindning. Förbind de två sista kolen med en trippelbindning.`,
+    `${namn} har ${n} kol. Rita ut kolen${n>2?" och bindningarna mellan de bakre kolen":""}.`,
+    `En alkyn har en trippelbindning. Förbind de två första kolen med en trippelbindning.`,
     `Rita ut resten av bindningarna så att varje kol får fyra.`,
     `Sätt väte (H) på alla lediga bindningar. Klart!`]};
 }
@@ -351,13 +440,49 @@ function tutEster(){ // etyletanoat: syra + alkohol -> ester
     `Sätt en dubbelbunden syreatom uppåt på syrans kol – nu finns estergruppen –C(=O)–O–.`,
     `Sätt väte (H) på alla lediga bindningar. Klart! (Vid förestringen avgick också en vattenmolekyl.)`]};
 }
-const TUTORIALS=[
-  {key:"butanol", label:"Butanol (alkohol)", make:()=>tutAlkohol(4,"Butanol")},
-  {key:"butansyra", label:"Butansyra (syra)", make:()=>tutSyra(4,"Butansyra")},
-  {key:"propen", label:"Propen (alken)", make:tutAlken},
-  {key:"propyn", label:"Propyn (alkyn)", make:tutAlkyn},
-  {key:"glykol", label:"Etandiol/glykol (flervärd)", make:tutFlervard},
-  {key:"ester", label:"Etyletanoat (ester)", make:tutEster},
+const STEM=["","met","et","prop","but","pent","hex","hept","okt"];
+function alkanNamn(n){return STEM[n]+"an";}
+function alkanolNamn(n){return STEM[n]+"anol";}
+function syraNamn(n){return STEM[n]+"ansyra";}
+function alkenNamn(n){return n<=3?STEM[n]+"en":STEM[n]+"-1-en";}
+function alkynNamn(n){return n<=3?STEM[n]+"yn":STEM[n]+"-1-yn";}
+function tutAlkan(n,namn){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0,step:1});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1,step:1});
+  for(let i=0;i<n;i++){const first=i===0,last=i===n-1;
+    let dirs=(n===1)?[[-1,0],[1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
+    if(n>1&&first)dirs.push([-1,0]); if(n>1&&last)dirs.push([1,0]);
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy,step:3};A.push(h);B.push({a:i,b:idx(h),order:1,step:2});}}
+  return {g:{atoms:A,bonds:B}, captions:[
+    `${namn} har ${n===1?"ett kol":n+" kol"}. Rita ut ${n===1?"kolet":"kolkedjan med bindningar mellan kolen"}.`,
+    `Rita ut bindningar så att varje kol får fyra bindningar totalt.`,
+    `Sätt en väteatom (H) på varje ledig bindning. Klart!`]};
+}
+function tutDiol(n, ohList, namn){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0,step:1});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1,step:1});
+  for(const c of ohList){const O={el:"OH",col:c,row:1,step:2};A.push(O);B.push({a:c,b:idx(O),order:1,step:2});}
+  for(let i=0;i<n;i++){const hasPrev=i>0,hasNext=i<n-1,hasOH=ohList.includes(i);
+    const hc=4-(hasPrev?1:0)-(hasNext?1:0)-(hasOH?1:0);
+    const slots=[[0,-1]]; if(!hasOH)slots.push([0,1]); if(!hasPrev)slots.push([-1,0]); if(!hasNext)slots.push([1,0]);
+    for(let k=0;k<hc;k++){const [dx,dy]=slots[k];const h={el:"H",col:i+dx,row:dy,step:4};A.push(h);B.push({a:i,b:idx(h),order:1,step:3});}}
+  return {g:{atoms:A,bonds:B}, xscale:1.25, captions:[
+    `${namn} har ${n} kol. Rita ut kolkedjan.`,
+    `En flervärd alkohol har flera –OH-grupper. Sätt en –OH på ${ohList.length===n?"varje kol":"rätt kol"}.`,
+    `Rita ut resten av bindningarna så att varje kol får fyra.`,
+    `Sätt väte (H) på alla lediga bindningar. Klart!`]};
+}
+function mkItems(lengths,nameFn,makeFn){return lengths.map(n=>({namn:nameFn(n),make:()=>makeFn(n)}));}
+const TUTCATS=[
+  {label:"Alkaner", items:mkItems([1,2,3,4,5,6],alkanNamn,(n)=>tutAlkan(n,alkanNamn(n)))},
+  {label:"Alkener", items:mkItems([2,3,4,5,6],alkenNamn,(n)=>tutAlken(n,alkenNamn(n)))},
+  {label:"Alkyner", items:mkItems([2,3,4,5,6],alkynNamn,(n)=>tutAlkyn(n,alkynNamn(n)))},
+  {label:"Alkoholer", items:mkItems([1,2,3,4,5,6],alkanolNamn,(n)=>tutAlkohol(n,alkanolNamn(n)))},
+  {label:"Organiska syror", items:mkItems([1,2,3,4,5,6],syraNamn,(n)=>tutSyra(n,syraNamn(n)))},
+  {label:"Flervärda", items:[{namn:"etandiol",make:()=>tutDiol(2,[0,1],"etandiol (glykol)")},{namn:"propan-1,2,3-triol",make:()=>tutDiol(3,[0,1,2],"propan-1,2,3-triol (glycerol)")}]},
+  {label:"Estrar", items:[{namn:"etyletanoat",make:tutEster}]},
 ];
 
 /* ===================== ÖVNINGSDATA ===================== */
@@ -458,12 +583,27 @@ const RULES=`<strong>Så namnger man kolväten:</strong>
 </ol>
 <div class="src">Källor: kemilektioner.se och kemi.ugglansno.se (IUPAC-namngivning).</div>`;
 
+const OVERKURS=[
+ {grupp:"Etrar", kann:"Två kolkedjor bundna till samma syreatom (R–O–R).", ex:"dimetyleter", g:()=>eterBuild(1,1), fakta:"Etrar är flyktiga och luktar starkt. Dietyleter användes förr som narkosmedel och är i dag ett lösningsmedel."},
+ {grupp:"Aldehyder", kann:"En –CHO-grupp i änden: ett kol med dubbelbindning till syre och ett väte.", ex:"metanal (formaldehyd)", g:()=>aldehyd(1), fakta:"Metanal (formaldehyd) finns i konserveringsvätska och lim. Aldehyder bildas när alkoholer oxideras."},
+ {grupp:"Ketoner", kann:"En C=O mitt inne i kolkedjan (R–CO–R).", ex:"propanon (aceton)", g:()=>keton(1,1), fakta:"Propanon (aceton) är ett vanligt lösningsmedel, t.ex. i nagellacksborttagning."},
+ {grupp:"Aminer", kann:"En kvävegrupp –NH₂ på kedjan (R–NH₂).", ex:"metylamin", g:()=>amin(1), fakta:"Aminer luktar ofta fisk eller ammoniak. De är släkt med aminosyrorna som bygger proteiner."},
+ {grupp:"Peroxider", kann:"Två syreatomer bundna direkt till varandra (–O–O–).", ex:"väteperoxid", g:()=>veteperoxid(), fakta:"Väteperoxid (H₂O₂) bleker hår och desinficerar sår. Peroxider är reaktiva."},
+];
+const OVERKURS_EX=[
+ {namn:"dietyleter", g:()=>eterBuild(2,2), fakta:"”Eter” – förr narkosmedel, nu lösningsmedel."},
+ {namn:"etanal (acetaldehyd)", g:()=>aldehyd(2), fakta:"Bildas när kroppen bryter ner alkohol – ger baksmälla."},
+ {namn:"propanal", g:()=>aldehyd(3), fakta:"En aldehyd med tre kol."},
+ {namn:"butanon", g:()=>keton(1,2), fakta:"Ett starkt lösningsmedel (MEK) i lim och lack."},
+ {namn:"etylamin", g:()=>amin(2), fakta:"En amin med fiskliknande lukt."},
+ {namn:"dimetylperoxid", g:()=>dimetylperoxid(), fakta:"En enkel organisk peroxid – reaktiv."},
+];
 /* ===================== FLIKAR ===================== */
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
   t.classList.add("active");
   const id=t.dataset.tab;
-  ["rita","namn","formel"].forEach(k=>document.getElementById("tab-"+k).hidden=(k!==id));
+  ["rita","namn","formel","overkurs"].forEach(k=>document.getElementById("tab-"+k).hidden=(k!==id));
 }));
 function shuffle(a){return a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
@@ -472,11 +612,17 @@ function poolByKat(kat){return kat==="alla"?POOL.slice():POOL.filter(p=>p.kat===
 /* ===================== TUTORIAL ===================== */
 let curTut=null, curStep=1, maxStep=1, playing=false, playTimer=null;
 const stage=document.getElementById("tut-stage");
-function loadTut(key){
-  const t=TUTORIALS.find(x=>x.key===key); curTut=t.make();
+let tutKat=TUTCATS[0], tutItemIdx=0;
+function buildTutKat(){const c=document.getElementById("tut-kat");c.innerHTML="";
+  TUTCATS.forEach(cat=>{const b=document.createElement("button");b.className="chip"+(cat===tutKat?" active":"");b.textContent=cat.label;
+    b.onclick=()=>{tutKat=cat;tutItemIdx=0;buildTutKat();buildTutLen();loadTutItem();};c.appendChild(b);});}
+function buildTutLen(){const c=document.getElementById("tut-len");c.innerHTML="";
+  tutKat.items.forEach((it,i)=>{const b=document.createElement("button");b.className="chip"+(i===tutItemIdx?" active":"");b.textContent=cap(it.namn);
+    b.onclick=()=>{tutItemIdx=i;buildTutLen();loadTutItem();};c.appendChild(b);});}
+function loadTutItem(){
+  curTut=tutKat.items[tutItemIdx].make();
   maxStep=curTut.captions.length; curStep=1;
   stage.innerHTML=renderSVG(curTut.g, curTut.xscale||1);
-  document.querySelectorAll("#tut-chips .chip").forEach(c=>c.classList.toggle("active",c.dataset.key===key));
   const d=document.getElementById("tut-dots");d.innerHTML="";for(let i=1;i<=maxStep;i++){const s=document.createElement("span");s.className="dot";d.appendChild(s);}
   applyStep();
 }
@@ -496,9 +642,7 @@ document.getElementById("tut-play").onclick=function(){
   if(curStep>=maxStep)curStep=1; applyStep(); playing=true; this.textContent="Pausa";
   playTimer=setInterval(()=>{if(curStep>=maxStep){clearInterval(playTimer);playing=false;this.textContent="Spela";return;}curStep++;applyStep();},1400);
 };
-(function(){const chips=document.getElementById("tut-chips");
-  TUTORIALS.forEach(t=>{const b=document.createElement("button");b.className="chip";b.dataset.key=t.key;b.textContent=t.label;b.onclick=()=>loadTut(t.key);chips.appendChild(b);});
-  loadTut(TUTORIALS[0].key);})();
+buildTutKat();buildTutLen();loadTutItem();
 
 /* ===================== NAMNGE ===================== */
 let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnKat="alla";
@@ -576,6 +720,16 @@ document.getElementById("formel-clear").onclick=()=>{if(!formelAnswered){formelS
 document.getElementById("formel-check").onclick=checkFormel;
 document.getElementById("formel-next").onclick=nextFormel;
 nextFormel();
+
+/* ===================== ÖVERKURS ===================== */
+(function(){
+  let h="";
+  OVERKURS.forEach(o=>{ h+='<div class="ogrupp"><h3>'+o.grupp+'</h3><div class="okann"><b>Känns igen på:</b> '+o.kann+'</div><div class="ostage">'+renderSVG(o.g(),o.xs||1)+'</div><div class="oex">Exempel: '+o.ex+'</div><div class="fact">'+o.fakta+'</div></div>'; });
+  h+='<h3 style="margin:1.4rem 0 .3rem;color:var(--lila-mork)">Fler exempel</h3><div class="ogrid">';
+  OVERKURS_EX.forEach(e=>{ h+='<div class="ocard"><div class="ostage">'+renderSVG(e.g(),e.xs||1)+'</div><div class="oname">'+e.namn+'</div><div class="fact" style="text-align:center">'+e.fakta+'</div></div>'; });
+  h+='</div>';
+  document.getElementById("ok-content").innerHTML=h;
+})();
 </script>
 </body>
 </html>
