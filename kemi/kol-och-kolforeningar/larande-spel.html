@@ -79,7 +79,7 @@
   </header>
 
   <div class="tabs">
-    <button class="tab active" data-tab="rita">Lär dig rita strukturformler</button>
+    <button class="tab active" data-tab="rita">Träna strukturformler</button>
     <button class="tab" data-tab="namn">Namnge föreningen</button>
     <button class="tab" data-tab="formel">Bygg molekylformler</button>
     <button class="tab" data-tab="overkurs">Överkurs</button>
@@ -97,6 +97,7 @@
       <div class="controls">
         <button class="btn" id="tut-prev">Föregående</button>
         <button class="btn primary" id="tut-next">Nästa steg</button>
+        <button class="btn" id="tut-facit">Facit</button>
         <button class="btn" id="tut-play">Spela</button>
         <button class="btn" id="tut-reset">Börja om</button>
         <div class="dots" id="tut-dots"></div>
@@ -611,9 +612,10 @@ function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function poolByKat(kat){return kat==="alla"?POOL.slice():POOL.filter(p=>p.kat===kat);}
 
 /* ===================== TUTORIAL ===================== */
-let curTut=null, curStep=1, maxStep=1, playing=false, playTimer=null;
+let curTut=null, curStep=0, maxStep=1, playing=false, playTimer=null, tutName="", facit=false;
 const stage=document.getElementById("tut-stage");
 let tutKat=TUTCATS[0], tutItemIdx=0;
+function tutBase(){return tutName.replace(/\s*\([^)]*\)/,"");}
 function buildTutKat(){const c=document.getElementById("tut-kat");c.innerHTML="";
   TUTCATS.forEach(cat=>{const b=document.createElement("button");b.className="chip"+(cat===tutKat?" active":"");b.textContent=cat.label;
     b.onclick=()=>{tutKat=cat;tutItemIdx=0;buildTutKat();buildTutLen();loadTutItem();};c.appendChild(b);});}
@@ -622,25 +624,38 @@ function buildTutLen(){const c=document.getElementById("tut-len");c.innerHTML=""
     b.onclick=()=>{tutItemIdx=i;buildTutLen();loadTutItem();};c.appendChild(b);});}
 function loadTutItem(){
   curTut=tutKat.items[tutItemIdx].make();
-  maxStep=curTut.captions.length; curStep=1;
+  tutName=tutKat.items[tutItemIdx].namn;
+  maxStep=curTut.captions.length; curStep=0; facit=false;
+  if(playing){clearInterval(playTimer);playing=false;document.getElementById("tut-play").textContent="Spela";}
   stage.innerHTML=renderSVG(curTut.g, curTut.xscale||1);
   const d=document.getElementById("tut-dots");d.innerHTML="";for(let i=1;i<=maxStep;i++){const s=document.createElement("span");s.className="dot";d.appendChild(s);}
   applyStep();
 }
 function applyStep(){
-  stage.querySelectorAll("[data-step]").forEach(el=>{el.style.opacity=(+el.getAttribute("data-step"))<=curStep?1:0;});
-  document.getElementById("tut-stepno").textContent="Steg "+curStep+" av "+maxStep;
-  document.getElementById("tut-caption").textContent=curTut.captions[curStep-1];
-  document.querySelectorAll("#tut-dots .dot").forEach((dot,i)=>dot.classList.toggle("on",i<curStep));
-  document.getElementById("tut-prev").disabled=curStep<=1;
-  document.getElementById("tut-next").disabled=curStep>=maxStep;
+  const show=facit?maxStep:curStep;
+  stage.querySelectorAll("[data-step]").forEach(el=>{el.style.opacity=(+el.getAttribute("data-step"))<=show?1:0;});
+  const sn=document.getElementById("tut-stepno"), cp=document.getElementById("tut-caption");
+  if(facit){
+    sn.textContent="Facit ";
+    cp.textContent="Så här ritas "+tutBase()+". Stämmer det med din skiss?";
+  } else if(curStep===0){
+    sn.textContent="";
+    cp.textContent=cap(tutName)+" – rita "+tutBase()+" i din skrivbok! Tryck sedan på Facit för att se om du har ritat rätt. Om du vill lära dig hur man ritar föreningen trycker du på Nästa steg.";
+  } else {
+    sn.textContent="Steg "+curStep+" av "+maxStep+" ";
+    cp.textContent=curTut.captions[curStep-1];
+  }
+  document.querySelectorAll("#tut-dots .dot").forEach((dot,i)=>dot.classList.toggle("on",i<show));
+  document.getElementById("tut-prev").disabled=(!facit && curStep<=0);
+  document.getElementById("tut-next").disabled=(!facit && curStep>=maxStep);
 }
-document.getElementById("tut-next").onclick=()=>{if(curStep<maxStep){curStep++;applyStep();}};
-document.getElementById("tut-prev").onclick=()=>{if(curStep>1){curStep--;applyStep();}};
-document.getElementById("tut-reset").onclick=()=>{curStep=1;applyStep();};
+document.getElementById("tut-next").onclick=()=>{if(facit){facit=false;curStep=1;applyStep();return;}if(curStep<maxStep){curStep++;applyStep();}};
+document.getElementById("tut-prev").onclick=()=>{if(facit){facit=false;curStep=maxStep;applyStep();return;}if(curStep>0){curStep--;applyStep();}};
+document.getElementById("tut-facit").onclick=()=>{if(playing){clearInterval(playTimer);playing=false;document.getElementById("tut-play").textContent="Spela";}facit=true;applyStep();};
+document.getElementById("tut-reset").onclick=()=>{facit=false;curStep=0;if(playing){clearInterval(playTimer);playing=false;document.getElementById("tut-play").textContent="Spela";}applyStep();};
 document.getElementById("tut-play").onclick=function(){
   if(playing){clearInterval(playTimer);playing=false;this.textContent="Spela";return;}
-  if(curStep>=maxStep)curStep=1; applyStep(); playing=true; this.textContent="Pausa";
+  facit=false; if(curStep>=maxStep||curStep<1)curStep=1; applyStep(); playing=true; this.textContent="Pausa";
   playTimer=setInterval(()=>{if(curStep>=maxStep){clearInterval(playTimer);playing=false;this.textContent="Spela";return;}curStep++;applyStep();},1400);
 };
 buildTutKat();buildTutLen();loadTutItem();
