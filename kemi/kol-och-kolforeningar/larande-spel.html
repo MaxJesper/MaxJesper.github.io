@@ -455,7 +455,7 @@ function esterNamn(acidN,alcoholN){return YL[alcoholN]+OAT[acidN];}
 const ESTERFAKTA={
   "metylmetanoat":"Ester av metansyra och metanol. En doftande vätska som används som lösningsmedel i industrin.",
   "etylmetanoat":"Ester av metansyra och etanol. Doftar rom och hallon och används som smak- och doftämne, bland annat i godis.",
-  "etyletanoat":"Ester av etansyra och etanol. Ett mycket vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar fruktigt.",
+  "etyletanoat":"Ester av etansyra och etanol. Ett mycket vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar fruktigt. Ingår också i det svenska sårrengöringsmedlet Salubrin, tillsammans med etanol och ättiksyra.",
   "propyletanoat":"Ester av etansyra och propanol. Doftar päron och används som doft- och smakämne.",
   "butyletanoat":"Ester av etansyra och butanol. Doftar frukt (äpple/päron) och är ett viktigt industriellt lösningsmedel i färg, lack och lim.",
   "pentyletanoat":"Ester av etansyra och pentanol. Doftar tydligt banan – kallas amylacetat och används som bananarom och som lösningsmedel.",
@@ -556,7 +556,7 @@ const POOL=[
   P("grenat",["3-metylpentan"],"3-metylpentan",()=>grenAlkan(5,3),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 3 (mitten). Finns i bensin."),
   // ESTRAR
   P("ester",["metylmetanoat","metylformiat"],"metylmetanoat (metylformiat)",()=>esterBuild(1,1),["C2H4O2"],"HCOOCH<sub>3</sub>","En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin."),
-  P("ester",["etyletanoat","etylacetat"],"etyletanoat (etylacetat)",()=>esterBuild(2,2),["C4H8O2"],"CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar."),
+  P("ester",["etyletanoat","etylacetat"],"etyletanoat (etylacetat)",()=>esterBuild(2,2),["C4H8O2"],"CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar. Ingår också i det svenska sårrengöringsmedlet Salubrin, tillsammans med etanol och ättiksyra."),
   P("ester",["metylbutanoat"],"metylbutanoat",()=>esterBuild(4,1),["C5H10O2"],"C<sub>3</sub>H<sub>7</sub>COOCH<sub>3</sub>","En ester av butansyra och metanol. Doftar äpple – smak- och doftämne."),
   P("ester",["etylbutanoat"],"etylbutanoat",()=>esterBuild(4,2),["C6H12O2"],"C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av butansyra och etanol. Doftar ananas – smak- och doftämne."),
   // FLER – ALKANER
