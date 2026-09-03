@@ -499,14 +499,14 @@ const POOL=[
   P("alken",["eten","etylen"],"eten (kallas även etylen)",()=>chain(2,[2]),["C2H4"],"C<sub>2</sub>H<sub>4</sub>","Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna."),
   P("alken",["propen","propylen"],"propen (kallas även propylen)",()=>chain(3,[2,1]),["C3H6"],"C<sub>3</sub>H<sub>6</sub>","Råvara för plasten polypropen, som finns i matlådor, mattor och rep."),
   P("alken",["buten","but-1-en","1-buten"],"buten (but-1-en)",()=>chain(4,[2,1,1]),["C4H8"],"C<sub>4</sub>H<sub>8</sub>","Dubbelbindning mellan kol 1 och 2. Råvara i plastindustrin."),
-  P("alken",["buten","but-2-en","2-buten"],"buten (but-2-en)",()=>chain(4,[1,2,1]),["C4H8"],"C<sub>4</sub>H<sub>8</sub>","Dubbelbindning mellan kol 2 och 3 – därför siffran 2 i namnet."),
+  P("alken",["but-2-en","2-buten"],"but-2-en",()=>chain(4,[1,2,1]),["C4H8"],"C<sub>4</sub>H<sub>8</sub>","Dubbelbindning mellan kol 2 och 3 – därför siffran 2 i namnet."),
   P("alken",["penten","pent-1-en","1-penten"],"penten (pent-1-en)",()=>chain(5,[2,1,1,1]),["C5H10"],"C<sub>5</sub>H<sub>10</sub>","Fem kol med dubbelbindning mellan kol 1 och 2."),
-  P("alken",["penten","pent-2-en","2-penten"],"penten (pent-2-en)",()=>chain(5,[1,2,1,1]),["C5H10"],"C<sub>5</sub>H<sub>10</sub>","Fem kol med dubbelbindning mellan kol 2 och 3."),
+  P("alken",["pent-2-en","2-penten"],"pent-2-en",()=>chain(5,[1,2,1,1]),["C5H10"],"C<sub>5</sub>H<sub>10</sub>","Fem kol med dubbelbindning mellan kol 2 och 3."),
   // ALKYNER
   P("alkyn",["etyn","acetylen"],"etyn (även kallad acetylen)",()=>chain(2,[3]),["C2H2"],"C<sub>2</sub>H<sub>2</sub>","Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall."),
   P("alkyn",["propyn"],"propyn",()=>chain(3,[1,3]),["C3H4"],"C<sub>3</sub>H<sub>4</sub>","En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri."),
   P("alkyn",["butyn","but-1-yn","1-butyn"],"butyn (but-1-yn)",()=>chain(4,[3,1,1]),["C4H6"],"C<sub>4</sub>H<sub>6</sub>","Trippelbindning mellan kol 1 och 2."),
-  P("alkyn",["butyn","but-2-yn","2-butyn"],"butyn (but-2-yn)",()=>chain(4,[1,3,1]),["C4H6"],"C<sub>4</sub>H<sub>6</sub>","Trippelbindning mellan kol 2 och 3."),
+  P("alkyn",["but-2-yn","2-butyn"],"but-2-yn",()=>chain(4,[1,3,1]),["C4H6"],"C<sub>4</sub>H<sub>6</sub>","Trippelbindning mellan kol 2 och 3."),
   // ALKOHOLER
   P("alkohol",["metanol"],"metanol",()=>alkohol(1),["CH3OH","CH4O"],"CH<sub>3</sub>OH","Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel."),
   P("alkohol",["etanol"],"etanol (sprit/alkohol till vardags)",()=>alkohol(2),["C2H5OH","C2H6O"],"C<sub>2</sub>H<sub>5</sub>OH","Alkoholen i öl, vin och sprit, som jäst bildar av socker. Även bränsle (E85) och desinfektionsmedel."),
@@ -515,9 +515,9 @@ const POOL=[
   P("alkohol",["pentanol"],"pentanol",()=>alkohol(5),["C5H11OH","C5H12O"],"C<sub>5</sub>H<sub>11</sub>OH","En alkohol med fem kol; används som lösnings- och doftämne."),
   // FLERVÄRDA
   P("flervard",["etandiol","1,2-etandiol","etan-1,2-diol","glykol","etylenglykol"],"etandiol / 1,2-etandiol (kallas etylenglykol eller glykol)",()=>polyol(2,[0,1]),["C2H4(OH)2","C2H6O2"],"C<sub>2</sub>H<sub>4</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska.",1.25),
-  P("flervard",["propandiol","propan-1,2-diol","1,2-propandiol","propylenglykol"],"propandiol / propan-1,2-diol (propylenglykol)",()=>polyol(3,[0,1]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. En ofarligare släkting till glykol: lösningsmedel i läkemedel, fuktbindare i kosmetika, livsmedelstillsats (E1520), fuktbevarare i snus, mjukgörare och frostskydd.",1.25),
-  P("flervard",["propandiol","propan-1,3-diol","1,3-propandiol"],"propandiol / propan-1,3-diol",()=>polyol(3,[0,2]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 3 (ytterkolen). Används i kosmetika och kan göras av förnybara råvaror.",1.25),
-  P("flervard",["butandiol","butan-1,4-diol","1,4-butandiol"],"butandiol / butan-1,4-diol",()=>polyol(4,[0,3]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 4 (ytterkolen). Råvara för plast och lösningsmedel.",1.25),
+  P("flervard",["propan-1,2-diol","1,2-propandiol","propylenglykol"],"propan-1,2-diol (propylenglykol)",()=>polyol(3,[0,1]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. En ofarligare släkting till glykol: lösningsmedel i läkemedel, fuktbindare i kosmetika, livsmedelstillsats (E1520), fuktbevarare i snus, mjukgörare och frostskydd.",1.25),
+  P("flervard",["propan-1,3-diol","1,3-propandiol"],"propan-1,3-diol",()=>polyol(3,[0,2]),["C3H6(OH)2","C3H8O2"],"C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub>","OH på kol 1 och 3 (ytterkolen). Används i kosmetika och kan göras av förnybara råvaror.",1.25),
+  P("flervard",["butan-1,4-diol","1,4-butandiol"],"butan-1,4-diol",()=>polyol(4,[0,3]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 4 (ytterkolen). Råvara för plast och lösningsmedel.",1.25),
   P("flervard",["propan-1,2,3-triol","1,2,3-propantriol","propantriol","glycerol","glycerin"],"propantriol / propan-1,2,3-triol (kallas glycerol)",()=>glycerol(),["C3H5(OH)3","C3H8O3"],"C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub>","OH på alla tre kolen. En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter.",1.25),
   // SYROR
   P("syra",["metansyra","myrsyra"],"metansyra (kallas myrsyra)",()=>syra(1),["HCOOH","CH2O2"],"HCOOH","Myror och brännässlor svider med den. Även konserveringsmedel i djurfoder."),
@@ -526,10 +526,10 @@ const POOL=[
   P("syra",["butansyra","smörsyra"],"butansyra (kallas smörsyra)",()=>syra(4),["C3H7COOH","C4H8O2"],"C<sub>3</sub>H<sub>7</sub>COOH","Luktar härsket smör och svettiga fötter. Finns bl.a. i parmesanost."),
   P("syra",["pentansyra","valeriansyra"],"pentansyra (kallas valeriansyra)",()=>syra(5),["C4H9COOH","C5H10O2"],"C<sub>4</sub>H<sub>9</sub>COOH","Luktar illa; finns i växten vänderot (valeriana)."),
   // GRENADE
-  P("grenat",["metylpropan","2-metylpropan","isobutan"],"metylpropan / 2-metylpropan (kallas isobutan)",()=>grenAlkan(3,2),["C4H10"],"C<sub>4</sub>H<sub>10</sub>","Grenad variant av butan; metylgrupp (–yl) på kol 2. Köldmedium och drivgas i sprayburkar."),
-  P("grenat",["metylbutan","2-metylbutan","isopentan"],"metylbutan / 2-metylbutan (kallas isopentan)",()=>grenAlkan(4,2),["C5H12"],"C<sub>5</sub>H<sub>12</sub>","Metylgren på kol 2. Jäsmedel (blåsmedel) vid tillverkning av frigolit."),
-  P("grenat",["metylpentan","2-metylpentan","isohexan"],"metylpentan / 2-metylpentan (kallas isohexan)",()=>grenAlkan(5,2),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 2 i en pentankedja. Finns i bensin."),
-  P("grenat",["metylpentan","3-metylpentan"],"metylpentan / 3-metylpentan",()=>grenAlkan(5,3),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 3 (mitten). Finns i bensin."),
+  P("grenat",["2-metylpropan","metylpropan","isobutan"],"2-metylpropan (kallas isobutan)",()=>grenAlkan(3,2),["C4H10"],"C<sub>4</sub>H<sub>10</sub>","Grenad variant av butan; metylgrupp (–yl) på kol 2. Köldmedium och drivgas i sprayburkar."),
+  P("grenat",["2-metylbutan","isopentan"],"2-metylbutan (kallas isopentan)",()=>grenAlkan(4,2),["C5H12"],"C<sub>5</sub>H<sub>12</sub>","Metylgren på kol 2. Jäsmedel (blåsmedel) vid tillverkning av frigolit."),
+  P("grenat",["2-metylpentan","isohexan"],"2-metylpentan (kallas isohexan)",()=>grenAlkan(5,2),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 2 i en pentankedja. Finns i bensin."),
+  P("grenat",["3-metylpentan"],"3-metylpentan",()=>grenAlkan(5,3),["C6H14"],"C<sub>6</sub>H<sub>14</sub>","Metylgren på kol 3 (mitten). Finns i bensin."),
   // ESTRAR
   P("ester",["metylmetanoat","metylformiat"],"metylmetanoat (metylformiat)",()=>esterBuild(1,1),["C2H4O2"],"HCOOCH<sub>3</sub>","En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin."),
   P("ester",["etyletanoat","etylacetat"],"etyletanoat (etylacetat)",()=>esterBuild(2,2),["C4H8O2"],"CH<sub>3</sub>COOC<sub>2</sub>H<sub>5</sub>","En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning. Doftar."),
@@ -552,17 +552,17 @@ const POOL=[
   P("alkohol",["heptanol"],"heptanol",()=>alkohol(7),["C7H15OH","C7H16O"],"C<sub>7</sub>H<sub>15</sub>OH","Alkohol med sju kol; doftämne."),
   P("alkohol",["oktanol"],"oktanol",()=>alkohol(8),["C8H17OH","C8H18O"],"C<sub>8</sub>H<sub>17</sub>OH","Alkohol med åtta kol; används i parfym och som lösningsmedel."),
   // FLER – FLERVÄRDA
-  P("flervard",["butandiol","butan-1,2-diol","1,2-butandiol"],"butandiol / butan-1,2-diol",()=>polyol(4,[0,1]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. Lösningsmedel och fuktbindare.",1.25),
-  P("flervard",["pentandiol","pentan-1,5-diol","1,5-pentandiol"],"pentandiol / pentan-1,5-diol",()=>polyol(5,[0,4]),["C5H10(OH)2","C5H12O2"],"C<sub>5</sub>H<sub>10</sub>(OH)<sub>2</sub>","OH på kol 1 och 5 (ytterkolen). Mjukgörare och plastråvara.",1.25),
-  P("flervard",["hexandiol","hexan-1,6-diol","1,6-hexandiol"],"hexandiol / hexan-1,6-diol",()=>polyol(6,[0,5]),["C6H12(OH)2","C6H14O2"],"C<sub>6</sub>H<sub>12</sub>(OH)<sub>2</sub>","OH på kol 1 och 6. Råvara för plast och lim.",1.25),
+  P("flervard",["butan-1,2-diol","1,2-butandiol"],"butan-1,2-diol",()=>polyol(4,[0,1]),["C4H8(OH)2","C4H10O2"],"C<sub>4</sub>H<sub>8</sub>(OH)<sub>2</sub>","OH på kol 1 och 2. Lösningsmedel och fuktbindare.",1.25),
+  P("flervard",["pentan-1,5-diol","1,5-pentandiol"],"pentan-1,5-diol",()=>polyol(5,[0,4]),["C5H10(OH)2","C5H12O2"],"C<sub>5</sub>H<sub>10</sub>(OH)<sub>2</sub>","OH på kol 1 och 5 (ytterkolen). Mjukgörare och plastråvara.",1.25),
+  P("flervard",["hexan-1,6-diol","1,6-hexandiol"],"hexan-1,6-diol",()=>polyol(6,[0,5]),["C6H12(OH)2","C6H14O2"],"C<sub>6</sub>H<sub>12</sub>(OH)<sub>2</sub>","OH på kol 1 och 6. Råvara för plast och lim.",1.25),
   // FLER – SYROR
   P("syra",["hexansyra","kapronsyra"],"hexansyra (kallas kapronsyra)",()=>syra(6),["C5H11COOH","C6H12O2"],"C<sub>5</sub>H<sub>11</sub>COOH","Luktar get; finns i getost."),
   P("syra",["heptansyra"],"heptansyra",()=>syra(7),["C6H13COOH","C7H14O2"],"C<sub>6</sub>H<sub>13</sub>COOH","En fettsyra med sju kol."),
   P("syra",["oktansyra","kaprylsyra"],"oktansyra (kallas kaprylsyra)",()=>syra(8),["C7H15COOH","C8H16O2"],"C<sub>7</sub>H<sub>15</sub>COOH","En fettsyra med åtta kol; finns i kokosolja."),
   // FLER – GRENADE
-  P("grenat",["metylhexan","2-metylhexan"],"metylhexan / 2-metylhexan",()=>grenAlkan(6,2),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 2 i en hexankedja. Finns i bensin."),
-  P("grenat",["metylhexan","3-metylhexan"],"metylhexan / 3-metylhexan",()=>grenAlkan(6,3),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 3. Finns i bensin."),
-  P("grenat",["metylheptan","2-metylheptan"],"metylheptan / 2-metylheptan",()=>grenAlkan(7,2),["C8H18"],"C<sub>8</sub>H<sub>18</sub>","Metylgren på kol 2 i en heptankedja."),
+  P("grenat",["2-metylhexan"],"2-metylhexan",()=>grenAlkan(6,2),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 2 i en hexankedja. Finns i bensin."),
+  P("grenat",["3-metylhexan"],"3-metylhexan",()=>grenAlkan(6,3),["C7H16"],"C<sub>7</sub>H<sub>16</sub>","Metylgren på kol 3. Finns i bensin."),
+  P("grenat",["2-metylheptan"],"2-metylheptan",()=>grenAlkan(7,2),["C8H18"],"C<sub>8</sub>H<sub>18</sub>","Metylgren på kol 2 i en heptankedja."),
   // FLER – ESTRAR
   P("ester",["metylpropanoat"],"metylpropanoat",()=>esterBuild(3,1),["C4H8O2"],"C<sub>2</sub>H<sub>5</sub>COOCH<sub>3</sub>","Ester av propansyra och metanol. Doftar."),
   P("ester",["etylpropanoat"],"etylpropanoat",()=>esterBuild(3,2),["C5H10O2"],"C<sub>2</sub>H<sub>5</sub>COOC<sub>2</sub>H<sub>5</sub>","Ester av propansyra och etanol. Fruktdoft."),
@@ -581,7 +581,7 @@ const RULES=`<strong>Så namnger man kolväten:</strong>
 <li><b>Flervärda alkoholer</b>: ändelsen <b>-diol</b>/<b>-triol</b> med positionssiffror för OH-grupperna: propan-1,2-diol, propan-1,2,3-triol (glycerol).</li>
 <li><b>Estrar</b>: alkoholdelen som <b>-yl</b> + syradelen som <b>-oat</b>: etanol + butansyra → etylbutanoat.</li>
 </ol>
-<p style="margin:.4rem 0 0"><b>Bra att veta:</b> i övningen räknas både formen <b>med</b> och <b>utan</b> siffra som rätt – t.ex. både <i>hexen</i> och <i>hex-1-en</i>. Du behöver alltså inte kunna positionssiffrorna; de visas ändå i facit så att du känner igen dem.</p>
+<p style="margin:.4rem 0 0"><b>Bra att veta:</b> när dubbel- eller trippelbindningen sitter mellan <b>första och andra kolet</b> räknas både formen med och utan siffra som rätt – t.ex. både <i>hexen</i> och <i>hex-1-en</i>. Sitter bindningen längre in i kedjan (t.ex. <i>but-2-en</i>) krävs siffran för att visa var den sitter. Samma sak för flervärda alkoholer, där siffrorna talar om var –OH-grupperna sitter. Facit skriver ut båda formerna när båda gäller.</p>
 <div class="src">Källor: kemilektioner.se och kemi.ugglansno.se (IUPAC-namngivning).</div>`;
 
 const OVERKURS=[
