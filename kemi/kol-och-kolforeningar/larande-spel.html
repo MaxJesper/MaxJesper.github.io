@@ -426,22 +426,31 @@ function tutFlervard(){
     `Rita ut resten av bindningarna så att varje kol får fyra.`,
     `Sätt väte (H) på alla lediga bindningar. Klart!`]};
 }
-function tutEster(){ // etyletanoat: syra + alkohol -> ester
+function tutEster(acidN, alcoholN, namn){ // syra (acidN kol) + alkohol (alcoholN kol) -> ester
   const A=[],B=[],idx=x=>A.indexOf(x);
-  const C0={el:"C",col:0,row:0,step:1},C1={el:"C",col:1,row:0,step:1};A.push(C0,C1);B.push({a:0,b:1,order:1,step:1});
-  const O1={el:"O",col:2,row:0,step:2};A.push(O1);B.push({a:1,b:idx(O1),order:1,step:2});
-  const C2={el:"C",col:3,row:0,step:2},C3={el:"C",col:4,row:0,step:2};A.push(C2,C3);
-  B.push({a:idx(O1),b:idx(C2),order:1,step:2});B.push({a:idx(C2),b:idx(C3),order:1,step:2});
-  const Oc={el:"O",col:1,row:-1,step:3};A.push(Oc);B.push({a:1,b:idx(Oc),order:2,step:3});
-  const addH=(ci,dirs,st)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy,step:st};A.push(h);B.push({a:idx(ci),b:idx(h),order:1,step:st});});
-  addH(C0,[[-1,0],[0,-1],[0,1]],4); addH(C2,[[0,-1],[0,1]],4); addH(C3,[[0,-1],[0,1],[1,0]],4);
+  for(let i=0;i<acidN;i++)A.push({el:"C",col:i,row:0,step:1});
+  for(let i=0;i<acidN-1;i++)B.push({a:i,b:i+1,order:1,step:1});
+  const cc=acidN-1;
+  const O1={el:"O",col:acidN,row:0,step:2};A.push(O1);B.push({a:cc,b:idx(O1),order:1,step:2});
+  const alc=[];
+  for(let j=0;j<alcoholN;j++){const c={el:"C",col:acidN+1+j,row:0,step:2};A.push(c);alc.push(c);}
+  B.push({a:idx(O1),b:idx(alc[0]),order:1,step:2});
+  for(let j=0;j<alcoholN-1;j++)B.push({a:idx(alc[j]),b:idx(alc[j+1]),order:1,step:2});
+  const Oc={el:"O",col:cc,row:-1,step:3};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2,step:3});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy,step:4};A.push(h);B.push({a:idx(ci),b:idx(h),order:1,step:4});});
+  for(let i=0;i<cc;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  if(acidN===1){ addH(A[cc],[[-1,0]]); }
+  for(let j=0;j<alcoholN;j++){const last=j===alcoholN-1; addH(alc[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
   return {g:{atoms:A,bonds:B}, captions:[
-    `Estern etyletanoat bildas av en syra och en alkohol. Rita först syrans kol (etansyrans två kol).`,
-    `Sätt syrans –O– och koppla på alkoholens kol (etanolens två kol) efter syret.`,
+    `Estern ${namn} bildas av en syra och en alkohol. Rita först syrans kol (${acidN===1?"ett kol":acidN+" kol"}).`,
+    `Sätt syrans –O– och koppla på alkoholens kol (${alcoholN===1?"ett kol":alcoholN+" kol"}) efter syret.`,
     `Sätt en dubbelbunden syreatom uppåt på syrans kol – nu finns estergruppen –C(=O)–O–.`,
     `Sätt väte (H) på alla lediga bindningar. Klart! (Vid förestringen avgick också en vattenmolekyl.)`]};
 }
 const STEM=["","met","et","prop","but","pent","hex","hept","okt"];
+const YL=["","metyl","etyl","propyl","butyl","pentyl","hexyl","heptyl","oktyl"];
+const OAT=["","metanoat","etanoat","propanoat","butanoat","pentanoat","hexanoat","heptanoat","oktanoat"];
+function esterNamn(acidN,alcoholN){return YL[alcoholN]+OAT[acidN];}
 function alkanNamn(n){return STEM[n]+"an";}
 function alkanolNamn(n){return STEM[n]+"anol";}
 function syraNamn(n){return STEM[n]+"ansyra";}
@@ -483,7 +492,7 @@ const TUTCATS=[
   {label:"Alkoholer", items:mkItems([1,2,3,4,5,6],alkanolNamn,(n)=>tutAlkohol(n,alkanolNamn(n)))},
   {label:"Organiska syror", items:mkItems([1,2,3,4,5,6],syraNamn,(n)=>tutSyra(n,syraNamn(n)))},
   {label:"Flervärda", items:[{namn:"etandiol",make:()=>tutDiol(2,[0,1],"etandiol (glykol)")},{namn:"propan-1,2,3-triol",make:()=>tutDiol(3,[0,1,2],"propan-1,2,3-triol (glycerol)")}]},
-  {label:"Estrar", items:[{namn:"etyletanoat",make:tutEster}]},
+  {label:"Estrar", items:[[1,1],[1,2],[2,2],[2,3],[2,4],[2,5],[2,8],[3,1],[3,2],[4,1],[4,2]].map(([a,al])=>({namn:esterNamn(a,al),make:()=>tutEster(a,al,esterNamn(a,al))}))},
 ];
 
 /* ===================== ÖVNINGSDATA ===================== */
