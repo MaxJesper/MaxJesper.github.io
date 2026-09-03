@@ -708,7 +708,7 @@ function checkFormel(){
 (function(){
   const elem=document.getElementById("formel-elem"), dig=document.getElementById("formel-dig"), grp=document.getElementById("formel-grp");
   ["C","H","O","N"].forEach(e=>{const b=document.createElement("button");b.textContent=e;b.onclick=()=>{if(!formelAnswered){formelStr+=e;renderBuilt();}};elem.appendChild(b);});
-  for(let n=1;n<=9;n++){const b=document.createElement("button");b.textContent=n;b.onclick=()=>{if(!formelAnswered){formelStr+=n;renderBuilt();}};dig.appendChild(b);}
+  for(let n=1;n<=10;n++){const d=n%10;const b=document.createElement("button");b.textContent=d;b.onclick=()=>{if(!formelAnswered){formelStr+=d;renderBuilt();}};dig.appendChild(b);}
   [["OH","OH"],["COOH","COOH"],["(",""],[")",""]].forEach(([lbl,val])=>{const b=document.createElement("button");b.className="grp";b.textContent=lbl;b.onclick=()=>{if(!formelAnswered){formelStr+=(val||lbl);renderBuilt();}};grp.appendChild(b);});
   const kc=document.getElementById("formel-kat");
   KATS.forEach(([k,lbl],i)=>{const b=document.createElement("button");b.className="chip"+(i===0?" active":"");b.dataset.k=k;b.textContent=lbl;
