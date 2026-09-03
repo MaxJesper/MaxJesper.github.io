@@ -120,6 +120,7 @@
       <div class="q-structure anim" id="namn-structure"></div>
       <input class="answer" id="namn-input" placeholder="Skriv namnet (stor/liten bokstav spelar ingen roll)…" autocomplete="off" />
       <div class="controls" style="margin-top:.7rem">
+        <button class="btn" id="namn-prev">Föregående</button>
         <button class="btn primary" id="namn-check">Rätta</button>
         <button class="btn" id="namn-next">Nästa</button>
       </div>
@@ -693,19 +694,37 @@ buildTutKat();buildTutLen();loadTutItem();
 
 /* ===================== NAMNGE ===================== */
 let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnKat="alkan";
-function nextNamn(){
-  if(namnQueue.length===0) namnQueue=shuffle(poolByKat(namnKat));
-  namnItem=namnQueue.pop(); namnAnswered=false;
+let namnHist=[], namnIdx=-1;
+function drawNamn(){
+  const e=namnHist[namnIdx]; namnItem=e.item;
   document.getElementById("namn-structure").innerHTML=renderSVG(namnItem.g(), namnItem.xs||1);
-  document.getElementById("namn-input").value="";
-  document.getElementById("namn-feedback").textContent="";
-  document.getElementById("namn-fact").textContent="";
-  document.getElementById("namn-input").focus();
+  const inp=document.getElementById("namn-input"), fb=document.getElementById("namn-feedback"), ft=document.getElementById("namn-fact");
+  inp.value=e.val||"";
+  if(e.done){
+    namnAnswered=true;
+    if(e.ok){fb.textContent="Rätt! ("+namnItem.visa+")";fb.className="feedback ok";}
+    else{fb.textContent="Fel. Rätt svar: "+namnItem.visa;fb.className="feedback no";}
+    ft.textContent=namnItem.fakta||"";
+  } else {
+    namnAnswered=false; fb.textContent=""; fb.className="feedback"; ft.textContent="";
+  }
+  document.getElementById("namn-prev").disabled=namnIdx<=0;
+  inp.focus();
 }
+function nextNamn(){
+  if(namnIdx<namnHist.length-1){ namnIdx++; drawNamn(); return; }
+  if(namnQueue.length===0) namnQueue=shuffle(poolByKat(namnKat));
+  namnHist.push({item:namnQueue.pop(),done:false,ok:false,val:""}); namnIdx=namnHist.length-1;
+  drawNamn();
+}
+function prevNamn(){ if(namnIdx>0){ namnIdx--; drawNamn(); } }
+function resetNamn(){ namnHist=[]; namnIdx=-1; namnQueue=[]; nextNamn(); }
 function checkNamn(){
   if(namnAnswered) return;
-  const val=document.getElementById("namn-input").value.trim().toLowerCase().replace(/\s/g,"");
+  const inp=document.getElementById("namn-input");
+  const val=inp.value.trim().toLowerCase().replace(/\s/g,"");
   if(!val) return;
+  const e=namnHist[namnIdx];
   namnAnswered=true; namnTotal++;
   const fb=document.getElementById("namn-feedback");
   const ok=namnItem.answers.some(a=>a.replace(/\s/g,"")===val);
@@ -713,16 +732,18 @@ function checkNamn(){
   else { fb.textContent="Fel. Rätt svar: "+namnItem.visa; fb.className="feedback no"; }
   if(namnItem.fakta) document.getElementById("namn-fact").textContent=namnItem.fakta;
   document.getElementById("namn-score").textContent="Rätt: "+namnRight+" / "+namnTotal;
+  e.done=true; e.ok=ok; e.val=inp.value;
 }
 document.getElementById("namn-check").onclick=checkNamn;
 document.getElementById("namn-next").onclick=nextNamn;
+document.getElementById("namn-prev").onclick=prevNamn;
 document.getElementById("namn-input").addEventListener("keydown",e=>{if(e.key==="Enter"){namnAnswered?nextNamn():checkNamn();}});
 document.getElementById("namn-rules").innerHTML=RULES;
 document.getElementById("namn-rules-btn").onclick=()=>{const r=document.getElementById("namn-rules");r.hidden=!r.hidden;};
 (function(){const c=document.getElementById("namn-kat");
   KATS.forEach(([k,lbl])=>{const b=document.createElement("button");b.className="chip"+(k===namnKat?" active":"");b.dataset.k=k;b.textContent=lbl;
-    b.onclick=()=>{namnKat=k;namnQueue=[];namnRight=0;namnTotal=0;document.getElementById("namn-score").textContent="Rätt: 0 / 0";
-      c.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));nextNamn();};
+    b.onclick=()=>{namnKat=k;namnRight=0;namnTotal=0;document.getElementById("namn-score").textContent="Rätt: 0 / 0";
+      c.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));resetNamn();};
     c.appendChild(b);});})();
 nextNamn();
 
