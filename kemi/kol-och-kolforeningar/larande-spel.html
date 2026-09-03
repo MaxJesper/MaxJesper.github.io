@@ -68,6 +68,19 @@
   .ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem}
   .ocard{border:1px solid #e6e2f5;border-radius:10px;padding:.7rem;background:#fff}
   .oname{text-align:center;font-weight:600;margin-top:.3rem}
+  .aa-principle{display:flex;flex-direction:column;align-items:center;gap:.5rem;background:var(--lila-ljus);border:1px solid var(--lila-kant);border-radius:12px;padding:1rem;margin-bottom:1.2rem}
+  .aa-principle .stage-mini svg{max-width:260px}
+  .aa-principle p{margin:0;font-size:.92rem;text-align:center;max-width:560px}
+  .aa-group-title{margin:1.3rem 0 .5rem;color:var(--lila-mork);font-size:1.05rem;border-bottom:2px solid var(--lila-kant);padding-bottom:.25rem}
+  .aa-group-desc{font-size:.88rem;color:#555;margin:0 0 .6rem}
+  .aa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:.6rem}
+  .aa-card{border:1px solid #e6e2f5;border-radius:10px;padding:.7rem;background:#fff}
+  .aa-card .ostage{min-height:130px}
+  .aa-card .ostage svg{max-height:170px}
+  .aa-name{text-align:center;font-weight:700;margin-top:.3rem}
+  .aa-codes{text-align:center;font-size:.82rem;color:#666;margin:.1rem 0 .3rem}
+  .aa-codes b{color:var(--lila-mork)}
+  .aa-fact{font-size:.8rem;color:#444;text-align:center}
 </style>
 </head>
 <body>
@@ -83,6 +96,7 @@
     <button class="tab" data-tab="namn">Namnge föreningen</button>
     <button class="tab" data-tab="formel">Bygg molekylformler</button>
     <button class="tab" data-tab="overkurs">Överkurs</button>
+    <button class="tab" data-tab="amino">Överkurs – Aminosyror</button>
   </div>
 
   <!-- TAB 1 -->
@@ -157,6 +171,40 @@
   <!-- TAB 4 -->
   <section id="tab-overkurs" hidden>
     <div class="card"><div style="font-size:.85rem;color:#666;margin-bottom:.2rem">Utöver grundkursen finns fler grupper av kolföreningar. Här är en kort presentation.</div><div id="ok-content"></div></div>
+  </section>
+
+  <!-- TAB 5 -->
+  <section id="tab-amino" hidden>
+    <div class="card">
+      <div class="chips" id="amino-subnav">
+        <button class="chip active" type="button" id="amino-nav-info">Alla 20 aminosyror</button>
+        <button class="chip" type="button" id="amino-nav-quiz">Träna namngivning</button>
+      </div>
+
+      <div id="amino-info">
+        <div class="aa-principle">
+          <div class="stage-mini" id="aa-principle-stage"></div>
+          <p><b>Alla 20 aminosyror har samma grundstruktur:</b> en aminogrupp (–NH<sub>2</sub>) till vänster, en karboxylgrupp (–COOH) till höger, och en sidokedja (R) nedåt från det mittersta kolet (alfa-kolet, C<sub>&alpha;</sub>). Det är R-gruppen som gör aminosyrorna olika och avgör deras egenskaper.</p>
+        </div>
+        <div id="aa-groups"></div>
+      </div>
+
+      <div id="amino-quiz" hidden>
+        <div class="rowflex" style="margin-bottom:.4rem">
+          <span class="score" id="amq-score" style="margin-left:auto">Rätt: 0 / 0</span>
+        </div>
+        <div class="rowflex" style="margin:.4rem 0 .6rem"><strong>Vilken aminosyra är detta?</strong></div>
+        <div class="q-structure" id="amq-structure"></div>
+        <input class="answer" id="amq-input" placeholder="Skriv namnet (t.ex. leucin)…" autocomplete="off" />
+        <div class="controls" style="margin-top:.7rem">
+          <button class="btn" id="amq-prev">Föregående</button>
+          <button class="btn primary" id="amq-check">Rätta</button>
+          <button class="btn" id="amq-next">Nästa</button>
+        </div>
+        <div class="feedback" id="amq-feedback"></div>
+        <div class="fact" id="amq-fact"></div>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -348,6 +396,285 @@ function dimetylperoxid(){
   addH(C0,[[-1,0],[0,-1],[0,1]]);addH(C1,[[1,0],[0,-1],[0,1]]);
   return {atoms:A,bonds:B};
 }
+/* ===================== AMINOSYROR (överkurs) ===================== */
+function aaBackbone(rBuilder){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  const N={el:"N",col:0,row:0},Ca={el:"C",col:1,row:0},C={el:"C",col:2,row:0};
+  A.push(N,Ca,C);B.push({a:0,b:1,order:1},{a:1,b:2,order:1});
+  const Oc={el:"O",col:2,row:-1};A.push(Oc);B.push({a:idx(C),b:idx(Oc),order:2});
+  const Oh={el:"O",col:3,row:0};A.push(Oh);B.push({a:idx(C),b:idx(Oh),order:1});
+  const Hh={el:"H",col:4,row:0};A.push(Hh);B.push({a:idx(Oh),b:idx(Hh),order:1});
+  const Nl={el:"H",col:-1,row:0};A.push(Nl);B.push({a:idx(N),b:idx(Nl),order:1});
+  const Nu={el:"H",col:0,row:-1};A.push(Nu);B.push({a:idx(N),b:idx(Nu),order:1});
+  const Cu={el:"H",col:1,row:-1};A.push(Cu);B.push({a:idx(Ca),b:idx(Cu),order:1});
+  rBuilder(A,B,idx,idx(Ca));
+  return {atoms:A,bonds:B};
+}
+const aaAddH=(A,B,idx,ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+const aaBond=(A,B,idx,a1,a2,order)=>B.push({a:idx(a1),b:idx(a2),order:order||1});
+function aaRing(A,B,idx,attachCarbon,cx,cy,radius,substituent){
+  const skip=substituent===undefined?[0]:Array.isArray(substituent)?substituent:[substituent];
+  const verts=[];
+  for(let k=0;k<6;k++){const ang=-90+k*60,r=ang*Math.PI/180;verts.push({el:skip.includes(k)?"C":"CH",col:cx+radius*Math.sin(r),row:cy-radius*Math.cos(r)});}
+  verts.forEach(v=>A.push(v));
+  for(let k=0;k<6;k++)aaBond(A,B,idx,verts[k],verts[(k+1)%6],(k%2===0)?2:1);
+  if(attachCarbon)aaBond(A,B,idx,attachCarbon,verts[0]);
+  return verts;
+}
+const AA=[];
+function defAA(kod3,kod1,namn,grupp,fakta,rBuilder,xs){ AA.push({kod3,kod1,namn,grupp,fakta,g:()=>aaBackbone(rBuilder),xs:xs||1}); }
+
+defAA("Gly","G","Glycin","Opolära (hydrofoba)","Minsta aminosyran (R = H). Mycket flexibel och finns ofta i tighta veck i proteiners struktur.",(A,B,idx,ca)=>{
+  const H={el:"H",col:1,row:1};A.push(H);aaBond(A,B,idx,A[ca],H);
+});
+defAA("Ala","A","Alanin","Opolära (hydrofoba)","Liten och opolär. En av de vanligaste aminosyrorna i proteiner.",(A,B,idx,ca)=>{
+  const C1={el:"C",col:1,row:1};A.push(C1);aaBond(A,B,idx,A[ca],C1);
+  aaAddH(A,B,idx,C1,[[-1,0],[1,0],[0,1]]);
+});
+defAA("Val","V","Valin","Opolära (hydrofoba)","Förgrenad och opolär. Finns ofta inuti proteinets kärna, bort från vatten.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0]]);
+  const Cg1={el:"C",col:0,row:2};A.push(Cg1);aaBond(A,B,idx,Cb,Cg1);
+  aaAddH(A,B,idx,Cg1,[[-1,0],[0,1],[-1,1]]);
+  const Cg2={el:"C",col:2,row:2};A.push(Cg2);aaBond(A,B,idx,Cb,Cg2);
+  aaAddH(A,B,idx,Cg2,[[1,0],[0,1],[1,1]]);
+});
+defAA("Leu","L","Leucin","Opolära (hydrofoba)","Förgrenad och opolär, en av de vanligaste aminosyrorna i muskelprotein.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  aaAddH(A,B,idx,Cg,[[1,0]]);
+  const Cd1={el:"C",col:0,row:3};A.push(Cd1);aaBond(A,B,idx,Cg,Cd1);
+  aaAddH(A,B,idx,Cd1,[[-1,0],[0,1],[-1,1]]);
+  const Cd2={el:"C",col:2,row:3};A.push(Cd2);aaBond(A,B,idx,Cg,Cd2);
+  aaAddH(A,B,idx,Cd2,[[1,0],[0,1],[1,1]]);
+});
+defAA("Ile","I","Isoleucin","Opolära (hydrofoba)","Förgrenad och opolär, nära släkt med leucin men med annan förgreningspunkt.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0]]);
+  const Cg1={el:"C",col:2,row:2};A.push(Cg1);aaBond(A,B,idx,Cb,Cg1);
+  aaAddH(A,B,idx,Cg1,[[1,0],[0,1],[1,1]]);
+  const Cg2={el:"C",col:0,row:2};A.push(Cg2);aaBond(A,B,idx,Cb,Cg2);
+  aaAddH(A,B,idx,Cg2,[[-1,0],[-1,1]]);
+  const Cd={el:"C",col:0,row:3};A.push(Cd);aaBond(A,B,idx,Cg2,Cd);
+  aaAddH(A,B,idx,Cd,[[1,0],[0,1],[-1,1]]);
+});
+defAA("Met","M","Metionin","Opolära (hydrofoba)","Innehåller svavel. Startaminosyran vid proteinsyntes – kodas av startkodonet AUG.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  aaAddH(A,B,idx,Cg,[[-1,0],[1,0]]);
+  const S={el:"S",col:1,row:3};A.push(S);aaBond(A,B,idx,Cg,S);
+  const Ce={el:"C",col:1,row:4};A.push(Ce);aaBond(A,B,idx,S,Ce);
+  aaAddH(A,B,idx,Ce,[[-1,0],[1,0],[0,1]]);
+});
+AA.push({kod3:"Pro",kod1:"P",namn:"Prolin",grupp:"Opolära (hydrofoba)",xs:1,
+  fakta:"Sidokedjan är bunden tillbaka till kväveatomen och bildar en ring. Gör proteinkedjan stel och skapar ofta veck.",
+  g:()=>{
+    const A=[],B=[],idx=x=>A.indexOf(x);
+    const N={el:"N",col:0,row:0},Ca={el:"C",col:1,row:0},C={el:"C",col:2,row:0};
+    A.push(N,Ca,C);aaBond(A,B,idx,N,Ca);aaBond(A,B,idx,Ca,C);
+    const Oc={el:"O",col:2,row:-1};A.push(Oc);aaBond(A,B,idx,C,Oc,2);
+    const Oh={el:"O",col:3,row:0};A.push(Oh);aaBond(A,B,idx,C,Oh);
+    const Hh={el:"H",col:4,row:0};A.push(Hh);aaBond(A,B,idx,Oh,Hh);
+    const Nh={el:"H",col:0,row:-1};A.push(Nh);aaBond(A,B,idx,N,Nh);
+    const Cu={el:"H",col:1,row:-1};A.push(Cu);aaBond(A,B,idx,Ca,Cu);
+    const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,Ca,Cb);
+    aaAddH(A,B,idx,Cb,[[1,0],[-1,0]]);
+    const Cg={el:"C",col:0.3,row:1.9};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+    aaAddH(A,B,idx,Cg,[[-1,0.2]]);
+    const Cd={el:"C",col:-0.7,row:1.1};A.push(Cd);aaBond(A,B,idx,Cg,Cd);aaBond(A,B,idx,Cd,N);
+    aaAddH(A,B,idx,Cd,[[-1,-0.2]]);
+    const HgExtra={el:"H",col:0.7,row:2.85};A.push(HgExtra);aaBond(A,B,idx,Cg,HgExtra);
+    const HdExtra={el:"H",col:-1.6,row:1.9};A.push(HdExtra);aaBond(A,B,idx,Cd,HdExtra);
+    return {atoms:A,bonds:B};
+  }});
+defAA("Phe","F","Fenylalanin","Opolära (hydrofoba)","Har en aromatisk bensenring. Opolär och stor.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  aaRing(A,B,idx,Cb,1,3.15,1.3,0);
+},1.3);
+defAA("Tyr","Y","Tyrosin","Polära (oladdade)","Aromatisk med en –OH-grupp på ringen. Kan fosforyleras, viktigt vid cellsignalering.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const verts=aaRing(A,B,idx,Cb,1,3.15,1.3,[0,3]);
+  const OH={el:"OH",col:verts[3].col,row:verts[3].row+0.75};A.push(OH);aaBond(A,B,idx,verts[3],OH);
+},1.3);
+defAA("Trp","W","Tryptofan","Opolära (hydrofoba)","Störst av alla aminosyror, med en dubbelring (indol). Kroppen bildar signalämnet serotonin från tryptofan.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const C3={el:"C",col:1,row:2.5};A.push(C3);aaBond(A,B,idx,Cb,C3);
+  const C2={el:"CH",col:-0.35,row:3.35};A.push(C2);aaBond(A,B,idx,C3,C2,2);
+  const N1={el:"N",col:0.15,row:4.65};A.push(N1);aaBond(A,B,idx,C2,N1);
+  const HN={el:"H",col:-0.35,row:5.55};A.push(HN);aaBond(A,B,idx,N1,HN);
+  const C7a={el:"C",col:1.75,row:4.65};A.push(C7a);aaBond(A,B,idx,N1,C7a);
+  const C3a={el:"C",col:2.25,row:3.35};A.push(C3a);aaBond(A,B,idx,C7a,C3a,2);aaBond(A,B,idx,C3a,C3);
+  const C4={el:"CH",col:4.05,row:3.15};A.push(C4);aaBond(A,B,idx,C3a,C4,1);
+  const C5={el:"CH",col:4.85,row:4.3};A.push(C5);aaBond(A,B,idx,C4,C5,2);
+  const C6={el:"CH",col:4.05,row:5.45};A.push(C6);aaBond(A,B,idx,C5,C6,1);
+  const C7={el:"CH",col:2.65,row:5.45};A.push(C7);aaBond(A,B,idx,C6,C7,2);aaBond(A,B,idx,C7,C7a,1);
+},0.9);
+defAA("Ser","S","Serin","Polära (oladdade)","Har en –OH-grupp, polär. Kan fosforyleras och ingå i enzymers aktiva säte.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const O={el:"O",col:1,row:2};A.push(O);aaBond(A,B,idx,Cb,O);
+  const H={el:"H",col:1,row:3};A.push(H);aaBond(A,B,idx,O,H);
+});
+defAA("Thr","T","Treonin","Polära (oladdade)","Har en –OH-grupp och en förgrening. Kan liksom serin fosforyleras.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0]]);
+  const O={el:"O",col:0,row:2};A.push(O);aaBond(A,B,idx,Cb,O);
+  const Ho={el:"H",col:-1,row:2};A.push(Ho);aaBond(A,B,idx,O,Ho);
+  const Cg={el:"C",col:2,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  aaAddH(A,B,idx,Cg,[[1,0],[0,1],[1,1]]);
+});
+defAA("Cys","C","Cystein","Polära (oladdade)","Innehåller svavel i en –SH-grupp (tiol). Två cystein kan bilda en disulfidbrygga (–S–S–) som håller ihop proteinets form.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const S={el:"S",col:1,row:2};A.push(S);aaBond(A,B,idx,Cb,S);
+  const H={el:"H",col:1,row:3};A.push(H);aaBond(A,B,idx,S,H);
+});
+defAA("Asn","N","Asparagin","Polära (oladdade)","Har en amidgrupp, polär men oladdad.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  const Oc={el:"O",col:0,row:2};A.push(Oc);aaBond(A,B,idx,Cg,Oc,2);
+  const N={el:"N",col:1,row:3};A.push(N);aaBond(A,B,idx,Cg,N);
+  aaAddH(A,B,idx,N,[[-1,0.3],[1,0.3]]);
+});
+defAA("Gln","Q","Glutamin","Polära (oladdade)","Som asparagin men med en extra CH₂ i kedjan. Vanlig i blodet, transporterar kväve mellan vävnader.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  aaAddH(A,B,idx,Cg,[[-1,0],[1,0]]);
+  const Cd={el:"C",col:1,row:3};A.push(Cd);aaBond(A,B,idx,Cg,Cd);
+  const Oc={el:"O",col:0,row:3};A.push(Oc);aaBond(A,B,idx,Cd,Oc,2);
+  const N={el:"N",col:1,row:4};A.push(N);aaBond(A,B,idx,Cd,N);
+  aaAddH(A,B,idx,N,[[-1,0.3],[1,0.3]]);
+});
+defAA("Asp","D","Asparaginsyra","Sura (negativt laddade)","Har en extra karboxylgrupp (–COOH) som är negativt laddad vid kroppens pH.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  const Oc={el:"O",col:0,row:2};A.push(Oc);aaBond(A,B,idx,Cg,Oc,2);
+  const Oh={el:"O",col:1,row:3};A.push(Oh);aaBond(A,B,idx,Cg,Oh);
+  const H={el:"H",col:1,row:4};A.push(H);aaBond(A,B,idx,Oh,H);
+});
+defAA("Glu","E","Glutaminsyra","Sura (negativt laddade)","Som asparaginsyra men en CH₂ längre. Glutamat (den laddade formen) är en viktig signalsubstans i hjärnan.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const Cg={el:"C",col:1,row:2};A.push(Cg);aaBond(A,B,idx,Cb,Cg);
+  aaAddH(A,B,idx,Cg,[[-1,0],[1,0]]);
+  const Cd={el:"C",col:1,row:3};A.push(Cd);aaBond(A,B,idx,Cg,Cd);
+  const Oc={el:"O",col:0,row:3};A.push(Oc);aaBond(A,B,idx,Cd,Oc,2);
+  const Oh={el:"O",col:1,row:4};A.push(Oh);aaBond(A,B,idx,Cd,Oh);
+  const H={el:"H",col:1,row:5};A.push(H);aaBond(A,B,idx,Oh,H);
+});
+defAA("Lys","K","Lysin","Basiska (positivt laddade)","Har en extra aminogrupp (–NH₂) i änden av en lång kedja, positivt laddad vid kroppens pH.",(A,B,idx,ca)=>{
+  let prev=A[ca],col=1,row=1;
+  for(let i=0;i<4;i++){const C={el:"C",col,row:row+i};A.push(C);aaBond(A,B,idx,prev,C);aaAddH(A,B,idx,C,[[-1,0],[1,0]]);prev=C;}
+  const N={el:"N",col:1,row:5};A.push(N);aaBond(A,B,idx,prev,N);
+  aaAddH(A,B,idx,N,[[-1,0.3],[1,0.3]]);
+});
+defAA("Arg","R","Arginin","Basiska (positivt laddade)","Har en guanidinogrupp i änden av kedjan, starkt positivt laddad. Vanlig i proteiner som binder DNA.",(A,B,idx,ca)=>{
+  let prev=A[ca],row=1;
+  for(let i=0;i<3;i++){const C={el:"C",col:1,row:row+i};A.push(C);aaBond(A,B,idx,prev,C);aaAddH(A,B,idx,C,[[-1,0],[1,0]]);prev=C;}
+  const Nd={el:"N",col:1,row:4};A.push(Nd);aaBond(A,B,idx,prev,Nd);
+  const Hd={el:"H",col:0,row:4};A.push(Hd);aaBond(A,B,idx,Nd,Hd);
+  const Cz={el:"C",col:1,row:5};A.push(Cz);aaBond(A,B,idx,Nd,Cz);
+  const Ne1={el:"N",col:0,row:5.7};A.push(Ne1);aaBond(A,B,idx,Cz,Ne1,2);
+  const He1={el:"H",col:-1,row:5.7};A.push(He1);aaBond(A,B,idx,Ne1,He1);
+  const Ne2={el:"N",col:2,row:5.7};A.push(Ne2);aaBond(A,B,idx,Cz,Ne2,1);
+  aaAddH(A,B,idx,Ne2,[[0.6,0.7],[1.2,0]]);
+});
+defAA("His","H","Histidin","Basiska (positivt laddade)","Har en imidazolring med två kväveatomer. Kan både ta upp och lämna ifrån sig protoner – viktig i många enzymers aktiva säte.",(A,B,idx,ca)=>{
+  const Cb={el:"C",col:1,row:1};A.push(Cb);aaBond(A,B,idx,A[ca],Cb);
+  aaAddH(A,B,idx,Cb,[[-1,0],[1,0]]);
+  const C4={el:"C",col:1,row:2.3};A.push(C4);aaBond(A,B,idx,Cb,C4);
+  const C5={el:"CH",col:-0.25,row:3.15};A.push(C5);aaBond(A,B,idx,C4,C5,2);
+  const N1={el:"N",col:0.2,row:4.4};A.push(N1);aaBond(A,B,idx,C5,N1);
+  const H1={el:"H",col:-0.35,row:5.2};A.push(H1);aaBond(A,B,idx,N1,H1);
+  const C2={el:"CH",col:1.55,row:4.4};A.push(C2);aaBond(A,B,idx,N1,C2);
+  const N3={el:"N",col:2,row:3.15};A.push(N3);aaBond(A,B,idx,C2,N3,2);aaBond(A,B,idx,N3,C4);
+},1.1);
+
+const AA_GRUPPER=[
+  ["Opolära (hydrofoba)","Vänder sig bort från vatten och samlas ofta inne i proteinets kärna. Sidokedjan innehåller mest kol och väte."],
+  ["Polära (oladdade)","Kan bilda vätebindningar med vatten men har ingen laddning. Sitter ofta på proteinets yta."],
+  ["Sura (negativt laddade)","Har en extra karboxylgrupp och är negativt laddade vid kroppens pH."],
+  ["Basiska (positivt laddade)","Har en extra kväveinnehållande grupp och är positivt laddade vid kroppens pH."],
+];
+
+/* ===================== AMINOSYROR – UI ===================== */
+(function(){
+  // principskiss: NH2 - Ca(H)(R) - COOH, R = generisk sidokedja
+  const princip=aaBackbone((A,B,idx,ca)=>{const R={el:"R",col:1,row:1};A.push(R);aaBond(A,B,idx,A[ca],R);});
+  document.getElementById("aa-principle-stage").innerHTML=renderSVG(princip,1.15);
+
+  // informationssida, grupperad
+  let h="";
+  AA_GRUPPER.forEach(([grupp,beskr])=>{
+    h+=`<h3 class="aa-group-title">${grupp}</h3><p class="aa-group-desc">${beskr}</p><div class="aa-grid">`;
+    AA.filter(a=>a.grupp===grupp).forEach(a=>{
+      const g=a.g();
+      h+=`<div class="aa-card"><div class="ostage">${renderSVG(g,a.xs||1)}</div><div class="aa-name">${a.namn}</div><div class="aa-codes"><b>${a.kod3}</b> · ${a.kod1}</div><div class="aa-fact">${a.fakta}</div></div>`;
+    });
+    h+=`</div>`;
+  });
+  document.getElementById("aa-groups").innerHTML=h;
+
+  // subnav (info / quiz)
+  const navInfo=document.getElementById("amino-nav-info"), navQuiz=document.getElementById("amino-nav-quiz");
+  const secInfo=document.getElementById("amino-info"), secQuiz=document.getElementById("amino-quiz");
+  navInfo.onclick=()=>{navInfo.classList.add("active");navQuiz.classList.remove("active");secInfo.hidden=false;secQuiz.hidden=true;};
+  navQuiz.onclick=()=>{navQuiz.classList.add("active");navInfo.classList.remove("active");secQuiz.hidden=false;secInfo.hidden=true;};
+
+  // namngivningsträning
+  let amqItem=null, amqRight=0, amqTotal=0, amqAnswered=false, amqQueue=[], amqHist=[], amqIdx=-1;
+  function amqDraw(){
+    const e=amqHist[amqIdx]; amqItem=e.item;
+    document.getElementById("amq-structure").innerHTML=renderSVG(amqItem.g(),amqItem.xs||1);
+    const inp=document.getElementById("amq-input"), fb=document.getElementById("amq-feedback"), ft=document.getElementById("amq-fact");
+    inp.value=e.val||"";
+    if(e.done){
+      amqAnswered=true;
+      if(e.ok){fb.textContent="Rätt! ("+amqItem.namn+")";fb.className="feedback ok";}
+      else{fb.textContent="Fel. Rätt svar: "+amqItem.namn+" ("+amqItem.kod3+" / "+amqItem.kod1+")";fb.className="feedback no";}
+      ft.textContent=amqItem.fakta||"";
+    } else { amqAnswered=false; fb.textContent=""; fb.className="feedback"; ft.textContent=""; }
+    document.getElementById("amq-prev").disabled=amqIdx<=0;
+    inp.focus();
+  }
+  function amqNext(){
+    if(amqIdx<amqHist.length-1){amqIdx++;amqDraw();return;}
+    if(amqQueue.length===0) amqQueue=shuffle(AA.slice());
+    amqHist.push({item:amqQueue.pop(),done:false,ok:false,val:""}); amqIdx=amqHist.length-1;
+    amqDraw();
+  }
+  function amqPrev(){ if(amqIdx>0){amqIdx--;amqDraw();} }
+  function amqCheck(){
+    if(amqAnswered) return;
+    const inp=document.getElementById("amq-input");
+    const val=inp.value.trim().toLowerCase().replace(/\s/g,"");
+    if(!val) return;
+    const e=amqHist[amqIdx];
+    amqAnswered=true; amqTotal++;
+    const fb=document.getElementById("amq-feedback");
+    const ok = val===amqItem.namn.toLowerCase() || val===amqItem.kod3.toLowerCase();
+    if(ok){ amqRight++; fb.textContent="Rätt! ("+amqItem.namn+")"; fb.className="feedback ok"; }
+    else { fb.textContent="Fel. Rätt svar: "+amqItem.namn+" ("+amqItem.kod3+" / "+amqItem.kod1+")"; fb.className="feedback no"; }
+    if(amqItem.fakta) document.getElementById("amq-fact").textContent=amqItem.fakta;
+    document.getElementById("amq-score").textContent="Rätt: "+amqRight+" / "+amqTotal;
+    e.done=true; e.ok=ok; e.val=inp.value;
+  }
+  document.getElementById("amq-check").onclick=amqCheck;
+  document.getElementById("amq-next").onclick=amqNext;
+  document.getElementById("amq-prev").onclick=amqPrev;
+  document.getElementById("amq-input").addEventListener("keydown",e=>{if(e.key==="Enter"){amqAnswered?amqNext():amqCheck();}});
+  amqNext();
+})();
+
+
 /* ===================== TUTORIALS ===================== */
 function tutAlkohol(n,namn){
   const A=[],B=[],idx=x=>A.indexOf(x);
@@ -629,12 +956,16 @@ const OVERKURS_EX=[
  {namn:"dimetylperoxid", g:()=>dimetylperoxid(), fakta:"En enkel organisk peroxid – reaktiv."},
 ];
 /* ===================== FLIKAR ===================== */
-document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
-  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-  t.classList.add("active");
-  const id=t.dataset.tab;
-  ["rita","namn","formel","overkurs"].forEach(k=>document.getElementById("tab-"+k).hidden=(k!==id));
-}));
+function visaFlik(id){
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===id));
+  ["rita","namn","formel","overkurs","amino"].forEach(k=>document.getElementById("tab-"+k).hidden=(k!==id));
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>visaFlik(t.dataset.tab)));
+// Tillåt direktlänkning till en flik, t.ex. larande-spel.html#amino
+(function(){
+  const startId=(location.hash||"").replace("#","");
+  if(["rita","namn","formel","overkurs","amino"].includes(startId)) visaFlik(startId);
+})();
 function shuffle(a){return a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
 function poolByKat(kat){return kat==="alla"?POOL.slice():POOL.filter(p=>p.kat===kat);}
