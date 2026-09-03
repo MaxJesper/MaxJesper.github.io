@@ -136,6 +136,7 @@
       fram += `<p class="rk-hint">Vänd kortet för en förklaring.</p>`;
     } else {
       fram += `<div class="rk-fraga">${escapeHtml(k.fraga)}</div>`;
+      fram += `<div class="rk-rad"><div class="rk-etikett">Dessa formler behöver du för uppgiften</div>${formelBlock(k.formel)}</div>`;
       fram += `<p class="rk-hint">Försök själv först – vänd sedan för uträkning och svar.</p>`;
     }
     el("fram").innerHTML = fram;
