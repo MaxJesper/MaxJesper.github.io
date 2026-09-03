@@ -641,10 +641,12 @@ function poolByKat(kat){return kat==="alla"?POOL.slice():POOL.filter(p=>p.kat===
 /* ===================== TUTORIAL ===================== */
 let curTut=null, curStep=0, maxStep=1, playing=false, playTimer=null, tutName="", facit=false;
 const stage=document.getElementById("tut-stage");
-let tutKat=TUTCATS[0], tutItemIdx=0;
+const TUTMIX={label:"Blanda allt", items:[].concat(...TUTCATS.map(c=>c.items))};
+const TUTGROUPS=[TUTMIX, ...TUTCATS];
+let tutKat=TUTCATS[0], tutItemIdx=0;   // start på Alkaner (eleverna väljer Blanda allt själva senare)
 function tutBase(){return tutName.replace(/\s*\([^)]*\)/,"");}
 function buildTutKat(){const c=document.getElementById("tut-kat");c.innerHTML="";
-  TUTCATS.forEach(cat=>{const b=document.createElement("button");b.className="chip"+(cat===tutKat?" active":"");b.textContent=cat.label;
+  TUTGROUPS.forEach(cat=>{const b=document.createElement("button");b.className="chip"+(cat===tutKat?" active":"");b.textContent=cat.label;
     b.onclick=()=>{tutKat=cat;tutItemIdx=0;buildTutKat();buildTutLen();loadTutItem();};c.appendChild(b);});}
 function buildTutLen(){const c=document.getElementById("tut-len");c.innerHTML="";
   tutKat.items.forEach((it,i)=>{const b=document.createElement("button");b.className="chip"+(i===tutItemIdx?" active":"");b.textContent=cap(it.namn);
@@ -690,7 +692,7 @@ document.getElementById("tut-play").onclick=function(){
 buildTutKat();buildTutLen();loadTutItem();
 
 /* ===================== NAMNGE ===================== */
-let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnKat="alla";
+let namnItem=null, namnRight=0, namnTotal=0, namnAnswered=false, namnQueue=[], namnKat="alkan";
 function nextNamn(){
   if(namnQueue.length===0) namnQueue=shuffle(poolByKat(namnKat));
   namnItem=namnQueue.pop(); namnAnswered=false;
@@ -718,14 +720,14 @@ document.getElementById("namn-input").addEventListener("keydown",e=>{if(e.key===
 document.getElementById("namn-rules").innerHTML=RULES;
 document.getElementById("namn-rules-btn").onclick=()=>{const r=document.getElementById("namn-rules");r.hidden=!r.hidden;};
 (function(){const c=document.getElementById("namn-kat");
-  KATS.forEach(([k,lbl],i)=>{const b=document.createElement("button");b.className="chip"+(i===0?" active":"");b.dataset.k=k;b.textContent=lbl;
+  KATS.forEach(([k,lbl])=>{const b=document.createElement("button");b.className="chip"+(k===namnKat?" active":"");b.dataset.k=k;b.textContent=lbl;
     b.onclick=()=>{namnKat=k;namnQueue=[];namnRight=0;namnTotal=0;document.getElementById("namn-score").textContent="Rätt: 0 / 0";
       c.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));nextNamn();};
     c.appendChild(b);});})();
 nextNamn();
 
 /* ===================== BYGG FORMEL ===================== */
-let formelItem=null, formelStr="", formelRight=0, formelTotal=0, formelAnswered=false, formelQueue=[], formelKat="alla";
+let formelItem=null, formelStr="", formelRight=0, formelTotal=0, formelAnswered=false, formelQueue=[], formelKat="alkan";
 function normF(s){return s.replace(/\s/g,"").toUpperCase();}
 function subscriptify(s){return s.replace(/(\d+)/g,'<sub>$1</sub>');}
 function renderBuilt(){document.getElementById("formel-built").innerHTML=subscriptify(formelStr||"")+'<span class="cursor">|</span>';}
@@ -755,7 +757,7 @@ function checkFormel(){
   for(let n=1;n<=10;n++){const d=n%10;const b=document.createElement("button");b.textContent=d;b.onclick=()=>{if(!formelAnswered){formelStr+=d;renderBuilt();}};dig.appendChild(b);}
   [["OH","OH"],["COOH","COOH"],["(",""],[")",""]].forEach(([lbl,val])=>{const b=document.createElement("button");b.className="grp";b.textContent=lbl;b.onclick=()=>{if(!formelAnswered){formelStr+=(val||lbl);renderBuilt();}};grp.appendChild(b);});
   const kc=document.getElementById("formel-kat");
-  KATS.forEach(([k,lbl],i)=>{const b=document.createElement("button");b.className="chip"+(i===0?" active":"");b.dataset.k=k;b.textContent=lbl;
+  KATS.forEach(([k,lbl])=>{const b=document.createElement("button");b.className="chip"+(k===formelKat?" active":"");b.dataset.k=k;b.textContent=lbl;
     b.onclick=()=>{formelKat=k;formelQueue=[];formelRight=0;formelTotal=0;document.getElementById("formel-score").textContent="Rätt: 0 / 0";
       kc.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x.dataset.k===k));nextFormel();};
     kc.appendChild(b);});
