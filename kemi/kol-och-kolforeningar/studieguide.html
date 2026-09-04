@@ -59,7 +59,7 @@
       background: #f5f3ff; border-left: 4px solid #6d28d9; border-radius: 6px;
       padding: 0.75rem 0.95rem; margin: 0.9rem 0; font-size: 0.98rem;
     }
-    .fact-box strong {
+    .fact-box > strong:first-child {
       display: block; margin-bottom: 0.25rem; font-size: 0.8rem;
       letter-spacing: 1px; text-transform: uppercase; color: #6d28d9;
     }
@@ -164,6 +164,10 @@
         <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"><span class="mol-name">Metan</span></div></div><figcaption>Metan (CH₄): en kolatom som binder fyra väteatomer – den enklaste kolföreningen.</figcaption></figure>
         <p>Förutom kol innehåller kolföreningarna ofta <strong class="term">väte</strong>, och dessutom kan syre, kväve och andra grundämnen ingå. Vilken grupp en kolförening tillhör beror på vilka grundämnen den innehåller och hur atomerna sitter ihop.</p>
         <div class="fact-box">
+          <strong>Kom ihåg – antal bindningar</strong>
+          Varje grundämne har ett bestämt antal "armar" (bindningar) det alltid använder i en kolförening: <strong class="term">kol</strong> har fyra, <strong class="term">kväve</strong> har tre, <strong class="term">syre</strong> har två och <strong class="term">väte</strong> har en. Kom ihåg detta – det förklarar varför en OH-grupp, en aminogrupp eller en dubbelbindning bara kan sitta på vissa ställen i molekylerna du möter längre fram.
+        </div>
+        <div class="fact-box">
           <strong>Sammanfattning</strong>
           Organisk kemi är kolföreningarnas kemi. Kolatomen kan bilda fyra bindningar och kan därför kopplas ihop till kedjor, grenar och ringar – det är förklaringen till att det finns miljontals kolföreningar. En strukturformel visar hur atomerna binder till varandra.
         </div>
@@ -195,6 +199,10 @@
         <details class="deepen">
           <summary>Tekniskt kol och aktivt kol</summary>
           <p>Om man hettar upp organiskt material utan lufttillförsel (så kallad <strong>torrdestillation</strong>) blir kol kvar som återstod. Träkol framställs så. Hettar man i stället upp finmalet kol i vattenånga får man <strong>aktivt kol</strong>, som är extremt poröst och har enorm yta. Tack vare den stora ytan kan aktivt kol suga åt sig färg-, lukt- och smakämnen – och till och med giftiga ämnen i magen. Därför finns aktivt kol i köksfläktfilter, i gasmasker och som medicin vid förgiftningar.</p>
+        </details>
+        <details class="deepen">
+          <summary>Nanorör och grafen – framtidens material?</summary>
+          <p>Rullar man ihop ett enda lager av grafit – bara en atom tjockt – får man <strong>grafen</strong>. Ett sådant enskilt lager av kolatomer i ett sexkantigt mönster upptäcktes vara både mycket starkt och en utmärkt ledare av el och värme; upptäckten belönades med Nobelpriset i fysik 2010.<a class="cite" href="#ref-4">[4]</a> Rullar man i stället ihop grafenlagret till ett rör får man ett <strong>nanorör</strong>: extremt tunna, ihåliga rör där väggen bara är en atom tjock. Kolnanorör är starkare än diamant och samtidigt betydligt lättare än stål – till och med lättare än bomull.<a class="cite" href="#ref-5">[5]</a> Forskare undersöker hur nanorör och grafen kan användas i allt från lättare sportutrustning och byggmaterial till snabbare elektronik.</p>
         </details>
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
@@ -300,6 +308,11 @@
           <summary>Teknisk sprit – därför luktar T-sprit illa</summary>
           <p>Den etanol som säljs för tekniskt bruk, till exempel <strong>T-sprit</strong> (T-röd och T-blå), är <strong>denaturerad</strong>. Det betyder att man har tillsatt små mängder giftiga och illasmakande ämnen – bland annat metanol – just för att spriten inte ska kunna drickas. Denaturerad etanol används som bränsle, rengöringsmedel, frostskydd och lösningsmedel.</p>
         </details>
+        <details class="deepen">
+          <summary>Varför är metanol så farligt?</summary>
+          <p>Både etanol och metanol bryts ner av samma enzym i levern, men till helt olika ämnen. Etanol bryts ner till acetaldehyd och sedan vidare till ättiksyra – ett ämne kroppen känns igen och kan göra sig av med. Metanol bryts i stället ner till <strong>formaldehyd</strong> och därefter till <strong>myrsyra</strong>, som kroppen inte kan bryta ner på samma sätt. Myrsyran hopar sig i blodet och gör det surare (<strong>acidos</strong>), vilket framför allt skadar synnerven – redan någon enstaka centiliter ren metanol kan ge bestående synskador eller blindhet.<a class="cite" href="#ref-6">[6]</a></p>
+          <p>Eftersom etanol och metanol konkurrerar om samma nedbrytande enzym kan etanol faktiskt användas som motgift vid metanolförgiftning: så länge levern är upptagen med att bryta ner etanol hinner metanolen lämna kroppen innan den omvandlas till de farliga ämnena.<a class="cite" href="#ref-6">[6]</a></p>
+        </details>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
           En alkohol är ett kolväte där en väteatom bytts mot en OH-grupp (hydroxylgrupp). Alkoholer namnges med ändelsen -ol: metanol (CH₃OH) och etanol (C₂H₅OH). Etanol finns i sprit; metanol är mycket giftig.
@@ -335,7 +348,7 @@
       <summary><span class="m-num">Milstolpe 7</span><span class="m-title">Organiska syror</span></summary>
       <div class="m-body">
         <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
-        <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
+        <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Myrsyra används också för att konservera foder (ensilage), eftersom den sura miljön hindrar skadliga bakterier från att växa till. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
         <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" alt="Strukturformel för Metansyra (myrsyra)"><span class="mol-name">Metansyra (myrsyra)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Etansyra (ättiksyra)"><span class="mol-name">Etansyra (ättiksyra)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" alt="Strukturformel för Butansyra (smörsyra)"><span class="mol-name">Butansyra (smörsyra)</span></div></div><figcaption>Tre organiska syror. Alla bär samma karboxylgrupp (–COOH) längst till höger; det som skiljer dem är kolkedjans längd.</figcaption></figure>
         <p>Organiska syror finns i mängder av livsmedel: citronsyra i citrusfrukter, mjölksyra i filmjölk och i trötta muskler, äppelsyra i frukt. De är oftast svaga syror, men i koncentrerad form kan de ändå vara frätande.</p>
         <p>Det finns ett fint samband mellan alkoholerna och syrorna: en organisk syra kan bildas när en <strong class="term">alkohol oxideras</strong> (reagerar med syre). Det är just därför ett glas vin som får stå framme till slut smakar surt – etanolen oxideras långsamt till ättiksyra. Sambandet syns också i namnen: etan<em>ol</em> och etan<em>syra</em> (ättiksyra) bygger båda på kolvätet etan.</p>
@@ -409,6 +422,9 @@
         <li id="ref-1">Nationalencyklopedin. <em>Organisk kemi, kolväten, alkoholer, karboxylsyror, estrar, aminosyror, diamant, grafit, fulleren.</em> <a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a></li>
         <li id="ref-2">Kungl. Vetenskapsakademien. <em>Nobelpriset i kemi 1996: Curl, Kroto &amp; Smalley</em> (upptäckten av fullerener). <a href="https://www.nobelprize.org/prizes/chemistry/1996/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
         <li id="ref-3">Kokpunkter för alkaner: CRC Handbook of Chemistry and Physics (standardvärden vid normalt lufttryck).</li>
+        <li id="ref-4">Kungl. Vetenskapsakademien. <em>Nobelpriset i fysik 2010: Geim &amp; Novoselov</em> (upptäckten av grafen). <a href="https://www.nobelprize.org/prizes/physics/2010/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-5">Forskning.se. <em>Kolnanorör – det nya svarta.</em> <a href="https://forskning.se/2022/01/17/kolnanoror-det-nya-svarta/" target="_blank" rel="noopener">forskning.se</a></li>
+        <li id="ref-6">Giftinformationscentralen. <em>Metanol – nedbrytning, symtom och behandling.</em> <a href="https://giftinformation.se/lakare/substanser/metanol/" target="_blank" rel="noopener">giftinformation.se</a></li>
       </ol>
       <p style="font-size:0.82rem;color:#777;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats.</p>
     </section>
