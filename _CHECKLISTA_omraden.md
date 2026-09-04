@@ -44,7 +44,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | kemi/atomer | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
-| kemi/kol-och-kolforeningar | 2/13 | 1/5 | 0/10 | ✗ | ✗ |
+| kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
 | kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/separationsprocesser | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
@@ -60,7 +60,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ### Nya grunder byggda (behöver kompletteras)
 
-- **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar), begrepp (28), index klara. Återstår: checklista, instuderingsfrågor, övningsprov+facit, begreppslista, begreppskort, print-sidor, lärande spel; översättningar. Källa: TEFY (uppladdad PDF).
+- **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar, uppdaterad med valensregel/nanorör-grafen/metanolförgiftning), begrepp (28), index (med översiktsbilder), lärande spel, checklista, instuderingsfrågor (+print elev/lärare), övningsprov+facit (+print), begreppslista klara. Återstår: begreppskort (görs ev. via lärande-spelet istället för egen sida, se mönster i CLAUDE.md), översättningar. Källa: TEFY + Gleerups + Enkel Kemi (uppladdade PDF:er).
 
 - **liv-och-cellen:** komplett struktur klar. Filmerna inlagda (komprimerade 250x + 400x i `film/`). Återstår: översättningar (`begrepp.<språk>.json`) + toffeldjursbild (`images/biologi/liv-och-cellen/toffeldjur.jpg`).
 
