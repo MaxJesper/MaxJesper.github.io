@@ -28,6 +28,8 @@
   .stage svg{max-width:100%;height:auto}
   svg line{stroke:var(--ink);stroke-width:1.25;stroke-linecap:round}
   svg text{fill:var(--ink);font-family:Arial,sans-serif}
+  svg line.rg-bond{stroke:#1450d6}
+  svg text.rg-atom{fill:#1450d6;font-weight:700}
   .anim [data-step]{transition:opacity .45s ease}
   .caption{background:var(--lila-ljus);border-left:4px solid var(--lila);border-radius:8px;padding:.7rem .9rem;margin:.9rem 0;min-height:2.6rem}
   .caption .stepno{font-size:.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--lila);font-weight:700;display:block;margin-bottom:.15rem}
@@ -224,9 +226,13 @@ function renderSVG(g, xscale=1){
     const trim=b.gap!==undefined?b.gap:G;
     x1+=ux*trim;y1+=uy*trim;x2-=ux*trim;y2-=uy*trim;
     const px=-uy,py=ux, offs=b.order===1?[0]:b.order===2?[-3.5,3.5]:[-6,0,6];
-    offs.forEach(o=>els.push(`<line x1="${(x1+px*o).toFixed(1)}" y1="${(y1+py*o).toFixed(1)}" x2="${(x2+px*o).toFixed(1)}" y2="${(y2+py*o).toFixed(1)}" data-step="${b.step||1}"/>`));
+    const cls=b.rg?' class="rg-bond"':'';
+    offs.forEach(o=>els.push(`<line x1="${(x1+px*o).toFixed(1)}" y1="${(y1+py*o).toFixed(1)}" x2="${(x2+px*o).toFixed(1)}" y2="${(y2+py*o).toFixed(1)}"${cls} data-step="${b.step||1}"/>`));
   });
-  g.atoms.forEach(a=>els.push(`<text x="${X(a).toFixed(1)}" y="${Y(a).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="${FS}" data-step="${a.step||1}">${a.el}</text>`));
+  g.atoms.forEach(a=>{
+    const cls=a.rg?' class="rg-atom"':'';
+    els.push(`<text x="${X(a).toFixed(1)}" y="${Y(a).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="${FS}"${cls} data-step="${a.step||1}">${a.el}</text>`);
+  });
   const W=(maxC-minC)*SX+2*PAD, H=(maxR-minR)*SY+2*PAD;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W.toFixed(1)} ${H.toFixed(1)}" width="${W.toFixed(1)}" height="${H.toFixed(1)}">${els.join("")}</svg>`;
 }
@@ -408,7 +414,10 @@ function aaBackbone(rBuilder){
   const Nl={el:"H",col:-1,row:0};A.push(Nl);B.push({a:idx(N),b:idx(Nl),order:1});
   const Nu={el:"H",col:0,row:-1};A.push(Nu);B.push({a:idx(N),b:idx(Nu),order:1});
   const Cu={el:"H",col:1,row:-1};A.push(Cu);B.push({a:idx(Ca),b:idx(Cu),order:1});
+  const backboneCount=A.length; // allt rBuilder lagger till harefter racknas som den unika R-gruppen
   rBuilder(A,B,idx,idx(Ca));
+  for(let i=backboneCount;i<A.length;i++) A[i].rg=true;
+  B.forEach(b=>{ if(A[b.a].rg||A[b.b].rg) b.rg=true; });
   return {atoms:A,bonds:B};
 }
 const aaAddH=(A,B,idx,ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
