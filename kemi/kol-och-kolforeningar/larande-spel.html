@@ -963,14 +963,14 @@ const RULES=`<strong>Så namnger man kolväten:</strong>
 
 const OVERKURS=[
  {grupp:"Etrar", kann:"Två kolkedjor bundna till samma syreatom (R–O–R).", ex:"dimetyleter", g:()=>eterBuild(1,1), fakta:"Etrar är flyktiga och luktar starkt. Dietyleter användes förr som narkosmedel och är i dag ett lösningsmedel."},
- {grupp:"Aldehyder", kann:"En –CHO-grupp i änden: ett kol med dubbelbindning till syre och ett väte.", ex:"metanal (formaldehyd)", g:()=>aldehyd(1), fakta:"Metanal (formaldehyd) finns i konserveringsvätska och lim. Aldehyder bildas när alkoholer oxideras."},
+ {grupp:"Aldehyder", kann:"En –CHO-grupp i änden: ett kol med dubbelbindning till syre och ett väte.", ex:"etanal (acetaldehyd)", g:()=>aldehyd(2), fakta:"Etanal (acetaldehyd) bildas i levern när kroppen bryter ner alkohol – ämnet ger baksmälla. Aldehyder bildas när alkoholer oxideras."},
  {grupp:"Ketoner", kann:"En C=O mitt inne i kolkedjan (R–CO–R).", ex:"propanon (aceton)", g:()=>keton(1,1), fakta:"Propanon (aceton) är ett vanligt lösningsmedel, t.ex. i nagellacksborttagning."},
  {grupp:"Aminer", kann:"En kvävegrupp –NH₂ på kedjan (R–NH₂).", ex:"metylamin", g:()=>amin(1), fakta:"Aminer luktar ofta fisk eller ammoniak. De är släkt med aminosyrorna som bygger proteiner."},
  {grupp:"Peroxider", kann:"Två syreatomer bundna direkt till varandra (–O–O–).", ex:"väteperoxid", g:()=>veteperoxid(), fakta:"Väteperoxid (H₂O₂) bleker hår och desinficerar sår. Peroxider är reaktiva."},
 ];
 const OVERKURS_EX=[
  {namn:"dietyleter", g:()=>eterBuild(2,2), fakta:"”Eter” – förr narkosmedel, nu lösningsmedel."},
- {namn:"etanal (acetaldehyd)", g:()=>aldehyd(2), fakta:"Bildas när kroppen bryter ner alkohol – ger baksmälla."},
+ {namn:"metanal (formaldehyd)", g:()=>aldehyd(1), fakta:"Finns i konserveringsvätska och lim."},
  {namn:"propanal", g:()=>aldehyd(3), fakta:"En aldehyd med tre kol."},
  {namn:"butanon", g:()=>keton(1,2), fakta:"Ett starkt lösningsmedel (MEK) i lim och lack."},
  {namn:"etylamin", g:()=>amin(2), fakta:"En amin med fiskliknande lukt."},
