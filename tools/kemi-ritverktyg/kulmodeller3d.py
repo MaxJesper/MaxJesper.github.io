@@ -168,6 +168,33 @@ i samma mapp.
     deltaY som motsvarar "dra isar" i webblasarens ctrl+wheel-emulering av
     pekplatte-nyp - den kan skilja mellan plattformar/webblasare.
 
+    REGRESSION upptackt sep 2026 (samma vecka som "rattningen" ovan):
+    Jesper rapporterar att riktningen ANDA ar bakvand pa hans RIKTIGA
+    styrplatta (isarnypta fingrar FORMINSKAR, ihopnypta FORSTORAR - fel
+    hall). Koden i studieguide.html har fortfarande `factor = 1 +
+    clamped*sensitivity` fran "rattningen" har ovan. Slutsats: den
+    syntetiska Playwright-verifieringen (WheelEvent{deltaY:-20,
+    ctrlKey:true}) FORUTSAG INTE korrekt vad som hander pa riktig
+    maskinvara - webblasarens faktiska deltaY-tecken for ett
+    tva-fingers-isardrag pa en fysisk styrplatta foljde tydligen INTE
+    samma tecken som det syntetiska testet antog. TROLIG FIX: byt tillbaka
+    till `factor = 1 - clamped*sensitivity` i studieguide.html:s
+    createViewerIn-funktion - men detta AR INTE VERIFIERAT och far inte
+    goras blint. Nasta gang detta tas upp: gor andringen, be Jesper testa
+    pa sin egen styrplatta INNAN sessionen avslutas (inte bara syntetiskt i
+    Playwright), och uppdatera denna anteckning med det bekraftade
+    resultatet. Lita INTE pa syntetiska wheel-event-tester som ensamt bevis
+    for riktning pa denna typ av interaktion.
+
+    UX-TIPS fran Jesper (sep 2026): pa styrplatta ar det smidigare att fora
+    tva fingrar rakt uppat/nedat (samma rorelse som scrolla) an att nypa
+    isar/ihop fingrarna for att zooma - fungerar lika bra tekniskt (bada
+    ger wheel-event) men kanns mer kontrollerat, och de flesta elever har
+    styrplatta, inte mus. Instruktionstexten i studieguide.html (stycket
+    fore Utforska i 3D-galleriet) uppdaterad sep 2026 for att namna
+    bada satten och lyfta fram tva-fingers-svep som ett enklare alternativ
+    till nyp-zoom.
+
 11. Prestanda vid manga kulmodeller pa samma sida: sedan kulmodellerna nu
     bade ligger i galleriet ("Utforska i 3D") OCH vavs in bredvid 2D-
     strukturformlerna i loptexten (se nedan) kan en enda sida innehalla
