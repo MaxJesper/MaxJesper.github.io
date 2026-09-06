@@ -500,6 +500,13 @@ AA.push({kod3:"Pro",kod1:"P",namn:"Prolin",grupp:"Opolära (hydrofoba)",xs:1,
     aaAddH(A,B,idx,Cd,[[-1,-0.2]]);
     const HgExtra={el:"H",col:0.7,row:2.85};A.push(HgExtra);aaBond(A,B,idx,Cg,HgExtra);
     const HdExtra={el:"H",col:-1.6,row:1.9};A.push(HdExtra);aaBond(A,B,idx,Cd,HdExtra);
+    // Prolins sidokedja byggs manuellt (ej via aaBackbone/rBuilder eftersom ringen
+    // binder tillbaka till kvaveatomen N) - markera darfor R-gruppen (de tre
+    // kolen Cb/Cg/Cd i ringen, samt vaggen som binder till dem) i efterhand pa
+    // samma satt som aaBackbone gor for alla ovriga aminosyror.
+    const backboneCount=8; // N,Ca,C,Oc,Oh,Hh,Nh,Cu
+    for(let i=backboneCount;i<A.length;i++) A[i].rg=true;
+    B.forEach(b=>{ if(A[b.a].rg||A[b.b].rg) b.rg=true; });
     return {atoms:A,bonds:B};
   }});
 defAA("Phe","F","Fenylalanin","Opolära (hydrofoba)","Har en aromatisk bensenring. Opolär och stor.",(A,B,idx,ca)=>{
