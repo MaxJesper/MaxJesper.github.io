@@ -52,6 +52,19 @@ regel 9-11 för detaljer. Molekylformlernas siffror i galleriet är nu riktiga
 <sub>-taggar. Alla kulmodell-boxar lat-laddas (IntersectionObserver) av
 prestandaskäl eftersom sidan nu kan ha 20+ av dem samtidigt.
 
+sep 2026 (andra rundan): zoom-riktningen var bakvänd (isärdragna fingrar
+förminskade) - rättad och verifierad empiriskt (inte bara utläst ur koden).
+Dubbel-/trippelbindnings-breddningen gäller nu ALLA sådana bindningar
+(order>=2 detekteras automatiskt), inte bara C=C/C#C - alltså även C=O i
+syror/estrar. Etyn fick en egen kulmodell (build_ethyne() i chembuilder.py).
+Viktig lärdom: CSS som skalar en SVG efter en gemensam pixelhöjd skalar även
+dess inbäddade font-size, så SVG:er med olika viewBox-höjd (även med samma
+font-size i källkoden) kan se olika stora ut - fixat genom att ge etyn.svg,
+propyn.svg, metansyra.svg och vatten.svg samma viewBox-höjd som sina
+referensmolekyler (padding, inte omritning). M7 (syrorna) fick tabell-layout
+(CSS grid) och M8:s reaktionsrad grupperar produkterna så de wrappar
+tillsammans. Flerradiga bildtexter vänsterjusterades.
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.

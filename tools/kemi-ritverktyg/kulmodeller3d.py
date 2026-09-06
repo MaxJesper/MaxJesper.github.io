@@ -108,11 +108,14 @@ i samma mapp.
    rak linje (x-axeln), och den avslutande metylgruppen ar en vanlig sp3-
    grupp (methyl_hydrogens) fast pa den sista sp-kolatomen.
 
-9. Visuell separation mellan flerdubbla bindningar (eten C=C, propyn C#C):
-   pa Jespers begaran (sep 2026) ritas dessa INTE med 3Dmol.js:s inbyggda,
-   ganska smala dubbel-/trippelstreck. Istallet stryks just den bindningen
-   ur MOL-blocket som skickas till 3Dmol (se gen_molblocks3.py-monstret:
-   bond-listan filtreras sa att paret saknas helt), och alla 2 (dubbel)
+9. Visuell separation mellan flerdubbla bindningar (ALLA dubbel-/trippel-
+   bindningar - eten C=C, etyn/propyn C#C, OCH karbonylens C=O i syror/
+   estrar - utokat sep 2026 fran att bara galla C=C/C#C): pa Jespers begaran
+   ritas dessa INTE med 3Dmol.js:s inbyggda, ganska smala dubbel-/
+   trippelstreck. Istallet detekteras ALLA bindningar med order>=2 i
+   bond-listan automatiskt (se gen_molblocks4.py-monstret: `[bd for bd in
+   bonds if bd[2]>=2]`) och stryks ur MOL-blocket som skickas till 3Dmol,
+   och alla 2 (dubbel)
    eller 3 (trippel) pinnar ritas manuellt i JS med viewer.addCylinder(),
    forskjutna vinkelratt mot bindningsaxeln med ett gap (0.17 A) som ar
    klart storre an 3Dmol:s standardavstand. For trippelbindningen ligger de
@@ -143,7 +146,7 @@ i samma mapp.
    den ar interaktiv). Dubbelbindningen i eten syns tydligt separerad fran
    praktiskt taget alla vinklar eftersom molekylen ar helt plan.
 
-10. Zoom-kanslighet (pekplatta/mushjul): 3Dmol.js:s inbyggda
+10. Zoom-kanslighet OCH -riktning (pekplatta/mushjul): 3Dmol.js:s inbyggda
     scroll/pinch-zoom ar for kanslig for elever att styra (Jespers
     rattelse sep 2026). Losning: en egen "wheel"-lyssnare laggs pa
     YTTRE .km-viewerbox-elementet med {capture:true, passive:false} -
@@ -154,6 +157,16 @@ i samma mapp.
     annu lagre nar ev.ctrlKey ar sant - sa rapporterar webblasare
     tva-fingers-nyp pa styrplattan) och anropar viewer.zoom(factor, 0) med
     en klampad faktor (0.94-1.06 per handelse) istallet.
+    RIKTNING - RATTAD sep 2026 (var bakvand forst): `factor = 1 +
+    clamped*sensitivity` (INTE `1 - ...`) - Jesper testade och bekraftade
+    att detta tecken ger "dra isar tva fingrar = forstora", som pa alla
+    andra sajter/kartor. Testa alltid empiriskt (t.ex. med ett syntetiskt
+    WheelEvent {deltaY:-20, ctrlKey:true} i Playwright, upprepat manga
+    ganger, och jamfor skarmdump fore/efter) - den teoretiska harledningen
+    fran 3Dmol-kallkodens zoom()-funktion (som visar att factor>1 ZOOMAR IN
+    rent matematiskt) racker INTE for att sjalv gissa vilket tecken pa
+    deltaY som motsvarar "dra isar" i webblasarens ctrl+wheel-emulering av
+    pekplatte-nyp - den kan skilja mellan plattformar/webblasare.
 
 11. Prestanda vid manga kulmodeller pa samma sida: sedan kulmodellerna nu
     bade ligger i galleriet ("Utforska i 3D") OCH vavs in bredvid 2D-
@@ -167,6 +180,75 @@ i samma mapp.
     objektet styr vilket element som fylls) - det gor att SAMMA molekyl kan
     visas i flera olika boxar pa sidan (t.ex. metan bade i M1 och i
     galleriet) utan att molblocket eller byggkoden dupliceras.
+
+12. VIKTIG 2D-SVG-LARDOM (upptackt sep 2026): CSS-regeln
+    `.mol-fig img { height:108px; width:auto }` (och motsvarande for
+    `.rxn .mol img { height:96px }`) skalar HELA SVG:n - inklusive dess
+    inbaddade font-size - efter en enda gemensam pixel-hojd. Tva SVG:er kan
+    ha EXAKT samma `font-size="21"` i kallkoden och anda se olika stora ut
+    pa sidan, om deras `viewBox`-HOJD skiljer sig - en kortare/plattare
+    viewBox (t.ex. etyn utan nagra atomer over/under huvudraden) skalas UPP
+    mer av CSS:en och far darfor STORRE synlig text an en molekyl med en
+    hogre viewBox (t.ex. propyn med bade en topp- och en bottenvate).
+    LARDOM: for att flera strukturformler ska se lika stora ut i SAMMA rad/
+    figur maste deras `viewBox`/`width`/`height`-HOJD vara IDENTISK, oavsett
+    om molekylen faktiskt "anvander" hela den hojden eller inte - fyll ut
+    med osynlig marginal (padding) runt den ritade molekylen istallet for
+    att beskara viewBox tatt runt konturerna. Vid rattelse: hall
+    huvudradens y-koordinat (oftast y=61 i STEP=35-konventionen, eller
+    y=50.75 for de "plana"/kortare figurerna som eten) OFORANDRAD och lagg
+    till/ta bort lika mycket marginal upptill och nedtill (skift alla
+    y-koordinater med samma delta = (ny_hojd - gammal_hojd)/2) - rita INTE
+    om molekylen fran grunden bara for att andra en marginal.
+    Konkreta rattelser sep 2026: etyn.svg och propyn.svg (i M4, med eten
+    som referens) fick bada sin viewBox-hojd andrad till 101.5 (etens hojd)
+    - etyn (var 52) skiftades +24.75, propyn (var 122) skiftades -10.25.
+    metansyra.svg (i M7, med etansyra/butansyra som referens) fick sin
+    viewBox-hojd andrad fran 87 till 122 UTAN nagon koordinatskiftning,
+    eftersom dess huvudrad redan lag pa y=61 - exakt samma som i etansyra/
+    butansyra. vatten.svg (i M8:s esterreaktion, med etanol/butansyra/
+    etylbutanoat som referens) fick sin viewBox-hojd andrad fran 73.4 till
+    122, skiftad +24.3 for att centrera huvudraden pa y=61.
+
+13. Bildtexter (figcaption) som blir mer an en rad ska INTE centreras
+    (text-align:center gor att varje rad far olika vansterkant, vilket ser
+    sladdrigt/oplanerat ut) - `.mol-fig figcaption` byttes sep 2026 till
+    `text-align:left` (med en max-bredd och auto-marginaler for att
+    fortfarande centrera BLOCKET som helhet i figuren) sa att rad 2, 3 osv
+    alltid borjar i sidled pa samma stalle som rad 1.
+
+14. Tabell-layout for flera foreningar i en figur (M7-monster, sep 2026):
+    nar Jesper vill se flera foreningars 2D-formel + 3D-modell som en
+    "tabell" (formlerna i en vanster-justerad kolumn, kulmodellerna i en
+    hogerjusterad kolumn) racker INTE flexbox-`.mol-row` (som centrerar och
+    kan hamna i olika bredd per rad nar molekylerna har olika kedjelangd).
+    Anvand istallet CSS GRID: `.mol-table { display:grid;
+    grid-template-columns:max-content max-content; ... }` och lagg varje
+    molekyls tva `.mol`-divar (2D-bild, 3D-box) direkt som grid-barn i
+    ordning, rad for rad - grid-motorn justerar da automatiskt bada
+    kolumnerna konsekvent oavsett att bredderna varierar. En molekyl utan
+    3D-modell (t.ex. butansyra i M7, som inte ar en av de 12 galleri-
+    foreningarna) behover en tom `<div class="mol mini3d-placeholder">`
+    som platshallare sa att grid-radernas tva-kolumns-monster inte
+    forskjuts.
+
+15. Reaktionsrad som inte far plats pa en rad (M8-monster, sep 2026): i
+    `.rxn`-raden (reaktant + reaktant → produkt + produkt) ska PRODUKTERNA
+    (ester + vatten) alltid halla ihop och hamna TILLSAMMANS pa en ny rad
+    om allt inte far plats, ISTALLET for att bara det sista elementet
+    (vattnet) tappar av for sig sjalvt (standard flex-wrap-beteende).
+    Losning: gruppera produkterna i en egen `.rxn-products`-div
+    (`display:flex; flex-wrap:nowrap`) inuti den yttre `.rxn`-flexboxen -
+    da wrappar HELA gruppen som en enhet. En `margin-left` pa
+    `.rxn-products` flyttar dessutom gruppen at hoger nar den hamnar pa sin
+    egen rad, sa att den visuellt fortsatter "efter pilen" istallet for att
+    ligga langst till vanster.
+
+16. Etyn/acetylen (HC#CH) - ny KOMPLETTERANDE "bonus"-modell, sep 2026:
+    `build_ethyne()` i chembuilder.py, samma monster som build_propyne()
+    men med ett vate istallet for en metylgrupp pa C2. Anvands BARA som en
+    liten kulmodell i M4 (dar etyn redan namns i loptexten) - INTE en av de
+    12 fasta gallerimolekylerna i "Utforska i 3D".
 
 == VILKA FORENINGAR FAR 3D + FULLT "KORT" I STUDIEGUIDEN (beslut sep 2026) ==
   Alkaner:     metan, etan, propan

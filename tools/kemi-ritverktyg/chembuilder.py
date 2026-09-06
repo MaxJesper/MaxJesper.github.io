@@ -195,6 +195,19 @@ def build_propyne():
     bonds = [(1,2,3),(2,3,1),(1,4,1),(3,5,1),(3,6,1),(3,7,1)]
     return atoms, bonds
 
+def build_ethyne():
+    """Etyn/acetylen, HC=CH (trippelbindning). Bada kolen sp, helt linjara
+    (180 grader) - som build_propyne() men med ett vate istallet for en
+    metylgrupp pa C2 (sep 2026, kompletterande "bonus"-modell for M4 i
+    studieguiden - INTE en av de 12 fasta gallerimolekylerna)."""
+    C1 = np.array([0.0, 0.0, 0.0])
+    C2 = C1 + np.array([BOND_CC_TRIPLE, 0.0, 0.0])
+    H1 = C1 + np.array([-BOND_CH_SP, 0.0, 0.0])
+    H2 = C2 + np.array([BOND_CH_SP, 0.0, 0.0])
+    atoms = [('C',*C1),('C',*C2),('H',*H1),('H',*H2)]
+    bonds = [(1,2,3),(1,3,1),(2,4,1)]
+    return atoms, bonds
+
 def build_alkane(n):
     """Rak alkankedja, n kolatomer (metan hanteras separat pga tetraedrisk
     symmetri utan zigzag), etan/propan/butan etc via build_zigzag_chain."""
