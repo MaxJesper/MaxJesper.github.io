@@ -8,7 +8,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ## Standardkomponenter per område
 
-**Kärn-HTML (13):** `index.html`, `studieguide.html`, `begreppslista.html`, `begreppskort.html`, `checklista.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `ovningsprov-print.html`, `facit.html`, `facit-print.html`, `larande-spel.html`. **Rekommenderad:** `korsord.html`.
+**Kärn-HTML (13):** `index.html`, `studieguide.html`, `begreppslista.html`, `begreppskort.html`, `checklista.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `ovningsprov-print.html`, `facit.html`, `facit-print.html`, `larande-spel.html`. **Rekommenderad:** `korsord.html`. **Vid fysiska laborationer (nytt, sep 2026):** `laborationer.html` eller `<tema>lab.html` – utskrivbar HTML enligt "Laborationsprotokoll"-mönstret i CLAUDE.md (aldrig docx), länkad från studieguidens next-steps OCH index.html/"Material för läraren".
 
 **Data (5):** `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json`.
 

@@ -191,6 +191,19 @@ Alla utskriftsvyer följer namnmönstret `*-print-elev.html`, `*-print-larare.ht
 - Utskriftslänkarna **ska enbart** finnas som knappar inne i moderdokumentet (`instuderingsfragor.html`, `ovningsprov.html`, `facit.html`). **Inte** som separata länkar i lärarmenyns `index.html`.
 - Utskriftssidor kör `window.print()` automatiskt vid laddning och stänger sig sedan.
 
+### Laborationsprotokoll – standardkomponent (från sep 2026)
+
+Varje område som har fysiska laborationer ska ha ett utskrivbart laborationsprotokoll som HTML-sida på hemsidan, ALDRIG som en Word/docx-fil (lärare saknar ofta Word, och Jesper vill inte att materialet enkelt kan kopieras/spridas av vem som helst i redigerbart format). Standardnamn: `laborationer.html` (flera labbar) eller `<tema>lab.html` (en enskild labb, t.ex. `esterlab.html`).
+
+Mönster (referens: `fysik/magnetism-induktion/laborationshandledningar.html`, samt `kemi/kol-och-kolforeningar/esterlab.html` som enklare enskild-labb-variant):
+
+- Flytande "🖨️ Skriv ut"-knapp (`.print-fab`, `class="no-print"`) längst upp till vänster, `onclick="window.print()"`, plus en "← Tillbaka"-länk till studieguiden.
+- `@page { size: A4; margin: ...}` och en `@media print`-block som döljer `.no-print` och nollar padding/marginaler för utskrift – INTE samma auto-print-och-stäng-mekanik som `*-print.html`-sidorna för prov/instuderingsfrågor (den passar quiz-data, inte fria labbtexter).
+- Innehåll minst: Bakgrund/syfte, Material, Genomförande (numrerad lista), en tydlig **röd** "Risker vid laborationen"-ruta, ev. en referens-/facit-tabell, och en tom resultattabell eleverna fyller i.
+- Om en lärare ska tillsätta något riskfyllt (t.ex. koncentrerad syra) i dragskåp: skriv ut det explicit i både Genomförande och Risker.
+- Länka protokollet från TVÅ ställen: (1) studieguidens relevanta milstolpe (`next-steps`-rutan), och (2) områdets `index.html` under "Material för läraren".
+- Lägg till `laborationer.html`/`<tema>lab.html` som standardkomponent i `_CHECKLISTA_omraden.md` när ett område får sin första laboration.
+
 ---
 
 ## Begreppskort – placering
