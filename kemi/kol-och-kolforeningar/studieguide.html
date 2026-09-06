@@ -130,6 +130,17 @@
     .rxn .arrow { display: flex; flex-direction: column; align-items: center; line-height: 1; }
     .rxn .arrow .cat { font-size: 0.78rem; color: #6d28d9; margin-bottom: 0.1rem; white-space: nowrap; }
     .rxn .arrow .a { font-size: 1.8rem; color: #6d28d9; }
+  
+.km-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.1rem; margin:1.1rem 0; }
+.km-card { border:1px solid #e3e3e8; border-radius:10px; padding:0.9rem; background:#fafafe; }
+.km-card h4 { margin:0 0 0.15rem 0; font-size:1.02rem; color:#1a1a2e; }
+.km-card .km-formula { color:#555; font-size:0.9rem; margin-bottom:0.55rem; }
+.km-card .km-row { display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; }
+.km-card .km-2d { flex:0 0 auto; max-width:44%; }
+.km-card .km-2d img { max-width:100%; height:auto; display:block; }
+.km-viewerbox { position:relative; overflow:hidden; flex:1 1 160px; min-width:150px; height:170px; border-radius:8px; background:#fff; border:1px solid #eee; }
+.km-hint { font-size:0.72rem; color:#999; margin-top:0.3rem; }
+
   </style>
 </head>
 <body>
@@ -416,6 +427,125 @@
       </div>
     </details>
 
+    <!-- M10: interaktiva 3D-kulmodeller -->
+<details class="milestone" id="m10">
+  <summary><span class="m-num">Utforska i 3D</span><span class="m-title">Rotera molekylerna själv</span></summary>
+  <div class="m-body">
+    <p>Här kan du rotera och zooma riktiga 3D-modeller av några av de viktigaste molekylerna i det här kapitlet. Modellerna är byggda efter kolatomens verkliga bindningsvinklar (VSEPR-teorin): kolatomens fyra bindningar pekar ut mot hörnen i en tetraeder (109,5°), medan atomer med dubbelbindningar (t.ex. i eten och karboxylsyrorna) är platta med 120° mellan bindningarna, och trippelbindningen i propyn gör den delen av molekylen helt rak (180°).</p>
+    <div class="km-grid">
+<div class="km-card">
+  <h4>Metan</h4>
+  <div class="km-formula">CH4</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"></div>
+    <div class="km-viewerbox" id="viewer-metan"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Etan</h4>
+  <div class="km-formula">C2H6</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etan.svg" alt="Strukturformel för Etan"></div>
+    <div class="km-viewerbox" id="viewer-etan"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Propan</h4>
+  <div class="km-formula">C3H8</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propan.svg" alt="Strukturformel för Propan"></div>
+    <div class="km-viewerbox" id="viewer-propan"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Eten</h4>
+  <div class="km-formula">C2H4</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/eten.svg" alt="Strukturformel för Eten"></div>
+    <div class="km-viewerbox" id="viewer-eten"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Propyn</h4>
+  <div class="km-formula">C3H4</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propyn.svg" alt="Strukturformel för Propyn"></div>
+    <div class="km-viewerbox" id="viewer-propyn"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Metanol</h4>
+  <div class="km-formula">CH3OH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metanol.svg" alt="Strukturformel för Metanol"></div>
+    <div class="km-viewerbox" id="viewer-metanol"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Etanol</h4>
+  <div class="km-formula">C2H5OH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="Strukturformel för Etanol"></div>
+    <div class="km-viewerbox" id="viewer-etanol"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Metansyra (myrsyra)</h4>
+  <div class="km-formula">HCOOH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" alt="Strukturformel för Metansyra (myrsyra)"></div>
+    <div class="km-viewerbox" id="viewer-metansyra"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Etansyra (ättiksyra)</h4>
+  <div class="km-formula">CH3COOH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Etansyra (ättiksyra)"></div>
+    <div class="km-viewerbox" id="viewer-etansyra"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Propansyra</h4>
+  <div class="km-formula">C2H5COOH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propansyra.svg" alt="Strukturformel för Propansyra"></div>
+    <div class="km-viewerbox" id="viewer-propansyra"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Metylpropanoat</h4>
+  <div class="km-formula">C2H5COOCH3</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metylpropanoat.svg" alt="Strukturformel för Metylpropanoat"></div>
+    <div class="km-viewerbox" id="viewer-metylpropanoat"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card">
+  <h4>Etylpropanoat</h4>
+  <div class="km-formula">C2H5COOC2H5</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylpropanoat.svg" alt="Strukturformel för Etylpropanoat"></div>
+    <div class="km-viewerbox" id="viewer-etylpropanoat"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+    </div>
+  </div>
+</details>
+
+
     <section class="references" id="kallor">
       <h2>Källor</h2>
       <ol>
@@ -456,6 +586,25 @@
       else openFromHash();
       window.addEventListener("hashchange", openFromHash);
     })();
+  </script>
+  <script src="/js/3Dmol-min.js"></script>
+  <script>
+
+window.addEventListener('load', function() {
+  var MOLS = {"metan": "Metan\n  Claude3D\n\n  5  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293    0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293   -0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293    0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293   -0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\nM  END", "etan": "Etan\n  Claude3D\n\n  8  7  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1478    0.2597   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  2  1  0\n  2  6  1  0\n  2  7  1  0\n  2  8  1  0\nM  END", "propan": "Propan\n  Claude3D\n\n 11 10  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.4054    0.6291    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  1  2  1  0\n  2  7  1  0\n  2  8  1  0\n  2  3  1  0\n  3  9  1  0\n  3 10  1  0\n  3 11  1  0\nM  END", "eten": "Eten\n  Claude3D\n\n  6  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.3300    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  2  0\n  1  3  1  0\n  1  4  1  0\n  2  5  1  0\n  2  6  1  0\nM  END", "propyn": "Propyn\n  Claude3D\n\n  7  6  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.6600    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238    1.0275    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  3  0\n  2  3  1  0\n  1  4  1  0\n  3  5  1  0\n  3  6  1  0\n  3  7  1  0\nM  END", "metanol": "Metanol\n  Claude3D\n\n  6  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1678    0.8253    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9518    0.2713    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  2  6  1  0\nM  END", "etanol": "Etanol\n  Claude3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8695    2.2651    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.6534    2.8192    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  2  7  1  0\n  2  8  1  0\n  3  9  1  0\nM  END", "metansyra": "Metansyra (myrsyra)\n  Claude3D\n\n  5  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.2761    1.1678    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.0407   -0.9807    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0440   -0.3132    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8945   -0.5419    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  2  0\n  1  3  1  0\n  1  4  1  0\n  3  5  1  0\nM  END", "etansyra": "Etansyra (ättiksyra)\n  Claude3D\n\n  8  7  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1478    2.0838    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5563    0.2901    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.2262    0.9778    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  2  3  2  0\n  2  4  1  0\n  1  2  1  0\n  1  5  1  0\n  1  6  1  0\n  1  7  1  0\n  4  8  1  0\nM  END", "propansyra": "Propansyra\n  Claude3D\n\n 11 10  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3844   -1.4240    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.2562   -1.8259    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  4  2  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  1  6  1  0\n  1  7  1  0\n  1  8  1  0\n  2  9  1  0\n  2 10  1  0\n  5 11  1  0\nM  END", "metylpropanoat": "Metylpropanoat\n  Claude3D\n\n 14 13  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.5499   -1.2183    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  4  2  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  1  7  1  0\n  1  8  1  0\n  1  9  1  0\n  2 10  1  0\n  2 11  1  0\n  6 12  1  0\n  6 13  1  0\n  6 14  1  0\nM  END", "etylpropanoat": "Etylpropanoat\n  Claude3D\n\n 17 16  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6484   -3.5326    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.6383   -3.9889    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  4  2  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  6  7  1  0\n  1  8  1  0\n  1  9  1  0\n  1 10  1  0\n  2 11  1  0\n  2 12  1  0\n  6 13  1  0\n  6 14  1  0\n  7 15  1  0\n  7 16  1  0\n  7 17  1  0\nM  END"};
+  Object.keys(MOLS).forEach(function(key) {
+    var el = document.getElementById('viewer-' + key);
+    if (!el) return;
+    var viewer = $3Dmol.createViewer(el, {backgroundColor: 'white'});
+    viewer.addModel(MOLS[key], 'sdf');
+    viewer.setStyle({}, {stick:{radius:0.12}, sphere:{scale:0.28}});
+    viewer.setStyle({elem:'C'}, {stick:{radius:0.12, color:'#777777'}, sphere:{scale:0.28, color:'#4d4d4d'}});
+    viewer.zoomTo();
+    viewer.render();
+    viewer.zoom(1.15);
+  });
+});
+
   </script>
   <script src="/js/language-selector.js"></script>
 </body>

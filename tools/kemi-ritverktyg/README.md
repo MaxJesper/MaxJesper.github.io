@@ -12,16 +12,37 @@ Utvecklad strukturformel: alla atomer utskrivna, räta vinklar.
 - Summaformlernas siffror: sub 0,6em.
 Kör: `node strukturformler.js`  → images/kemi/kol-och-kolforeningar/strukturformler/
 
-## kulmodeller.js  (3D ball-and-stick)
-Kol = mörka kulor, väte = ljusa, mörka pinnar emellan.
-- Äkta geometri: metan tetraedrisk (109,5°), eten plan, etyn linjär.
-- 3D via rotation + perspektiv (DCAM 7): kulor bakåt ritas mindre, pinnar smalnar av på djupet.
-- SCALE 70, kol-radie 27, väte-radie 19, pinne 11.
-Kör: `node kulmodeller.js`  → images/kemi/kol-och-kolforeningar/kulmodeller/
+## kulmodeller.js  (GAMMAL, ersatt sep 2026 - ligger kvar bara som referens)
+Ritade statiska SVG-bilder av kulmodeller. ANVÄNDS INTE LÄNGRE.
+
+## kulmodeller3d.py + chembuilder.py  (3D ball-and-stick, AKTUELL, sep 2026-)
+BESLUT sep 2026: kulmodeller ska vara INTERAKTIVA, roterbara/zoombara 3D-modeller
+inbäddade med 3Dmol.js (öppen källkod, WebGL, github.com/3dmol/3Dmol.js) direkt på
+sidorna - inte färdigritade bilder. chembuilder.py är Python-motorn som räknar ut
+3D-koordinater (VSEPR, se filens docstring för alla byggregler/konventioner -
+zigzag-kedjor, metylgruppers vridning, karboxyl-/estergruppens plana 120°-vinkel,
+mm). kulmodeller3d.py är dokumentationen/receptet i klartext.
+Läs BÅDA filerna innan du ritar en ny förening - alla mönster (raka kedjor,
+alkoholer, syror, estrar, alkener, alkyner) och färgkonventionerna (kol: sfär
+#4d4d4d, pinne #777777 - INTE samma, annars ser kol-kol-bindningar svarta ut)
+finns där. 3Dmol-min.js ligger som en delad statisk fil på /js/3Dmol-min.js
+(ingen CDN, fungerar offline) och länkas in med en vanlig <script src>-tagg -
+bäddas INTE in i varje enskild HTML-fil (det var bra för en fristående
+mockup-sida, men på riktiga sajtsidor räcker en delad fil, ~540 kB).
+
+sep 2026: alla 12 föreningarna metan, etan, propan, eten, propyn, metanol,
+etanol, metansyra, etansyra, propansyra, metylpropanoat och etylpropanoat har
+fått fulla "kort" (namn + molekylformel + 2D-strukturformel + interaktiv
+3D-kulmodell) i en ny sektion ("Utforska i 3D") i
+kemi/kol-och-kolforeningar/studieguide.html. De tre SVG:erna för
+propansyra/metylpropanoat/etylpropanoat som saknades finns nu i
+images/kemi/kol-och-kolforeningar/strukturformler/.
 
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.
 3. Jesper granskar snabbt. 4. Spara namn.svg. 5. Återanvänd i text, frågor, prov, facit och spel.
 
-Uppdatera de här skripten OCH skill:en varje gång vi optimerar ritfunktionen.
+Uppdatera de här skripten (strukturformler.js, chembuilder.py, kulmodeller3d.py)
+OCH minnet/skillen varje gång vi optimerar en ritfunktion - gäller oberoende av
+vilken session/dator det görs ifrån.
