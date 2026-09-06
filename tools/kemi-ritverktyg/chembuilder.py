@@ -240,17 +240,24 @@ def build_alkane(n):
 # ============================================================
 def carbonyl_group(prev_carbon, carbonyl_pos, kind, ester_bond=BOND_CO_ESTER):
     """kind: 'acid' -> (=O, -OH+H)   'ester' -> (=O, -O- bridge, no H)
-    Dubbelbundna syret placeras alltid at det hall som ger storst y (uppat),
-    enligt Jespers konvention."""
+    Estrar: dubbelbundna syret placeras at det hall som ger storst y (uppat),
+    enligt Jespers ursprungliga konvention (bekraftad korrekt for estrar).
+    Fristaende karboxylsyror (kind='acid'): dubbelbundna syret placeras
+    istallet NEDAT och enkelbundna -OH UPPAT, sa att molekylen ser ut som
+    'fyllehunden' (samma skelett som etanol-hunden): karbonylkolets
+    dubbelbundna syre pekar rakt ned mitt mellan 'bakbenen', och -OH pekar
+    upp som 'huvud' med sitt vate nedat som 'nos' (Jespers rattelse sep 2026,
+    galler bara syror - estrarnas uppat-konvention andras INTE)."""
     existing = prev_carbon - carbonyl_pos
     d_pos, d_neg = sp2_planar_substituents(existing)
     dir_up, dir_down = (d_pos, d_neg) if d_pos[1] >= d_neg[1] else (d_neg, d_pos)
-    O_double = carbonyl_pos + BOND_C_ODOUBLE * dir_up / np.linalg.norm(dir_up)
     if kind == 'acid':
-        O_single = carbonyl_pos + BOND_CO_SINGLE * dir_down / np.linalg.norm(dir_down)
+        O_double = carbonyl_pos + BOND_C_ODOUBLE * dir_down / np.linalg.norm(dir_down)
+        O_single = carbonyl_pos + BOND_CO_SINGLE * dir_up / np.linalg.norm(dir_up)
         H_oh = oh_hydrogen(O_single, carbonyl_pos, syn_ref=O_double)
         return O_double, O_single, H_oh
     else:
+        O_double = carbonyl_pos + BOND_C_ODOUBLE * dir_up / np.linalg.norm(dir_up)
         O_bridge = carbonyl_pos + ester_bond * dir_down / np.linalg.norm(dir_down)
         return O_double, O_bridge
 
@@ -266,8 +273,9 @@ def build_acid(n_carbon):
         d_pos, d_neg = sp2_planar_substituents(Hdir)
         dir_up, dir_down = (d_pos, d_neg) if d_pos[1] >= d_neg[1] else (d_neg, d_pos)
         Hpos = Ccarb + BOND_CH*Hdir
-        O_double = Ccarb + BOND_C_ODOUBLE*dir_up/np.linalg.norm(dir_up)
-        O_single = Ccarb + BOND_CO_SINGLE*dir_down/np.linalg.norm(dir_down)
+        # Fristaende syra (se carbonyl_group): =O nedat, -OH uppat ("fyllehunden")
+        O_double = Ccarb + BOND_C_ODOUBLE*dir_down/np.linalg.norm(dir_down)
+        O_single = Ccarb + BOND_CO_SINGLE*dir_up/np.linalg.norm(dir_up)
         H_oh = oh_hydrogen(O_single, Ccarb, syn_ref=O_double)
         atoms = [('C',*Ccarb), ('O',*O_double), ('O',*O_single), ('H',*Hpos), ('H',*H_oh)]
         bonds = [(1,2,2),(1,3,1),(1,4,1),(3,5,1)]

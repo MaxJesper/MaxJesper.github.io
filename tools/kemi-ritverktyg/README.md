@@ -38,6 +38,20 @@ kemi/kol-och-kolforeningar/studieguide.html. De tre SVG:erna för
 propansyra/metylpropanoat/etylpropanoat som saknades finns nu i
 images/kemi/kol-och-kolforeningar/strukturformler/.
 
+sep 2026 (uppföljning): kulmodellerna vävdes in "både och" i studieguiden -
+hela galleriet ligger kvar sist, plus en liten .mini3d-box direkt bredvid
+2D-formeln varje gång en förening redan nämns i löptexten. Tre buggar
+rättade: (1) fristående karboxylsyrors (metansyra/etansyra/propansyra) =O/-OH
+låg fel väg i chembuilder.py - rättat i carbonyl_group()/build_acid() så =O
+pekar nedåt och -OH uppåt (samma skelett som etanol-"fyllehunden"; estrarnas
+konvention opåverkad). (2) Dubbel-/trippelbindningar (eten/propyn) ritas nu
+manuellt med tydligt större mellanrum mellan pinnarna (verifierat mot modern
+forskning - bent bond-modellen är fortfarande vetenskapligt giltig). (3)
+Pekplatte-/mushjulszoom dämpad kraftigt (var för känslig). Se kulmodeller3d.py
+regel 9-11 för detaljer. Molekylformlernas siffror i galleriet är nu riktiga
+<sub>-taggar. Alla kulmodell-boxar lat-laddas (IntersectionObserver) av
+prestandaskäl eftersom sidan nu kan ha 20+ av dem samtidigt.
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.
