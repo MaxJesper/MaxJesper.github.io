@@ -154,11 +154,22 @@
       cursor: pointer;
       outline: none;
     }
-    #anatomi .hit:hover { fill: rgba(163, 51, 94, 0.14); }
+    #anatomi .hit:hover { fill: rgba(163, 51, 94, 0.16); }
     #anatomi .hit:focus-visible { stroke: var(--area-strong); stroke-width: 2.5; stroke-dasharray: 5 4; }
     #anatomi .hit.solved { fill: rgba(21, 128, 61, 0.16); cursor: default; }
     #anatomi .hit.wrong { fill: rgba(185, 28, 28, 0.22); }
     #anatomi .hit.reveal { fill: rgba(217, 119, 6, 0.25); }
+    #anatomi .hit.line {
+      fill: none;
+      stroke: transparent;
+      stroke-width: 26;
+      pointer-events: stroke;
+    }
+    #anatomi .hit.line:hover { stroke: rgba(163, 51, 94, 0.22); }
+    #anatomi .hit.line.solved { stroke: rgba(21, 128, 61, 0.30); }
+    #anatomi .hit.line.wrong { stroke: rgba(185, 28, 28, 0.32); }
+    #anatomi .hit.line.reveal { stroke: rgba(217, 119, 6, 0.32); }
+
     .fig-label {
       font-size: 13px;
       fill: var(--area-strong);
@@ -388,81 +399,127 @@
 
         <div class="figure-wrap">
           <!-- Egenritad schematisk bild: livmoder, äggledare, äggstockar, slemhinna, livmoderhals, slida -->
-          <svg id="anatomi" viewBox="0 0 620 430" xmlns="http://www.w3.org/2000/svg"
+          <svg id="anatomi" viewBox="0 0 620 440" xmlns="http://www.w3.org/2000/svg"
                role="img" aria-label="Schematisk bild av livmoder, äggledare, äggstockar, livmoderhals och slida">
 
-            <!-- Livmoderkropp -->
-            <path d="M215 150 C215 118 250 104 310 104 C370 104 405 118 405 150
-                     L385 268 C381 292 366 302 310 302 C254 302 239 292 235 268 Z"
-                  fill="#f7d9e4" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+            <!-- breda livmoderbandet -->
+            <path d="M248,162 C212,156 176,166 152,188 C132,206 128,234 142,252
+                     C156,268 184,272 210,264 C234,256 248,240 256,220 Z"
+                  fill="#f7e2e9" stroke="#e0b4c5" stroke-width="2"/>
+            <path d="M372,162 C408,156 444,166 468,188 C488,206 492,234 478,252
+                     C464,268 436,272 410,264 C386,256 372,240 364,220 Z"
+                  fill="#f7e2e9" stroke="#e0b4c5" stroke-width="2"/>
 
-            <!-- Livmoderslemhinna (inre foder) -->
-            <path d="M247 160 C247 140 272 132 310 132 C348 132 373 140 373 160
-                     L357 258 C354 274 344 280 310 280 C276 280 266 274 263 258 Z"
-                  fill="#e79ab7" stroke="#a3335e" stroke-width="2"/>
+            <!-- slidan, en kanal med smal öppning -->
+            <path d="M288,296 C282,332 278,374 278,414 L342,414 C342,374 338,332 332,296 Z
+                     M307,304 C305,340 303,376 303,408 L317,408 C317,376 315,340 313,304 Z"
+                  fill="#eab3c6" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"
+                  fill-rule="evenodd"/>
+            <g stroke="#c4859c" stroke-width="2" fill="none">
+              <path d="M289,322 C294,323 299,324 304,324 M286,350 C292,351 298,352 303,352
+                       M283,378 C290,379 296,380 302,380"/>
+              <path d="M331,322 C326,323 321,324 316,324 M334,350 C328,351 322,352 317,352
+                       M337,378 C330,379 324,380 318,380"/>
+            </g>
 
-            <!-- Äggledare vänster -->
-            <path d="M217 150 C180 112 148 100 116 108" fill="none" stroke="#a3335e"
-                  stroke-width="9" stroke-linecap="round"/>
-            <path d="M217 150 C180 112 148 100 116 108" fill="none" stroke="#f7d9e4"
-                  stroke-width="4" stroke-linecap="round"/>
-            <!-- Fransar vänster -->
-            <path d="M116 108 L100 94 M116 108 L96 106 M116 108 L102 122"
-                  stroke="#a3335e" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <!-- livmoderns muskelvägg -->
+            <path d="M246,150 C242,114 272,97 310,96 C348,97 378,114 374,150
+                     C368,192 352,232 336,264 C332,272 330,278 328,284
+                     L292,284 C290,278 288,272 284,264 C268,232 252,192 246,150 Z"
+                  fill="#eab3c6" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
 
-            <!-- Äggledare höger -->
-            <path d="M403 150 C440 112 472 100 504 108" fill="none" stroke="#a3335e"
-                  stroke-width="9" stroke-linecap="round"/>
-            <path d="M403 150 C440 112 472 100 504 108" fill="none" stroke="#f7d9e4"
-                  stroke-width="4" stroke-linecap="round"/>
-            <path d="M504 108 L520 94 M504 108 L524 106 M504 108 L518 122"
-                  stroke="#a3335e" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <!-- livmoderhålan klädd med slemhinna -->
+            <path d="M284,146 C284,130 295,123 310,122 C325,123 336,130 336,146
+                     C332,182 324,216 316,246 C314,254 313,258 312,262
+                     L308,262 C307,258 306,254 304,246 C296,216 288,182 284,146 Z"
+                  fill="#d97fa3" stroke="#a3335e" stroke-width="2"/>
 
-            <!-- Äggstock vänster -->
-            <ellipse cx="86" cy="140" rx="40" ry="27" fill="#f5c7a0" stroke="#a3335e" stroke-width="3"/>
-            <circle cx="74" cy="136" r="6" fill="#fff" stroke="#a3335e" stroke-width="2"/>
-            <circle cx="96" cy="148" r="4.5" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+            <!-- livmoderhalsen -->
+            <path d="M292,284 L328,284 C327,304 324,322 320,334
+                     C314,341 306,341 300,334 C296,322 293,304 292,284 Z"
+                  fill="#dfa0b8" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M307,286 C306,304 306,320 307,332 L313,332 C314,320 314,304 313,286 Z"
+                  fill="#fdf2f6" stroke="#a3335e" stroke-width="1.6"/>
 
-            <!-- Äggstock höger -->
-            <ellipse cx="534" cy="140" rx="40" ry="27" fill="#f5c7a0" stroke="#a3335e" stroke-width="3"/>
-            <circle cx="546" cy="136" r="6" fill="#fff" stroke="#a3335e" stroke-width="2"/>
-            <circle cx="524" cy="148" r="4.5" fill="#fff" stroke="#a3335e" stroke-width="2"/>
+            <!-- äggledarna -->
+            <g fill="none" stroke="#a3335e" stroke-width="10" stroke-linecap="round">
+              <path d="M250,148 C224,126 194,118 172,128 C150,138 142,162 150,186
+                       C156,202 166,214 178,222"/>
+              <path d="M370,148 C396,126 426,118 448,128 C470,138 478,162 470,186
+                       C464,202 454,214 442,222"/>
+            </g>
+            <g fill="none" stroke="#f6d5e0" stroke-width="4.5" stroke-linecap="round">
+              <path d="M250,148 C224,126 194,118 172,128 C150,138 142,162 150,186
+                       C156,202 166,214 178,222"/>
+              <path d="M370,148 C396,126 426,118 448,128 C470,138 478,162 470,186
+                       C464,202 454,214 442,222"/>
+            </g>
 
-            <!-- Livmoderhals -->
-            <path d="M272 302 L348 302 L340 348 L280 348 Z"
-                  fill="#eab9cb" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
-            <path d="M310 306 L310 344" stroke="#a3335e" stroke-width="2" stroke-dasharray="4 4"/>
+            <!-- äggstockarna -->
+            <g>
+              <ellipse cx="196" cy="248" rx="34" ry="22" transform="rotate(-14 196 248)"
+                       fill="#e8c39c" stroke="#a3335e" stroke-width="3"/>
+              <circle cx="184" cy="243" r="5.5" fill="#fff6ee" stroke="#a3335e" stroke-width="2"/>
+              <circle cx="203" cy="254" r="4.2" fill="#fff6ee" stroke="#a3335e" stroke-width="2"/>
+              <circle cx="207" cy="240" r="3" fill="#fff6ee" stroke="#a3335e" stroke-width="1.6"/>
+            </g>
+            <g>
+              <ellipse cx="424" cy="248" rx="34" ry="22" transform="rotate(14 424 248)"
+                       fill="#e8c39c" stroke="#a3335e" stroke-width="3"/>
+              <circle cx="436" cy="243" r="5.5" fill="#fff6ee" stroke="#a3335e" stroke-width="2"/>
+              <circle cx="417" cy="254" r="4.2" fill="#fff6ee" stroke="#a3335e" stroke-width="2"/>
+              <circle cx="413" cy="240" r="3" fill="#fff6ee" stroke="#a3335e" stroke-width="1.6"/>
+            </g>
 
-            <!-- Slida -->
-            <path d="M280 348 L340 348 L352 414 L268 414 Z"
-                  fill="#f7d9e4" stroke="#a3335e" stroke-width="3" stroke-linejoin="round"/>
+            <!-- fransarna hänger ned över äggstocken -->
+            <g stroke="#a3335e" stroke-width="2.6" stroke-linecap="round" fill="none">
+              <path d="M178,222 C170,228 164,232 158,234 M178,222 C174,231 171,237 169,243
+                       M178,222 C180,232 181,239 181,246 M178,222 C186,229 191,234 195,238"/>
+              <path d="M442,222 C450,228 456,232 462,234 M442,222 C446,231 449,237 451,243
+                       M442,222 C440,232 439,239 439,246 M442,222 C434,229 429,234 425,238"/>
+            </g>
+
+            <!-- äggstocksligamentet -->
+            <g stroke="#cf90a8" stroke-width="6" fill="none" stroke-linecap="round">
+              <path d="M256,192 C248,212 240,230 228,242"/>
+              <path d="M364,192 C372,212 380,230 392,242"/>
+            </g>
 
             <!-- Klickytor -->
-            <ellipse class="hit" id="hit-aggstock" data-part="aggstock" cx="86" cy="140" rx="46" ry="33"
-                     tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
-            <ellipse class="hit" id="hit-aggstock2" data-part="aggstock" cx="534" cy="140" rx="46" ry="33"
-                     tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
-            <path class="hit" id="hit-aggledare" data-part="aggledare"
-                  d="M214 164 C176 124 146 112 110 122 L122 90 C160 82 194 100 228 140 Z"
+            <ellipse class="hit" data-part="aggstock" cx="196" cy="248" rx="40" ry="28"
+                     transform="rotate(-14 196 248)" tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
+            <ellipse class="hit" data-part="aggstock" cx="424" cy="248" rx="40" ry="28"
+                     transform="rotate(14 424 248)" tabindex="0" role="button" aria-label="Del av bilden"></ellipse>
+
+            <path class="hit line" data-part="aggledare"
+                  d="M250,148 C224,126 194,118 172,128 C150,138 142,162 150,186 C156,202 166,214 178,222"
                   tabindex="0" role="button" aria-label="Del av bilden"></path>
-            <path class="hit" id="hit-aggledare2" data-part="aggledare"
-                  d="M406 164 C444 124 474 112 510 122 L498 90 C460 82 426 100 392 140 Z"
+            <path class="hit line" data-part="aggledare"
+                  d="M370,148 C396,126 426,118 448,128 C470,138 478,162 470,186 C464,202 454,214 442,222"
                   tabindex="0" role="button" aria-label="Del av bilden"></path>
-            <path class="hit" id="hit-livmoder" data-part="livmoder"
-                  d="M215 150 C215 118 250 104 310 104 C370 104 405 118 405 150 L385 268
-                     C381 292 366 302 310 302 C254 302 239 292 235 268 Z
-                     M247 160 L263 258 C266 274 276 280 310 280 C344 280 354 274 357 258 L373 160
-                     C373 140 348 132 310 132 C272 132 247 140 247 160 Z"
-                  fill-rule="evenodd" tabindex="0" role="button" aria-label="Del av bilden"></path>
-            <path class="hit" id="hit-slemhinna" data-part="slemhinna"
-                  d="M247 160 C247 140 272 132 310 132 C348 132 373 140 373 160
-                     L357 258 C354 274 344 280 310 280 C276 280 266 274 263 258 Z"
+
+            <path class="hit" data-part="livmoder" fill-rule="evenodd"
+                  d="M246,150 C242,114 272,97 310,96 C348,97 378,114 374,150
+                     C368,192 352,232 336,264 C332,272 330,278 328,284
+                     L292,284 C290,278 288,272 284,264 C268,232 252,192 246,150 Z
+                     M284,146 C284,130 295,123 310,122 C325,123 336,130 336,146
+                     C332,182 324,216 316,246 C314,254 313,258 312,262
+                     L308,262 C307,258 306,254 304,246 C296,216 288,182 284,146 Z"
                   tabindex="0" role="button" aria-label="Del av bilden"></path>
-            <path class="hit" id="hit-livmoderhals" data-part="livmoderhals"
-                  d="M272 302 L348 302 L340 348 L280 348 Z"
+
+            <path class="hit" data-part="slemhinna"
+                  d="M284,146 C284,130 295,123 310,122 C325,123 336,130 336,146
+                     C332,182 324,216 316,246 C314,254 313,258 312,262
+                     L308,262 C307,258 306,254 304,246 C296,216 288,182 284,146 Z"
                   tabindex="0" role="button" aria-label="Del av bilden"></path>
-            <path class="hit" id="hit-slida" data-part="slida"
-                  d="M280 348 L340 348 L352 414 L268 414 Z"
+
+            <path class="hit" data-part="slida"
+                  d="M285,330 C281,356 278,384 278,414 L342,414 C342,384 339,356 335,330 Z"
+                  tabindex="0" role="button" aria-label="Del av bilden"></path>
+
+            <path class="hit" data-part="livmoderhals"
+                  d="M292,284 L328,284 C327,304 324,322 320,334
+                     C314,341 306,341 300,334 C296,322 293,304 292,284 Z"
                   tabindex="0" role="button" aria-label="Del av bilden"></path>
 
             <!-- Etiketter fylls i av JS när en del är klar -->

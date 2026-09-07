@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Övningsprov – Arbete, energi och effekt (Utskrift)</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/prov.css" />
+  <style>
+    .formelblad {
+      background: #eef2fb; border: 1px solid #cdd9f0; border-left: 4px solid #2e4a8a;
+      border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.25rem;
+    }
+    .formelblad h2 { margin: 0 0 0.5rem 0; font-size: 1.1rem; color: #2e4a8a; }
+    .formelblad ul {
+      margin: 0; padding-left: 1.1rem; columns: 2; column-gap: 1.5rem;
+      list-style: square;
+    }
+    .formelblad li { margin: 0.2rem 0; break-inside: avoid; }
+    @media (max-width: 520px) { .formelblad ul { columns: 1; } }
+  </style>
+</head>
+
+<body>
+  <header class="fysik-header">
+    <h1>Övningsprov</h1>
+    <p>Arbete, energi och effekt</p>
+  </header>
+
+  <main>
+    <div class="print-note">
+      <div class="print-field">
+        <span class="print-label">Namn:</span>
+        <span class="print-line print-line-name"></span>
+      </div>
+      <div class="print-field">
+        <span class="print-label">Klass:</span>
+        <span class="print-line print-line-class"></span>
+      </div>
+    </div>
+
+    <section class="formelblad" aria-label="Formelblad">
+      <h2>Formelblad</h2>
+      <ul>
+        <li>Arbete: W = F &middot; s</li>
+        <li>Tyngd: F = m &middot; g&nbsp;&nbsp;(g = 10 N/kg)</li>
+        <li>Effekt: P = W / t</li>
+        <li>Energi: E = P &middot; t</li>
+        <li>L&auml;gesenergi: E = m &middot; g &middot; h</li>
+        <li>Verkningsgrad = nyttig / tillf&ouml;rd</li>
+        <li>1 J = 1 Nm&nbsp;&nbsp;&middot;&nbsp;&nbsp;1 W = 1 J/s</li>
+        <li>1 kWh = en effekt p&aring; 1000 W under 1 timme</li>
+      </ul>
+    </section>
+    <div id="prov-container"></div>
+  </main>
+
+  <script src="/js/render-prov.js"></script>
+  <script>
+    renderProv({
+      jsonPath: "./data/ovningsprov.json",
+      mountId: "prov-container",
+      mode: "print-exam"
+    });
+
+    function autoPrintAndClose() {
+      window.addEventListener("afterprint", () => {
+        try { window.close(); } catch (e) {}
+      });
+      setTimeout(() => { try { window.close(); } catch (e) {} }, 2500);
+      window.print();
+    }
+
+    window.addEventListener("load", () => setTimeout(autoPrintAndClose, 350));
+  </script>
+</body>
+</html>

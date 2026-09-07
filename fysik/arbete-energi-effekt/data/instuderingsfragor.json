@@ -1,0 +1,89 @@
+{
+  "title": "Instuderingsfrågor – Arbete, energi och effekt",
+  "subject": "Fysik",
+  "area": "Arbete, energi och effekt",
+  "intro": "Frågorna följer studieguidens milstolpar. Försök först svara själv, titta sedan på facit. I räkneuppgifterna ska du redovisa steg för steg: formel först, insättning med enheter och till sist svar med enhet.",
+  "groups": [
+    {
+      "title": "1. Arbete",
+      "items": [
+        { "q": "När utförs ett mekaniskt arbete i fysikens mening?", "a": "När en kraft flyttar ett föremål en sträcka i kraftens riktning. Både en kraft och en förflyttning måste finnas.", "lines": 3 },
+        { "q": "Du håller en tung kasse helt stilla i handen. Utför du ett fysikaliskt arbete? Motivera.", "a": "Nej. Du känner dig ansträngd, men kassen flyttas inte någon sträcka, och då är arbetet noll i fysikens mening.", "lines": 3 },
+        { "q": "Vilken formel använder du för att räkna ut ett arbete, och vad betyder bokstäverna?", "a": "arbete = kraft · väg, W = F · s. W är arbetet (J), F är kraften (N) och s är sträckan (m).", "lines": 3 },
+        { "q": "Vad heter enheten för arbete, och hur hänger den ihop med newton och meter?", "a": "Enheten är joule (J). 1 J = 1 Nm, alltså det arbete en kraft på 1 N gör när den flyttar något 1 m.", "lines": 3 },
+        { "q": "En låda dras 4 m längs golvet med en kraft på 25 N i rörelseriktningen. Hur stort arbete utförs?", "a": "W = F · s = 25 N · 4 m = 100 Nm = 100 J.", "lines": 3 },
+        { "q": "En kasse väger 3 kg. Hur stor är tyngden? (g = 10 N/kg)", "a": "F = m · g = 3 kg · 10 N/kg = 30 N.", "lines": 3 }
+      ]
+    },
+    {
+      "title": "2. Energi och energiformer",
+      "items": [
+        { "q": "Vad menas med energi i fysiken?", "a": "Energi är förmågan att utföra ett arbete – man kan se det som lagrat arbete. Har något energi kan det uträtta ett arbete.", "lines": 3 },
+        { "q": "Räkna upp minst fem energiformer.", "a": "Lägesenergi, rörelseenergi, kemisk energi, elektrisk energi, värmeenergi, strålningsenergi och kärnenergi.", "lines": 3 },
+        { "q": "Vilken enhet mäts energi i, och hur hänger den ihop med enheten för arbete?", "a": "Energi mäts i joule (J) – samma enhet som arbete, eftersom energi är lagrat arbete.", "lines": 3 },
+        { "q": "Ge exempel på var kemisk energi finns lagrad.", "a": "I mat, i bränslen som bensin och ved, och i batterier.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "3. Lägesenergi och rörelseenergi",
+      "items": [
+        { "q": "Vad är lägesenergi och vad beror den på?", "a": "Lägesenergi är energi ett föremål har tack vare sin höjd. Den beror på höjden och på massan – ju högre upp och ju tyngre, desto större lägesenergi.", "lines": 3 },
+        { "q": "Vad är rörelseenergi och vad beror den på?", "a": "Rörelseenergi är energi ett föremål har för att det rör sig. Den beror på farten och på massan – ju större fart och ju större massa, desto större rörelseenergi.", "lines": 3 },
+        { "q": "Vad kallas läges- och rörelseenergi med ett gemensamt namn?", "a": "Mekanisk energi.", "lines": 2 },
+        { "q": "Beskriv hur läges- och rörelseenergi omvandlas till varandra i en berg- och dalbana.", "a": "Högst upp har vagnen mest lägesenergi och står nästan stilla. På väg ner omvandlas lägesenergin till rörelseenergi, så farten ökar. På väg upp igen omvandlas rörelseenergin tillbaka till lägesenergi.", "lines": 4 }
+      ]
+    },
+    {
+      "title": "4. Energiprincipen",
+      "items": [
+        { "q": "Formulera energiprincipen.", "a": "Energi kan varken skapas eller förstöras – den kan bara omvandlas mellan olika former. Den totala energimängden är alltid bevarad.", "lines": 3 },
+        { "q": "Vad är en energikedja? Ge ett exempel.", "a": "En serie energiomvandlingar efter varandra. Exempel: i ett vattenkraftverk omvandlas vattnets lägesenergi → rörelseenergi → elektrisk energi → ljus och värme i hemmen.", "lines": 3 },
+        { "q": "Vad händer med energin till slut i varje energikedja, och varför?", "a": "Den slutar som värme. Vid varje omvandling bildas lite värme som sprids till omgivningen, så all energi till sist blir värme.", "lines": 3 },
+        { "q": "Om energi aldrig försvinner – varför säger vi ändå att energi ”tar slut” eller att vi måste spara på energi?", "a": "Energin försvinner inte, men den omvandlas till värme som är utspridd och svår att använda igen. Vi har ont om energi i användbara former, inte om energi totalt.", "lines": 4 }
+      ]
+    },
+    {
+      "title": "5. Effekt",
+      "items": [
+        { "q": "Vad menas med effekt?", "a": "Effekt är hur mycket arbete eller energi som uträttas per sekund: effekt = arbete / tid.", "lines": 2 },
+        { "q": "Skriv formeln för effekt och vad enheten är.", "a": "P = W / t. Enheten är watt (W), och 1 W = 1 J/s.", "lines": 2 },
+        { "q": "En motor utför arbetet 6000 J på 30 s. Hur stor är effekten?", "a": "P = W / t = 6000 J / 30 s = 200 W.", "lines": 3 },
+        { "q": "Vad betyder det att en lampa är märkt 60 W?", "a": "Att den omvandlar 60 joule energi varje sekund.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "6. Verkningsgrad",
+      "items": [
+        { "q": "Vad menas med verkningsgrad?", "a": "Hur stor andel av den tillförda energin som blir nyttig energi, oftast angivet i procent. Resten blir värme.", "lines": 3 },
+        { "q": "En lampa tillförs 100 J elektrisk energi och avger 15 J som ljus. Vad är verkningsgraden?", "a": "verkningsgrad = nyttig energi / tillförd energi = 15 J / 100 J = 0,15 = 15 %.", "lines": 3 },
+        { "q": "Varför kan ingen maskin ha verkningsgraden 100 %?", "a": "Vid varje omvandling bildas alltid lite värme som inte är den nyttiga energin. Därför blir en del av den tillförda energin alltid ”förlorad” som värme.", "lines": 3 }
+      ]
+    },
+    {
+      "title": "7. Enkla maskiner och mekanikens gyllene regel",
+      "items": [
+        { "q": "Ge tre exempel på enkla maskiner.", "a": "Hävstång, lutande plan och block (talja).", "lines": 2 },
+        { "q": "Formulera mekanikens gyllene regel.", "a": "Det man vinner i kraft, förlorar man i väg. En enkel maskin kan minska kraften, men då måste föremålet flyttas en längre sträcka.", "lines": 3 },
+        { "q": "En enkel maskin sparar kraft. Sparar den också arbete? Motivera.", "a": "Nej. Arbetet blir ungefär lika stort, eftersom mindre kraft måste tas ut över en längre sträcka. Man sparar kraft, inte arbete.", "lines": 3 },
+        { "q": "Varför är det lättare att rulla upp en tunna för ett lutande plan än att lyfta den rakt upp?", "a": "Det lutande planet gör att man behöver mindre kraft, fast över en längre sträcka. Arbetet blir ungefär detsamma, men kraften i varje ögonblick blir mindre.", "lines": 3 }
+      ]
+    },
+    {
+      "title": "8. Energienheter",
+      "items": [
+        { "q": "Vilka enheter används för energi på elräkningen?", "a": "Wattimme (Wh) och kilowattimme (kWh). 1 kWh = 1000 Wh.", "lines": 2 },
+        { "q": "Vad betyder 1 kWh?", "a": "Den energi en apparat på 1000 W (1 kW) använder under 1 timme.", "lines": 2 },
+        { "q": "En dammsugare på 800 W används i 2 timmar. Hur mycket energi använder den, i kWh?", "a": "E = P · t = 0,8 kW · 2 h = 1,6 kWh.", "lines": 3 },
+        { "q": "Om 1 kWh kostar 2 kr, vad kostar det att köra dammsugaren i uppgiften ovan?", "a": "kostnad = energi · pris = 1,6 kWh · 2 kr/kWh = 3,20 kr.", "lines": 3 }
+      ]
+    },
+    {
+      "title": "9. Energikällor och kraftverk",
+      "items": [
+        { "q": "Vad är skillnaden mellan förnybara och icke förnybara energikällor? Ge exempel på båda.", "a": "Förnybara tar inte slut: sol, vind, vatten, biobränsle och geoenergi. Icke förnybara finns i begränsad mängd och tar en dag slut: kol, olja, naturgas och kärnenergi.", "lines": 4 },
+        { "q": "Beskriv energiomvandlingarna i ett vattenkraftverk.", "a": "Vattnets lägesenergi (magasinet högt upp) → rörelseenergi (vattnet faller och driver en turbin) → elektrisk energi (turbinen driver en generator).", "lines": 3 },
+        { "q": "Varför säger man att nästan all energi i grunden kommer från solen?", "a": "Solen driver vindar och vattnets kretslopp (vind- och vattenkraft), får växter att växa (biobränsle och mat), och för länge sedan bildades kol och olja av växter och djur som levde av solens energi.", "lines": 4 }
+      ]
+    }
+  ]
+}

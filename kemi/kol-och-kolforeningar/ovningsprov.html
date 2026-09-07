@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Övningsprov – Kol och kolföreningar</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/prov.css" />
+  <style>
+    body.area-kol{--area:#7c3aed;--area-strong:#6d28d9;--area-soft:#f5f3ff;--area-border:#ddd6fe;--area-hover:#ede9fe;}
+  </style>
+</head>
+
+<body class="area-kol">
+  <header class="kemi-header">
+    <h1>Övningsprov</h1>
+    <p>Kol och kolföreningar</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="study-info" role="note">
+      <strong>OM PROVET:</strong> Frågorna är ordnade i tre delar efter svårighetsgrad –
+      <strong>E</strong> (grundläggande), <strong>C</strong> (förklara och tillämpa) och
+      <strong>A</strong> (resonera och dra slutsatser). Dina svar sparas i webbläsaren tills
+      du skriver ut.
+    </div>
+
+    <div class="prov-actions">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./facit.html" class="subject-btn">✅ Facit</a>
+      <a href="./ovningsprov-print.html" target="_blank" rel="noopener" class="subject-btn print-green">🖨️ Skriv ut prov</a>
+    </div>
+
+    <div id="prov-container"></div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-prov.js"></script>
+  <script>
+    renderProv({
+      jsonPath: "./data/ovningsprov.json",
+      mountId: "prov-container",
+      mode: "exam"
+    });
+  </script>
+</body>
+</html>

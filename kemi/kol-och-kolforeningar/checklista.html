@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklista – Kol och kolföreningar</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/checklista.css" />
+  <style>
+    body.area-kol{--area:#7c3aed;--area-strong:#6d28d9;--area-soft:#f5f3ff;--area-border:#ddd6fe;--area-hover:#ede9fe;}
+  </style>
+</head>
+<body class="area-kol">
+  <header class="kemi-header">
+    <h1>Checklista</h1>
+    <p>Kol och kolföreningar</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p class="checklist-intro">
+      Använd checklistan för att se vad du behöver kunna i arbetsområdet. Arbeta steg för steg
+      och markera det du känner dig säker på. Punkterna följer studieguidens milstolpar.
+    </p>
+
+    <div class="checklist-actions">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
+      <button id="expand-all-btn" class="checklist-btn" type="button">Visa alla</button>
+      <button id="collapse-all-btn" class="checklist-btn" type="button">Fäll ihop alla</button>
+    </div>
+
+    <section id="checklista-container"></section>
+
+    <section class="checklist-reflection">
+      <h2>Reflektion</h2>
+      <div class="write-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/render-checklista.js"></script>
+  <script>
+    renderChecklist({
+      jsonPath: "./data/checklista.json",
+      mountId: "checklista-container",
+      expandAllBtnId: "expand-all-btn",
+      collapseAllBtnId: "collapse-all-btn"
+    });
+  </script>
+</body>
+</html>

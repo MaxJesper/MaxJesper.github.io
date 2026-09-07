@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationshandledning – Framställning av estrar</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body { padding-top: 3.5rem; }
+    main { font-size: 1.05em; max-width: 780px; margin: 0 auto; }
+
+    .lab-head { border-bottom: 2px solid #6d28d9; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+    .lab-head .lab-cat { font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: #6d28d9; font-weight: 700; }
+    .lab-head h1 { font-size: 1.5rem; margin: 0.15rem 0 0.1rem; color: #1a1a2e; }
+    .lab-head .lab-sub { font-size: 0.88rem; color: #666; }
+
+    main h2 { font-size: 0.85rem; letter-spacing: 1.2px; text-transform: uppercase; color: #6d28d9; margin: 1.1rem 0 0.4rem; }
+    main p { line-height: 1.55; margin: 0.4rem 0; }
+    main ul, main ol { padding-left: 1.4rem; line-height: 1.55; margin: 0.3rem 0; }
+    main li { margin-bottom: 0.25rem; }
+
+    .fact-box {
+      background: #f5f3ff; border-left: 4px solid #6d28d9; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.5rem 0; font-size: 0.92rem;
+    }
+
+    .risk-box {
+      background: #fdecee; border: 1px solid #f3b8c0; border-left: 4px solid #c0152a;
+      border-radius: 8px; padding: 0.7rem 0.95rem; margin: 0.4rem 0;
+    }
+    .risk-box h2 { color: #c0152a; margin: 0 0 0.4rem; }
+    .risk-box ul { margin: 0; padding-left: 1.3rem; }
+    .risk-box li { font-size: 0.9rem; color: #6e1420; margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.35rem 0.6rem; text-align: left; }
+    .compare-table th { background: #f5f3ff; color: #6d28d9; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #faf9ff; }
+    .compare-table.fillin td { height: 1.4em; }
+
+    .foot-note { font-size: 0.78rem; color: #777; font-style: italic; margin: 0.3rem 0 0.8rem; }
+    .source-line { font-size: 0.78rem; color: #888; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
+
+    .print-fab {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000; display: flex; gap: 0.5rem;
+    }
+    .print-fab button {
+      background: #6d28d9; color: #fff; border: none; border-radius: 8px; padding: 0.55rem 1rem;
+      font-weight: 600; font-size: 0.95rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-family: inherit;
+    }
+    .print-fab button:hover { background: #5b21b6; }
+    .print-fab a {
+      display: inline-flex; align-items: center; padding: 0.55rem 1rem; background: #fff; color: #6d28d9;
+      border: 1px solid #6d28d9; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: inherit;
+    }
+    .print-fab a:hover { background: #f5f3ff; }
+
+    @page { size: A4; margin: 16mm 16mm 14mm; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; padding-top: 0; }
+      main { max-width: none; font-size: 0.88em; }
+      main h2 { margin: 0.7rem 0 0.3rem; }
+      main p, main ul, main ol { margin: 0.25rem 0; }
+      main li { margin-bottom: 0.12rem; }
+      .fact-box, .risk-box { margin: 0.3rem 0; padding: 0.5rem 0.8rem; break-inside: avoid; }
+      .risk-box li { margin-bottom: 0.12rem; }
+      .compare-table th, .compare-table td { padding: 0.22rem 0.5rem; }
+      .lab-head { margin-bottom: 0.6rem; padding-bottom: 0.4rem; }
+      .foot-note { margin: 0.15rem 0 0.4rem; }
+      .source-line { margin-top: 0.6rem; padding-top: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-fab no-print">
+  <button onclick="window.print()">🖨️ Skriv ut</button>
+  <a href="./studieguide.html#m8">← Tillbaka</a>
+</div>
+
+<main>
+  <div class="lab-head">
+    <div class="lab-cat">Organisk kemi · Estrar</div>
+    <h1>Laboration: Framställning av estrar</h1>
+    <div class="lab-sub">Lärarversion, utskrivbar</div>
+  </div>
+
+  <h2>Bakgrund</h2>
+  <p>När en alkohol och en organisk syra (karboxylsyra) reagerar bildas en ester och vatten – reaktionen kallas förestring. Den går långsamt av sig själv, men koncentrerad svavelsyra fungerar som katalysator och driver på den avsevärt. Många estrar har en påtaglig fruktdoft, vilket gör detta till en mycket uppskattad laboration.</p>
+
+  <h2>Material (per grupp)</h2>
+  <ul>
+    <li>2–3 små, rena provrör (helst märkbara) + ställ</li>
+    <li>Pastörpipetter/droppflaskor för respektive vätska</li>
+    <li>Liten bägare (ca 100 ml) med hett vatten (från vattenkokare) som värmebad</li>
+    <li>Skyddsglasögon (obligatoriskt) och skyddshandskar</li>
+    <li>Pappersremsor eller bomullstussar för luktprov</li>
+    <li>Ett urval av alkoholer (t.ex. etanol, propanol, butanol, pentanol, oktanol) och karboxylsyror (t.ex. myrsyra, ättiksyra, ev. smörsyra) enligt tabellen nedan</li>
+  </ul>
+  <div class="foot-note">Koncentrerad svavelsyra finns endast hos läraren och tillsätts i dragskåp.</div>
+
+  <h2>Genomförande</h2>
+  <ol>
+    <li>Häll hett vatten i den lilla bägaren – detta är gruppens värmebad under laborationen.</li>
+    <li>Välj en kombination av karboxylsyra och alkohol enligt tabellen. Droppa 2–3 droppar av vardera i ett litet, märkt provrör.</li>
+    <li>Lämna provröret till läraren, som i dragskåpet tillsätter 2 droppar koncentrerad svavelsyra. Om ni valt butansyra (smörsyra) tillsätter läraren även denna i dragskåpet, eftersom den luktar mycket starkt och är frätande.</li>
+    <li>Blanda försiktigt genom att knacka lätt på provröret, och ställ det i värmebadet i några minuter.</li>
+    <li>Tillsätt några droppar kallt vatten och blanda – detta späder ut kvarvarande syra/alkohol och gör doften tydligare.</li>
+    <li>Vifta doften försiktigt mot er med handen ovanför öppningen – lukta aldrig rakt ner i provröret. Bildar estern en oljelik hinna på ytan kan ni suga upp den försiktigt med en pipett och droppa på en pappersremsa eller bomullstuss för ett renare luktprov.</li>
+    <li>Anteckna vilken doft ni känner i resultattabellen. Ställ sedan provröret i dragskåpet.</li>
+  </ol>
+
+  <div class="risk-box">
+    <h2>Risker vid laborationen</h2>
+    <ul>
+      <li>Koncentrerad svavelsyra är starkt frätande och ger allvarliga frätskador på hud och ögon. Hanteras endast av läraren, i dragskåp.</li>
+      <li>Butansyra (smörsyra) är frätande/irriterande och har en mycket stark, obehaglig lukt. Tillsätts av läraren i dragskåp.</li>
+      <li>Alkoholerna är brandfarliga – inga öppna lågor eller tändstickor får finnas framme.</li>
+      <li>Hett vatten från vattenkokaren kan ge brännskador – bär bägaren försiktigt och stadigt.</li>
+      <li>Lukta alltid försiktigt genom att vifta ångorna mot er, aldrig med näsan direkt över öppningen.</li>
+      <li>Använd skyddsglasögon under hela laborationen. Vid stänk på hud eller i ögon: skölj genast rikligt med vatten och kontakta läraren.</li>
+    </ul>
+  </div>
+
+  <h2>Doftexempel</h2>
+  <table class="compare-table">
+    <thead><tr><th>Karboxylsyra</th><th>Alkohol</th><th>Ester</th><th>Doft</th><th>Syra tillsätts av</th></tr></thead>
+    <tbody>
+      <tr><td>Metansyra (myrsyra)</td><td>Etanol</td><td>Etylmetanoat</td><td>Rom, hallon</td><td>Elev</td></tr>
+      <tr><td>Etansyra (ättiksyra)</td><td>Propanol</td><td>Propyletanoat</td><td>Päron</td><td>Elev</td></tr>
+      <tr><td>Etansyra (ättiksyra)</td><td>Butanol</td><td>Butyletanoat</td><td>Äpple</td><td>Elev</td></tr>
+      <tr><td>Etansyra (ättiksyra)</td><td>Pentanol</td><td>Pentyletanoat (amylacetat)</td><td>Banan</td><td>Elev</td></tr>
+      <tr><td>Etansyra (ättiksyra)</td><td>Oktanol</td><td>Oktyletanoat</td><td>Apelsin</td><td>Elev</td></tr>
+      <tr><td>Butansyra (smörsyra)</td><td>Etanol</td><td>Etylbutanoat</td><td>Ananas</td><td>Lärare i dragskåp</td></tr>
+    </tbody>
+  </table>
+  <div class="foot-note">Doftupplevelsen är delvis subjektiv och kan variera något mellan personer och källor.</div>
+
+  <h2>Resultat</h2>
+  <table class="compare-table fillin">
+    <thead><tr><th>Karboxylsyra</th><th>Alkohol</th><th>Ester (namn)</th><th>Doft jag kände</th></tr></thead>
+    <tbody>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <div class="source-line">Källor: naturvetenskap.se (Estrar, högstadiekemi/organisk kemi) samt skolans egen riskbedömning för laborationen.</div>
+</main>
+
+</body>
+</html>

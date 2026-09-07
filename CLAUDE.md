@@ -191,6 +191,19 @@ Alla utskriftsvyer följer namnmönstret `*-print-elev.html`, `*-print-larare.ht
 - Utskriftslänkarna **ska enbart** finnas som knappar inne i moderdokumentet (`instuderingsfragor.html`, `ovningsprov.html`, `facit.html`). **Inte** som separata länkar i lärarmenyns `index.html`.
 - Utskriftssidor kör `window.print()` automatiskt vid laddning och stänger sig sedan.
 
+### Laborationsprotokoll – standardkomponent (från sep 2026)
+
+Varje område som har fysiska laborationer ska ha ett utskrivbart laborationsprotokoll som HTML-sida på hemsidan, ALDRIG som en Word/docx-fil (lärare saknar ofta Word, och Jesper vill inte att materialet enkelt kan kopieras/spridas av vem som helst i redigerbart format). Standardnamn: `laborationer.html` (flera labbar) eller `<tema>lab.html` (en enskild labb, t.ex. `esterlab.html`).
+
+Mönster (referens: `fysik/magnetism-induktion/laborationshandledningar.html`, samt `kemi/kol-och-kolforeningar/esterlab.html` som enklare enskild-labb-variant):
+
+- Flytande "🖨️ Skriv ut"-knapp (`.print-fab`, `class="no-print"`) längst upp till vänster, `onclick="window.print()"`, plus en "← Tillbaka"-länk till studieguiden.
+- `@page { size: A4; margin: ...}` och en `@media print`-block som döljer `.no-print` och nollar padding/marginaler för utskrift – INTE samma auto-print-och-stäng-mekanik som `*-print.html`-sidorna för prov/instuderingsfrågor (den passar quiz-data, inte fria labbtexter).
+- Innehåll minst: Bakgrund/syfte, Material, Genomförande (numrerad lista), en tydlig **röd** "Risker vid laborationen"-ruta, ev. en referens-/facit-tabell, och en tom resultattabell eleverna fyller i.
+- Om en lärare ska tillsätta något riskfyllt (t.ex. koncentrerad syra) i dragskåp: skriv ut det explicit i både Genomförande och Risker.
+- Länka protokollet från TVÅ ställen: (1) studieguidens relevanta milstolpe (`next-steps`-rutan), och (2) områdets `index.html` under "Material för läraren".
+- Lägg till `laborationer.html`/`<tema>lab.html` som standardkomponent i `_CHECKLISTA_omraden.md` när ett område får sin första laboration.
+
 ---
 
 ## Begreppskort – placering
@@ -257,6 +270,39 @@ Tills filer finns används syntetisk röst (TTS) som standard.
 
 ---
 
+## Videoruta – klicka-för-att-ladda YouTube (GDPR-vänligt)
+
+Återanvändbar komponent för att bädda in YouTube-klipp utan att kontakta Google innan eleven klickar på play. Ingen spårning och inga cookies förrän filmen startas (använder `youtube-nocookie.com`).
+
+- Filer: `/js/videoruta.js` + `/css/videoruta.css`.
+- Länka båda i `<head>`/före `</body>` och lägg en tom div där klippet ska visas:
+
+```html
+<div class="videoruta"
+     data-yt="9gUdDM6LZGo"
+     data-start="2738"
+     data-titel="Energiprincipen förklarad"
+     data-text="Kort beskrivning under rubriken."
+     data-flagga="🇸🇪"></div>
+```
+
+Attribut: `data-yt` (krävs, video-id), `data-start` (starttid i sek), `data-titel`, `data-text`, `data-flagga` (språk-emoji). Första användning: `fysik/arbete-energi-effekt/for-lararen.html`.
+
+## För läraren-sidor
+
+Sidor med lärarstöd (t.ex. videoklipp för genomgångar) heter `for-lararen.html` i områdesmappen. De **länkas inte från elevernas meny** utan bara från en egen "För läraren"-ruta på områdets index, och har `<meta name="robots" content="noindex, nofollow">`. Detta är i nuläget bara en mjuk spärr – eleverna kan nå sidan om de har länken. När vi lägger upp material som inte bör spridas fritt får vi lägga på ett riktigt kodord/lösenord (t.ex. via Cloudflare Access). Första sidan: `fysik/arbete-energi-effekt/for-lararen.html`.
+
+## Övningsprov + facit + instuderingsfrågor + checklista (tunna mallar)
+
+Dessa fyra sidtyper är tunna HTML-mallar som renderar JSON via delad JS. Klona från en färdig area (fysik: `fysik/kraft-och-rorelse/`; biologi: `biologi/genetik/`) och byt bara ut områdesnamnet i `<title>` och `<header><p>`.
+
+- `checklista.html` → `js/render-checklista.js`, data `{sections:[{title, note?, items:[]}]}`.
+- `instuderingsfragor.html` (+ `-print-elev`, `-print-larare`) → `js/render-instudering.js`, data `{groups:[{title, items:[{q,a,lines?}]}]}`.
+- `ovningsprov.html` (+ `-print`), `facit.html` (+ `-print`) → `js/render-prov.js`, data `{sections:[{title, questions:[]}]}`. Frågetyper: vanlig `{q,a,lines}` eller `{type:"match", title, left:[], right:[], a}`. OBS: render-prov escapar HTML och gör inte radbrytningar i facit – skriv räknefacit på en rad med `·` och `→`.
+- Prov-sidorna kan ha ett `formelblad` (statisk `<section class="formelblad">` före `#prov-container`), som även skrivs ut.
+
+Ett övningsprov ska träna **samma förmågor** som ett riktigt prov i området, men med **egna uppgifter och siffror** (aldrig kopiera). Facit i räkneexempel-format (formel → insättning med enheter → svar med enhet).
+
 ## Originalitet – inga kopior av lärobokstext
 
 När Claude skapar **studieguider**, **instuderingsfrågor** och **övningsprov** gäller att all text ska vara ny och självständigt formulerad. Det är inte tillåtet att kopiera eller nära citera text från läroböcker (t.ex. TEFY, Puls, Spektrum eller andra förlag).
@@ -267,6 +313,26 @@ När Claude skapar **studieguider**, **instuderingsfrågor** och **övningsprov*
 - Varje studieguide ska avslutas med en **källförteckning** (`<section class="references" id="kallor">`) med numrerade referenser i APA-liknande format, i linje med universum/studieguide.html.
 
 Syftet är att Jesper ska kunna publicera och använda materialet utan risk för anklagelse om upphovsrättsintrång.
+
+---
+
+## Räkneexempel – standardformat
+
+Alla räkneexempel (studieguider, räknekort, prov) skrivs i tre steg, och enheterna räknas med hela vägen:
+
+1. **Formeln först** (i symboler).
+2. **Insättning av mätetal med enheter.**
+3. **Svar med enhet** (på egen "Svar:"-rad).
+
+Exempel:
+
+```
+F = m · g = 20 kg · 10 N/kg = 200 N   (g = 10 N/kg)
+W = F · s = 200 N · 1,5 m = 300 Nm = 300 J
+Svar: Arbetet blir 300 J.
+```
+
+Tyngdfaktorn skrivs g = 10 N/kg. I studieguider introduceras formatet med en tydlig "Minnesregel"-ruta vid det första räkneexemplet.
 
 ---
 
