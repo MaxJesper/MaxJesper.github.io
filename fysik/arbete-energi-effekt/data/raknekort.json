@@ -75,7 +75,7 @@
           "formel": [
             "W = F · s"
           ],
-          "forklaring": "Arbetet W är energin som överförs när kraften F flyttar ett föremål sträckan s i kraftens riktning. F är i newton (N), s i meter (m) och W i joule (J)."
+          "forklaring": "Arbetet W är energin som överförs när kraften F flyttar ett föremål sträckan s i kraftens riktning. F är i newton (N) och s i meter (m), så enheten blir newtonmeter (Nm) – och eftersom 1 Nm = 1 J skrivs svaret sedan om till joule (J)."
         },
         {
           "typ": "uppgift",
@@ -84,7 +84,7 @@
             "W = F · s"
           ],
           "utrakning": [
-            "W = F · s = 20 N · 3 m = 60 J"
+            "W = F · s = 20 N · 3 m = 60 Nm = 60 J"
           ],
           "svar": "W = 60 J",
           "forklaring": "Kraft gånger sträcka ger arbetet."
@@ -96,7 +96,7 @@
             "W = F · s"
           ],
           "utrakning": [
-            "W = F · s = 500 N · 4 m = 2000 J"
+            "W = F · s = 500 N · 4 m = 2000 Nm = 2000 J"
           ],
           "svar": "W = 2000 J",
           "forklaring": "2000 J kan även skrivas 2 kJ (kilojoule)."
@@ -110,7 +110,7 @@
           ],
           "utrakning": [
             "F = m · g = 5 kg · 10 N/kg = 50 N",
-            "W = F · s = 50 N · 2 m = 100 J"
+            "W = F · s = 50 N · 2 m = 100 Nm = 100 J"
           ],
           "svar": "W = 100 J",
           "forklaring": "Räkna först ut tyngden, som är kraften du lyfter med, och sätt sedan in i arbetsformeln."
@@ -139,7 +139,7 @@
           "formel": [
             "P = W / t"
           ],
-          "forklaring": "Effekten P är energin (arbetet) W som omvandlas per tid t. W är i joule (J), t i sekunder (s) och P i watt (W). 1 W = 1 J/s."
+          "forklaring": "Effekten P är arbetet (energin) W som omvandlas per tid t. Räknas W i newtonmeter (Nm) och t i sekunder (s) blir enheten för P newtonmeter per sekund (Nm/s) – och eftersom 1 Nm = 1 J är det samma som joule per sekund (J/s), det vill säga watt (W). Alltså: 1 W = 1 J/s = 1 Nm/s."
         },
         {
           "typ": "uppgift",
@@ -148,7 +148,7 @@
             "P = W / t"
           ],
           "utrakning": [
-            "P = W / t = 600 J / 3 s = 200 W"
+            "P = W / t = 600 Nm / 3 s = 200 Nm/s = 200 J/s = 200 W"
           ],
           "svar": "P = 200 W",
           "forklaring": "Arbete delat med tid ger effekten."
@@ -160,7 +160,7 @@
             "P = W / t"
           ],
           "utrakning": [
-            "P = W / t = 1200 J / 20 s = 60 W"
+            "P = W / t = 1200 Nm / 20 s = 60 Nm/s = 60 J/s = 60 W"
           ],
           "svar": "P = 60 W",
           "forklaring": "En 60 W-lampa omvandlar alltså 60 J varje sekund."
@@ -173,7 +173,7 @@
             "ger W = P · t"
           ],
           "utrakning": [
-            "W = P · t = 50 W · 10 s = 500 J"
+            "W = P · t = 50 W · 10 s = 500 Nm = 500 J"
           ],
           "svar": "W = 500 J",
           "forklaring": "Lös ut W genom att multiplicera effekten med tiden."
@@ -767,8 +767,8 @@
           ],
           "utrakning": [
             "F = m · g = 50 kg · 10 N/kg = 500 N",
-            "W = F · s = 500 N · 6 m = 3000 J",
-            "P = W / t = 3000 J / 4 s = 750 W"
+            "W = F · s = 500 N · 6 m = 3000 Nm = 3000 J",
+            "P = W / t = 3000 Nm / 4 s = 750 Nm/s = 750 J/s = 750 W"
           ],
           "svar": "P = 750 W",
           "forklaring": "Tre steg: räkna tyngden, sedan arbetet, sedan effekten."
@@ -854,7 +854,7 @@
           ],
           "utrakning": [
             "E = P · t = 2000 W · 180 s = 360 000 J",
-            "W = m · g · h = 70 kg · 10 N/kg · 5 m = 3500 J",
+            "W = m · g · h = 70 kg · 10 N/kg · 5 m = 3500 Nm = 3500 J",
             "Antal = 360 000 J / 3500 J ≈ 102"
           ],
           "svar": "ungefär 102 personer",
@@ -879,7 +879,7 @@
             "W = F · s"
           ],
           "utrakning": [
-            "W = F · s = 45 N · 8 m = 360 J"
+            "W = F · s = 45 N · 8 m = 360 Nm = 360 J"
           ],
           "svar": "W = 360 J",
           "forklaring": "Kraft gånger sträcka ger arbetet."
@@ -932,7 +932,7 @@
             "W = E_p ger h = W / (m · g)"
           ],
           "utrakning": [
-            "W = F · s = 50 N · 8 m = 400 J",
+            "W = F · s = 50 N · 8 m = 400 Nm = 400 J",
             "h = W / (m · g) = 400 J / (20 kg · 10 N/kg) = 2,0 m"
           ],
           "svar": "h = 2,0 m",
@@ -957,7 +957,7 @@
             "P = W / t"
           ],
           "utrakning": [
-            "P = W / t = 2400 J / 6 s = 400 W"
+            "P = W / t = 2400 Nm / 6 s = 400 Nm/s = 400 J/s = 400 W"
           ],
           "svar": "P = 400 W",
           "forklaring": "Effekt är arbete per tidsenhet."
@@ -970,8 +970,8 @@
             "P = W / t"
           ],
           "utrakning": [
-            "W = m · g · h = 80 kg · 10 N/kg · 15 m = 12 000 J",
-            "P = W / t = 12 000 J / 20 s = 600 W"
+            "W = m · g · h = 80 kg · 10 N/kg · 15 m = 12 000 Nm = 12 000 J",
+            "P = W / t = 12 000 Nm / 20 s = 600 Nm/s = 600 J/s = 600 W"
           ],
           "svar": "W = 12 000 J, P = 600 W",
           "forklaring": "Räkna först arbetet (= lägesenergin), och dela sedan med tiden för att få effekten."
