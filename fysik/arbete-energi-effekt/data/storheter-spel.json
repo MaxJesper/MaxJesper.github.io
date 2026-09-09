@@ -11,9 +11,9 @@
     { "id": "hojd",         "storhet": "Höjd",               "symbol": "h", "enhet": "meter",               "enhetssymbol": "m" },
     { "id": "tid",          "storhet": "Tid",                "symbol": "t", "enhet": "sekund",              "enhetssymbol": "s" },
     { "id": "hastighet",    "storhet": "Hastighet",          "symbol": "v", "enhet": "meter per sekund",    "enhetssymbol": "m/s" },
-    { "id": "tyngdacc",     "storhet": "Tyngdacceleration",  "symbol": "g", "enhet": "newton per kilogram", "enhetssymbol": "N/kg" },
+    { "id": "tyngdacc",     "storhet": "Tyngdacceleration",  "symbol": "g", "enhet": "newton per kilogram", "enhetssymbol": "N/kg", "altEnhet": "meter per sekundkvadrat" },
     { "id": "spanning",     "storhet": "Spänning",           "symbol": "U", "enhet": "volt",                "enhetssymbol": "V" },
     { "id": "strom",        "storhet": "Strömstyrka",        "symbol": "I", "enhet": "ampere",              "enhetssymbol": "A" },
-    { "id": "verkningsgrad","storhet": "Verkningsgrad",      "symbol": "η", "symbolTypable": false, "enhet": "procent", "enhetssymbol": "%" }
+    { "id": "verkningsgrad","storhet": "Verkningsgrad",      "symbol": "η", "enhet": "procent", "enhetssymbol": "%", "excludeQuestionTypes": ["storhet_symbol", "storhet_enhet", "enhet_symbol", "symbol_enhet"] }
   ]
 }

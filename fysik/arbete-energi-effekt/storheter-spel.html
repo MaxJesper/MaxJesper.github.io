@@ -240,15 +240,24 @@
     return out;
   }
 
+  function altFieldFor(field) {
+    if (field === "enhet") return "altEnhet";
+    if (field === "enhetssymbol") return "altEnhetssymbol";
+    return null;
+  }
+
   function buildPool(mode) {
     const pool = [];
     entries.forEach(e => {
       QUESTION_TYPES.forEach(qt => {
+        if (e.excludeQuestionTypes && e.excludeQuestionTypes.includes(qt.type)) return;
         if (mode === "typed" && qt.excludeTyped && qt.excludeTyped(e)) return;
+        const altField = altFieldFor(qt.answerField);
         pool.push({
           entryId: e.id, type: qt.type,
           promptHtml: qt.prompt(e),
-          answer: e[qt.answerField], answerField: qt.answerField
+          answer: e[qt.answerField], answerField: qt.answerField,
+          altAnswer: altField ? e[altField] : undefined
         });
       });
     });
@@ -324,8 +333,10 @@
     const q = l1Questions[l1Index];
     const input = el("l1Input");
     input.disabled = true;
-    const ratt = varde !== null && normalize(varde) === normalize(q.answer);
+    const ratt = varde !== null && (normalize(varde) === normalize(q.answer) ||
+      (q.altAnswer && normalize(varde) === normalize(q.altAnswer)));
     const feedback = el("l1Feedback");
+    const facit = q.altAnswer ? (q.answer + " (eller " + q.altAnswer + ")") : q.answer;
     if (ratt) {
       l1Correct++; l1Score += L1_POINTS;
       input.classList.add("ratt-in");
@@ -334,7 +345,7 @@
     } else {
       l1Wrong++;
       input.classList.add("fel-in");
-      feedback.textContent = (varde === null ? "Tiden tog slut. " : "Fel. ") + "Rätt svar: " + q.answer;
+      feedback.textContent = (varde === null ? "Tiden tog slut. " : "Fel. ") + "Rätt svar: " + facit;
       feedback.className = "st-feedback fel";
     }
     el("l1Ratt").textContent = l1Correct;
