@@ -84,6 +84,19 @@
     .klart-ruta p { margin: 0.3rem 0; color: #333; }
 
     .start-ruta { max-width: 640px; margin: 0 auto; text-align: center; }
+
+    .tidval {
+      max-width: 420px; margin: 1.3rem auto 0; text-align: left;
+      background: var(--area-bg); border: 1px solid var(--area-line);
+      border-radius: 12px; padding: 0.9rem 1.1rem 1.1rem;
+    }
+    .tidval label { font-size: 0.98rem; color: #333; }
+    .tidval .tidval-siffra { color: var(--area); font-weight: 800; }
+    .tidval input[type="range"] {
+      width: 100%; margin: 0.6rem 0 0.3rem; accent-color: var(--area);
+    }
+    .tidval-skala { display: flex; justify-content: space-between; font-size: 0.78rem; color: #888; }
+
     .hidden { display: none; }
   </style>
 </head>
@@ -111,6 +124,17 @@
       <li><strong>Nivå 1 – Skriv in:</strong> skriv rätt storhet, storhetsförkortning, enhet eller enhetsförkortning innan tiden tar slut.</li>
       <li><strong>Nivå 2 – Klicka snabbt:</strong> klicka på rätt svar. Det går gradvis snabbare och varje rätt svar ger fler poäng – men svarar du inte i tid visas facit och du missar poängen.</li>
     </ul>
+
+    <div class="tidval">
+      <label for="tidSlider">
+        <strong>Tid per fråga i nivå 1:</strong>
+        <span class="tidval-siffra" id="tidVarde">12</span> s →
+        <span class="tidval-siffra" id="poangVarde">10</span> poäng/rätt
+      </label>
+      <input type="range" id="tidSlider" min="5" max="30" step="1" value="12" />
+      <div class="tidval-skala"><span>Kort tid, fler poäng</span><span>Lång tid, färre poäng</span></div>
+    </div>
+
     <div class="spel-knappar">
       <button id="startBtn" type="button" class="primar">Starta nivå 1</button>
     </div>
@@ -180,7 +204,14 @@
 <script>
   const JSON_PATH = "./data/storheter-spel.json";
 
-  const L1_COUNT = 10, L1_TIME_MS = 12000, L1_POINTS = 10;
+  const L1_COUNT = 10, L1_TIME_MIN_S = 5, L1_TIME_MAX_S = 30, L1_TIME_DEFAULT_S = 12;
+  let l1TimeMs = L1_TIME_DEFAULT_S * 1000;
+  let l1Points = beraknaPoang(L1_TIME_DEFAULT_S);
+
+  function beraknaPoang(sekunder) {
+    // Kortare tid ger fler poäng, längre tid ger färre – avrundat till närmaste heltal, aldrig under 2.
+    return Math.max(2, Math.round(120 / sekunder));
+  }
   const L2_COUNT = 12, L2_TIME_START_MS = 9000, L2_TIME_FLOOR_MS = 1800, L2_POINTS_STEP = 10;
 
   let entries = [];
@@ -301,6 +332,10 @@
 
   // ---------- NIVÅ 1 ----------
   function startLevel1() {
+    const sekunder = Number(el("tidSlider").value) || L1_TIME_DEFAULT_S;
+    l1TimeMs = sekunder * 1000;
+    l1Points = beraknaPoang(sekunder);
+    try { localStorage.setItem("storheterTidS", String(sekunder)); } catch (e) {}
     const pool = buildPool("typed");
     l1Questions = pool.slice(0, L1_COUNT);
     l1Index = 0; l1Score = 0; l1Correct = 0; l1Wrong = 0;
@@ -322,7 +357,7 @@
     input.disabled = false;
     el("l1Feedback").textContent = "";
     el("l1Feedback").className = "st-feedback";
-    startTimer(L1_TIME_MS, el("l1Bar"), el("l1TidText"), () => l1Svara(null));
+    startTimer(l1TimeMs, el("l1Bar"), el("l1TidText"), () => l1Svara(null));
     setTimeout(() => input.focus(), 30);
   }
 
@@ -338,9 +373,9 @@
     const feedback = el("l1Feedback");
     const facit = q.altAnswer ? (q.answer + " (eller " + q.altAnswer + ")") : q.answer;
     if (ratt) {
-      l1Correct++; l1Score += L1_POINTS;
+      l1Correct++; l1Score += l1Points;
       input.classList.add("ratt-in");
-      feedback.textContent = "Rätt! +" + L1_POINTS + " p";
+      feedback.textContent = "Rätt! +" + l1Points + " p";
       feedback.className = "st-feedback ratt";
     } else {
       l1Wrong++;
@@ -460,6 +495,14 @@
   el("startNiva2Btn").addEventListener("click", startLevel2);
   el("omBtn").addEventListener("click", () => { showView("startVy"); });
 
+  function uppdateraTidval() {
+    const slider = el("tidSlider");
+    const sekunder = Number(slider.value);
+    el("tidVarde").textContent = sekunder;
+    el("poangVarde").textContent = beraknaPoang(sekunder);
+  }
+  el("tidSlider").addEventListener("input", uppdateraTidval);
+
   window.addEventListener("load", async () => {
     try {
       const res = await fetch(JSON_PATH, { cache: "no-store" });
@@ -467,6 +510,13 @@
       const data = await res.json();
       entries = Array.isArray(data.entries) ? data.entries : [];
       if (data.intro) el("intro").textContent = data.intro;
+      let sparadTid = L1_TIME_DEFAULT_S;
+      try {
+        const lagrad = Number(localStorage.getItem("storheterTidS"));
+        if (lagrad && lagrad >= L1_TIME_MIN_S && lagrad <= L1_TIME_MAX_S) sparadTid = lagrad;
+      } catch (e) {}
+      el("tidSlider").value = sparadTid;
+      uppdateraTidval();
       showView("startVy");
     } catch (err) {
       console.error(err);
