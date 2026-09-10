@@ -83,6 +83,14 @@
     .deepen > summary::after { content: " ▾"; }
     .deepen[open] > summary::after { content: " ▴"; }
     .deepen > summary ~ * { margin-top: 0.6rem; }
+    .wonder { background:#f0fdfa; border-left:4px solid #0d9488; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .wonder > summary { cursor:pointer; font-weight:600; color:#115e59; list-style:none; }
+    .wonder > summary::-webkit-details-marker { display:none; }
+    .wonder > summary::before { content: "» Fundera vidare: "; }
+    .wonder > summary::after { content: " ▾"; }
+    .wonder[open] > summary::after { content: " ▴"; }
+    .wonder > summary ~ * { margin-top: 0.6rem; }
+    .wonder .frontier { font-size:0.85rem; color:#0f766e; font-style:italic; border-top:1px dashed #99f6e4; margin-top:0.5rem; padding-top:0.5rem; }
 
     .next-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; margin-top: 1rem; }
     .next-steps a {
@@ -110,7 +118,7 @@
     .references li { margin-bottom: 0.4rem; }
     .references a { color: #6d28d9; }
 
-    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+    details.milestone, details.deepen, details.wonder { scroll-margin-top: 0.75rem; }
     @media (max-width: 520px) { main { font-size: 1.05em; } .milestone .m-title { font-size: 1rem; } }
 
     .mol-fig { margin: 1rem 0; overflow-x: auto; }
@@ -221,6 +229,12 @@
           <summary>Nanorör och grafen – framtidens material?</summary>
           <p>Rullar man ihop ett enda lager av grafit – bara en atom tjockt – får man <strong>grafen</strong>. Ett sådant enskilt lager av kolatomer i ett sexkantigt mönster upptäcktes vara både mycket starkt och en utmärkt ledare av el och värme; upptäckten belönades med Nobelpriset i fysik 2010.<a class="cite" href="#ref-4">[4]</a> Rullar man i stället ihop grafenlagret till ett rör får man ett <strong>nanorör</strong>: extremt tunna, ihåliga rör där väggen bara är en atom tjock. Kolnanorör är starkare än diamant och samtidigt betydligt lättare än stål – till och med lättare än bomull.<a class="cite" href="#ref-5">[5]</a> Forskare undersöker hur nanorör och grafen kan användas i allt från lättare sportutrustning och byggmaterial till snabbare elektronik.</p>
         </details>
+        <details class="wonder">
+          <summary>Kan grafen leda till supraledning vid rumstemperatur?</summary>
+          <p>En elev undrade: om kolnanorör kan bestå av rör innanför rör (flerväggiga nanorör), vad håller egentligen skikten samman? Svaret är enkelt: varje kolatom i ett grafenlager bildar bara tre bindningar &ndash; till sina tre grannar i samma sexkantiga lager. Lagren i sig är inte kemiskt bundna till varandra alls, utan hålls ihop av betydligt svagare <strong>van der Waals-krafter</strong>. Det är därför grafit känns fett och lagren lätt glider isär (blyertspennan!) &ndash; och det var precis den egenskapen som gjorde det möjligt att med vanlig tejp dra loss enstaka lager grafen ur grafit, vilket gav Nobelpriset i fysik 2010.<a class="cite" href="#ref-4">[4]</a></p>
+          <p>Forskare har upptäckt något som verkar nästan magiskt: lägger man två lager grafen ovanpå varandra och vrider det ena lagret en mycket exakt, liten vinkel mot det andra &ndash; ungefär 1,1°, den s.k. <strong>"magiska vinkeln"</strong> &ndash; förändras materialets egenskaper dramatiskt. Vid precis den vinkeln, och vid extremt låg temperatur (nära absoluta nollpunkten), blir materialet en <strong>supraledare</strong>: ström flyter genom det helt utan motstånd, utan att någon energi går förlorad som värme. Upptäckten gjordes 2018 och väckte enorm uppmärksamhet i fysikvärlden.<a class="cite" href="#ref-8">[8]</a></p>
+          <p class="frontier">Forskningsfronten: i dag fungerar det bara vid extrem kyla, men fysikens stora dröm är ett material som är supraledande redan vid rumstemperatur. Lyckas man med det skulle det kunna förändra samhället i grunden &ndash; elledningar utan energiförluster hur långa de än är, snabbtåg som svävar utan dyr kylning, betydligt effektivare datorer. Ingen har lyckats ännu, men det vridna grafenet är ett av de mest lovande spåren forskare haft på flera decennier för att förstå <em>hur</em> supraledning egentligen uppstår &ndash; kunskap som en dag kan hjälpa till att hitta eller konstruera ett sådant material. Vad tror du skulle krävas för att ta steget från nära absoluta nollpunkten till rumstemperatur? Vilka hinder tror du forskarna stöter på?</p>
+        </details>
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m3"><span class="n-label">Fortsätt</span>Alkanerna</a>
@@ -302,6 +316,21 @@
         <details class="deepen">
           <summary>Ringformiga och aromatiska kolväten</summary>
           <p>Kolatomerna kan också kopplas ihop till <strong>ringar</strong> i stället för kedjor. Ett viktigt exempel är <strong>bensen</strong>, <span class="formula">C₆H₆</span>, en ring av sex kolatomer. Sådana ringformiga kolväten kallas ofta <strong>aromatiska</strong>. Många av dem, bland annat bensen, är cancerframkallande och måste hanteras försiktigt.</p>
+        </details>
+        <details class="deepen">
+          <summary>Plast &ndash; långa kedjor av alkener</summary>
+          <p>Många vanliga plaster är polymerer byggda just på det sätt som beskrivs ovan: dubbelbindningen i en alken öppnas, och tiotusentals molekyler länkas samman till en enda lång kedja. Eten ger på så sätt <strong>polyeten</strong> (PE) &ndash; världens vanligaste plast &ndash; och samma princip (<strong>additionspolymerisation</strong>) ger propen till <strong>polypropen</strong> (PP), vinylklorid till <strong>PVC</strong> och styren till <strong>polystyren</strong> (PS). Andra plaster, till exempel PET, bildas i stället genom <strong>kondensationspolymerisation</strong> av två olika molekyler.</p>
+          <figure>
+            <a href="/images/kemi/kol-och-kolforeningar/plast-fordjupning.pdf" target="_blank" rel="noopener">
+              <img src="/images/kemi/kol-och-kolforeningar/plast-fordjupning-omslag.jpg" alt="Faktablad: Vanliga plaster &ndash; strukturformler, egenskaper, andel av världsproduktionen, återvinning och miljöpåverkan" />
+            </a>
+            <figcaption><strong>Vanliga plaster.</strong> Ett faktablad om de sex vanligaste plasttyperna (PE, PP, PVC, PS, PET, PUR): monomerens strukturformel, egenskaper och användning, andel av världsproduktionen, återvinning och miljöpåverkan. Klicka på bilden för att öppna hela faktabladet som PDF.<br><span style="font-size:0.85rem;color:#777;font-style:italic;">Källa för andel av världsproduktionen: PlasticsEurope, <em>Plastics &ndash; the Facts 2025</em> (data för 2024).<a href="#ref-7" class="cite">[7]</a></span></figcaption>
+          </figure>
+        </details>
+        <details class="deepen">
+          <summary>Halogenkolväten och ozonlagret</summary>
+          <p>Om en eller flera väteatomer i ett kolväte byts ut mot en <strong>halogen</strong> (fluor, klor, brom eller jod) får man ett <strong>halogenkolväte</strong>. Ett känt exempel är <strong>klorfluorkarboner</strong>, förkortat <strong>CFC</strong> eller freoner, som under 1900-talet användes i stor skala som köldmedium i kylskåp och frysar och som drivgas i sprayflaskor.</p>
+          <p>CFC är mycket stabilt nere vid marken, men högt uppe i stratosfären bryts molekylerna sönder av UV-strålning från solen. Då frigörs kloratomer som sätter igång en kedjereaktion där ozon (O₃) omvandlas till vanligt syre (O₂) &ndash; utan att kloratomen själv förbrukas kan den fortsätta bryta ner ozon om och om igen. Kemisterna Mario Molina och Sherwood Rowland varnade redan 1974 för att detta höll på att tunna ut ozonlagret, som annars skyddar allt liv på jorden från skadlig UV-strålning; upptäckten belönades (tillsammans med Paul Crutzen) med Nobelpriset i kemi 1995.<a href="#ref-9" class="cite">[9]</a> Sedan Montrealprotokollet 1987 förbjöd CFC i land efter land har ozonlagret sakta börjat återhämta sig.<a href="#ref-10" class="cite">[10]</a></p>
         </details>
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
@@ -581,6 +610,10 @@
         <li id="ref-4">Kungl. Vetenskapsakademien. <em>Nobelpriset i fysik 2010: Geim &amp; Novoselov</em> (upptäckten av grafen). <a href="https://www.nobelprize.org/prizes/physics/2010/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
         <li id="ref-5">Forskning.se. <em>Kolnanorör – det nya svarta.</em> <a href="https://forskning.se/2022/01/17/kolnanoror-det-nya-svarta/" target="_blank" rel="noopener">forskning.se</a></li>
         <li id="ref-6">Giftinformationscentralen. <em>Metanol – nedbrytning, symtom och behandling.</em> <a href="https://giftinformation.se/lakare/substanser/metanol/" target="_blank" rel="noopener">giftinformation.se</a></li>
+        <li id="ref-7">PlasticsEurope. <em>Plastics – the Facts 2025</em> (global efterfrågan fördelad på polymertyp, data för 2024).</li>
+        <li id="ref-8">Cao, Y. et al. <em>Unconventional superconductivity in magic-angle graphene superlattices.</em> Nature 556, 43–50 (2018). <a href="https://doi.org/10.1038/nature26160" target="_blank" rel="noopener">doi.org/10.1038/nature26160</a></li>
+        <li id="ref-9">Kungl. Vetenskapsakademien. <em>Nobelpriset i kemi 1995: Crutzen, Molina &amp; Rowland</em> (nedbrytningen av ozonskiktet). <a href="https://www.nobelprize.org/prizes/chemistry/1995/press-release/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-10">Naturvårdsverket. <em>Ozonskiktet.</em> <a href="https://www.naturvardsverket.se/amnesomraden/luft/ozonskiktet/" target="_blank" rel="noopener">naturvardsverket.se</a></li>
       </ol>
       <p style="font-size:0.82rem;color:#777;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats.</p>
     </section>

@@ -246,6 +246,11 @@
     });
   }
 
+  // Exponera för fristående väljare (t.ex. concept-lang-selector.js) som vill
+  // återanvända hämtning/cache av begrepp-JSON utan att styra TTS-språket.
+  window.LangSelector = window.LangSelector || {};
+  window.LangSelector.loadBegreppForLang = loadBegreppForLang;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', render);
   } else {

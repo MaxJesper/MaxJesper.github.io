@@ -72,6 +72,8 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 - Audio/lyssna (bara magnetism); korsord (saknas elektricitet, universum, syror); laborationer; träna-med-ai; bildstöd.
 
+- **Begreppsöversättning vid läsning (inline i löptexten, inkl. termer-nivån för icke-begrepp) — BESLUTAT sep 2026 att spridas till alla färdiga och framtida områden** (just nu bara magnetism-induktion). Viktig USP (se om-plattformen.html) – flexibiliteten att möta varje elev på sitt eget språk begrepp för begrepp är ett skäl att föredra digitalt läromedel för elever med annat modersmål än svenska. Se CLAUDE.md, avsnitt "Begreppsöversättning vid läsning", för hur mönstret ska appliceras per område.
+
 ### Konkreta byggen
 
 - Fanerozoikum-frågespel (biologi/evolution): porta från kraft-och-rorelse/fragespel.html (chansa/säkra, timer, poäng, lösen 'JTo').

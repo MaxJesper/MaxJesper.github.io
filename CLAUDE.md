@@ -227,6 +227,72 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 ---
 
+## Begreppsöversättning vid läsning (inline i löptexten) — PROTOTYP, sep 2026
+
+Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda ord *inne i studieguidens löptext* går att klicka på och ger en popup, utan att eleven lämnar sidan. Två nivåer, med olika djup, se nästa avsnitt för den lättviktiga nivån:
+
+1. **Kärnbegrepp** (de ~15 i områdets begreppslista/checklista) – full popup: översättning + förklaring + länk. Bygger på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan fanns – ingen ny datakälla för dessa.
+2. **Termer** (övriga fetmarkerade ord, `<strong class="term">`, som INTE är kärnbegrepp) – lättviktig popup: BARA översättning, ingen förklaring, inte med i checklistan. Se separat avsnitt nedan.
+
+**Status (kärnbegrepp):** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har en klickbar förekomst VID SIN FÖRSTA FETMARKERADE nämning i respektive milstolpe (dvs. samma ställe där `<strong class="term">` redan introducerar begreppet). Jesper testade och beslutade den slutgiltiga regeln (sep 2026): kärnbegreppen förblir som de är (fortsätter poppa upp, full förklaring). Övriga fetmarkerade ord ska visa BARA en översättning vid klick, utan att läggas till i begreppslistan – se "Termer"-avsnittet nedan för hur det är löst. Jesper har beslutat (sep 2026) att funktionen (både kärnbegrepp- och termer-nivån) ska spridas till alla färdiga och framtida områden – se _CHECKLISTA_omraden.md, avsnitt "Sprid funktioner", för status per område. Motivering: viktig USP (se om-plattformen.html) – ett digitalt läromedel kan möta varje elev på sitt eget språk begrepp för begrepp, vilket väger tungt för elever med annat modersmål än svenska, även om den pedagogiska trenden i övrigt talar för tryckta läromedel.
+
+**Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
+
+**Filer:**
+- `js/concept-lang-selector.js` – ny, oberoende väljare. Egen `localStorage`-nyckel `site.concept-lang`. Återanvänder `window.LangSelector.loadBegreppForLang(lang, begreppBase)` (exponerad från `language-selector.js`) för hämtning/cache av kärnbegrepps-JSON, men har DESSUTOM sin egen separata fetch/cache för termer-JSON (se nedan) – påverkar ALDRIG TTS-rösten.
+- `js/language-selector.js` – oförändrad i sak, bara exponerar `window.LangSelector.loadBegreppForLang` så den nya väljaren kan återanvända hämtningslogiken. Medvetet INTE utökad med termer-logik, för att undvika regressionsrisk i den redan fungerande TTS-språkväljaren.
+- `js/concepts-popup.js` – ny CSS-klass `.concept-inline` (klickbart understruket ord, samma hover-färg som `.concept-btn`). Internt två separata index: `conceptsCore` (kärnbegrepp) och `conceptsTerms` (termer), en `lookup(name)`-hjälpfunktion som kollar båda. Om ett ord inte finns i någotdera (t.ex. en termer-popup innan ett språk är valt) gör klicket inget – ingen krasch.
+
+**Markup per område (i `studieguide.html`):**
+```html
+<div class="lang-selector-mount"></div>
+<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+```
+och i själva löptexten, ordagrant matchande `namn`-fältet i respektive JSON (attributvärdet, inte den synliga ordformen – böjda/gemena former i texten är okej):
+```html
+<span class="concept-inline" data-concept="Exakt namn som i begrepp.json eller termer.json">ordet i texten</span>
+```
+Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns inte `window.LangSelector` än):
+```html
+<script src="/js/concepts-popup.js"></script>
+<script src="/js/concept-lang-selector.js"></script>
+<script>
+  fetch("./data/begrepp.json", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.length) return;
+      window.BEGREPP = data;
+      var savedConceptLang = 'sv-SE';
+      try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+      if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+    })
+    .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+</script>
+```
+Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist. Ingen motsvarande svensk bas-fetch behövs för termer (se nedan – på svenska ska termer-klick inte göra något).
+
+**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma steg: mount-div med båda data-attributen, script-inklusion, wrapa kärnbegrepp OCH termer i löptexten (se till att ALLA kärnbegrepp i områdets `data/begrepp.json` får minst en förekomst vid sin första fetmarkering).
+
+### Fetmarkerade termer utan egen definition ("termer")
+
+Jespers slutgiltiga beslut (sep 2026), ordagrant: "de begrepp som är viktiga för förståelsen (de vi redan valt ut) ska vara kvar och de poppar också upp i texten. De fetstilta ord som inte tillhör dessa vill jag ska översättas vid popupen, men behöver inte ha en tillhörande förklaring i övrigt och behöver inte vara med i begreppsordlistan." Alltså: fetstil ska konsekvent betyda "viktigt, klickbart" – men bara kärnbegreppen får full förklaring; övriga fetmarkerade ord får bara en översättning.
+
+**Datastruktur:** `data/termer.json` (svensk bas – finns INTE som fil, behövs inte eftersom svenska aldrig visar någon termer-popup, se nedan) + `data/termer.<prefix>.json` per språk (samma 10 prefix som begrepp: am/ar/bs/en/es/fa/pl/ps/so/ur), format:
+```json
+[{ "namn": "rotor", "namn_native": "rotor" }, ...]
+```
+Bara `namn` (måste matcha `data-concept`-attributets värde exakt) och `namn_native` – ingen `definition`, ingen `anchor`.
+
+**Beteende på svenska (`sv-SE`, dvs. inget språk valt):** klick på en termer-markerad ord gör INGET (ingen popup) – `conceptsTerms` är tom tills ett språk väljs. Detta är ett medvetet, godkänt beteende (inte en bugg) eftersom en term per definition inte har någon svensk "översättning" att visa.
+
+**Hur `concept-lang-selector.js` hanterar termer:** helt separat kod från kärnbegreppen (rör INTE `language-selector.js`). Vid språkbyte: om `data-termer-base` finns på mount-diven, hämtas (och cachas per språk) `{termerBase}.{prefix}.json`, och `window.BEGREPPPopup.updateTermer(data)` anropas. Samma kapplöpningsskydd som för kärnbegrepp (kollar att valt språk fortfarande är detsamma innan datan appliceras).
+
+**Pilot:** `fysik/magnetism-induktion/studieguide.html`, 22 termer identifierade genom att gå igenom samtliga `<strong class="term">`-förekomster och plocka bort generiska/beskrivande fraser (t.ex. "lika poler stöter bort varandra") som inte är egna vokabulärord: magnetiserat, keramiska magneter, neodymmagneter, högerhandsregeln, Lorentzkraften, nordände, sydände, antalet varv, kommutator, rotor, stator, induktionsspänning, inducerad ström, likström, primärspolen, sekundärspolen, uppstegringstransformator, stamnätet, nedstegringstransformatorer, fas, nolla, skyddsjord. Dessutom länkades en extra bar förekomst av "nordpol" (i Kompassen-avsnittet, M3) till det BEFINTLIGA kärnbegreppet `data-concept="Nordpol och sydpol"` istället för att bli en egen termer-post. Översättningarna (särskilt amhariska, pashto och somaliska) är AI-genererade utan inbyggd verifiering – lägre konfidens än för kärnbegreppens redan etablerade begrepp.<prefix>.json-filer; värt att stämma av med modersmålstalare vid tillfälle, men inget som blockerar utrullning eftersom termer-popupen bara är ett litet extra stöd, inte huvudförklaringen.
+
+**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma mönster: identifiera icke-kärnbegrepp `.term`-ord per område, skapa `data/termer.<prefix>.json`, wrapa i löptexten.
+
+---
+
 ## Lyssna-funktion (studieguide)
 
 Alla `studieguide.html` ska ha en lyssna-funktion som lägger till en "🔈 Lyssna"-knapp i varje milstolpe och fördjupning.
@@ -267,6 +333,24 @@ Lägg inspelade filer i `audio/`-mappen i resp. område:
 - `m1-fordj.mp3`, … (fördjupningsavsnitt, valfria)
 
 Tills filer finns används syntetisk röst (TTS) som standard.
+
+---
+
+## Helöversättning av studieguidetexter + flerspråkig uppläsning (PLANERAD, EJ PÅBÖRJAD)
+
+I dag täcker flerspråksstödet bara begreppen (`data/begrepp.<prefix>.json`). Själva löptexten i studieguiden finns bara på svenska, och `lyssna.js` läser bara upp svensk text (inspelad mp3 eller annars Web Speech API på `sv-SE`). Detta är en medveten SENARE fas: påbörjas först när ett områdes svenska text är helt slutgranskad och godkänd av Jesper (se `pedagogik.md`). Det här avsnittet dokumenterar HUR det ska göras när den fasen inleds, så inget går förlorat mellan sessioner.
+
+**Steg 1 – datastruktur för översatt löptext.** Ny datafil per område och språk, t.ex. `data/studieguide.<prefix>.json`, som speglar milstolpestrukturen (`m1`, `m2`, …) och innehåller den ÖVERSATTA brödtexten milstolpe för milstolpe (inte bara begrepp). Varje textblock som ska kunna bytas ut behöver ett stabilt attribut att hänga översättningen på, t.ex. `data-i18n-block="m3-text"` på respektive `<div>`/`<p>`-grupp i studieguiden.
+
+**Steg 2 – generering av översättningen.** Automatöversättning (AI) av den redan godkända svenska texten, milstolpe för milstolpe. Jesper förväntas INTE läsa igenom hela textmassan i alla språk ord för ord, men bör göra stickprov – särskilt av facktermer. Viktigast: facktermerna i den översatta löptexten måste matcha EXAKT de redan godkända översättningarna i `data/begrepp.<prefix>.json` (annars får eleven två olika ord för samma begrepp – ett i löptexten, ett i begreppspopupen).
+
+**Steg 3 – rendering.** Klientsidesväxling, samma mönster som begreppen redan använder: vid språkbyte i `lang-selector-mount` hämtas `data/studieguide.<prefix>.json` och byter ut brödtexten i varje märkt textblock. Enklare (men tyngre DOM) alternativ: rendera båda språkversionerna i HTML från start och toggla synlighet med CSS/JS. Föredra klientsidesväxling via fetch – konsekvent med hur begreppen redan hanteras.
+
+**Steg 4 – TTS-koppling.** `lyssna.js` måste uppdateras så att när ett annat språk än svenska är valt OCH en översatt textfil finns för området, läses den ÖVERSATTA texten upp med en röst som matchar språkkoden (samma `LANG_PREFIX`-mappning som redan finns i `language-selector.js`). Saknas översatt text eller röst: falla tillbaka till nuvarande beteende (svensk röst läser svensk text) – aldrig fel röst på fel språk.
+
+**Prioritering:** börja med språk som redan har begrepp-översättningar och tydlig efterfrågan i klassen (t.ex. arabiska, somaliska, urdu), inte alla ~11 språk samtidigt.
+
+**Relaterat, redan byggt:** se "Begreppsöversättning vid läsning" ovan – den funktionen löser ett näraliggande men mindre problem (enskilda begreppsord) och kräver INTE denna helöversättning. De två funktionerna är oberoende av varandra och kan användas var för sig.
 
 ---
 
@@ -333,6 +417,37 @@ Svar: Arbetet blir 300 J.
 ```
 
 Tyngdfaktorn skrivs g = 10 N/kg. I studieguider introduceras formatet med en tydlig "Minnesregel"-ruta vid det första räkneexemplet.
+
+---
+
+## Kontrollfrågor med klicka-för-svar (inline i löptexten) — STÅENDE REGEL, sep 2026
+
+Idé hämtad från en konkurrentanalys av naturvetenskap.se (sep 2026): de har korta övningsfrågor direkt i löptexten med ett dolt facit man klickar fram, som ett lågtröskel-sätt att kontrollera sig själv utan att lämna sidan. Detta ska föras in som ett KOMPLEMENT (inte ersättning) till de befintliga instuderingsfrågorna/övningsproven, specifikt i områden där beräkningar/formler ingår och där en snabb kontrollfråga direkt efter ett räkneexempel ökar förståelsen.
+
+**Bekräftade kandidatområden (Jespers egna, sep 2026):** fysik/arbete-energi-effekt, fysik/kraft-och-rorelse, fysik/tryck. Fler områden kan tillkomma — bedöm område för område (samma princip som undantaget för räknekort ovan: inför inte överallt per automatik).
+
+**Mönster:** ett `<details class="check-q">`-block direkt efter ett räkneexempel eller ett nyckelresonemang i studieguidens löptext, med frågan som `<summary>` och facit dolt i en `<div class="svar">` som visas vid klick.
+
+CSS (samma `<style>`-block som övriga komponenter, egen färg — blå, skild från gula `.deepen` och orange `.fact-box` så de tre inte blandas ihop):
+```css
+.check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+.check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+.check-q > summary::-webkit-details-marker { display:none; }
+.check-q > summary::before { content: "✓ Kontrollera dig själv: "; }
+.check-q > summary::after { content: " (visa svar)"; font-weight:400; color:#64748b; }
+.check-q[open] > summary::after { content: " (dölj svar)"; }
+.check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+```
+
+HTML:
+```html
+<details class="check-q">
+  <summary>Hur stort blir arbetet om en kraft på 50 N flyttar en låda 3 m?</summary>
+  <div class="svar"><strong>Svar:</strong> W = F · s = 50 N · 3 m = 150 J</div>
+</details>
+```
+
+Inte gjort ännu i något område — detta är påminnelseregeln som ska följas nästa gång vi bygger/reviderar arbete-energi-effekt, kraft-och-rorelse eller tryck (och andra beräkningstunga områden vi stöter på).
 
 ---
 
