@@ -21,21 +21,32 @@
  */
 
 (function () {
-  var concepts = {};
+  // conceptsCore = de riktiga begreppen (data/begrepp.json, i checklistan).
+  // conceptsTerms = lättviktiga "termer" (fetmarkerade ord som INTE är begrepp) –
+  // bara namn + ev. namn_native (översättning), ingen definition/ankare.
+  // Se concept-lang-selector.js och CLAUDE.md ("Fetmarkerade termer utan egen definition").
+  var conceptsCore = {};
+  var conceptsTerms = {};
 
   function buildIndex(arr) {
-    concepts = {};
+    var idx = {};
     (arr || []).forEach(function (item) {
-      concepts[item.namn] = item;
+      idx[item.namn] = item;
     });
+    return idx;
+  }
+
+  function lookup(name) {
+    return conceptsCore[name] || conceptsTerms[name];
   }
 
   // Initiera med svenska data
-  buildIndex(window.BEGREPP);
+  conceptsCore = buildIndex(window.BEGREPP);
 
-  // Publik API – anropas av language-selector.js vid språkbyte
+  // Publik API – anropas av language-selector.js/concept-lang-selector.js vid språkbyte
   window.BEGREPPPopup = {
-    update: function (arr) { buildIndex(arr); }
+    update: function (arr) { conceptsCore = buildIndex(arr); },
+    updateTermer: function (arr) { conceptsTerms = buildIndex(arr); }
   };
 
   // ── CSS ────────────────────────────────────────────────────────────────────
@@ -55,6 +66,7 @@
     '.cm-title-native{margin:0 0 .6rem;font-size:.9rem;color:#666;font-style:italic;}',
     '.cm-title-native:empty{display:none}',
     '.cm-definition{margin:0 0 .9rem;font-size:.97rem;line-height:1.6;color:#1f2937}',
+    '.cm-definition:empty{display:none}',
     '.cm-link{display:inline-block;font-size:.88rem;font-weight:600;',
     'color:var(--area-strong,#1e3466);text-decoration:underline;text-underline-offset:2px}',
     '.cm-link.hidden{display:none}',
@@ -89,11 +101,11 @@
   var prevFocus;
 
   function openModal(name) {
-    var item = concepts[name];
+    var item = lookup(name);
     if (!item) return;
     titleEl.textContent    = name;
     titleNatEl.textContent = item.namn_native || '';
-    defEl.textContent      = item.definition;
+    defEl.textContent      = item.definition || '';
     if (item.anchor) {
       linkEl.href = item.anchor;
       linkEl.classList.remove('hidden');

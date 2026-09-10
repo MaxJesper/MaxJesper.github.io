@@ -13,8 +13,20 @@
  * inlästa FÖRE denna fil (återanvänder window.BEGREPPPopup respektive
  * window.LangSelector.loadBegreppForLang för hämtning/cache av begrepp-JSON).
  *
+ * Hanterar TVÅ separata datakällor, båda valfria men begrepp-base krävs:
+ *  - data-begrepp-base: de riktiga begreppen (i checklistan), rik popup
+ *    (namn + översättning + definition + länk). Delad kod med den vanliga
+ *    TTS-språkväljaren via window.LangSelector.loadBegreppForLang.
+ *  - data-termer-base: fetmarkerade ord i löptexten som INTE är begrepp
+ *    (t.ex. "Rotor", "Högerhandsregeln") – lättviktig popup med BARA namn +
+ *    översättning, ingen definition, inte med i begreppslistan/checklistan.
+ *    Filformat: [{ "namn": "Rotor", "namn_native": "Rotor" }, ...] – samma
+ *    fält som begrepp.json men utan definition/anchor.
+ *
  * Montering (i studieguide.html, bredvid den vanliga lang-selector-mount):
- *   <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+ *   <div class="concept-lang-selector-mount"
+ *        data-begrepp-base="./data/begrepp"
+ *        data-termer-base="./data/termer"></div>
  */
 (function () {
   var STORAGE_KEY = 'site.concept-lang';
@@ -32,6 +44,25 @@
     { code: 'es-ES', label: '🇪🇸 Spanska (Español)' },
     { code: 'ur-PK', label: '🇵🇰 Urdu (اردو)' }
   ];
+
+  // Samma prefix-mappning som language-selector.js använder för begrepp.<prefix>.json –
+  // duplicerad här (inte importerad) så att denna fil kan hämta termer.<prefix>.json
+  // helt oberoende, utan att röra language-selector.js.
+  var LANG_PREFIX = {
+    'am-ET': 'am',
+    'ar-SA': 'ar',
+    'bs':    'bs',
+    'en-GB': 'en',
+    'es-ES': 'es',
+    'fa':    'fa',
+    'pl-PL': 'pl',
+    'ps-AF': 'ps',
+    'so':    'so',
+    'ur-PK': 'ur'
+  };
+
+  // Cache: termerCache["<termerBase>|<prefix>"] = redan hämtad JSON-array
+  var termerCache = {};
 
   var CSS = [
     '.concept-lang-wrap{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;',
@@ -58,13 +89,46 @@
     try { localStorage.setItem(STORAGE_KEY, code); } catch (e) {}
   }
 
-  function apply(code, begreppBase) {
-    if (!begreppBase) return;
-    if (!window.LangSelector || !window.LangSelector.loadBegreppForLang) {
-      console.warn('[concept-lang] language-selector.js måste laddas före concept-lang-selector.js.');
+  function applyTermer(code, termerBase) {
+    if (!termerBase) return;
+    if (!window.BEGREPPPopup || !window.BEGREPPPopup.updateTermer) return;
+
+    if (code === 'sv-SE') {
+      // Ingen översättning valt – töm termer-bucketen (klick på fetmarkerade
+      // icke-begrepp gör då inget, vilket är okej).
+      window.BEGREPPPopup.updateTermer([]);
       return;
     }
-    window.LangSelector.loadBegreppForLang(code, begreppBase);
+
+    var prefix = LANG_PREFIX[code];
+    if (!prefix) return;
+
+    var cacheKey = termerBase + '|' + prefix;
+    if (termerCache[cacheKey]) {
+      if (getSaved() === code) window.BEGREPPPopup.updateTermer(termerCache[cacheKey]);
+      return;
+    }
+
+    fetch(termerBase + '.' + prefix + '.json')
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (data) {
+        termerCache[cacheKey] = data;
+        // Skydd mot race: applicera bara om eleven fortfarande har detta språk valt
+        // (kan ha hunnit byta språk igen medan hämtningen pågick).
+        if (getSaved() === code) window.BEGREPPPopup.updateTermer(data);
+      })
+      .catch(function () { /* tyst – termer är ett tillägg, inte kritiskt */ });
+  }
+
+  function apply(code, begreppBase, termerBase) {
+    if (begreppBase) {
+      if (!window.LangSelector || !window.LangSelector.loadBegreppForLang) {
+        console.warn('[concept-lang] language-selector.js måste laddas före concept-lang-selector.js.');
+      } else {
+        window.LangSelector.loadBegreppForLang(code, begreppBase);
+      }
+    }
+    applyTermer(code, termerBase);
   }
 
   function render() {
@@ -78,6 +142,7 @@
       mount.dataset.rendered = '1';
 
       var begreppBase = mount.dataset.begreppBase;
+      var termerBase = mount.dataset.termerBase;
 
       var wrap = document.createElement('div');
       wrap.className = 'concept-lang-wrap';
@@ -103,7 +168,7 @@
 
       sel.addEventListener('change', function () {
         save(sel.value);
-        apply(sel.value, begreppBase);
+        apply(sel.value, begreppBase, termerBase);
       });
 
       wrap.appendChild(label);
@@ -111,7 +176,7 @@
       mount.appendChild(wrap);
 
       // Applicera direkt vid sidladdning om ett annat språk än svenska är sparat sedan tidigare
-      if (saved !== 'sv-SE') apply(saved, begreppBase);
+      if (saved !== 'sv-SE') apply(saved, begreppBase, termerBase);
     });
   }
 

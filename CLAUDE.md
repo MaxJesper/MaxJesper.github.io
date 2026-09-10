@@ -229,25 +229,28 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 ## Begreppsöversättning vid läsning (inline i löptexten) — PROTOTYP, sep 2026
 
-Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda begreppsord *inne i studieguidens löptext* går att klicka på och ger samma popup (översättning + förklaring), utan att eleven lämnar sidan. Bygger vidare på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan finns – ingen ny datakälla.
+Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda ord *inne i studieguidens löptext* går att klicka på och ger en popup, utan att eleven lämnar sidan. Två nivåer, med olika djup, se nästa avsnitt för den lättviktiga nivån:
 
-**Status:** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har nu minst en klickbar förekomst i löptexten (17 `data-concept`-spans totalt, Generator wrappad två gånger). Väntar på Jespers godkännande av UX/känsla innan den sprids till fler områden.
+1. **Kärnbegrepp** (de ~15 i områdets begreppslista/checklista) – full popup: översättning + förklaring + länk. Bygger på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan fanns – ingen ny datakälla för dessa.
+2. **Termer** (övriga fetmarkerade ord, `<strong class="term">`, som INTE är kärnbegrepp) – lättviktig popup: BARA översättning, ingen förklaring, inte med i checklistan. Se separat avsnitt nedan.
+
+**Status (kärnbegrepp):** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har en klickbar förekomst VID SIN FÖRSTA FETMARKERADE nämning i respektive milstolpe (dvs. samma ställe där `<strong class="term">` redan introducerar begreppet). Jesper testade och beslutade den slutgiltiga regeln (sep 2026): kärnbegreppen förblir som de är (fortsätter poppa upp, full förklaring). Övriga fetmarkerade ord ska visa BARA en översättning vid klick, utan att läggas till i begreppslistan – se "Termer"-avsnittet nedan för hur det är löst. Väntar fortfarande på Jespers besked innan spridning till fler områden.
 
 **Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
 
 **Filer:**
-- `js/concept-lang-selector.js` – ny, oberoende väljare. Egen `localStorage`-nyckel `site.concept-lang`. Återanvänder `window.LangSelector.loadBegreppForLang(lang, begreppBase)` (exponerad från `language-selector.js`) för själva hämtningen/cachen av begrepp-JSON, men påverkar ALDRIG TTS-rösten.
-- `js/language-selector.js` – oförändrad i sak, bara exponerar `window.LangSelector.loadBegreppForLang` så den nya väljaren kan återanvända hämtningslogiken.
-- `js/concepts-popup.js` – ny CSS-klass `.concept-inline` (klickbart understruket ord, samma hover-färg som `.concept-btn`).
+- `js/concept-lang-selector.js` – ny, oberoende väljare. Egen `localStorage`-nyckel `site.concept-lang`. Återanvänder `window.LangSelector.loadBegreppForLang(lang, begreppBase)` (exponerad från `language-selector.js`) för hämtning/cache av kärnbegrepps-JSON, men har DESSUTOM sin egen separata fetch/cache för termer-JSON (se nedan) – påverkar ALDRIG TTS-rösten.
+- `js/language-selector.js` – oförändrad i sak, bara exponerar `window.LangSelector.loadBegreppForLang` så den nya väljaren kan återanvända hämtningslogiken. Medvetet INTE utökad med termer-logik, för att undvika regressionsrisk i den redan fungerande TTS-språkväljaren.
+- `js/concepts-popup.js` – ny CSS-klass `.concept-inline` (klickbart understruket ord, samma hover-färg som `.concept-btn`). Internt två separata index: `conceptsCore` (kärnbegrepp) och `conceptsTerms` (termer), en `lookup(name)`-hjälpfunktion som kollar båda. Om ett ord inte finns i någotdera (t.ex. en termer-popup innan ett språk är valt) gör klicket inget – ingen krasch.
 
 **Markup per område (i `studieguide.html`):**
 ```html
 <div class="lang-selector-mount"></div>
-<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
 ```
-och i själva löptexten, ordagrant matchande `namn`-fältet i `data/begrepp.json` (attributvärdet, inte den synliga ordformen – böjda/gemena former i texten är okej):
+och i själva löptexten, ordagrant matchande `namn`-fältet i respektive JSON (attributvärdet, inte den synliga ordformen – böjda/gemena former i texten är okej):
 ```html
-<span class="concept-inline" data-concept="Exakt namn som i begrepp.json">ordet i texten</span>
+<span class="concept-inline" data-concept="Exakt namn som i begrepp.json eller termer.json">ordet i texten</span>
 ```
 Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns inte `window.LangSelector` än):
 ```html
@@ -266,9 +269,27 @@ Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns int
     .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
 </script>
 ```
-Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist.
+Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist. Ingen motsvarande svensk bas-fetch behövs för termer (se nedan – på svenska ska termer-klick inte göra något).
 
-**Kvarstående när Jesper godkänt piloten:** (1) sprid till fler områden (samma tre steg: mount-div, script-inklusion, wrapa begreppsord i löptexten – se till att ALLA begrepp i områdets `data/begrepp.json` får minst en förekomst, inte bara några), (2) överväg att wrapa fler förekomster per begrepp (nu oftast bara en per begrepp), (3) lägg till som standardkomponent i `_CHECKLISTA_omraden.md` om den blir permanent.
+**Kvarstående när Jesper godkänt piloten:** sprid till fler områden (samma steg: mount-div med båda data-attributen, script-inklusion, wrapa kärnbegrepp OCH termer i löptexten – se till att ALLA kärnbegrepp i områdets `data/begrepp.json` får minst en förekomst vid sin första fetmarkering).
+
+### Fetmarkerade termer utan egen definition ("termer")
+
+Jespers slutgiltiga beslut (sep 2026), ordagrant: "de begrepp som är viktiga för förståelsen (de vi redan valt ut) ska vara kvar och de poppar också upp i texten. De fetstilta ord som inte tillhör dessa vill jag ska översättas vid popupen, men behöver inte ha en tillhörande förklaring i övrigt och behöver inte vara med i begreppsordlistan." Alltså: fetstil ska konsekvent betyda "viktigt, klickbart" – men bara kärnbegreppen får full förklaring; övriga fetmarkerade ord får bara en översättning.
+
+**Datastruktur:** `data/termer.json` (svensk bas – finns INTE som fil, behövs inte eftersom svenska aldrig visar någon termer-popup, se nedan) + `data/termer.<prefix>.json` per språk (samma 10 prefix som begrepp: am/ar/bs/en/es/fa/pl/ps/so/ur), format:
+```json
+[{ "namn": "rotor", "namn_native": "rotor" }, ...]
+```
+Bara `namn` (måste matcha `data-concept`-attributets värde exakt) och `namn_native` – ingen `definition`, ingen `anchor`.
+
+**Beteende på svenska (`sv-SE`, dvs. inget språk valt):** klick på en termer-markerad ord gör INGET (ingen popup) – `conceptsTerms` är tom tills ett språk väljs. Detta är ett medvetet, godkänt beteende (inte en bugg) eftersom en term per definition inte har någon svensk "översättning" att visa.
+
+**Hur `concept-lang-selector.js` hanterar termer:** helt separat kod från kärnbegreppen (rör INTE `language-selector.js`). Vid språkbyte: om `data-termer-base` finns på mount-diven, hämtas (och cachas per språk) `{termerBase}.{prefix}.json`, och `window.BEGREPPPopup.updateTermer(data)` anropas. Samma kapplöpningsskydd som för kärnbegrepp (kollar att valt språk fortfarande är detsamma innan datan appliceras).
+
+**Pilot:** `fysik/magnetism-induktion/studieguide.html`, 22 termer identifierade genom att gå igenom samtliga `<strong class="term">`-förekomster och plocka bort generiska/beskrivande fraser (t.ex. "lika poler stöter bort varandra") som inte är egna vokabulärord: magnetiserat, keramiska magneter, neodymmagneter, högerhandsregeln, Lorentzkraften, nordände, sydände, antalet varv, kommutator, rotor, stator, induktionsspänning, inducerad ström, likström, primärspolen, sekundärspolen, uppstegringstransformator, stamnätet, nedstegringstransformatorer, fas, nolla, skyddsjord. Dessutom länkades en extra bar förekomst av "nordpol" (i Kompassen-avsnittet, M3) till det BEFINTLIGA kärnbegreppet `data-concept="Nordpol och sydpol"` istället för att bli en egen termer-post. Översättningarna (särskilt amhariska, pashto och somaliska) är AI-genererade utan inbyggd verifiering – lägre konfidens än för kärnbegreppens redan etablerade begrepp.<prefix>.json-filer; värt att stämma av med modersmålstalare vid tillfälle, men inget som blockerar utrullning eftersom termer-popupen bara är ett litet extra stöd, inte huvudförklaringen.
+
+**Kvarstående:** sprid till fler områden när Jesper godkänt piloten (samma mönster: identifiera icke-kärnbegrepp `.term`-ord per område, skapa `data/termer.<prefix>.json`, wrapa i löptexten).
 
 ---
 
