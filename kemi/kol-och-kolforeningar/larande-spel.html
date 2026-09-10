@@ -18,6 +18,9 @@
   .tab{border:1px solid var(--lila-kant);background:#fff;color:var(--lila-mork);border-radius:999px;
        padding:.5rem 1rem;font-size:.95rem;font-weight:600;cursor:pointer}
   .tab.active{background:var(--lila);color:#fff;border-color:var(--lila)}
+  .tab-link{border:1px dashed var(--lila-kant);background:var(--lila-ljus);color:var(--lila-mork);border-radius:999px;
+       padding:.5rem 1rem;font-size:.95rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
+  .tab-link:hover{background:#fff}
   .card{background:var(--panel);border:1px solid #e6e2f5;border-radius:14px;padding:1.1rem;margin-bottom:1rem;
         box-shadow:0 2px 10px rgba(20,33,61,.05)}
   .chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
@@ -99,6 +102,7 @@
     <button class="tab" data-tab="formel">Bygg molekylformler</button>
     <button class="tab" data-tab="overkurs">Överkurs</button>
     <button class="tab" data-tab="amino">Överkurs – Aminosyror</button>
+    <a class="tab-link" href="./studieguide.html#m10">Utforska i 3D ↗</a>
   </div>
 
   <!-- TAB 1 -->

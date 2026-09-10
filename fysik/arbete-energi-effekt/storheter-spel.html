@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storheter och enheter – lärande spel – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    :root { --area: #b45309; --area-bg: #fffbeb; --area-line: #f59e0b; }
+
+    .spel-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .spel-intro { max-width: 820px; margin-bottom: 1rem; color: #333; }
+    .spel-intro ul { margin: 0.5rem 0 0 1.2rem; padding: 0; }
+    .spel-intro li { margin-bottom: 0.3rem; }
+
+    .spel-stats { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .stat-badge {
+      background: #fff; border: 1px solid #e2d6bf; border-radius: 999px;
+      padding: 0.35rem 0.9rem; font-weight: 700; color: #333; font-variant-numeric: tabular-nums;
+    }
+    .stat-badge.niva1 { border-color: var(--area-line); }
+    .stat-badge.niva2 { border-color: #c2410c; background: #fff7ed; }
+
+    .st-scen { max-width: 640px; margin: 0 auto; }
+
+    .st-card {
+      background: #fff; border: 1px solid #e2d6bf; border-top: 6px solid var(--area-line);
+      border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.07); padding: 1.5rem;
+      min-height: 220px; display: flex; flex-direction: column; gap: 1rem;
+    }
+    .st-card.niva2 { border-top-color: #c2410c; }
+
+    .st-etikett {
+      font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--area); display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .st-etikett .st-rond { color: #888; font-weight: 700; text-transform: none; letter-spacing: 0; }
+
+    .st-timerbar-outer { height: 10px; background: #f0e2c4; border-radius: 999px; overflow: hidden; }
+    .st-timerbar-inner { height: 100%; width: 100%; background: var(--area-line); }
+    .st-card.niva2 .st-timerbar-inner { background: #c2410c; }
+
+    .st-fraga { font-size: 1.2rem; font-weight: 700; line-height: 1.45; }
+    .st-fraga b { color: var(--area); }
+
+    .st-svarsrad { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .st-input {
+      flex: 1 1 200px; font-size: 1.1rem; padding: 0.6rem 0.8rem; border-radius: 8px;
+      border: 2px solid #d9c9a3; font-family: inherit;
+    }
+    .st-input:focus { outline: none; border-color: var(--area-line); }
+    .st-input.ratt-in { border-color: #15803d; background: #dcfce7; }
+    .st-input.fel-in { border-color: #b91c1c; background: #fee2e2; }
+
+    .st-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; }
+    .st-opt {
+      text-align: left; border: 2px solid #d9c9a3; background: #fff; color: #111;
+      border-radius: 10px; padding: 0.75rem 0.9rem; font-size: 1.05rem; font-weight: 700;
+      cursor: pointer; transition: border-color .12s ease, background .12s ease, box-shadow .12s ease;
+    }
+    .st-opt:hover:not(:disabled) { border-color: var(--area-line); }
+    .st-opt:disabled { cursor: default; }
+    .st-opt.ratt { border-color: #15803d; background: #dcfce7; color: #14532d; }
+    .st-opt.fel { border-color: #b91c1c; background: #fee2e2; color: #7f1d1d; }
+    .st-opt.utebliven { border-color: #15803d; background: #dcfce7; color: #14532d; box-shadow: 0 0 0 3px rgba(21,128,61,0.2); }
+
+    .st-feedback { font-weight: 700; min-height: 1.4em; }
+    .st-feedback.ratt { color: #15803d; }
+    .st-feedback.fel { color: #b91c1c; }
+
+    .spel-knappar { margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+    .spel-knappar button, .spel-knappar .subject-btn {
+      padding: 0.6rem 1.1rem; border-radius: 8px; border: 1px solid #cbb98f;
+      background: #fff; color: #111; font-size: 1rem; font-weight: 600; cursor: pointer;
+    }
+    .spel-knappar button.primar { background: var(--area); border-color: var(--area); color: #fff; }
+
+    .klart-ruta {
+      max-width: 640px; margin: 0 auto; border: 1px solid #86efac; background: #ecfdf5;
+      border-radius: 12px; padding: 1.25rem 1.5rem; text-align: center;
+    }
+    .klart-ruta h2 { margin: 0 0 0.6rem; font-size: 1.3rem; }
+    .klart-ruta .stort-poang { font-size: 2.2rem; font-weight: 800; color: #15803d; margin: 0.4rem 0; }
+    .klart-ruta p { margin: 0.3rem 0; color: #333; }
+
+    .start-ruta { max-width: 640px; margin: 0 auto; text-align: center; }
+
+    .tidval {
+      max-width: 420px; margin: 1.3rem auto 0; text-align: left;
+      background: var(--area-bg); border: 1px solid var(--area-line);
+      border-radius: 12px; padding: 0.9rem 1.1rem 1.1rem;
+    }
+    .tidval label { font-size: 0.98rem; color: #333; }
+    .tidval .tidval-siffra { color: var(--area); font-weight: 800; }
+    .tidval input[type="range"] {
+      width: 100%; margin: 0.6rem 0 0.3rem; accent-color: var(--area);
+    }
+    .tidval-skala { display: flex; justify-content: space-between; font-size: 0.78rem; color: #888; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+
+<header class="fysik-header">
+  <h1>Storheter och enheter</h1>
+  <p>Arbete, energi och effekt</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="spel-topbar">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <p class="spel-intro" id="intro"></p>
+
+  <!-- START -->
+  <section id="startVy" class="start-ruta">
+    <ul style="text-align:left; display:inline-block;">
+      <li><strong>Nivå 1 – Skriv in:</strong> skriv rätt storhet, storhetsförkortning, enhet eller enhetsförkortning innan tiden tar slut.</li>
+      <li><strong>Nivå 2 – Klicka snabbt:</strong> klicka på rätt svar. Det går gradvis snabbare och varje rätt svar ger fler poäng – men svarar du inte i tid visas facit och du missar poängen.</li>
+    </ul>
+
+    <div class="tidval">
+      <label for="tidSlider">
+        <strong>Tid per fråga i nivå 1:</strong>
+        <span class="tidval-siffra" id="tidVarde">12</span> s →
+        <span class="tidval-siffra" id="poangVarde">10</span> poäng/rätt
+      </label>
+      <input type="range" id="tidSlider" min="5" max="30" step="1" value="12" />
+      <div class="tidval-skala"><span>Kort tid, fler poäng</span><span>Lång tid, färre poäng</span></div>
+    </div>
+
+    <div class="spel-knappar">
+      <button id="startBtn" type="button" class="primar">Starta nivå 1</button>
+    </div>
+  </section>
+
+  <!-- NIVÅ 1 -->
+  <section id="niva1Vy" class="st-scen hidden">
+    <div class="spel-stats" aria-live="polite">
+      <span class="stat-badge niva1">Fråga: <span id="l1Fraga">1</span>/<span id="l1Total">10</span></span>
+      <span class="stat-badge niva1">Rätt: <span id="l1Ratt">0</span></span>
+      <span class="stat-badge niva1">Poäng: <span id="l1Poang">0</span></span>
+    </div>
+
+    <div class="st-card">
+      <div class="st-etikett">Nivå 1 · Skriv in <span class="st-rond" id="l1TidText">12,0 s</span></div>
+      <div class="st-timerbar-outer"><div class="st-timerbar-inner" id="l1Bar"></div></div>
+      <div class="st-fraga" id="l1Fragetext"></div>
+      <form class="st-svarsrad" id="l1Form">
+        <input class="st-input" id="l1Input" type="text" autocomplete="off" placeholder="Skriv svaret här …" />
+        <button type="submit" class="primar" style="border:1px solid var(--area); background:var(--area); color:#fff; border-radius:8px; padding:0 1.1rem; font-weight:700;">Svara</button>
+      </form>
+      <div class="st-feedback" id="l1Feedback"></div>
+    </div>
+  </section>
+
+  <!-- MELLANRUTA -->
+  <section id="mellanVy" class="klart-ruta hidden">
+    <h2>Nivå 1 klar!</h2>
+    <p id="mellanText"></p>
+    <div class="spel-knappar">
+      <button id="startNiva2Btn" type="button" class="primar">Starta nivå 2</button>
+    </div>
+  </section>
+
+  <!-- NIVÅ 2 -->
+  <section id="niva2Vy" class="st-scen hidden">
+    <div class="spel-stats" aria-live="polite">
+      <span class="stat-badge niva2">Runda: <span id="l2Fraga">1</span>/<span id="l2Total">12</span></span>
+      <span class="stat-badge niva2">Rätt: <span id="l2Ratt">0</span></span>
+      <span class="stat-badge niva2">Poäng: <span id="l2Poang">0</span></span>
+      <span class="stat-badge niva2">Denna runda värd: <span id="l2Vart">10</span> p</span>
+    </div>
+
+    <div class="st-card niva2">
+      <div class="st-etikett">Nivå 2 · Klicka snabbt <span class="st-rond" id="l2TidText">6,0 s</span></div>
+      <div class="st-timerbar-outer"><div class="st-timerbar-inner" id="l2Bar"></div></div>
+      <div class="st-fraga" id="l2Fragetext"></div>
+      <div class="st-options" id="l2Options"></div>
+      <div class="st-feedback" id="l2Feedback"></div>
+    </div>
+  </section>
+
+  <!-- SLUT -->
+  <section id="slutVy" class="klart-ruta hidden">
+    <h2>Klart!</h2>
+    <p class="stort-poang" id="slutPoang">0 p</p>
+    <p id="slutText"></p>
+    <div class="spel-knappar">
+      <button id="omBtn" type="button" class="primar">Spela igen</button>
+      <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+    </div>
+  </section>
+</main>
+
+<script src="/js/menu.js"></script>
+
+<script>
+  const JSON_PATH = "./data/storheter-spel.json";
+
+  const L1_COUNT = 10, L1_TIME_MIN_S = 5, L1_TIME_MAX_S = 30, L1_TIME_DEFAULT_S = 12;
+  let l1TimeMs = L1_TIME_DEFAULT_S * 1000;
+  let l1Points = beraknaPoang(L1_TIME_DEFAULT_S);
+
+  function beraknaPoang(sekunder) {
+    // Kortare tid ger fler poäng, längre tid ger färre – avrundat till närmaste heltal, aldrig under 2.
+    return Math.max(2, Math.round(120 / sekunder));
+  }
+  const L2_COUNT = 12, L2_TIME_START_MS = 9000, L2_TIME_FLOOR_MS = 1800, L2_POINTS_STEP = 10;
+
+  let entries = [];
+  let l1Questions = [], l1Index = 0, l1Score = 0, l1Correct = 0, l1Wrong = 0;
+  let l2Questions = [], l2Index = 0, l2Score = 0, l2Correct = 0, l2Wrong = 0;
+  let timerHandle = null, timeoutHandle = null;
+  let l1Locked = false, l2Locked = false;
+
+  const el = (id) => document.getElementById(id);
+  function escapeHtml(str) {
+    return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+  }
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function normalize(s) {
+    return String(s).trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  // Frågetyper: varje typ tar ett "storhet"-objekt och bygger en fråga.
+  const QUESTION_TYPES = [
+    {
+      type: "storhet_symbol", promptField: "storhet", answerField: "symbol",
+      prompt: (e) => `Vilken storhetsförkortning (symbol) har <b>${escapeHtml(e.storhet)}</b>?`,
+      excludeTyped: (e) => e.symbolTypable === false
+    },
+    {
+      type: "symbol_storhet", promptField: "symbol", answerField: "storhet",
+      prompt: (e) => `Vilken storhet har storhetsförkortningen <b>${escapeHtml(e.symbol)}</b>?`
+    },
+    {
+      type: "storhet_enhet", promptField: "storhet", answerField: "enhet",
+      prompt: (e) => `Vilken enhet mäts <b>${escapeHtml(e.storhet)}</b> i?`
+    },
+    {
+      type: "enhet_symbol", promptField: "enhet", answerField: "enhetssymbol",
+      prompt: (e) => `Vilken enhetsförkortning har enheten <b>${escapeHtml(e.enhet)}</b>?`
+    },
+    {
+      type: "symbol_enhet", promptField: "enhetssymbol", answerField: "enhet",
+      prompt: (e) => `Vilken enhet har enhetsförkortningen <b>${escapeHtml(e.enhetssymbol)}</b>?`
+    }
+  ];
+
+  function fieldPool(field) {
+    const seen = new Set(); const out = [];
+    entries.forEach(e => {
+      const v = e[field];
+      if (v && !seen.has(v)) { seen.add(v); out.push(v); }
+    });
+    return out;
+  }
+
+  function altFieldFor(field) {
+    if (field === "enhet") return "altEnhet";
+    if (field === "enhetssymbol") return "altEnhetssymbol";
+    return null;
+  }
+
+  function buildPool(mode) {
+    const pool = [];
+    entries.forEach(e => {
+      QUESTION_TYPES.forEach(qt => {
+        if (e.excludeQuestionTypes && e.excludeQuestionTypes.includes(qt.type)) return;
+        if (mode === "typed" && qt.excludeTyped && qt.excludeTyped(e)) return;
+        const altField = altFieldFor(qt.answerField);
+        pool.push({
+          entryId: e.id, type: qt.type,
+          promptHtml: qt.prompt(e),
+          answer: e[qt.answerField], answerField: qt.answerField,
+          altAnswer: altField ? e[altField] : undefined
+        });
+      });
+    });
+    return shuffle(pool);
+  }
+
+  function makeOptions(q) {
+    const candidates = fieldPool(q.answerField).filter(v => v !== q.answer);
+    const distraktorer = shuffle(candidates).slice(0, 3);
+    return shuffle([q.answer, ...distraktorer]);
+  }
+
+  function formatTid(ms) { return (ms / 1000).toFixed(1).replace(".", ",") + " s"; }
+
+  function stopTimer() {
+    if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+    if (timeoutHandle) { clearTimeout(timeoutHandle); timeoutHandle = null; }
+  }
+
+  function startTimer(totalMs, barEl, textEl, onTimeout) {
+    stopTimer();
+    const start = performance.now();
+    barEl.style.transition = "none";
+    barEl.style.width = "100%";
+    // tvinga reflow så transitionen startar om varje runda
+    // eslint-disable-next-line no-unused-expressions
+    barEl.offsetWidth;
+    barEl.style.transition = `width ${totalMs}ms linear`;
+    barEl.style.width = "0%";
+    timerHandle = setInterval(() => {
+      const kvar = Math.max(0, totalMs - (performance.now() - start));
+      textEl.textContent = formatTid(kvar);
+      if (kvar <= 0) clearInterval(timerHandle);
+    }, 100);
+    timeoutHandle = setTimeout(onTimeout, totalMs);
+  }
+
+  function showView(id) {
+    ["startVy", "niva1Vy", "mellanVy", "niva2Vy", "slutVy"].forEach(v => el(v).classList.toggle("hidden", v !== id));
+  }
+
+  // ---------- NIVÅ 1 ----------
+  function startLevel1() {
+    const sekunder = Number(el("tidSlider").value) || L1_TIME_DEFAULT_S;
+    l1TimeMs = sekunder * 1000;
+    l1Points = beraknaPoang(sekunder);
+    try { localStorage.setItem("storheterTidS", String(sekunder)); } catch (e) {}
+    const pool = buildPool("typed");
+    l1Questions = pool.slice(0, L1_COUNT);
+    l1Index = 0; l1Score = 0; l1Correct = 0; l1Wrong = 0;
+    el("l1Total").textContent = l1Questions.length;
+    el("l1Ratt").textContent = "0";
+    el("l1Poang").textContent = "0";
+    showView("niva1Vy");
+    showL1Question();
+  }
+
+  function showL1Question() {
+    l1Locked = false;
+    const q = l1Questions[l1Index];
+    el("l1Fraga").textContent = l1Index + 1;
+    el("l1Fragetext").innerHTML = q.promptHtml;
+    const input = el("l1Input");
+    input.value = "";
+    input.classList.remove("ratt-in", "fel-in");
+    input.disabled = false;
+    el("l1Feedback").textContent = "";
+    el("l1Feedback").className = "st-feedback";
+    startTimer(l1TimeMs, el("l1Bar"), el("l1TidText"), () => l1Svara(null));
+    setTimeout(() => input.focus(), 30);
+  }
+
+  function l1Svara(varde) {
+    if (l1Locked) return;
+    l1Locked = true;
+    stopTimer();
+    const q = l1Questions[l1Index];
+    const input = el("l1Input");
+    input.disabled = true;
+    const ratt = varde !== null && (normalize(varde) === normalize(q.answer) ||
+      (q.altAnswer && normalize(varde) === normalize(q.altAnswer)));
+    const feedback = el("l1Feedback");
+    const facit = q.altAnswer ? (q.answer + " (eller " + q.altAnswer + ")") : q.answer;
+    if (ratt) {
+      l1Correct++; l1Score += l1Points;
+      input.classList.add("ratt-in");
+      feedback.textContent = "Rätt! +" + l1Points + " p";
+      feedback.className = "st-feedback ratt";
+    } else {
+      l1Wrong++;
+      input.classList.add("fel-in");
+      feedback.textContent = (varde === null ? "Tiden tog slut. " : "Fel. ") + "Rätt svar: " + facit;
+      feedback.className = "st-feedback fel";
+    }
+    el("l1Ratt").textContent = l1Correct;
+    el("l1Poang").textContent = l1Score;
+    setTimeout(() => {
+      l1Index++;
+      if (l1Index >= l1Questions.length) endLevel1(); else showL1Question();
+    }, ratt ? 700 : 1600);
+  }
+
+  el("l1Form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    l1Svara(el("l1Input").value);
+  });
+
+  function endLevel1() {
+    stopTimer();
+    el("mellanText").textContent =
+      "Du fick " + l1Correct + " av " + l1Questions.length + " rätt och " + l1Score + " poäng. Nu blir det snabbare – klicka på rätt svar i nivå 2.";
+    showView("mellanVy");
+  }
+
+  // ---------- NIVÅ 2 ----------
+  function startLevel2() {
+    const pool = buildPool("click");
+    l2Questions = pool.slice(0, L2_COUNT);
+    l2Index = 0; l2Score = 0; l2Correct = 0; l2Wrong = 0;
+    el("l2Total").textContent = l2Questions.length;
+    el("l2Ratt").textContent = "0";
+    el("l2Poang").textContent = "0";
+    showView("niva2Vy");
+    showL2Question();
+  }
+
+  function roundTimeMs(i) {
+    if (L2_COUNT <= 1) return L2_TIME_START_MS;
+    const steg = (L2_TIME_START_MS - L2_TIME_FLOOR_MS) / (L2_COUNT - 1);
+    return Math.round(L2_TIME_START_MS - i * steg);
+  }
+  function roundPoints(i) { return L2_POINTS_STEP * (i + 1); }
+
+  function showL2Question() {
+    l2Locked = false;
+    const q = l2Questions[l2Index];
+    const varda = roundPoints(l2Index);
+    el("l2Fraga").textContent = l2Index + 1;
+    el("l2Vart").textContent = varda;
+    el("l2Fragetext").innerHTML = q.promptHtml;
+    el("l2Feedback").textContent = "";
+    el("l2Feedback").className = "st-feedback";
+
+    const opts = makeOptions(q);
+    const wrap = el("l2Options");
+    wrap.innerHTML = "";
+    opts.forEach(val => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "st-opt";
+      b.textContent = val;
+      b.addEventListener("click", () => l2Svara(b, val));
+      wrap.appendChild(b);
+    });
+
+    const tid = roundTimeMs(l2Index);
+    startTimer(tid, el("l2Bar"), el("l2TidText"), () => l2Svara(null, null));
+  }
+
+  function l2Svara(knapp, varde) {
+    if (l2Locked) return;
+    l2Locked = true;
+    stopTimer();
+    const q = l2Questions[l2Index];
+    const varda = roundPoints(l2Index);
+    const alla = Array.from(el("l2Options").querySelectorAll(".st-opt"));
+    alla.forEach(b => b.disabled = true);
+    const feedback = el("l2Feedback");
+
+    if (varde !== null && varde === q.answer) {
+      l2Correct++; l2Score += varda;
+      knapp.classList.add("ratt");
+      feedback.textContent = "Rätt! +" + varda + " p";
+      feedback.className = "st-feedback ratt";
+    } else {
+      l2Wrong++;
+      if (knapp) knapp.classList.add("fel");
+      const rattKnapp = alla.find(b => b.textContent === q.answer);
+      if (rattKnapp) rattKnapp.classList.add(varde === null ? "utebliven" : "ratt");
+      feedback.textContent = (varde === null ? "Tiden tog slut. " : "Fel. ") + "Rätt svar: " + q.answer + ". Du missar poängen.";
+      feedback.className = "st-feedback fel";
+    }
+    el("l2Ratt").textContent = l2Correct;
+    el("l2Poang").textContent = l2Score;
+    setTimeout(() => {
+      l2Index++;
+      if (l2Index >= l2Questions.length) endLevel2(); else showL2Question();
+    }, 1100);
+  }
+
+  function endLevel2() {
+    stopTimer();
+    const totalScore = l1Score + l2Score;
+    const totalRatt = l1Correct + l2Correct;
+    const totalFragor = l1Questions.length + l2Questions.length;
+    el("slutPoang").textContent = totalScore + " p";
+    el("slutText").textContent =
+      "Nivå 1: " + l1Correct + "/" + l1Questions.length + " rätt (" + l1Score + " p). " +
+      "Nivå 2: " + l2Correct + "/" + l2Questions.length + " rätt (" + l2Score + " p). " +
+      "Totalt " + totalRatt + " av " + totalFragor + " rätt.";
+    showView("slutVy");
+  }
+
+  el("startBtn").addEventListener("click", startLevel1);
+  el("startNiva2Btn").addEventListener("click", startLevel2);
+  el("omBtn").addEventListener("click", () => { showView("startVy"); });
+
+  function uppdateraTidval() {
+    const slider = el("tidSlider");
+    const sekunder = Number(slider.value);
+    el("tidVarde").textContent = sekunder;
+    el("poangVarde").textContent = beraknaPoang(sekunder);
+  }
+  el("tidSlider").addEventListener("input", uppdateraTidval);
+
+  window.addEventListener("load", async () => {
+    try {
+      const res = await fetch(JSON_PATH, { cache: "no-store" });
+      if (!res.ok) throw new Error("Kunde inte läsa " + JSON_PATH + " (" + res.status + ")");
+      const data = await res.json();
+      entries = Array.isArray(data.entries) ? data.entries : [];
+      if (data.intro) el("intro").textContent = data.intro;
+      let sparadTid = L1_TIME_DEFAULT_S;
+      try {
+        const lagrad = Number(localStorage.getItem("storheterTidS"));
+        if (lagrad && lagrad >= L1_TIME_MIN_S && lagrad <= L1_TIME_MAX_S) sparadTid = lagrad;
+      } catch (e) {}
+      el("tidSlider").value = sparadTid;
+      uppdateraTidval();
+      showView("startVy");
+    } catch (err) {
+      console.error(err);
+      el("intro").textContent = "Det gick inte att ladda övningen.";
+    }
+  });
+</script>
+
+</body>
+</html>

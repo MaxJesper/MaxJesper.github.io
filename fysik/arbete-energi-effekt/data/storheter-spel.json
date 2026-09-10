@@ -1,0 +1,19 @@
+{
+  "title": "Storheter och enheter",
+  "intro": "Träna storheter, storhetsförkortningar (symboler), enheter och enhetsförkortningar från arbete, energi och effekt.",
+  "entries": [
+    { "id": "kraft",        "storhet": "Kraft",              "symbol": "F", "enhet": "newton",              "enhetssymbol": "N" },
+    { "id": "arbete",       "storhet": "Arbete",             "symbol": "W", "enhet": "joule",               "enhetssymbol": "J" },
+    { "id": "energi",       "storhet": "Energi",             "symbol": "E", "enhet": "joule",               "enhetssymbol": "J", "altEnhet": "kilowattimme", "altEnhetssymbol": "kWh" },
+    { "id": "effekt",       "storhet": "Effekt",             "symbol": "P", "enhet": "watt",                "enhetssymbol": "W" },
+    { "id": "massa",        "storhet": "Massa",              "symbol": "m", "enhet": "kilogram",            "enhetssymbol": "kg" },
+    { "id": "strecka",      "storhet": "Sträcka",            "symbol": "s", "enhet": "meter",               "enhetssymbol": "m" },
+    { "id": "hojd",         "storhet": "Höjd",               "symbol": "h", "enhet": "meter",               "enhetssymbol": "m" },
+    { "id": "tid",          "storhet": "Tid",                "symbol": "t", "enhet": "sekund",              "enhetssymbol": "s" },
+    { "id": "hastighet",    "storhet": "Hastighet",          "symbol": "v", "enhet": "meter per sekund",    "enhetssymbol": "m/s" },
+    { "id": "tyngdacc",     "storhet": "Tyngdacceleration",  "symbol": "g", "enhet": "newton per kilogram", "enhetssymbol": "N/kg", "altEnhet": "meter per sekundkvadrat" },
+    { "id": "spanning",     "storhet": "Spänning",           "symbol": "U", "enhet": "volt",                "enhetssymbol": "V" },
+    { "id": "strom",        "storhet": "Strömstyrka",        "symbol": "I", "enhet": "ampere",              "enhetssymbol": "A" },
+    { "id": "verkningsgrad","storhet": "Verkningsgrad",      "symbol": "η", "enhet": "procent", "enhetssymbol": "%", "excludeQuestionTypes": ["storhet_symbol", "storhet_enhet", "enhet_symbol", "symbol_enhet"] }
+  ]
+}
