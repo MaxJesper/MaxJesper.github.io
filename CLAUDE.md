@@ -227,6 +227,51 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 ---
 
+## Begreppsöversättning vid läsning (inline i löptexten) — PROTOTYP, sep 2026
+
+Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda begreppsord *inne i studieguidens löptext* går att klicka på och ger samma popup (översättning + förklaring), utan att eleven lämnar sidan. Bygger vidare på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan finns – ingen ny datakälla.
+
+**Status:** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` (11 begreppsord inlindade, ett urval, inte uttömmande). Väntar på Jespers godkännande av UX/känsla innan den sprids till fler områden eller kompletteras med fler ord i samma område.
+
+**Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
+
+**Filer:**
+- `js/concept-lang-selector.js` – ny, oberoende väljare. Egen `localStorage`-nyckel `site.concept-lang`. Återanvänder `window.LangSelector.loadBegreppForLang(lang, begreppBase)` (exponerad från `language-selector.js`) för själva hämtningen/cachen av begrepp-JSON, men påverkar ALDRIG TTS-rösten.
+- `js/language-selector.js` – oförändrad i sak, bara exponerar `window.LangSelector.loadBegreppForLang` så den nya väljaren kan återanvända hämtningslogiken.
+- `js/concepts-popup.js` – ny CSS-klass `.concept-inline` (klickbart understruket ord, samma hover-färg som `.concept-btn`).
+
+**Markup per område (i `studieguide.html`):**
+```html
+<div class="lang-selector-mount"></div>
+<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+```
+och i själva löptexten, ordagrant matchande `namn`-fältet i `data/begrepp.json` (attributvärdet, inte den synliga ordformen – böjda/gemena former i texten är okej):
+```html
+<span class="concept-inline" data-concept="Exakt namn som i begrepp.json">ordet i texten</span>
+```
+Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns inte `window.LangSelector` än):
+```html
+<script src="/js/concepts-popup.js"></script>
+<script src="/js/concept-lang-selector.js"></script>
+<script>
+  fetch("./data/begrepp.json", { cache: "no-store" })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.length) return;
+      window.BEGREPP = data;
+      var savedConceptLang = 'sv-SE';
+      try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+      if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+    })
+    .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+</script>
+```
+Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist.
+
+**Kvarstående när Jesper godkänt piloten:** (1) sprid till fler områden (samma tre steg: mount-div, script-inklusion, wrapa begreppsord i löptexten), (2) överväg att wrapa ALLA förekomster av varje begrepp per område, inte bara ett urval, (3) lägg till som standardkomponent i `_CHECKLISTA_omraden.md` om den blir permanent.
+
+---
+
 ## Lyssna-funktion (studieguide)
 
 Alla `studieguide.html` ska ha en lyssna-funktion som lägger till en "🔈 Lyssna"-knapp i varje milstolpe och fördjupning.
@@ -267,6 +312,24 @@ Lägg inspelade filer i `audio/`-mappen i resp. område:
 - `m1-fordj.mp3`, … (fördjupningsavsnitt, valfria)
 
 Tills filer finns används syntetisk röst (TTS) som standard.
+
+---
+
+## Helöversättning av studieguidetexter + flerspråkig uppläsning (PLANERAD, EJ PÅBÖRJAD)
+
+I dag täcker flerspråksstödet bara begreppen (`data/begrepp.<prefix>.json`). Själva löptexten i studieguiden finns bara på svenska, och `lyssna.js` läser bara upp svensk text (inspelad mp3 eller annars Web Speech API på `sv-SE`). Detta är en medveten SENARE fas: påbörjas först när ett områdes svenska text är helt slutgranskad och godkänd av Jesper (se `pedagogik.md`). Det här avsnittet dokumenterar HUR det ska göras när den fasen inleds, så inget går förlorat mellan sessioner.
+
+**Steg 1 – datastruktur för översatt löptext.** Ny datafil per område och språk, t.ex. `data/studieguide.<prefix>.json`, som speglar milstolpestrukturen (`m1`, `m2`, …) och innehåller den ÖVERSATTA brödtexten milstolpe för milstolpe (inte bara begrepp). Varje textblock som ska kunna bytas ut behöver ett stabilt attribut att hänga översättningen på, t.ex. `data-i18n-block="m3-text"` på respektive `<div>`/`<p>`-grupp i studieguiden.
+
+**Steg 2 – generering av översättningen.** Automatöversättning (AI) av den redan godkända svenska texten, milstolpe för milstolpe. Jesper förväntas INTE läsa igenom hela textmassan i alla språk ord för ord, men bör göra stickprov – särskilt av facktermer. Viktigast: facktermerna i den översatta löptexten måste matcha EXAKT de redan godkända översättningarna i `data/begrepp.<prefix>.json` (annars får eleven två olika ord för samma begrepp – ett i löptexten, ett i begreppspopupen).
+
+**Steg 3 – rendering.** Klientsidesväxling, samma mönster som begreppen redan använder: vid språkbyte i `lang-selector-mount` hämtas `data/studieguide.<prefix>.json` och byter ut brödtexten i varje märkt textblock. Enklare (men tyngre DOM) alternativ: rendera båda språkversionerna i HTML från start och toggla synlighet med CSS/JS. Föredra klientsidesväxling via fetch – konsekvent med hur begreppen redan hanteras.
+
+**Steg 4 – TTS-koppling.** `lyssna.js` måste uppdateras så att när ett annat språk än svenska är valt OCH en översatt textfil finns för området, läses den ÖVERSATTA texten upp med en röst som matchar språkkoden (samma `LANG_PREFIX`-mappning som redan finns i `language-selector.js`). Saknas översatt text eller röst: falla tillbaka till nuvarande beteende (svensk röst läser svensk text) – aldrig fel röst på fel språk.
+
+**Prioritering:** börja med språk som redan har begrepp-översättningar och tydlig efterfrågan i klassen (t.ex. arabiska, somaliska, urdu), inte alla ~11 språk samtidigt.
+
+**Relaterat, redan byggt:** se "Begreppsöversättning vid läsning" ovan – den funktionen löser ett näraliggande men mindre problem (enskilda begreppsord) och kräver INTE denna helöversättning. De två funktionerna är oberoende av varandra och kan användas var för sig.
 
 ---
 

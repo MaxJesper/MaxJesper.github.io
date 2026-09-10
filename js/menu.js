@@ -32,6 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="/">Hem</a>
       </li>
 
+      <!-- Om plattformen -->
+      <li class="menu-home">
+        <a href="/om-plattformen.html">Om plattformen</a>
+      </li>
+
       <!-- Biologi -->
       <li class="menu-section">
         <button class="menu-toggle">Biologi</button>

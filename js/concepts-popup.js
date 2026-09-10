@@ -60,7 +60,9 @@
     '.cm-link.hidden{display:none}',
     '.concept-btn{background:none;border:none;padding:0;cursor:pointer;font:inherit;',
     'color:inherit;text-align:left}',
-    '.concept-btn:hover{text-decoration:underline;color:var(--area-strong,#1e3466)}'
+    '.concept-btn:hover{text-decoration:underline;color:var(--area-strong,#1e3466)}',
+    '.concept-inline{cursor:pointer;border-bottom:1px dotted currentColor;}',
+    '.concept-inline:hover{color:var(--area-strong,#1e3466);border-bottom-style:solid}'
   ].join('');
   document.head.appendChild(style);
 
