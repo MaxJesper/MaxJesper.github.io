@@ -234,7 +234,7 @@ Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knapp
 1. **Kärnbegrepp** (de ~15 i områdets begreppslista/checklista) – full popup: översättning + förklaring + länk. Bygger på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan fanns – ingen ny datakälla för dessa.
 2. **Termer** (övriga fetmarkerade ord, `<strong class="term">`, som INTE är kärnbegrepp) – lättviktig popup: BARA översättning, ingen förklaring, inte med i checklistan. Se separat avsnitt nedan.
 
-**Status (kärnbegrepp):** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har en klickbar förekomst VID SIN FÖRSTA FETMARKERADE nämning i respektive milstolpe (dvs. samma ställe där `<strong class="term">` redan introducerar begreppet). Jesper testade och beslutade den slutgiltiga regeln (sep 2026): kärnbegreppen förblir som de är (fortsätter poppa upp, full förklaring). Övriga fetmarkerade ord ska visa BARA en översättning vid klick, utan att läggas till i begreppslistan – se "Termer"-avsnittet nedan för hur det är löst. Väntar fortfarande på Jespers besked innan spridning till fler områden.
+**Status (kärnbegrepp):** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har en klickbar förekomst VID SIN FÖRSTA FETMARKERADE nämning i respektive milstolpe (dvs. samma ställe där `<strong class="term">` redan introducerar begreppet). Jesper testade och beslutade den slutgiltiga regeln (sep 2026): kärnbegreppen förblir som de är (fortsätter poppa upp, full förklaring). Övriga fetmarkerade ord ska visa BARA en översättning vid klick, utan att läggas till i begreppslistan – se "Termer"-avsnittet nedan för hur det är löst. Jesper har beslutat (sep 2026) att funktionen (både kärnbegrepp- och termer-nivån) ska spridas till alla färdiga och framtida områden – se _CHECKLISTA_omraden.md, avsnitt "Sprid funktioner", för status per område. Motivering: viktig USP (se om-plattformen.html) – ett digitalt läromedel kan möta varje elev på sitt eget språk begrepp för begrepp, vilket väger tungt för elever med annat modersmål än svenska, även om den pedagogiska trenden i övrigt talar för tryckta läromedel.
 
 **Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
 
@@ -271,7 +271,7 @@ Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns int
 ```
 Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist. Ingen motsvarande svensk bas-fetch behövs för termer (se nedan – på svenska ska termer-klick inte göra något).
 
-**Kvarstående när Jesper godkänt piloten:** sprid till fler områden (samma steg: mount-div med båda data-attributen, script-inklusion, wrapa kärnbegrepp OCH termer i löptexten – se till att ALLA kärnbegrepp i områdets `data/begrepp.json` får minst en förekomst vid sin första fetmarkering).
+**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma steg: mount-div med båda data-attributen, script-inklusion, wrapa kärnbegrepp OCH termer i löptexten (se till att ALLA kärnbegrepp i områdets `data/begrepp.json` får minst en förekomst vid sin första fetmarkering).
 
 ### Fetmarkerade termer utan egen definition ("termer")
 
@@ -289,7 +289,7 @@ Bara `namn` (måste matcha `data-concept`-attributets värde exakt) och `namn_na
 
 **Pilot:** `fysik/magnetism-induktion/studieguide.html`, 22 termer identifierade genom att gå igenom samtliga `<strong class="term">`-förekomster och plocka bort generiska/beskrivande fraser (t.ex. "lika poler stöter bort varandra") som inte är egna vokabulärord: magnetiserat, keramiska magneter, neodymmagneter, högerhandsregeln, Lorentzkraften, nordände, sydände, antalet varv, kommutator, rotor, stator, induktionsspänning, inducerad ström, likström, primärspolen, sekundärspolen, uppstegringstransformator, stamnätet, nedstegringstransformatorer, fas, nolla, skyddsjord. Dessutom länkades en extra bar förekomst av "nordpol" (i Kompassen-avsnittet, M3) till det BEFINTLIGA kärnbegreppet `data-concept="Nordpol och sydpol"` istället för att bli en egen termer-post. Översättningarna (särskilt amhariska, pashto och somaliska) är AI-genererade utan inbyggd verifiering – lägre konfidens än för kärnbegreppens redan etablerade begrepp.<prefix>.json-filer; värt att stämma av med modersmålstalare vid tillfälle, men inget som blockerar utrullning eftersom termer-popupen bara är ett litet extra stöd, inte huvudförklaringen.
 
-**Kvarstående:** sprid till fler områden när Jesper godkänt piloten (samma mönster: identifiera icke-kärnbegrepp `.term`-ord per område, skapa `data/termer.<prefix>.json`, wrapa i löptexten).
+**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma mönster: identifiera icke-kärnbegrepp `.term`-ord per område, skapa `data/termer.<prefix>.json`, wrapa i löptexten.
 
 ---
 
