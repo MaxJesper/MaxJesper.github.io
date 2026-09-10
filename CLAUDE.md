@@ -336,6 +336,37 @@ Tyngdfaktorn skrivs g = 10 N/kg. I studieguider introduceras formatet med en tyd
 
 ---
 
+## Kontrollfrågor med klicka-för-svar (inline i löptexten) — STÅENDE REGEL, sep 2026
+
+Idé hämtad från en konkurrentanalys av naturvetenskap.se (sep 2026): de har korta övningsfrågor direkt i löptexten med ett dolt facit man klickar fram, som ett lågtröskel-sätt att kontrollera sig själv utan att lämna sidan. Detta ska föras in som ett KOMPLEMENT (inte ersättning) till de befintliga instuderingsfrågorna/övningsproven, specifikt i områden där beräkningar/formler ingår och där en snabb kontrollfråga direkt efter ett räkneexempel ökar förståelsen.
+
+**Bekräftade kandidatområden (Jespers egna, sep 2026):** fysik/arbete-energi-effekt, fysik/kraft-och-rorelse, fysik/tryck. Fler områden kan tillkomma — bedöm område för område (samma princip som undantaget för räknekort ovan: inför inte överallt per automatik).
+
+**Mönster:** ett `<details class="check-q">`-block direkt efter ett räkneexempel eller ett nyckelresonemang i studieguidens löptext, med frågan som `<summary>` och facit dolt i en `<div class="svar">` som visas vid klick.
+
+CSS (samma `<style>`-block som övriga komponenter, egen färg — blå, skild från gula `.deepen` och orange `.fact-box` så de tre inte blandas ihop):
+```css
+.check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+.check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+.check-q > summary::-webkit-details-marker { display:none; }
+.check-q > summary::before { content: "✓ Kontrollera dig själv: "; }
+.check-q > summary::after { content: " (visa svar)"; font-weight:400; color:#64748b; }
+.check-q[open] > summary::after { content: " (dölj svar)"; }
+.check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+```
+
+HTML:
+```html
+<details class="check-q">
+  <summary>Hur stort blir arbetet om en kraft på 50 N flyttar en låda 3 m?</summary>
+  <div class="svar"><strong>Svar:</strong> W = F · s = 50 N · 3 m = 150 J</div>
+</details>
+```
+
+Inte gjort ännu i något område — detta är påminnelseregeln som ska följas nästa gång vi bygger/reviderar arbete-energi-effekt, kraft-och-rorelse eller tryck (och andra beräkningstunga områden vi stöter på).
+
+---
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang
