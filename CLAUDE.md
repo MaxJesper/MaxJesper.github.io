@@ -231,7 +231,7 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda begreppsord *inne i studieguidens löptext* går att klicka på och ger samma popup (översättning + förklaring), utan att eleven lämnar sidan. Bygger vidare på samma data (`data/begrepp.<prefix>.json`) och samma popup-komponent (`concepts-popup.js`) som redan finns – ingen ny datakälla.
 
-**Status:** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` (11 begreppsord inlindade, ett urval, inte uttömmande). Väntar på Jespers godkännande av UX/känsla innan den sprids till fler områden eller kompletteras med fler ord i samma område.
+**Status:** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har nu minst en klickbar förekomst i löptexten (17 `data-concept`-spans totalt, Generator wrappad två gånger). Väntar på Jespers godkännande av UX/känsla innan den sprids till fler områden.
 
 **Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
 
@@ -268,7 +268,7 @@ Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns int
 ```
 Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist.
 
-**Kvarstående när Jesper godkänt piloten:** (1) sprid till fler områden (samma tre steg: mount-div, script-inklusion, wrapa begreppsord i löptexten), (2) överväg att wrapa ALLA förekomster av varje begrepp per område, inte bara ett urval, (3) lägg till som standardkomponent i `_CHECKLISTA_omraden.md` om den blir permanent.
+**Kvarstående när Jesper godkänt piloten:** (1) sprid till fler områden (samma tre steg: mount-div, script-inklusion, wrapa begreppsord i löptexten – se till att ALLA begrepp i områdets `data/begrepp.json` får minst en förekomst, inte bara några), (2) överväg att wrapa fler förekomster per begrepp (nu oftast bara en per begrepp), (3) lägg till som standardkomponent i `_CHECKLISTA_omraden.md` om den blir permanent.
 
 ---
 
