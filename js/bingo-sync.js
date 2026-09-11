@@ -9,7 +9,7 @@
    Denna fil delas av alla begreppsbingo-sidor, så du behöver bara ändra
    adressen på ETT ställe.
    ========================================================= */
-const BINGO_SYNC_API = "https://BYT-UT-MOT-DIN-WORKER-URL.workers.dev";
+const BINGO_SYNC_API = "https://bingo-sync.jesper-tordsson.workers.dev";
 
 async function bingoSkapaRum(){
   const res = await fetch(`${BINGO_SYNC_API}/rum`, { method: "POST" });
