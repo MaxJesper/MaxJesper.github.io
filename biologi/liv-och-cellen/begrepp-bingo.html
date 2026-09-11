@@ -179,8 +179,8 @@
 
         <div class="intervall" id="takt-rad">
           <label for="intervall-slider" style="margin:0">Takt:</label>
-          <input type="range" id="intervall-slider" min="4" max="18" value="8" oninput="andraIntervall(this.value)">
-          <span id="intervall-varde">8 s</span>
+          <input type="range" id="intervall-slider" min="5" max="60" step="1" value="12" oninput="andraIntervall(this.value)">
+          <span id="intervall-varde">12 s</span>
         </div>
       </div>
     </div>
@@ -244,7 +244,7 @@ let markerade = new Set();  // index (0-24) som är markerade
 let klaraRader = new Set(); // index i LINJER som redan firats
 let uppropOrdning = [];     // begrepp i slumpad uppropsordning
 let nastaOrdIndex = 0;      // hur många begrepp i uppropOrdning som redan lagts in i sekvensen
-let intervallMs = 8000;
+let intervallMs = 12000;
 let uppropAktivt = false;
 let ljudPa = true;
 let audioCtx = null;
@@ -515,6 +515,11 @@ function animeraTimer(ms){
 function andraIntervall(varde){
   intervallMs = Number(varde) * 1000;
   document.getElementById("intervall-varde").textContent = varde + " s";
+  // Om en fråga just nu räknas ner i automatiskt läge: starta om nedräkningen med det nya taktvärdet
+  if(uppropAktivt && lage === "auto"){
+    const steg = sekvens[pekare];
+    if(steg && steg.fas === "fraga") schemalaggAuto();
+  }
 }
 
 function valjLage(nyttLage){
