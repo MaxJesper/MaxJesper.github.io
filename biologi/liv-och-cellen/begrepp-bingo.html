@@ -104,6 +104,19 @@
   #bingo .uppropsknappar{display:flex;gap:.6rem;justify-content:center;margin-top:1.1rem;flex-wrap:wrap}
   #bingo .intervall{display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:.8rem;color:var(--mut);font-size:.88rem}
 
+  /* Notis när någon får bonuspoäng för en rad eller hel platta – visas kort för alla */
+  #bingo .handelse-toast{
+    position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-16px);
+    background:linear-gradient(160deg,#ffffff,var(--gron-l));border:2px solid var(--gron);
+    border-radius:14px;padding:.8rem 1.5rem;font-weight:800;font-size:1.05rem;color:var(--gron);
+    box-shadow:0 12px 30px rgba(0,0,0,.2);z-index:70;opacity:0;pointer-events:none;
+    transition:opacity .35s ease,transform .35s ease;text-align:center;max-width:90vw;
+  }
+  #bingo .handelse-toast.visas{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:480px){
+    #bingo .handelse-toast{font-size:.9rem;padding:.65rem 1rem}
+  }
+
   /* Rumskodpanelen döljs (till en liten pill i huden) så fort uppropet har startat */
   #bingo .rumskod-stor.dold{display:none}
   #bingo .hud .pill.rum-pill{display:none}
@@ -224,6 +237,8 @@
 
   <div id="bingo">
 
+    <div class="handelse-toast" id="handelse-toast"></div>
+
     <div class="kort" id="rollval">
       <h2>Begreppsbingo</h2>
       <p class="lead">
@@ -251,7 +266,7 @@
         <div class="rad">
           <div>
             <label for="spelarnamn-input">Ditt namn (visas på topplistan)</label>
-            <input type="text" id="spelarnamn-input" maxlength="20" placeholder="t.ex. Alex">
+            <input type="text" id="spelarnamn-input" maxlength="20" placeholder="t.ex. Arvid">
           </div>
           <div>
             <label for="rumskod-input">Rumskod (visas på lärarens skärm)</label>
@@ -445,6 +460,9 @@ let minBricka = null;       // (elevläge) eleven eget bricknummer, för att kun
 let senasteRumState = null; // senaste hämtade rumsläge (spelare, poäng m.m.) – används för topplistan
 let spelSlutVisat = false;  // så att pallceremonin bara triggas en gång per rum
 let visadeFanfarer = 0;     // hur många podieplatser som redan fått sin fanfar-ljudeffekt
+let senasteHandelseIndex = 0; // hur många poster i handelser-loggen vi redan visat en notis för
+let toastKo = [];           // kö av väntande notistexter (t.ex. "Bingo för Anna – rad 2!")
+let toastVisarNu = false;
 
 // Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (förklaringen visas)
 // och "facit" (rätt begrepp visas). pekare pekar på vilket steg som visas just nu.
@@ -524,6 +542,41 @@ function vaxlaLjud(){
     b.textContent = "Ljud: " + (ljudPa ? "På" : "Av");
   });
 }
+function ljudBonusPoang(){
+  spelaTon(880, 0, 0.1, 0.07);
+  spelaTon(1174.66, 0.09, 0.16, 0.08);
+}
+
+/* =========================================================
+   NOTISER – korta "Bingo för X!"-toaster när någon får en radbonus eller
+   hel platta. Visas på alla skärmar (lärare + samtliga elever) via pollningen.
+   ========================================================= */
+function visaHandelseToast(text){
+  toastKo.push(text);
+  if(!toastVisarNu) nastaToast();
+}
+function nastaToast(){
+  const text = toastKo.shift();
+  if(text === undefined){ toastVisarNu = false; return; }
+  toastVisarNu = true;
+  const el = document.getElementById("handelse-toast");
+  el.textContent = text;
+  el.classList.add("visas");
+  ljudBonusPoang();
+  setTimeout(() => {
+    el.classList.remove("visas");
+    setTimeout(nastaToast, 350);
+  }, 2600);
+}
+// Jämför den senast hämtade händelseloggen mot vad vi redan visat en notis för, och
+// köar upp notiser för allt nytt. Anropas varje gång vi pollar rummets state.
+function bearbetaNyaHandelser(handelser){
+  if(!Array.isArray(handelser)) return;
+  if(handelser.length > senasteHandelseIndex){
+    handelser.slice(senasteHandelseIndex).forEach(h => { if(h && h.text) visaHandelseToast(h.text); });
+    senasteHandelseIndex = handelser.length;
+  }
+}
 
 /* =========================================================
    BRICKA – uppbyggnad (elevläge)
@@ -587,6 +640,10 @@ function kollaLinjer(){
         document.querySelector(`.cell[data-index="${idx}"]`).classList.add("rad-klar");
       });
       document.getElementById("hud-rader").textContent = klaraRader.size;
+      const antalRaderNu = klaraRader.size;
+      if(antalRaderNu <= 3 && rumskod && minBricka){
+        bingoRapporteraRad(rumskod, minBricka, antalRaderNu).catch(() => {});
+      }
       if(markerade.size === 25){
         visaOverlay("Hel bricka!", "Alla 24 rutor klara – full bricka!");
         ljudBingo();
@@ -834,6 +891,9 @@ async function nyttUpprop(){
   doljSpelSlut();
   spelSlutVisat = false;
   senasteRumState = null;
+  senasteHandelseIndex = 0;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
   document.getElementById("rumskod-panel").classList.remove("dold");
   visaSteg();
 
@@ -854,6 +914,7 @@ async function nyttUpprop(){
       if(!d) return;
       senasteRumState = d;
       antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av 23 brickor valda`;
+      bearbetaNyaHandelser(d.handelser);
       if(d.avslutad && !spelSlutVisat){
         spelSlutVisat = true;
         pausaUpprop();
@@ -899,6 +960,9 @@ function tillbakaTillRollval(){
   anslutenKod = null;
   minBricka = null;
   spelSlutVisat = false;
+  senasteHandelseIndex = 0;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
 }
 
 /* =========================================================
@@ -1024,6 +1088,11 @@ async function valjBricka(bricknummer){
   rumskod = anslutenKod;
   minBricka = bricknummer;
   spelSlutVisat = false;
+  // Sätt utgångspunkten för notiser till nuläget, så eleven inte får en flod av gamla
+  // "Bingo för X!"-notiser för sådant som redan hänt innan hen anslöt.
+  senasteHandelseIndex = ((data && data.handelser) || []).length;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
 
   document.getElementById("hud-bricka").textContent = bricknummer;
   document.getElementById("hud-rumskod-elev").textContent = rumskod;
@@ -1037,6 +1106,7 @@ async function valjBricka(bricknummer){
     const d = await bingoHamtaRum(rumskod);
     if(!d) return;
     ropta = new Set(d.roptaTermer || []);
+    bearbetaNyaHandelser(d.handelser);
     if(d.avslutad && !spelSlutVisat){
       spelSlutVisat = true;
       stoppaPolling();

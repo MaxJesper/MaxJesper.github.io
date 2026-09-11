@@ -81,6 +81,25 @@ async function bingoRapporteraRatt(kod, bricknummer, term){
   }
 }
 
+// Rapporterar att eleven precis klarat sin antalRader:e rad (räknat per elev). De tre
+// första i hela rummet som når rad 1, 2 respektive 3 får en poängbonus, och servern
+// skickar tillbaka det uppdaterade rumsläget (inklusive händelseloggen för notiser).
+async function bingoRapporteraRad(kod, bricknummer, antalRader){
+  try{
+    const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/rad`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({bricknummer, antalRader})
+    });
+    let data = null;
+    try{ data = await res.json(); } catch(e){}
+    return { ok: res.ok, data };
+  } catch(e){
+    console.warn("Kunde inte rapportera klar rad:", e);
+    return { ok:false, data:null };
+  }
+}
+
 // Rapporterar att eleven fick hel bricka. Servern låser spelet för alla (avslutad:true)
 // och räknar fram topplistan över de tre bästa spelarna.
 async function bingoAvslutaSpel(kod, bricknummer){
