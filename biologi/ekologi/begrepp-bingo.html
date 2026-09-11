@@ -26,9 +26,19 @@
   #bingo p.lead{color:var(--mut);line-height:1.5;margin:0 0 1rem}
   #bingo .rad{display:flex;gap:.9rem;align-items:flex-end;flex-wrap:wrap}
   #bingo label{display:block;font-weight:600;font-size:.92rem;margin-bottom:.3rem}
-  #bingo select, #bingo input[type=number]{
+  #bingo select, #bingo input[type=number], #bingo input[type=text]{
     font-size:1rem;padding:.5rem .6rem;border:2px solid var(--linje);border-radius:10px;
     font-family:inherit;background:#fff;
+  }
+
+  /* Namn + rumskod vid elevinloggningen – extra stora så de syns tydligt på en padda/mobil */
+  #bingo #spelarnamn-input, #bingo #rumskod-input{
+    font-size:1.6rem;padding:.7rem .9rem;border-width:2px;border-radius:12px;
+    min-width:220px;max-width:100%;font-weight:700;
+  }
+  #bingo #rumskod-input{letter-spacing:.12em;text-align:center;max-width:180px}
+  @media(max-width:640px){
+    #bingo #spelarnamn-input, #bingo #rumskod-input{font-size:1.35rem;min-width:0;width:100%}
   }
   #bingo button{
     font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;
@@ -80,42 +90,102 @@
 
   /* Uppropspanel (lärarläge – projektorvänligt) */
   #bingo .upprop{text-align:center;padding:1.3rem 1rem}
-  #bingo .upprop .aktuellt{font-size:1.4rem;font-weight:600;min-height:3.4em;line-height:1.4;
-    display:flex;align-items:center;justify-content:center;color:var(--ink)}
-  #bingo .upprop .aktuellt.tom{color:var(--mut);font-weight:400;font-size:1.1rem;min-height:2.4em}
-  #bingo .upprop .aktuellt.facit-visning{color:var(--gron);font-size:2.4rem;font-weight:800;
-    min-height:2.4em;flex-direction:column;gap:.3rem}
-  #bingo .upprop .svar-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;
-    letter-spacing:.05em;font-weight:600}
+  #bingo .upprop .aktuellt{font-size:2.1rem;font-weight:800;min-height:3.6em;line-height:1.35;
+    display:flex;align-items:center;justify-content:center;color:var(--ink);
+    background:linear-gradient(160deg,#ffffff,var(--gron-l));border-radius:20px;
+    padding:1.4rem 1.6rem;box-shadow:inset 0 2px 10px rgba(36,48,51,.06),0 6px 20px rgba(36,48,51,.08)}
+  #bingo .upprop .aktuellt.tom{color:var(--mut);font-weight:400;font-size:1.2rem;min-height:2.6em;background:transparent;box-shadow:none}
+  #bingo .upprop .aktuellt.facit-visning{color:var(--gron);font-size:3rem;font-weight:800;
+    min-height:2.6em;flex-direction:column;gap:.3rem;background:linear-gradient(160deg,#ffffff,#d7f2e6)}
+  #bingo .upprop .svar-etikett{font-size:.85rem;color:var(--mut);text-transform:uppercase;
+    letter-spacing:.05em;font-weight:700}
   #bingo .timerbar{height:9px;background:#eef1f0;border-radius:999px;overflow:hidden;margin:.9rem auto 0;max-width:420px}
   #bingo .timerbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gron-m),var(--gron));width:0%}
   #bingo .uppropsknappar{display:flex;gap:.6rem;justify-content:center;margin-top:1.1rem;flex-wrap:wrap}
   #bingo .intervall{display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:.8rem;color:var(--mut);font-size:.88rem}
 
-  /* Bricka */
+  /* Rumskodpanelen döljs (till en liten pill i huden) så fort uppropet har startat */
+  #bingo .rumskod-stor.dold{display:none}
+  #bingo .hud .pill.rum-pill{display:none}
+  #bingo .hud .pill.rum-pill.visas{display:inline-block}
+
+  /* Topplista var tredje begrepp – staplar som "rusar fram" */
+  #bingo .topplista-panel{padding:.6rem .5rem 0}
+  #bingo .topplista-panel h3{margin:0 0 1rem;font-size:1.3rem;color:var(--gron)}
+  #bingo .topplista-rad{display:grid;grid-template-columns:1.6rem 6rem 1fr 3rem;align-items:center;
+    gap:.6rem;margin-bottom:.6rem;text-align:left}
+  #bingo .topplista-rad .plac{font-weight:800;color:var(--mut);text-align:center}
+  #bingo .topplista-rad .namn{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #bingo .topplista-rad .stapel-bakgrund{background:#eef1f0;border-radius:999px;height:22px;overflow:hidden}
+  #bingo .topplista-rad .stapel{display:block;height:100%;width:0%;border-radius:999px;
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+  #bingo .topplista-rad .poang{font-weight:800;text-align:right}
+  #bingo .topplista-tom{color:var(--mut);font-size:.95rem}
+
+  /* Spelslut – pallceremoni */
+  #bingo .spelslut-overlay{position:fixed;inset:0;background:rgba(20,28,30,.82);display:none;
+    align-items:center;justify-content:center;z-index:60;padding:1.5rem}
+  #bingo .spelslut-overlay.visa{display:flex}
+  #bingo .spelslut-ruta{background:#fff;border-radius:22px;padding:2rem 1.6rem 1.6rem;text-align:center;
+    max-width:520px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  #bingo .spelslut-ruta h2{margin:0 0 1.3rem;font-size:1.6rem;color:var(--gron)}
+  #bingo .podium{display:flex;align-items:flex-end;justify-content:center;gap:.7rem;margin:0 0 1.5rem}
+  #bingo .podium-plats{flex:1;max-width:150px;opacity:0;transform:translateY(24px) scale(.85);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  #bingo .podium-plats.visas{opacity:1;transform:translateY(0) scale(1)}
+  #bingo .podium-namn{font-weight:800;font-size:1rem;margin-bottom:.3rem;overflow-wrap:break-word}
+  #bingo .podium-poang{font-size:.85rem;color:var(--mut);margin-bottom:.5rem}
+  #bingo .podium-block{border-radius:12px 12px 0 0;display:flex;align-items:flex-start;justify-content:center;
+    padding-top:.5rem;font-size:1.8rem;font-weight:900;color:#fff}
+  #bingo .podium-plats.p1 .podium-block{background:linear-gradient(160deg,#ffd76a,#f0a500);height:150px;box-shadow:0 -4px 24px rgba(240,165,0,.5)}
+  #bingo .podium-plats.p2 .podium-block{background:linear-gradient(160deg,#d9dee0,#aeb7bb);height:112px}
+  #bingo .podium-plats.p3 .podium-block{background:linear-gradient(160deg,#e3b483,#c0864f);height:86px}
+  #bingo .podium-plats.p1 .podium-namn{font-size:1.3rem;color:var(--gul, #9a6b00)}
+  #bingo .podium-plats.p1.visas .podium-block{animation:podiumglod 1.4s ease-in-out infinite alternate}
+  @keyframes podiumglod{
+    from{box-shadow:0 -4px 24px rgba(240,165,0,.4)}
+    to{box-shadow:0 -4px 40px rgba(240,165,0,.8)}
+  }
+  #bingo .spelslut-stjarnor{font-size:1.6rem;letter-spacing:.3em;margin:0 0 1rem;opacity:0;transition:opacity .5s}
+  #bingo .spelslut-stjarnor.visas{opacity:1}
+  @media(max-width:480px){
+    #bingo .podium-namn{font-size:.82rem}
+    #bingo .podium-plats.p1 .podium-namn{font-size:1rem}
+    #bingo .podium-block{font-size:1.3rem}
+  }
+
+  /* Bricka – 3D-känsla: djup skugga, lyft på hover, "tryck ner"-känsla vid klick */
   #bingo .bricka{
-    display:grid;grid-template-columns:repeat(5,1fr);gap:.55rem;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;
+    background:linear-gradient(160deg,#eef6f2,#dcefe6);
+    border-radius:20px;padding:1rem;
+    box-shadow:inset 0 2px 10px rgba(36,48,51,.08);
   }
   #bingo .cell{
-    border:2px solid var(--linje);border-radius:12px;background:#fbfcfc;
-    min-height:96px;padding:.5rem .55rem;display:flex;align-items:center;justify-content:center;
-    text-align:center;font-size:.92rem;font-weight:600;line-height:1.25;color:var(--ink);cursor:pointer;
-    transition:border-color .12s,background .12s,transform .08s;user-select:none;position:relative;
+    border:none;border-radius:14px;background:linear-gradient(160deg,#ffffff,#f1f5f4);
+    min-height:100px;padding:.5rem .55rem;display:flex;align-items:center;justify-content:center;
+    text-align:center;font-size:1.08rem;font-weight:800;line-height:1.25;color:var(--ink);cursor:pointer;
+    transition:transform .12s ease,box-shadow .12s ease,background .15s;user-select:none;position:relative;
+    box-shadow:0 4px 0 rgba(36,48,51,.14),0 8px 16px rgba(36,48,51,.12);
+    transform:translateY(0);
   }
-  #bingo .cell:hover{border-color:var(--bla)}
-  #bingo .cell.fri{background:var(--gul-l);border-color:var(--gul);font-size:.95rem;color:#9a6b00;cursor:default}
-  #bingo .cell.markerad{background:var(--ratt-l);border-color:var(--ratt);color:var(--ratt)}
+  #bingo .cell:hover{transform:translateY(-3px);box-shadow:0 7px 0 rgba(36,48,51,.14),0 14px 22px rgba(36,48,51,.16)}
+  #bingo .cell:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(36,48,51,.14),0 4px 10px rgba(36,48,51,.14)}
+  #bingo .cell.fri{background:linear-gradient(160deg,var(--gul-l),#ffe9b3);font-size:1.05rem;color:#9a6b00;cursor:default;box-shadow:0 4px 0 rgba(154,107,0,.18),0 8px 16px rgba(154,107,0,.14)}
+  #bingo .cell.fri:hover{transform:translateY(0)}
+  #bingo .cell.markerad{background:linear-gradient(160deg,var(--ratt-l),#bdeecb);color:var(--ratt);
+    box-shadow:0 4px 0 rgba(46,158,91,.28),0 8px 18px rgba(46,158,91,.22)}
   #bingo .cell.darrar{animation:darr .32s}
-  #bingo .cell.rad-klar{box-shadow:0 0 0 3px var(--bla) inset}
+  #bingo .cell.rad-klar{box-shadow:0 0 0 3px var(--bla) inset,0 4px 0 rgba(46,158,91,.28),0 8px 18px rgba(46,158,91,.22)}
   @keyframes darr{
-    0%,100%{transform:translateX(0)}
-    25%{transform:translateX(-4px)}
-    75%{transform:translateX(4px)}
+    0%,100%{transform:translateX(0) translateY(0)}
+    25%{transform:translateX(-4px) translateY(0)}
+    75%{transform:translateX(4px) translateY(0)}
   }
   @media(max-width:640px){
-    #bingo .bricka{gap:.4rem}
-    #bingo .cell{min-height:78px;font-size:.8rem;padding:.35rem}
-    #bingo .cell.fri{font-size:.85rem}
+    #bingo .bricka{gap:.45rem;padding:.6rem}
+    #bingo .cell{min-height:78px;font-size:.86rem;padding:.35rem}
+    #bingo .cell.fri{font-size:.9rem}
     #bingo .upprop .aktuellt{font-size:1.15rem}
     #bingo .upprop .aktuellt.facit-visning{font-size:1.7rem}
     #bingo .roll-btn{min-width:0;width:100%}
@@ -179,6 +249,10 @@
       <div id="rumskod-steg">
         <div class="rad">
           <div>
+            <label for="spelarnamn-input">Ditt namn (visas på topplistan)</label>
+            <input type="text" id="spelarnamn-input" maxlength="20" placeholder="t.ex. Arvid">
+          </div>
+          <div>
             <label for="rumskod-input">Rumskod (visas på lärarens skärm)</label>
             <input type="text" id="rumskod-input" inputmode="numeric" maxlength="4" placeholder="t.ex. 4821">
           </div>
@@ -205,12 +279,13 @@
     <div class="kort" id="lararkort" style="display:none">
       <div class="hud">
         <span class="pill gron">Lärarläge</span>
+        <span class="pill rum-pill" id="hud-rum-pill">Rum: <span id="hud-rumskod-larare"></span></span>
         <span class="sp"></span>
         <button onclick="nyttUpprop()">Nytt upprop</button>
         <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
       </div>
 
-      <div class="rumskod-stor">
+      <div class="rumskod-stor" id="rumskod-panel">
         <div class="rumskod-etikett">Rumskod – elever ansluter med denna</div>
         <div class="rumskod-siffror" id="rumskod-stor">••••</div>
         <div class="rumskod-antal" id="hud-antal-brickor"></div>
@@ -229,6 +304,10 @@
         </div>
 
         <div class="aktuellt tom" id="aktuellt-begrepp">Tryck på Starta uppropet när ni är redo</div>
+        <div class="topplista-panel" id="topplista-panel" style="display:none">
+          <h3>🏆 Läget just nu</h3>
+          <div id="topplista-lista"></div>
+        </div>
         <div class="timerbar" id="timerbar-rad"><i id="timerbar-i"></i></div>
 
         <div class="uppropsknappar" id="auto-knappar">
@@ -274,6 +353,31 @@
         <h3 id="overlay-rubrik">Bingo!</h3>
         <p id="overlay-text"></p>
         <button class="primar" onclick="stangOverlay()">Fortsätt spela</button>
+      </div>
+    </div>
+
+    <div class="spelslut-overlay" id="spelslut-overlay">
+      <div class="spelslut-ruta">
+        <h2>🎉 Spelet är slut!</h2>
+        <div class="spelslut-stjarnor" id="spelslut-stjarnor">⭐️⭐️⭐️⭐️⭐️</div>
+        <div class="podium" id="podium">
+          <div class="podium-plats p2" id="podium-2">
+            <div class="podium-namn" id="podium-2-namn"></div>
+            <div class="podium-poang" id="podium-2-poang"></div>
+            <div class="podium-block">2</div>
+          </div>
+          <div class="podium-plats p1" id="podium-1">
+            <div class="podium-namn" id="podium-1-namn"></div>
+            <div class="podium-poang" id="podium-1-poang"></div>
+            <div class="podium-block">1</div>
+          </div>
+          <div class="podium-plats p3" id="podium-3">
+            <div class="podium-namn" id="podium-3-namn"></div>
+            <div class="podium-poang" id="podium-3-poang"></div>
+            <div class="podium-block">3</div>
+          </div>
+        </div>
+        <button class="primar" onclick="tillbakaTillRollval()">Till startsidan</button>
       </div>
     </div>
 
@@ -334,7 +438,12 @@ let rumskod = null;         // delad kod som kopplar ihop lärarens upprop med e
 let pollTimer = null;       // (elevläge) intervall som frågar efter nya uppropade begrepp
 let anslutenKod = null;     // (elevläge) rumskoden eleven anslutit till, innan bricka är vald
 let valdaBrickorPoll = null;// (elevläge) intervall som uppdaterar vilka brickor som är lediga
-let larareRumPoll = null;   // (lärarläge) intervall som uppdaterar antal valda brickor
+let larareRumPoll = null;   // (lärarläge) intervall som uppdaterar antal valda brickor + topplista
+let spelarnamn = "";        // (elevläge) namnet eleven skrev in vid inloggningen
+let minBricka = null;       // (elevläge) eleven eget bricknummer, för att kunna rapportera rätt svar/vinst
+let senasteRumState = null; // senaste hämtade rumsläge (spelare, poäng m.m.) – används för topplistan
+let spelSlutVisat = false;  // så att pallceremonin bara triggas en gång per rum
+let visadeFanfarer = 0;     // hur många podieplatser som redan fått sin fanfar-ljudeffekt
 
 // Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (förklaringen visas)
 // och "facit" (rätt begrepp visas). pekare pekar på vilket steg som visas just nu.
@@ -397,6 +506,17 @@ function ljudBingo(){
   [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f,i) => spelaTon(f, i*0.09, 0.22, 0.1));
   spelaTon(1318.51, 0.55, 0.5, 0.11);
 }
+// Fanfar till pallceremonin – storleken (0=brons, 1=silver, 2=guld) styr hur stor fanfaren är.
+function ljudFanfar(storlek){
+  const serier = [
+    [392.00, 523.25],                          // brons – liten twåtonsfanfar
+    [392.00, 523.25, 659.25],                  // silver
+    [392.00, 523.25, 659.25, 783.99, 1046.5],  // guld – störst
+  ];
+  const toner = serier[storlek] || serier[0];
+  toner.forEach((f,i) => spelaTon(f, i*0.11, 0.28, 0.09));
+  if(storlek === 2) spelaTon(1046.5, toner.length*0.11 + 0.05, 0.6, 0.11);
+}
 function vaxlaLjud(){
   ljudPa = !ljudPa;
   document.querySelectorAll(".ljud-knapp-btn").forEach(b => {
@@ -449,6 +569,7 @@ function klickaCell(i){
     markerade.add(i);
     cellEl.classList.add("markerad");
     ljudRatt();
+    if(rumskod && minBricka) bingoRapporteraRatt(rumskod, minBricka, begrepp.term).catch(() => {});
     kollaLinjer();
   } else {
     cellEl.classList.add("darrar");
@@ -468,6 +589,15 @@ function kollaLinjer(){
       if(markerade.size === 25){
         visaOverlay("Hel bricka!", "Alla 24 rutor klara – full bricka!");
         ljudBingo();
+        if(rumskod && minBricka){
+          bingoAvslutaSpel(rumskod, minBricka).then(({data}) => {
+            if(data && data.avslutad && !spelSlutVisat){
+              spelSlutVisat = true;
+              stoppaPolling();
+              visaSpelSlut(data.topplista || []);
+            }
+          }).catch(() => {});
+        }
       } else {
         visaOverlay("Bingo på en rad!", "Fyra i rad klara. Fortsätt spela för fler rader eller hela brickan.");
         ljudRadKlar();
@@ -495,7 +625,16 @@ function nyUppropsOrdning(){
 
 function skapaNastaSteg(){
   const senaste = sekvens[sekvens.length - 1];
-  if(!senaste || senaste.fas === "facit"){
+
+  // Var tredje uppropat begrepp: visa topplistan innan nästa fråga.
+  if(senaste && senaste.fas === "facit" && !senaste.topplistaVisad &&
+     nastaOrdIndex > 0 && nastaOrdIndex % 3 === 0){
+    senaste.topplistaVisad = true;
+    sekvens.push({fas:"topplista"});
+    return;
+  }
+
+  if(!senaste || senaste.fas === "facit" || senaste.fas === "topplista"){
     if(nastaOrdIndex >= uppropOrdning.length) nyUppropsOrdning();
     const begrepp = uppropOrdning[nastaOrdIndex++];
     sekvens.push({fas:"fraga", begrepp});
@@ -510,16 +649,34 @@ function skapaNastaSteg(){
 function visaSteg(){
   const steg = sekvens[pekare];
   const visning = document.getElementById("aktuellt-begrepp");
+  const topplistaPanel = document.getElementById("topplista-panel");
+
+  // Rumskoden är bara viktig innan uppropet dragit igång – när första frågan har
+  // visats kollapsar den stora rutan till en liten pill i huden istället.
+  const uppropetHarStartat = pekare >= 0;
+  document.getElementById("rumskod-panel").classList.toggle("dold", uppropetHarStartat);
+  document.getElementById("hud-rum-pill").classList.toggle("visas", uppropetHarStartat && !!rumskod);
+
   if(!steg){
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
     visning.classList.remove("facit-visning");
     visning.classList.add("tom");
     visning.textContent = lage === "manuell"
       ? "Tryck på Visa rätt begrepp för att börja"
       : "Tryck på Starta uppropet när ni är redo";
+  } else if(steg.fas === "topplista"){
+    visning.style.display = "none";
+    topplistaPanel.style.display = "";
+    renderTopplista();
   } else if(steg.fas === "fraga"){
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
     visning.classList.remove("facit-visning", "tom");
     visning.textContent = steg.begrepp.def;
   } else {
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
     visning.classList.remove("tom");
     visning.classList.add("facit-visning");
     visning.innerHTML = `<span class="svar-etikett">Rätt begrepp</span>${steg.begrepp.term}`;
@@ -531,8 +688,41 @@ function uppdateraManuellaKnappar(){
   if(lage !== "manuell") return;
   const steg = sekvens[pekare];
   const framat = document.getElementById("framat-knapp");
-  framat.textContent = (steg && steg.fas === "fraga") ? "Visa rätt begrepp →" : "Nästa förklaring →";
+  framat.textContent = (steg && steg.fas === "fraga") ? "Visa rätt begrepp →"
+    : (steg && steg.fas === "topplista") ? "Nästa fråga →"
+    : "Nästa förklaring →";
   document.getElementById("bakat-knapp").disabled = pekare <= 0;
+}
+
+// Ritar topplistan som staplar (färgad per bricknummer) sorterade efter poäng, med en
+// liten fördröjning per rad så att de känns som att de "rusar fram" när de dyker upp.
+const TOPPLISTA_FARGER = ["#2e8b6f","#3b7dd8","#f0a500","#d64545","#8b5cf6","#0891b2","#db2777","#65a30d"];
+function renderTopplista(){
+  const lista = document.getElementById("topplista-lista");
+  lista.innerHTML = "";
+  const spelare = Object.entries((senasteRumState && senasteRumState.spelare) || {})
+    .map(([id, p]) => ({ bricknummer: Number(id), namn: p.namn, poang: p.poang }))
+    .sort((a, b) => b.poang - a.poang)
+    .slice(0, 5);
+
+  if(spelare.length === 0){
+    lista.innerHTML = `<p class="topplista-tom">Ingen har fått poäng ännu – första rätt svar syns här näst gång.</p>`;
+    return;
+  }
+  const maxPoang = Math.max(1, ...spelare.map(s => s.poang));
+  spelare.forEach((s, i) => {
+    const rad = document.createElement("div");
+    rad.className = "topplista-rad";
+    const farg = TOPPLISTA_FARGER[s.bricknummer % TOPPLISTA_FARGER.length];
+    rad.innerHTML = `
+      <span class="plac">${i + 1}.</span>
+      <span class="namn">${s.namn}</span>
+      <span class="stapel-bakgrund"><span class="stapel" style="background:${farg}"></span></span>
+      <span class="poang">${s.poang}</span>`;
+    lista.appendChild(rad);
+    const stapel = rad.querySelector(".stapel");
+    setTimeout(() => { stapel.style.width = `${Math.max(6, (s.poang / maxPoang) * 100)}%`; }, 250 + i * 220);
+  });
 }
 
 function stegFramat(){
@@ -575,6 +765,9 @@ function schemalaggAuto(){
   if(steg.fas === "fraga"){
     animeraTimer(intervallMs);
     vantetid = setTimeout(() => { if(uppropAktivt) stegFramat(); }, intervallMs);
+  } else if(steg.fas === "topplista"){
+    animeraTimer(6000);
+    vantetid = setTimeout(() => { if(uppropAktivt) stegFramat(); }, 6000);
   } else {
     animeraTimer(4000);
     vantetid = setTimeout(() => {
@@ -633,19 +826,34 @@ async function nyttUpprop(){
   sekvens = []; pekare = -1; clearTimeout(vantetid); uppropAktivt = false;
   nyUppropsOrdning();
   document.getElementById("upprop-knapp").textContent = "Starta uppropet";
+  doljSpelSlut();
+  spelSlutVisat = false;
+  senasteRumState = null;
+  document.getElementById("rumskod-panel").classList.remove("dold");
   visaSteg();
   rumskod = null;
   if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
   const storVisning = document.getElementById("rumskod-stor");
   const antalVisning = document.getElementById("hud-antal-brickor");
   storVisning.textContent = "••••"; antalVisning.textContent = "";
+  document.getElementById("hud-rum-pill").classList.remove("visas");
   try{
     rumskod = await bingoSkapaRum();
     storVisning.textContent = rumskod;
+    document.getElementById("hud-rumskod-larare").textContent = rumskod;
     antalVisning.textContent = "0 av 23 brickor valda";
     larareRumPoll = setInterval(async () => {
       const d = await bingoHamtaRum(rumskod);
-      if(d) antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av 23 brickor valda`;
+      if(!d) return;
+      senasteRumState = d;
+      antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av 23 brickor valda`;
+      if(d.avslutad && !spelSlutVisat){
+        spelSlutVisat = true;
+        pausaUpprop();
+        clearInterval(larareRumPoll);
+        larareRumPoll = null;
+        visaSpelSlut(d.topplista || []);
+      }
     }, 3000);
   } catch(e){
     storVisning.textContent = "Ej uppkopplad";
@@ -670,6 +878,7 @@ function valjRoll(r){
 function tillbakaTillRollval(){
   pausaUpprop();
   stoppaPolling();
+  doljSpelSlut();
   if(valdaBrickorPoll){ clearInterval(valdaBrickorPoll); valdaBrickorPoll = null; }
   if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
   document.getElementById("startkort").style.display = "none";
@@ -679,6 +888,46 @@ function tillbakaTillRollval(){
   document.getElementById("elevkort").style.display = "none";
   document.getElementById("rollval").style.display = "";
   roll = null; rumskod = null; anslutenKod = null;
+  minBricka = null;
+  spelSlutVisat = false;
+}
+
+/* =========================================================
+   SPELSLUT – pallceremoni (visas för både lärare och elever när någon fått hel bricka)
+   ========================================================= */
+function visaSpelSlut(topplista){
+  const overlay = document.getElementById("spelslut-overlay");
+  const platser = [
+    { id: "podium-1", plac: 0, storlek: 2 },
+    { id: "podium-2", plac: 1, storlek: 1 },
+    { id: "podium-3", plac: 2, storlek: 0 },
+  ];
+  platser.forEach(({id, plac}) => {
+    const posten = topplista[plac];
+    document.getElementById(`${id}-namn`).textContent = posten ? posten.namn : "–";
+    document.getElementById(`${id}-poang`).textContent = posten ? `${posten.poang} poäng` : "";
+    document.getElementById(id).classList.remove("visas");
+    document.getElementById(id).style.visibility = posten ? "" : "hidden";
+  });
+  document.getElementById("spelslut-stjarnor").classList.remove("visas");
+  overlay.classList.add("visa");
+
+  // Bronsen visas först, sedan silver, sedan guld sist och störst – som i Kahoot.
+  visadeFanfarer = 0;
+  const reveal = (id, storlek, fordrojning) => setTimeout(() => {
+    if(!topplista[platser.find(p => p.id === id).plac]) return;
+    document.getElementById(id).classList.add("visas");
+    ljudFanfar(storlek);
+  }, fordrojning);
+  reveal("podium-3", 0, 500);
+  reveal("podium-2", 1, 1900);
+  reveal("podium-1", 2, 3500);
+  setTimeout(() => document.getElementById("spelslut-stjarnor").classList.add("visas"), 4300);
+}
+
+function doljSpelSlut(){
+  document.getElementById("spelslut-overlay").classList.remove("visa");
+  ["podium-1","podium-2","podium-3"].forEach(id => document.getElementById(id).classList.remove("visas"));
 }
 
 /* =========================================================
@@ -687,11 +936,20 @@ function tillbakaTillRollval(){
 async function anslutRum(){
   const felVisning = document.getElementById("startkort-fel");
   felVisning.style.display = "none";
+
+  const namn = document.getElementById("spelarnamn-input").value.trim();
+  if(!namn){
+    felVisning.textContent = "Skriv in ditt namn så att det syns på topplistan.";
+    felVisning.style.display = "";
+    return;
+  }
+
   const kod = document.getElementById("rumskod-input").value.trim();
   if(!/^\d{4}$/.test(kod)){
     felVisning.textContent = "Skriv in den fyrsiffriga rumskoden som läraren visar på sin skärm.";
     felVisning.style.display = ""; return;
   }
+  spelarnamn = namn.slice(0, 20);
   const data = await bingoHamtaRum(kod);
   if(!data){
     felVisning.textContent = "Hittade inget aktivt upprop med den koden. Kontrollera koden med läraren.";
@@ -726,7 +984,7 @@ function ritaBrickval(upptagna){
 async function valjBricka(bricknummer){
   const felVisning = document.getElementById("brickval-fel");
   felVisning.style.display = "none";
-  const { ok, data } = await bingoValjBricka(anslutenKod, bricknummer);
+  const { ok, data } = await bingoValjBricka(anslutenKod, bricknummer, spelarnamn);
   if(!ok){
     felVisning.textContent = "Den brickan blev precis tagen av någon annan – välj en ledig bricka.";
     felVisning.style.display = "";
@@ -738,6 +996,8 @@ async function valjBricka(bricknummer){
   ropta = new Set((data && data.roptaTermer) || []);
   markerade = new Set(); klaraRader = new Set();
   rumskod = anslutenKod;
+  minBricka = bricknummer;
+  spelSlutVisat = false;
   document.getElementById("hud-bricka").textContent = bricknummer;
   document.getElementById("hud-rumskod-elev").textContent = rumskod;
   document.getElementById("hud-rader").textContent = "0";
@@ -747,7 +1007,13 @@ async function valjBricka(bricknummer){
   stoppaPolling();
   pollTimer = setInterval(async () => {
     const d = await bingoHamtaRum(rumskod);
-    if(d) ropta = new Set(d.roptaTermer || []);
+    if(!d) return;
+    ropta = new Set(d.roptaTermer || []);
+    if(d.avslutad && !spelSlutVisat){
+      spelSlutVisat = true;
+      stoppaPolling();
+      visaSpelSlut(d.topplista || []);
+    }
   }, 2500);
 }
 
