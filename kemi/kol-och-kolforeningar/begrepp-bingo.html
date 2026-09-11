@@ -3,11 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Begreppsbingo (prototyp) – Liv och cellen</title>
+<title>Begreppsbingo – Kol och kolföreningar</title>
 <link rel="stylesheet" href="/css/style.css" />
 <style>
+  body.area-kol {
+    --area: #7c3aed;
+    --area-strong: #6d28d9;
+    --area-soft: #f5f3ff;
+    --area-border: #ddd6fe;
+    --area-hover: #ede9fe;
+  }
   #bingo{
-    --gron:#2e8b6f; --gron-m:#3fae8b; --gron-l:#e6f5ef;
+    --gron:#6d28d9; --gron-m:#8b5cf6; --gron-l:#f5f3ff;
     --bla:#3b7dd8; --bla-l:#e8f1fc;
     --gul:#f0a500; --gul-l:#fff4dd;
     --ratt:#2e9e5b; --ratt-l:#e4f6ea;
@@ -67,6 +74,12 @@
   #bingo .upprop .aktuellt.tom{color:var(--mut);font-weight:400;font-size:1.1rem;min-height:2.4em}
   #bingo .upprop .aktuellt.facit-visning{color:var(--gron);font-size:2.4rem;font-weight:800;
     min-height:2.4em;flex-direction:column;gap:.3rem}
+  #bingo .upprop .aktuellt.struktur-visning{flex-direction:column;gap:.6rem;min-height:auto;font-size:1.15rem}
+  #bingo .fraga-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  #bingo .struktur-stage{background:#fff;border:2px solid var(--linje);border-radius:14px;padding:.9rem 1.2rem;display:inline-flex}
+  #bingo .struktur-stage svg{max-width:420px;width:100%;height:auto}
+  #bingo svg line{stroke:var(--ink);stroke-width:1.4;stroke-linecap:round}
+  #bingo svg text{fill:var(--ink);font-family:Arial,sans-serif}
   #bingo .upprop .svar-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;
     letter-spacing:.05em;font-weight:600}
   #bingo .timerbar{height:9px;background:#eef1f0;border-radius:999px;overflow:hidden;margin:.9rem auto 0;max-width:420px}
@@ -100,6 +113,7 @@
     #bingo .cell.fri{font-size:.85rem}
     #bingo .upprop .aktuellt{font-size:1.15rem}
     #bingo .upprop .aktuellt.facit-visning{font-size:1.7rem}
+    #bingo .struktur-stage svg{max-width:260px}
     #bingo .roll-btn{min-width:0;width:100%}
   }
 
@@ -119,11 +133,11 @@
   #bingo .fotnot{color:var(--mut);font-size:.85rem;line-height:1.5}
 </style>
 </head>
-<body>
+<body class="area-kol">
 
-<header class="biologi-header">
-  <h1>Liv och cellen</h1>
-  <p>Begreppsbingo – prototyp</p>
+<header class="kemi-header">
+  <h1>Kol och kolföreningar</h1>
+  <p>Begreppsbingo</p>
 </header>
 
 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -131,7 +145,7 @@
 
 <main>
   <p>
-    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+    <a href="./index.html" class="subject-btn">← Tillbaka till området</a>
   </p>
 
   <div id="bingo">
@@ -139,10 +153,11 @@
     <div class="kort" id="rollval">
       <h2>Begreppsbingo</h2>
       <p class="lead">
-        Klassisk bingo med <strong>begrepp</strong> från Liv och cellen istället för siffror.
-        En person läser upp förklaringar högt för klassen – till exempel läraren via en
-        storbildsskärm – medan alla andra har varsin bricka och markerar när de hör rätt
-        förklaring. Fyra i rad ger bingo på en rad, hela brickan full ger storbingo.
+        Klassisk bingo med <strong>kolföreningar</strong> istället för siffror. En person
+        visar och läser upp en ledtråd i taget för klassen – till exempel läraren via en
+        storbildsskärm – ibland en förklaring, ibland en ritad strukturformel. Alla andra
+        har varsin bricka och markerar när de känner igen rätt förening. Fyra i rad ger
+        bingo på en rad, hela brickan full ger storbingo.
       </p>
       <div class="roll-knappar">
         <button class="primar roll-btn" onclick="valjRoll('larare')">Jag är läraren</button>
@@ -153,10 +168,10 @@
     <div class="kort" id="startkort" style="display:none">
       <h2>Begreppsbingo – elev</h2>
       <p class="lead">
-        Din bricka har 24 rutor med <strong>begrepp</strong> från Liv och cellen. Läraren läser
-        upp en förklaring i taget för hela klassen – hittar du rutan med rätt begrepp klickar
-        du på den. Fyra i rad – vågrätt, lodrätt eller diagonalt – ger bingo på en rad. Hela
-        brickan full ger storbingo.
+        Din bricka har 24 rutor med <strong>kolföreningar</strong>. Läraren visar en
+        ledtråd i taget för hela klassen – ibland en förklaring, ibland en strukturformel –
+        hittar du rutan med rätt förening klickar du på den. Fyra i rad – vågrätt, lodrätt
+        eller diagonalt – ger bingo på en rad. Hela brickan full ger storbingo.
       </p>
       <div class="rad">
         <div>
@@ -182,8 +197,9 @@
         <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
       </div>
       <p class="fotnot" style="margin:-0.3rem 0 1rem">
-        Läs upp förklaringen som visas nedan. Eleverna har varsin bricka med begrepp och
-        markerar själva när de hör rätt förklaring – ingen bricka visas här.
+        Läs upp förklaringen eller visa strukturformeln som visas nedan. Eleverna har
+        varsin bricka med kolföreningar och markerar själva när de känner igen rätt
+        förening – ingen bricka visas här.
       </p>
 
       <div class="upprop">
@@ -203,14 +219,14 @@
 
         <div class="uppropsknappar" id="manuell-knappar" style="display:none">
           <button id="bakat-knapp" onclick="stegBakat()" disabled>← Föregående</button>
-          <button class="primar" id="framat-knapp" onclick="stegFramat()">Visa rätt begrepp →</button>
+          <button class="primar" id="framat-knapp" onclick="stegFramat()">Visa rätt förening →</button>
           <button class="ljud-knapp-btn" onclick="vaxlaLjud()">Ljud: På</button>
         </div>
 
         <div class="intervall" id="takt-rad">
           <label for="intervall-slider" style="margin:0">Takt:</label>
-          <input type="range" id="intervall-slider" min="5" max="60" step="1" value="12" oninput="andraIntervall(this.value)">
-          <span id="intervall-varde">12 s</span>
+          <input type="range" id="intervall-slider" min="5" max="60" step="1" value="15" oninput="andraIntervall(this.value)">
+          <span id="intervall-varde">15 s</span>
         </div>
       </div>
     </div>
@@ -223,9 +239,8 @@
         <button onclick="bytBricka()">Byt bricka</button>
       </div>
       <p class="fotnot" style="margin:-0.4rem 0 1rem">
-        Klicka på rutan när du hör läraren läsa upp rätt förklaring. Klicka igen om du
-        klickade fel – precis som i vanlig bingo finns ingen automatisk kontroll, ni litar
-        på varandra.
+        Klicka på rutan när du känner igen rätt förening. Klicka igen om du klickade fel –
+        precis som i vanlig bingo finns ingen automatisk kontroll, ni litar på varandra.
       </p>
       <div class="bricka" id="bricka"></div>
       <p class="fotnot" style="margin-top:1rem">
@@ -246,17 +261,165 @@
 
 <script>
 /* =========================================================
-   DATA
+   RITMOTOR (samma motor som i Lärande spel – rita strukturformler)
    ========================================================= */
-const JSON_PATH = "./data/begreppskort.json";
-let ALLA_BEGREPP = [];
-
-async function laddaData(){
-  const res = await fetch(JSON_PATH, {cache:"no-store"});
-  if(!res.ok) throw new Error(`Kunde inte läsa ${JSON_PATH}`);
-  const data = await res.json();
-  ALLA_BEGREPP = [...data.levels["1"], ...data.levels["2"]];
+const STEP=35, G=11, FS=21, PAD=20;
+function renderSVG(g, xscale=1){
+  const SX=STEP*xscale, SY=STEP;
+  const cols=g.atoms.map(a=>a.col), rows=g.atoms.map(a=>a.row);
+  const minC=Math.min(...cols),maxC=Math.max(...cols),minR=Math.min(...rows),maxR=Math.max(...rows);
+  const OX=PAD-minC*SX, OY=PAD-minR*SY, X=a=>OX+a.col*SX, Y=a=>OY+a.row*SY;
+  let els=[];
+  g.bonds.forEach(b=>{
+    const a1=g.atoms[b.a],a2=g.atoms[b.b];
+    let x1=X(a1),y1=Y(a1),x2=X(a2),y2=Y(a2);
+    const dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len;
+    const trim=b.gap!==undefined?b.gap:G;
+    x1+=ux*trim;y1+=uy*trim;x2-=ux*trim;y2-=uy*trim;
+    const px=-uy,py=ux, offs=b.order===1?[0]:b.order===2?[-3.5,3.5]:[-6,0,6];
+    offs.forEach(o=>els.push(`<line x1="${(x1+px*o).toFixed(1)}" y1="${(y1+py*o).toFixed(1)}" x2="${(x2+px*o).toFixed(1)}" y2="${(y2+py*o).toFixed(1)}"/>`));
+  });
+  g.atoms.forEach(a=>{
+    els.push(`<text x="${X(a).toFixed(1)}" y="${Y(a).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="${FS}">${a.el}</text>`);
+  });
+  const W=(maxC-minC)*SX+2*PAD, H=(maxR-minR)*SY+2*PAD;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W.toFixed(1)} ${H.toFixed(1)}" width="${W.toFixed(1)}" height="${H.toFixed(1)}">${els.join("")}</svg>`;
 }
+
+/* ===================== BYGGARE (samma som i Lärande spel) ===================== */
+function chain(n,bonds){
+  const A=[],B=[];
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:bonds[i]});
+  for(let i=0;i<n;i++){
+    const hasPrev=i>0,hasNext=i<n-1,prevO=hasPrev?bonds[i-1]:0,nextO=hasNext?bonds[i]:0;
+    const hc=4-prevO-nextO,nN=(hasPrev?1:0)+(hasNext?1:0),free=!hasPrev?"left":"right";
+    let offs=[];
+    if(nN===1 && ((hasNext&&nextO===2)||(hasPrev&&prevO===2))){
+      const E=45, angs=hasNext?[180-E,180+E]:[E,-E];
+      for(const th of angs){const r=th*Math.PI/180;offs.push({dx:Math.cos(r),dy:-Math.sin(r)});}
+    } else {
+      let dirs=hc===4?["up","down","left","right"]:hc===3?["up","down",free]:hc===2?["up","down"]:hc===1?(nN===1?[free]:["up"]):[];
+      for(const d of dirs) offs.push({dx:d==="left"?-1:d==="right"?1:0,dy:d==="up"?-1:d==="down"?1:0});
+    }
+    for(const o of offs){A.push({el:"H",col:i+o.dx,row:o.dy});B.push({a:i,b:A.length-1,order:1});}
+  }
+  return {atoms:A,bonds:B};
+}
+function alkohol(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const O={el:"O",col:n,row:0};A.push(O);B.push({a:n-1,b:idx(O),order:1});
+  const Ho={el:"H",col:n+1,row:0};A.push(Ho);B.push({a:idx(O),b:idx(Ho),order:1});
+  for(let i=0;i<n;i++){let dirs=(n===1||i===0)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}}
+  return {atoms:A,bonds:B};
+}
+function syra(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=n-1;
+  const Oc={el:"O",col:n-1,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const Oh={el:"O",col:n,row:0};A.push(Oh);B.push({a:cc,b:idx(Oh),order:1});
+  const Hh={el:"H",col:n+1,row:0};A.push(Hh);B.push({a:idx(Oh),b:idx(Hh),order:1});
+  for(let i=0;i<n;i++){ if(i===cc){ if(n===1){const h={el:"H",col:-1,row:0};A.push(h);B.push({a:i,b:idx(h),order:1});} continue; }
+    let dirs=(i===0)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}}
+  return {atoms:A,bonds:B};
+}
+function polyol(n, ohCarbons){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  for(let i=0;i<n;i++){
+    const hasPrev=i>0,hasNext=i<n-1,hasOH=ohCarbons.includes(i);
+    const hc=4-(hasPrev?1:0)-(hasNext?1:0)-(hasOH?1:0);
+    if(hasOH){const O={el:"OH",col:i,row:1};A.push(O);B.push({a:i,b:idx(O),order:1});}
+    const slots=[[0,-1]]; if(!hasOH) slots.push([0,1]); if(!hasPrev) slots.push([-1,0]); if(!hasNext) slots.push([1,0]);
+    for(let k=0;k<hc;k++){const [dx,dy]=slots[k]; const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}
+  }
+  return {atoms:A,bonds:B};
+}
+function glycerol(){ return polyol(3,[0,1,2]); }
+function grenAlkan(n,pos){ // rak kedja n kol med en metylgren (nedåt) på kol 'pos' (1-indexerat)
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const bc=pos-1;
+  const Cb={el:"C",col:bc,row:2};A.push(Cb);B.push({a:bc,b:idx(Cb),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<n;i++){const first=i===0,last=i===n-1;
+    let dirs = (i===bc) ? [[0,-1]] : [[0,-1],[0,1]];
+    if(first) dirs.push([-1,0]); if(last) dirs.push([1,0]);
+    addH(A[i],dirs);
+  }
+  addH(Cb,[[0,1],[-1,0],[1,0]]);
+  return {atoms:A,bonds:B};
+}
+function esterBuild(acidN, alcoholN){ // syra (acidN kol) förestrad med alkohol (alcoholN kol)
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<acidN;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<acidN-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=acidN-1;
+  const Oc={el:"O",col:cc,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const O1={el:"O",col:acidN,row:0};A.push(O1);B.push({a:cc,b:idx(O1),order:1});
+  const alc=[];
+  for(let j=0;j<alcoholN;j++){const c={el:"C",col:acidN+1+j,row:0};A.push(c);alc.push(c);}
+  B.push({a:idx(O1),b:idx(alc[0]),order:1});
+  for(let j=0;j<alcoholN-1;j++)B.push({a:idx(alc[j]),b:idx(alc[j+1]),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<cc;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  if(acidN===1){ addH(A[cc],[[-1,0]]); }
+  for(let j=0;j<alcoholN;j++){const last=j===alcoholN-1; addH(alc[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
+  return {atoms:A,bonds:B};
+}
+
+/* =========================================================
+   DATA – kolföreningar (samma ämnen och fakta som i Lärande spel)
+   ========================================================= */
+function B(term,kat,g,fakta,xs){return {term,kat,g,fakta,xs:xs||1};}
+const ALLA_BEGREPP = [
+  // ALKANER
+  B("metan","alkan",()=>chain(1,[]),"Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. En stark växthusgas."),
+  B("etan","alkan",()=>chain(2,[1]),"En gas i naturgas. Används mest som råvara för att tillverka eten och plast."),
+  B("propan","alkan",()=>chain(3,[1,1]),"Ingår i gasol och används i gasolkök, campingkök och gasgrillar."),
+  B("butan","alkan",()=>chain(4,[1,1,1]),"Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck."),
+  B("pentan","alkan",()=>chain(5,[1,1,1,1]),"En lättflyktig vätska som ingår i bensin."),
+  B("hexan","alkan",()=>chain(6,[1,1,1,1,1]),"Vätska i bensin; används också som lösningsmedel i industrin."),
+  // ALKENER
+  B("eten","alken",()=>chain(2,[2]),"Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna."),
+  B("propen","alken",()=>chain(3,[2,1]),"Råvara för plasten polypropen, som finns i matlådor, mattor och rep."),
+  B("buten","alken",()=>chain(4,[2,1,1]),"Dubbelbindning i ena änden av kedjan. Råvara i plastindustrin."),
+  B("penten","alken",()=>chain(5,[2,1,1,1]),"Fem kol med dubbelbindning i ena änden av kedjan."),
+  // ALKYNER
+  B("etyn","alkyn",()=>chain(2,[3]),"Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall."),
+  B("propyn","alkyn",()=>chain(3,[1,3]),"En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri."),
+  B("butyn","alkyn",()=>chain(4,[3,1,1]),"Fyra kol med trippelbindning i ena änden av kedjan."),
+  // ALKOHOLER
+  B("metanol","alkohol",()=>alkohol(1),"Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel."),
+  B("etanol","alkohol",()=>alkohol(2),"Alkoholen i öl, vin och sprit, som jäst bildar av socker. Även bränsle (E85) och desinfektionsmedel."),
+  B("propanol","alkohol",()=>alkohol(3),"Lösningsmedel samt i handsprit och ytdesinfektion."),
+  B("butanol","alkohol",()=>alkohol(4),"Lösningsmedel, bland annat i färg och lack."),
+  // FLERVÄRDA
+  B("etandiol","flervard",()=>polyol(2,[0,1]),"En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska (kallas även glykol).",1.25),
+  B("propantriol","flervard",()=>glycerol(),"En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter (kallas även glycerol).",1.25),
+  // SYROR
+  B("metansyra","syra",()=>syra(1),"Myror och brännässlor svider med den (kallas även myrsyra). Även konserveringsmedel i djurfoder."),
+  B("etansyra","syra",()=>syra(2),"Ger ättika dess sura smak (kallas även ättiksyra). Bildas när vin surnar."),
+  B("propansyra","syra",()=>syra(3),"Konserveringsmedel i bröd (E280) som motverkar mögel."),
+  B("butansyra","syra",()=>syra(4),"Luktar härsket smör och svettiga fötter (kallas även smörsyra). Finns bl.a. i parmesanost."),
+  // GRENADE (visas aldrig som strukturfråga – bara som faktaledtråd)
+  B("2-metylpropan","grenat",()=>grenAlkan(3,2),"Grenad variant av butan; metylgrupp på kol 2 (kallas även isobutan). Köldmedium och drivgas i sprayburkar."),
+  B("2-metylbutan","grenat",()=>grenAlkan(4,2),"Metylgren på kol 2 (kallas även isopentan). Jäsmedel vid tillverkning av frigolit."),
+  B("3-metylpentan","grenat",()=>grenAlkan(5,3),"Metylgren på kol 3, mitten av kedjan. Finns i bensin."),
+  // ESTRAR
+  B("metylmetanoat","ester",()=>esterBuild(1,1),"En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin."),
+  B("etyletanoat","ester",()=>esterBuild(2,2),"En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning."),
+  B("metylbutanoat","ester",()=>esterBuild(4,1),"En ester av butansyra och metanol. Doftar äpple."),
+  B("etylbutanoat","ester",()=>esterBuild(4,2),"En ester av butansyra och etanol. Doftar ananas."),
+];
 
 /* =========================================================
    SEEDAD SLUMP (mulberry32) – samma bricknummer ger alltid samma bricka
@@ -283,20 +446,20 @@ function blandad(lista, slumpFn){
    ========================================================= */
 const FRI_INDEX = 12; // mitten av 5x5
 let roll = null;            // "larare" | "elev"
-let brickans_celler = [];   // 25 st: {term, def} eller null (fri ruta)
+let brickans_celler = [];   // 25 st: {term, kat, g, fakta} eller null (fri ruta)
 let markerade = new Set();  // index (0-24) som är markerade
 let klaraRader = new Set(); // index i LINJER som redan firats
 let uppropOrdning = [];     // begrepp i slumpad uppropsordning
 let nastaOrdIndex = 0;      // hur många begrepp i uppropOrdning som redan lagts in i sekvensen
-let intervallMs = 12000;
+let intervallMs = 15000;
 let uppropAktivt = false;
 let ljudPa = true;
 let audioCtx = null;
 
-// Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (förklaringen visas)
-// och "facit" (rätt begrepp visas). pekare pekar på vilket steg som visas just nu.
-// Detta driver bara lärarens uppropsvy – eleverna har ingen egen uppropsmotor, de
-// markerar själva på sin bricka utifrån vad de hör läraren läsa upp.
+// Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (en förklaring eller
+// en strukturformel visas) och "facit" (rätt förening visas). pekare pekar på vilket steg
+// som visas just nu. Detta driver bara lärarens uppropsvy – eleverna har ingen egen
+// uppropsmotor, de markerar själva på sin bricka utifrån vad läraren visar/läser upp.
 let sekvens = [];
 let pekare = -1;
 let lage = "auto"; // "auto" | "manuell"
@@ -397,8 +560,8 @@ function ritaBricka(){
 }
 
 // Elevläget har ingen egen uppropsmotor och ingen automatisk rättning: eleven klickar
-// fritt utifrån vad läraren läser upp, precis som i vanlig bingo. Ett andra klick på en
-// redan markerad ruta ångrar markeringen (för att rätta till en felklickning).
+// fritt utifrån vad läraren visar/läser upp, precis som i vanlig bingo. Ett andra klick på
+// en redan markerad ruta ångrar markeringen (för att rätta till en felklickning).
 function klickaCell(i){
   if(i === FRI_INDEX) return;
   const cellEl = document.querySelector(`.cell[data-index="${i}"]`);
@@ -458,7 +621,8 @@ function stangOverlay(){
 }
 
 /* =========================================================
-   UPPROP (lärarläge) – sekvens av "fraga" (förklaringen visas) och "facit" (rätt begrepp visas)
+   UPPROP (lärarläge) – sekvens av "fraga" (förklaring eller strukturformel visas)
+   och "facit" (rätt förening visas)
    ========================================================= */
 function nyUppropsOrdning(){
   uppropOrdning = blandad(ALLA_BEGREPP, Math.random);
@@ -470,7 +634,10 @@ function skapaNastaSteg(){
   if(!senaste || senaste.fas === "facit"){
     if(nastaOrdIndex >= uppropOrdning.length) nyUppropsOrdning();
     const begrepp = uppropOrdning[nastaOrdIndex++];
-    sekvens.push({fas:"fraga", begrepp});
+    // Grenade kolväten visas aldrig som strukturfråga, bara som faktaledtråd.
+    const kanStruktur = begrepp.kat !== "grenat";
+    const typ = (kanStruktur && Math.random() < 0.5) ? "struktur" : "fakta";
+    sekvens.push({fas:"fraga", begrepp, typ});
     ljudNyttBegrepp();
   } else {
     sekvens.push({fas:"facit", begrepp: senaste.begrepp});
@@ -482,18 +649,25 @@ function visaSteg(){
   const steg = sekvens[pekare];
   const visning = document.getElementById("aktuellt-begrepp");
   if(!steg){
-    visning.classList.remove("facit-visning");
+    visning.classList.remove("facit-visning", "struktur-visning");
     visning.classList.add("tom");
     visning.textContent = lage === "manuell"
-      ? "Tryck på Visa rätt begrepp för att börja"
+      ? "Tryck på Visa rätt förening för att börja"
       : "Tryck på Starta uppropet när ni är redo";
   } else if(steg.fas === "fraga"){
     visning.classList.remove("facit-visning", "tom");
-    visning.textContent = steg.begrepp.def;
+    if(steg.typ === "struktur"){
+      visning.classList.add("struktur-visning");
+      visning.innerHTML = `<span class="fraga-etikett">Vad heter föreningen?</span>`
+        + `<div class="struktur-stage">${renderSVG(steg.begrepp.g(), steg.begrepp.xs || 1)}</div>`;
+    } else {
+      visning.classList.remove("struktur-visning");
+      visning.textContent = steg.begrepp.fakta;
+    }
   } else {
-    visning.classList.remove("tom");
+    visning.classList.remove("tom", "struktur-visning");
     visning.classList.add("facit-visning");
-    visning.innerHTML = `<span class="svar-etikett">Rätt begrepp</span>${steg.begrepp.term}`;
+    visning.innerHTML = `<span class="svar-etikett">Rätt förening</span>${steg.begrepp.term}`;
   }
   uppdateraManuellaKnappar();
 }
@@ -502,7 +676,7 @@ function uppdateraManuellaKnappar(){
   if(lage !== "manuell") return;
   const steg = sekvens[pekare];
   const framat = document.getElementById("framat-knapp");
-  framat.textContent = (steg && steg.fas === "fraga") ? "Visa rätt begrepp →" : "Nästa förklaring →";
+  framat.textContent = (steg && steg.fas === "fraga") ? "Visa rätt förening →" : "Nästa ledtråd →";
   document.getElementById("bakat-knapp").disabled = pekare <= 0;
 }
 
@@ -558,9 +732,9 @@ function schemalaggAuto(){
 
 function visaPaus(){
   const visning = document.getElementById("aktuellt-begrepp");
-  visning.classList.remove("facit-visning");
+  visning.classList.remove("facit-visning", "struktur-visning");
   visning.classList.add("tom");
-  visning.textContent = "Nästa förklaring strax …";
+  visning.textContent = "Nästa ledtråd strax …";
   animeraTimer(4000);
 }
 
@@ -664,10 +838,7 @@ function bytBricka(){
   document.getElementById("elevkort").style.display = "none";
 }
 
-(async function init(){
-  await laddaData();
-  fyllBrickval();
-})();
+fyllBrickval();
 </script>
 
 <script src="/js/menu.js"></script>
