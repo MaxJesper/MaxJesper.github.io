@@ -42,12 +42,50 @@ async function bingoHamtaRum(kod){
   }
 }
 
-// Försöker låsa ett bricknummer åt eleven i det här rummet. Om numret redan är taget
-// (någon annan hann före) svarar servern med ok:false och den aktuella listan över
-// upptagna brickor, så att gränssnittet kan uppdateras och eleven kan välja en annan.
-async function bingoValjBricka(kod, bricknummer){
+// Försöker låsa ett bricknummer åt eleven i det här rummet, med det namn eleven skrev
+// in vid inloggningen (visas i topplistan). Om numret redan är taget (någon annan hann
+// före) svarar servern med ok:false och den aktuella listan över upptagna brickor, så
+// att gränssnittet kan uppdateras och eleven kan välja en annan.
+async function bingoValjBricka(kod, bricknummer, namn){
   try{
     const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/valjBricka`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({bricknummer, namn})
+    });
+    let data = null;
+    try{ data = await res.json(); } catch(e){}
+    return { ok: res.ok, data };
+  } catch(e){
+    console.warn("Kunde inte välja bricka:", e);
+    return { ok:false, data:null };
+  }
+}
+
+// Rapporterar att eleven klickat rätt på ett uppropat begrepp. Servern delar ut poäng
+// efter hur snabbt eleven var (mest poäng till den första som svarar rätt på just det
+// begreppet) och skickar tillbaka det uppdaterade rumsläget.
+async function bingoRapporteraRatt(kod, bricknummer, term){
+  try{
+    const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/ratt`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({bricknummer, term})
+    });
+    let data = null;
+    try{ data = await res.json(); } catch(e){}
+    return { ok: res.ok, data };
+  } catch(e){
+    console.warn("Kunde inte rapportera rätt svar:", e);
+    return { ok:false, data:null };
+  }
+}
+
+// Rapporterar att eleven fick hel bricka. Servern låser spelet för alla (avslutad:true)
+// och räknar fram topplistan över de tre bästa spelarna.
+async function bingoAvslutaSpel(kod, bricknummer){
+  try{
+    const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/avsluta`, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
       body: JSON.stringify({bricknummer})
@@ -56,7 +94,7 @@ async function bingoValjBricka(kod, bricknummer){
     try{ data = await res.json(); } catch(e){}
     return { ok: res.ok, data };
   } catch(e){
-    console.warn("Kunde inte välja bricka:", e);
+    console.warn("Kunde inte avsluta spelet:", e);
     return { ok:false, data:null };
   }
 }
