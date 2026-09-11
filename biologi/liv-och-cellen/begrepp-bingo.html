@@ -560,6 +560,33 @@ function ljudFanfar(storlek){
   toner.forEach((f,i) => spelaTon(f, i*0.11, 0.28, 0.09));
   if(storlek === 2) spelaTon(1046.5, toner.length*0.11 + 0.05, 0.6, 0.11);
 }
+// Lång "tutande" fanfar (ca 3 sekunder) till den nya, mer dramatiska pallceremonin – ett par
+// tutande hornstötar följt av en hållen, ringande slutton. storlek: 0=brons,1=silver,2=guld.
+function ljudFanfarLang(storlek){
+  const scheman = [
+    [ // brons – två korta tutningar + en varm hållen slutton
+      {f:392.00, t:0.00, l:0.38, v:0.12},
+      {f:392.00, t:0.48, l:0.38, v:0.12},
+      {f:523.25, t:0.98, l:1.95, v:0.14},
+    ],
+    [ // silver – tre tutningar, ljusare och lite piggare
+      {f:440.00, t:0.00, l:0.32, v:0.12},
+      {f:440.00, t:0.40, l:0.32, v:0.12},
+      {f:554.37, t:0.80, l:0.32, v:0.13},
+      {f:659.25, t:1.24, l:1.72, v:0.15},
+    ],
+    [ // guld – stigande löpning, störst och festligast, avslutas i ett hållet ackord
+      {f:523.25, t:0.00, l:0.22, v:0.12},
+      {f:659.25, t:0.22, l:0.22, v:0.12},
+      {f:783.99, t:0.44, l:0.22, v:0.13},
+      {f:1046.5, t:0.66, l:0.24, v:0.14},
+      {f:783.99, t:1.02, l:0.30, v:0.13},
+      {f:1046.5, t:1.38, l:1.58, v:0.17},
+      {f:1318.51, t:1.42, l:1.54, v:0.11},
+    ],
+  ];
+  (scheman[storlek] || scheman[0]).forEach(n => spelaTon(n.f, n.t, n.l, n.v));
+}
 function vaxlaLjud(){
   ljudPa = !ljudPa;
   document.querySelectorAll(".ljud-knapp-btn").forEach(b => {
@@ -590,7 +617,7 @@ function nastaToast(){
   setTimeout(() => {
     el.classList.remove("visas");
     setTimeout(nastaToast, 350);
-  }, 2600);
+  }, 5000);
 }
 // Jämför den senast hämtade händelseloggen mot vad vi redan visat en notis för, och
 // köar upp notiser för allt nytt. Anropas varje gång vi pollar rummets state.
@@ -650,6 +677,10 @@ function byggBricka(bricknummer){
 function ritaBricka(){
   const el = document.getElementById("bricka");
   el.innerHTML = "";
+  if(minBricka !== null && minBricka !== undefined){
+    const [ljus, ljusare] = BRICKA_PASTELLER[minBricka % BRICKA_PASTELLER.length];
+    el.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
+  }
   brickans_celler.forEach((begrepp, i) => {
     const div = document.createElement("div");
     div.className = "cell";
@@ -819,6 +850,19 @@ function uppdateraManuellaKnappar(){
 // Ritar topplistan som staplar (färgad per bricknummer) sorterade efter poäng, med en
 // liten fördröjning per rad så att de känns som att de "rusar fram" när de dyker upp.
 const TOPPLISTA_FARGER = ["#2e8b6f","#3b7dd8","#f0a500","#d64545","#8b5cf6","#0891b2","#db2777","#65a30d"];
+
+// Lugna, ljusa pastellfärger bakom elevens egen bricka – olika bricknummer får olika
+// (lugna) kulörer så att brickan känns lite personlig utan att bli stökig eller stressig.
+const BRICKA_PASTELLER = [
+  ["#fff9e6","#ffefc2"], // gul
+  ["#eaf6ff","#d6ecff"], // blå
+  ["#eefbf0","#d7f5dd"], // grön
+  ["#fdeef6","#fbdcec"], // rosa
+  ["#f3edfd","#e6d9fb"], // lila
+  ["#fff1e6","#ffe0c7"], // persika
+  ["#e9fbfa","#d3f3f1"], // turkos
+  ["#f5f7e6","#e9efc4"], // ljus lime
+];
 function renderTopplista(){
   const lista = document.getElementById("topplista-lista");
   lista.innerHTML = "";
@@ -1052,17 +1096,32 @@ function visaSpelSlut(topplista){
   document.getElementById("spelslut-stjarnor").classList.remove("visas");
   overlay.classList.add("visa");
 
-  // Bronsen visas först, sedan silver, sedan guld sist och störst – som i Kahoot.
-  visadeFanfarer = 0;
-  const reveal = (id, storlek, fordrojning) => setTimeout(() => {
-    if(!topplista[platser.find(p => p.id === id).plac]) return;
-    document.getElementById(id).classList.add("visas");
-    ljudFanfar(storlek);
-  }, fordrojning);
-  reveal("podium-3", 0, 500);
-  reveal("podium-2", 1, 1900);
-  reveal("podium-1", 2, 3500);
-  setTimeout(() => document.getElementById("spelslut-stjarnor").classList.add("visas"), 4300);
+  // Dramatisk pallceremoni: brons, sedan silver, sedan guld – i den ordningen väntar vi
+  // 2 sekunder i tystnad, visar namnet och prispallen och spelar en ca 3 sekunder lång
+  // tutande fanfar, innan vi går vidare till nästa placering. Efter guldets fanfar tänds
+  // stjärnorna och resultatet står sedan kvar orört (inget döljs automatiskt).
+  const ORDNING_FOR_CEREMONI = [
+    { id: "podium-3", plac: 2, storlek: 0 },
+    { id: "podium-2", plac: 1, storlek: 1 },
+    { id: "podium-1", plac: 0, storlek: 2 },
+  ];
+  const VANTAN_FORE = 2000;
+  const FANFAR_LANGD = 3000;
+
+  let tid = 0;
+  ORDNING_FOR_CEREMONI.forEach(({id, plac, storlek}, i) => {
+    tid += VANTAN_FORE;
+    setTimeout(() => {
+      if(!topplista[plac]) return;
+      document.getElementById(id).classList.add("visas");
+      ljudFanfarLang(storlek);
+    }, tid);
+    tid += FANFAR_LANGD;
+    if(i === ORDNING_FOR_CEREMONI.length - 1){
+      const stjarnTid = tid;
+      setTimeout(() => document.getElementById("spelslut-stjarnor").classList.add("visas"), stjarnTid);
+    }
+  });
 }
 
 function doljSpelSlut(){
