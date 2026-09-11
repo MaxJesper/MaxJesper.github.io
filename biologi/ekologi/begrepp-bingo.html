@@ -48,6 +48,24 @@
   #bingo .roll-knappar{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem}
   #bingo .roll-btn{padding:1rem 1.6rem;font-size:1.05rem;min-width:200px}
 
+  /* Stor rumskod (lärarläge, kahoot-stil) */
+  #bingo .rumskod-stor{text-align:center;background:var(--gron-l);border:2px solid var(--gron);
+    border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem}
+  #bingo .rumskod-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;
+    letter-spacing:.06em;font-weight:700;margin-bottom:.3rem}
+  #bingo .rumskod-siffror{font-size:3rem;font-weight:800;letter-spacing:.15em;color:var(--gron)}
+  #bingo .rumskod-antal{font-size:.9rem;color:var(--mut);margin-top:.3rem}
+
+  /* Bricka-väljare (elev ansluter med rumskod, väljer sedan en ledig bricka) */
+  #bingo .brick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));
+    gap:.5rem;margin-top:.6rem}
+  #bingo .brick-btn{border:2px solid var(--linje);border-radius:10px;background:#fff;
+    padding:.6rem 0;font-weight:700;font-size:1rem;cursor:pointer;color:var(--ink);
+    font-family:inherit;transition:border-color .12s,background .12s}
+  #bingo .brick-btn:hover:not(:disabled){border-color:var(--gron-m);background:var(--gron-l)}
+  #bingo .brick-btn.tagen{background:#f2f2f2;border-color:var(--linje);color:var(--mut);
+    cursor:default;text-decoration:line-through;opacity:.7}
+
   /* HUD */
   #bingo .hud{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}
   #bingo .hud .pill{background:var(--gul-l);color:#9a6b00;font-weight:700;
@@ -158,16 +176,26 @@
         du på den. Fyra i rad – vågrätt, lodrätt eller diagonalt – ger bingo på en rad. Hela
         brickan full ger storbingo.
       </p>
-      <div class="rad">
-        <div>
-          <label for="brickval">Ditt bricknummer (1–23)</label>
-          <select id="brickval"></select>
+      <div id="rumskod-steg">
+        <div class="rad">
+          <div>
+            <label for="rumskod-input">Rumskod (visas på lärarens skärm)</label>
+            <input type="text" id="rumskod-input" inputmode="numeric" maxlength="4" placeholder="t.ex. 4821">
+          </div>
+          <button class="primar" onclick="anslutRum()">Anslut</button>
         </div>
-        <button class="primar" onclick="startaSpel()">Starta bingo</button>
+        <p class="fotnot" id="startkort-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
       </div>
+
+      <div id="brickval-steg" style="display:none">
+        <p class="lead" style="margin-top:1rem;margin-bottom:.3rem"><strong>Välj en ledig bricka:</strong></p>
+        <div class="brick-grid" id="brick-grid"></div>
+        <p class="fotnot" id="brickval-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
+      </div>
+
       <p class="fotnot" style="margin-top:1rem">
-        Läraren delar ut ett nummer per elev så att ingen i klassen har samma bricka.
-        Samma nummer ger alltid samma bricka, så du kan spela vidare på din egen om du laddar om sidan.
+        Samma bricka kan bara väljas av en person åt gången, precis som att välja avatar i
+        Kahoot. Om du laddar om sidan ansluter du med samma rumskod och väljer en ny ledig bricka.
       </p>
       <p class="fotnot" style="margin-top:.6rem">
         <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
@@ -181,9 +209,17 @@
         <button onclick="nyttUpprop()">Nytt upprop</button>
         <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
       </div>
+
+      <div class="rumskod-stor">
+        <div class="rumskod-etikett">Rumskod – elever ansluter med denna</div>
+        <div class="rumskod-siffror" id="rumskod-stor">••••</div>
+        <div class="rumskod-antal" id="hud-antal-brickor"></div>
+      </div>
+
       <p class="fotnot" style="margin:-0.3rem 0 1rem">
-        Läs upp förklaringen som visas nedan. Eleverna har varsin bricka med begrepp och
-        markerar själva när de hör rätt förklaring – ingen bricka visas här.
+        Läs upp förklaringen som visas nedan. Dela rumskoden ovan med klassen – eleverna
+        ansluter och väljer en ledig bricka på sin egen sida. Eleverna har varsin bricka med
+        begrepp och markerar själva när de hör rätt förklaring – ingen bricka visas här.
       </p>
 
       <div class="upprop">
@@ -218,14 +254,14 @@
     <div class="kort" id="elevkort" style="display:none">
       <div class="hud">
         <span class="pill">Bricka #<span id="hud-bricka"></span></span>
+        <span class="pill">Rum: <span id="hud-rumskod-elev"></span></span>
         <span class="pill gron">Rader klara: <span id="hud-rader">0</span>/12</span>
         <span class="sp"></span>
         <button onclick="bytBricka()">Byt bricka</button>
       </div>
       <p class="fotnot" style="margin:-0.4rem 0 1rem">
-        Klicka på rutan när du hör läraren läsa upp rätt förklaring. Klicka igen om du
-        klickade fel – precis som i vanlig bingo finns ingen automatisk kontroll, ni litar
-        på varandra.
+        Klicka på rutan när du hör läraren läsa upp rätt begrepp. Din bricka känner av
+        läraren uppropet i realtid – hittar en ruta inte rätt begrepp ännu skakar den till.
       </p>
       <div class="bricka" id="bricka"></div>
       <p class="fotnot" style="margin-top:1rem">
@@ -244,6 +280,7 @@
   </div>
 </main>
 
+<script src="/js/bingo-sync.js"></script>
 <script>
 /* =========================================================
    DATA
@@ -284,6 +321,7 @@ function blandad(lista, slumpFn){
 const FRI_INDEX = 12; // mitten av 5x5
 let roll = null;            // "larare" | "elev"
 let brickans_celler = [];   // 25 st: {term, def} eller null (fri ruta)
+let ropta = new Set();      // (elevläge) begrepp läraren faktiskt ropat upp, hämtat via synk
 let markerade = new Set();  // index (0-24) som är markerade
 let klaraRader = new Set(); // index i LINJER som redan firats
 let uppropOrdning = [];     // begrepp i slumpad uppropsordning
@@ -292,6 +330,11 @@ let intervallMs = 12000;
 let uppropAktivt = false;
 let ljudPa = true;
 let audioCtx = null;
+let rumskod = null;         // delad kod som kopplar ihop lärarens upprop med elevernas brickor
+let pollTimer = null;       // (elevläge) intervall som frågar efter nya uppropade begrepp
+let anslutenKod = null;     // (elevläge) rumskoden eleven anslutit till, innan bricka är vald
+let valdaBrickorPoll = null;// (elevläge) intervall som uppdaterar vilka brickor som är lediga
+let larareRumPoll = null;   // (lärarläge) intervall som uppdaterar antal valda brickor
 
 // Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (förklaringen visas)
 // och "facit" (rätt begrepp visas). pekare pekar på vilket steg som visas just nu.
@@ -396,22 +439,21 @@ function ritaBricka(){
   });
 }
 
-// Elevläget har ingen egen uppropsmotor och ingen automatisk rättning: eleven klickar
-// fritt utifrån vad läraren läser upp, precis som i vanlig bingo. Ett andra klick på en
-// redan markerad ruta ångrar markeringen (för att rätta till en felklickning).
+// Elevläget har ingen egen uppropsmotor, men känner av lärarens riktiga upprop via synken
+// (rumskoden) – en ruta går bara att markera om läraren faktiskt har ropat upp det begreppet.
 function klickaCell(i){
-  if(i === FRI_INDEX) return;
   const cellEl = document.querySelector(`.cell[data-index="${i}"]`);
-  if(markerade.has(i)){
-    markerade.delete(i);
-    cellEl.classList.remove("markerad");
-    omprakLinjer();
-    return;
+  if(markerade.has(i)) return;
+  const begrepp = brickans_celler[i];
+  if(ropta.has(begrepp.term)){
+    markerade.add(i);
+    cellEl.classList.add("markerad");
+    ljudRatt();
+    kollaLinjer();
+  } else {
+    cellEl.classList.add("darrar");
+    setTimeout(() => cellEl.classList.remove("darrar"), 320);
   }
-  markerade.add(i);
-  cellEl.classList.add("markerad");
-  ljudRatt();
-  kollaLinjer();
 }
 
 function kollaLinjer(){
@@ -432,20 +474,6 @@ function kollaLinjer(){
       }
     }
   });
-}
-
-// Räknar om vilka rader som är klara (används när en markering ångras, så att en ruta
-// som fortfarande ingår i en annan klar rad behåller sin markering korrekt).
-function omprakLinjer(){
-  document.querySelectorAll(".cell.rad-klar").forEach(el => el.classList.remove("rad-klar"));
-  klaraRader = new Set();
-  LINJER.forEach((linje, li) => {
-    if(linje.every(idx => markerade.has(idx))){
-      klaraRader.add(li);
-      linje.forEach(idx => document.querySelector(`.cell[data-index="${idx}"]`).classList.add("rad-klar"));
-    }
-  });
-  document.getElementById("hud-rader").textContent = klaraRader.size;
 }
 
 function visaOverlay(rubrik, text){
@@ -472,6 +500,7 @@ function skapaNastaSteg(){
     const begrepp = uppropOrdning[nastaOrdIndex++];
     sekvens.push({fas:"fraga", begrepp});
     ljudNyttBegrepp();
+    if(rumskod) bingoRopaBegrepp(rumskod, begrepp.term);
   } else {
     sekvens.push({fas:"facit", begrepp: senaste.begrepp});
     ljudFacit();
@@ -600,14 +629,28 @@ function valjLage(nyttLage){
 
 // Nollställer uppropet (används både när läraren väljer sin roll första gången och när
 // läraren trycker på "Nytt upprop" för att börja om från början, t.ex. inför en ny klass).
-function nyttUpprop(){
-  sekvens = [];
-  pekare = -1;
-  clearTimeout(vantetid);
-  uppropAktivt = false;
+async function nyttUpprop(){
+  sekvens = []; pekare = -1; clearTimeout(vantetid); uppropAktivt = false;
   nyUppropsOrdning();
   document.getElementById("upprop-knapp").textContent = "Starta uppropet";
   visaSteg();
+  rumskod = null;
+  if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
+  const storVisning = document.getElementById("rumskod-stor");
+  const antalVisning = document.getElementById("hud-antal-brickor");
+  storVisning.textContent = "••••"; antalVisning.textContent = "";
+  try{
+    rumskod = await bingoSkapaRum();
+    storVisning.textContent = rumskod;
+    antalVisning.textContent = "0 av 23 brickor valda";
+    larareRumPoll = setInterval(async () => {
+      const d = await bingoHamtaRum(rumskod);
+      if(d) antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av 23 brickor valda`;
+    }, 3000);
+  } catch(e){
+    storVisning.textContent = "Ej uppkopplad";
+    console.warn("Kunde inte skapa delat rum:", e);
+  }
 }
 
 /* =========================================================
@@ -626,48 +669,107 @@ function valjRoll(r){
 
 function tillbakaTillRollval(){
   pausaUpprop();
+  stoppaPolling();
+  if(valdaBrickorPoll){ clearInterval(valdaBrickorPoll); valdaBrickorPoll = null; }
+  if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
   document.getElementById("startkort").style.display = "none";
+  document.getElementById("rumskod-steg").style.display = "";
+  document.getElementById("brickval-steg").style.display = "none";
   document.getElementById("lararkort").style.display = "none";
   document.getElementById("elevkort").style.display = "none";
   document.getElementById("rollval").style.display = "";
-  roll = null;
+  roll = null; rumskod = null; anslutenKod = null;
 }
 
 /* =========================================================
-   START / RESET (elevläge)
+   START / RESET (elevläge) – rumskod, brickval Kahoot-stil, synk
    ========================================================= */
-function fyllBrickval(){
-  const sel = document.getElementById("brickval");
-  sel.innerHTML = "";
+async function anslutRum(){
+  const felVisning = document.getElementById("startkort-fel");
+  felVisning.style.display = "none";
+  const kod = document.getElementById("rumskod-input").value.trim();
+  if(!/^\d{4}$/.test(kod)){
+    felVisning.textContent = "Skriv in den fyrsiffriga rumskoden som läraren visar på sin skärm.";
+    felVisning.style.display = ""; return;
+  }
+  const data = await bingoHamtaRum(kod);
+  if(!data){
+    felVisning.textContent = "Hittade inget aktivt upprop med den koden. Kontrollera koden med läraren.";
+    felVisning.style.display = ""; return;
+  }
+  anslutenKod = kod;
+  document.getElementById("rumskod-steg").style.display = "none";
+  document.getElementById("brickval-steg").style.display = "";
+  ritaBrickval(data.upptagnaBrickor || []);
+  if(valdaBrickorPoll) clearInterval(valdaBrickorPoll);
+  valdaBrickorPoll = setInterval(async () => {
+    const d = await bingoHamtaRum(anslutenKod);
+    if(d) ritaBrickval(d.upptagnaBrickor || []);
+  }, 2000);
+}
+
+function ritaBrickval(upptagna){
+  const grid = document.getElementById("brick-grid");
+  grid.innerHTML = "";
+  const upptagnaSet = new Set(upptagna);
   for(let n = 1; n <= 23; n++){
-    const opt = document.createElement("option");
-    opt.value = n; opt.textContent = "Bricka " + n;
-    sel.appendChild(opt);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "brick-btn" + (upptagnaSet.has(n) ? " tagen" : "");
+    btn.textContent = n;
+    if(upptagnaSet.has(n)){ btn.disabled = true; }
+    else { btn.addEventListener("click", () => valjBricka(n)); }
+    grid.appendChild(btn);
   }
 }
 
-function startaSpel(){
-  const bricknummer = Number(document.getElementById("brickval").value);
+async function valjBricka(bricknummer){
+  const felVisning = document.getElementById("brickval-fel");
+  felVisning.style.display = "none";
+  const { ok, data } = await bingoValjBricka(anslutenKod, bricknummer);
+  if(!ok){
+    felVisning.textContent = "Den brickan blev precis tagen av någon annan – välj en ledig bricka.";
+    felVisning.style.display = "";
+    ritaBrickval((data && data.upptagnaBrickor) || []);
+    return;
+  }
+  if(valdaBrickorPoll){ clearInterval(valdaBrickorPoll); valdaBrickorPoll = null; }
   brickans_celler = byggBricka(bricknummer);
-  markerade = new Set();
-  klaraRader = new Set();
-
+  ropta = new Set((data && data.roptaTermer) || []);
+  markerade = new Set(); klaraRader = new Set();
+  rumskod = anslutenKod;
   document.getElementById("hud-bricka").textContent = bricknummer;
+  document.getElementById("hud-rumskod-elev").textContent = rumskod;
   document.getElementById("hud-rader").textContent = "0";
   document.getElementById("startkort").style.display = "none";
   document.getElementById("elevkort").style.display = "";
   ritaBricka();
+  stoppaPolling();
+  pollTimer = setInterval(async () => {
+    const d = await bingoHamtaRum(rumskod);
+    if(d) ropta = new Set(d.roptaTermer || []);
+  }, 2500);
 }
+
+function stoppaPolling(){ if(pollTimer){ clearInterval(pollTimer); pollTimer = null; } }
 
 function bytBricka(){
-  document.getElementById("startkort").style.display = "";
+  stoppaPolling();
   document.getElementById("elevkort").style.display = "none";
+  document.getElementById("startkort").style.display = "";
+  document.getElementById("rumskod-steg").style.display = "none";
+  document.getElementById("brickval-steg").style.display = "";
+  if(anslutenKod){
+    bingoHamtaRum(anslutenKod).then(d => { if(d) ritaBrickval(d.upptagnaBrickor || []); });
+    if(valdaBrickorPoll) clearInterval(valdaBrickorPoll);
+    valdaBrickorPoll = setInterval(async () => {
+      const d = await bingoHamtaRum(anslutenKod);
+      if(d) ritaBrickval(d.upptagnaBrickor || []);
+    }, 2000);
+  }
 }
 
-(async function init(){
-  await laddaData();
-  fyllBrickval();
-})();
+(async function init(){ await laddaData(); })();
 </script>
 
 <script src="/js/menu.js"></script>
