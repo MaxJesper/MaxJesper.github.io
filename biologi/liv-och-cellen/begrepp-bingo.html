@@ -26,9 +26,19 @@
   #bingo p.lead{color:var(--mut);line-height:1.5;margin:0 0 1rem}
   #bingo .rad{display:flex;gap:.9rem;align-items:flex-end;flex-wrap:wrap}
   #bingo label{display:block;font-weight:600;font-size:.92rem;margin-bottom:.3rem}
-  #bingo select, #bingo input[type=number]{
+  #bingo select, #bingo input[type=number], #bingo input[type=text]{
     font-size:1rem;padding:.5rem .6rem;border:2px solid var(--linje);border-radius:10px;
     font-family:inherit;background:#fff;
+  }
+
+  /* Namn + rumskod vid elevinloggningen – extra stora så de syns tydligt på en padda/mobil */
+  #bingo #spelarnamn-input, #bingo #rumskod-input{
+    font-size:1.6rem;padding:.7rem .9rem;border-width:2px;border-radius:12px;
+    min-width:220px;max-width:100%;font-weight:700;
+  }
+  #bingo #rumskod-input{letter-spacing:.12em;text-align:center;max-width:180px}
+  @media(max-width:640px){
+    #bingo #spelarnamn-input, #bingo #rumskod-input{font-size:1.35rem;min-width:0;width:100%}
   }
   #bingo button{
     font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;
