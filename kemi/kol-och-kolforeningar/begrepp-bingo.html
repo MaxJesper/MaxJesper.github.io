@@ -584,55 +584,89 @@ function esterBuild(acidN, alcoholN){ // syra (acidN kol) förestrad med alkohol
 /* =========================================================
    DATA – kolföreningar (samma ämnen och fakta som i Lärande spel)
 
-   Frågenivåer (Version 1 / Version 2 / Överkurs): varje begrepp kan höra till en eller
-   flera nivåer via sjätte argumentet till B(...), t.ex. B(..., ["v1"]) eller
-   B(..., ["v1","overkurs"]). Ett bingobräde behöver minst 24 begrepp för att fyllas, så
-   tills Jesper har gått igenom och fördelat begreppen mellan nivåerna ligger ALLA 30
-   begreppen som standard i alla tre nivåerna (identiska frågepooler) – ändra bara den
-   sjätte parametern på de rader nedan som ska höra till en snävare uppsättning nivåer.
+   Frågenivåer (Version 1 / Version 2 / Överkurs): varje begrepp hör till en eller flera
+   nivåer via sjätte argumentet till B(...), t.ex. B(..., ["v1"]) eller
+   B(..., ["v1","overkurs"]). Ett bingobräde behöver minst 24 begrepp för att fyllas –
+   varje nivå nedan har minst 24 (Överkurs har några fler, vilket ger lite variation
+   mellan elevernas brickor precis som i den ursprungliga poolen).
+
+   Begrepp utan strukturformel (g = null) visas alltid som faktaledtråd, aldrig som
+   ritad molekyl – det gäller de grenade kolvätena och de rena "kunskapsbegreppen"
+   (t.ex. Alkan, Diamant, Krackning) som lagts till nedan.
    ========================================================= */
 function B(term,kat,g,fakta,xs,version){
   return {term,kat,g,fakta,xs:xs||1, version: version || ["v1","v2","overkurs"]};
 }
 const ALLA_BEGREPP_MASTER = [
   // ALKANER
-  B("metan","alkan",()=>chain(1,[]),"Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. En stark växthusgas."),
-  B("etan","alkan",()=>chain(2,[1]),"En gas i naturgas. Används mest som råvara för att tillverka eten och plast."),
-  B("propan","alkan",()=>chain(3,[1,1]),"Ingår i gasol och används i gasolkök, campingkök och gasgrillar."),
-  B("butan","alkan",()=>chain(4,[1,1,1]),"Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck."),
-  B("pentan","alkan",()=>chain(5,[1,1,1,1]),"En lättflyktig vätska som ingår i bensin."),
-  B("hexan","alkan",()=>chain(6,[1,1,1,1,1]),"Vätska i bensin; används också som lösningsmedel i industrin."),
+  B("metan","alkan",()=>chain(1,[]),"Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. En stark växthusgas.",1,["v1"]),
+  B("etan","alkan",()=>chain(2,[1]),"En gas i naturgas. Används mest som råvara för att tillverka eten och plast.",1,["v1"]),
+  B("propan","alkan",()=>chain(3,[1,1]),"Ingår i gasol och används i gasolkök, campingkök och gasgrillar.",1,["v1"]),
+  B("butan","alkan",()=>chain(4,[1,1,1]),"Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck.",1,["v1"]),
+  B("pentan","alkan",()=>chain(5,[1,1,1,1]),"En lättflyktig vätska som ingår i bensin.",1,["v1"]),
+  B("hexan","alkan",()=>chain(6,[1,1,1,1,1]),"Vätska i bensin; används också som lösningsmedel i industrin.",1,["v2","overkurs"]),
   // ALKENER
-  B("eten","alken",()=>chain(2,[2]),"Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna."),
-  B("propen","alken",()=>chain(3,[2,1]),"Råvara för plasten polypropen, som finns i matlådor, mattor och rep."),
-  B("buten","alken",()=>chain(4,[2,1,1]),"Dubbelbindning i ena änden av kedjan. Råvara i plastindustrin."),
-  B("penten","alken",()=>chain(5,[2,1,1,1]),"Fem kol med dubbelbindning i ena änden av kedjan."),
+  B("eten","alken",()=>chain(2,[2]),"Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna.",1,["v1","v2"]),
+  B("propen","alken",()=>chain(3,[2,1]),"Råvara för plasten polypropen, som finns i matlådor, mattor och rep.",1,["v1","v2"]),
+  B("buten","alken",()=>chain(4,[2,1,1]),"Dubbelbindning i ena änden av kedjan. Råvara i plastindustrin.",1,["v1","v2"]),
+  B("penten","alken",()=>chain(5,[2,1,1,1]),"Fem kol med dubbelbindning i ena änden av kedjan.",1,["overkurs"]),
   // ALKYNER
-  B("etyn","alkyn",()=>chain(2,[3]),"Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall."),
-  B("propyn","alkyn",()=>chain(3,[1,3]),"En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri."),
-  B("butyn","alkyn",()=>chain(4,[3,1,1]),"Fyra kol med trippelbindning i ena änden av kedjan."),
+  B("etyn","alkyn",()=>chain(2,[3]),"Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall.",1,["v1"]),
+  B("propyn","alkyn",()=>chain(3,[1,3]),"En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri.",1,["v1","v2"]),
+  B("butyn","alkyn",()=>chain(4,[3,1,1]),"Fyra kol med trippelbindning i ena änden av kedjan.",1,["v2","overkurs"]),
   // ALKOHOLER
-  B("metanol","alkohol",()=>alkohol(1),"Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel."),
-  B("etanol","alkohol",()=>alkohol(2),"Alkoholen i öl, vin och sprit, som jäst bildar av socker. Även bränsle (E85) och desinfektionsmedel."),
-  B("propanol","alkohol",()=>alkohol(3),"Lösningsmedel samt i handsprit och ytdesinfektion."),
-  B("butanol","alkohol",()=>alkohol(4),"Lösningsmedel, bland annat i färg och lack."),
+  B("metanol","alkohol",()=>alkohol(1),"Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel.",1,["v1"]),
+  B("etanol","alkohol",()=>alkohol(2),"Alkoholen i öl, vin och sprit, som bildas av socker. Även bränsle (E85) och desinfektionsmedel.",1,["v1","v2"]),
+  B("propanol","alkohol",()=>alkohol(3),"Lösningsmedel samt i handsprit och ytdesinfektion.",1,["v1","v2"]),
+  B("butanol","alkohol",()=>alkohol(4),"Lösningsmedel, bland annat i färg och lack.",1,["v2","overkurs"]),
   // FLERVÄRDA
-  B("etandiol","flervard",()=>polyol(2,[0,1]),"En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska (kallas även glykol).",1.25),
-  B("propantriol","flervard",()=>glycerol(),"En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter (kallas även glycerol).",1.25),
+  B("etandiol","flervard",()=>polyol(2,[0,1]),"En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska (kallas även glykol).",1.25,["v2","overkurs"]),
+  B("propantriol","flervard",()=>glycerol(),"En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter (kallas även glycerol).",1.25,["v2","overkurs"]),
   // SYROR
-  B("metansyra","syra",()=>syra(1),"Myror och brännässlor svider med den (kallas även myrsyra). Även konserveringsmedel i djurfoder."),
-  B("etansyra","syra",()=>syra(2),"Ger ättika dess sura smak (kallas även ättiksyra). Bildas när vin surnar."),
-  B("propansyra","syra",()=>syra(3),"Konserveringsmedel i bröd (E280) som motverkar mögel."),
-  B("butansyra","syra",()=>syra(4),"Luktar härsket smör och svettiga fötter (kallas även smörsyra). Finns bl.a. i parmesanost."),
+  B("metansyra","syra",()=>syra(1),"Myror och brännässlor svider med den (kallas även myrsyra). Även konserveringsmedel i djurfoder.",1,["v1"]),
+  B("etansyra","syra",()=>syra(2),"Ger ättika dess sura smak (kallas även ättiksyra). Bildas när vin surnar.",1,["v1","v2"]),
+  B("propansyra","syra",()=>syra(3),"Konserveringsmedel i bröd (E280) som motverkar mögel.",1,["v1","v2"]),
+  B("butansyra","syra",()=>syra(4),"Luktar härsket smör och svettiga fötter (kallas även smörsyra). Finns bl.a. i parmesanost.",1,["v2","overkurs"]),
   // GRENADE (visas aldrig som strukturfråga – bara som faktaledtråd)
-  B("2-metylpropan","grenat",()=>grenAlkan(3,2),"Grenad variant av butan; metylgrupp på kol 2 (kallas även isobutan). Köldmedium och drivgas i sprayburkar."),
-  B("2-metylbutan","grenat",()=>grenAlkan(4,2),"Metylgren på kol 2 (kallas även isopentan). Jäsmedel vid tillverkning av frigolit."),
-  B("3-metylpentan","grenat",()=>grenAlkan(5,3),"Metylgren på kol 3, mitten av kedjan. Finns i bensin."),
+  B("2-metylpropan","grenat",()=>grenAlkan(3,2),"Grenad variant av butan; metylgrupp på kol 2 (kallas även isobutan). Köldmedium och drivgas i sprayburkar.",1,["overkurs"]),
+  B("2-metylbutan","grenat",()=>grenAlkan(4,2),"Metylgren på kol 2 (kallas även isopentan). Jäsmedel vid tillverkning av frigolit.",1,["overkurs"]),
+  B("3-metylpentan","grenat",()=>grenAlkan(5,3),"Metylgren på kol 3, mitten av kedjan. Finns i bensin.",1,["overkurs"]),
   // ESTRAR
-  B("metylmetanoat","ester",()=>esterBuild(1,1),"En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin."),
-  B("etyletanoat","ester",()=>esterBuild(2,2),"En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning."),
-  B("metylbutanoat","ester",()=>esterBuild(4,1),"En ester av butansyra och metanol. Doftar äpple."),
-  B("etylbutanoat","ester",()=>esterBuild(4,2),"En ester av butansyra och etanol. Doftar ananas."),
+  B("metylmetanoat","ester",()=>esterBuild(1,1),"En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin.",1,["v2","overkurs"]),
+  B("etyletanoat","ester",()=>esterBuild(2,2),"En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning.",1,["v2","overkurs"]),
+  B("metylbutanoat","ester",()=>esterBuild(4,1),"En ester av butansyra och metanol. Doftar äpple.",1,["v2","overkurs"]),
+  B("etylbutanoat","ester",()=>esterBuild(4,2),"En ester av butansyra och etanol. Doftar ananas.",1,["v2","overkurs"]),
+
+  // ===== RENA BEGREPP (ingen strukturformel – visas alltid som faktaledtråd) =====
+  // Grundbegrepp – Version 1
+  B("molekyl","koncept",null,"Den minsta delen av ett ämne som har kvar ämnets egenskaper – uppbyggd av två eller flera atomer som sitter ihop.",1,["v1"]),
+  B("alkan","koncept",null,"En kolvätegrupp där alla kolatomer bara har enkelbindningar mellan sig. Namnen inom gruppen slutar alltid på -an.",1,["v1"]),
+  B("alken","koncept",null,"En kolvätegrupp med minst en dubbelbindning mellan två kolatomer. Namnen inom gruppen slutar alltid på -en.",1,["v1"]),
+  B("alkyn","koncept",null,"En kolvätegrupp med minst en trippelbindning mellan två kolatomer. Namnen inom gruppen slutar alltid på -yn.",1,["v1"]),
+  B("gasform","koncept",null,"Den aggregationsform som de kortaste kolvätekedjorna oftast har vid rumstemperatur, t.ex. de fyra minsta i alkanserien.",1,["v1"]),
+  B("diamant","koncept",null,"En av kolets rena former. Extremt hård eftersom varje kolatom sitter fast bunden till fyra andra i ett stabilt mönster. Används i smycken och borrverktyg.",1,["v1"]),
+  B("grafit","koncept",null,"En annan ren form av kol, uppbyggd av lager som lätt glider mot varandra. Leder ström och finns bland annat i blyertspennor och som smörjmedel.",1,["v1"]),
+  // Mellannivå – Version 2
+  B("grafen","koncept",null,"Ett enda lager av grafit, bara en atom tjockt. Extremt starkt i förhållande till sin vikt och leder både värme och elektricitet mycket bra.",1,["v2"]),
+  B("nanorör","koncept",null,"Ett kolmaterial format som ett litet rör, ungefär som om ett lager grafen rullats ihop. Mycket starkt och används i modern materialteknik.",1,["v2"]),
+  B("fullerener","koncept",null,"Klotformade eller rörformade molekyler helt uppbyggda av kolatomer, t.ex. den fotbollsformade C60. En av kolets rena former, upptäckt på 1980-talet.",1,["v2"]),
+  B("vatten","koncept",null,"En förening av väte och syre som bildas tillsammans med koldioxid vid fullständig förbränning av kolväten.",1,["v2"]),
+  B("koldioxid","koncept",null,"En gas som bildas vid fullständig förbränning av kolföreningar och som bidrar till växthuseffekten.",1,["v2"]),
+  B("omättade","koncept",null,"Kolväten med minst en dubbel- eller trippelbindning mellan kolatomerna, till skillnad från de som bara har enkelbindningar.",1,["v1","v2"]),
+  // Överkurs – från Gleerups kolkapitel och fördjupning
+  B("jäsning","koncept",null,"En process där mikroorganismer bryter ner socker till etanol och koldioxid utan tillgång till syre. Sker bland annat vid bakning av bröd och tillverkning av öl och vin.",1,["overkurs"]),
+  B("oxidation","koncept",null,"En kemisk reaktion där ett ämne reagerar med syre, t.ex. när kolväten förbränns eller när etanol långsamt omvandlas till en syra.",1,["overkurs"]),
+  B("katalysator","koncept",null,"Ett ämne som gör att en kemisk reaktion går snabbare utan att själv förbrukas, t.ex. vid krackning av råolja eller i bilars avgasrening.",1,["overkurs"]),
+  B("denaturerad sprit","koncept",null,"Etanol som blandats med ett äckligt eller giftigt ämne för att göra den odrickbar, så att den kan säljas skattefritt som lösningsmedel och bränsle.",1,["overkurs"]),
+  B("fotogen","koncept",null,"En blandning av kolväten som utvinns ur råolja genom raffinering. Används som flygbränsle och användes förr för belysning innan elektriciteten kom.",1,["overkurs"]),
+  B("krackning","koncept",null,"En process där långa kolvätekedjor från råolja spjälkas till kortare, mer användbara molekyler med hjälp av hög värme och katalysatorer.",1,["overkurs"]),
+  B("raffinering","koncept",null,"Processen där råolja separeras i olika kolväten genom destillation, eftersom de har olika kokpunkter.",1,["overkurs"]),
+  B("fossila bränslen","koncept",null,"Kol, olja och naturgas – bildade under miljontals år av döda växt- och djurrester. Frigör gammal koldioxid när de eldas upp.",1,["overkurs"]),
+  B("aktivt kol","koncept",null,"Kol som behandlats så att det får en enorm inre yta med massor av små porer. Binder gifter och gaser mycket effektivt, används bland annat vid förgiftningar och i vattenrening.",1,["overkurs"]),
+  B("träkol","koncept",null,"Framställs genom att hetta upp ved utan tillgång till syre. Användes förr som bränsle och råvara vid järnframställning.",1,["overkurs"]),
+  B("stenkol","koncept",null,"Ett fossilt bränsle som bildats av växtrester under mycket högt tryck under lång tid. Innehåller mer kol per kilo än brunkol och ved.",1,["overkurs"]),
+  B("biobränsle","koncept",null,"Bränsle som framställs av nyligen levande material, t.ex. växter, och som därför räknas som förnybart eftersom det inte tillför ny fossil koldioxid.",1,["overkurs"]),
+  B("förstärkt växthuseffekt","koncept",null,"När mänsklig aktivitet, t.ex. förbränning av fossila bränslen, ökar mängden växthusgaser i atmosfären så att jorden värms upp mer än naturligt.",1,["overkurs"]),
 ];
 
 const VERSIONER = {
@@ -1008,8 +1042,9 @@ function skapaNastaSteg(){
   if(!senaste || senaste.fas === "facit" || senaste.fas === "topplista"){
     if(nastaOrdIndex >= uppropOrdning.length) nyUppropsOrdning();
     const begrepp = uppropOrdning[nastaOrdIndex++];
-    // Grenade kolväten visas aldrig som strukturfråga, bara som faktaledtråd.
-    const kanStruktur = begrepp.kat !== "grenat";
+    // Bara begrepp med en strukturformel-funktion kan visas som strukturfråga
+    // (grenade kolväten och rena begrepp utan molekylstruktur visas alltid som faktaledtråd).
+    const kanStruktur = typeof begrepp.g === "function";
     const typ = (kanStruktur && Math.random() < 0.5) ? "struktur" : "fakta";
     sekvens.push({fas:"fraga", begrepp, typ});
     ljudNyttBegrepp();
