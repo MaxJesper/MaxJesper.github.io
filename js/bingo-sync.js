@@ -11,8 +11,16 @@
    ========================================================= */
 const BINGO_SYNC_API = "https://bingo-sync.jesper-tordsson.workers.dev";
 
-async function bingoSkapaRum(){
-  const res = await fetch(`${BINGO_SYNC_API}/rum`, { method: "POST" });
+// version är valfri: används av spel som erbjuder flera frågenivåer (t.ex. kol-och-
+// kolföreningars Version 1/Version 2/Överkurs) så att servern kommer ihåg vilken nivå
+// rummet hör till – elever som ansluter kan då bygga sin bricka från samma begreppspool.
+// Spel utan flera nivåer struntar bara i parametern.
+async function bingoSkapaRum(version){
+  const res = await fetch(`${BINGO_SYNC_API}/rum`, {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(version ? {version} : {})
+  });
   if(!res.ok) throw new Error("Kunde inte skapa rum (status " + res.status + ")");
   const data = await res.json();
   if(!data || !data.kod) throw new Error("Oväntat svar vid skapande av rum");

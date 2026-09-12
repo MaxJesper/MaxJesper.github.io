@@ -64,7 +64,10 @@
   #bingo .rumskod-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;
     letter-spacing:.06em;font-weight:700;margin-bottom:.3rem}
   #bingo .rumskod-siffror{font-size:3rem;font-weight:800;letter-spacing:.15em;color:var(--gron)}
-  #bingo .rumskod-antal{font-size:.9rem;color:var(--mut);margin-top:.3rem}
+  #bingo .rumskod-antal{font-size:1.7rem;font-weight:800;color:var(--gron);margin-top:.5rem}
+  @media(max-width:480px){
+    #bingo .rumskod-antal{font-size:1.3rem}
+  }
 
   /* Bricka-väljare (elev ansluter med rumskod, väljer sedan en ledig bricka) */
   #bingo .brick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));
@@ -188,12 +191,23 @@
     #bingo .podium-block{font-size:1.3rem}
   }
 
-  /* Bricka – 3D-känsla: djup skugga, lyft på hover, "tryck ner"-känsla vid klick */
+  /* Brickans yta – en lugn pastellfärgad "ram" runt själva spelplanen (färgen sätts per
+     bricknummer i JS, samma kulör som elevens brickval-knapp hade). Ger lite personlighet
+     utan att konkurrera med brickans egen, mer neutrala inramning. */
+  #bingo .bricka-yta{
+    border-radius:24px;padding:.9rem;
+    background:linear-gradient(160deg,#eef6f2,#dcefe6);
+    box-shadow:0 10px 30px rgba(36,48,51,.1);
+  }
+  /* Bricka – 3D-känsla: djup skugga, lyft på hover, "tryck ner"-känsla vid klick.
+     Neutral grå grundfärg med en mörk kant, så att spelplanen sticker ut snyggt mot den
+     pastellfärgade ytan runt om. */
   #bingo .bricka{
     display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;
-    background:linear-gradient(160deg,#eef6f2,#dcefe6);
-    border-radius:20px;padding:1rem;
-    box-shadow:inset 0 2px 10px rgba(36,48,51,.08);
+    background:linear-gradient(160deg,#eef0f1,#d7dbde);
+    border:3px solid #23292c;
+    border-radius:18px;padding:1rem;
+    box-shadow:inset 0 2px 10px rgba(36,48,51,.1);
   }
   #bingo .cell{
     border:none;border-radius:14px;background:linear-gradient(160deg,#ffffff,#f1f5f4);
@@ -381,7 +395,9 @@
         läraren uppropet i realtid – hittar en ruta inte rätt begrepp ännu skakar den till.
       </p>
       <div class="mina-poang" id="mina-poang">Dina poäng: <span id="mina-poang-varde">0</span></div>
-      <div class="bricka" id="bricka"></div>
+      <div class="bricka-yta" id="bricka-yta">
+        <div class="bricka" id="bricka"></div>
+      </div>
       <p class="fotnot" style="margin-top:1rem">
         <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
       </p>
@@ -430,6 +446,7 @@
    ========================================================= */
 const JSON_PATH = "./data/begreppskort.json";
 let ALLA_BEGREPP = [];
+const ANTAL_BRICKOR = 32; // hur många valbara bingobrickor rummet erbjuder (måste matcha workern)
 
 async function laddaData(){
   const res = await fetch(JSON_PATH, {cache:"no-store"});
@@ -677,9 +694,10 @@ function byggBricka(bricknummer){
 function ritaBricka(){
   const el = document.getElementById("bricka");
   el.innerHTML = "";
-  if(minBricka !== null && minBricka !== undefined){
+  const yta = document.getElementById("bricka-yta");
+  if(yta && minBricka !== null && minBricka !== undefined){
     const [ljus, ljusare] = BRICKA_PASTELLER[minBricka % BRICKA_PASTELLER.length];
-    el.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
+    yta.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
   }
   brickans_celler.forEach((begrepp, i) => {
     const div = document.createElement("div");
@@ -1018,12 +1036,12 @@ async function nyttUpprop(){
     rumskod = await bingoSkapaRum();
     storVisning.textContent = rumskod;
     document.getElementById("hud-rumskod-larare").textContent = rumskod;
-    antalVisning.textContent = "0 av 23 brickor valda";
+    antalVisning.textContent = `0 av ${ANTAL_BRICKOR} brickor valda`;
     larareRumPoll = setInterval(async () => {
       const d = await bingoHamtaRum(rumskod);
       if(!d) return;
       senasteRumState = d;
-      antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av 23 brickor valda`;
+      antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av ${ANTAL_BRICKOR} brickor valda`;
       renderLobbyNamn(d.spelare);
       bearbetaNyaHandelser(d.handelser);
       if(d.avslutad && !spelSlutVisat){
@@ -1177,7 +1195,7 @@ function ritaBrickval(upptagna){
   const grid = document.getElementById("brick-grid");
   grid.innerHTML = "";
   const upptagnaSet = new Set(upptagna);
-  for(let n = 1; n <= 23; n++){
+  for(let n = 1; n <= ANTAL_BRICKOR; n++){
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "brick-btn" + (upptagnaSet.has(n) ? " tagen" : "");
@@ -1185,6 +1203,13 @@ function ritaBrickval(upptagna){
     if(upptagnaSet.has(n)){
       btn.disabled = true;
     } else {
+      // Färgen matchar exakt den pastellfärg eleven sedan får som bakgrund runt sin
+      // bricka, så valet känns som att man väljer en färg snarare än bara en siffra.
+      const [ljus, ljusare] = BRICKA_PASTELLER[n % BRICKA_PASTELLER.length];
+      const kant = TOPPLISTA_FARGER[n % TOPPLISTA_FARGER.length];
+      btn.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
+      btn.style.borderColor = kant;
+      btn.style.color = kant;
       btn.addEventListener("click", () => valjBricka(n));
     }
     grid.appendChild(btn);
