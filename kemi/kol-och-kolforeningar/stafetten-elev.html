@@ -185,7 +185,11 @@
     <p>Skriv in rumskoden som läraren visar, och namnet på ert lag.</p>
     <div class="falt"><label>Rumskod</label><input id="in-kod" inputmode="numeric" maxlength="4" placeholder="1234"></div>
     <div class="falt"><label>Ditt namn</label><input id="in-namn" maxlength="24" placeholder="t.ex. Sigrid"></div>
-    <div class="falt"><label>Lagnamn</label><input id="in-lag" maxlength="24" placeholder="t.ex. Lag Elektronerna"></div>
+    <div class="falt">
+      <label>Lagnamn</label>
+      <input id="in-lag" maxlength="24" placeholder="t.ex. Lag Elektronerna" list="lagnamn-lista" autocomplete="off">
+      <datalist id="lagnamn-lista"></datalist>
+    </div>
     <button class="knapp" id="btn-ga-med">Gå med</button>
     <div class="fel-text dold" id="login-fel"></div>
   </div>
@@ -209,6 +213,7 @@
       <p class="stold-forklaring" id="vantar-pa-lagkompis" style="color:var(--ink-soft); font-weight:600;"></p>
       <div id="svarsomrade"></div>
       <button class="knapp dold" id="btn-skicka-flerval" style="margin-top:14px">Skicka svar</button>
+      <div class="fel-text dold" id="svar-fel" style="margin-top:12px"></div>
     </div>
 
     <div id="vy-vantar-svar" class="vantar-yta dold">Ni har svarat — väntar på övriga lag …</div>
@@ -264,6 +269,26 @@ async function api(path, method, body){
   if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.fel || ("HTTP "+res.status)); }
   return res.json();
 }
+
+// Föreslå redan existerande lagnamn i rummet som en dropdown (datalist) när eleven skrivit
+// in rumskoden – annars är det lätt att stava fel och råka hamna i ett nytt, tomt lag
+// istället för att gå med i sina lagkompisars.
+let lagforslagTimer = null;
+async function uppdateraLagforslag(){
+  const k = $("#in-kod").value.trim();
+  if(!/^\d{4}$/.test(k)) { $("#lagnamn-lista").innerHTML = ""; return; }
+  try{
+    const state = await api(`/rum/${k}`, "GET");
+    $("#lagnamn-lista").innerHTML = Object.keys(state.lag).map(namn =>
+      `<option value="${namn.replace(/"/g,"&quot;")}"></option>`).join("");
+  }catch(e){ $("#lagnamn-lista").innerHTML = ""; /* fel/okänd rumskod – inga förslag än */ }
+}
+$("#in-kod").addEventListener("input", () => {
+  clearTimeout(lagforslagTimer);
+  lagforslagTimer = setTimeout(uppdateraLagforslag, 300);
+});
+// Hämta färska förslag precis när eleven ska välja lag, ifall fler lag hunnit skapas sedan.
+$("#in-lag").addEventListener("focus", uppdateraLagforslag);
 
 $("#btn-ga-med").addEventListener("click", async () => {
   const k = $("#in-kod").value.trim();
@@ -338,21 +363,36 @@ function visaEndast(id){
   });
 }
 
+let tidsutTimer = null;
 function renderFraga(f){
   visaEndast("vy-fraga");
+  $("#svar-fel").classList.add("dold");
   $("#fraga-etikett").classList.toggle("dold", f.typ==="vanlig");
   $("#stold-forklaring").classList.toggle("dold", f.typ!=="stold");
   $("#fraga-text").textContent = f.text || "(fråga saknar text)";
   // Räkna ut hur många sekunder som är kvar av svarstiden just nu (t.ex. om eleven
   // laddar om sidan eller fick "annons"-skärmen visad ett tag) så att baren alltid
   // visar den verkliga, server-satta deadline:en – inte en hårdkodad gissning.
-  const kvar = f.deadline ? Math.max(0, (f.deadline - Date.now()) / 1000) : 20;
+  const kvar = f.deadline ? Math.max(0, (f.deadline - Date.now()) / 1000) : 45;
   $("#timer-fyllning").style.transition = "none";
   $("#timer-fyllning").style.width = "100%";
   requestAnimationFrame(()=>{
     $("#timer-fyllning").style.transition = `width ${kvar}s linear`;
     $("#timer-fyllning").style.width = "0%";
   });
+
+  // Stäng av svarsknapparna själva när tiden går ut, istället för att låta eleven klicka
+  // "i onödan" och bara få ett tyst nekat svar från servern (se skickaSvarRaw).
+  if(tidsutTimer) clearTimeout(tidsutTimer);
+  tidsutTimer = setTimeout(() => {
+    if(harSvaratForFraga === f.id) return; // redan skickat svar innan tiden gick ut
+    [...document.querySelectorAll("#svarsomrade button")].forEach(b => b.disabled = true);
+    $("#btn-skicka-flerval").disabled = true;
+    if(minTur){
+      $("#svar-fel").textContent = "Tiden är ute — inget svar hanns skickas.";
+      $("#svar-fel").classList.remove("dold");
+    }
+  }, kvar*1000);
 
   const omr = $("#svarsomrade");
   omr.innerHTML = "";
@@ -391,9 +431,22 @@ $("#btn-skicka-flerval").addEventListener("click", () => {
 });
 function skickaSvar(f, svar){ skickaSvarRaw(svar); }
 async function skickaSvarRaw(svar){
-  harSvaratForFraga = visadFragaId;
-  visaEndast("vy-vantar-svar");
-  try{ await api(`/rum/${kod}/svara`, "POST", {lag:mittLag, spelare:mittNamn, svar}); }catch(e){ /* pollen hämtar rätt läge ändå */ }
+  // OBS: vi markerar INTE "har svarat" och byter INTE vy förrän servern faktiskt bekräftat
+  // svaret (200 OK). Annars kan ett svar som nekas (t.ex. tiden hann ta slut, eller turen
+  // hann gå vidare) se ut som att det gick igenom, fast poängen aldrig delades ut.
+  $("#svar-fel").classList.add("dold");
+  try{
+    await api(`/rum/${kod}/svara`, "POST", {lag:mittLag, spelare:mittNamn, svar});
+    harSvaratForFraga = visadFragaId;
+    if(tidsutTimer) clearTimeout(tidsutTimer);
+    visaEndast("vy-vantar-svar");
+  }catch(e){
+    const text = (e.message||"").includes("tiden") ? "Tiden hann ta slut — svaret registrerades inte."
+      : (e.message||"").includes("tur") ? "Hann inte i tid — det var inte längre er tur."
+      : ("Kunde inte skicka svaret (" + e.message + "). Försök igen om det fortfarande går.");
+    $("#svar-fel").textContent = text;
+    $("#svar-fel").classList.remove("dold");
+  }
 }
 
 function renderResultat(state, f, migLag){
