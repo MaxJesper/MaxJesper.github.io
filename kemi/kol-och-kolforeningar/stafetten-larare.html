@@ -44,6 +44,12 @@
   .formnyckel .r3{ background:var(--svar-d); border-radius:3px; }
   .formnyckel .rad{ display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--ink-soft); }
   .knapprad{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
+  .installningar-rutnat{ display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; margin-top:8px; }
+  .installningar-rutnat label{ display:flex; flex-direction:column; gap:4px; font-size:.85rem; color:var(--ink-soft); }
+  .installningar-rutnat input{ font:inherit; font-size:1rem; padding:8px 10px; border:1px solid var(--border); border-radius:6px; color:var(--ink); }
+  .installningar-kryss{ display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; }
+  .installningar-kryss label{ display:flex; align-items:center; gap:8px; font-size:.92rem; }
+  @media (max-width:480px){ .installningar-rutnat{ grid-template-columns:1fr; } }
 
   .annons{ display:flex; align-items:center; justify-content:center; padding:60px 0; }
   .taggig-badge{
@@ -65,30 +71,34 @@
 
   /* --- Större skärmar (dator/projektor): mer luft, större text och rutor. --- */
   @media (min-width: 700px){
-    .stage{ max-width:1100px; padding:40px 28px 80px; }
-    .yta{ padding:32px; border-radius:14px; }
+    .stage{ max-width:1200px; padding:44px 30px 90px; }
+    .yta{ padding:38px; border-radius:16px; }
 
-    .kodvisning{ font-size:4.5rem; }
-    .lag-chip{ font-size:1.05rem; padding:9px 18px; }
+    .kodvisning{ font-size:7.5rem; }
+    .lag-chip{ font-size:1.4rem; padding:12px 24px; border-radius:26px; }
 
-    .fraga-etikett{ font-size:.9rem; }
-    .stold-forklaring{ font-size:1.15rem; }
-    .fraga-text{ font-size:2.3rem; margin:0 0 28px; }
-    .svarsantal{ font-size:1.3rem; }
-    .svarsantal strong{ font-size:1.7rem; }
-    .formnyckel{ gap:28px; margin-bottom:26px; }
-    .formnyckel .form{ width:32px; height:32px; }
-    .formnyckel .rad{ font-size:.95rem; }
+    .fraga-etikett{ font-size:1.4rem; margin-bottom:12px; }
+    .stold-forklaring{ font-size:1.4rem; }
+    .fraga-text{ font-size:2.9rem; margin:0 0 32px; }
+    .svarsantal{ font-size:1.65rem; }
+    .svarsantal strong{ font-size:2.1rem; }
+    .formnyckel{ gap:32px; margin-bottom:30px; }
+    .formnyckel .form{ width:40px; height:40px; }
+    .formnyckel .rad{ font-size:1.25rem; }
 
-    .taggig-badge{ width:340px; height:190px; font-size:1.6rem; }
+    .taggig-badge{ width:420px; height:230px; font-size:2rem; }
 
-    .knapp{ padding:15px 22px; font-size:1.15rem; }
+    .knapp{ padding:19px 28px; font-size:1.4rem; }
 
-    .tavla{ gap:18px; }
-    .tavla-stapelspar{ height:48px; }
-    .tavla-stapel{ font-size:1.2rem; padding-left:16px; }
-    .tavla-poang{ font-size:1.15rem; min-width:64px; }
-    .tavla-plac{ font-size:1.15rem; }
+    .installningar-rutnat label{ font-size:1.05rem; }
+    .installningar-rutnat input{ font-size:1.15rem; padding:10px 12px; }
+    .installningar-kryss label{ font-size:1.1rem; }
+
+    .tavla{ gap:20px; }
+    .tavla-stapelspar{ height:54px; }
+    .tavla-stapel{ font-size:1.3rem; padding-left:18px; }
+    .tavla-poang{ font-size:1.25rem; min-width:70px; }
+    .tavla-plac{ font-size:1.25rem; }
   }
 </style>
 </head>
@@ -102,11 +112,37 @@
   </div>
 
   <div id="vy-rum" class="dold">
+
+    <!-- Inställningarna ligger UTANFÖR de omväxlande vyerna nedan (styrs inte av visaYta) så att
+         läraren kan öppna och ändra dem när som helst under spelets gång, inte bara innan första
+         frågan – de gäller från och med nästa fråga som startas. -->
+    <div class="yta" id="yta-installningar-knapp" style="padding:14px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <span class="fraga-etikett" style="margin:0">Rumskod <strong id="kodvisning-liten" style="font-family:ui-monospace,monospace; text-transform:none; letter-spacing:normal; font-size:1.1em;"></strong></span>
+      <button class="knapp sekundar" id="btn-visa-installningar">⚙ Inställningar</button>
+    </div>
+    <div class="yta dold" id="yta-installningar">
+      <div class="installningar-rutnat">
+        <label>Svarstid (sekunder)<input type="number" id="in-svarstid" value="20" min="5" max="120"></label>
+        <label>Poäng för rätt svar<input type="number" id="in-poangratt" value="10" min="1" max="100"></label>
+        <label>Poäng vid stöld<input type="number" id="in-stoldbelopp" value="40" min="1" max="500"></label>
+        <label>Reducerat stöldbelopp (för ledande lag)<input type="number" id="in-stoldreducerat" value="10" min="0" max="500"></label>
+      </div>
+      <div class="installningar-kryss">
+        <label><input type="checkbox" id="in-aktivera-stold" checked> Tillåt stöldfrågor</label>
+        <label><input type="checkbox" id="in-aktivera-forstratt" checked> Tillåt "Först rätt tar täten"</label>
+      </div>
+      <p class="fraga-etikett" style="text-align:left; margin-top:10px; text-transform:none; letter-spacing:normal;">
+        Om en frågetyp är avstängd körs den ändå, fast som en vanlig fråga. Ändringar gäller från
+        och med nästa fråga som startas.
+      </p>
+    </div>
+
     <div class="yta" id="yta-kod">
       <div class="fraga-etikett">Rumskod</div>
       <div class="kodvisning" id="kodvisning"></div>
       <div class="fraga-etikett" style="margin-top:14px">Anslutna lag</div>
       <div class="lag-lista" id="lag-lista"></div>
+
       <div class="knapprad" style="margin-top:18px">
         <button class="knapp" id="btn-starta-fraga">Starta fråga 1</button>
       </div>
@@ -176,7 +212,18 @@ const FRAGOR = [
     rattSvar:[0] },
 ];
 
-let kod=null, fragaIndex=-1, pollTimer=null;
+let kod=null, fragaIndex=-1, pollTimer=null, sammanstallTimer=null;
+
+function hamtaInstallningar(){
+  return {
+    svarstid: Math.max(5, Number($("#in-svarstid").value) || 20),
+    poangRatt: Math.max(1, Number($("#in-poangratt").value) || 10),
+    stoldBelopp: Math.max(0, Number($("#in-stoldbelopp").value) || 0),
+    stoldBeloppReducerat: Math.max(0, Number($("#in-stoldreducerat").value) || 0),
+    stoldAktiv: $("#in-aktivera-stold").checked,
+    forstRattAktiv: $("#in-aktivera-forstratt").checked,
+  };
+}
 
 async function api(path, method, body){
   const res = await fetch(API + path, {
@@ -191,9 +238,15 @@ $("#btn-skapa-rum").addEventListener("click", async () => {
   const r = await api("/rum", "POST");
   kod = r.kod;
   $("#kodvisning").textContent = kod;
+  $("#kodvisning-liten").textContent = kod;
   $("#vy-skapa").classList.add("dold");
   $("#vy-rum").classList.remove("dold");
   pollRum();
+});
+
+$("#btn-visa-installningar").addEventListener("click", () => {
+  const dold = $("#yta-installningar").classList.toggle("dold");
+  $("#btn-visa-installningar").textContent = dold ? "⚙ Inställningar" : "✕ Stäng inställningar";
 });
 
 async function pollRum(){
@@ -222,15 +275,31 @@ $("#btn-nasta-fraga").addEventListener("click", () => startaFraga(fragaIndex+1))
 async function startaFraga(index){
   if(index >= FRAGOR.length){ alert("Inga fler demo-frågor — lägg till fler i FRAGOR-listan."); return; }
   fragaIndex = index;
-  const f = FRAGOR[index];
-  await api(`/rum/${kod}/startaFraga`, "POST", { fragaId: index, ...f });
+  const instal = hamtaInstallningar();
+  // Om läraren stängt av en frågetyp körs den ändå, fast nedgraderad till en vanlig fråga
+  // (se förklaringstexten under kryssrutorna) – frågans innehåll är oförändrat.
+  const grundFraga = FRAGOR[index];
+  let typ = grundFraga.typ;
+  if(typ === "stold" && !instal.stoldAktiv) typ = "vanlig";
+  if(typ === "forstRatt" && !instal.forstRattAktiv) typ = "vanlig";
+  const f = { ...grundFraga, typ };
+
+  if(sammanstallTimer){ clearTimeout(sammanstallTimer); sammanstallTimer = null; }
+
+  await api(`/rum/${kod}/startaFraga`, "POST", {
+    fragaId: index, ...f,
+    svarstid: instal.svarstid,
+    poangRatt: instal.poangRatt,
+    stoldBelopp: instal.stoldBelopp,
+    stoldBeloppReducerat: instal.stoldBeloppReducerat,
+  });
 
   visaYta("vy-fraga");
   if(f.typ === "stold"){
     visaYta("vy-annons");
-    setTimeout(()=>visaFragevy(f), 4000);
+    setTimeout(()=>visaFragevy(f, instal.svarstid), 4000);
   } else {
-    visaFragevy(f);
+    visaFragevy(f, instal.svarstid);
   }
 }
 
@@ -238,20 +307,38 @@ function visaYta(id){
   ["yta-kod","vy-annons","vy-fraga","vy-sammanstalld","vy-tavla"].forEach(x=>$("#"+x).classList.toggle("dold", x!==id));
 }
 
-function visaFragevy(f){
+function visaFragevy(f, svarstid){
   visaYta("vy-fraga");
   $("#fraga-etikett").classList.toggle("dold", f.typ==="vanlig");
   $("#stold-forklaring").classList.toggle("dold", f.typ!=="stold");
   $("#fraga-text").textContent = f.text;
+  $("#timer-fyllning").style.transition = "none";
   $("#timer-fyllning").style.width = "100%";
-  requestAnimationFrame(()=>{ $("#timer-fyllning").style.transition="width 20s linear"; $("#timer-fyllning").style.width = "0%"; });
+  requestAnimationFrame(()=>{
+    $("#timer-fyllning").style.transition = `width ${svarstid}s linear`;
+    $("#timer-fyllning").style.width = "0%";
+  });
   const raknarklass = ["r0","r1","r2","r3"];
   $("#formnyckel").innerHTML = f.alternativ.map((_,i)=>
     `<span class="rad"><span class="form ${raknarklass[i%4]}"></span>${String.fromCharCode(65+i)}</span>`).join("");
   $("#antal-svarat").textContent = "0";
+
+  // Sammanställ automatiskt när svarstiden gått ut, ifall läraren inte redan klickat själv.
+  if(sammanstallTimer) clearTimeout(sammanstallTimer);
+  sammanstallTimer = setTimeout(async () => {
+    sammanstallTimer = null;
+    try{
+      const state = await api(`/rum/${kod}`, "GET");
+      if(state.aktuellFraga && !state.aktuellFraga.sammanstalld && state.aktuellFraga.id===fragaIndex){
+        await api(`/rum/${kod}/sammanstall`, "POST", { fragaId: fragaIndex });
+        visaSammanstalld();
+      }
+    }catch(e){ /* pollen tar över ändå */ }
+  }, svarstid*1000 + 300);
 }
 
 $("#btn-sammanstall").addEventListener("click", async () => {
+  if(sammanstallTimer){ clearTimeout(sammanstallTimer); sammanstallTimer = null; }
   await api(`/rum/${kod}/sammanstall`, "POST", { fragaId: fragaIndex });
   visaSammanstalld();
 });

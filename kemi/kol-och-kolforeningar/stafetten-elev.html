@@ -129,49 +129,50 @@
   /* --- Större skärmar (dator/lärplatta): mer luft, större text och rutor.
      Telefon-storleken ovan är medvetet oförändrad – den är redan lagom där. --- */
   @media (min-width: 700px){
-    .stage{ max-width:980px; padding:34px 24px 80px; }
+    .stage{ max-width:1200px; padding:40px 28px 90px; }
 
-    .login-yta{ max-width:520px; margin:80px auto 0; padding:36px 32px; }
-    .login-yta h1{ font-size:1.7rem; }
-    .login-yta p{ font-size:1.05rem; }
-    .falt input{ padding:13px 14px; font-size:1.1rem; }
-    .knapp{ padding:15px 20px; font-size:1.15rem; }
+    .login-yta{ max-width:620px; margin:80px auto 0; padding:48px 44px; }
+    .login-yta h1{ font-size:2.4rem; }
+    .login-yta p{ font-size:1.35rem; }
+    .falt label{ font-size:1.1rem; }
+    .falt input{ padding:18px 18px; font-size:1.4rem; }
+    .knapp{ padding:19px 26px; font-size:1.4rem; }
 
-    .banner{ padding:20px 28px; }
-    .banner .lagnamn{ font-size:1.3rem; }
-    .banner .poang{ font-size:2.1rem; }
-    .banner .sparat{ font-size:.95rem; }
-    .banner .sparat strong{ font-size:1.2rem; }
+    .banner{ padding:28px 36px; }
+    .banner .lagnamn{ font-size:1.8rem; }
+    .banner .poang{ font-size:3rem; }
+    .banner .sparat{ font-size:1.3rem; }
+    .banner .sparat strong{ font-size:1.7rem; }
 
-    .fraga-etikett{ font-size:.9rem; }
-    .stold-forklaring{ font-size:1.1rem; }
-    .fraga-text{ font-size:2rem; margin:0 0 32px; }
+    .fraga-etikett{ font-size:1.25rem; margin-bottom:10px; }
+    .stold-forklaring{ font-size:1.3rem; }
+    .fraga-text{ font-size:2.7rem; margin:0 0 36px; }
 
-    .svarsrutnat, .svarsrutnat-struktur{ gap:18px; }
-    .svarsruta{ padding:26px 24px; font-size:1.4rem; gap:16px; border-radius:10px; }
-    .svarsruta .form{ width:30px; height:30px; }
+    .svarsrutnat, .svarsrutnat-struktur{ gap:22px; }
+    .svarsruta{ padding:34px 30px; font-size:1.8rem; gap:20px; border-radius:14px; }
+    .svarsruta .form{ width:38px; height:38px; }
 
-    .svarsruta-struktur{ min-height:190px; padding:16px; border-radius:10px; }
-    .svarsruta-struktur svg{ max-height:170px; }
-    .svarsruta-struktur .horn{ width:26px; height:26px; top:12px; left:12px; }
+    .svarsruta-struktur{ min-height:240px; padding:20px; border-radius:14px; }
+    .svarsruta-struktur svg{ max-height:220px; }
+    .svarsruta-struktur .horn{ width:34px; height:34px; top:16px; left:16px; }
 
-    .taggig-badge{ width:340px; height:190px; font-size:1.6rem; }
+    .taggig-badge{ width:420px; height:230px; font-size:2rem; }
 
-    .resultat-kort{ padding:34px; border-radius:14px; }
-    .resultat-poang{ font-size:3.2rem; }
-    .resultat-text{ font-size:1.15rem; }
-    .facit-rad{ font-size:1.05rem; }
-    .stold-rad{ font-size:1.05rem; padding:16px 18px; }
+    .resultat-kort{ padding:46px; border-radius:18px; }
+    .resultat-poang{ font-size:4.2rem; }
+    .resultat-text{ font-size:1.5rem; }
+    .facit-rad{ font-size:1.35rem; }
+    .stold-rad{ font-size:1.3rem; padding:20px 22px; }
 
-    .stjal-yta{ padding:28px; }
-    .stjal-yta h3{ font-size:1.3rem; }
-    .lag-val button{ padding:13px 16px; font-size:1.05rem; }
+    .stjal-yta{ padding:36px; }
+    .stjal-yta h3{ font-size:1.7rem; }
+    .lag-val button{ padding:17px 20px; font-size:1.3rem; }
 
-    .tavla{ gap:18px; }
-    .tavla-stapelspar{ height:46px; }
-    .tavla-stapel{ font-size:1.15rem; padding-left:16px; }
-    .tavla-poang{ font-size:1.1rem; min-width:64px; }
-    .tavla-plac{ font-size:1.1rem; }
+    .tavla{ gap:20px; }
+    .tavla-stapelspar{ height:54px; }
+    .tavla-stapel{ font-size:1.3rem; padding-left:18px; }
+    .tavla-poang{ font-size:1.25rem; min-width:70px; }
+    .tavla-plac{ font-size:1.25rem; }
   }
 </style>
 </head>
@@ -342,8 +343,16 @@ function renderFraga(f){
   $("#fraga-etikett").classList.toggle("dold", f.typ==="vanlig");
   $("#stold-forklaring").classList.toggle("dold", f.typ!=="stold");
   $("#fraga-text").textContent = f.text || "(fråga saknar text)";
+  // Räkna ut hur många sekunder som är kvar av svarstiden just nu (t.ex. om eleven
+  // laddar om sidan eller fick "annons"-skärmen visad ett tag) så att baren alltid
+  // visar den verkliga, server-satta deadline:en – inte en hårdkodad gissning.
+  const kvar = f.deadline ? Math.max(0, (f.deadline - Date.now()) / 1000) : 20;
+  $("#timer-fyllning").style.transition = "none";
   $("#timer-fyllning").style.width = "100%";
-  requestAnimationFrame(()=>{ $("#timer-fyllning").style.width = "0%"; });
+  requestAnimationFrame(()=>{
+    $("#timer-fyllning").style.transition = `width ${kvar}s linear`;
+    $("#timer-fyllning").style.width = "0%";
+  });
 
   const omr = $("#svarsomrade");
   omr.innerHTML = "";
