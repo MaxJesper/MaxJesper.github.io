@@ -213,6 +213,20 @@ const FRAGOR = [
 ];
 
 let kod=null, fragaIndex=-1, pollTimer=null, sammanstallTimer=null;
+// Ordningen frågorna visas i under EN spelomgång – slumpas när rummet skapas (se
+// btn-skapa-rum), så varje nytt spel går igenom samma frågebank i en ny ordning istället
+// för alltid likadant. fragaOrdning[i] pekar ut vilket index i FRAGOR som är "fråga nummer
+// i+1" den här omgången; fragaId som skickas till servern är alltid FRAGOR-indexet (stabilt
+// per fråga, oavsett i vilken ordning den visas).
+let fragaOrdning = [];
+function slumpaOrdning(arr){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 function hamtaInstallningar(){
   return {
@@ -237,6 +251,7 @@ async function api(path, method, body){
 $("#btn-skapa-rum").addEventListener("click", async () => {
   const r = await api("/rum", "POST");
   kod = r.kod;
+  fragaOrdning = slumpaOrdning(FRAGOR.map((_, i) => i));
   $("#kodvisning").textContent = kod;
   $("#kodvisning-liten").textContent = kod;
   $("#vy-skapa").classList.add("dold");
@@ -269,11 +284,15 @@ async function pollRum(){
   pollTimer = setTimeout(pollRum, POLL_MS);
 }
 
-$("#btn-starta-fraga").addEventListener("click", () => startaFraga(0));
-$("#btn-nasta-fraga").addEventListener("click", () => startaFraga(fragaIndex+1));
+let fragaPosition = -1; // var i den SLUMPADE ordningen (fragaOrdning) vi är, 0-baserat
 
-async function startaFraga(index){
-  if(index >= FRAGOR.length){ alert("Inga fler demo-frågor — lägg till fler i FRAGOR-listan."); return; }
+$("#btn-starta-fraga").addEventListener("click", () => startaFraga(0));
+$("#btn-nasta-fraga").addEventListener("click", () => startaFraga(fragaPosition+1));
+
+async function startaFraga(position){
+  if(position >= fragaOrdning.length){ alert("Inga fler demo-frågor — lägg till fler i FRAGOR-listan."); return; }
+  fragaPosition = position;
+  const index = fragaOrdning[position]; // det STABILA indexet i FRAGOR för den här frågan
   fragaIndex = index;
   const instal = hamtaInstallningar();
   // Om läraren stängt av en frågetyp körs den ändå, fast nedgraderad till en vanlig fråga
