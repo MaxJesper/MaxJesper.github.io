@@ -126,6 +126,11 @@
   .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
   .yta{ background:var(--surface); border-radius:12px; padding:18px; }
 
+  .lag-medlemmar-yta{ margin-top:16px; }
+  .lag-medlemmar-lista{ display:flex; flex-wrap:wrap; gap:8px; }
+  .medlem-chip{ background:var(--surface-alt); border-radius:20px; padding:6px 14px; font-size:.88rem; }
+  .medlem-chip.aktiv{ background:var(--accent); color:var(--accent-ink); font-weight:700; }
+
   /* --- Större skärmar (dator/lärplatta): mer luft, större text och rutor.
      Telefon-storleken ovan är medvetet oförändrad – den är redan lagom där. --- */
   @media (min-width: 700px){
@@ -173,6 +178,9 @@
     .tavla-stapel{ font-size:1.3rem; padding-left:18px; }
     .tavla-poang{ font-size:1.25rem; min-width:70px; }
     .tavla-plac{ font-size:1.25rem; }
+
+    .lag-medlemmar-lista{ gap:12px; }
+    .medlem-chip{ font-size:1.15rem; padding:9px 20px; border-radius:24px; }
   }
 </style>
 </head>
@@ -231,6 +239,15 @@
         <p class="fraga-etikett" style="text-align:center; margin-bottom:18px;">Ställning</p>
         <div class="tavla" id="tavla-omrade"></div>
       </div>
+    </div>
+
+    <!-- Ligger UTANFÖR de omväxlande vyerna ovan (ingen av dem döljer den) så att den alltid
+         syns, oavsett om man väntar, svarar eller ser resultat – och eftersom allt ovanför
+         den är dolt (display:none) i just det ögonblicket, hamnar den visuellt alltid direkt
+         under vad som än visas just då (t.ex. rakt under svarsrutorna medan en fråga pågår). -->
+    <div class="yta lag-medlemmar-yta" id="lag-medlemmar-yta">
+      <p class="fraga-etikett" style="margin-bottom:8px;">Ert lag</p>
+      <div class="lag-medlemmar-lista" id="lag-medlemmar-lista"></div>
     </div>
   </div>
 
@@ -319,7 +336,7 @@ async function pollLoop(){
 }
 
 function uppdatera(state){
-  const migLag = state.lag[mittLag] || {poang:0, sparatStold:0, senasteResultat:null, turNu:null};
+  const migLag = state.lag[mittLag] || {poang:0, sparatStold:0, senasteResultat:null, turNu:null, medlemmar:[]};
   $("#ban-lag").textContent = mittLag;
   $("#ban-poang").textContent = migLag.poang + " p";
   $("#ban-sparat-belopp").textContent = migLag.sparatStold + " p";
@@ -329,6 +346,8 @@ function uppdatera(state){
   const vantarEl = $("#vantar-pa-lagkompis");
   vantarEl.classList.toggle("dold", minTur);
   if(!minTur) vantarEl.textContent = `Väntar på att ${migLag.turNu} i ert lag svarar …`;
+
+  renderLagmedlemmar(migLag);
 
   const f = state.aktuellFraga;
   if(!f){
@@ -355,6 +374,23 @@ function uppdatera(state){
     visaEndast("vy-vantar-svar");
   }
   // annars: redan ritad frågevy, låt eleven vara ifred medan hen funderar
+}
+
+// Visar alla i det egna laget, uppdaterat varje poll – nya lagkompisar dyker upp här så
+// fort de går med, och listan ligger kvar synlig genom hela spelet (se HTML-kommentaren
+// vid #lag-medlemmar-yta). Den som har svarsturen just nu får en tydlig markering.
+function renderLagmedlemmar(migLag){
+  const behallare = $("#lag-medlemmar-lista");
+  const medlemmar = migLag.medlemmar || [];
+  if(!medlemmar.length){
+    behallare.innerHTML = `<span style="color:var(--ink-soft)">Väntar på lagkompisar …</span>`;
+    return;
+  }
+  behallare.innerHTML = medlemmar.map(namn => {
+    const aktiv = migLag.turNu === namn;
+    const arJag = namn === mittNamn;
+    return `<span class="medlem-chip${aktiv ? " aktiv" : ""}">${namn}${arJag ? " (du)" : ""}</span>`;
+  }).join("");
 }
 
 function visaEndast(id){
