@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stafetten – Kol och kolföreningar</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  body.area-kol {
+    --area: #7c3aed;
+    --area-strong: #6d28d9;
+    --area-soft: #f5f3ff;
+    --area-border: #ddd6fe;
+    --area-hover: #ede9fe;
+  }
+  #stafetten-val{
+    --gron:#6d28d9; --gron-m:#8b5cf6; --gron-l:#f5f3ff;
+    --ink:#243033; --mut:#5c6b6e; --linje:#dfe6e4;
+    max-width:640px; margin:1rem auto 3rem; color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  #stafetten-val *{box-sizing:border-box}
+  #stafetten-val .kort{
+    background:#fff;border:1px solid var(--linje);border-radius:18px;
+    padding:1.5rem 1.6rem;box-shadow:0 4px 20px rgba(36,48,51,.06);
+  }
+  #stafetten-val h2{margin:0 0 .5rem;font-size:1.25rem}
+  #stafetten-val p.lead{color:var(--mut);line-height:1.5;margin:0 0 1.2rem}
+  #stafetten-val .val-knappar{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem}
+  #stafetten-val .val-btn{
+    font-family:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;text-decoration:none;
+    border-radius:10px;border:2px solid var(--gron);background:var(--gron);color:#fff;
+    padding:1rem 1.6rem;min-width:200px;text-align:center;transition:background .12s,border-color .12s;display:inline-block;
+  }
+  #stafetten-val .val-btn:hover{background:var(--gron-m);border-color:var(--gron-m)}
+  #stafetten-val .val-btn.sekundar{background:#fff;color:var(--gron);}
+  #stafetten-val .val-btn.sekundar:hover{background:var(--gron-l)}
+  #stafetten-val .fotnot{color:var(--mut);font-size:.88rem;margin-top:1.2rem;text-align:center}
+</style>
+</head>
+<body class="area-kol">
+
+<header class="kemi-header">
+  <h1>Kol och kolföreningar</h1>
+  <p>Stafetten</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>
+    <a href="./index.html" class="subject-btn">← Tillbaka till området</a>
+  </p>
+
+  <div id="stafetten-val">
+    <div class="kort">
+      <h2>Stafetten</h2>
+      <p class="lead">
+        Lagbaserat frågespel för klassrummet. Alla lag svarar samtidigt på samma
+        flervalsfråga – snabbhet, lagkänsla och ibland chansen att sno poäng av ett
+        annat lag. Läraren skapar rummet och styr takten från sin skärm, eleverna
+        går med på sina egna enheter med en rumskod.
+      </p>
+      <div class="val-knappar">
+        <a class="val-btn" href="./stafetten-larare.html">Jag är läraren</a>
+        <a class="val-btn sekundar" href="./stafetten-elev.html">Jag är elev</a>
+      </div>
+      <p class="fotnot">Eleverna behöver rumskoden som visas på lärarens skärm för att gå med.</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
