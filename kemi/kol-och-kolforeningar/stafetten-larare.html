@@ -62,6 +62,34 @@
   .tavla-stapel{ height:100%; background:var(--accent); display:flex; align-items:center; padding-left:12px; color:#fff; font-weight:700; font-size:.92rem; border-radius:5px; }
   .tavla-poang{ font-family:ui-monospace,monospace; font-weight:700; text-align:right; min-width:52px; }
   .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
+
+  /* --- Större skärmar (dator/projektor): mer luft, större text och rutor. --- */
+  @media (min-width: 700px){
+    .stage{ max-width:1100px; padding:40px 28px 80px; }
+    .yta{ padding:32px; border-radius:14px; }
+
+    .kodvisning{ font-size:4.5rem; }
+    .lag-chip{ font-size:1.05rem; padding:9px 18px; }
+
+    .fraga-etikett{ font-size:.9rem; }
+    .stold-forklaring{ font-size:1.15rem; }
+    .fraga-text{ font-size:2.3rem; margin:0 0 28px; }
+    .svarsantal{ font-size:1.3rem; }
+    .svarsantal strong{ font-size:1.7rem; }
+    .formnyckel{ gap:28px; margin-bottom:26px; }
+    .formnyckel .form{ width:32px; height:32px; }
+    .formnyckel .rad{ font-size:.95rem; }
+
+    .taggig-badge{ width:340px; height:190px; font-size:1.6rem; }
+
+    .knapp{ padding:15px 22px; font-size:1.15rem; }
+
+    .tavla{ gap:18px; }
+    .tavla-stapelspar{ height:48px; }
+    .tavla-stapel{ font-size:1.2rem; padding-left:16px; }
+    .tavla-poang{ font-size:1.15rem; min-width:64px; }
+    .tavla-plac{ font-size:1.15rem; }
+  }
 </style>
 </head>
 <body>

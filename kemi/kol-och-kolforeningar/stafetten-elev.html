@@ -125,6 +125,54 @@
   .tavla-poang{ font-family:ui-monospace,monospace; font-weight:700; text-align:right; min-width:52px; }
   .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
   .yta{ background:var(--surface); border-radius:12px; padding:18px; }
+
+  /* --- Större skärmar (dator/lärplatta): mer luft, större text och rutor.
+     Telefon-storleken ovan är medvetet oförändrad – den är redan lagom där. --- */
+  @media (min-width: 700px){
+    .stage{ max-width:980px; padding:34px 24px 80px; }
+
+    .login-yta{ max-width:520px; margin:80px auto 0; padding:36px 32px; }
+    .login-yta h1{ font-size:1.7rem; }
+    .login-yta p{ font-size:1.05rem; }
+    .falt input{ padding:13px 14px; font-size:1.1rem; }
+    .knapp{ padding:15px 20px; font-size:1.15rem; }
+
+    .banner{ padding:20px 28px; }
+    .banner .lagnamn{ font-size:1.3rem; }
+    .banner .poang{ font-size:2.1rem; }
+    .banner .sparat{ font-size:.95rem; }
+    .banner .sparat strong{ font-size:1.2rem; }
+
+    .fraga-etikett{ font-size:.9rem; }
+    .stold-forklaring{ font-size:1.1rem; }
+    .fraga-text{ font-size:2rem; margin:0 0 32px; }
+
+    .svarsrutnat, .svarsrutnat-struktur{ gap:18px; }
+    .svarsruta{ padding:26px 24px; font-size:1.4rem; gap:16px; border-radius:10px; }
+    .svarsruta .form{ width:30px; height:30px; }
+
+    .svarsruta-struktur{ min-height:190px; padding:16px; border-radius:10px; }
+    .svarsruta-struktur svg{ max-height:170px; }
+    .svarsruta-struktur .horn{ width:26px; height:26px; top:12px; left:12px; }
+
+    .taggig-badge{ width:340px; height:190px; font-size:1.6rem; }
+
+    .resultat-kort{ padding:34px; border-radius:14px; }
+    .resultat-poang{ font-size:3.2rem; }
+    .resultat-text{ font-size:1.15rem; }
+    .facit-rad{ font-size:1.05rem; }
+    .stold-rad{ font-size:1.05rem; padding:16px 18px; }
+
+    .stjal-yta{ padding:28px; }
+    .stjal-yta h3{ font-size:1.3rem; }
+    .lag-val button{ padding:13px 16px; font-size:1.05rem; }
+
+    .tavla{ gap:18px; }
+    .tavla-stapelspar{ height:46px; }
+    .tavla-stapel{ font-size:1.15rem; padding-left:16px; }
+    .tavla-poang{ font-size:1.1rem; min-width:64px; }
+    .tavla-plac{ font-size:1.1rem; }
+  }
 </style>
 </head>
 <body>
