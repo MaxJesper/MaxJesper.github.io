@@ -50,16 +50,18 @@ async function bingoHamtaRum(kod){
   }
 }
 
-// Försöker låsa ett bricknummer åt eleven i det här rummet, med det namn eleven skrev
-// in vid inloggningen (visas i topplistan). Om numret redan är taget (någon annan hann
-// före) svarar servern med ok:false och den aktuella listan över upptagna brickor, så
-// att gränssnittet kan uppdateras och eleven kan välja en annan.
-async function bingoValjBricka(kod, bricknummer, namn){
+// Försöker låsa ett bricknummer åt eleven (eller laget) i det här rummet, med det namn
+// som skrevs in vid inloggningen (visas i topplistan). medlemmar är valfritt: en lista med
+// upp till fyra lagmedlemmars namn, används av lagläget (begrepp-bingo-lag.html) så att
+// övriga lag kan se vilka som ingår i varje lag. Om numret redan är taget (någon annan
+// hann före) svarar servern med ok:false och den aktuella listan över upptagna brickor,
+// så att gränssnittet kan uppdateras och man kan välja en annan.
+async function bingoValjBricka(kod, bricknummer, namn, medlemmar){
   try{
     const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/valjBricka`, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({bricknummer, namn})
+      body: JSON.stringify(medlemmar ? {bricknummer, namn, medlemmar} : {bricknummer, namn})
     });
     let data = null;
     try{ data = await res.json(); } catch(e){}
@@ -122,6 +124,42 @@ async function bingoAvslutaSpel(kod, bricknummer){
     return { ok: res.ok, data };
   } catch(e){
     console.warn("Kunde inte avsluta spelet:", e);
+    return { ok:false, data:null };
+  }
+}
+// =========================================================
+// LAGLÄGE (begrepp-bingo-lag.html) – milstolpar och poängbyte mellan lag.
+// Additiva tillägg som inte påverkar den vanliga (individuella) bingon ovan.
+// =========================================================
+
+async function bingoRapporteraMilstolpe(kod, bricknummer, antalRader){
+  try{
+    const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/lagMilstolpe`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({bricknummer, antalRader})
+    });
+    let data = null;
+    try{ data = await res.json(); } catch(e){}
+    return { ok: res.ok, data };
+  } catch(e){
+    console.warn("Kunde inte rapportera milstolpe:", e);
+    return { ok:false, data:null };
+  }
+}
+
+async function bingoOverforPoang(kod, tarBricknummer, gerBricknummer, poang, etikett){
+  try{
+    const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/lagPoangbyte`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({tarBricknummer, gerBricknummer, poang, etikett})
+    });
+    let data = null;
+    try{ data = await res.json(); } catch(e){}
+    return { ok: res.ok, data };
+  } catch(e){
+    console.warn("Kunde inte överföra poäng:", e);
     return { ok:false, data:null };
   }
 }
