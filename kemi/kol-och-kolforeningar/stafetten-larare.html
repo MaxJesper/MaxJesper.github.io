@@ -68,6 +68,7 @@
   .tavla-stapel{ height:100%; background:var(--accent); display:flex; align-items:center; padding-left:12px; color:#fff; font-weight:700; font-size:.92rem; border-radius:5px; }
   .tavla-poang{ font-family:ui-monospace,monospace; font-weight:700; text-align:right; min-width:52px; }
   .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
+  .tavla-vinnare{ text-align:center; font-size:1.3rem; font-weight:800; color:var(--gold); margin:18px 0 0; }
 
   /* --- Större skärmar (dator/projektor): mer luft, större text och rutor. --- */
   @media (min-width: 700px){
@@ -98,6 +99,7 @@
     .tavla-stapelspar{ height:54px; }
     .tavla-stapel{ font-size:1.3rem; padding-left:18px; }
     .tavla-poang{ font-size:1.25rem; min-width:70px; }
+    .tavla-vinnare{ font-size:2.4rem; margin-top:30px; }
     .tavla-plac{ font-size:1.25rem; }
   }
 </style>
@@ -171,8 +173,9 @@
     </div>
 
     <div id="vy-tavla" class="yta dold">
-      <p class="fraga-etikett" style="text-align:center; margin-bottom:18px;">Ställning</p>
+      <p class="fraga-etikett" id="tavla-etikett" style="text-align:center; margin-bottom:18px;">Ställning</p>
       <div class="tavla" id="tavla-omrade"></div>
+      <p class="tavla-vinnare dold" id="tavla-vinnare"></p>
       <div class="knapprad" style="margin-top:22px">
         <button class="knapp" id="btn-nasta-fraga">Nästa fråga</button>
       </div>
@@ -449,6 +452,24 @@ function renderTavla(state){
       <div class="tavla-stapelspar"><div class="tavla-stapel" style="width:${bredd}%">${r.namn}</div></div>
       <span class="tavla-poang">${r.poang}</span></div>`;
   }).join("");
+
+  // Sista frågan i den här omgångens (slumpade) ordning är klar – gör det tydligt på
+  // LÄRARENS skärm/projektorn att spelet är slut, istället för att det bara ser ut som en
+  // vanlig mellanställning (se Jespers återkoppling: avslutet ska märkas här, så att hela
+  // klassen kan titta upp och se det gemensamt) – och ta bort "Nästa fråga"-knappen, som
+  // annars bara gav ett förvirrande felmeddelande om man klickade på den av misstag.
+  const sistaFragan = fragaPosition >= fragaOrdning.length - 1;
+  $("#tavla-etikett").textContent = sistaFragan ? "🏁 Spelet är slut! Slutställning" : "Ställning";
+  $("#btn-nasta-fraga").classList.toggle("dold", sistaFragan);
+  const vinnareEl = $("#tavla-vinnare");
+  vinnareEl.classList.toggle("dold", !sistaFragan);
+  if(sistaFragan && rader.length){
+    const toppPoang = rader[0].poang;
+    const vinnare = rader.filter(r=>r.poang===toppPoang).map(r=>r.namn);
+    vinnareEl.textContent = vinnare.length>1
+      ? `🏆 Delad seger: ${vinnare.join(" & ")}!`
+      : `🏆 Vinnare: ${vinnare[0]}!`;
+  }
 }
 </script>
 </body>
