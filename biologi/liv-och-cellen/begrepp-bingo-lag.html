@@ -497,21 +497,31 @@
       <div class="ruta bred">
         <h3 id="milstolpe-rubrik">🎯 Ni fick chansen!</h3>
         <p id="milstolpe-text" class="lead" style="text-align:center"></p>
-        <div class="milstolpe-val">
-          <div class="falt">
-            <label for="milstolpe-lag-select">Vilket lag?</label>
-            <select id="milstolpe-lag-select" style="width:100%"></select>
-          </div>
-          <div class="falt" style="max-width:120px">
-            <label for="milstolpe-poang-input">Poäng</label>
-            <input type="number" id="milstolpe-poang-input" value="40" min="1" max="200" style="width:100%">
-          </div>
+
+        <div class="falt" style="margin-bottom:1rem">
+          <label for="milstolpe-lag-select">Vilket lag?</label>
+          <select id="milstolpe-lag-select" style="width:100%"></select>
         </div>
+
+        <p class="fotnot" style="margin:0 0 .4rem"><strong>Ta poäng från dem</strong> (högst 40p, så att inget lag kan sänkas helt):</p>
         <div class="milstolpe-knappar">
-          <button class="primar" onclick="bekraftaPoangbyte('ta')">Ta poäng från dem</button>
-          <button class="primar" onclick="bekraftaPoangbyte('ge')">Ge poäng till dem</button>
-          <button class="lank-knapp" onclick="hoppaOverMilstolpe()">Hoppa över</button>
+          <button class="primar" onclick="taPoang(10)">Ta 10p</button>
+          <button class="primar" onclick="taPoang(20)">Ta 20p</button>
+          <button class="primar" onclick="taPoang(30)">Ta 30p</button>
+          <button class="primar" onclick="taPoang(40)">Ta 40p</button>
         </div>
+
+        <p class="fotnot" style="margin:1rem 0 .4rem"><strong>Ge poäng till dem</strong> (valfritt belopp, upp till era egna poäng):</p>
+        <div class="milstolpe-val">
+          <div class="falt" style="max-width:120px">
+            <input type="number" id="milstolpe-ge-input" value="40" min="1" style="width:100%">
+          </div>
+          <button class="primar" id="milstolpe-ge-knapp" onclick="gePoang()">Skänk poäng</button>
+        </div>
+
+        <p class="fotnot" style="text-align:center;margin-top:1.1rem">
+          <button class="lank-knapp" onclick="hoppaOverMilstolpe()">Hoppa över</button>
+        </p>
       </div>
     </div>
 
@@ -980,21 +990,47 @@ function visaMilstolpeVal(plats, antalRader){
       select.appendChild(opt);
     });
   }
-  document.getElementById("milstolpe-poang-input").value = 40;
+  const eget = (senasteRumState && senasteRumState.spelare && senasteRumState.spelare[String(minBricka)])
+    ? senasteRumState.spelare[String(minBricka)].poang : 0;
+  const geInput = document.getElementById("milstolpe-ge-input");
+  geInput.max = Math.max(1, eget);
+  geInput.value = Math.max(1, Math.min(40, eget));
+  document.getElementById("milstolpe-ge-knapp").disabled = eget < 1;
+
   document.getElementById("milstolpe-overlay").classList.add("visa");
 }
 
-function bekraftaPoangbyte(riktning){
+// Tar högst 40 poäng (fasta knappar 10/20/30/40) från det valda laget – så att inget lag
+// kan sänkas helt av ett enda tagande. Servern kapar ändå vid 40 oavsett vad som skickas,
+// men knapparna gör det tydligt för eleverna redan i gränssnittet.
+function taPoang(belopp){
   const select = document.getElementById("milstolpe-lag-select");
   const valtId = select.value;
   if(!valtId){ doljMilstolpe(); return; }
-  const poang = Math.max(1, Math.min(200, Number(document.getElementById("milstolpe-poang-input").value) || 40));
   const etikett = vantandeMilstolpe ? `rad ${vantandeMilstolpe.antalRader}` : "";
+  bingoOverforPoang(rumskod, minBricka, Number(valtId), belopp, etikett, "ta").then(({data}) => {
+    if(data && data.state){
+      senasteRumState = data.state;
+      uppdateraLagetsPoang(data.state);
+      renderAndraLag(data.state);
+      bearbetaNyaHandelser(data.state.handelser);
+    }
+  }).catch(() => {}).finally(doljMilstolpe);
+}
 
-  const tar = riktning === "ta" ? minBricka : Number(valtId);
-  const ger = riktning === "ta" ? Number(valtId) : minBricka;
-
-  bingoOverforPoang(rumskod, tar, ger, poang, etikett).then(({data}) => {
+// Ger ett valfritt belopp (upp till lagets egna poäng) till det valda laget. Servern
+// loggar då ett slumpat, skämtsamt gåvomeddelande istället för det vanliga "tog poäng"-meddelandet.
+function gePoang(){
+  const select = document.getElementById("milstolpe-lag-select");
+  const valtId = select.value;
+  if(!valtId){ doljMilstolpe(); return; }
+  const eget = (senasteRumState && senasteRumState.spelare && senasteRumState.spelare[String(minBricka)])
+    ? senasteRumState.spelare[String(minBricka)].poang : 0;
+  const onskat = Number(document.getElementById("milstolpe-ge-input").value) || 0;
+  const poang = Math.max(1, Math.min(eget, onskat));
+  if(eget < 1 || poang < 1){ doljMilstolpe(); return; }
+  const etikett = vantandeMilstolpe ? `rad ${vantandeMilstolpe.antalRader}` : "";
+  bingoOverforPoang(rumskod, Number(valtId), minBricka, poang, etikett, "ge").then(({data}) => {
     if(data && data.state){
       senasteRumState = data.state;
       uppdateraLagetsPoang(data.state);

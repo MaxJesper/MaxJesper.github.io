@@ -148,12 +148,12 @@ async function bingoRapporteraMilstolpe(kod, bricknummer, antalRader){
   }
 }
 
-async function bingoOverforPoang(kod, tarBricknummer, gerBricknummer, poang, etikett){
+async function bingoOverforPoang(kod, tarBricknummer, gerBricknummer, poang, etikett, riktning){
   try{
     const res = await fetch(`${BINGO_SYNC_API}/rum/${encodeURIComponent(kod)}/lagPoangbyte`, {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({tarBricknummer, gerBricknummer, poang, etikett})
+      body: JSON.stringify({tarBricknummer, gerBricknummer, poang, etikett, riktning})
     });
     let data = null;
     try{ data = await res.json(); } catch(e){}
