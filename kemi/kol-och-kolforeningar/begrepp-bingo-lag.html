@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Begreppsbingo Lag – Kol och kolföreningar</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  body.area-kol {
+    --area: #7c3aed;
+    --area-strong: #6d28d9;
+    --area-soft: #f5f3ff;
+    --area-border: #ddd6fe;
+    --area-hover: #ede9fe;
+  }
+  #bingo{
+    --gron:#6d28d9; --gron-m:#8b5cf6; --gron-l:#f5f3ff;
+    --bla:#3b7dd8; --bla-l:#e8f1fc;
+    --gul:#f0a500; --gul-l:#fff4dd;
+    --ratt:#2e9e5b; --ratt-l:#e4f6ea;
+    --fel:#d64545; --fel-l:#fce8e8;
+    --ink:#243033; --mut:#5c6b6e; --linje:#dfe6e4;
+    max-width:1080px; margin:1rem auto 3rem; color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  #bingo *{box-sizing:border-box}
+  #bingo .kort{
+    background:#fff;border:1px solid var(--linje);border-radius:18px;
+    padding:1.5rem 1.6rem;box-shadow:0 4px 20px rgba(36,48,51,.06);
+    margin-bottom:1.2rem;
+  }
+  #bingo h2{margin:0 0 .5rem;font-size:1.25rem}
+  #bingo p.lead{color:var(--mut);line-height:1.5;margin:0 0 1rem}
+  #bingo .rad{display:flex;gap:.9rem;align-items:flex-end;flex-wrap:wrap}
+  #bingo label{display:block;font-weight:600;font-size:.92rem;margin-bottom:.3rem}
+  #bingo select, #bingo input[type=number], #bingo input[type=text]{
+    font-size:1rem;padding:.5rem .6rem;border:2px solid var(--linje);border-radius:10px;
+    font-family:inherit;background:#fff;
+  }
+
+  /* Rumskod vid laganslutning – extra stor så den syns tydligt på en padda/mobil */
+  #bingo #rumskod-input{
+    font-size:1.6rem;padding:.7rem .9rem;border-width:2px;border-radius:12px;
+    letter-spacing:.12em;text-align:center;max-width:180px;font-weight:700;
+  }
+  #bingo #lagnamn-input{
+    font-size:1.4rem;padding:.6rem .8rem;border-width:2px;border-radius:12px;
+    min-width:220px;max-width:100%;font-weight:700;
+  }
+  @media(max-width:640px){
+    #bingo #rumskod-input, #bingo #lagnamn-input{font-size:1.25rem;min-width:0;width:100%}
+  }
+  #bingo button{
+    font-family:inherit;font-size:.95rem;font-weight:600;cursor:pointer;
+    border-radius:10px;border:2px solid var(--linje);background:#fff;color:var(--ink);
+    padding:.6rem 1.1rem;transition:border-color .12s,background .12s,transform .05s;
+  }
+  #bingo button:hover{border-color:var(--gron-m);background:var(--gron-l)}
+  #bingo button:active{transform:scale(.98)}
+  #bingo button.primar{background:var(--gron);border-color:var(--gron);color:#fff}
+  #bingo button.primar:hover{background:var(--gron-m);border-color:var(--gron-m)}
+  #bingo button:disabled{opacity:.5;cursor:default}
+  #bingo button.lank-knapp{border-color:transparent;background:transparent;color:var(--mut);
+    font-weight:500;padding:.3rem .4rem;text-decoration:underline}
+  #bingo button.lank-knapp:hover{background:transparent;border-color:transparent;color:var(--ink)}
+
+  /* Rollval */
+  #bingo .roll-knappar{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:.4rem}
+  #bingo .roll-btn{padding:1rem 1.6rem;font-size:1.05rem;min-width:200px}
+
+  /* Stor rumskod (lärarläge, kahoot-stil) */
+  #bingo .rumskod-stor{text-align:center;background:var(--gron-l);border:2px solid var(--gron);
+    border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.1rem}
+  #bingo .rumskod-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;
+    letter-spacing:.06em;font-weight:700;margin-bottom:.3rem}
+  #bingo .rumskod-siffror{font-size:3rem;font-weight:800;letter-spacing:.15em;color:var(--gron)}
+  #bingo .rumskod-antal{font-size:1.7rem;font-weight:800;color:var(--gron);margin-top:.5rem}
+  @media(max-width:480px){
+    #bingo .rumskod-antal{font-size:1.3rem}
+  }
+
+  /* Medlemmar-tabell – upp till fyra namnrutor i en rad (radbryter på smala skärmar) */
+  #bingo .medlemmar-tabell{display:flex;gap:.7rem;flex-wrap:wrap;margin:.6rem 0 1rem}
+  #bingo .medlemmar-tabell .falt{flex:1 1 140px;min-width:120px}
+  #bingo .medlemmar-tabell input[type=text]{width:100%}
+
+  /* Bricka-väljare (laget ansluter med rumskod, väljer sedan en ledig bricka) */
+  #bingo .brick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));
+    gap:.5rem;margin-top:.6rem}
+  #bingo .brick-btn{border:2px solid var(--linje);border-radius:10px;background:#fff;
+    padding:.6rem 0;font-weight:700;font-size:1rem;cursor:pointer;color:var(--ink);
+    font-family:inherit;transition:border-color .12s,background .12s}
+  #bingo .brick-btn:hover:not(:disabled){border-color:var(--gron-m);background:var(--gron-l)}
+  #bingo .brick-btn.tagen{background:#f2f2f2;border-color:var(--linje);color:var(--mut);
+    cursor:default;text-decoration:line-through;opacity:.7}
+
+  /* HUD */
+  #bingo .hud{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:1rem}
+  #bingo .hud .pill{background:var(--gul-l);color:#9a6b00;font-weight:700;
+    padding:.35rem .8rem;border-radius:999px;font-size:.9rem}
+  #bingo .hud .pill.gron{background:var(--gron-l);color:var(--gron)}
+  #bingo .hud .sp{margin-left:auto}
+
+  /* Lägesväljare */
+  #bingo .lage-val{display:flex;gap:.4rem;justify-content:center;margin-bottom:1rem}
+  #bingo .lage-knapp{padding:.35rem .9rem;border-radius:999px;font-size:.85rem}
+  #bingo .lage-knapp.aktiv{background:var(--gron);border-color:var(--gron);color:#fff}
+
+  /* Uppropspanel (lärarläge – projektorvänligt) */
+  #bingo .upprop{text-align:center;padding:1.3rem 1rem}
+  #bingo .upprop .aktuellt{font-size:2.1rem;font-weight:800;min-height:3.6em;line-height:1.35;
+    display:flex;align-items:center;justify-content:center;color:var(--ink);
+    background:linear-gradient(160deg,#ffffff,var(--gron-l));border-radius:20px;
+    padding:1.4rem 1.6rem;box-shadow:inset 0 2px 10px rgba(36,48,51,.06),0 6px 20px rgba(36,48,51,.08)}
+  #bingo .upprop .aktuellt.tom{color:var(--mut);font-weight:400;font-size:1.2rem;min-height:2.6em;background:transparent;box-shadow:none}
+  #bingo .upprop .aktuellt.facit-visning{color:var(--gron);font-size:3rem;font-weight:800;
+    min-height:2.6em;flex-direction:column;gap:.3rem;background:linear-gradient(160deg,#ffffff,#d7f2e6)}
+  #bingo .upprop .aktuellt.struktur-visning{flex-direction:column;gap:.6rem;min-height:auto;font-size:1.15rem}
+  #bingo .fraga-etikett{font-size:.8rem;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  #bingo .struktur-stage{background:#fff;border:2px solid var(--linje);border-radius:14px;padding:.9rem 1.2rem;display:inline-flex}
+  #bingo .struktur-stage svg{max-width:420px;width:100%;height:auto}
+  #bingo svg line{stroke:var(--ink);stroke-width:1.4;stroke-linecap:round}
+  #bingo svg text{fill:var(--ink);font-family:Arial,sans-serif}
+  #bingo .upprop .svar-etikett{font-size:.85rem;color:var(--mut);text-transform:uppercase;
+    letter-spacing:.05em;font-weight:700}
+  #bingo .timerbar{height:9px;background:#eef1f0;border-radius:999px;overflow:hidden;margin:.9rem auto 0;max-width:420px}
+  #bingo .timerbar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gron-m),var(--gron));width:0%}
+  #bingo .uppropsknappar{display:flex;gap:.6rem;justify-content:center;margin-top:1.1rem;flex-wrap:wrap}
+  #bingo .intervall{display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:.8rem;color:var(--mut);font-size:.88rem}
+
+  /* Notis när ett lag får en milstolpe, poängbyte eller hel platta – visas kort för alla */
+  #bingo .handelse-toast{
+    position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-16px);
+    background:linear-gradient(160deg,#ffffff,var(--gron-l));border:2px solid var(--gron);
+    border-radius:14px;padding:.8rem 1.5rem;font-weight:800;font-size:1.05rem;color:var(--gron);
+    box-shadow:0 12px 30px rgba(0,0,0,.2);z-index:70;opacity:0;pointer-events:none;
+    transition:opacity .35s ease,transform .35s ease;text-align:center;max-width:90vw;
+  }
+  #bingo .handelse-toast.visas{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:480px){
+    #bingo .handelse-toast{font-size:.9rem;padding:.65rem 1rem}
+  }
+
+  /* Väntrum – lagnamnen dyker upp som chips i takt med att lagen loggar in, Kahoot-stil */
+  #bingo .lobby-namn{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.9rem}
+  #bingo .lobby-chip{
+    background:linear-gradient(160deg,#fff,var(--gron-l));border:2px solid var(--gron);
+    border-radius:999px;padding:.5rem 1.1rem;font-weight:800;font-size:1.15rem;color:var(--gron);
+    animation:lobbypop .4s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes lobbypop{
+    0%{transform:scale(.4);opacity:0}
+    70%{transform:scale(1.08);opacity:1}
+    100%{transform:scale(1)}
+  }
+
+  /* Lagets egna poäng, stort och tydligt ovanför brickan */
+  #bingo .mina-poang{text-align:center;font-size:2rem;font-weight:900;color:var(--gron);margin:.1rem 0 1rem}
+  #bingo .mina-poang-etikett{font-size:.95rem;font-weight:700;color:var(--mut);
+    text-transform:uppercase;letter-spacing:.05em;margin-left:.4rem}
+  @media(max-width:480px){
+    #bingo .mina-poang{font-size:1.5rem}
+  }
+
+  /* Rumskodpanelen döljs (till en liten pill i huden) så fort uppropet har startat */
+  #bingo .rumskod-stor.dold{display:none}
+  #bingo .hud .pill.rum-pill{display:none}
+  #bingo .hud .pill.rum-pill.visas{display:inline-block}
+
+  /* Topplista var tredje begrepp – staplar som "rusar fram" */
+  #bingo .topplista-panel{padding:.6rem .5rem 0}
+  #bingo .topplista-panel h3{margin:0 0 1rem;font-size:1.3rem;color:var(--gron)}
+  #bingo .topplista-rad{display:grid;grid-template-columns:1.6rem 6rem 1fr 3rem;align-items:center;
+    gap:.6rem;margin-bottom:.6rem;text-align:left}
+  #bingo .topplista-rad .plac{font-weight:800;color:var(--mut);text-align:center}
+  #bingo .topplista-rad .namn{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #bingo .topplista-rad .stapel-bakgrund{background:#eef1f0;border-radius:999px;height:22px;overflow:hidden}
+  #bingo .topplista-rad .stapel{display:block;height:100%;width:0%;border-radius:999px;
+    transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+  #bingo .topplista-rad .poang{font-weight:800;text-align:right}
+  #bingo .topplista-tom{color:var(--mut);font-size:.95rem}
+
+  /* Spelplan: bricka + "Andra lag"-panel sida vid sida på bred skärm, staplat på smal */
+  #bingo .spelplan{display:flex;gap:1.3rem;align-items:flex-start;flex-wrap:wrap}
+  #bingo .spelplan > .bricka-kolumn{flex:1 1 380px;min-width:280px}
+  #bingo .spelplan > .andra-lag-kolumn{flex:1 1 260px;min-width:240px}
+
+  /* "Andra lag"-panel – lista med lagnamn, medlemmar och poäng, uppdateras live */
+  #bingo .andra-lag-panel{background:#fff;border:1px solid var(--linje);border-radius:16px;
+    padding:1rem 1.1rem;box-shadow:0 4px 16px rgba(36,48,51,.05)}
+  #bingo .andra-lag-panel h3{margin:0 0 .8rem;font-size:1.05rem;color:var(--gron)}
+  #bingo .lag-rad{display:flex;align-items:center;gap:.6rem;padding:.5rem .3rem;
+    border-bottom:1px solid var(--linje)}
+  #bingo .lag-rad:last-child{border-bottom:none}
+  #bingo .lag-rad .lag-farg{width:.7rem;height:.7rem;border-radius:50%;flex:none}
+  #bingo .lag-rad .lag-info{flex:1;min-width:0}
+  #bingo .lag-rad .lag-namn{font-weight:800;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #bingo .lag-rad .lag-medlemmar{font-size:.8rem;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #bingo .lag-rad .lag-poang{font-weight:800;color:var(--gron);font-size:1rem}
+  #bingo .andra-lag-tom{color:var(--mut);font-size:.9rem}
+
+  /* "Ställning"-knappen och dess modal – tillgänglig när som helst för lärare och lag */
+  #bingo .stallning-tabell{width:100%;border-collapse:collapse;margin-top:.8rem}
+  #bingo .stallning-tabell th{text-align:left;font-size:.82rem;color:var(--mut);
+    text-transform:uppercase;letter-spacing:.04em;padding:.4rem .5rem;border-bottom:2px solid var(--linje)}
+  #bingo .stallning-tabell td{padding:.55rem .5rem;border-bottom:1px solid var(--linje);vertical-align:top}
+  #bingo .stallning-tabell tr:nth-child(1) td{font-weight:800}
+  #bingo .stallning-tabell .st-poang{font-weight:800;color:var(--gron);text-align:right;white-space:nowrap}
+
+  /* Spelslut – pallceremoni */
+  #bingo .spelslut-overlay{position:fixed;inset:0;background:rgba(20,28,30,.82);display:none;
+    align-items:center;justify-content:center;z-index:60;padding:1.5rem}
+  #bingo .spelslut-overlay.visa{display:flex}
+  #bingo .spelslut-ruta{background:#fff;border-radius:22px;padding:2rem 1.6rem 1.6rem;text-align:center;
+    max-width:520px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  #bingo .spelslut-ruta h2{margin:0 0 1.3rem;font-size:1.6rem;color:var(--gron)}
+  #bingo .podium{display:flex;align-items:flex-end;justify-content:center;gap:.7rem;margin:0 0 1.5rem}
+  #bingo .podium-plats{flex:1;max-width:150px;opacity:0;transform:translateY(24px) scale(.85);
+    transition:opacity .5s ease,transform .5s cubic-bezier(.2,.8,.2,1)}
+  #bingo .podium-plats.visas{opacity:1;transform:translateY(0) scale(1)}
+  #bingo .podium-namn{font-weight:800;font-size:1rem;margin-bottom:.3rem;overflow-wrap:break-word}
+  #bingo .podium-poang{font-size:.85rem;color:var(--mut);margin-bottom:.5rem}
+  #bingo .podium-block{border-radius:12px 12px 0 0;display:flex;align-items:flex-start;justify-content:center;
+    padding-top:.5rem;font-size:1.8rem;font-weight:900;color:#fff}
+  #bingo .podium-plats.p1 .podium-block{background:linear-gradient(160deg,#ffd76a,#f0a500);height:150px;box-shadow:0 -4px 24px rgba(240,165,0,.5)}
+  #bingo .podium-plats.p2 .podium-block{background:linear-gradient(160deg,#d9dee0,#aeb7bb);height:112px}
+  #bingo .podium-plats.p3 .podium-block{background:linear-gradient(160deg,#e3b483,#c0864f);height:86px}
+  #bingo .podium-plats.p1 .podium-namn{font-size:1.3rem;color:var(--gul, #9a6b00)}
+  #bingo .podium-plats.p1.visas .podium-block{animation:podiumglod 1.4s ease-in-out infinite alternate}
+  @keyframes podiumglod{
+    from{box-shadow:0 -4px 24px rgba(240,165,0,.4)}
+    to{box-shadow:0 -4px 40px rgba(240,165,0,.8)}
+  }
+  #bingo .spelslut-stjarnor{font-size:1.6rem;letter-spacing:.3em;margin:0 0 1rem;opacity:0;transition:opacity .5s}
+  #bingo .spelslut-stjarnor.visas{opacity:1}
+  @media(max-width:480px){
+    #bingo .podium-namn{font-size:.82rem}
+    #bingo .podium-plats.p1 .podium-namn{font-size:1rem}
+    #bingo .podium-block{font-size:1.3rem}
+  }
+
+  /* Brickans yta – en lugn pastellfärgad "ram" runt själva spelplanen (färgen sätts per
+     bricknummer i JS, samma kulör som lagets brickval-knapp hade). */
+  #bingo .bricka-yta{
+    border-radius:24px;padding:.9rem;
+    background:linear-gradient(160deg,#eef6f2,#dcefe6);
+    box-shadow:0 10px 30px rgba(36,48,51,.1);
+  }
+  /* Bricka – 3D-känsla: djup skugga, lyft på hover, "tryck ner"-känsla vid klick. */
+  #bingo .bricka{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;
+    background:linear-gradient(160deg,#eef0f1,#d7dbde);
+    border:3px solid #23292c;
+    border-radius:18px;padding:1rem;
+    box-shadow:inset 0 2px 10px rgba(36,48,51,.1);
+  }
+  #bingo .cell{
+    border:none;border-radius:14px;background:linear-gradient(160deg,#ffffff,#f1f5f4);
+    min-height:100px;padding:.5rem .55rem;display:flex;align-items:center;justify-content:center;
+    text-align:center;font-size:1.08rem;font-weight:800;line-height:1.25;color:var(--ink);cursor:pointer;
+    transition:transform .12s ease,box-shadow .12s ease,background .15s;user-select:none;position:relative;
+    box-shadow:0 4px 0 rgba(36,48,51,.14),0 8px 16px rgba(36,48,51,.12);
+    transform:translateY(0);
+  }
+  #bingo .cell:hover{transform:translateY(-3px);box-shadow:0 7px 0 rgba(36,48,51,.14),0 14px 22px rgba(36,48,51,.16)}
+  #bingo .cell:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(36,48,51,.14),0 4px 10px rgba(36,48,51,.14)}
+  #bingo .cell.fri{background:linear-gradient(160deg,var(--gul-l),#ffe9b3);font-size:1.05rem;color:#9a6b00;cursor:default;box-shadow:0 4px 0 rgba(154,107,0,.18),0 8px 16px rgba(154,107,0,.14)}
+  #bingo .cell.fri:hover{transform:translateY(0)}
+  #bingo .cell.markerad{background:linear-gradient(160deg,var(--ratt-l),#bdeecb);color:var(--ratt);
+    box-shadow:0 4px 0 rgba(46,158,91,.28),0 8px 18px rgba(46,158,91,.22)}
+  #bingo .cell.darrar{animation:darr .32s}
+  #bingo .cell.rad-klar{box-shadow:0 0 0 3px var(--bla) inset,0 4px 0 rgba(46,158,91,.28),0 8px 18px rgba(46,158,91,.22)}
+  @keyframes darr{
+    0%,100%{transform:translateX(0) translateY(0)}
+    25%{transform:translateX(-4px) translateY(0)}
+    75%{transform:translateX(4px) translateY(0)}
+  }
+  @media(max-width:640px){
+    #bingo .bricka{gap:.45rem;padding:.6rem}
+    #bingo .cell{min-height:78px;font-size:.86rem;padding:.35rem}
+    #bingo .cell.fri{font-size:.9rem}
+    #bingo .upprop .aktuellt{font-size:1.15rem}
+    #bingo .upprop .aktuellt.facit-visning{font-size:1.7rem}
+    #bingo .struktur-stage svg{max-width:260px}
+    #bingo .roll-btn{min-width:0;width:100%}
+  }
+
+  /* Overlay (generell, återanvänds för bingo-på-en-rad, Ställning och milstolpe-val) */
+  #bingo .overlay{
+    position:fixed;inset:0;background:rgba(36,48,51,.55);display:none;
+    align-items:center;justify-content:center;z-index:50;padding:1.2rem;
+  }
+  #bingo .overlay.visa{display:flex}
+  #bingo .overlay .ruta{
+    background:#fff;border-radius:18px;padding:2.2rem 2.4rem;text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);max-width:340px;
+  }
+  #bingo .overlay .ruta h3{margin:0 0 .5rem;font-size:1.5rem;color:var(--gron)}
+  #bingo .overlay .ruta p{color:var(--mut);margin:0 0 1.2rem}
+  #bingo .overlay .ruta.bred{max-width:460px;text-align:left}
+  #bingo .overlay .ruta.bred h3{text-align:center}
+
+  #bingo .milstolpe-val{display:flex;gap:.6rem;flex-wrap:wrap;align-items:flex-end;margin:1rem 0}
+  #bingo .milstolpe-val .falt{flex:1 1 160px}
+  #bingo .milstolpe-knappar{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:.6rem}
+
+  #bingo .fotnot{color:var(--mut);font-size:.85rem;line-height:1.5}
+</style>
+</head>
+<body class="area-kol">
+
+<header class="kemi-header">
+  <h1>Kol och kolföreningar</h1>
+  <p>Begreppsbingo Lag</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <p>
+    <a href="./index.html" class="subject-btn">← Tillbaka till området</a>
+  </p>
+
+  <div id="bingo">
+
+    <div class="handelse-toast" id="handelse-toast"></div>
+
+    <div class="kort" id="rollval">
+      <h2>Begreppsbingo – lagläge</h2>
+      <p class="lead">
+        Samma begreppsbingo som vanligt, fast i lag om 2–4 personer som delar en dator.
+        En person visar och läser upp en ledtråd i taget för klassen – till exempel
+        läraren via en storbildsskärm – ibland en förklaring, ibland en ritad
+        strukturformel – medan varje lag har en gemensam bricka och markerar när de
+        känner igen rätt förening. När ett lag är bland de två första att klara 1, 2
+        eller 4 rader får laget välja att ta poäng från eller ge poäng till ett annat lag.
+      </p>
+      <div class="roll-knappar">
+        <button class="primar roll-btn" onclick="valjRoll('larare')">Jag är läraren</button>
+        <button class="primar roll-btn" onclick="valjRoll('lag')">Vi är ett lag</button>
+      </div>
+    </div>
+
+    <div class="kort" id="lagstartkort" style="display:none">
+      <h2>Begreppsbingo – lag</h2>
+      <p class="lead" id="lagstart-lead">
+        Er bricka har 24 rutor med <strong>kolföreningar</strong>. Läraren visar en
+        ledtråd i taget för hela klassen – ibland en förklaring, ibland en strukturformel
+        – hittar ni rutan med rätt förening klickar ni på den. Fyra i rad – vågrätt,
+        lodrätt eller diagonalt – ger bingo på en rad.
+      </p>
+
+      <div id="rumskod-steg">
+        <div class="rad">
+          <div>
+            <label for="rumskod-input">Rumskod (visas på lärarens skärm)</label>
+            <input type="text" id="rumskod-input" inputmode="numeric" maxlength="4" placeholder="t.ex. 4821">
+          </div>
+          <button class="primar" onclick="anslutRum()">Anslut</button>
+        </div>
+        <p class="fotnot" id="rumskod-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
+      </div>
+
+      <div id="medlemmar-steg" style="display:none">
+        <p class="lead" style="margin-top:1rem;margin-bottom:.3rem"><strong>Vad heter lagets medlemmar?</strong></p>
+        <div class="medlemmar-tabell">
+          <div class="falt"><input type="text" id="medlem-1" maxlength="20" placeholder="Medlem 1"></div>
+          <div class="falt"><input type="text" id="medlem-2" maxlength="20" placeholder="Medlem 2"></div>
+          <div class="falt"><input type="text" id="medlem-3" maxlength="20" placeholder="Medlem 3"></div>
+          <div class="falt"><input type="text" id="medlem-4" maxlength="20" placeholder="Medlem 4"></div>
+        </div>
+        <button class="primar" onclick="fortsattMedlemmar()">Fortsätt</button>
+        <p class="fotnot" id="medlemmar-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
+      </div>
+
+      <div id="lagnamn-steg" style="display:none">
+        <p class="lead" style="margin-top:1rem;margin-bottom:.3rem"><strong>Vad vill ni kalla ert lag?</strong></p>
+        <div class="rad">
+          <div>
+            <label for="lagnamn-input">Lagnamn (visas på topplistan och för andra lag)</label>
+            <input type="text" id="lagnamn-input" maxlength="24" placeholder="t.ex. Cellkämparna">
+          </div>
+          <button class="primar" onclick="fortsattLagnamn()">Fortsätt</button>
+        </div>
+        <p class="fotnot" id="lagnamn-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
+      </div>
+
+      <div id="brickval-steg" style="display:none">
+        <p class="lead" style="margin-top:1rem;margin-bottom:.3rem"><strong>Välj en ledig bricka:</strong></p>
+        <div class="brick-grid" id="brick-grid"></div>
+        <p class="fotnot" id="brickval-fel" style="display:none;color:var(--fel);margin-top:.6rem"></p>
+      </div>
+
+      <p class="fotnot" style="margin-top:1rem">
+        <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
+      </p>
+    </div>
+
+    <div class="kort" id="lararkort" style="display:none">
+      <div class="hud">
+        <span class="pill gron">Lärarläge</span>
+        <span class="pill rum-pill" id="hud-rum-pill">Rum: <span id="hud-rumskod-larare"></span></span>
+        <span class="sp"></span>
+        <button onclick="visaStallning()">🏆 Ställning</button>
+        <button onclick="nyttUpprop()">Nytt upprop</button>
+        <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
+      </div>
+
+      <div class="lage-val" role="group" aria-label="Frågenivå" id="version-val">
+        <button type="button" class="lage-knapp aktiv" data-version="v1" onclick="valjVersion('v1')">Version 1</button>
+        <button type="button" class="lage-knapp" data-version="v2" onclick="valjVersion('v2')">Version 2</button>
+        <button type="button" class="lage-knapp" data-version="overkurs" onclick="valjVersion('overkurs')">Överkurs</button>
+      </div>
+      <p class="fotnot" style="text-align:center;margin:-0.5rem 0 1rem">
+        Välj frågenivå innan du trycker på "Nytt upprop" – lagen bygger sin bricka från samma nivå.
+      </p>
+
+      <div class="rumskod-stor" id="rumskod-panel">
+        <div class="rumskod-etikett">Rumskod – lagen ansluter med denna</div>
+        <div class="rumskod-siffror" id="rumskod-stor">••••</div>
+        <div class="rumskod-antal" id="hud-antal-brickor"></div>
+        <div class="lobby-namn" id="lobby-namn"></div>
+      </div>
+
+      <p class="fotnot" style="margin:-0.3rem 0 1rem">
+        Läs upp förklaringen eller visa strukturformeln som visas nedan. Dela rumskoden
+        ovan med klassen – varje lag ansluter på sin egen dator, fyller i sina medlemmar
+        och lagnamn och väljer en ledig bricka. Tryck på <strong>Ställning</strong> när
+        som helst för att se alla lag, deras medlemmar och poäng.
+      </p>
+
+      <div class="upprop">
+        <div class="lage-val" role="group" aria-label="Läge för uppropet">
+          <button type="button" class="lage-knapp aktiv" id="lage-auto-knapp" onclick="valjLage('auto')">Automatiskt</button>
+          <button type="button" class="lage-knapp" id="lage-manuell-knapp" onclick="valjLage('manuell')">Manuellt</button>
+        </div>
+
+        <div class="aktuellt tom" id="aktuellt-begrepp">Tryck på Starta uppropet när ni är redo</div>
+        <div class="topplista-panel" id="topplista-panel" style="display:none">
+          <h3>🏆 Läget just nu</h3>
+          <div id="topplista-lista"></div>
+        </div>
+        <div class="timerbar" id="timerbar-rad"><i id="timerbar-i"></i></div>
+
+        <div class="uppropsknappar" id="auto-knappar">
+          <button class="primar" id="upprop-knapp" onclick="vaxlaUpprop()">Starta uppropet</button>
+          <button id="hoppa-knapp" onclick="stegFramat()">Nästa →</button>
+          <button class="ljud-knapp-btn" onclick="vaxlaLjud()">Ljud: På</button>
+        </div>
+
+        <div class="uppropsknappar" id="manuell-knappar" style="display:none">
+          <button id="bakat-knapp" onclick="stegBakat()" disabled>← Föregående</button>
+          <button class="primar" id="framat-knapp" onclick="stegFramat()">Visa rätt förening →</button>
+          <button class="ljud-knapp-btn" onclick="vaxlaLjud()">Ljud: På</button>
+        </div>
+
+        <div class="intervall" id="takt-rad">
+          <label for="intervall-slider" style="margin:0">Takt:</label>
+          <input type="range" id="intervall-slider" min="5" max="60" step="1" value="15" oninput="andraIntervall(this.value)">
+          <span id="intervall-varde">15 s</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kort" id="lagkort" style="display:none">
+      <div class="hud">
+        <span class="pill">Lag: <span id="hud-lagnamn"></span></span>
+        <span class="pill">Bricka #<span id="hud-bricka"></span></span>
+        <span class="pill">Rum: <span id="hud-rumskod-lag"></span></span>
+        <span class="pill gron">Rader klara: <span id="hud-rader">0</span>/12</span>
+        <span class="sp"></span>
+        <button onclick="visaStallning()">🏆 Ställning</button>
+        <button onclick="bytBricka()">Byt bricka</button>
+      </div>
+      <p class="fotnot" style="margin:-0.4rem 0 1rem">
+        Klicka på rutan när ni hör läraren läsa upp rätt begrepp. Er bricka känner av
+        uppropet i realtid – hittar en ruta inte rätt begrepp ännu skakar den till.
+      </p>
+      <div class="mina-poang" id="mina-poang">Lagets poäng: <span id="mina-poang-varde">0</span></div>
+
+      <div class="spelplan">
+        <div class="bricka-kolumn">
+          <div class="bricka-yta" id="bricka-yta">
+            <div class="bricka" id="bricka"></div>
+          </div>
+        </div>
+        <div class="andra-lag-kolumn">
+          <div class="andra-lag-panel">
+            <h3>Övriga lag</h3>
+            <div id="andra-lag-lista"><p class="andra-lag-tom">Inga andra lag har anslutit ännu.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="fotnot" style="margin-top:1rem">
+        <button class="lank-knapp" onclick="tillbakaTillRollval()">← Byt roll</button>
+      </p>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="ruta">
+        <h3 id="overlay-rubrik">Bingo!</h3>
+        <p id="overlay-text"></p>
+        <button class="primar" onclick="stangOverlay()">Fortsätt spela</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="stallning-overlay">
+      <div class="ruta bred">
+        <h3>🏆 Ställning</h3>
+        <table class="stallning-tabell" id="stallning-tabell">
+          <thead><tr><th>Lag</th><th>Medlemmar</th><th style="text-align:right">Poäng</th></tr></thead>
+          <tbody id="stallning-tabell-body"></tbody>
+        </table>
+        <p class="fotnot" id="stallning-tom" style="display:none;margin-top:.8rem">Inga lag har anslutit ännu.</p>
+        <button class="primar" style="margin-top:1.2rem" onclick="doljStallning()">Stäng</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="milstolpe-overlay">
+      <div class="ruta bred">
+        <h3 id="milstolpe-rubrik">🎯 Ni fick chansen!</h3>
+        <p id="milstolpe-text" class="lead" style="text-align:center"></p>
+
+        <div class="falt" style="margin-bottom:1rem">
+          <label for="milstolpe-lag-select">Vilket lag?</label>
+          <select id="milstolpe-lag-select" style="width:100%"></select>
+        </div>
+
+        <p class="fotnot" style="margin:0 0 .4rem"><strong>Ta poäng från dem</strong> (högst 40p, så att inget lag kan sänkas helt):</p>
+        <div class="milstolpe-knappar">
+          <button class="primar" onclick="taPoang(10)">Ta 10p</button>
+          <button class="primar" onclick="taPoang(20)">Ta 20p</button>
+          <button class="primar" onclick="taPoang(30)">Ta 30p</button>
+          <button class="primar" onclick="taPoang(40)">Ta 40p</button>
+        </div>
+
+        <p class="fotnot" style="margin:1rem 0 .4rem"><strong>Ge poäng till dem</strong> (valfritt belopp, upp till era egna poäng):</p>
+        <div class="milstolpe-val">
+          <div class="falt" style="max-width:120px">
+            <input type="number" id="milstolpe-ge-input" value="40" min="1" style="width:100%">
+          </div>
+          <button class="primar" id="milstolpe-ge-knapp" onclick="gePoang()">Skänk poäng</button>
+        </div>
+
+        <p class="fotnot" style="text-align:center;margin-top:1.1rem">
+          <button class="lank-knapp" onclick="hoppaOverMilstolpe()">Hoppa över</button>
+        </p>
+      </div>
+    </div>
+
+    <div class="spelslut-overlay" id="spelslut-overlay">
+      <div class="spelslut-ruta">
+        <h2>🎉 Spelet är slut!</h2>
+        <div class="spelslut-stjarnor" id="spelslut-stjarnor">⭐️⭐️⭐️⭐️⭐️</div>
+        <div class="podium" id="podium">
+          <div class="podium-plats p2" id="podium-2">
+            <div class="podium-namn" id="podium-2-namn"></div>
+            <div class="podium-poang" id="podium-2-poang"></div>
+            <div class="podium-block">2</div>
+          </div>
+          <div class="podium-plats p1" id="podium-1">
+            <div class="podium-namn" id="podium-1-namn"></div>
+            <div class="podium-poang" id="podium-1-poang"></div>
+            <div class="podium-block">1</div>
+          </div>
+          <div class="podium-plats p3" id="podium-3">
+            <div class="podium-namn" id="podium-3-namn"></div>
+            <div class="podium-poang" id="podium-3-poang"></div>
+            <div class="podium-block">3</div>
+          </div>
+        </div>
+        <button class="primar" onclick="tillbakaTillRollval()">Till startsidan</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="/js/bingo-sync.js"></script>
+<script>
+/* =========================================================
+   RITMOTOR (samma motor som i Lärande spel – rita strukturformler)
+   ========================================================= */
+const STEP=35, G=11, FS=21, PAD=20;
+function renderSVG(g, xscale=1){
+  const SX=STEP*xscale, SY=STEP;
+  const cols=g.atoms.map(a=>a.col), rows=g.atoms.map(a=>a.row);
+  const minC=Math.min(...cols),maxC=Math.max(...cols),minR=Math.min(...rows),maxR=Math.max(...rows);
+  const OX=PAD-minC*SX, OY=PAD-minR*SY, X=a=>OX+a.col*SX, Y=a=>OY+a.row*SY;
+  let els=[];
+  g.bonds.forEach(b=>{
+    const a1=g.atoms[b.a],a2=g.atoms[b.b];
+    let x1=X(a1),y1=Y(a1),x2=X(a2),y2=Y(a2);
+    const dx=x2-x1,dy=y2-y1,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len;
+    const trim=b.gap!==undefined?b.gap:G;
+    x1+=ux*trim;y1+=uy*trim;x2-=ux*trim;y2-=uy*trim;
+    const px=-uy,py=ux, offs=b.order===1?[0]:b.order===2?[-3.5,3.5]:[-6,0,6];
+    offs.forEach(o=>els.push(`<line x1="${(x1+px*o).toFixed(1)}" y1="${(y1+py*o).toFixed(1)}" x2="${(x2+px*o).toFixed(1)}" y2="${(y2+py*o).toFixed(1)}"/>`));
+  });
+  g.atoms.forEach(a=>{
+    els.push(`<text x="${X(a).toFixed(1)}" y="${Y(a).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="${FS}">${a.el}</text>`);
+  });
+  const W=(maxC-minC)*SX+2*PAD, H=(maxR-minR)*SY+2*PAD;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W.toFixed(1)} ${H.toFixed(1)}" width="${W.toFixed(1)}" height="${H.toFixed(1)}">${els.join("")}</svg>`;
+}
+
+/* ===================== BYGGARE (samma som i Lärande spel) ===================== */
+function chain(n,bonds){
+  const A=[],B=[];
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:bonds[i]});
+  for(let i=0;i<n;i++){
+    const hasPrev=i>0,hasNext=i<n-1,prevO=hasPrev?bonds[i-1]:0,nextO=hasNext?bonds[i]:0;
+    const hc=4-prevO-nextO,nN=(hasPrev?1:0)+(hasNext?1:0),free=!hasPrev?"left":"right";
+    let offs=[];
+    if(nN===1 && ((hasNext&&nextO===2)||(hasPrev&&prevO===2))){
+      const E=45, angs=hasNext?[180-E,180+E]:[E,-E];
+      for(const th of angs){const r=th*Math.PI/180;offs.push({dx:Math.cos(r),dy:-Math.sin(r)});}
+    } else {
+      let dirs=hc===4?["up","down","left","right"]:hc===3?["up","down",free]:hc===2?["up","down"]:hc===1?(nN===1?[free]:["up"]):[];
+      for(const d of dirs) offs.push({dx:d==="left"?-1:d==="right"?1:0,dy:d==="up"?-1:d==="down"?1:0});
+    }
+    for(const o of offs){A.push({el:"H",col:i+o.dx,row:o.dy});B.push({a:i,b:A.length-1,order:1});}
+  }
+  return {atoms:A,bonds:B};
+}
+function alkohol(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const O={el:"O",col:n,row:0};A.push(O);B.push({a:n-1,b:idx(O),order:1});
+  const Ho={el:"H",col:n+1,row:0};A.push(Ho);B.push({a:idx(O),b:idx(Ho),order:1});
+  for(let i=0;i<n;i++){let dirs=(n===1||i===0)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}}
+  return {atoms:A,bonds:B};
+}
+function syra(n){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=n-1;
+  const Oc={el:"O",col:n-1,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const Oh={el:"O",col:n,row:0};A.push(Oh);B.push({a:cc,b:idx(Oh),order:1});
+  const Hh={el:"H",col:n+1,row:0};A.push(Hh);B.push({a:idx(Oh),b:idx(Hh),order:1});
+  for(let i=0;i<n;i++){ if(i===cc){ if(n===1){const h={el:"H",col:-1,row:0};A.push(h);B.push({a:i,b:idx(h),order:1});} continue; }
+    let dirs=(i===0)?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]];
+    for(const [dx,dy] of dirs){const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}}
+  return {atoms:A,bonds:B};
+}
+function polyol(n, ohCarbons){
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  for(let i=0;i<n;i++){
+    const hasPrev=i>0,hasNext=i<n-1,hasOH=ohCarbons.includes(i);
+    const hc=4-(hasPrev?1:0)-(hasNext?1:0)-(hasOH?1:0);
+    if(hasOH){const O={el:"OH",col:i,row:1};A.push(O);B.push({a:i,b:idx(O),order:1});}
+    const slots=[[0,-1]]; if(!hasOH) slots.push([0,1]); if(!hasPrev) slots.push([-1,0]); if(!hasNext) slots.push([1,0]);
+    for(let k=0;k<hc;k++){const [dx,dy]=slots[k]; const h={el:"H",col:i+dx,row:dy};A.push(h);B.push({a:i,b:idx(h),order:1});}
+  }
+  return {atoms:A,bonds:B};
+}
+function glycerol(){ return polyol(3,[0,1,2]); }
+function grenAlkan(n,pos){ // rak kedja n kol med en metylgren (nedåt) på kol 'pos' (1-indexerat)
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<n;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<n-1;i++)B.push({a:i,b:i+1,order:1});
+  const bc=pos-1;
+  const Cb={el:"C",col:bc,row:2};A.push(Cb);B.push({a:bc,b:idx(Cb),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<n;i++){const first=i===0,last=i===n-1;
+    let dirs = (i===bc) ? [[0,-1]] : [[0,-1],[0,1]];
+    if(first) dirs.push([-1,0]); if(last) dirs.push([1,0]);
+    addH(A[i],dirs);
+  }
+  addH(Cb,[[0,1],[-1,0],[1,0]]);
+  return {atoms:A,bonds:B};
+}
+function esterBuild(acidN, alcoholN){ // syra (acidN kol) förestrad med alkohol (alcoholN kol)
+  const A=[],B=[],idx=x=>A.indexOf(x);
+  for(let i=0;i<acidN;i++)A.push({el:"C",col:i,row:0});
+  for(let i=0;i<acidN-1;i++)B.push({a:i,b:i+1,order:1});
+  const cc=acidN-1;
+  const Oc={el:"O",col:cc,row:-1};A.push(Oc);B.push({a:cc,b:idx(Oc),order:2});
+  const O1={el:"O",col:acidN,row:0};A.push(O1);B.push({a:cc,b:idx(O1),order:1});
+  const alc=[];
+  for(let j=0;j<alcoholN;j++){const c={el:"C",col:acidN+1+j,row:0};A.push(c);alc.push(c);}
+  B.push({a:idx(O1),b:idx(alc[0]),order:1});
+  for(let j=0;j<alcoholN-1;j++)B.push({a:idx(alc[j]),b:idx(alc[j+1]),order:1});
+  const addH=(ci,dirs)=>dirs.forEach(([dx,dy])=>{const h={el:"H",col:ci.col+dx,row:ci.row+dy};A.push(h);B.push({a:idx(ci),b:idx(h),order:1});});
+  for(let i=0;i<cc;i++){const first=i===0; addH(A[i], first?[[-1,0],[0,-1],[0,1]]:[[0,-1],[0,1]]);}
+  if(acidN===1){ addH(A[cc],[[-1,0]]); }
+  for(let j=0;j<alcoholN;j++){const last=j===alcoholN-1; addH(alc[j], last?[[0,-1],[0,1],[1,0]]:[[0,-1],[0,1]]);}
+  return {atoms:A,bonds:B};
+}
+
+/* =========================================================
+   DATA – kolföreningar (samma ämnen och fakta som i Lärande spel / vanliga begreppsbingon)
+
+   Frågenivåer (Version 1 / Version 2 / Överkurs): varje begrepp hör till en eller flera
+   nivåer via sjätte argumentet till B(...). Rummet vet vilken nivå läraren valde – lag
+   som ansluter bygger sin bricka från exakt samma nivå (se fortsattLagnamn).
+
+   Begrepp utan strukturformel (g = null) visas alltid som faktaledtråd, aldrig som
+   ritad molekyl.
+   ========================================================= */
+function B(term,kat,g,fakta,xs,version){
+  return {term,kat,g,fakta,xs:xs||1, version: version || ["v1","v2","overkurs"]};
+}
+const ALLA_BEGREPP_MASTER = [
+  // ALKANER
+  B("metan","alkan",()=>chain(1,[]),"Finns i naturgas och biogas och är ett vanligt bränsle. Bildas när växt- och djurrester bryts ner utan syre, t.ex. i kärr och i kornas mage. En stark växthusgas.",1,["v1"]),
+  B("etan","alkan",()=>chain(2,[1]),"En gas i naturgas. Används mest som råvara för att tillverka eten och plast.",1,["v1"]),
+  B("propan","alkan",()=>chain(3,[1,1]),"Ingår i gasol och används i gasolkök, campingkök och gasgrillar.",1,["v1"]),
+  B("butan","alkan",()=>chain(4,[1,1,1]),"Ingår i gasol och är bränslet i cigarettändare, där det ligger som vätska under tryck.",1,["v1"]),
+  B("pentan","alkan",()=>chain(5,[1,1,1,1]),"En lättflyktig vätska som ingår i bensin.",1,["v1"]),
+  B("hexan","alkan",()=>chain(6,[1,1,1,1,1]),"Vätska i bensin; används också som lösningsmedel i industrin.",1,["v2","overkurs"]),
+  // ALKENER
+  B("eten","alken",()=>chain(2,[2]),"Färglös gas och råvara för polyeten, världens vanligaste plast. Får också frukt att mogna.",1,["v1","v2"]),
+  B("propen","alken",()=>chain(3,[2,1]),"Råvara för plasten polypropen, som finns i matlådor, mattor och rep.",1,["v1","v2"]),
+  B("buten","alken",()=>chain(4,[2,1,1]),"Dubbelbindning i ena änden av kedjan. Råvara i plastindustrin.",1,["v1","v2"]),
+  B("penten","alken",()=>chain(5,[2,1,1,1]),"Fem kol med dubbelbindning i ena änden av kedjan.",1,["overkurs"]),
+  // ALKYNER
+  B("etyn","alkyn",()=>chain(2,[3]),"Brinner mycket hett (över 3000 °C med rent syre) och används vid svetsning och skärning av metall.",1,["v1"]),
+  B("propyn","alkyn",()=>chain(3,[1,3]),"En alkyn med trippelbindning, släkting till acetylen. Byggsten i kemisk industri.",1,["v1","v2"]),
+  B("butyn","alkyn",()=>chain(4,[3,1,1]),"Fyra kol med trippelbindning i ena änden av kedjan.",1,["v2","overkurs"]),
+  // ALKOHOLER
+  B("metanol","alkohol",()=>alkohol(1),"Träsprit. Mycket giftig – små mängder ger blindhet eller döden. Bränsle och lösningsmedel.",1,["v1"]),
+  B("etanol","alkohol",()=>alkohol(2),"Alkoholen i öl, vin och sprit, som bildas av socker. Även bränsle (E85) och desinfektionsmedel.",1,["v1","v2"]),
+  B("propanol","alkohol",()=>alkohol(3),"Lösningsmedel samt i handsprit och ytdesinfektion.",1,["v1","v2"]),
+  B("butanol","alkohol",()=>alkohol(4),"Lösningsmedel, bland annat i färg och lack.",1,["v2","overkurs"]),
+  // FLERVÄRDA
+  B("etandiol","flervard",()=>polyol(2,[0,1]),"En klar, söt och giftig vätska som används som frostskydd i bilkylare och spolarvätska (kallas även glykol).",1.25,["v2","overkurs"]),
+  B("propantriol","flervard",()=>glycerol(),"En tjock, söt och ofarlig vätska. Fuktbevarare i hudkräm och livsmedel, byggsten i alla fetter (kallas även glycerol).",1.25,["v2","overkurs"]),
+  // SYROR
+  B("metansyra","syra",()=>syra(1),"Myror och brännässlor svider med den (kallas även myrsyra). Även konserveringsmedel i djurfoder.",1,["v1"]),
+  B("etansyra","syra",()=>syra(2),"Ger ättika dess sura smak (kallas även ättiksyra). Bildas när vin surnar.",1,["v1","v2"]),
+  B("propansyra","syra",()=>syra(3),"Konserveringsmedel i bröd (E280) som motverkar mögel.",1,["v1","v2"]),
+  B("butansyra","syra",()=>syra(4),"Luktar härsket smör och svettiga fötter (kallas även smörsyra). Finns bl.a. i parmesanost.",1,["v2","overkurs"]),
+  // GRENADE (visas aldrig som strukturfråga – bara som faktaledtråd)
+  B("2-metylpropan","grenat",()=>grenAlkan(3,2),"Grenad variant av butan; metylgrupp på kol 2 (kallas även isobutan). Köldmedium och drivgas i sprayburkar.",1,["overkurs"]),
+  B("2-metylbutan","grenat",()=>grenAlkan(4,2),"Metylgren på kol 2 (kallas även isopentan). Jäsmedel vid tillverkning av frigolit.",1,["overkurs"]),
+  B("3-metylpentan","grenat",()=>grenAlkan(5,3),"Metylgren på kol 3, mitten av kedjan. Finns i bensin.",1,["overkurs"]),
+  // ESTRAR
+  B("metylmetanoat","ester",()=>esterBuild(1,1),"En ester av metansyra och metanol. Doftande vätska som används som lösningsmedel i industrin.",1,["v2","overkurs"]),
+  B("etyletanoat","ester",()=>esterBuild(2,2),"En ester av etansyra och etanol. Vanligt lösningsmedel, t.ex. i nagellacksborttagning.",1,["v2","overkurs"]),
+  B("metylbutanoat","ester",()=>esterBuild(4,1),"En ester av butansyra och metanol. Doftar äpple.",1,["v2","overkurs"]),
+  B("etylbutanoat","ester",()=>esterBuild(4,2),"En ester av butansyra och etanol. Doftar ananas.",1,["v2","overkurs"]),
+
+  // ===== RENA BEGREPP (ingen strukturformel – visas alltid som faktaledtråd) =====
+  // Grundbegrepp – Version 1
+  B("molekyl","koncept",null,"Den minsta delen av ett ämne som har kvar ämnets egenskaper – uppbyggd av två eller flera atomer som sitter ihop.",1,["v1"]),
+  B("alkan","koncept",null,"En kolvätegrupp där alla kolatomer bara har enkelbindningar mellan sig. Namnen inom gruppen slutar alltid på -an.",1,["v1"]),
+  B("alken","koncept",null,"En kolvätegrupp med minst en dubbelbindning mellan två kolatomer. Namnen inom gruppen slutar alltid på -en.",1,["v1"]),
+  B("alkyn","koncept",null,"En kolvätegrupp med minst en trippelbindning mellan två kolatomer. Namnen inom gruppen slutar alltid på -yn.",1,["v1"]),
+  B("gasform","koncept",null,"Den aggregationsform som de kortaste kolvätekedjorna oftast har vid rumstemperatur, t.ex. de fyra minsta i alkanserien.",1,["v1"]),
+  B("diamant","koncept",null,"En av kolets rena former. Extremt hård eftersom varje kolatom sitter fast bunden till fyra andra i ett stabilt mönster. Används i smycken och borrverktyg.",1,["v1"]),
+  B("grafit","koncept",null,"En annan ren form av kol, uppbyggd av lager som lätt glider mot varandra. Leder ström och finns bland annat i blyertspennor och som smörjmedel.",1,["v1"]),
+  // Mellannivå – Version 2
+  B("grafen","koncept",null,"Ett enda lager av grafit, bara en atom tjockt. Extremt starkt i förhållande till sin vikt och leder både värme och elektricitet mycket bra.",1,["v2"]),
+  B("nanorör","koncept",null,"Ett kolmaterial format som ett litet rör, ungefär som om ett lager grafen rullats ihop. Mycket starkt och används i modern materialteknik.",1,["v2"]),
+  B("fullerener","koncept",null,"Klotformade eller rörformade molekyler helt uppbyggda av kolatomer, t.ex. den fotbollsformade C60. En av kolets rena former, upptäckt på 1980-talet.",1,["v2"]),
+  B("vatten","koncept",null,"En förening av väte och syre som bildas tillsammans med koldioxid vid fullständig förbränning av kolväten.",1,["v2"]),
+  B("koldioxid","koncept",null,"En gas som bildas vid fullständig förbränning av kolföreningar och som bidrar till växthuseffekten.",1,["v2"]),
+  B("omättade","koncept",null,"Kolväten med minst en dubbel- eller trippelbindning mellan kolatomerna, till skillnad från de som bara har enkelbindningar.",1,["v1","v2"]),
+  // Överkurs – från Gleerups kolkapitel och fördjupning
+  B("jäsning","koncept",null,"En process där mikroorganismer bryter ner socker till etanol och koldioxid utan tillgång till syre. Sker bland annat vid bakning av bröd och tillverkning av öl och vin.",1,["overkurs"]),
+  B("oxidation","koncept",null,"En kemisk reaktion där ett ämne reagerar med syre, t.ex. när kolväten förbränns eller när etanol långsamt omvandlas till en syra.",1,["overkurs"]),
+  B("katalysator","koncept",null,"Ett ämne som gör att en kemisk reaktion går snabbare utan att själv förbrukas, t.ex. vid krackning av råolja eller i bilars avgasrening.",1,["overkurs"]),
+  B("denaturerad sprit","koncept",null,"Etanol som blandats med ett äckligt eller giftigt ämne för att göra den odrickbar, så att den kan säljas skattefritt som lösningsmedel och bränsle.",1,["overkurs"]),
+  B("fotogen","koncept",null,"En blandning av kolväten som utvinns ur råolja genom raffinering. Används som flygbränsle och användes förr för belysning innan elektriciteten kom.",1,["overkurs"]),
+  B("krackning","koncept",null,"En process där långa kolvätekedjor från råolja spjälkas till kortare, mer användbara molekyler med hjälp av hög värme och katalysatorer.",1,["overkurs"]),
+  B("raffinering","koncept",null,"Processen där råolja separeras i olika kolväten genom destillation, eftersom de har olika kokpunkter.",1,["overkurs"]),
+  B("fossila bränslen","koncept",null,"Kol, olja och naturgas – bildade under miljontals år av döda växt- och djurrester. Frigör gammal koldioxid när de eldas upp.",1,["overkurs"]),
+  B("aktivt kol","koncept",null,"Kol som behandlats så att det får en enorm inre yta med massor av små porer. Binder gifter och gaser mycket effektivt, används bland annat vid förgiftningar och i vattenrening.",1,["overkurs"]),
+  B("träkol","koncept",null,"Framställs genom att hetta upp ved utan tillgång till syre. Användes förr som bränsle och råvara vid järnframställning.",1,["overkurs"]),
+  B("stenkol","koncept",null,"Ett fossilt bränsle som bildats av växtrester under mycket högt tryck under lång tid. Innehåller mer kol per kilo än brunkol och ved.",1,["overkurs"]),
+  B("biobränsle","koncept",null,"Bränsle som framställs av nyligen levande material, t.ex. växter, och som därför räknas som förnybart eftersom det inte tillför ny fossil koldioxid.",1,["overkurs"]),
+  B("förstärkt växthuseffekt","koncept",null,"När mänsklig aktivitet, t.ex. förbränning av fossila bränslen, ökar mängden växthusgaser i atmosfären så att jorden värms upp mer än naturligt.",1,["overkurs"]),
+];
+
+const VERSIONER = {
+  v1: { namn: "Version 1" },
+  v2: { namn: "Version 2" },
+  overkurs: { namn: "Överkurs" },
+};
+// Plockar ut den delmängd av ALLA_BEGREPP_MASTER som hör till en viss frågenivå.
+function begreppForVersion(v){
+  const traff = ALLA_BEGREPP_MASTER.filter(b => (b.version || []).includes(v));
+  return traff.length ? traff : ALLA_BEGREPP_MASTER;
+}
+let ALLA_BEGREPP = begreppForVersion("v1"); // den aktiva poolen just nu (byts vid nytt upprop/anslutning)
+let valdVersion = "v1"; // (lärarläge) vilken frågenivå som är vald just nu: v1/v2/overkurs
+const ANTAL_BRICKOR = 32; // hur många valbara bingobrickor rummet erbjuder (måste matcha workern)
+
+/* =========================================================
+   SEEDAD SLUMP (mulberry32) – samma bricknummer ger alltid samma bricka
+   ========================================================= */
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = (t + Math.imul(t ^ t >>> 7, 61 | t)) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function blandad(lista, slumpFn){
+  const kopia = lista.slice();
+  for(let i = kopia.length - 1; i > 0; i--){
+    const j = Math.floor(slumpFn() * (i + 1));
+    [kopia[i], kopia[j]] = [kopia[j], kopia[i]];
+  }
+  return kopia;
+}
+
+/* =========================================================
+   SPELSTATE
+   ========================================================= */
+const FRI_INDEX = 12; // mitten av 5x5
+let roll = null;            // "larare" | "lag"
+let brickans_celler = [];   // 25 st: {term, def} eller null (fri ruta)
+let ropta = new Set();      // (lagläge) begrepp läraren faktiskt ropat upp, hämtat via synk
+let markerade = new Set();  // index (0-24) som är markerade
+let klaraRader = new Set(); // index i LINJER som redan firats
+let uppropOrdning = [];     // begrepp i slumpad uppropsordning
+let nastaOrdIndex = 0;      // hur många begrepp i uppropOrdning som redan lagts in i sekvensen
+let intervallMs = 12000;
+let uppropAktivt = false;
+let ljudPa = true;
+let audioCtx = null;
+let rumskod = null;         // delad kod som kopplar ihop lärarens upprop med lagens brickor
+let pollTimer = null;       // (lagläge) intervall som frågar efter nya uppropade begrepp
+let anslutenKod = null;     // (lagläge) rumskoden laget anslutit till, innan bricka är vald
+let valdaBrickorPoll = null;// (lagläge) intervall som uppdaterar vilka brickor som är lediga
+let larareRumPoll = null;   // (lärarläge) intervall som uppdaterar antal valda brickor + topplista
+let lagnamn = "";           // (lagläge) lagnamnet som skrevs in efter anslutning
+let medlemmar = [];         // (lagläge) upp till fyra medlemsnamn
+let minBricka = null;       // (lagläge) lagets eget bricknummer, för att kunna rapportera rätt svar/vinst
+let senasteRumState = null; // senaste hämtade rumsläge (spelare, poäng m.m.) – används för topplistan/ställning
+let spelSlutVisat = false;  // så att pallceremonin bara triggas en gång per rum
+let visadeFanfarer = 0;     // hur många podieplatser som redan fått sin fanfar-ljudeffekt
+let senasteHandelseIndex = 0; // hur många poster i handelser-loggen vi redan visat en notis för
+let toastKo = [];           // kö av väntande notistexter
+let toastVisarNu = false;
+let visadeLobbyNamn = new Set(); // (lärarläge) bricknummer vars namn-chip redan ritats i väntrummet
+let rapporteradeMilstolpar = new Set(); // (lagläge) vilka antalRader vi redan anropat lagMilstolpe för
+let vantandeMilstolpe = null; // (lagläge) {antalRader, plats} medan milstolpe-modalen är öppen
+
+// Sekvensen av steg i uppropet: varje begrepp ger två steg – "fraga" (förklaringen visas)
+// och "facit" (rätt begrepp visas). pekare pekar på vilket steg som visas just nu.
+let sekvens = [];
+let pekare = -1;
+let lage = "auto"; // "auto" | "manuell"
+let vantetid = null; // aktuell setTimeout-handle i automatiskt läge
+
+const LINJER = (() => {
+  const rader = 5, kol = 5;
+  const linjer = [];
+  for(let r = 0; r < rader; r++) linjer.push([0,1,2,3,4].map(c => r*5 + c));
+  for(let c = 0; c < kol; c++) linjer.push([0,1,2,3,4].map(r => r*5 + c));
+  linjer.push([0,6,12,18,24]);
+  linjer.push([4,8,12,16,20]);
+  return linjer;
+})();
+
+// Vilka antal-rader-milstolpar som ger de två första lagen chansen att ta/ge poäng.
+const MILSTOLPAR = [1, 2, 4];
+
+/* =========================================================
+   LJUD (Web Audio – inga externa filer, inget bakgrundsljud)
+   ========================================================= */
+function fåAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function spelaTon(frekvens, starttid, langd, volym){
+  if(!ljudPa) return;
+  try{
+    const ctx = fåAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.value = frekvens;
+    const t = ctx.currentTime + starttid;
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(volym, t + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + langd);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t); osc.stop(t + langd + 0.03);
+  } catch(e) { /* tyst fallback, t.ex. om ljud blockeras */ }
+}
+function ljudNyttBegrepp(){
+  spelaTon(587.33, 0, 0.09, 0.06);
+  spelaTon(880, 0.06, 0.13, 0.05);
+}
+function ljudFacit(){
+  spelaTon(659.25, 0, 0.16, 0.06);
+}
+function ljudRatt(){
+  spelaTon(523.25, 0, 0.11, 0.08);
+  spelaTon(659.25, 0.07, 0.11, 0.08);
+  spelaTon(783.99, 0.14, 0.18, 0.09);
+}
+function ljudRadKlar(){
+  [523.25, 659.25, 783.99, 1046.5].forEach((f,i) => spelaTon(f, i*0.08, 0.18, 0.09));
+}
+function ljudBingo(){
+  [523.25, 659.25, 783.99, 1046.5, 1318.51].forEach((f,i) => spelaTon(f, i*0.09, 0.22, 0.1));
+  spelaTon(1318.51, 0.55, 0.5, 0.11);
+}
+function ljudFanfar(storlek){
+  const serier = [
+    [392.00, 523.25],
+    [392.00, 523.25, 659.25],
+    [392.00, 523.25, 659.25, 783.99, 1046.5],
+  ];
+  const toner = serier[storlek] || serier[0];
+  toner.forEach((f,i) => spelaTon(f, i*0.11, 0.28, 0.09));
+  if(storlek === 2) spelaTon(1046.5, toner.length*0.11 + 0.05, 0.6, 0.11);
+}
+function ljudFanfarLang(storlek){
+  const scheman = [
+    [
+      {f:392.00, t:0.00, l:0.38, v:0.12},
+      {f:392.00, t:0.48, l:0.38, v:0.12},
+      {f:523.25, t:0.98, l:1.95, v:0.14},
+    ],
+    [
+      {f:440.00, t:0.00, l:0.32, v:0.12},
+      {f:440.00, t:0.40, l:0.32, v:0.12},
+      {f:554.37, t:0.80, l:0.32, v:0.13},
+      {f:659.25, t:1.24, l:1.72, v:0.15},
+    ],
+    [
+      {f:523.25, t:0.00, l:0.22, v:0.12},
+      {f:659.25, t:0.22, l:0.22, v:0.12},
+      {f:783.99, t:0.44, l:0.22, v:0.13},
+      {f:1046.5, t:0.66, l:0.24, v:0.14},
+      {f:783.99, t:1.02, l:0.30, v:0.13},
+      {f:1046.5, t:1.38, l:1.58, v:0.17},
+      {f:1318.51, t:1.42, l:1.54, v:0.11},
+    ],
+  ];
+  (scheman[storlek] || scheman[0]).forEach(n => spelaTon(n.f, n.t, n.l, n.v));
+}
+function vaxlaLjud(){
+  ljudPa = !ljudPa;
+  document.querySelectorAll(".ljud-knapp-btn").forEach(b => {
+    b.textContent = "Ljud: " + (ljudPa ? "På" : "Av");
+  });
+}
+function ljudBonusPoang(){
+  spelaTon(880, 0, 0.1, 0.07);
+  spelaTon(1174.66, 0.09, 0.16, 0.08);
+}
+
+/* =========================================================
+   NOTISER – korta toaster när ett lag når en milstolpe, byter poäng eller får hel platta.
+   Visas på alla skärmar (lärare + samtliga lag) via pollningen.
+   ========================================================= */
+function visaHandelseToast(text){
+  toastKo.push(text);
+  if(!toastVisarNu) nastaToast();
+}
+function nastaToast(){
+  const text = toastKo.shift();
+  if(text === undefined){ toastVisarNu = false; return; }
+  toastVisarNu = true;
+  const el = document.getElementById("handelse-toast");
+  el.textContent = text;
+  el.classList.add("visas");
+  ljudBonusPoang();
+  setTimeout(() => {
+    el.classList.remove("visas");
+    setTimeout(nastaToast, 350);
+  }, 5000);
+}
+function bearbetaNyaHandelser(handelser){
+  if(!Array.isArray(handelser)) return;
+  if(handelser.length > senasteHandelseIndex){
+    handelser.slice(senasteHandelseIndex).forEach(h => { if(h && h.text) visaHandelseToast(h.text); });
+    senasteHandelseIndex = handelser.length;
+  }
+}
+
+// Ritar upp namn-chips i väntrummet i takt med att lag loggar in och väljer bricka.
+function renderLobbyNamn(spelare){
+  if(!spelare) return;
+  const container = document.getElementById("lobby-namn");
+  if(!container) return;
+  Object.entries(spelare).forEach(([id, p]) => {
+    const bricknummer = Number(id);
+    if(visadeLobbyNamn.has(bricknummer)) return;
+    visadeLobbyNamn.add(bricknummer);
+    const farg = TOPPLISTA_FARGER[bricknummer % TOPPLISTA_FARGER.length];
+    const chip = document.createElement("span");
+    chip.className = "lobby-chip";
+    chip.style.borderColor = farg;
+    chip.style.color = farg;
+    chip.textContent = p.namn;
+    container.appendChild(chip);
+  });
+}
+
+// Uppdaterar lagets egna poäng-räknare ovanför brickan utifrån senast hämtade rumsstate.
+function uppdateraLagetsPoang(d){
+  if(!d || !d.spelare || !minBricka) return;
+  const p = d.spelare[String(minBricka)];
+  const el = document.getElementById("mina-poang-varde");
+  if(el && p) el.textContent = p.poang;
+}
+
+// Ritar "Övriga lag"-panelen bredvid brickan – alla lag utom det egna, sorterade efter
+// poäng, med lagnamn, medlemmar och aktuell poäng. Uppdateras live vid varje pollning.
+function renderAndraLag(d){
+  const container = document.getElementById("andra-lag-lista");
+  if(!container || !d || !d.spelare) return;
+  const ovriga = Object.entries(d.spelare)
+    .filter(([id]) => Number(id) !== minBricka)
+    .map(([id, p]) => ({ bricknummer: Number(id), namn: p.namn, poang: p.poang, medlemmar: p.medlemmar || [] }))
+    .sort((a, b) => b.poang - a.poang);
+
+  if(ovriga.length === 0){
+    container.innerHTML = `<p class="andra-lag-tom">Inga andra lag har anslutit ännu.</p>`;
+    return;
+  }
+  container.innerHTML = "";
+  ovriga.forEach(lag => {
+    const farg = TOPPLISTA_FARGER[lag.bricknummer % TOPPLISTA_FARGER.length];
+    const rad = document.createElement("div");
+    rad.className = "lag-rad";
+    rad.innerHTML = `
+      <span class="lag-farg" style="background:${farg}"></span>
+      <span class="lag-info">
+        <div class="lag-namn">${lag.namn}</div>
+        <div class="lag-medlemmar">${lag.medlemmar.length ? lag.medlemmar.join(", ") : "&nbsp;"}</div>
+      </span>
+      <span class="lag-poang">${lag.poang}</span>`;
+    container.appendChild(rad);
+  });
+}
+
+// Ställning – en fullständig tabell över ALLA lag (även det egna), tillgänglig på begäran
+// för både lärare och lag via "Ställning"-knappen.
+function renderStallning(d){
+  const body = document.getElementById("stallning-tabell-body");
+  const tomText = document.getElementById("stallning-tom");
+  if(!body) return;
+  const state = d || senasteRumState;
+  const alla = Object.entries((state && state.spelare) || {})
+    .map(([id, p]) => ({ bricknummer: Number(id), namn: p.namn, poang: p.poang, medlemmar: p.medlemmar || [] }))
+    .sort((a, b) => b.poang - a.poang);
+
+  if(alla.length === 0){
+    body.innerHTML = "";
+    tomText.style.display = "";
+    return;
+  }
+  tomText.style.display = "none";
+  body.innerHTML = alla.map(lag => `
+    <tr>
+      <td>${lag.namn}${lag.bricknummer === minBricka ? " (ni)" : ""}</td>
+      <td>${lag.medlemmar.length ? lag.medlemmar.join(", ") : "–"}</td>
+      <td class="st-poang">${lag.poang}</td>
+    </tr>`).join("");
+}
+function visaStallning(){
+  renderStallning(senasteRumState);
+  document.getElementById("stallning-overlay").classList.add("visa");
+}
+function doljStallning(){
+  document.getElementById("stallning-overlay").classList.remove("visa");
+}
+
+/* =========================================================
+   BRICKA – uppbyggnad (lagläge)
+   ========================================================= */
+function byggBricka(bricknummer){
+  const seed = ((bricknummer * 2654435761) % 4294967296) >>> 0;
+  const slumpFn = mulberry32(seed || 1);
+  const ordnade = blandad(ALLA_BEGREPP, slumpFn);
+  const celler = new Array(25).fill(null);
+  let p = 0;
+  for(let i = 0; i < 25; i++){
+    if(i === FRI_INDEX) continue;
+    celler[i] = ordnade[p++];
+  }
+  return celler;
+}
+
+function ritaBricka(){
+  const el = document.getElementById("bricka");
+  el.innerHTML = "";
+  const yta = document.getElementById("bricka-yta");
+  if(yta && minBricka !== null && minBricka !== undefined){
+    const [ljus, ljusare] = BRICKA_PASTELLER[minBricka % BRICKA_PASTELLER.length];
+    yta.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
+  }
+  brickans_celler.forEach((begrepp, i) => {
+    const div = document.createElement("div");
+    div.className = "cell";
+    div.dataset.index = i;
+    if(i === FRI_INDEX){
+      div.classList.add("fri", "markerad");
+      div.textContent = "Fri ruta";
+      markerade.add(i);
+    } else {
+      div.textContent = begrepp.term;
+      div.addEventListener("click", () => klickaCell(i));
+    }
+    el.appendChild(div);
+  });
+}
+
+// Lagläget har ingen egen uppropsmotor, men känner av lärarens riktiga upprop via synken
+// (rumskoden) – en ruta går bara att markera om läraren faktiskt har ropat upp det begreppet.
+function klickaCell(i){
+  const cellEl = document.querySelector(`.cell[data-index="${i}"]`);
+  if(markerade.has(i)) return;
+  const begrepp = brickans_celler[i];
+  if(ropta.has(begrepp.term)){
+    markerade.add(i);
+    cellEl.classList.add("markerad");
+    ljudRatt();
+    if(rumskod && minBricka){
+      bingoRapporteraRatt(rumskod, minBricka, begrepp.term).then(({data}) => uppdateraLagetsPoang(data && data.state)).catch(() => {});
+    }
+    kollaLinjer();
+  } else {
+    cellEl.classList.add("darrar");
+    setTimeout(() => cellEl.classList.remove("darrar"), 320);
+  }
+}
+
+function kollaLinjer(){
+  LINJER.forEach((linje, li) => {
+    if(klaraRader.has(li)) return;
+    if(linje.every(idx => markerade.has(idx))){
+      klaraRader.add(li);
+      linje.forEach(idx => {
+        document.querySelector(`.cell[data-index="${idx}"]`).classList.add("rad-klar");
+      });
+      document.getElementById("hud-rader").textContent = klaraRader.size;
+      const antalRaderNu = klaraRader.size;
+
+      // Milstolpar (1, 2, 4 rader): rapportera till servern om det är en av de tre
+      // milstolparna och vi inte redan rapporterat den. De två första lagen som når
+      // varje milstolpe får själva välja att ta/ge poäng (se visaMilstolpeVal).
+      if(MILSTOLPAR.includes(antalRaderNu) && !rapporteradeMilstolpar.has(antalRaderNu) && rumskod && minBricka){
+        rapporteradeMilstolpar.add(antalRaderNu);
+        bingoRapporteraMilstolpe(rumskod, minBricka, antalRaderNu).then(({data}) => {
+          if(!data) return;
+          uppdateraLagetsPoang(data.state);
+          bearbetaNyaHandelser(data.state && data.state.handelser);
+          senasteRumState = data.state || senasteRumState;
+          if(data.kvalificerad){
+            visaMilstolpeVal(data.plats, antalRaderNu);
+          }
+        }).catch(() => {});
+      }
+
+      if(markerade.size === 25){
+        visaOverlay("Hel bricka!", "Alla 24 rutor klara – full bricka!");
+        ljudBingo();
+        if(rumskod && minBricka){
+          bingoAvslutaSpel(rumskod, minBricka).then(({data}) => {
+            if(!data) return;
+            uppdateraLagetsPoang(data);
+            bearbetaNyaHandelser(data.handelser);
+            if(data.avslutad && !spelSlutVisat){
+              spelSlutVisat = true;
+              stoppaPolling();
+              visaSpelSlut(data.topplista || []);
+            }
+          }).catch(() => {});
+        }
+      } else {
+        visaOverlay("Bingo på en rad!", "Fyra i rad klara. Fortsätt spela för fler rader eller hela brickan.");
+        ljudRadKlar();
+      }
+    }
+  });
+}
+
+function visaOverlay(rubrik, text){
+  document.getElementById("overlay-rubrik").textContent = rubrik;
+  document.getElementById("overlay-text").textContent = text;
+  document.getElementById("overlay").classList.add("visa");
+}
+function stangOverlay(){
+  document.getElementById("overlay").classList.remove("visa");
+}
+
+/* =========================================================
+   MILSTOLPE – lagets val att ta poäng från eller ge poäng till ett annat lag
+   ========================================================= */
+function visaMilstolpeVal(plats, antalRader){
+  vantandeMilstolpe = { antalRader };
+  const platsText = plats === 0 ? "första" : "andra";
+  document.getElementById("milstolpe-text").textContent =
+    `Ni klarade rad ${antalRader} som ${platsText} lag! Välj ett annat lag och hur många poäng ni vill ta från dem eller ge till dem.`;
+
+  const select = document.getElementById("milstolpe-lag-select");
+  select.innerHTML = "";
+  const ovriga = Object.entries((senasteRumState && senasteRumState.spelare) || {})
+    .filter(([id]) => Number(id) !== minBricka);
+  if(ovriga.length === 0){
+    select.innerHTML = `<option value="">Inga andra lag ännu</option>`;
+  } else {
+    ovriga.forEach(([id, p]) => {
+      const opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = p.namn;
+      select.appendChild(opt);
+    });
+  }
+  const eget = (senasteRumState && senasteRumState.spelare && senasteRumState.spelare[String(minBricka)])
+    ? senasteRumState.spelare[String(minBricka)].poang : 0;
+  const geInput = document.getElementById("milstolpe-ge-input");
+  geInput.max = Math.max(1, eget);
+  geInput.value = Math.max(1, Math.min(40, eget));
+  document.getElementById("milstolpe-ge-knapp").disabled = eget < 1;
+
+  document.getElementById("milstolpe-overlay").classList.add("visa");
+}
+
+// Tar högst 40 poäng (fasta knappar 10/20/30/40) från det valda laget – så att inget lag
+// kan sänkas helt av ett enda tagande. Servern kapar ändå vid 40 oavsett vad som skickas,
+// men knapparna gör det tydligt för eleverna redan i gränssnittet.
+function taPoang(belopp){
+  const select = document.getElementById("milstolpe-lag-select");
+  const valtId = select.value;
+  if(!valtId){ doljMilstolpe(); return; }
+  const etikett = vantandeMilstolpe ? `rad ${vantandeMilstolpe.antalRader}` : "";
+  bingoOverforPoang(rumskod, minBricka, Number(valtId), belopp, etikett, "ta").then(({data}) => {
+    if(data && data.state){
+      senasteRumState = data.state;
+      uppdateraLagetsPoang(data.state);
+      renderAndraLag(data.state);
+      bearbetaNyaHandelser(data.state.handelser);
+    }
+  }).catch(() => {}).finally(doljMilstolpe);
+}
+
+// Ger ett valfritt belopp (upp till lagets egna poäng) till det valda laget. Servern
+// loggar då ett slumpat, skämtsamt gåvomeddelande istället för det vanliga "tog poäng"-meddelandet.
+function gePoang(){
+  const select = document.getElementById("milstolpe-lag-select");
+  const valtId = select.value;
+  if(!valtId){ doljMilstolpe(); return; }
+  const eget = (senasteRumState && senasteRumState.spelare && senasteRumState.spelare[String(minBricka)])
+    ? senasteRumState.spelare[String(minBricka)].poang : 0;
+  const onskat = Number(document.getElementById("milstolpe-ge-input").value) || 0;
+  const poang = Math.max(1, Math.min(eget, onskat));
+  if(eget < 1 || poang < 1){ doljMilstolpe(); return; }
+  const etikett = vantandeMilstolpe ? `rad ${vantandeMilstolpe.antalRader}` : "";
+  bingoOverforPoang(rumskod, Number(valtId), minBricka, poang, etikett, "ge").then(({data}) => {
+    if(data && data.state){
+      senasteRumState = data.state;
+      uppdateraLagetsPoang(data.state);
+      renderAndraLag(data.state);
+      bearbetaNyaHandelser(data.state.handelser);
+    }
+  }).catch(() => {}).finally(doljMilstolpe);
+}
+
+function hoppaOverMilstolpe(){
+  doljMilstolpe();
+}
+function doljMilstolpe(){
+  document.getElementById("milstolpe-overlay").classList.remove("visa");
+  vantandeMilstolpe = null;
+}
+
+/* =========================================================
+   UPPROP (lärarläge) – sekvens av "fraga" (förklaringen visas) och "facit" (rätt begrepp visas)
+   ========================================================= */
+function nyUppropsOrdning(){
+  uppropOrdning = blandad(ALLA_BEGREPP, Math.random);
+  nastaOrdIndex = 0;
+}
+
+function skapaNastaSteg(){
+  const senaste = sekvens[sekvens.length - 1];
+
+  if(senaste && senaste.fas === "facit" && !senaste.topplistaVisad &&
+     nastaOrdIndex > 0 && nastaOrdIndex % 3 === 0){
+    senaste.topplistaVisad = true;
+    sekvens.push({fas:"topplista"});
+    return;
+  }
+
+  if(!senaste || senaste.fas === "facit" || senaste.fas === "topplista"){
+    if(nastaOrdIndex >= uppropOrdning.length) nyUppropsOrdning();
+    const begrepp = uppropOrdning[nastaOrdIndex++];
+    // Bara begrepp med en strukturformel-funktion kan visas som strukturfråga
+    // (grenade kolväten och rena begrepp utan molekylstruktur visas alltid som faktaledtråd).
+    const kanStruktur = typeof begrepp.g === "function";
+    const typ = (kanStruktur && Math.random() < 0.5) ? "struktur" : "fakta";
+    sekvens.push({fas:"fraga", begrepp, typ});
+    ljudNyttBegrepp();
+    if(rumskod) bingoRopaBegrepp(rumskod, begrepp.term);
+  } else {
+    sekvens.push({fas:"facit", begrepp: senaste.begrepp});
+    ljudFacit();
+  }
+}
+
+function visaSteg(){
+  const steg = sekvens[pekare];
+  const visning = document.getElementById("aktuellt-begrepp");
+  const topplistaPanel = document.getElementById("topplista-panel");
+
+  const uppropetHarStartat = pekare >= 0;
+  document.getElementById("rumskod-panel").classList.toggle("dold", uppropetHarStartat);
+  document.getElementById("hud-rum-pill").classList.toggle("visas", uppropetHarStartat && !!rumskod);
+
+  if(!steg){
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
+    visning.classList.remove("facit-visning", "struktur-visning");
+    visning.classList.add("tom");
+    visning.textContent = lage === "manuell"
+      ? "Tryck på Visa rätt förening för att börja"
+      : "Tryck på Starta uppropet när ni är redo";
+  } else if(steg.fas === "topplista"){
+    visning.style.display = "none";
+    topplistaPanel.style.display = "";
+    renderTopplista();
+  } else if(steg.fas === "fraga"){
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
+    visning.classList.remove("facit-visning", "tom");
+    if(steg.typ === "struktur"){
+      visning.classList.add("struktur-visning");
+      visning.innerHTML = `<span class="fraga-etikett">Vad heter föreningen?</span>`
+        + `<div class="struktur-stage">${renderSVG(steg.begrepp.g(), steg.begrepp.xs || 1)}</div>`;
+    } else {
+      visning.classList.remove("struktur-visning");
+      visning.textContent = steg.begrepp.fakta;
+    }
+  } else {
+    topplistaPanel.style.display = "none";
+    visning.style.display = "";
+    visning.classList.remove("tom", "struktur-visning");
+    visning.classList.add("facit-visning");
+    visning.innerHTML = `<span class="svar-etikett">Rätt förening</span>${steg.begrepp.term}`;
+  }
+  uppdateraManuellaKnappar();
+}
+
+function uppdateraManuellaKnappar(){
+  if(lage !== "manuell") return;
+  const steg = sekvens[pekare];
+  const framat = document.getElementById("framat-knapp");
+  framat.textContent = (steg && steg.fas === "fraga") ? "Visa rätt förening →"
+    : (steg && steg.fas === "topplista") ? "Nästa fråga →"
+    : "Nästa ledtråd →";
+  document.getElementById("bakat-knapp").disabled = pekare <= 0;
+}
+
+const TOPPLISTA_FARGER = ["#2e8b6f","#3b7dd8","#f0a500","#d64545","#8b5cf6","#0891b2","#db2777","#65a30d"];
+const BRICKA_PASTELLER = [
+  ["#fff9e6","#ffefc2"],
+  ["#eaf6ff","#d6ecff"],
+  ["#eefbf0","#d7f5dd"],
+  ["#fdeef6","#fbdcec"],
+  ["#f3edfd","#e6d9fb"],
+  ["#fff1e6","#ffe0c7"],
+  ["#e9fbfa","#d3f3f1"],
+  ["#f5f7e6","#e9efc4"],
+];
+function renderTopplista(){
+  const lista = document.getElementById("topplista-lista");
+  lista.innerHTML = "";
+  const spelare = Object.entries((senasteRumState && senasteRumState.spelare) || {})
+    .map(([id, p]) => ({ bricknummer: Number(id), namn: p.namn, poang: p.poang }))
+    .sort((a, b) => b.poang - a.poang)
+    .slice(0, 5);
+
+  if(spelare.length === 0){
+    lista.innerHTML = `<p class="topplista-tom">Inget lag har fått poäng ännu – första rätt svar syns här näst gång.</p>`;
+    return;
+  }
+  const maxPoang = Math.max(1, ...spelare.map(s => s.poang));
+  spelare.forEach((s, i) => {
+    const rad = document.createElement("div");
+    rad.className = "topplista-rad";
+    const farg = TOPPLISTA_FARGER[s.bricknummer % TOPPLISTA_FARGER.length];
+    rad.innerHTML = `
+      <span class="plac">${i + 1}.</span>
+      <span class="namn">${s.namn}</span>
+      <span class="stapel-bakgrund"><span class="stapel" style="background:${farg}"></span></span>
+      <span class="poang">${s.poang}</span>`;
+    lista.appendChild(rad);
+    const stapel = rad.querySelector(".stapel");
+    setTimeout(() => { stapel.style.width = `${Math.max(6, (s.poang / maxPoang) * 100)}%`; }, 250 + i * 220);
+  });
+}
+
+function stegFramat(){
+  if(pekare < sekvens.length - 1){
+    pekare++;
+  } else {
+    skapaNastaSteg();
+    pekare++;
+  }
+  visaSteg();
+  if(lage === "auto" && uppropAktivt) schemalaggAuto();
+}
+
+function stegBakat(){
+  if(pekare <= 0) return;
+  pekare--;
+  visaSteg();
+}
+
+function vaxlaUpprop(){
+  if(uppropAktivt) pausaUpprop();
+  else startaUpprop();
+}
+function startaUpprop(){
+  uppropAktivt = true;
+  document.getElementById("upprop-knapp").textContent = "Pausa uppropet";
+  if(pekare < 0) stegFramat();
+  else schemalaggAuto();
+}
+function pausaUpprop(){
+  uppropAktivt = false;
+  document.getElementById("upprop-knapp").textContent = "Fortsätt uppropet";
+  clearTimeout(vantetid);
+}
+
+function schemalaggAuto(){
+  clearTimeout(vantetid);
+  const steg = sekvens[pekare];
+  if(!steg) return;
+  if(steg.fas === "fraga"){
+    animeraTimer(intervallMs);
+    vantetid = setTimeout(() => { if(uppropAktivt) stegFramat(); }, intervallMs);
+  } else if(steg.fas === "topplista"){
+    animeraTimer(6000);
+    vantetid = setTimeout(() => { if(uppropAktivt) stegFramat(); }, 6000);
+  } else {
+    animeraTimer(4000);
+    vantetid = setTimeout(() => {
+      if(!uppropAktivt) return;
+      visaPaus();
+      vantetid = setTimeout(() => { if(uppropAktivt) stegFramat(); }, 4000);
+    }, 4000);
+  }
+}
+
+function visaPaus(){
+  const visning = document.getElementById("aktuellt-begrepp");
+  visning.classList.remove("facit-visning", "struktur-visning");
+  visning.classList.add("tom");
+  visning.textContent = "Nästa ledtråd strax …";
+  animeraTimer(4000);
+}
+
+function animeraTimer(ms){
+  const bar = document.getElementById("timerbar-i");
+  bar.style.transition = "none";
+  bar.style.width = "0%";
+  requestAnimationFrame(() => {
+    bar.style.transition = `width ${ms}ms linear`;
+    bar.style.width = "100%";
+  });
+}
+function andraIntervall(varde){
+  intervallMs = Number(varde) * 1000;
+  document.getElementById("intervall-varde").textContent = varde + " s";
+  if(uppropAktivt && lage === "auto"){
+    const steg = sekvens[pekare];
+    if(steg && steg.fas === "fraga") schemalaggAuto();
+  }
+}
+
+function valjLage(nyttLage){
+  if(lage === nyttLage) return;
+  lage = nyttLage;
+  clearTimeout(vantetid);
+  uppropAktivt = false;
+  document.getElementById("lage-auto-knapp").classList.toggle("aktiv", lage === "auto");
+  document.getElementById("lage-manuell-knapp").classList.toggle("aktiv", lage === "manuell");
+  document.getElementById("auto-knappar").style.display = lage === "auto" ? "" : "none";
+  document.getElementById("manuell-knappar").style.display = lage === "manuell" ? "" : "none";
+  document.getElementById("takt-rad").style.display = lage === "auto" ? "" : "none";
+  document.getElementById("timerbar-rad").style.display = lage === "auto" ? "" : "none";
+  document.getElementById("upprop-knapp").textContent = "Starta uppropet";
+  visaSteg();
+}
+
+// Väljer vilken frågenivå (Version 1/2 eller Överkurs) som nästa "Nytt upprop" ska
+// använda. Tar inte effekt förrän ett nytt rum faktiskt skapas, så det går bra att byta
+// nivå mellan lektioner utan att störa ett pågående upprop.
+function valjVersion(v){
+  valdVersion = v;
+  document.querySelectorAll("#version-val .lage-knapp").forEach(b => {
+    b.classList.toggle("aktiv", b.dataset.version === v);
+  });
+}
+
+async function nyttUpprop(){
+  // Frågenivån (Version 1 / Version 2 / Överkurs) väljs innan uppropet startar – den
+  // avgör vilken delmängd av ALLA_BEGREPP_MASTER som ropas upp och som lagens brickor
+  // byggs från. Talas om till servern så att lag som ansluter vet vilken uppsättning
+  // de ska bygga sin bricka från också (se fortsattLagnamn).
+  ALLA_BEGREPP = begreppForVersion(valdVersion);
+  sekvens = [];
+  pekare = -1;
+  clearTimeout(vantetid);
+  uppropAktivt = false;
+  nyUppropsOrdning();
+  document.getElementById("upprop-knapp").textContent = "Starta uppropet";
+  doljSpelSlut();
+  spelSlutVisat = false;
+  senasteRumState = null;
+  senasteHandelseIndex = 0;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
+  document.getElementById("rumskod-panel").classList.remove("dold");
+  visadeLobbyNamn = new Set();
+  document.getElementById("lobby-namn").innerHTML = "";
+  visaSteg();
+
+  rumskod = null;
+  if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
+  const storVisning = document.getElementById("rumskod-stor");
+  const antalVisning = document.getElementById("hud-antal-brickor");
+  storVisning.textContent = "••••";
+  antalVisning.textContent = "";
+  document.getElementById("hud-rum-pill").classList.remove("visas");
+  try{
+    rumskod = await bingoSkapaRum(valdVersion);
+    storVisning.textContent = rumskod;
+    document.getElementById("hud-rumskod-larare").textContent = rumskod;
+    antalVisning.textContent = `0 av ${ANTAL_BRICKOR} brickor valda`;
+    larareRumPoll = setInterval(async () => {
+      const d = await bingoHamtaRum(rumskod);
+      if(!d) return;
+      senasteRumState = d;
+      antalVisning.textContent = `${(d.upptagnaBrickor || []).length} av ${ANTAL_BRICKOR} brickor valda`;
+      renderLobbyNamn(d.spelare);
+      bearbetaNyaHandelser(d.handelser);
+      if(document.getElementById("stallning-overlay").classList.contains("visa")) renderStallning(d);
+      if(d.avslutad && !spelSlutVisat){
+        spelSlutVisat = true;
+        pausaUpprop();
+        clearInterval(larareRumPoll);
+        larareRumPoll = null;
+        visaSpelSlut(d.topplista || []);
+      }
+    }, 3000);
+  } catch(e){
+    storVisning.textContent = "Ej uppkopplad";
+    console.warn("Kunde inte skapa delat rum:", e);
+  }
+}
+
+/* =========================================================
+   ROLLVAL – läraren ser bara uppropet (projektorvy), laget ser bara sin bricka
+   ========================================================= */
+function valjRoll(r){
+  roll = r;
+  document.getElementById("rollval").style.display = "none";
+  if(r === "larare"){
+    nyttUpprop();
+    document.getElementById("lararkort").style.display = "";
+  } else {
+    document.getElementById("lagstartkort").style.display = "";
+  }
+}
+
+function tillbakaTillRollval(){
+  pausaUpprop();
+  stoppaPolling();
+  doljSpelSlut();
+  doljStallning();
+  doljMilstolpe();
+  if(valdaBrickorPoll){ clearInterval(valdaBrickorPoll); valdaBrickorPoll = null; }
+  if(larareRumPoll){ clearInterval(larareRumPoll); larareRumPoll = null; }
+  document.getElementById("lagstartkort").style.display = "none";
+  document.getElementById("rumskod-steg").style.display = "";
+  document.getElementById("medlemmar-steg").style.display = "none";
+  document.getElementById("lagnamn-steg").style.display = "none";
+  document.getElementById("brickval-steg").style.display = "none";
+  document.getElementById("lararkort").style.display = "none";
+  document.getElementById("lagkort").style.display = "none";
+  document.getElementById("rollval").style.display = "";
+  roll = null;
+  rumskod = null;
+  anslutenKod = null;
+  minBricka = null;
+  lagnamn = "";
+  medlemmar = [];
+  rapporteradeMilstolpar = new Set();
+  spelSlutVisat = false;
+  senasteHandelseIndex = 0;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
+  ["rumskod-input","medlem-1","medlem-2","medlem-3","medlem-4","lagnamn-input"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = "";
+  });
+}
+
+/* =========================================================
+   SPELSLUT – pallceremoni (visas för både lärare och lag när något lag fått hel bricka)
+   ========================================================= */
+function visaSpelSlut(topplista){
+  const overlay = document.getElementById("spelslut-overlay");
+  const platser = [
+    { id: "podium-1", plac: 0, storlek: 2 },
+    { id: "podium-2", plac: 1, storlek: 1 },
+    { id: "podium-3", plac: 2, storlek: 0 },
+  ];
+  platser.forEach(({id, plac}) => {
+    const posten = topplista[plac];
+    document.getElementById(`${id}-namn`).textContent = posten ? posten.namn : "–";
+    document.getElementById(`${id}-poang`).textContent = posten ? `${posten.poang} poäng` : "";
+    document.getElementById(id).classList.remove("visas");
+    document.getElementById(id).style.visibility = posten ? "" : "hidden";
+  });
+  document.getElementById("spelslut-stjarnor").classList.remove("visas");
+  overlay.classList.add("visa");
+
+  const ORDNING_FOR_CEREMONI = [
+    { id: "podium-3", plac: 2, storlek: 0 },
+    { id: "podium-2", plac: 1, storlek: 1 },
+    { id: "podium-1", plac: 0, storlek: 2 },
+  ];
+  const VANTAN_FORE = 2000;
+  const FANFAR_LANGD = 3000;
+
+  let tid = 0;
+  ORDNING_FOR_CEREMONI.forEach(({id, plac, storlek}, i) => {
+    tid += VANTAN_FORE;
+    setTimeout(() => {
+      if(!topplista[plac]) return;
+      document.getElementById(id).classList.add("visas");
+      ljudFanfarLang(storlek);
+    }, tid);
+    tid += FANFAR_LANGD;
+    if(i === ORDNING_FOR_CEREMONI.length - 1){
+      const stjarnTid = tid;
+      setTimeout(() => document.getElementById("spelslut-stjarnor").classList.add("visas"), stjarnTid);
+    }
+  });
+}
+
+function doljSpelSlut(){
+  document.getElementById("spelslut-overlay").classList.remove("visa");
+  ["podium-1","podium-2","podium-3"].forEach(id => document.getElementById(id).classList.remove("visas"));
+}
+
+/* =========================================================
+   START / ANSLUTNING (lagläge) – fyra steg: rumskod, medlemmar, lagnamn, brickval
+   ========================================================= */
+// Steg 1: laget ansluter med rumskoden läraren visar.
+async function anslutRum(){
+  const felVisning = document.getElementById("rumskod-fel");
+  felVisning.style.display = "none";
+
+  const kod = document.getElementById("rumskod-input").value.trim();
+  if(!/^\d{4}$/.test(kod)){
+    felVisning.textContent = "Skriv in den fyrsiffriga rumskoden som läraren visar på sin skärm.";
+    felVisning.style.display = "";
+    return;
+  }
+
+  const data = await bingoHamtaRum(kod);
+  if(!data){
+    felVisning.textContent = "Hittade inget aktivt upprop med den koden. Kontrollera koden med läraren.";
+    felVisning.style.display = "";
+    return;
+  }
+
+  anslutenKod = kod;
+  document.getElementById("rumskod-steg").style.display = "none";
+  document.getElementById("medlemmar-steg").style.display = "";
+}
+
+// Steg 2: lagets medlemmar (upp till fyra namn, minst ett krävs).
+function fortsattMedlemmar(){
+  const felVisning = document.getElementById("medlemmar-fel");
+  felVisning.style.display = "none";
+
+  const namn = ["medlem-1","medlem-2","medlem-3","medlem-4"]
+    .map(id => document.getElementById(id).value.trim())
+    .filter(v => v)
+    .map(v => v.slice(0, 20));
+
+  if(namn.length === 0){
+    felVisning.textContent = "Skriv in minst en medlem i laget.";
+    felVisning.style.display = "";
+    return;
+  }
+
+  medlemmar = namn.slice(0, 4);
+  document.getElementById("medlemmar-steg").style.display = "none";
+  document.getElementById("lagnamn-steg").style.display = "";
+}
+
+// Steg 3: lagnamn, som visas för läraren och övriga lag.
+async function fortsattLagnamn(){
+  const felVisning = document.getElementById("lagnamn-fel");
+  felVisning.style.display = "none";
+
+  const namn = document.getElementById("lagnamn-input").value.trim();
+  if(!namn){
+    felVisning.textContent = "Skriv in ett lagnamn.";
+    felVisning.style.display = "";
+    return;
+  }
+  lagnamn = namn.slice(0, 24);
+
+  document.getElementById("lagnamn-steg").style.display = "none";
+  document.getElementById("brickval-steg").style.display = "";
+
+  const data = await bingoHamtaRum(anslutenKod);
+  // Rummet vet vilken frågenivå läraren valde (version/överkurs) – laget måste bygga
+  // sin bricka från exakt samma begreppspool, annars skulle brickan kunna innehålla
+  // begrepp som aldrig ropas upp i det här rummet.
+  ALLA_BEGREPP = begreppForVersion((data && data.version) || "v1");
+  ritaBrickval((data && data.upptagnaBrickor) || []);
+
+  if(valdaBrickorPoll) clearInterval(valdaBrickorPoll);
+  valdaBrickorPoll = setInterval(async () => {
+    const d = await bingoHamtaRum(anslutenKod);
+    if(d) ritaBrickval(d.upptagnaBrickor || []);
+  }, 2000);
+}
+
+// Ritar de valbara bricknumren som knappar – upptagna nummer är avstängda och genomstrukna.
+function ritaBrickval(upptagna){
+  const grid = document.getElementById("brick-grid");
+  grid.innerHTML = "";
+  const upptagnaSet = new Set(upptagna);
+  for(let n = 1; n <= ANTAL_BRICKOR; n++){
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "brick-btn" + (upptagnaSet.has(n) ? " tagen" : "");
+    btn.textContent = n;
+    if(upptagnaSet.has(n)){
+      btn.disabled = true;
+    } else {
+      const [ljus, ljusare] = BRICKA_PASTELLER[n % BRICKA_PASTELLER.length];
+      const kant = TOPPLISTA_FARGER[n % TOPPLISTA_FARGER.length];
+      btn.style.background = `linear-gradient(160deg, ${ljus}, ${ljusare})`;
+      btn.style.borderColor = kant;
+      btn.style.color = kant;
+      btn.addEventListener("click", () => valjBricka(n));
+    }
+    grid.appendChild(btn);
+  }
+}
+
+// Steg 4: laget klickar på en ledig bricka. Servern låser numret åt just det laget – om
+// någon annan hann före visas ett felmeddelande och listan uppdateras.
+async function valjBricka(bricknummer){
+  const felVisning = document.getElementById("brickval-fel");
+  felVisning.style.display = "none";
+
+  const { ok, data } = await bingoValjBricka(anslutenKod, bricknummer, lagnamn, medlemmar);
+  if(!ok){
+    felVisning.textContent = "Den brickan blev precis tagen av ett annat lag – välj en ledig bricka.";
+    felVisning.style.display = "";
+    ritaBrickval((data && data.upptagnaBrickor) || []);
+    return;
+  }
+
+  if(valdaBrickorPoll){ clearInterval(valdaBrickorPoll); valdaBrickorPoll = null; }
+
+  brickans_celler = byggBricka(bricknummer);
+  ropta = new Set((data && data.roptaTermer) || []);
+  markerade = new Set();
+  klaraRader = new Set();
+  rapporteradeMilstolpar = new Set();
+  rumskod = anslutenKod;
+  minBricka = bricknummer;
+  spelSlutVisat = false;
+  senasteHandelseIndex = ((data && data.handelser) || []).length;
+  senasteRumState = data;
+  toastKo = [];
+  document.getElementById("handelse-toast").classList.remove("visas");
+
+  document.getElementById("hud-lagnamn").textContent = lagnamn;
+  document.getElementById("hud-bricka").textContent = bricknummer;
+  document.getElementById("hud-rumskod-lag").textContent = rumskod;
+  document.getElementById("hud-rader").textContent = "0";
+  document.getElementById("lagstartkort").style.display = "none";
+  document.getElementById("lagkort").style.display = "";
+  uppdateraLagetsPoang(data);
+  renderAndraLag(data);
+  ritaBricka();
+
+  stoppaPolling();
+  pollTimer = setInterval(async () => {
+    const d = await bingoHamtaRum(rumskod);
+    if(!d) return;
+    senasteRumState = d;
+    ropta = new Set(d.roptaTermer || []);
+    uppdateraLagetsPoang(d);
+    renderAndraLag(d);
+    bearbetaNyaHandelser(d.handelser);
+    if(document.getElementById("stallning-overlay").classList.contains("visa")) renderStallning(d);
+    if(d.avslutad && !spelSlutVisat){
+      spelSlutVisat = true;
+      stoppaPolling();
+      visaSpelSlut(d.topplista || []);
+    }
+  }, 2500);
+}
+
+function stoppaPolling(){
+  if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+}
+
+// Går tillbaka till bricka-väljaren i samma rum (t.ex. om laget vill välja en annan bricka).
+function bytBricka(){
+  stoppaPolling();
+  document.getElementById("lagkort").style.display = "none";
+  document.getElementById("lagstartkort").style.display = "";
+  document.getElementById("rumskod-steg").style.display = "none";
+  document.getElementById("medlemmar-steg").style.display = "none";
+  document.getElementById("lagnamn-steg").style.display = "none";
+  document.getElementById("brickval-steg").style.display = "";
+  if(anslutenKod){
+    bingoHamtaRum(anslutenKod).then(d => { if(d) ritaBrickval(d.upptagnaBrickor || []); });
+    if(valdaBrickorPoll) clearInterval(valdaBrickorPoll);
+    valdaBrickorPoll = setInterval(async () => {
+      const d = await bingoHamtaRum(anslutenKod);
+      if(d) ritaBrickval(d.upptagnaBrickor || []);
+    }, 2000);
+  }
+}
+
+</script>
+
+<script src="/js/menu.js"></script>
+</body>
+</html>
