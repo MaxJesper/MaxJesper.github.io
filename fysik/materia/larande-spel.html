@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Materia – Fysik</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .resource-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .resource-thumb-link {
+      display: block;
+      text-decoration: none;
+    }
+
+    .resource-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #eef4ff, #cfe3ff);
+      color: #1d4ed8;
+    }
+
+    .resource-title-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .resource-title-link h2 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .resource-title-link:hover h2 {
+      text-decoration: underline;
+    }
+
+    .resource-box p {
+      margin: 0;
+      color: #444;
+      line-height: 1.35;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box ul a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Lärande spel</h1>
+    <p>Materia</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p>
+      <a href="./" class="subject-btn">← Tillbaka</a>
+    </p>
+
+    <section class="page-intro">
+      <p>Här hittar du lärande spel som hjälper dig att träna begreppen inom materia.</p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./memory.html">
+          <div class="resource-thumb">Memory</div>
+        </a>
+        <a class="resource-title-link" href="./memory.html">
+          <h2>Memory</h2>
+        </a>
+        <p>Para ihop begrepp och förklaringar om materia i ett memoryspel.</p>
+        <ul>
+          <li><a href="./memory.html">Öppna Memory</a></li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>
