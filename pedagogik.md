@@ -1,6 +1,6 @@
 # Pedagogisk filosofi – NO-plattformen
 
-**Version 0.2** · Uppdaterad 2026-06-28
+**Version 0.3** · Uppdaterad 2026-09-15
 
 Detta dokument beskriver hur vi tänker när vi bygger plattformen. Det är levande – det
 ändras när klassrummet lär oss något nytt. Version 0.1 skrevs av Jesper tillsammans med
@@ -199,6 +199,38 @@ Vi är tre i projektet: Jesper, Claude och ChatGPT. Claude och ChatGPT är snabb
 formulera och sammanfatta, men ingen av oss har stått i klassrummet. När en elegant idé
 från en AI krockar med vad eleverna faktiskt visar, vinner klassrummet. AI:ernas roll är
 att spara tid och hitta svagheter – inte att ersätta lärarens omdöme.
+
+### 11. Olika elever behöver olika ingångar – komplementära pedagogiker, inte konkurrerande
+
+TEFY-serien (se STIL.md, avsnitt 1) fick på sin tid kritik för att den inte stimulerade
+elevernas eget upptäckande – kritikerna menade att en modernare, bättre pedagogik skulle
+utgå mer från elevens egen nyfikenhet och kreativitet än från raka, sakliga genomgångar.
+Kritiken var inte fel, men slutsatsen att man därför bör välja *bort* TEFY-andan är det.
+Elever är olika. Vissa blir trygga och motiverade av att veta exakt vad de förväntas kunna
+– checklistan, den sakliga studieguiden, det tydliga facit. Andra tänder till först när de
+får gissa själva, bli nyfikna och pröva sig fram innan de får svaret. Att binda upp sig
+hårt vid en enda pedagogik, oavsett vilken, är att välja bort de elever den inte passar.
+
+**Lösningen är att bygga in båda som komplement, aldrig som konkurrenter.** Den sakliga
+ryggraden (studieguide, checklista, begrepp, facit) finns kvar precis som förut – den är
+inte förhandlingsbar, eftersom den ger den trygghet många elever behöver för att orka ta
+till sig ett nytt område. Vid sidan av den erbjuder vi nu även **"Vad tror du?"** – en egen
+sida per område med öppna, hypotesdrivna frågor som eleven uppmanas gissa på *innan* den
+tar reda på svaret (t.ex. genom att vrida på en 3D-modell, mäta, eller läsa vidare i
+studieguiden). Poängen är inte att ersätta det sakliga med det utforskande, utan att
+erbjuda båda ingångarna och låta eleven själv välja vilken som passar bäst för stunden.
+
+**Spelen fyller ännu ett, delvis annat, behov.** Begreppsbingo, Stafetten och liknande är
+inte bara repetition – de sänker tröskeln för två grupper som annars lätt hamnar utanför:
+elever med ett annat modersmål, och elever som tycker NO är svårt eller ointressant (ofta
+just för att det kostar för mycket energi att förstå innehållet på egen hand). Ett
+lättsamt, lågmält tävlingsmoment utan prestationskrav gör att den eleven kan delta och
+känna sig aktiverad även innan begreppen sitter – vilket i sig är ett steg mot att de ska
+sitta.
+
+Sammantaget: bredden i pedagogiska ingångar (strukturerad/trygg, utforskande/kreativ,
+lekfull/tävlande) är ett medvetet designval för att möta olika elevers olika behov – inte
+brist på konsekvens i vilken pedagogik plattformen "egentligen" bygger på.
 
 ---
 

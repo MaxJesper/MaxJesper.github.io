@@ -84,6 +84,24 @@ Studieguidens "Träna"-länk per milstolpe går **direkt** till rätt spel, inte
 
 Länken till **Lärande spel** i elevkortet på `index.html` ska alltid peka på `larande-spel.html` — aldrig direkt på ett enskilt spel (t.ex. `begreppskort.html`). Eleven väljer spel inne på spel-sidan.
 
+### "Vad tror du?" – en egen sida per område för hypotesdrivna frågor
+
+Se pedagogik.md, avsnitt 11, för resonemanget: den sakliga studieguiden och de öppna,
+utforskande frågorna är två komplementära ingångar, inte konkurrerande pedagogiker.
+
+- Varje område som har färdiga frågor får en egen `vad-tror-du.html`, länkad som en egen
+  rad i elevkortet på `index.html` (efter Lärande spel, före/efter Utforska i 3D beroende
+  på vad som känns naturligast för området) — aldrig inbakad i studieguiden eller i
+  Lärande spel.
+- Varje fråga ber eleven **gissa/hypotisera först**, och pekar sedan mot hur eleven själv
+  kan ta reda på svaret (rotera en 3D-modell, mäta, läsa vidare i studieguiden). Facit ska
+  gå att fälla ut/dölja, aldrig stå omedelbart bredvid frågan.
+- Frågor som hör ihop med en specifik 3D-modell (se `studieguide.html`, avsnittet
+  "Utforska i 3D") får gärna referera till den modellen rakt av, men sidan `vad-tror-du.html`
+  är ändå fristående — eleven ska kunna läsa och fundera utan att först ha öppnat 3D-vyn.
+- Ingen lärarfacit-lista på samma sida. Om en lärarversion med resonemang/facit behövs,
+  blir det ett separat lärarkort-tillägg senare, inte en del av V1 av denna sida.
+
 ---
 
 ## 3. Områdets startsida (`index.html`)
