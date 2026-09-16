@@ -121,6 +121,14 @@
     margin-bottom: 0.6rem;
   }
 
+  .resultat-text {
+    text-align: center;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--gron-stark);
+    margin: -0.3rem 0 1rem;
+  }
+
   /* ── Fotoruta ── */
   .foto-ruta {
     background: var(--gron-mjuk);
@@ -261,6 +269,7 @@
         <span class="etikett">Rätt</span>
       </div>
     </div>
+    <p class="resultat-text" id="slut-text"></p>
     <div id="slut-missade"></div>
     <div class="btn-row">
       <button class="btn primary" id="igenBtn">Spela igen</button>
@@ -412,6 +421,7 @@ function visaSlut() {
   const procent = svarade ? Math.round((ratt / svarade) * 100) : 0;
   el("slut-poang").textContent = poang;
   el("slut-procent").textContent = procent + "%";
+  el("slut-text").textContent = "Du hade " + ratt + "/" + svarade + " rätt (" + procent + " % rätt).";
 
   if (missade.length) {
     const unika = [...new Set(missade)];
