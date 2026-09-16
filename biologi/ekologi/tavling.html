@@ -329,7 +329,7 @@ function byggRunda() {
   ARTER.forEach(a => {
     a.bilder.forEach(b => bilder.push({ src: BILDBAS + b, artId: a.id, artNamn: a.namn }));
   });
-  RUNDA = bilder; // TILLFÄLLIGT ordnad (ej blandad) för Jespers granskning av bilderna, sep 2026
+  RUNDA = shuffle(bilder);
 }
 
 function starta() {
