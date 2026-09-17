@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demonstration – Brännbarhet, lågfärg och löslighet hos alkoholer</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body { padding-top: 3.5rem; }
+    main { font-size: 1.05em; max-width: 780px; margin: 0 auto; }
+
+    .lab-head { border-bottom: 2px solid #6d28d9; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+    .lab-head .lab-cat { font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: #6d28d9; font-weight: 700; }
+    .lab-head h1 { font-size: 1.5rem; margin: 0.15rem 0 0.1rem; color: #1a1a2e; }
+    .lab-head .lab-sub { font-size: 0.88rem; color: #666; }
+
+    main h2 { font-size: 0.85rem; letter-spacing: 1.2px; text-transform: uppercase; color: #6d28d9; margin: 1.1rem 0 0.4rem; }
+    main p { line-height: 1.55; margin: 0.4rem 0; }
+    main ul, main ol { padding-left: 1.4rem; line-height: 1.55; margin: 0.3rem 0; }
+    main li { margin-bottom: 0.25rem; }
+
+    .fact-box {
+      background: #f5f3ff; border-left: 4px solid #6d28d9; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.5rem 0; font-size: 0.92rem;
+    }
+
+    .risk-box {
+      background: #fdecee; border: 1px solid #f3b8c0; border-left: 4px solid #c0152a;
+      border-radius: 8px; padding: 0.7rem 0.95rem; margin: 0.4rem 0;
+    }
+    .risk-box h2 { color: #c0152a; margin: 0 0 0.4rem; }
+    .risk-box ul { margin: 0; padding-left: 1.3rem; }
+    .risk-box li { font-size: 0.9rem; color: #6e1420; margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.35rem 0.6rem; text-align: left; }
+    .compare-table th { background: #f5f3ff; color: #6d28d9; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #faf9ff; }
+    .compare-table.fillin td { height: 1.4em; }
+
+    .foot-note { font-size: 0.78rem; color: #777; font-style: italic; margin: 0.3rem 0 0.8rem; }
+    .source-line { font-size: 0.78rem; color: #888; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
+
+    .print-fab {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000; display: flex; gap: 0.5rem;
+    }
+    .print-fab button {
+      background: #6d28d9; color: #fff; border: none; border-radius: 8px; padding: 0.55rem 1rem;
+      font-weight: 600; font-size: 0.95rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      font-family: inherit;
+    }
+    .print-fab button:hover { background: #5b21b6; }
+    .print-fab a {
+      display: inline-flex; align-items: center; padding: 0.55rem 1rem; background: #fff; color: #6d28d9;
+      border: 1px solid #6d28d9; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: inherit;
+    }
+    .print-fab a:hover { background: #f5f3ff; }
+
+    @page { size: A4; margin: 16mm 16mm 14mm; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; padding-top: 0; }
+      main { max-width: none; font-size: 0.88em; }
+      main h2 { margin: 0.7rem 0 0.3rem; }
+      main p, main ul, main ol { margin: 0.25rem 0; }
+      main li { margin-bottom: 0.12rem; }
+      .fact-box, .risk-box { margin: 0.3rem 0; padding: 0.5rem 0.8rem; break-inside: avoid; }
+      .risk-box li { margin-bottom: 0.12rem; }
+      .compare-table th, .compare-table td { padding: 0.22rem 0.5rem; }
+      .lab-head { margin-bottom: 0.6rem; padding-bottom: 0.4rem; }
+      .foot-note { margin: 0.15rem 0 0.4rem; }
+      .source-line { margin-top: 0.6rem; padding-top: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="print-fab no-print">
+  <button onclick="window.print()">🖨️ Skriv ut</button>
+  <a href="./studieguide.html#m5">← Tillbaka</a>
+</div>
+
+<main>
+  <div class="lab-head">
+    <div class="lab-cat">Organisk kemi · Alkoholer</div>
+    <h1>Demonstration: Brännbarhet, lågfärg och löslighet hos alkoholer</h1>
+    <div class="lab-sub">Lärarledd demonstration med elever framme, utskrivbar</div>
+  </div>
+
+  <h2>Bakgrund</h2>
+  <p>Alkoholerna i samma serie (metanol, etanol, propanol, butanol, pentanol …) liknar varandra men blir stegvis svårare att förgasa och sämre lösliga i vatten ju längre kolkedjan blir. De flervärda alkoholerna glykol och glycerol har flera OH-grupper istället för en längre kedja, vilket ger dem andra egenskaper. Den här demonstrationen jämför brännbarhet, lågfärg och löslighet för hela serien och kopplar till milstolpe 5 och 6 i studieguiden.</p>
+
+  <h2>Material</h2>
+  <ul>
+    <li>7 urglas (eller små petriskålar)</li>
+    <li>Tesked eller pipett</li>
+    <li>Metanol, etanol, propanol, butanol, pentanol, glykol och glycerol</li>
+    <li>Tändstickor eller tändare med skaft</li>
+    <li>6 små provrör + ställ</li>
+    <li>Vatten</li>
+    <li>Bomullsrondeller (rivs i bitar) och en pincett för att placera veken</li>
+    <li>Skyddsglasögon (lärare och elever som är framme)</li>
+    <li>Skyddshandskar, särskilt vid hantering av metanol</li>
+    <li>Brandfilt eller brandsläckare nära till hands</li>
+  </ul>
+
+  <h2>Genomförande</h2>
+  <p><strong>Runda 1 – metanol, etanol, propanol</strong></p>
+  <ol>
+    <li>Ställ fram tre urglas på katedern/pulpeten. En elev tillsätter ca en tesked metanol, etanol respektive propanol i vart sitt urglas.</li>
+    <li>Eleven tänder de tre vätskorna en i taget och låter varje låga brinna ut helt innan nästa tänds. Fråga klassen hur lågorna skiljer sig åt (storlek, färg), och fråga eleven som tände om det verkade vara någon skillnad i hur lätt det gick att tända de olika alkoholerna.</li>
+    <li>En annan elev fyller tre små provrör till hälften med vatten och droppar sedan försiktigt i metanol, etanol respektive propanol i vart sitt rör. Metanol och etanol löser sig direkt, medan propanol lägger sig som ett eget lager på ytan – men löser sig när röret skakas om.</li>
+  </ol>
+
+  <p><strong>Runda 2 – butanol, pentanol, glykol/glycerol</strong></p>
+  <ol>
+    <li>Samma moment upprepas nu med butanol, pentanol och glykol <em>eller</em> glycerol – fråga gärna klassen vilken av de två de vill se testad.</li>
+    <li>Denna gång går det inte att tända direkt med en tändsticka. Läraren förklarar att ämnena behöver hjälp att förgasas, precis som veken i ett stearinljus.</li>
+    <li>Riv bitar av en bomullsrondell, dränk dem i respektive alkohol och lägg dem så att en bit hänger ut över kanten på urglaset som en veke. Elev eller lärare tänder på veken.</li>
+    <li>Nu brinner det. Förklara att det är ytförstoringen från bomullen som gör förgasningen möjlig, att det är gasen ovanför vätskan som brinner (inte vätskan själv), och att bomullen inte brinner upp förrän all alkohol är slut – den skyddas av vätskan tills den tagit slut.</li>
+    <li>Upprepa löslighetstestet i vatten med butanol, pentanol och glykol/glycerol på samma sätt som i runda 1.</li>
+    <li>Låt gärna eleverna lukta på pentanolen: skicka runt urglaset i klassrummet och visa hur man viftar lukten mot näsan istället för att lukta rakt ner i kärlet.</li>
+  </ol>
+
+  <h2>Förklaring</h2>
+  <p>Ju längre kolkedjan är, desto svagare blir ångtrycket och desto svårare blir det att förgasa alkoholen – därför tänder metanol, etanol och propanol direkt, medan butanol och pentanol behöver en veke med stor yta för att förgasas tillräckligt. Samma mönster syns i lösligheten: den opolära kolkedjan väger allt tyngre jämfört med den enda OH-gruppen ju längre kedjan blir, så metanol och etanol är fullständigt lösliga medan propanol, butanol och pentanol löser sig sämre. Glykol och glycerol bryter mönstret: flera OH-grupper gör dem fullständigt lösliga i vatten trots att de inte är särskilt korta molekyler, men de många vätebindningarna gör dem samtidigt svårare att förgasa och antända.</p>
+
+  <div class="risk-box">
+    <h2>Risker vid demonstrationen</h2>
+    <ul>
+      <li>Alla alkoholerna i övningen är brandfarliga. Ha alltid brandfilt eller brandsläckare nära till hands och se till att inga andra brandfarliga vätskor finns framme.</li>
+      <li>Metanol är dessutom giftig – redan små mängder kan ge synskador eller vara livshotande. Hanteras med skyddshandskar och får aldrig smakas eller andas in koncentrerat.</li>
+      <li>Tänd aldrig fler urglas samtidigt än de som används i det aktuella momentet, och låt varje låga brinna ut helt (eller kväv den med ett lock) innan nästa hanteras.</li>
+      <li>Brinnande eller nysläckta urglas kan vara varma – låt dem svalna innan de flyttas eller diskas.</li>
+      <li>Lukta alltid genom att vifta ångorna mot er, aldrig med näsan rakt ner i kärlet.</li>
+      <li>Skyddsglasögon används av läraren och av de elever som är framme vid katedern.</li>
+      <li>Se till att rummet är väl ventilerat under hela demonstrationen.</li>
+    </ul>
+  </div>
+
+  <h2>Observationer</h2>
+  <table class="compare-table fillin">
+    <thead><tr><th>Ämne</th><th>Tändes direkt?</th><th>Lågans utseende</th><th>Löslighet i vatten</th></tr></thead>
+    <tbody>
+      <tr><td>Metanol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Etanol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Propanol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Butanol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Pentanol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Glykol / glycerol</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+  <div class="foot-note">Fyll i tabellen under demonstrationen utifrån vad ni ser och vad eleverna framme berättar.</div>
+
+  <div class="source-line">Källor: skolans egen riskbedömning för demonstrationen. Sambandet mellan kolkedjelängd, ångtryck och löslighet är allmän kemikunskap, se milstolpe 5 och 6 i <a href="./studieguide.html#m5">studieguiden</a>.</div>
+</main>
+
+</body>
+</html>
