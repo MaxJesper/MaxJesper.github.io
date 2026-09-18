@@ -42,7 +42,7 @@
       font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
       color: #6d28d9; font-weight: 700; white-space: nowrap;
     }
-    .milestone .m-title { font-size: 1.1rem; flex: 1; }
+    .milestone .m-title { font-size: 1.1rem; flex: 1; margin: 0; font-weight: inherit; line-height: inherit; }
     .milestone .m-body { padding: 0 1.1rem 1.1rem 1.1rem; border-top: 1px solid #eee; padding-top: 0.9rem; }
     .milestone .m-body p { margin: 0.6rem 0; line-height: 1.55; }
     .milestone .m-body strong.term { color: #1a1a2e; }
@@ -75,7 +75,7 @@
       padding: 0.65rem 0.9rem; margin: 0.8rem 0; font-size: 0.96rem;
     }
     .deepen > summary {
-      cursor: pointer; list-style: none; font-weight: 700; color: #a37a00;
+      cursor: pointer; list-style: none; font-weight: 700; color: #7a5c00;
       font-size: 0.88rem; letter-spacing: 1px; text-transform: uppercase; padding: 0.1rem 0;
     }
     .deepen > summary::-webkit-details-marker { display: none; }
@@ -149,10 +149,10 @@
 .km-card .km-2d { flex:0 0 auto; max-width:44%; }
 .km-card .km-2d img { max-width:100%; height:auto; display:block; }
 .km-viewerbox { position:relative; overflow:hidden; flex:1 1 160px; min-width:150px; height:170px; border-radius:8px; background:#fff; border:1px solid #eee; }
-.km-hint { font-size:0.72rem; color:#999; margin-top:0.3rem; }
+.km-hint { font-size:0.72rem; color:#6b6b6b; margin-top:0.3rem; }
     .mini3d { display:flex; flex-direction:column; align-items:center; gap:0.3rem; }
     .mini3d .km-viewerbox { position:relative; overflow:hidden; width:150px; height:140px; border-radius:8px; background:#fff; border:1px solid #eee; }
-    .mini3d .mini3d-label { font-size:0.78rem; color:#8a8aa0; }
+    .mini3d .mini3d-label { font-size:0.78rem; color:#6f6f85; }
     .mini3d .mini3d-link { font-size:0.78rem; }
 
   </style>
@@ -181,7 +181,7 @@
 
     <!-- M1 -->
     <details class="milestone" id="m1" open>
-      <summary><span class="m-num">Milstolpe 1</span><span class="m-title">Organisk kemi och kolatomen</span></summary>
+      <summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Organisk kemi och kolatomen</h2></summary>
       <div class="m-body">
         <p>Den gren av kemin som handlar om kolets föreningar kallas <strong class="term">organisk kemi</strong>. Namnet kommer från att man förr trodde att sådana ämnen bara kunde bildas av levande organismer, med hjälp av en särskild "livskraft". På 1800-talet lyckades man dock framställa ett organiskt ämne på konstgjord väg, och därmed föll den idén. Idag kallas organisk kemi ofta helt enkelt <strong class="term">kolföreningarnas kemi</strong>.</p>
         <p>Att just kol kan bilda så många ämnen – man känner till flera miljoner – beror på en unik egenskap hos <strong class="term">kolatomen</strong>: den kan bilda <strong class="term">fyra bindningar</strong>. Kolatomen kan binda till andra kolatomer och samtidigt till atomer av andra grundämnen. På så sätt kan kolatomerna kopplas ihop till långa kedjor, grenar och ringar, och det ger nästan oändliga möjligheter till nya ämnen.</p>
@@ -205,7 +205,7 @@
 
     <!-- M2 -->
     <details class="milestone" id="m2">
-      <summary><span class="m-num">Milstolpe 2</span><span class="m-title">Rent kol i olika former</span></summary>
+      <summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Rent kol i olika former</h2></summary>
       <div class="m-body">
         <p>Rent kol – alltså ämnen som bara består av kolatomer – förekommer i flera helt olika former. Att formerna är så olika beror på att kolatomerna är sammanbundna på olika sätt.</p>
         <p><strong class="term">Diamant</strong> är det hårdaste ämne vi känner till. I en diamant är varje kolatom hårt bunden till fyra andra kolatomer i ett fast, tredimensionellt mönster. De starka bindningarna åt alla håll gör diamanten stenhård. Slipade diamanter används som smycken, men diamant används också i verktyg som ska borra och skära i hårda material.</p>
@@ -244,7 +244,7 @@
 
     <!-- M3 -->
     <details class="milestone" id="m3">
-      <summary><span class="m-num">Milstolpe 3</span><span class="m-title">Alkaner – den mättade metanserien</span></summary>
+      <summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Alkaner – den mättade metanserien</h2></summary>
       <div class="m-body">
         <p>De enklaste kolföreningarna kallas <strong class="term">kolväten</strong> – de innehåller bara kol och väte. Den viktigaste gruppen av kolväten är <strong class="term">alkanerna</strong>, som också kallas <strong class="term">metanserien</strong>. Alla ämnen i serien är byggda efter samma mönster: en kedja av kolatomer där varje kolatom binder så många väteatomer som möjligt.</p>
         <p>Serien börjar med metan (en kolatom) och fortsätter med etan (två), propan (tre) och så vidare. För varje steg läggs en kolatom till. Namnen på de tio första alkanerna är värda att kunna:</p>
@@ -299,7 +299,7 @@
 
     <!-- M4 -->
     <details class="milestone" id="m4">
-      <summary><span class="m-num">Milstolpe 4</span><span class="m-title">Alkener och alkyner – omättade kolväten</span></summary>
+      <summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Alkener och alkyner – omättade kolväten</h2></summary>
       <div class="m-body">
         <p>I alkanerna binder varje kolatom fyra andra atomer med enkelbindningar. Men två kolatomer kan också dela på fler bindningar med varandra. Kolväten som innehåller en <strong class="term">dubbelbindning</strong> eller en <strong class="term">trippelbindning</strong> kallas <strong class="term">omättade</strong>.</p>
         <p>Kolväten med en dubbelbindning bildar gruppen <strong class="term">alkener</strong>. Det enklaste är <strong class="term">eten</strong>, <span class="formula">C₂H₄</span>, där de två kolatomerna hålls ihop av en dubbelbindning. Eten är en färglös gas och en viktig råvara vid tillverkning av plast.</p>
@@ -341,7 +341,7 @@
 
     <!-- M5 -->
     <details class="milestone" id="m5">
-      <summary><span class="m-num">Milstolpe 5</span><span class="m-title">Alkoholer</span></summary>
+      <summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Alkoholer</h2></summary>
       <div class="m-body">
         <p>Hittills har vi bara haft kol och väte. Nu tar vi in <strong class="term">syre</strong>. Om man byter ut en väteatom i ett kolväte mot en <strong class="term">OH-grupp</strong> (en hydroxylgrupp, alltså en syreatom och en väteatom) får man en <strong class="term">alkohol</strong>. OH-gruppen är det som gör ett ämne till en alkohol.</p>
         <p>Alkoholerna får sina namn från kolvätet de bygger på (stamkolvätet) genom att lägga till ändelsen <strong class="term">-ol</strong>. Byter man ut ett väte i metan (<span class="formula">CH₄</span>) mot en OH-grupp får man <strong class="term">metanol</strong>, <span class="formula">CH₃OH</span>. Byter man ut ett väte i etan (<span class="formula">C₂H₆</span>) får man <strong class="term">etanol</strong>, <span class="formula">C₂H₅OH</span>.</p>
@@ -373,7 +373,7 @@
 
     <!-- M6 -->
     <details class="milestone" id="m6">
-      <summary><span class="m-num">Milstolpe 6</span><span class="m-title">Flervärda alkoholer</span></summary>
+      <summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Flervärda alkoholer</h2></summary>
       <div class="m-body">
         <p>Metanol och etanol har var sin ensam OH-grupp. En alkohol kan emellertid ha <strong class="term">flera OH-grupper</strong> – då kallas den en <strong class="term">flervärd alkohol</strong>. Antalet OH-grupper avgör hur "värd" alkoholen är: en OH-grupp ger en envärd alkohol, två ger en tvåvärd och så vidare.</p>
         <p>Den vanligaste tvåvärda alkoholen är <strong class="term">glykol</strong> (etandiol), som har två OH-grupper. Glykol sänker vätskans fryspunkt kraftigt och är dessutom lättflytande, vilket gör den till ett effektivt <strong class="term">frostskyddsmedel</strong> i bilars kylare och i spolarvätska. Nackdelen är att glykol är giftigt att få i sig.</p>
@@ -394,7 +394,7 @@
 
     <!-- M7 -->
     <details class="milestone" id="m7">
-      <summary><span class="m-num">Milstolpe 7</span><span class="m-title">Organiska syror</span></summary>
+      <summary><span class="m-num">Milstolpe 7</span><h2 class="m-title">Organiska syror</h2></summary>
       <div class="m-body">
         <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
         <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Myrsyra används också för att konservera foder (ensilage), eftersom den sura miljön hindrar skadliga bakterier från att växa till. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
@@ -418,7 +418,7 @@
 
     <!-- M8 -->
     <details class="milestone" id="m8">
-      <summary><span class="m-num">Milstolpe 8</span><span class="m-title">Estrar</span></summary>
+      <summary><span class="m-num">Milstolpe 8</span><h2 class="m-title">Estrar</h2></summary>
       <div class="m-body">
         <p>Nu kan vi kombinera två av grupperna vi lärt oss. När en <strong class="term">alkohol</strong> reagerar med en <strong class="term">organisk syra</strong> bildas ett nytt ämne som kallas en <strong class="term">ester</strong>, och samtidigt frigörs en vattenmolekyl. Reaktionen kallas <strong class="term">förestring</strong>:</p>
         <figure class="mol-fig">
@@ -465,7 +465,7 @@
 
     <!-- M9 -->
     <details class="milestone" id="m9">
-      <summary><span class="m-num">Milstolpe 9 · Fördjupning</span><span class="m-title">Aminosyror</span></summary>
+      <summary><span class="m-num">Milstolpe 9 · Fördjupning</span><h2 class="m-title">Aminosyror</h2></summary>
       <div class="m-body">
         <p>Det här avsnittet är för dig som vill komma längre och koppla ihop kolkemin med biologin. Vi utgår från ett ämne du redan känner: <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>.</p>
         <p>Tänk dig att vi byter ut en av väteatomerna på ättiksyrans kolkedja mot en <strong class="term">aminogrupp</strong>, <span class="formula">−NH₂</span> (en kvävegrupp). Då har vi gjort en <strong class="term">aminosyra</strong>. Den enklaste aminosyran heter <strong class="term">glycin</strong> – den minsta av de 20 aminosyrorna – och är just en sådan modifierad ättiksyra: <span class="formula">NH₂−CH₂−COOH</span>.</p>
@@ -486,12 +486,12 @@
 
     <!-- M10: interaktiva 3D-kulmodeller -->
 <details class="milestone" id="m10">
-  <summary><span class="m-num">Utforska i 3D</span><span class="m-title">Rotera molekylerna själv</span></summary>
+  <summary><span class="m-num">Utforska i 3D</span><h2 class="m-title">Rotera molekylerna själv</h2></summary>
   <div class="m-body">
     <p>Här kan du rotera och zooma riktiga 3D-modeller av några av de viktigaste molekylerna i det här kapitlet. Modellerna är byggda efter kolatomens verkliga bindningsvinklar (VSEPR-teorin): kolatomens fyra bindningar pekar ut mot hörnen i en tetraeder (109,5°), medan atomer med dubbelbindningar (t.ex. i eten och karboxylsyrorna) är platta med 120° mellan bindningarna, och trippelbindningen i propyn gör den delen av molekylen helt rak (180°). Förstora och förminska kulmodellen genom att skrolla med mushjulet eller föra två fingrar uppåt/nedåt på styrplattan – det brukar kännas smidigare än att dra isär och föra ihop fingrarna – och rotera modellen med ett finger eller genom att dra med musen.</p>
     <div class="km-grid">
 <div class="km-card">
-  <h4>Metan</h4>
+  <h3>Metan</h3>
   <div class="km-formula">CH<sub>4</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"></div>
@@ -500,7 +500,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Etan</h4>
+  <h3>Etan</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>6</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etan.svg" alt="Strukturformel för Etan"></div>
@@ -509,7 +509,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Propan</h4>
+  <h3>Propan</h3>
   <div class="km-formula">C<sub>3</sub>H<sub>8</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propan.svg" alt="Strukturformel för Propan"></div>
@@ -518,7 +518,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Eten</h4>
+  <h3>Eten</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>4</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/eten.svg" alt="Strukturformel för Eten"></div>
@@ -527,7 +527,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Propyn</h4>
+  <h3>Propyn</h3>
   <div class="km-formula">C<sub>3</sub>H<sub>4</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propyn.svg" alt="Strukturformel för Propyn"></div>
@@ -536,7 +536,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Metanol</h4>
+  <h3>Metanol</h3>
   <div class="km-formula">CH<sub>3</sub>OH</div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metanol.svg" alt="Strukturformel för Metanol"></div>
@@ -545,7 +545,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Etanol</h4>
+  <h3>Etanol</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>OH</div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="Strukturformel för Etanol"></div>
@@ -554,7 +554,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Metansyra (myrsyra)</h4>
+  <h3>Metansyra (myrsyra)</h3>
   <div class="km-formula">HCOOH</div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" alt="Strukturformel för Metansyra (myrsyra)"></div>
@@ -563,7 +563,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Etansyra (ättiksyra)</h4>
+  <h3>Etansyra (ättiksyra)</h3>
   <div class="km-formula">CH<sub>3</sub>COOH</div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Etansyra (ättiksyra)"></div>
@@ -572,7 +572,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Propansyra</h4>
+  <h3>Propansyra</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOH</div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propansyra.svg" alt="Strukturformel för Propansyra"></div>
@@ -581,7 +581,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Metylpropanoat</h4>
+  <h3>Metylpropanoat</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOCH<sub>3</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metylpropanoat.svg" alt="Strukturformel för Metylpropanoat"></div>
@@ -590,7 +590,7 @@
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
 <div class="km-card">
-  <h4>Etylpropanoat</h4>
+  <h3>Etylpropanoat</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOC<sub>2</sub>H<sub>5</sub></div>
   <div class="km-row">
     <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylpropanoat.svg" alt="Strukturformel för Etylpropanoat"></div>

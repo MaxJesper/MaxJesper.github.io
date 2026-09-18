@@ -451,6 +451,25 @@ Inte gjort ännu i något område — detta är påminnelseregeln som ska följa
 
 ---
 
+## WCAG 2.2 AA-granskning — STÅENDE REGEL, sep 2026
+
+Allt nytt arbete framöver ska kontrolleras mot WCAG 2.2 nivå AA innan det räknas som klart, och befintligt material ska granskas successivt bakåt (område för område, inte allt på en gång – prioritera inte om Jesper inte ber om det).
+
+**Konkreta kontrollpunkter (checka dessa, inte bara "kändes okej"):**
+- **Kontrast:** brödtext mot bakgrund ≥ 4,5:1, stor rubriktext/UI-komponenter (knappar, ramar) ≥ 3:1. Mät faktiskt (t.ex. med ett litet skript som räknar ut kontrastkvoten från CSS-variablerna), lita inte på ögonmått – extra viktigt eftersom Jesper själv är rödgrön färgblind.
+- **Inte bara färg:** information (rätt/fel, aktiv nivå, vald flik) ska alltid ha ett andra kännetecken utöver färgen (ikon, text, mönster) – redan delvis gjort (orange istället för rött i tävlingsspelen, blå "Fortsätt"-knapp).
+- **Alt-texter:** varje `<img>` ska ha en alt-text som beskriver vad bilden visar, inte filnamnet eller "bild".
+- **Tangentbordsnavigering:** alla klickbara ytor (svarsknappar, "Fortsätt", menyer, `<details>`-rutor) ska nås med Tabb och aktiveras med Enter/mellanslag, med en synlig fokusram. Helst riktiga `<button>`/`<a>`-element, inte `<div onclick>`.
+- **Rubrikstruktur:** logisk H1 → H2 → H3 utan hopp på varje sida.
+- **Formulär:** textfält (t.ex. bokstavsrutorna i matchningsfrågor) ska ha en kopplad `<label>` eller `aria-label`.
+- **Skalbarhet:** sidan ska gå att zooma till minst 200 % utan att layouten går sönder.
+
+**Pilotgranskning (sep 2026):** kol-och-kolföreningar (studieguide.html + ovningsprov.html) är först ut som test för att se hur mycket som redan uppfylls och vad som typiskt behöver justeras, innan vi bestämmer omfattning för resten av plattformen.
+
+Referens: [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/).
+
+---
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang
