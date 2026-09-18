@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tävling: rätt fågel från foton – Ekologi</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  :root {
+    --gron: #3f6b34;
+    --gron-stark: #2f5228;
+    --gron-mjuk: #f1f6ed;
+    --gron-kant: #cadcbf;
+    --ok: #15803d;
+    --ok-mjuk: #dcfce7;
+    --fel: #c2410c;
+    --fel-mjuk: #ffedd5;
+    --nasta: #1d4ed8;
+    --nasta-stark: #1e3a8a;
+    --text: #212529;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body.tavling-sida {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: #fff;
+    font-size: 17px;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 1.5rem 1.2rem 3rem; }
+  .mellan { max-width: 760px; margin: 0 auto; }
+
+  header.top {
+    background: var(--gron);
+    color: #fff;
+    padding: 1.6rem 1.2rem;
+  }
+  header.top .inner { max-width: 1040px; margin: 0 auto; }
+  header.top h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.15rem; }
+  header.top p { opacity: 0.9; font-size: 0.95rem; }
+
+  h2 { font-size: 1.3rem; color: var(--gron-stark); margin: 1.6rem 0 0.7rem; }
+  h3 { font-size: 1.05rem; color: var(--gron-stark); margin: 1.1rem 0 0.4rem; }
+  p { margin-bottom: 0.8rem; }
+
+  .panel {
+    background: #fff;
+    border: 1px solid var(--gron-kant);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  .panel.soft { background: var(--gron-mjuk); }
+
+  .btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--gron-kant);
+    background: #fff;
+    color: var(--gron-stark);
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--gron-mjuk); }
+  .btn.primary { background: var(--gron); border-color: var(--gron); color: #fff; }
+  .btn.primary:hover { background: var(--gron-stark); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+  .art-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.8rem 0 0.2rem; }
+  .art-chip {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--gron-kant);
+    background: var(--gron-mjuk);
+    color: var(--gron-stark);
+  }
+
+  .note { font-size: 0.88rem; color: #666; }
+  .doldt { display: none !important; }
+
+  /* ── Stor resultatruta ── */
+  .stor-ruta {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: var(--gron);
+    color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(47,82,40,0.25);
+    margin-bottom: 1.2rem;
+  }
+  .stor-ruta .del {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 1rem 0.6rem;
+  }
+  .stor-ruta .del + .del { border-left: 1px solid rgba(255,255,255,0.25); }
+  .stor-ruta .siffra {
+    display: block;
+    font-size: 2.3rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .stor-ruta .etikett {
+    display: block;
+    font-size: 0.82rem;
+    opacity: 0.9;
+    margin-top: 0.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .framsteg {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .resultat-text {
+    text-align: center;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--gron-stark);
+    margin: -0.3rem 0 1rem;
+  }
+
+  .fraga-igen {
+    text-align: center;
+    font-weight: 600;
+    color: var(--gron-stark);
+    margin: 0.4rem 0 0.2rem;
+  }
+
+  /* ── Spellayout: inforuta – foto – statistik ── */
+  .spel-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+  }
+  .foto-kolumn { flex: 1 1 0; min-width: 0; }
+  .info-ruta, .stat-kolumn { flex: 0 0 190px; }
+
+  .info-ruta {
+    background: var(--gron-mjuk);
+    border: 1px solid var(--gron-kant);
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    font-size: 0.85rem;
+  }
+  .info-ruta h3 { font-size: 0.95rem; color: var(--gron-stark); margin-bottom: 0.4rem; }
+  .info-ruta p { margin: 0 0 0.3rem; }
+  .info-ruta ul { padding-left: 1.1rem; margin: 0.4rem 0; }
+  .info-ruta li { margin-bottom: 0.2rem; }
+  .info-note { color: #666; font-size: 0.8rem; margin-top: 0.4rem; }
+
+  .stat-kolumn { display: flex; flex-direction: column; gap: 0.6rem; }
+  .stat-box {
+    background: var(--gron);
+    color: #fff;
+    border-radius: 14px;
+    padding: 0.8rem 0.6rem;
+    text-align: center;
+  }
+  .stat-box .stat-siffra {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+  }
+  .stat-box .stat-etikett {
+    display: block;
+    font-size: 0.72rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: 0.1rem;
+  }
+  .stat-box .stat-procent {
+    display: block;
+    font-size: 0.92rem;
+    opacity: 0.95;
+    margin-top: 0.15rem;
+  }
+  .stat-progress { text-align: center; color: #666; font-size: 0.82rem; }
+
+  @media (max-width: 880px) {
+    .spel-layout { flex-direction: column; }
+    .info-ruta, .stat-kolumn { flex: none; width: 100%; }
+    .foto-kolumn { order: 1; }
+    .stat-kolumn { order: 2; flex-direction: row; }
+    .stat-kolumn .stat-box { flex: 1; }
+    .info-ruta { order: 3; }
+  }
+
+  /* ── Fotoruta ── */
+  .foto-ruta {
+    background: var(--gron-mjuk);
+    border: 1px solid var(--gron-kant);
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1.1rem;
+    text-align: center;
+  }
+  .foto-ruta img {
+    width: 100%;
+    max-width: 520px;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .svar-rad {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .svar-rad .svar-grid { flex: 1 1 0; }
+
+  .svar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+  }
+  @media (max-width: 560px) {
+    .svar-grid { grid-template-columns: 1fr; }
+    .svar-rad { flex-direction: column; }
+  }
+
+  .fortsatt-kolumn {
+    flex: 0 0 168px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 560px) {
+    .fortsatt-kolumn { flex: none; width: 100%; }
+  }
+  .btn-nasta {
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.02rem;
+    padding: 0.9rem 1rem;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    background: var(--nasta);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.12s, transform 0.08s;
+  }
+  .btn-nasta:hover { background: var(--nasta-stark); }
+  .btn-nasta:active { transform: translateY(1px); }
+  .svar-btn {
+    font: inherit;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-align: center;
+    padding: 0.9rem 0.6rem;
+    border-radius: 12px;
+    border: 2px solid var(--gron-kant);
+    background: #fff;
+    color: var(--gron-stark);
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s, transform 0.08s;
+  }
+  .svar-btn:hover:not(:disabled) { background: var(--gron-mjuk); border-color: var(--gron); }
+  .svar-btn:active:not(:disabled) { transform: translateY(1px); }
+  .svar-btn:disabled { cursor: default; }
+  .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); color: var(--gron-stark); }
+  .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); color: var(--fel); }
+
+  .besked {
+    min-height: 1.6em;
+    margin-top: 0.7rem;
+    font-weight: 700;
+    text-align: center;
+    font-size: 0.98rem;
+  }
+  .besked.ok { color: var(--ok); }
+  .besked.nej { color: var(--fel); }
+
+  #nasta-rad { width: 100%; }
+
+  .missad-lista { margin-top: 0.6rem; padding-left: 1.2rem; }
+  .missad-lista li { margin-bottom: 0.2rem; }
+</style>
+</head>
+<body class="tavling-sida">
+
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<nav id="side-menu"></nav>
+
+<header class="top">
+  <div class="inner">
+    <h1>Tävling: rätt fågel från foton</h1>
+    <p>Ekologi</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="mellan">
+  <p style="margin:1.2rem 0;">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+  </p>
+
+  <!-- ================= START ================= -->
+  <section class="panel" id="start-panel">
+    <h2 style="margin-top:0;">Hur många av skolans uppstoppade fåglar känner du igen?</h2>
+    <p id="intro-text">Du får se ett fotografi av en uppstoppad fågel ur skolans samling i taget.
+      Klicka på rätt fågelnamn av fyra alternativ. Varje rätt svar ger poäng och ett litet ljud,
+      och du ser hela tiden hur stor andel du har rätt på.</p>
+    <div class="art-chips" id="art-chips"></div>
+    <div class="btn-row">
+      <button class="btn primary" id="startBtn">Starta tävlingen →</button>
+    </div>
+  </section>
+  </div>
+
+  <!-- ================= SPEL ================= -->
+  <section class="doldt" id="spel-panel">
+    <div class="spel-layout">
+      <div class="info-ruta">
+        <h3>Så räknas poängen</h3>
+        <p>Snabba och rätta svar ger flest poäng:</p>
+        <ul>
+          <li>Under 3 sek: <strong>10 p</strong></li>
+          <li>Under 6 sek: <strong>8 p</strong></li>
+          <li>Under 10 sek: <strong>6 p</strong></li>
+          <li>Under 15 sek: <strong>4 p</strong></li>
+          <li>15 sek eller mer: <strong>2 p</strong></li>
+        </ul>
+        <p class="info-note">Fel svar ger inga poäng.</p>
+      </div>
+
+      <div class="foto-kolumn">
+        <div class="foto-ruta">
+          <img id="fragebild" src="" alt="Fågel att känna igen" />
+        </div>
+
+        <div class="svar-rad">
+          <div class="svar-grid" id="svar-grid"></div>
+
+          <div class="fortsatt-kolumn">
+            <div id="nasta-rad" class="doldt">
+              <button class="btn-nasta" id="nastaBtn">Fortsätt →</button>
+            </div>
+            <p class="besked" id="besked">&nbsp;</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-kolumn">
+        <div class="stat-box stat-main">
+          <span class="stat-siffra" id="s-rattantal">0/0</span>
+          <span class="stat-etikett">rätt</span>
+          <span class="stat-procent" id="s-procent">–</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-siffra" id="s-poang">0</span>
+          <span class="stat-etikett">snabbhetspoäng</span>
+        </div>
+        <div class="stat-progress" id="s-bildnr">Bild 1 av 0</div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:1.2rem;">
+      <button class="btn" id="avbrytBtn">Avbryt</button>
+    </div>
+  </section>
+
+  <div class="mellan">
+  <!-- ================= SLUT ================= -->
+  <section class="panel doldt" id="slut-panel">
+    <h2 style="margin-top:0;" id="slut-rubrik">Klart!</h2>
+    <div class="stor-ruta">
+      <div class="del">
+        <span class="siffra" id="slut-poang">0</span>
+        <span class="etikett">Snabbhetspoäng</span>
+      </div>
+      <div class="del">
+        <span class="siffra" id="slut-procent">0%</span>
+        <span class="etikett">Rätt</span>
+      </div>
+    </div>
+    <p class="resultat-text" id="slut-text"></p>
+    <div id="slut-missade"></div>
+    <p class="fraga-igen">Vill du träna igen?</p>
+    <div class="btn-row">
+      <button class="btn primary" id="igenBtn">Ja, träna igen</button>
+      <a href="./larande-spel.html" class="btn">Nej, avsluta</a>
+    </div>
+  </section>
+
+  <p class="note" style="margin-top:2rem;">Foton: Jesper Tordsson, av skolans uppstoppade fåglar.</p>
+  </div>
+
+</div>
+
+<script src="/js/menu.js"></script>
+<script>
+"use strict";
+
+const BILDBAS = "./bilder-faglar/";
+let ARTER = [];
+let RUNDA = [];       // { src, artId, artNamn }
+let index = 0;
+let ratt = 0, fel = 0, poang = 0;
+let fragaStart = 0;
+let missade = [];     // artnamn som svarats fel på
+let laser = false;
+
+function el(id) { return document.getElementById(id); }
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ── Ljud: mjukt "puff"-ljud via Web Audio, ingen ljudfil behövs ── */
+let audioCtx = null;
+function playPing() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(660, now);
+    osc.frequency.exponentialRampToValueAtTime(990, now + 0.09);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.18, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.24);
+  } catch (e) { /* ljud kan blockeras – spelet funkar ändå */ }
+}
+
+async function ladda() {
+  const res = await fetch("./data/faglar.json", { cache: "no-store" });
+  const data = await res.json();
+  ARTER = data.arter;
+  if (data.intro) el("intro-text").textContent = data.intro;
+  el("art-chips").innerHTML = ARTER
+    .map(a => '<span class="art-chip">' + a.namn + '</span>')
+    .join("");
+}
+
+function byggRunda() {
+  const bilder = [];
+  ARTER.forEach(a => {
+    a.bilder.forEach(b => bilder.push({ src: BILDBAS + b, artId: a.id, artNamn: a.namn }));
+  });
+  RUNDA = shuffle(bilder);
+}
+
+function starta() {
+  byggRunda();
+  index = 0; ratt = 0; fel = 0; poang = 0; missade = [];
+  el("start-panel").classList.add("doldt");
+  el("slut-panel").classList.add("doldt");
+  el("spel-panel").classList.remove("doldt");
+  uppdateraStat();
+  visaFraga();
+}
+
+function beraknaPoang(tidSek) {
+  if (tidSek < 3) return 10;
+  if (tidSek < 6) return 8;
+  if (tidSek < 10) return 6;
+  if (tidSek < 15) return 4;
+  return 2;
+}
+
+function uppdateraStat() {
+  el("s-rattantal").textContent = ratt + "/" + RUNDA.length;
+  const svarade = ratt + fel;
+  el("s-procent").textContent = svarade ? "(" + Math.round((ratt / svarade) * 100) + "%)" : "";
+  el("s-poang").textContent = poang;
+  el("s-bildnr").textContent = "Bild " + Math.min(index + 1, RUNDA.length) + " av " + RUNDA.length;
+}
+
+function visaFraga() {
+  if (index >= RUNDA.length) { visaSlut(); return; }
+  laser = false;
+  fragaStart = Date.now();
+  const fraga = RUNDA[index];
+  el("fragebild").src = fraga.src;
+  el("fragebild").alt = "Fågel – gissa vilken fågel";
+  el("besked").textContent = " ";
+  el("besked").className = "besked";
+  el("nasta-rad").classList.add("doldt");
+
+  const fel3 = shuffle(ARTER.filter(a => a.id !== fraga.artId)).slice(0, 3).map(a => a.namn);
+  const alternativ = shuffle([fraga.artNamn, ...fel3]);
+
+  el("svar-grid").innerHTML = "";
+  alternativ.forEach(namn => {
+    const b = document.createElement("button");
+    b.className = "svar-btn";
+    b.type = "button";
+    b.textContent = namn;
+    b.addEventListener("click", () => valSvar(b, namn, fraga));
+    el("svar-grid").appendChild(b);
+  });
+
+  uppdateraStat();
+}
+
+function valSvar(knapp, namn, fraga) {
+  if (laser) return;
+  laser = true;
+  const alla = el("svar-grid").querySelectorAll(".svar-btn");
+  alla.forEach(b => { b.disabled = true; });
+
+  if (namn === fraga.artNamn) {
+    const tidSek = (Date.now() - fragaStart) / 1000;
+    const vunna = beraknaPoang(tidSek);
+    ratt++; poang += vunna;
+    knapp.classList.add("ratt");
+    el("besked").textContent = "Rätt! Det är " + fraga.artNamn + ". (+" + vunna + " p)";
+    el("besked").className = "besked ok";
+    playPing();
+  } else {
+    fel++;
+    missade.push(fraga.artNamn);
+    knapp.classList.add("fel");
+    alla.forEach(b => { if (b.textContent === fraga.artNamn) b.classList.add("ratt"); });
+    el("besked").textContent = "Fel. Rätt svar är " + fraga.artNamn + ".";
+    el("besked").className = "besked nej";
+  }
+
+  uppdateraStat();
+  el("nasta-rad").classList.remove("doldt");
+}
+
+function nastaBild() {
+  index++;
+  visaFraga();
+}
+
+function visaSlut() {
+  el("spel-panel").classList.add("doldt");
+  el("slut-panel").classList.remove("doldt");
+  const totalt = RUNDA.length;
+  const procent = totalt ? Math.round((ratt / totalt) * 100) : 0;
+  el("slut-poang").textContent = poang;
+  el("slut-procent").textContent = procent + "%";
+  el("slut-text").textContent = "Bra, du fick " + ratt + "/" + totalt + " rätt (" + procent + " % rätt) och " + poang + " snabbhetspoäng.";
+
+  if (missade.length) {
+    const unika = [...new Set(missade)];
+    el("slut-missade").innerHTML =
+      '<p style="margin-top:0.8rem;">Du kan öva lite extra på:</p>' +
+      '<ul class="missad-lista">' + unika.map(n => "<li>" + n + "</li>").join("") + "</ul>";
+  } else {
+    el("slut-missade").innerHTML = '<p style="margin-top:0.8rem;">Alla rätt – snyggt jobbat!</p>';
+  }
+}
+
+el("startBtn").addEventListener("click", starta);
+el("nastaBtn").addEventListener("click", nastaBild);
+el("igenBtn").addEventListener("click", starta);
+el("avbrytBtn").addEventListener("click", () => {
+  el("spel-panel").classList.add("doldt");
+  el("start-panel").classList.remove("doldt");
+});
+
+ladda();
+</script>
+</body>
+</html>
