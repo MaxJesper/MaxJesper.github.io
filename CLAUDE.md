@@ -470,6 +470,17 @@ Referens: [W3C WCAG 2.2](https://www.w3.org/TR/WCAG22/).
 
 ---
 
+## Spridning av funktioner/USP:ar till alla områden — STÅENDE REGEL, sep 2026
+
+Risk Jesper lyfte (sep 2026): ju fler generella förbättringar vi kommer på under arbetets gång, desto större risk att de bara införs där de först uppfanns och glöms bort på övriga områden — vilket ger en spretig, "irriterande heterogen" slutprodukt för eleven. Att bara nämna en spridningsavsikt i chatten eller lita på Claudes minne räcker inte — det har redan hänt att `_CHECKLISTA_omraden.md` legat ouppdaterad med flera nya funktioner (3D-kulmodeller, begreppsöversättning vid läsning, kontrollfrågor, begreppsbingo m.m. saknades) innan detta uppmärksammades.
+
+**Den faktiska säkringen:** `_CHECKLISTA_omraden.md`, avsnittet "Sprid funktioner – USP/funktionsmatris", är sanningskällan — inte minnet, inte chatthistoriken. Regler:
+
+1. Så fort Jesper eller Claude beslutar att en ny funktion/USP ska gälla brett (fler än ett område), läggs den till som en NY RAD i matrisen **samma session**, med status per område Utfärdad (✓/✗/–/?) — även om den bara är byggd i ett pilotområde än.
+2. Innan ett område förklaras "klart" ska dess kolumn i matrisen gås igenom rad för rad.
+3. Ett `?` i matrisen betyder okontrollerat, inte "antas OK" — verifiera mot faktiska filer (grep) innan det ändras till ✓ eller ✗, gissa aldrig.
+4. Minnesfilen (Claudes minne, `/areas/no-plattform.md`) får gärna innehålla den narrativa historien (varför ett beslut togs), men ska INTE vara det enda stället där ett spridningsbeslut finns – det hör till repo-filen så Jesper också kan läsa den direkt, utan att fråga Claude.
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang

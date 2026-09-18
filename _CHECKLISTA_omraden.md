@@ -68,11 +68,25 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 - `kemi/periodiska-systemet/begrepp.json` (rot-dubblett) + gammal `sprak/`-mapp. `biologi/genetik/backupfile.html`/`backupindex.html`.
 
-### Sprid funktioner
+### Sprid funktioner – USP/funktionsmatris (sanningskälla, sep 2026)
 
-- Audio/lyssna (bara magnetism); korsord (saknas elektricitet, universum, syror); laborationer; träna-med-ai; bildstöd.
+**REGEL:** Så fort en ny funktion eller USP beslutas gälla brett (inte bara ett enskilt område) ska den läggas till som en NY RAD i matrisen nedan samma session den beslutas — inte bara nämnas i chatten eller i Claudes minne. Det är den här matrisen, inte minnet, som är den faktiska säkringen mot att kvaliteten blir spretig mellan områden. Innan ett område räknas som "klart" ska dess kolumn stämmas av mot matrisen.
 
-- **Begreppsöversättning vid läsning (inline i löptexten, inkl. termer-nivån för icke-begrepp) — BESLUTAT sep 2026 att spridas till alla färdiga och framtida områden** (just nu bara magnetism-induktion). Viktig USP (se om-plattformen.html) – flexibiliteten att möta varje elev på sitt eget språk begrepp för begrepp är ett skäl att föredra digitalt läromedel för elever med annat modersmål än svenska. Se CLAUDE.md, avsnitt "Begreppsöversättning vid läsning", för hur mönstret ska appliceras per område.
+Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för området · ? = okontrollerat (behöver verifieras mot faktiska filer, gissa inte)
+
+| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | ekologi | arb-energi-eff |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| TTS-uppläsning + begreppsöversättning (10 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ? |
+| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå) | ✗ | ✗ | ✓ (pilot) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | – | ✗ (beslutad kandidat) |
+| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ? | – | – | ✓ | – | – |
+| Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | ✓ |
+| Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) |
+| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ (+lag) | ✗ |
+| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✗ | ? |
+| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | – (ingen studieguide än) | ? |
+
+**Öppet, ej i matrisen än:** ekologi och arbete-energi-effekt saknar egna kolumner i statusöversikts-tabellen ovan trots att båda har betydligt mer byggt än "1/13" antyder (ekologi: tavling/fåglar/bingo-lag/trad-och-blad; arbete-energi-effekt: studieguide+räknekort) — hela statusöversikten ovan är från 2026-08-23 och bör regenereras mot faktiska filer i repot, inte bara mot minnet, innan den littas på fullt ut. Flaggat som backlog, inte gjort.
 
 ### Konkreta byggen
 
