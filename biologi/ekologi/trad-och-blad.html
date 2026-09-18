@@ -51,6 +51,37 @@
   p { margin-bottom: 0.8rem; }
   .intro p { max-width: 62ch; }
 
+  .intro details.intro-toggle {
+    margin-top: 2rem;
+  }
+  .intro details.intro-toggle > summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .intro details.intro-toggle > summary::-webkit-details-marker { display: none; }
+  .intro details.intro-toggle > summary::before {
+    content: "▸";
+    color: var(--gron-stark);
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .intro details.intro-toggle[open] > summary::before {
+    transform: rotate(90deg);
+  }
+  .intro details.intro-toggle > summary h2 {
+    margin: 0;
+  }
+  .intro details.intro-toggle > summary .toggle-hint {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #6b7a63;
+  }
+
   .panel {
     background: #fff;
     border: 1px solid var(--gron-kant);
@@ -309,17 +340,17 @@
     <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
   </p>
 
-  <!-- ================= INTRODUKTION ================= -->
-  <section class="intro">
-    <h2>Träden och deras plats i naturen</h2>
-
-    <p>Ett träd är en producent, men också en livsmiljö. På och i ett enda gammalt träd kan hundratals arter av insekter, svampar, lavar och mossor leva, och när trädet dör fortsätter veden att vara mat och bostad i decennier. Vilka trädarter som växer i en skog avgör därför vilka andra arter som finns där. Ek är extremfallet: omkring 1 500 svenska arter är knutna till ek, fler än till något annat träd.</p>
-
-    <p><strong>Pionjärträd</strong> som björk, asp, sälg och gråal har små, lättspridda frön, växer snabbt och kräver mycket ljus. De kommer först efter en brand eller ett hygge. <strong>Sekundärträd</strong> som bok och gran tål skugga som unga, växer långsammare och lever längre. De kommer in under pionjärerna och tar sedan över – därför blir en björkskog med tiden ofta en granskog.</p>
-
-    <p>Träden påverkar också marken de står i. Klibbalen gödslar sin egen mark med kväve från bakterier i rötterna. Bokens sega löv bryts ner långsamt och gör marken sur och artfattig, medan lönn, alm och lind ger snabb förna och mullrik jord med rik vårflora. Och de sprider sig olika: vinden bär björkens och lönnens vingade frön, fåglarna sprider rönnens bär, och möss och nötskrikor gömmer ekollon och hasselnötter som de sedan glömmer bort.</p>
-
-    <p class="note">Under exkursionen: titta på bladets form, kanten (hel, sågad eller flikig), bladbasen, om bladen sitter mitt emot varandra eller växelvis – och på vilken mark trädet står.</p>
+  <!-- ================= TÄVLING ================= -->
+  <section>
+    <h2>Tävling: rätt träd från foton</h2>
+    <p>Testa dig själv på riktiga fotografier istället för teckningar. Snabba rätta svar ger fler poäng.</p>
+    <div class="level-grid">
+      <a class="level-card" href="./tavling.html">
+        <h3>Tävling: rätt träd från foton</h3>
+        <p>Riktiga foton på blad – klicka på rätt trädnamn av fyra alternativ. Snabba rätta svar ger fler poäng.</p>
+        <span class="starta">Starta →</span>
+      </a>
+    </div>
   </section>
 
   <!-- ================= EKENS ARTER ================= -->
@@ -663,17 +694,22 @@
     </div>
   </section>
 
-  <!-- ================= TÄVLING ================= -->
-  <section>
-    <h2>Tävling: rätt träd från foton</h2>
-    <p>Testa dig själv på riktiga fotografier istället för teckningar. Snabba rätta svar ger fler poäng.</p>
-    <div class="level-grid">
-      <a class="level-card" href="./tavling.html">
-        <h3>Tävling: rätt träd från foton</h3>
-        <p>Riktiga foton på blad – klicka på rätt trädnamn av fyra alternativ. Snabba rätta svar ger fler poäng.</p>
-        <span class="starta">Starta →</span>
-      </a>
-    </div>
+  <!-- ================= INTRODUKTION ================= -->
+  <section class="intro">
+    <details class="intro-toggle">
+      <summary>
+        <h2>Träden och deras plats i naturen</h2>
+        <span class="toggle-hint">(klicka för att visa/dölja)</span>
+      </summary>
+
+      <p>Ett träd är en producent, men också en livsmiljö. På och i ett enda gammalt träd kan hundratals arter av insekter, svampar, lavar och mossor leva, och när trädet dör fortsätter veden att vara mat och bostad i decennier. Vilka trädarter som växer i en skog avgör därför vilka andra arter som finns där. Ek är extremfallet: omkring 1 500 svenska arter är knutna till ek, fler än till något annat träd.</p>
+
+      <p><strong>Pionjärträd</strong> som björk, asp, sälg och gråal har små, lättspridda frön, växer snabbt och kräver mycket ljus. De kommer först efter en brand eller ett hygge. <strong>Sekundärträd</strong> som bok och gran tål skugga som unga, växer långsammare och lever längre. De kommer in under pionjärerna och tar sedan över – därför blir en björkskog med tiden ofta en granskog.</p>
+
+      <p>Träden påverkar också marken de står i. Klibbalen gödslar sin egen mark med kväve från bakterier i rötterna. Bokens sega löv bryts ner långsamt och gör marken sur och artfattig, medan lönn, alm och lind ger snabb förna och mullrik jord med rik vårflora. Och de sprider sig olika: vinden bär björkens och lönnens vingade frön, fåglarna sprider rönnens bär, och möss och nötskrikor gömmer ekollon och hasselnötter som de sedan glömmer bort.</p>
+
+      <p class="note">Under exkursionen: titta på bladets form, kanten (hel, sågad eller flikig), bladbasen, om bladen sitter mitt emot varandra eller växelvis – och på vilken mark trädet står.</p>
+    </details>
   </section>
 
   <!-- ================= FÖRDJUPNING ================= -->
