@@ -85,7 +85,7 @@ function renderQuestion({ qObj, si, qi, qNumber, mode, storageKeyBase }) {
           const key = `${storageKeyBase}::${id}`;
           return `
             <div class="match-row">
-              <input class="match-input" type="text" inputmode="numeric" maxlength="1"
+              <input class="match-input" type="text" inputmode="text" maxlength="1"
                      aria-label="Svara för ${escapeHtml(item)}"
                      data-storage-key="${escapeHtml(key)}" />
               <span>${escapeHtml(item)}</span>
@@ -238,8 +238,9 @@ function hydrateAndAutosaveMatchInputs(root) {
     if (saved != null) inp.value = saved;
 
     inp.addEventListener("input", () => {
-      let v = inp.value.replace(/[^\d]/g, "");
+      let v = inp.value.replace(/[^a-zA-ZåäöÅÄÖ0-9]/g, "");
       if (v.length > 1) v = v.slice(0, 1);
+      v = v.toUpperCase();
       inp.value = v;
 
       try {
