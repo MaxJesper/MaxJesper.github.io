@@ -491,8 +491,7 @@ function beraknaPoang(tidSek) {
 
 function uppdateraStat() {
   el("s-rattantal").textContent = ratt + "/" + RUNDA.length;
-  const svarade = ratt + fel;
-  el("s-procent").textContent = svarade ? "(" + Math.round((ratt / svarade) * 100) + "%)" : "";
+  el("s-procent").textContent = RUNDA.length ? "(" + Math.round((ratt / RUNDA.length) * 100) + "%)" : "";
   el("s-poang").textContent = poang;
   el("s-bildnr").textContent = "Bild " + Math.min(index + 1, RUNDA.length) + " av " + RUNDA.length;
 }
