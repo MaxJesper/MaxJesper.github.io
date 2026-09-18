@@ -13,8 +13,10 @@
     --gron-kant: #cadcbf;
     --ok: #15803d;
     --ok-mjuk: #dcfce7;
-    --fel: #b91c1c;
-    --fel-mjuk: #fee2e2;
+    --fel: #c2410c;
+    --fel-mjuk: #ffedd5;
+    --nasta: #1d4ed8;
+    --nasta-stark: #1e3a8a;
     --text: #212529;
   }
 
@@ -219,14 +221,48 @@
     margin: 0 auto;
   }
 
+  .svar-rad {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .svar-rad .svar-grid { flex: 1 1 0; }
+
   .svar-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.7rem;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 560px) {
     .svar-grid { grid-template-columns: 1fr; }
+    .svar-rad { flex-direction: column; }
   }
+
+  .fortsatt-kolumn {
+    flex: 0 0 168px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 560px) {
+    .fortsatt-kolumn { flex: none; width: 100%; }
+  }
+  .btn-nasta {
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.02rem;
+    padding: 0.9rem 1rem;
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    background: var(--nasta);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: background 0.12s, transform 0.08s;
+  }
+  .btn-nasta:hover { background: var(--nasta-stark); }
+  .btn-nasta:active { transform: translateY(1px); }
   .svar-btn {
     font: inherit;
     font-weight: 600;
@@ -248,15 +284,15 @@
 
   .besked {
     min-height: 1.6em;
-    margin-top: 0.9rem;
+    margin-top: 0.7rem;
     font-weight: 700;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 0.98rem;
   }
   .besked.ok { color: var(--ok); }
   .besked.nej { color: var(--fel); }
 
-  #nasta-rad { text-align: center; margin-top: 0.8rem; }
+  #nasta-rad { width: 100%; }
 
   .missad-lista { margin-top: 0.6rem; padding-left: 1.2rem; }
   .missad-lista li { margin-bottom: 0.2rem; }
@@ -315,12 +351,15 @@
           <img id="fragebild" src="" alt="Blad att känna igen" />
         </div>
 
-        <div class="svar-grid" id="svar-grid"></div>
+        <div class="svar-rad">
+          <div class="svar-grid" id="svar-grid"></div>
 
-        <p class="besked" id="besked">&nbsp;</p>
-
-        <div id="nasta-rad" class="doldt">
-          <button class="btn primary" id="nastaBtn">Nästa bild →</button>
+          <div class="fortsatt-kolumn">
+            <div id="nasta-rad" class="doldt">
+              <button class="btn-nasta" id="nastaBtn">Fortsätt →</button>
+            </div>
+            <p class="besked" id="besked">&nbsp;</p>
+          </div>
         </div>
       </div>
 
