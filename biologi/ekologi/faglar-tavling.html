@@ -398,6 +398,9 @@
     </div>
     <p class="resultat-text" id="slut-text"></p>
     <div id="slut-missade"></div>
+    <div class="btn-row doldt" id="trana-svara-rad" style="margin-top:0.6rem;">
+      <button class="btn primary" id="tranaSvaraBtn">Träna bara på de fåglar du tyckte var svårast</button>
+    </div>
     <p class="fraga-igen">Vill du träna igen?</p>
     <div class="btn-row">
       <button class="btn primary" id="igenBtn">Ja, träna igen</button>
@@ -463,9 +466,9 @@ async function ladda() {
     .join("");
 }
 
-function byggRunda() {
+function byggRunda(artLista) {
   const bilder = [];
-  ARTER.forEach(a => {
+  (artLista || ARTER).forEach(a => {
     a.bilder.forEach(b => bilder.push({ src: BILDBAS + b, artId: a.id, artNamn: a.namn }));
   });
   RUNDA = shuffle(bilder);
@@ -539,7 +542,7 @@ function valSvar(knapp, namn, fraga) {
     playPing();
   } else {
     fel++;
-    missade.push(fraga.artNamn);
+    missade.push({ id: fraga.artId, namn: fraga.artNamn });
     knapp.classList.add("fel");
     alla.forEach(b => { if (b.textContent === fraga.artNamn) b.classList.add("ratt"); });
     el("besked").textContent = "Fel. Rätt svar är " + fraga.artNamn + ".";
@@ -564,19 +567,39 @@ function visaSlut() {
   el("slut-procent").textContent = procent + "%";
   el("slut-text").textContent = "Bra, du fick " + ratt + "/" + totalt + " rätt (" + procent + " % rätt) och " + poang + " snabbhetspoäng.";
 
-  if (missade.length) {
-    const unika = [...new Set(missade)];
+  const unika = [...new Map(missade.map(m => [m.id, m.namn])).values()];
+  if (unika.length) {
     el("slut-missade").innerHTML =
       '<p style="margin-top:0.8rem;">Du kan öva lite extra på:</p>' +
       '<ul class="missad-lista">' + unika.map(n => "<li>" + n + "</li>").join("") + "</ul>";
   } else {
     el("slut-missade").innerHTML = '<p style="margin-top:0.8rem;">Alla rätt – snyggt jobbat!</p>';
   }
+
+  if (procent >= 70 && procent < 100 && unika.length) {
+    el("trana-svara-rad").classList.remove("doldt");
+  } else {
+    el("trana-svara-rad").classList.add("doldt");
+  }
+}
+
+function startaTraningSvara() {
+  const svaraIder = new Set(missade.map(m => m.id));
+  const delmangd = ARTER.filter(a => svaraIder.has(a.id));
+  if (!delmangd.length) return;
+  byggRunda(delmangd);
+  index = 0; ratt = 0; fel = 0; poang = 0; missade = [];
+  el("start-panel").classList.add("doldt");
+  el("slut-panel").classList.add("doldt");
+  el("spel-panel").classList.remove("doldt");
+  uppdateraStat();
+  visaFraga();
 }
 
 el("startBtn").addEventListener("click", starta);
 el("nastaBtn").addEventListener("click", nastaBild);
 el("igenBtn").addEventListener("click", starta);
+el("tranaSvaraBtn").addEventListener("click", startaTraningSvara);
 el("avbrytBtn").addEventListener("click", () => {
   el("spel-panel").classList.add("doldt");
   el("start-panel").classList.remove("doldt");
