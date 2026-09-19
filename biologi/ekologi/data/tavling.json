@@ -2,22 +2,151 @@
   "title": "Tävling: hur många träd känner du igen på bladen?",
   "intro": "Ett fotografi av ett blad visas. Klicka på rätt trädnamn av fyra alternativ. Varje rätt svar ger poäng och ett litet ljud – och du ser hela tiden hur många procent du har rätt på.",
   "arter": [
-    { "id": "alm",     "namn": "Alm",                  "bilder": ["alm-1.jpg", "alm-2.jpg"] },
-    { "id": "asp",     "namn": "Asp",                  "bilder": ["asp-1.jpg"] },
-    { "id": "bjork",   "namn": "Björk",                "bilder": ["bjork-1.jpg", "bjork-2.jpg"] },
-    { "id": "ek",      "namn": "Ek",                   "bilder": ["ek-1.jpg"] },
-    { "id": "lonn",    "namn": "Lönn",                 "bilder": ["lonn-1.jpg"] },
-    { "id": "ronn",    "namn": "Rönn",                 "bilder": ["ronn-1.jpg", "ronn-2.jpg"] },
-    { "id": "ask",     "namn": "Ask",                  "bilder": ["ask-1.jpg", "ask-2.jpg"] },
-    { "id": "kastanj", "namn": "Kastanj (hästkastanj)","bilder": ["kastanj-1.jpg", "kastanj-2.jpg"] },
-    { "id": "lind",    "namn": "Lind",                 "bilder": ["lind-2.jpg", "lind-3.jpg"] },
-    { "id": "bok",     "namn": "Bok",                  "bilder": ["bok-1.jpg", "bok-2.jpg", "bok-3.jpg"] },
-    { "id": "pil",     "namn": "Pil",                  "bilder": ["pil-1.jpg"] },
-    { "id": "oxel",    "namn": "Oxel",                 "bilder": ["oxel-1.jpg"] },
-    { "id": "avenbok", "namn": "Avenbok",              "bilder": ["avenbok-1.jpg"] },
-    { "id": "al",      "namn": "Klibbal",              "bilder": ["al-1.jpg", "al-2.jpg", "al-3.jpg"] },
-    { "id": "kornell", "namn": "Skogskornell",         "bilder": ["kornell-1.jpg"] },
-    { "id": "aktakastanj", "namn": "Äkta kastanj",     "bilder": ["aktakastanj-1.jpg"] },
-    { "id": "hagg",    "namn": "Hägg",                 "bilder": ["hagg-1.jpg"] }
+    {
+      "id": "alm",
+      "namn": "Alm",
+      "bilder": [
+        "alm-1.jpg",
+        "alm-2.jpg"
+      ],
+      "fakta": "Almens blad känns igen på den ojämna bladbasen – den ena sidan sträcker sig längre ner mot bladskaftet än den andra. Träslaget är segt och hårt och har länge använts till möbler och verktygsskaft, men almen är i dag hotad av svampsjukdomen almsjukan."
+    },
+    {
+      "id": "asp",
+      "namn": "Asp",
+      "bilder": [
+        "asp-1.jpg"
+      ],
+      "fakta": "Aspens runda blad har ett långt, hoptryckt bladskaft som gör att de darrar i minsta vindpust – därav uttrycket 'darra som ett asplöv'. Trädet sprider sig lätt via rotskott och kan bilda hela snår av genetiskt identiska kloner."
+    },
+    {
+      "id": "bjork",
+      "namn": "Björk",
+      "bilder": [
+        "bjork-1.jpg",
+        "bjork-2.jpg"
+      ],
+      "fakta": "Björkens blad är trekantiga med sågtandad kant, och trädet känns lätt igen på sin vita, flagnande bark. På våren kan man tappa björksav ur stammen och dricka den, och den sega barken (näver) har länge använts till korgar och skor."
+    },
+    {
+      "id": "ek",
+      "namn": "Ek",
+      "bilder": [
+        "ek-1.jpg"
+      ],
+      "fakta": "Ekens blad har djupa, rundade flikar, och trädet känns också igen på sina ekollon. Eken kan bli flera hundra år gammal, och den hårda veden användes förr till skeppsbyggen, bland annat till Vasaskeppet. Gamla ekar hyser dessutom fler andra arter – insekter, lavar och svampar – än nästan något annat svenskt träd."
+    },
+    {
+      "id": "lonn",
+      "namn": "Lönn",
+      "bilder": [
+        "lonn-1.jpg"
+      ],
+      "fakta": "Lönnens blad har fem spetsiga flikar och en tydlig, handformad grundform. Bryter man av ett blad eller skott kommer det mjölkvit saft ur snittytan. Fröna sitter i par med vingar och snurrar som små helikoptrar när de faller från trädet på hösten."
+    },
+    {
+      "id": "ronn",
+      "namn": "Rönn",
+      "bilder": [
+        "ronn-1.jpg",
+        "ronn-2.jpg"
+      ],
+      "fakta": "Rönnens blad är sammansatta av många små, sågtandade småblad utmed ett gemensamt bladskaft, ungefär som på en ask. På hösten mognar de röda bären, som är viktigt vinterfoder för fåglar som sidensvansar men som människor bör koka innan de äts."
+    },
+    {
+      "id": "ask",
+      "namn": "Ask",
+      "bilder": [
+        "ask-1.jpg",
+        "ask-2.jpg"
+      ],
+      "fakta": "Askens blad liknar rönnens men är större, och trädet känns även igen på sina kolsvarta vinterknoppar. Veden är stark och böjlig och har länge använts till redskapsskaft och idrottsutrustning, men i dag hotas asken av svampsjukdomen askskottsjuka."
+    },
+    {
+      "id": "kastanj",
+      "namn": "Kastanj (hästkastanj)",
+      "bilder": [
+        "kastanj-1.jpg",
+        "kastanj-2.jpg"
+      ],
+      "fakta": "Hästkastanjens blad är sammansatta av 5–7 stora småblad som utgår från samma punkt, som fingrarna på en hand. På hösten faller de taggiga kapslarna med blanka, bruna kastanjer som barn gärna samlar och gör figurer av – men äkta kastanjer är de inte, och de går inte att äta."
+    },
+    {
+      "id": "lind",
+      "namn": "Lind",
+      "bilder": [
+        "lind-2.jpg",
+        "lind-3.jpg"
+      ],
+      "fakta": "Lindens blad är hjärtformade med en snedställd bas. På sommaren blommar linden med små, väldoftande gulvita blommor som är mycket omtyckta av bin och ger en särskild lindhonung. Gamla, stora lindar har ofta planterats som mötesplatser vid kyrkor och byar."
+    },
+    {
+      "id": "bok",
+      "namn": "Bok",
+      "bilder": [
+        "bok-1.jpg",
+        "bok-2.jpg",
+        "bok-3.jpg"
+      ],
+      "fakta": "Bokens blad är ovala med en vågig kant och sitter tätt i kronan, vilket gör att bokskogar ofta har ett mörkt, svalt golv med lite annan växtlighet. Barken är slät och grå, till skillnad från de flesta andra lövträd. Trädet är vanligast i södra Sverige och ger små, ätliga nötter som kallas bokollon."
+    },
+    {
+      "id": "pil",
+      "namn": "Pil",
+      "bilder": [
+        "pil-1.jpg"
+      ],
+      "fakta": "Pilens blad är smala och avlånga, och trädet trivs bäst nära vatten. Pil växer snabbt och är så lättrotad att en avbruten gren kan sättas direkt i marken och växa till ett nytt träd. Barken innehåller ett ämne som kallas salicin, som var förebilden när smärtstillande acetylsalicylsyra (aspirin) utvecklades."
+    },
+    {
+      "id": "oxel",
+      "namn": "Oxel",
+      "bilder": [
+        "oxel-1.jpg"
+      ],
+      "fakta": "Oxelns blad är flikiga med en ludden, gråvit undersida, vilket skiljer den från både rönn och lönn. Den bär röda bär som liknar rönnbär men är större, och trädet tål stadsluft, avgaser och salt mycket bra – därför planteras det ofta längs gator och i parker."
+    },
+    {
+      "id": "avenbok",
+      "namn": "Avenbok",
+      "bilder": [
+        "avenbok-1.jpg"
+      ],
+      "fakta": "Avenbokens blad påminner om björkens men är mer djupt sågtandade, och stammen har en karaktäristisk gråmusklig, vriden form. Veden är extremt hård och tät – en av de hårdaste vi har i Sverige – och användes förr bland annat till kugghjul och slaktbänkar."
+    },
+    {
+      "id": "al",
+      "namn": "Klibbal",
+      "bilder": [
+        "al-1.jpg",
+        "al-2.jpg",
+        "al-3.jpg"
+      ],
+      "fakta": "Klibbalens blad är runda med en liten inbuktning i spetsen i stället för att sluta i en vanlig spets. Unga skott och blad är klibbiga, vilket gett trädet dess namn. Klibbal växer gärna vid vatten och har bakterier i rötterna som binder kväve ur luften och gödslar marken den växer i."
+    },
+    {
+      "id": "kornell",
+      "namn": "Skogskornell",
+      "bilder": [
+        "kornell-1.jpg"
+      ],
+      "fakta": "Skogskornellens blad har böjda nerver som syns tydligt, och om man försiktigt sliter isär ett blad kan man se tunna, elastiska trådar som håller ihop nervarna även när bladet gått sönder – ett klassiskt naturknep att testa. På hösten färgas både blad och grenar rödvioletta."
+    },
+    {
+      "id": "aktakastanj",
+      "namn": "Äkta kastanj",
+      "bilder": [
+        "aktakastanj-1.jpg"
+      ],
+      "fakta": "Till skillnad från hästkastanjen har äkta kastanj ett enkelt, avlångt blad med skarpt sågtandad kant – bladen sitter alltså inte ihop flera i en solfjäder. Frukterna sitter i en taggig kapsel precis som hos hästkastanjen, men här är kastanjerna ätliga och kan rostas, till exempel på julmarknader."
+    },
+    {
+      "id": "hagg",
+      "namn": "Hägg",
+      "bilder": [
+        "hagg-1.jpg"
+      ],
+      "fakta": "Häggen känns igen på sina långa klasar av väldoftande, vita blommor som slår ut tidigt på våren – en doft många förknippar med folkliga föreställningar om 'häggens ångest', ett tillstånd av trötthet och håglöshet. Bladen är avlånga med fin sågtandning, och de svarta, beska bären äts gärna av fåglar."
+    }
   ]
 }

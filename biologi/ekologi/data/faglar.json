@@ -2,34 +2,241 @@
   "title": "Tävling: hur många av skolans uppstoppade fåglar känner du igen?",
   "intro": "Du får se ett fotografi av en uppstoppad fågel ur skolans samling i taget. Klicka på rätt fågelnamn av fyra alternativ. Varje rätt svar ger poäng och ett litet ljud – och du ser hela tiden hur många procent du har rätt på.",
   "arter": [
-    { "id": "sothona",    "namn": "Sothöna",    "bilder": ["sothona-1.jpg", "sothona-2.jpg"] },
-    { "id": "ejder",      "namn": "Ejder",      "bilder": ["ejder-1.jpg"] },
-    { "id": "sanglarka",  "namn": "Sånglärka",  "bilder": ["sanglarka-1.jpg"] },
-    { "id": "skrattmas",  "namn": "Skrattmås",  "bilder": ["skrattmas-1.jpg"] },
-    { "id": "blames",     "namn": "Blåmes",     "bilder": ["blames-1.jpg"] },
-    { "id": "talgoxe",    "namn": "Talgoxe",    "bilder": ["talgoxe-1.jpg"] },
-    { "id": "kungsfagel", "namn": "Kungsfågel", "bilder": ["kungsfagel-1.jpg"] },
-    { "id": "fiskmas",    "namn": "Fiskmås",    "bilder": ["fiskmas-1.jpg"] },
-    { "id": "trut",       "namn": "Trut",       "bilder": ["trut-1.jpg"] },
-    { "id": "skata",      "namn": "Skata",      "bilder": ["skata-1.jpg"] },
-    { "id": "tofsvipa",   "namn": "Tofsvipa",   "bilder": ["tofsvipa-1.jpg"] },
-    { "id": "raka",       "namn": "Råka",       "bilder": ["raka-1.jpg"] },
-    { "id": "vigg",       "namn": "Vigg",       "bilder": ["vigg-1.jpg"] },
-    { "id": "grasand",    "namn": "Gräsand",    "bilder": ["grasand-1.jpg"] },
-    { "id": "bofink",     "namn": "Bofink",     "bilder": ["bofink-1.jpg", "bofink-2.jpg"] },
-    { "id": "grasparv",   "namn": "Gråsparv",   "bilder": ["grasparv-1.jpg"] },
-    { "id": "pilfink",    "namn": "Pilfink",    "bilder": ["pilfink-1.jpg"] },
-    { "id": "rodhake",    "namn": "Rödhake",    "bilder": ["rodhake-1.jpg", "rodhake-2.jpg"] },
-    { "id": "gronfink",   "namn": "Grönfink",   "bilder": ["gronfink-1.jpg"] },
-    { "id": "koltrast",   "namn": "Koltrast",   "bilder": ["koltrast-1.jpg", "koltrast-2.jpg"] },
-    { "id": "hussvala",   "namn": "Hussvala",   "bilder": ["hussvala-1.jpg"] },
-    { "id": "stare",      "namn": "Stare",      "bilder": ["stare-1.jpg"] },
-    { "id": "gulsparv",   "namn": "Gulsparv",   "bilder": ["gulsparv-1.jpg"] },
-    { "id": "grakraka",   "namn": "Gråkråka",   "bilder": ["grakraka-1.jpg"] },
-    { "id": "ormvrak",    "namn": "Ormvråk",    "bilder": ["ormvrak-1.jpg"] },
-    { "id": "fjallvrak",  "namn": "Fjällvråk",  "bilder": ["fjallvrak-1.jpg"] },
-    { "id": "ringduva",   "namn": "Ringduva",   "bilder": ["ringduva-1.jpg"] },
-    { "id": "kaja",       "namn": "Kaja",       "bilder": ["kaja-1.jpg"] },
-    { "id": "hornuggla",  "namn": "Hornuggla",  "bilder": ["hornuggla-1.jpg"] }
+    {
+      "id": "sothona",
+      "namn": "Sothöna",
+      "bilder": [
+        "sothona-1.jpg",
+        "sothona-2.jpg"
+      ],
+      "fakta": "Sothönan är helt svart med en vit näbb och en vit hornplatta i pannan – lätt att känna igen bland sjöfåglarna. Den har klarröda ögon och stora, flikiga simfötter i stället för simhud. Hane och hona ser exakt likadana ut."
+    },
+    {
+      "id": "ejder",
+      "namn": "Ejder",
+      "bilder": [
+        "ejder-1.jpg"
+      ],
+      "fakta": "Ejdern är vår tyngsta and, och honan plockar dun från sitt eget bröst för att fodra boet – det mjuka dunet har gett namn åt ejderdun i täcken och jackor. Hanen är svartvit med ett grönaktigt nackparti, medan honan är brun och mönstrad för att vara osynlig när hon ruvar äggen."
+    },
+    {
+      "id": "sanglarka",
+      "namn": "Sånglärka",
+      "bilder": [
+        "sanglarka-1.jpg"
+      ],
+      "fakta": "Sånglärkan är känd för sin långa, porlande sång som den håller igång medan den svävar högt uppe i luften, ofta så högt att man bara hör den utan att se den. Den häckar på marken i öppna fält och är brun och strimmig, vilket gör den svår att upptäcka. Hane och hona liknar varandra."
+    },
+    {
+      "id": "skrattmas",
+      "namn": "Skrattmås",
+      "bilder": [
+        "skrattmas-1.jpg"
+      ],
+      "fakta": "Skrattmåsen har fått sitt namn av sitt gnälliga, skrattande läte. På sommaren har den ett chokladbrunt (inte svart) huvud, medan huvudet blir vitt med en mörk fläck bakom ögat på vintern. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "blames",
+      "namn": "Blåmes",
+      "bilder": [
+        "blames-1.jpg"
+      ],
+      "fakta": "Blåmesen känns igen på den blå hjässan och det gula bröstet, och är en av våra vanligaste besökare vid fågelmatningen på vintern. Den är mycket akrobatisk och kan hänga upp och ner i grenspetsar för att komma åt insekter. Hane och hona ser nästan likadana ut för blotta ögat."
+    },
+    {
+      "id": "talgoxe",
+      "namn": "Talgoxe",
+      "bilder": [
+        "talgoxe-1.jpg"
+      ],
+      "fakta": "Talgoxen är vår största mes, med svart huvud, vita kinder och gul buk med ett svart bröstband. Bandet är ofta bredare hos hannen än hos honan – ett av få mestecken där man faktiskt kan se skillnad. Sången låter som ett upprepat 'ti-ta, ti-ta'."
+    },
+    {
+      "id": "kungsfagel",
+      "namn": "Kungsfågel",
+      "bilder": [
+        "kungsfagel-1.jpg"
+      ],
+      "fakta": "Kungsfågeln är Europas minsta fågel, knappt större än en tumme, men har en lysande gul-orange hjässrand som gett den dess kungliga namn. Hos hannen är mittstrimman i hjässan orange, hos honan gul – annars är de mycket lika."
+    },
+    {
+      "id": "fiskmas",
+      "namn": "Fiskmås",
+      "bilder": [
+        "fiskmas-1.jpg"
+      ],
+      "fakta": "Fiskmåsen liknar en mindre gråtrut men har gulgröna ben och ett mildare, näst intill mjauande läte. Den häckar ofta i kolonier nära vatten och äter allt från fisk till mask och avfall. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "trut",
+      "namn": "Trut",
+      "bilder": [
+        "trut-1.jpg"
+      ],
+      "fakta": "Trutar är stora, kraftiga måsar med grå rygg, vita undersidor och en kraftig gul näbb med en röd fläck som ungarna pickar på för att få mat. De är opportunister som äter nästan vad som helst, från fisk till andra fåglars ägg. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "skata",
+      "namn": "Skata",
+      "bilder": [
+        "skata-1.jpg"
+      ],
+      "fakta": "Skatan är lätt att känna igen på sin svartvita fjäderdräkt och sin långa stjärt, som skimrar grönt och blått i solen. Den är en av våra intelligentaste fåglar och kan känna igen sig själv i en spegel, vilket bara ett fåtal djurarter klarar. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "tofsvipa",
+      "namn": "Tofsvipa",
+      "bilder": [
+        "tofsvipa-1.jpg"
+      ],
+      "fakta": "Tofsvipan känns igen på sin långa, tunna tofs i nacken och sina breda, runda vingar som gör flykten guppig och vinglig. Hannen har en längre tofs än honan och gör spektakulära störtdykningar i luften för att imponera på henne eller skrämma bort rovdjur från boet."
+    },
+    {
+      "id": "raka",
+      "namn": "Råka",
+      "bilder": [
+        "raka-1.jpg"
+      ],
+      "fakta": "Råkan liknar en kråka men har ett kalt, ljust ansikte vid näbbroten som gör den lätt att skilja från kråkor och kajor. Den häckar i stora, bullriga kolonier högt uppe i trädtoppar, ofta hundratals bon i samma trädgrupp. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "vigg",
+      "namn": "Vigg",
+      "bilder": [
+        "vigg-1.jpg"
+      ],
+      "fakta": "Viggen är en dykand: hanen är svartvit med en hängande tofs i nacken och klargula ögon, medan honan är brun och mer diskret färgad. Den dyker gärna flera meter ner för att leta efter musslor och smådjur på botten."
+    },
+    {
+      "id": "grasand",
+      "namn": "Gräsand",
+      "bilder": [
+        "grasand-1.jpg"
+      ],
+      "fakta": "Gräsanden är vår vanligaste and: hanen har ett glänsande grönt huvud och gul näbb, medan honan är brunspräcklig för att vara kamouflerad när hon ruvar. Båda könen har dock samma blå vingspegel, som syns bäst när den flyger eller sträcker på vingen."
+    },
+    {
+      "id": "bofink",
+      "namn": "Bofink",
+      "bilder": [
+        "bofink-1.jpg",
+        "bofink-2.jpg"
+      ],
+      "fakta": "Bofinkhannen är färgglad med blågrå hjässa och rosaskiftande bröst, medan honan är mer gråbrun och oansenlig. Båda har tydliga vita vingband som syns bra i flykten, och arten är en av våra allra vanligaste skogsfåglar."
+    },
+    {
+      "id": "grasparv",
+      "namn": "Gråsparv",
+      "bilder": [
+        "grasparv-1.jpg"
+      ],
+      "fakta": "Gråsparvhannen har grå hjässa, svart haklapp och kastanjebrun nacke, medan honan är mer enfärgat gråbrun och svårare att skilja från andra sparvar. Arten trivs nära människor och häckar gärna i hål i husfasader."
+    },
+    {
+      "id": "pilfink",
+      "namn": "Pilfink",
+      "bilder": [
+        "pilfink-1.jpg"
+      ],
+      "fakta": "Pilfinken liknar gråsparven men känns igen på sin kastanjebruna hjässa och en tydlig svart fläck på den vita kinden. Till skillnad från gråsparven ser hane och hona likadana ut hos pilfinken."
+    },
+    {
+      "id": "rodhake",
+      "namn": "Rödhake",
+      "bilder": [
+        "rodhake-1.jpg",
+        "rodhake-2.jpg"
+      ],
+      "fakta": "Rödhaken känns igen på sitt orangeröda bröst och ansikte, och är en av få svenska fåglar som sjunger även på vintern. Den är mycket revirhävdande och kan attackera andra rödhakar – och till och med en röd tygtrasa – som kommer in på dess revir. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "gronfink",
+      "namn": "Grönfink",
+      "bilder": [
+        "gronfink-1.jpg"
+      ],
+      "fakta": "Grönfinkhannen är olivgrön med gula fläckar i vingar och stjärt som syns tydligt i flykten, medan honan är mer brungrå och dovare i färgen. Den har en kraftig näbb som är anpassad för att knäcka frön och kärnor."
+    },
+    {
+      "id": "koltrast",
+      "namn": "Koltrast",
+      "bilder": [
+        "koltrast-1.jpg",
+        "koltrast-2.jpg"
+      ],
+      "fakta": "Koltrasthannen sjunger trolskt vackert om vårkvällar i södra Sverige, med en flöjtlik, melodisk sång som hörs långt efter solnedgången. Hanen är helt svart med en klargul näbb, medan honan är mer diskret sotbrun med en mörkare näbb."
+    },
+    {
+      "id": "hussvala",
+      "namn": "Hussvala",
+      "bilder": [
+        "hussvala-1.jpg"
+      ],
+      "fakta": "Hussvalan känns igen på sin blåsvarta ovansida, vita undersida och en tydlig vit skarv ovanför stjärten. Den bygger sitt bo av lera under takutsprång på hus, och flyger varje år ner till Afrika och tillbaka. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "stare",
+      "namn": "Stare",
+      "bilder": [
+        "stare-1.jpg"
+      ],
+      "fakta": "Staren har en glänsande, metalliskt skimrande fjäderdräkt med ljusa prickar, tydligast på vintern. Flera tusen starar kan flyga tillsammans i enorma, ombytliga moln på himlen, så kallade stjärnvirvlar. Den är också en skicklig imitatör som kan efterlikna andra fågelläten och till och med mobiltelefonsignaler."
+    },
+    {
+      "id": "gulsparv",
+      "namn": "Gulsparv",
+      "bilder": [
+        "gulsparv-1.jpg"
+      ],
+      "fakta": "Gulsparvhannen har ett lysande gult huvud och bröst, medan honan är mer strimmig och gulbrun. Den sjunger ofta från toppen av en buske eller ett elstängsel, med en entonig, rytmisk sång som upprepas om och om igen."
+    },
+    {
+      "id": "grakraka",
+      "namn": "Gråkråka",
+      "bilder": [
+        "grakraka-1.jpg"
+      ],
+      "fakta": "Gråkråkan har grått bålparti men svart huvud, vingar och stjärt, vilket skiljer den från den helsvarta korpen. Den är mycket intelligent och kan lösa problem, minnas ansikten och till och med använda enkla verktyg. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "ormvrak",
+      "namn": "Ormvråk",
+      "bilder": [
+        "ormvrak-1.jpg"
+      ],
+      "fakta": "Ormvråken är vår vanligaste rovfågel och syns ofta cirkla högt uppe på breda, ovala vingar medan den spanar efter smågnagare. Fjäderdräkten varierar mycket mellan olika individer, från nästan vit till mörkt chokladbrun. Hane och hona ser likadana ut, men honan är något större."
+    },
+    {
+      "id": "fjallvrak",
+      "namn": "Fjällvråk",
+      "bilder": [
+        "fjallvrak-1.jpg"
+      ],
+      "fakta": "Fjällvråken häckar i fjällen och i norra Skandinavien men syns i övriga Sverige mest på vintern. Till skillnad från ormvråken har den fjädrar ända ner på benen, ett skydd mot kylan, och den kan stå still i luften och 'rida' på vinden medan den spanar efter byte."
+    },
+    {
+      "id": "ringduva",
+      "namn": "Ringduva",
+      "bilder": [
+        "ringduva-1.jpg"
+      ],
+      "fakta": "Ringduvan är vår största duva och känns igen på den vita fläcken på var sida om halsen och ett vitt band tvärs över vingen som syns tydligt när den lyfter. Dess mjuka, entoniga kutter hörs ofta från skogsbryn och parker. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "kaja",
+      "namn": "Kaja",
+      "bilder": [
+        "kaja-1.jpg"
+      ],
+      "fakta": "Kajan är den minsta av våra kråkfåglar och känns lätt igen på sina ljusa, nästan vitgrå ögon och den gråa nacken mot den i övrigt svarta kroppen. Den är väldigt social och lever ofta i stora flockar, gärna tillsammans med råkor. Hane och hona ser likadana ut."
+    },
+    {
+      "id": "hornuggla",
+      "namn": "Hornuggla",
+      "bilder": [
+        "hornuggla-1.jpg"
+      ],
+      "fakta": "Hornugglan känns igen på sina långa 'öron' – tofsar av fjädrar på huvudet som inte har med hörseln att göra – och sina orangea ögon. Den jagar tyst i mörkret tack vare mjuka, ljuddämpande fjäderkanter på vingarna, och flera individer kan övervintra tillsammans i samma träd."
+    }
   ]
 }
