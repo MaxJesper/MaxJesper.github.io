@@ -428,6 +428,9 @@
     </div>
     <p class="resultat-text" id="slut-text"></p>
     <div id="slut-missade"></div>
+    <div id="tips-fagelsang" class="doldt panel soft" style="margin-top:0.9rem;">
+      <p style="margin:0;">Tips! Vill du lära dig fler fåglar – och höra hur de låter? Kolla in <a href="https://www.xn--fgelsng-exae.se/" target="_blank" rel="noopener">fågelsång.se</a>, en rolig sida utanför vår NO-sida.</p>
+    </div>
     <div class="btn-row doldt" id="trana-svara-rad" style="margin-top:0.6rem;">
       <button class="btn primary" id="tranaSvaraBtn">Träna bara på de fåglar du tyckte var svårast</button>
     </div>
@@ -619,6 +622,12 @@ function visaSlut() {
     el("trana-svara-rad").classList.remove("doldt");
   } else {
     el("trana-svara-rad").classList.add("doldt");
+  }
+
+  if (procent === 100) {
+    el("tips-fagelsang").classList.remove("doldt");
+  } else {
+    el("tips-fagelsang").classList.add("doldt");
   }
 }
 

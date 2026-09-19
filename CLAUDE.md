@@ -487,11 +487,9 @@ Risk Jesper lyfte (sep 2026): ju fler generella förbättringar vi kommer på un
 
 Anledning (Jesper, sep 2026): (1) Text som kopplar material, foton eller arbete till "skolan"/arbetstid på skolan riskerar att stödja ett framtida kommunalt anspråk på ägarskap av plattformen. (2) Plattformen riktar sig brett – alla skolor/elever i Sverige, Finlands svenskspråkiga elever, och på sikt (efter engelsköversättning) engelsktalande länder som USA (bland annat hemundervisningsmarknaden där) – en lokal "vår skola"-koppling passar inte den målgruppen.
 
-**Regel:** nämn aldrig "skolan", "vår skola", "min skola" eller liknande som källa/ägare till material, foton eller specifikt undervisningsinnehåll. Håll ursprunget generiskt ("en samling uppstoppade fåglar", "riktiga foton", osv). Personlig fotokreditering (Jesper Tordsson, familjemedlemmar) är okej och ska vara kvar – det är institutionskopplingen som ska bort, inte den personliga krediteringen.
+**Regel: gäller HELA NO-plattformen, alla ämnen och områden — inte bara där det först upptäcktes.** Nämn aldrig "skolan", "vår skola", "min skola" eller liknande som källa/ägare till material, foton, riskbedömningar eller specifikt undervisningsinnehåll, i något område. Håll ursprunget generiskt ("en samling uppstoppade fåglar", "riktiga foton", "egen riskbedömning", osv). Personlig kreditering (Jesper Tordsson, familjemedlemmar) är okej och ska vara kvar – det är institutionskopplingen som ska bort, inte den personliga krediteringen. Kontrollera nya sidor mot detta innan de räknas som klara, precis som med WCAG-regeln ovan.
 
-**Åtgärdat sep 2026:** fågeltävlingen (`biologi/ekologi/faglar-tavling.html`, `larande-spel.html`, `data/faglar.json`) hade flera "skolans"-omnämnanden (rubrik, introtext, fotokreditering) – borttagna.
-
-**Kvarstår, ej ändrat – fråga Jesper:** `kemi/kol-och-kolforeningar/esterlab.html` och `alkoholdemo.html` har källhänvisningar till "skolans egen riskbedömning". Annan karaktär (källa för en riskbedömningsrutin, inte ägarskap av foton/material), men kan falla under samma princip.
+**Åtgärdat sep 2026:** fågeltävlingen (`biologi/ekologi/faglar-tavling.html`, `larande-spel.html`, `data/faglar.json`) hade flera "skolans"-omnämnanden (rubrik, introtext, fotokreditering) – borttagna. `kemi/kol-och-kolforeningar/esterlab.html` och `alkoholdemo.html` hade källhänvisningar till "skolans egen riskbedömning" – ändrat till "egen riskbedömning".
 
 ## Idéer och påminnelser
 
