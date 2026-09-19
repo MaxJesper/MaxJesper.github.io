@@ -24,9 +24,10 @@ def to_atoms_bonds(P, cutoff):
     bonds = sorted({(min(i, j) + 1, max(i, j) + 1, 1) for i in range(len(P)) for j in nb[i]})
     return atoms, bonds
 
-def diamond(radius=3.3):
+def diamond(radius=5.0):
     """Diamantgitter (kubisk, a = 3,567 Å). Klustret = alla atomer inom `radius` Å från en central
-    atom - ger en central kolatom med sina fyra grannar och nästa skal, i ett tredimensionellt nät."""
+    atom. Med 5,0 Å blir det 87 atomer varav 35 har alla fyra grannar (de inre) - så att man ser att
+    varje kolatom i diamant binder fyra andra, i ett tredimensionellt nät."""
     a = 3.567
     fcc = np.array([[0,0,0],[0,.5,.5],[.5,0,.5],[.5,.5,0]])
     pts = []
@@ -82,7 +83,7 @@ def fullerene():
     P = P * (1.43 / 2.0)     # kantlängd 2 -> 1,43 Å
     return P, 1.6
 
-def nanotube(n=6, m=6, cells=4):
+def nanotube(n=6, m=6, cells=5):
     a = 2.46
     a1, a2 = np.array([a, 0.0]), np.array([a/2, a*np.sqrt(3)/2])
     basis = [np.array([0.0, 0.0]), np.array([a/2, a/(2*np.sqrt(3))])]
@@ -103,12 +104,27 @@ def nanotube(n=6, m=6, cells=4):
     P = np.unique(np.round(np.array(pts), 4), axis=0)
     return P - P.mean(axis=0), 1.6
 
+# Utseende i 3D-vyerna: SMÅ kulor i förhållande till bindningarna, så att man ser igenom strukturen
+# och kan följa hur atomerna sitter ihop (sfärskala, pinnradie i 3Dmol-enheter) samt startvy (rotX, rotY).
+STIL = (0.14, 0.062)
+VY = {'diamant': (25, 35), 'grafit': (-60, 10), 'fulleren': (-25, 20), 'grafen': (-25, 0), 'nanoror': (-15, 25)}
+
 BUILD = {'diamant': diamond, 'grafit': graphite, 'fulleren': fullerene, 'grafen': graphene, 'nanoror': nanotube}
 
 def report(name, P, cutoff):
     nb = neighbors(P, cutoff); c = np.bincount([len(x) for x in nb])
     L = [np.linalg.norm(P[i] - P[j]) for i in range(len(P)) for j in nb[i] if j > i]
     return f'{name:9s} atomer={len(P):3d} bindn={len(L):3d} längd {min(L):.3f}-{max(L):.3f} Å  grannar-histogram={dict(enumerate(map(int, c)))}'
+
+def molblocks():
+    """Molblock (MOL V2000) för alla former - läggs i MOLS i studieguidens script (alla kolformer roterbara)."""
+    import os, sys
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import chembuilder as cb
+    out = {}
+    for k, f in BUILD.items():
+        P, cut = f(); atoms, bonds = to_atoms_bonds(P, cut); out[k] = cb.write_molblock(atoms, bonds, k)
+    return out
 
 if __name__ == '__main__':
     for k, f in BUILD.items():

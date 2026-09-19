@@ -123,6 +123,23 @@ i samma mapp.
    3-faldiga symmetri som "banan-bindnings"-bilden av en trippelbindning -
    se forskningsnoteringen nedan). Detta ar en ren RENDERINGS-atgard, INTE
    en andring av den underliggande geometrin/bindningsvinklarna.
+   NYTT sep 2026 (uppfoljning): pinnarna ar INTE langre raka och parallella
+   med ett fast gap - de ritas som UTATBOJDA BAGAR ("banan-bindningar"): de
+   moter atomerna i andarna och buktar ut fran varandra i mitten. Det visar
+   att elektronmolnen skyr/stoter bort varandra i rymden och gor dubbel- och
+   framfor allt trippelbindningen latt att se (Jespers onskan). offset(t) =
+   MB.end + (bulge - MB.end)*sin(pi*t), t = 0..1 langs bindningen, byggd av 14
+   korta cylindrar med runda andar (fromCap/toCap 2). Standardvarden:
+   MB = {bulge:{2:0.48, 3:0.54}, radius:{2:0.06, 3:0.05}, end:0.02} - pinnarna
+   ar TUNNARE an enkelbindningens 0.12. Bulriktning e1 = axel x [0,0,1] (i
+   molekylens plan for plana molekyler, sa bulen syns framifran); trippel =
+   tre bagar 120 grader ifran varandra. Samma funktion addMultiBond finns i
+   studieguidens script (galleriet) OCH i tools/kemi-ritverktyg/statiska-
+   kulmodeller/render-kulmodeller.html (PNG-rendering) - hall dem identiska.
+   VIKTIGT: ALLA bindningar med order>=2 maste strykas ur molblocken (MOLS)
+   och ligga i MULTI - glycin, butansyra och etylbutanoat hade C=O kvar i
+   molblocket och fick dubbla streck ovanpa (ratta sep 2026). Kontrollera
+   efter varje ny molekyl att inga bindningsrader med order>=2 finns kvar.
    Forskningskoll (WebSearch sep 2026, pa Jespers begaran, innan
    implementation): den bojda bindnings-modellen ("bent bond"/"banana
    bond") - dar en dubbel- eller trippelbindning beskrivs som tva/tre

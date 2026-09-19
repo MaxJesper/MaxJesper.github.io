@@ -92,6 +92,19 @@ Ny molekyl: 1) bygg med chembuilder (build_alkane/acid/ester/... eller build_rdk
 3) `write_molblock` -> lägg i MOLS (+ MULTI för dubbel-/trippelbindningar) i studieguiden, 4) rita 2D-SVG med
 strukturformler.js, 5) kör render_kulmodeller.py <stem>, 6) lägg kortet i bildkolumnen och galleriet.
 
+sep 2026 (fjärde rundan, Jespers önskemål efter första granskningen):
+1) Dubbel-/trippelbindningar ritas som UTÅTBÖJDA BÅGAR och med tunnare pinnar (radie 0,06/0,05 mot
+   enkelbindningens 0,12) - se regel 9 i kulmodeller3d.py. Funktionen addMultiBond finns i studieguidens
+   script OCH i render-kulmodeller.html och ska hållas identisk. Alla PNG:er för molekyler med
+   dubbel-/trippelbindning renderades om (och img-storlekarna i HTML uppdaterades, eftersom bågarna ändrar
+   bildens bounding box). Rättade en bugg: glycin, butansyra och etylbutanoat hade C=O kvar i molblocket.
+2) Kolets former är nu ROTERBARA 3Dmol-vyer direkt i M2 (`.mc-viewer`, skapas lat och släpps när de
+   lämnar bild) - undantaget från "statiska PNG i löptexten", eftersom just den tredimensionella
+   strukturen är poängen. Små kulor (allotroper.STIL = sfärskala 0,14 / pinnradie 0,062) så att man ser
+   igenom strukturen; diamanten är ett kluster på 87 atomer (35 med fyra grannar). Modellerna ligger i
+   MOLS (skapade med `allotroper.molblocks()`), startvyer/stil i STYLE/VIEW i sidans script. PNG:erna
+   från render_allotroper.py är bara reserv (noscript). render_kulmodeller.py hoppar över kolformerna.
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.

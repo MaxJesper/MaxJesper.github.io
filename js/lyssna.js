@@ -63,11 +63,11 @@
   function getMilestoneText(milestone) {
     // .mc-head/.mc-rotate/.km-legend: molekylkortens rubrikrad, "Rotera i 3D"-länk och färgförklaring
     // i bildkolumnen (studieguide-bildkolumn.css) ska inte läsas upp; bildtexterna läses.
-    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip', '.mc-head', '.mc-rotate', '.km-legend']);
+    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip', '.mc-head', '.mc-rotate', '.km-legend', '.km-hint']);
   }
 
   function getDeepenText(deepen) {
-    return extractText(deepen, ['.listen-btn', '.km-legend']);
+    return extractText(deepen, ['.listen-btn', '.km-legend', '.km-hint']);
   }
 
   // Returnerar mp3-sökväg för en milstolpe eller fördjupning

@@ -74,7 +74,7 @@ main.guide-wide { max-width: 1180px; }
 .mc-desc { font-size: 0.88rem; color: #5b21b6; text-align: right; line-height: 1.25; }
 
 /* Bildrad inne i löpande text/utfällbar ruta (t.ex. grafen + nanorör i "Nanorör och grafen") */
-.fig-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0.8rem 1.2rem; margin: 0.9rem 0 0.2rem; }
+.fig-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 0.8rem 1.2rem; margin: 0.9rem 0 0.2rem; }
 .fig-row figure { margin: 0; text-align: center; flex: 1 1 0; min-width: 230px; max-width: 100%; }
 .fig-row figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .fig-row figcaption { font-size: 0.88rem; line-height: 1.4; color: #4a4a5a; margin-top: 0.4rem; max-width: 20em; margin-left: auto; margin-right: auto; }
@@ -82,4 +82,16 @@ main.guide-wide { max-width: 1180px; }
 /* Reaktionsbilder (full bredd) på mobil: låt produkterna bryta rad i stället för att klippas */
 @media (max-width: 600px) {
   .guide-wide .rxn-products { flex-wrap: wrap; justify-content: center; margin-left: 0; }
+}
+
+/* Roterbar 3D-vy direkt i en milstolpe (undantaget från "statiska bilder": används när själva
+   3D-strukturen är poängen, t.ex. kolets former). Skapas lat av samma IntersectionObserver som
+   galleriet (.km-viewerbox[data-mol]) och släpps när den lämnar bild. */
+.guide-wide .mc-viewer { flex: none; width: 100%; min-width: 0; height: 260px; cursor: grab; }
+.guide-wide .mc-viewer:active { cursor: grabbing; }
+.guide-wide .fig-row .mc-viewer { height: 240px; }
+.mol-card .km-hint, .fig-row .km-hint { font-size: 0.8rem; color: #555566; margin: 0.3rem 0 0; text-align: center; }
+/* Pekskärm: 3Dmol fångar fingerdrag i rutan - lämna sidmarginaler utanför den så att man kan scrolla förbi. */
+@media (max-width: 900px) {
+  .guide-wide .mc-viewer { width: calc(100% - 2.6rem); margin: 0 auto; }
 }

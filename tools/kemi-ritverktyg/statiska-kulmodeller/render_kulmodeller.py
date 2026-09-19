@@ -16,6 +16,7 @@ Kräver: pip install playwright pillow  +  Chromium (playwright install chromium
 import json, os, re, sys
 from playwright.sync_api import sync_playwright
 import _server as S
+from allotroper import BUILD as ALLOTROPER      # kolets former renderas av render_allotroper.py (egen stil)
 
 GUIDE = S.REPO / 'kemi/kol-och-kolforeningar/studieguide.html'
 PPA = float(os.environ.get('PPA', 34))
@@ -31,7 +32,7 @@ def load_mols():
 
 if __name__ == '__main__':
     mols, multi = load_mols()
-    names = sys.argv[1:] or list(mols)
+    names = sys.argv[1:] or [n for n in mols if n not in ALLOTROPER]
     S.OUT_DIR.mkdir(parents=True, exist_ok=True)
     srv = S.start_server(8766)
     with sync_playwright() as p:

@@ -215,14 +215,15 @@ Varje molekyl i texten får ett `.mol-card` i sidokolumnen: **namn + molekylform
 ### Statiska bilder bredvid texten – rotation bara i M10
 
 - Bilderna i bildkolumnen är **statiska PNG** (`images/kemi/<område>/kulmodeller/<stem>.png`, transparent, 3x upplösning, `width`/`height` = PNG-storlek/3, `loading="lazy"`, beskrivande `alt`). Inga live-3Dmol-rutor i löptexten: de tar WebGL-kontexter (max ca 16 per sida) och gör sidan seg.
-- **Möjligheten att rotera finns bara i det befintliga bladet "Utforska i 3D" (M10)**. Kortens länk `#km-<stem>` öppnar M10 och lyfter fram rätt kort (`.km-flash`). Nya molekyler ska in i BÅDE bildkolumnen och galleriet (`MOLS`/`MULTI` i sidans script är källan för båda).
+- **Möjligheten att rotera finns i det befintliga bladet "Utforska i 3D" (M10)** – och som ENDA undantag direkt i milstolpen när själva 3D-strukturen är poängen (kolets former i M2: diamant, grafit, fulleren, grafen, nanorör; klass `.mc-viewer` + `class="km-viewerbox"` + `data-mol`, samma lata skapande/släpp som galleriet, `noscript`-reserv med PNG, marginaler på mobil så att man kan scrolla förbi). Molekylerna i övrigt är statiska PNG i löptexten. Kortens länk `#km-<stem>` öppnar M10 och lyfter fram rätt kort (`.km-flash`). Nya molekyler ska in i BÅDE bildkolumnen och galleriet (`MOLS`/`MULTI` i sidans script är källan för båda).
 - Galleriets 3Dmol-boxar skapas lat (IntersectionObserver) och **släpps igen när de rullas ur bild** (`destroyViewerIn`, WEBGL_lose_context) – nödvändigt när galleriet har fler än ~16 molekyler.
+- **Dubbel-/trippelbindningar** ritas som utåtböjda bågar med tunnare pinnar (visar att elektronmolnen stöter bort varandra, och gör bindningarna lätta att se) – gäller både galleriet och PNG:erna; alla bindningar med ordning ≥2 ska ligga i `MULTI`, inte i molblocket (se `kulmodeller3d.py`, regel 9).
 - Alla kulmodeller har **samma atomstorlek** (fast px/Å, standard 34) så att storleksskillnader mellan molekyler är verkliga. Färger: kol svart (sfär #4d4d4d, pinne #777), väte vitt, syre rött, kväve blått (#3050f8).
 - Rendering: `tools/kemi-ritverktyg/statiska-kulmodeller/` (`render_kulmodeller.py`, `render_allotroper.py`, se README där). Geometrin kommer från `chembuilder.py` (för molekyler utan handbyggt mönster: `build_rdkit(smiles)` + `check_geometry`). Ritas alltid med skript – aldrig frihand.
 
 ### Övrigt
 
-- `lyssna.js` läser `.m-body`-texten: rubrikraden (`.mc-head`), `Rotera i 3D`-länken och färgförklaringen är uteslutna, bildtexterna läses.
+- `lyssna.js` läser `.m-body`-texten: rubrikraden (`.mc-head`), `Rotera i 3D`-länken, färgförklaringen (`.km-legend`) och 3D-instruktionen (`.km-hint`) är uteslutna, bildtexterna läses.
 - Egna bilder och egen text bara – Enkel NO, läroböcker m.fl. är inspiration, aldrig förlaga (se Originalitet).
 - WCAG 2.2 AA: alla bilder har `alt`, färgförklaring som text, kontrast ≥ 4.5:1 på bildtexter, inget som bara går att förstå via färg.
 - Nästa sida som kan få layouten: välj ut milstolpar med många molekyl-/organ-/kretsbilder först; sidor med få bilder behåller normalbredd.

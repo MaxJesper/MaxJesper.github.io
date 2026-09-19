@@ -2,26 +2,44 @@
 <body><div id="v"></div>
 <script src="/js/3Dmol-min.js"></script>
 <script>
-function addMultiBond(viewer, spec) {
-  var a = spec.a, b = spec.b, order = spec.order;
-  var axis = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
-  var len = Math.sqrt(axis[0]*axis[0]+axis[1]*axis[1]+axis[2]*axis[2]);
-  axis = [axis[0]/len, axis[1]/len, axis[2]/len];
-  var ref = Math.abs(axis[2]) < 0.9 ? [0,0,1] : [0,1,0];
-  function cross(u,v){ return [u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]]; }
-  function norm(u){ var l=Math.sqrt(u[0]*u[0]+u[1]*u[1]+u[2]*u[2]); return [u[0]/l,u[1]/l,u[2]/l]; }
-  var e1 = norm(cross(axis, ref));
-  var e2 = norm(cross(axis, e1));
-  var gap = 0.17, radius = 0.085, color = '#777777', dirs = [];
-  if (order === 2) { dirs = [e1, [-e1[0],-e1[1],-e1[2]]]; }
-  else if (order === 3) {
-    for (var k = 0; k < 3; k++) { var th = k*2*Math.PI/3, c=Math.cos(th), s=Math.sin(th);
-      dirs.push([e1[0]*c+e2[0]*s, e1[1]*c+e2[1]*s, e1[2]*c+e2[2]*s]); }
-  } else { dirs = [[0,0,0]]; }
-  dirs.forEach(function(d) {
-    viewer.addCylinder({start:{x:a[0]+d[0]*gap,y:a[1]+d[1]*gap,z:a[2]+d[2]*gap}, end:{x:b[0]+d[0]*gap,y:b[1]+d[1]*gap,z:b[2]+d[2]*gap}, radius:radius, color:color, fromCap:1, toCap:1});
-  });
-}
+var MB = {bulge: {2: 0.48, 3: 0.54}, radius: {2: 0.06, 3: 0.05}, end: 0.02};   // samma varden som i studieguidens script
+// Dubbel-/trippelbindningar ritas som UTATBOJDA bagar (banan-/bojd bindning-bilden): pinnarna
+  // borjar vid bada atomerna och buktar ut fran varandra i mitten. Det visar att elektronmolnen
+  // stoter bort varandra i rymden och gor bindningarna latta att se. Tunnare pinnar an enkelbindningen.
+  // Bagarna byggs av korta cylindrar med runda andar. Bulan ligger i bindningens plan (for plana
+  // molekyler syns den framifran); trippelbindningens tre bagar ar fasforskjutna 120 grader.
+  function addMultiBond(viewer, spec) {
+    var a = spec.a, b = spec.b, order = spec.order;
+    var axis = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
+    var len = Math.sqrt(axis[0]*axis[0]+axis[1]*axis[1]+axis[2]*axis[2]);
+    axis = [axis[0]/len, axis[1]/len, axis[2]/len];
+    var ref = Math.abs(axis[2]) < 0.9 ? [0,0,1] : [0,1,0];
+    function cross(u,v){ return [u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]]; }
+    function norm(u){ var l=Math.sqrt(u[0]*u[0]+u[1]*u[1]+u[2]*u[2]); return [u[0]/l,u[1]/l,u[2]/l]; }
+    var e1 = norm(cross(axis, ref));
+    var e2 = norm(cross(axis, e1));
+    var BULGE = MB.bulge[order] || MB.bulge[2], radius = MB.radius[order] || MB.radius[2], color = '#777777', N = 14;
+    var dirs = [];
+    if (order === 2) {
+      dirs = [e1, [-e1[0],-e1[1],-e1[2]]];
+    } else if (order === 3) {
+      for (var k = 0; k < 3; k++) {
+        var th = k * 2 * Math.PI / 3, c = Math.cos(th), s = Math.sin(th);
+        dirs.push([e1[0]*c+e2[0]*s, e1[1]*c+e2[1]*s, e1[2]*c+e2[2]*s]);
+      }
+    } else {
+      dirs = [[0,0,0]];
+    }
+    dirs.forEach(function(d) {
+      var prev = null;
+      for (var i = 0; i <= N; i++) {
+        var t = i / N, off = MB.end + (BULGE - MB.end) * Math.sin(Math.PI * t);
+        var p = {x: a[0] + t*(b[0]-a[0]) + d[0]*off, y: a[1] + t*(b[1]-a[1]) + d[1]*off, z: a[2] + t*(b[2]-a[2]) + d[2]*off};
+        if (prev) viewer.addCylinder({start: prev, end: p, radius: radius, color: color, fromCap: 2, toCap: 2});
+        prev = p;
+      }
+    });
+  }
 // Renderar EN molekyl med fast skala (px per angstrom) och returnerar PNG som data-URI.
 window.renderMol = function(sdf, multi, opts) {
   opts = opts || {};
