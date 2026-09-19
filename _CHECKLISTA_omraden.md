@@ -8,7 +8,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ## Standardkomponenter per område
 
-**Kärn-HTML (13):** `index.html`, `studieguide.html`, `begreppslista.html`, `begreppskort.html`, `checklista.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `ovningsprov-print.html`, `facit.html`, `facit-print.html`, `larande-spel.html`. **Rekommenderad:** `korsord.html`. **Vid fysiska laborationer (nytt, sep 2026):** `laborationer.html` eller `<tema>lab.html` – utskrivbar HTML enligt "Laborationsprotokoll"-mönstret i CLAUDE.md (aldrig docx), länkad från studieguidens next-steps OCH index.html/"Material för läraren".
+**Kärn-HTML (13):** `index.html`, `studieguide.html`, `begreppslista.html`, `begreppskort.html`, `checklista.html`, `instuderingsfragor.html`, `instuderingsfragor-print-elev.html`, `instuderingsfragor-print-larare.html`, `ovningsprov.html`, `ovningsprov-print.html`, `facit.html`, `facit-print.html`, `larande-spel.html`. **Rekommenderad:** `korsord.html`. **Vid fysiska laborationer (nytt, sep 2026):** `laborationer.html` eller `<tema>lab.html` – utskrivbar HTML enligt "Laborationsprotokoll"-mönstret i CLAUDE.md (aldrig docx), länkad från studieguidens next-steps OCH index.html/"Material för läraren". **Kreativa/kognitiva utmaningsfrågor (nytt, sep 2026):** öppna, gärna tvärvetenskapliga frågor utan givet facit, för elever som snabbt når målen och behöver stimulans. Byggs som `<details class="wonder">` i studieguiden – klassen finns redan implementerad och stylad (etikett "» Fundera vidare:", teal ruta, ev. avslutande `<p class="frontier">` för en riktigt öppen forskningsfråga) i kemi/kol-och-kolforeningar/studieguide.html. Minst 1 per område, gärna en som kopplar till ett annat NO-ämne eller till verkliga konsekvenser, och avsluta med en uppmaning att själv ta reda på svaret.
 
 **Data (5):** `data/begrepp.json`, `data/begreppskort.json`, `data/checklista.json`, `data/instuderingsfragor.json`, `data/ovningsprov.json`.
 
@@ -41,7 +41,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | fysik/materia | 9/13 | 3/5 | 0/10 | ✗ | ✗ |
 | fysik/tryck | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | fysik/universum | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
-| kemi/atomer | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/atomer | 13/13 | 5/5 | 0/10 | ✗ | ✗ |
 | kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
@@ -60,6 +60,8 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ### Nya grunder byggda (behöver kompletteras)
 
+- **kemi/atomer (åk7, sep 2026):** komplett standarduppsättning (13/13 HTML, 5/5 data) + `ovningsverktyg` (11 dra-och-släpp-sorteringar, 7 balanseringar, Räknemaskinen), `bygg-molekyl` (8 uppgifter), `formelark` (utskrivbart arbetsblad med facit: stor vs nedsänkt siffra), studieguide med 6 milstolpar, bred bildkolumn och roterbar 3D i molekylkorten. Inspirerat av (aldrig kopierat från) Gleerups Titano kemi och Enkel NO. Återstår: översättningar (10 språk, `data/begrepp.<prefix>.json`), begreppsbingo, ev. korsord, inline-översättning (`concept-inline`), lyssna-ljudfiler (TTS används), mp3.
+
 - **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar, uppdaterad med valensregel/nanorör-grafen/metanolförgiftning), begrepp (28), index (med översiktsbilder), lärande spel, checklista, instuderingsfrågor (+print elev/lärare), övningsprov+facit (+print), begreppslista klara. Återstår: begreppskort (görs ev. via lärande-spelet istället för egen sida, se mönster i CLAUDE.md), översättningar. Källa: TEFY + Gleerups + Enkel Kemi (uppladdade PDF:er).
 
 - **liv-och-cellen:** komplett struktur klar. Filmerna inlagda (komprimerade 250x + 400x i `film/`). Återstår: översättningar (`begrepp.<språk>.json`) + toffeldjursbild (`images/biologi/liv-och-cellen/toffeldjur.jpg`).
@@ -74,23 +76,34 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för området · ? = okontrollerat (behöver verifieras mot faktiska filer, gissa inte)
 
-| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | ekologi | arb-energi-eff |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TTS-uppläsning + begreppsöversättning (10 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ? |
-| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå) | ✗ | ✗ | ✓ (pilot) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
-| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | – | ✗ (beslutad kandidat) |
-| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ? | – | – | ✓ | – | – |
-| Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | ✓ |
-| Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) |
-| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ (+lag) | ✗ |
-| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✗ | ? |
-| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | – (ingen studieguide än) | ? |
+| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| TTS-uppläsning + begreppsöversättning (10 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? |
+| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå) | ✗ | ✗ | ✓ (pilot) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) |
+| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ? | – | – | ✓ | ✓ (live i molekylkorten) | – | – |
+| Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ |
+| Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) |
+| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✗ | ✓ (+lag) | ✗ |
+| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✗ | ? |
+| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | ✓ | – (ingen studieguide än) | ? |
+| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ |
+| Live-3D i studieguiden (molviewer; korta kapitel) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – |
+| Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ |
+| Formelverktyg (`formelvisare.js`: verkstad, balansera, Räknemaskinen) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – |
+| Utskrivbart formelark: stor vs nedsänkt siffra (`formelark.html`) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – |
 
-**Öppet, ej i matrisen än:** ekologi och arbete-energi-effekt saknar egna kolumner i statusöversikts-tabellen ovan trots att båda har betydligt mer byggt än "1/13" antyder (ekologi: tavling/fåglar/bingo-lag/trad-och-blad; arbete-energi-effekt: studieguide+räknekort) — hela statusöversikten ovan är från 2026-08-23 och bör regenereras mot faktiska filer i repot, inte bara mot minnet, innan den littas på fullt ut. Flaggat som backlog, inte gjort.
+**Öppet, ej i matrisen än:** ekologi och arbete-energi-effekt saknar egna kolumner i statusöversikts-tabellen ovan trots att båda har betydligt mer byggt än "1/13" antyder (ekologi: tavling/fåglar/bingo-lag/trad-och-blad; arbete-energi-effekt: studieguide+räknekort) — hela statusöversikten ovan är från 2026-08-23 och bör regenereras mot faktiska filer i repot, inte bara mot minnet, innan den littas på fullt ut. Flaggat som backlog, inte gjort. **Nytt sep 2026:** Jesper efterlyste fler "wonder"-frågor (kreativ/kognitiv stimulans, t.ex. hans exempel om varför vattenmolekylen är vinklad jämfört med koldioxid, och konsekvenserna för livets utveckling) – detta visade sig redan finnas som ett färdigbyggt, stylat mönster (`.wonder`) i kol-och-kolforeningar men användes bara en gång och stod inte med i matrisen. Vattenexemplet är nu inlagt där som en andra `.wonder`-ruta. Kvarstår: bygg minst en `.wonder`-fråga i varje övrigt område.
 
 ### Konkreta byggen
 
+- **Kemi-hudsidan (`kemi/index.html`) byggs om (Jespers önskemål 19 sep 2026, se CLAUDE.md Idé 24):** bort med ren länksida; in med uppstart + kemihistoria, faropiktogram-spel och labbutrustnings-spel (fågelspelets design; **väntar på Jespers foton**) samt ett **säkerhetsintyg** (övning som skrivs ut och skrivs under; en sida, länkas även från Ämnet Fysik och Ämnet Biologi).
+
 - Fanerozoikum-frågespel (biologi/evolution): porta från kraft-och-rorelse/fragespel.html (chansa/säkra, timer, poäng, lösen 'JTo').
+
+- **Seterra-liknande spel för anatomi/kroppsdelar** (ny idé, sep 2026): klicka/placera rätt punkt i en bild när en fråga visas, tid + poängräkning (samma princip som att lära sig städer på en karta i Seterra). Gäller hjärta-blod-lungor, nervsystemet (+hjärnan) och sinnena – **inte lågprioriterat**, tvärtom ett bra sätt att lära fackord lekfullt i just dessa läroplansbundna områden. Ej påbörjat. Behöver rättighetsfria anatomiska bilder med tydligt definierade klickytor (t.ex. Wikimedia Commons/public domain-anatomiatlas, undvik det upphovsrättsskyddade uppslagsverket – se separat resonemang i chatthistoriken).
+
+- **Fler fototävlingar i ekologi** (blommor, däggdjur, fiskar, insekter, fågel/träd-formatet): lågprioriterat, byggs när lusten faller på, ingen artgrupp eller ordning bestämd än. Annan idé än Seterra-spelet ovan – blandas inte ihop.
 
 - Provfrågor: räkna om per nytt format; fyll där tunt.
 

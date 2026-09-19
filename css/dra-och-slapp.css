@@ -1,0 +1,46 @@
+/* dra-och-slapp.css – stil för js/dra-och-slapp.js. Använder --area-strong / --area-soft / --area-border om de finns. */
+.dd { --dd-strong: var(--area-strong, #1d4ed8); --dd-soft: var(--area-soft, #eff6ff); --dd-border: var(--area-border, #bfdbfe);
+      background: #fff; border: 1px solid var(--dd-border); border-left: 5px solid var(--dd-strong); border-radius: 12px; padding: 0.9rem 1rem 1rem; margin: 1rem 0; color: #1a1a2e; }
+.dd-title { margin: 0 0 0.3rem; font-size: 1.15rem; color: var(--dd-strong); }
+.dd-intro { margin: 0.2rem 0 0.4rem; }
+.dd-how { margin: 0.2rem 0 0.7rem; font-size: 0.88rem; color: #333a4a; }
+.dd-pool { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.6rem; background: #f4f5f9; border: 1px solid #d5d7e0; border-radius: 10px; min-height: 60px; margin-bottom: 0.8rem; }
+.dd-pool:empty::after { content: "Alla brickor är placerade."; color: #333a4a; font-size: 0.9rem; align-self: center; }
+.dd-chip {
+  font: inherit; font-size: 1rem; font-weight: 600; min-height: 44px; min-width: 44px; padding: 0.35rem 0.85rem; cursor: grab;
+  background: #fff; color: #1a1a2e; border: 2px solid var(--dd-strong); border-radius: 10px; touch-action: none; user-select: none; -webkit-user-select: none;
+  line-height: 1.25;
+}
+.dd-chip svg { display: block; max-width: 100%; height: auto; }
+.dd-chip:hover:not(:disabled) { background: var(--dd-soft); }
+.dd-chip[aria-pressed="true"] { background: var(--dd-strong); color: #fff; outline: 3px solid #1a1a2e; outline-offset: 2px; }
+.dd-chip:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.dd-chip[aria-pressed="true"]:focus-visible { outline-color: #1a1a2e; box-shadow: 0 0 0 5px #fff; }
+.dd-chip.dd-ok { background: #ecfdf5; color: #14532d; border: 2px solid #15803d; cursor: default; opacity: 1; font-weight: 600; }
+.dd-chip.dd-wrong { border-style: dashed; border-color: #b91c1c; background: #fef2f2; }
+.dd-chip.dd-wrong::before { content: "✗ "; color: #b91c1c; font-weight: 700; }
+.dd-chip.dd-dragging { opacity: 0.35; }
+.dd-ghost { position: fixed; z-index: 9999; pointer-events: none; opacity: 0.95; box-shadow: 0 6px 18px rgba(0,0,0,0.25); cursor: grabbing; }
+.dd-mark { font-weight: 700; }
+.dd-zones { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.7rem; }
+.dd-zone { border: 2px dashed #5b6478; border-radius: 10px; padding: 0.55rem 0.65rem 0.65rem; background: #fff; display: flex; flex-direction: column; gap: 0.4rem; min-width: 0; }
+.dd-zone-h { font-weight: 700; text-align: center; padding-bottom: 0.3rem; border-bottom: 1px solid #e3e5ec; }
+.dd-zone-h svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.dd-zone-items { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 46px; align-content: flex-start; justify-content: center; }
+.dd-place { font: inherit; font-size: 0.85rem; min-height: 44px; padding: 0.25rem 0.6rem; background: #fff; color: var(--dd-strong); border: 2px solid var(--dd-strong); border-radius: 8px; cursor: pointer; margin-top: auto; }
+.dd-place:hover { background: var(--dd-soft); }
+.dd-place:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.dd-has-sel .dd-zone { border-color: var(--dd-strong); }
+.dd-has-sel .dd-place { background: var(--dd-strong); color: #fff; }
+.dd-zone.dd-over { border-style: solid; border-color: var(--dd-strong); background: var(--dd-soft); box-shadow: 0 0 0 3px var(--dd-strong) inset; }
+.dd-msg { margin: 0.7rem 0 0; min-height: 1.6em; font-size: 0.98rem; padding: 0.3rem 0; }
+.dd-msg.dd-good { color: #14532d; }
+.dd-msg.dd-bad { color: #7c2d12; }
+.dd-msg.dd-info { color: #333a4a; }
+.dd-result { margin-top: 0.6rem; padding: 0.7rem 0.9rem; background: var(--dd-soft); border: 1px solid var(--dd-border); border-radius: 10px; }
+.dd-result p { margin: 0 0 0.5rem; }
+.dd-again { font: inherit; min-height: 44px; padding: 0.35rem 1rem; font-weight: 600; background: var(--dd-strong); color: #fff; border: 2px solid var(--dd-strong); border-radius: 999px; cursor: pointer; }
+.dd-again:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .dd-chip, .dd-zone { transition: none; } }
+/* Markerad bricka: formelns siffror ska vara vita mot den mörka fyllningen */
+.dd-chip[aria-pressed="true"] .fx .coef, .dd-chip[aria-pressed="true"] .fx sub.idx { color: #fff; }

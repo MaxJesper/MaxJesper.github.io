@@ -105,6 +105,18 @@ sep 2026 (fjärde rundan, Jespers önskemål efter första granskningen):
    MOLS (skapade med `allotroper.molblocks()`), startvyer/stil i STYLE/VIEW i sidans script. PNG:erna
    från render_allotroper.py är bara reserv (noscript). render_kulmodeller.py hoppar över kolformerna.
 
+## atomer/bygg_atomer.py  (Atomer och molekyler, sep 2026)
+Bygger ALLT bild- och modellmaterial till `kemi/atomer/`: `kemi/atomer/js/molmodeller.js` (`window.MOLDATA`
+med molblock, dubbel-/trippelbindningar, vyer och texter – läses av `js/molviewer.js`), 2D-strukturformler
+(`images/kemi/atomer/strukturformler/*.svg`), förenklade atommodeller (väte, helium, kol + atomnyckel) och
+statiska kulmodell-PNG:er (`kulmodeller/`, reserv utan JavaScript och miniatyrer i dra-och-släpp/index).
+Kör `python3 tools/kemi-ritverktyg/atomer/bygg_atomer.py` (allt), `… data` (bara JS + SVG) eller `… png`
+(kräver playwright + pillow + chromium). Ny molekyl: lägg en rad i MOLS (atomer i Å, bindningar som (i, j, ordning)),
+kör, läs `check_geometry`-utskriften och titta på PNG:en. Ordning >= 2 skrivs inte in i molblocket – `molviewer.js`
+ritar utåtböjda bågar (regel 9 i kulmodeller3d.py); valfri `rot` (grader) vrider bågarnas plan runt bindningsaxeln
+(används i `render-kulmodeller.html` som `spec.rot`, så att PNG och live-3D ser likadana ut).
+Skillnad mot kolkapitlet: här ligger live-3D direkt i studieguiden (få molekyler); se CLAUDE.md, "Live-3D i korta kemikapitel".
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.

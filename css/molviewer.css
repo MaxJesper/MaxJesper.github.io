@@ -1,0 +1,10 @@
+/* molviewer.css – stil för js/molviewer.js (roterbara 3D-kulmodeller). Länka efter studieguide-bildkolumn.css. */
+.km-viewerbox {
+  position: relative; overflow: hidden; width: 100%; height: 240px; border-radius: 8px;
+  background: #fff; border: 1px solid #d5d7e0; touch-action: pan-y;
+}
+.km-viewerbox:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.km-viewerbox canvas { display: block; }
+/* Reservtext när JavaScript/WebGL saknas syns via <noscript><img …></noscript> i rutan. */
+.km-hint { font-size: 0.8rem; color: #4a4a5a; margin: 0.3rem 0 0; text-align: center; }
+.km-legend .km-dot--cl { background: #22b422; border-color: #137013; }

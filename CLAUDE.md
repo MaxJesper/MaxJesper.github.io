@@ -212,7 +212,7 @@ Inspirerat av Enkel NO (bara idén med förklarande bilder **bredvid** texten �
 
 Varje molekyl i texten får ett `.mol-card` i sidokolumnen: **namn + molekylformel** (rubrikrad, siffror som `<sub>`), **strukturformel** (2D-SVG, skala 0,88) och **kulmodell** (statisk PNG), plus länken `Rotera i 3D →` (`href="#km-<stem>"`) till samma molekyl i galleriet "Utforska i 3D" (M10). Flera kort i samma `.side-fig` delar en `<figcaption>` (bildtext + `.km-legend` med färgförklaring – bara text/prick, aldrig enbart färg). Kort utan molekylformel (t.ex. kolets former) använder `.mc-desc` i stället.
 
-### Statiska bilder bredvid texten – rotation bara i M10
+### Statiska bilder bredvid texten – rotation bara i M10 (gäller långa kapitel; kort kapitel: se "Live-3D i korta kemikapitel" nedan)
 
 - Bilderna i bildkolumnen är **statiska PNG** (`images/kemi/<område>/kulmodeller/<stem>.png`, transparent, 3x upplösning, `width`/`height` = PNG-storlek/3, `loading="lazy"`, beskrivande `alt`). Inga live-3Dmol-rutor i löptexten: de tar WebGL-kontexter (max ca 16 per sida) och gör sidan seg.
 - **Möjligheten att rotera finns i det befintliga bladet "Utforska i 3D" (M10)** – och som ENDA undantag direkt i milstolpen när själva 3D-strukturen är poängen (kolets former i M2: diamant, grafit, fulleren, grafen, nanorör; klass `.mc-viewer` + `class="km-viewerbox"` + `data-mol`, samma lata skapande/släpp som galleriet, `noscript`-reserv med PNG, marginaler på mobil så att man kan scrolla förbi). Molekylerna i övrigt är statiska PNG i löptexten. Kortens länk `#km-<stem>` öppnar M10 och lyfter fram rätt kort (`.km-flash`). Nya molekyler ska in i BÅDE bildkolumnen och galleriet (`MOLS`/`MULTI` i sidans script är källan för båda).
@@ -227,6 +227,35 @@ Varje molekyl i texten får ett `.mol-card` i sidokolumnen: **namn + molekylform
 - Egna bilder och egen text bara – Enkel NO, läroböcker m.fl. är inspiration, aldrig förlaga (se Originalitet).
 - WCAG 2.2 AA: alla bilder har `alt`, färgförklaring som text, kontrast ≥ 4.5:1 på bildtexter, inget som bara går att förstå via färg.
 - Nästa sida som kan få layouten: välj ut milstolpar med många molekyl-/organ-/kretsbilder först; sidor med få bilder behåller normalbredd.
+
+---
+
+## Live-3D i korta kemikapitel + delade komponenter för formler och övningar — sep 2026
+
+Pilot: `kemi/atomer/` (Atomer och molekyler, 6 milstolpar, 9 molekyler). Bygger på samma breda studieguide med bildkolumn (se ovan), men med ett **medvetet undantag** från regeln "inga live-3Dmol-rutor i löptexten": när ett kapitel har få molekyler (≲ 10) ligger **roterbara 3D-kulmodeller direkt i molekylkorten** i studieguiden, eftersom det inte är lika pedagogiskt att samla alla på ett galleri-ark som i kolkapitlet. Långa kapitel (kol, framtida organisk kemi) behåller statiska PNG + galleri.
+
+**Molekylkort i atomer-kapitlet:** namn + molekylformel (`.mc-head--lab`, `.mc-flab`/`.mc-lab`), 2D-strukturformel (`.mc-struct`, SVG i `images/kemi/atomer/strukturformler/`), roterbar kulmodell (`.mc-viewer`, lat start via IntersectionObserver, släpps när den lämnar bild) och en rad text "Bindning: … · Form: …". Ingen information enbart via färg: knappen "Bokstäver på kulorna" (`#lbl-btn`) lägger atombokstäver på 3D-kulorna för färgblinda elever, och färgförklaring finns som text.
+
+### Delade komponenter (återanvänds i alla kemikapitel)
+
+| Fil | Vad |
+|---|---|
+| `js/molviewer.js` + `css/molviewer.css` | 3Dmol-baserad viewer: `MolViewer.create/destroy/observe/mount/register/setLabels/addMultiBond`. Lat init, släpper WebGL-kontext (max ~16 per sida), tangentbordsstyrning, hjulzoom bara med fokus/ctrl-nyp. Molekyldata per kapitel i `<område>/js/molmodeller.js` (`window.MOLDATA = {mols, multi, style, view, info}`), byggs av `tools/kemi-ritverktyg/atomer/bygg_atomer.py`. |
+| `js/formelvisare.js` + `css/formelvisare.css` (`window.KemiFormel`) | Kulbilder som SVG med bokstäver, formelformatering (`fmt('2 H2O')` → stor siffra `.coef` + nedsänkt `sub.idx`), och widgets via `data-fv="verkstad|figure|reaction|balance|raknare"`: Formelverkstaden, balanserings-övning, Räknemaskinen (stor/nedsänkt siffra). `lyssna.js` hoppar över `.fv-widget`/`.no-listen`. |
+| `js/dra-och-slapp.js` + `css/dra-och-slapp.css` (`window.DraOchSlapp`) | Tillgänglig sorteringsövning: dra med pekare **eller** klicka bricka + ruta **eller** tangentbord; direkt besked med förklaring, poäng på första försöket, händelsen `dd:done`. Använder `--area-strong/--area-soft/--area-border`. **De äldre HTML5-DnD-spelen i andra områden ska migreras hit** (HTML5-DnD fungerar inte med touch och tangentbord). |
+| `css/studieguide-bildkolumn.css` | Har nu temavariablerna `--guide-accent/--guide-soft/--guide-border/--guide-dash` (fallback lila = kol). Sätt egna på `<main class="guide-wide">` för områdesfärg. Atomer = rosa (`#9d174d` stark, `#fdf2f8` mjuk, `#fbcfe8` ram). |
+
+### Formel-tecken: nedsänkt siffra (index) vs stor siffra (koefficient)
+
+Skillnaden mellan `H₂O` (index = antal atomer i molekylen) och `2 H₂O` (koefficient = antal molekyler) är det elever oftast blandar ihop. Den tränas på fem sätt i atomer: (1) förklaring + bildexempel i M5, (2) Formelverkstaden, (3) Räknemaskinen, (4) dra-och-släpp/balansering i `ovningsverktyg.html`, (5) utskrivbart **arbetsblad** `formelark.html` (elever skriver formeln under varje kulbild; slumpat blad med frö i adressen `#…`, facit på eget blad, ryms på en A4-sida). Ska in även i periodiska systemet/jonföreningar/syror-baser när de får reaktionsformler.
+
+### Standardsidor i atomer (mall för resterande kemiområden)
+
+`index` (area-layout + hero med kulmodeller + begrepp + milstolpsnavigering), `studieguide`, `checklista`, `instuderingsfragor` (+print-elev/-larare), `ovningsprov` (+print), `facit` (+print), `begreppslista`, `begreppskort`, `larande-spel`, `ovningsverktyg` (dra-och-släpp), `bygg-molekyl`, `formelark`, `flashcards` (äldre). Färgtema per område via `body.area-<namn>` (atomer: `--area:#be185d; --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8; --area-hover:#fce7f3`).
+
+### WCAG-notering (öppna, delade problem — inte lösta i atomer)
+
+Axe/kontrastmätning sep 2026 visar tre återkommande fel i **delad** CSS/JS som drabbar alla områden: `.subject-btn` och menyknappen (vit text på `#007bff` = 3,97:1, kräver ≥ 4,5:1 → mörkare blå, t.ex. `#0056b3`), `.print-green` (`#28a745` med vit text = 3,13:1) och `.footer-sub` (`#777` på `#f8f9fb` = 4,25:1). Åtgärdas en gång i `css/style.css` (kräver Jespers OK eftersom det ändrar knapparnas utseende överallt). Dessutom ligger Lyssna-knappen inuti `<summary>` (interaktivt element i interaktivt element).
 
 ---
 
@@ -698,3 +727,13 @@ Eleven drar/placerar korten rätt. **Målet:** lära sig **ordningen på skeende
 2. En **detaljerad bild** med alla faser.
 
 Den detaljerade fasbilden kan även bli en **digital träningsövning**, kopplad till en **andra fördjupning i M6** (finns inte ännu – behöver skapas). Ska göras tillsammans med Jesper.
+
+### Idé 24 – Kemi-hudsidan: uppstart, kemihistoria, faropiktogram, labbutrustning, säkerhetsintyg — SKA BYGGAS (Jesper, 19 sep 2026)
+Jesper vill att `kemi/index.html` (ämnessidan Kemi) **inte längre bara är en sida med länkar till områdena** (områdeslänkarna kan tas bort; områdena nås redan via menyn). I stället ska sidan innehålla:
+
+1. **Uppstart och lite kemihistoria** – en kort introduktion till ämnet.
+2. **Övning 1: Faropiktogram** – samma spelidé/design som fågeltävlingen (`biologi/ekologi/faglar-tavling.html`, `larande-spel.html`, `data/faglar.json`): bild + val/namngivning, tid och poäng. **Jesper tar foton** på faropiktogram så fort han hinner (egna foton, inga kopior av tryckta bilder).
+3. **Övning 2: Laboratorieutrustning** – samma spelidé; **Jesper tar foton** på utrustningen så fort han hinner.
+4. **Säkerhetsintyg: säkerhetsbeteende och föreskrifter för att få laborera** – en övning eleven gör (läser reglerna, svarar på kontrollfrågor) och som **till slut skrivs ut och skrivs under av eleven**. Gäller alla NO-ämnen men är viktigast i kemi. **Bara en sida** (lämpligen på kemi-sidan) som **länkas från Ämnet Fysik och Ämnet Biologi**; den behöver bara skrivas ut en gång per elev. Följ utskriftsstandarden (egen utskriftsvy, inget sparas online) och ingen hänvisning till "skolan" (se stående regel). Faktakällor för faro- och labbregler ska anges i en källförteckning.
+
+Ska göras tillsammans med Jesper. Väntar på hans foton för punkt 2 och 3 (punkt 1 och 4 kan byggas utan foton).

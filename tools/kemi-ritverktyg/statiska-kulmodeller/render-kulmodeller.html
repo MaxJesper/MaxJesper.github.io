@@ -18,6 +18,14 @@ var MB = {bulge: {2: 0.48, 3: 0.54}, radius: {2: 0.06, 3: 0.05}, end: 0.02};   /
     function norm(u){ var l=Math.sqrt(u[0]*u[0]+u[1]*u[1]+u[2]*u[2]); return [u[0]/l,u[1]/l,u[2]/l]; }
     var e1 = norm(cross(axis, ref));
     var e2 = norm(cross(axis, e1));
+    // Valfri vridning (spec.rot, grader) av bagarnas plan runt bindningsaxeln - t.ex. koldioxidens tva
+    // C=O-bindningar ligger i plan som ar vridna 90 grader mot varandra. Utan rot: som tidigare.
+    if (spec.rot) {
+      var ph = spec.rot * Math.PI / 180, cp = Math.cos(ph), sp = Math.sin(ph);
+      var e1r = [e1[0]*cp+e2[0]*sp, e1[1]*cp+e2[1]*sp, e1[2]*cp+e2[2]*sp];
+      var e2r = [-e1[0]*sp+e2[0]*cp, -e1[1]*sp+e2[1]*cp, -e1[2]*sp+e2[2]*cp];
+      e1 = e1r; e2 = e2r;
+    }
     var BULGE = MB.bulge[order] || MB.bulge[2], radius = MB.radius[order] || MB.radius[2], color = '#777777', N = 14;
     var dirs = [];
     if (order === 2) {

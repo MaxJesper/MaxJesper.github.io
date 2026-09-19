@@ -1,0 +1,985 @@
+{
+ "sortering": [
+  {
+   "id": "atomens-delar",
+   "tier": "Grund",
+   "title": "Atomens tre partiklar",
+   "intro": "Vilken partikel beskriver varje bricka: proton, neutron eller elektron?",
+   "zones": [
+    {
+     "id": "p",
+     "t": "Proton"
+    },
+    {
+     "id": "n",
+     "t": "Neutron"
+    },
+    {
+     "id": "e",
+     "t": "Elektron"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "p",
+     "why": "Protonen är den positiva partikeln.",
+     "t": "Positiv laddning",
+     "hint": "Tänk på plus och minus."
+    },
+    {
+     "id": "2",
+     "zone": "p",
+     "why": "Protonen ritas som ett plustecken i atombilderna.",
+     "t": "Ritas som + i bilderna",
+     "hint": "Titta på figurtexten till atombilderna."
+    },
+    {
+     "id": "3",
+     "zone": "p",
+     "why": "Antalet protoner är atomnumret, och det avgör vilket grundämne det är.",
+     "t": "Antalet är atomnumret",
+     "hint": "Atomnumret räknar en av partiklarna."
+    },
+    {
+     "id": "4",
+     "zone": "n",
+     "why": "Neutronen är neutral, ungefär som namnet.",
+     "t": "Ingen laddning",
+     "hint": "\"Neutral\" hör ihop med ett av namnen."
+    },
+    {
+     "id": "5",
+     "zone": "n",
+     "why": "Neutronen ritas som ett n.",
+     "t": "Ritas som n i bilderna",
+     "hint": "Titta på bokstaven i bilderna."
+    },
+    {
+     "id": "6",
+     "zone": "e",
+     "why": "Elektronen är negativ.",
+     "t": "Negativ laddning",
+     "hint": "Tänk på plus och minus."
+    },
+    {
+     "id": "7",
+     "zone": "e",
+     "why": "Elektronerna finns i elektronskal utanför kärnan.",
+     "t": "Rör sig i skal utanför kärnan",
+     "hint": "Kärnan innehåller protoner och neutroner."
+    },
+    {
+     "id": "8",
+     "zone": "e",
+     "why": "Elektronen ritas som ett minustecken.",
+     "t": "Ritas som − i bilderna",
+     "hint": "Titta på tecknet i bilderna."
+    }
+   ]
+  },
+  {
+   "id": "tecken",
+   "tier": "Grund",
+   "title": "Kemiska tecken",
+   "intro": "Para ihop varje grundämne med rätt kemiskt tecken. Varje ruta tar en bricka.",
+   "cap1": true,
+   "zones": [
+    {
+     "id": "h",
+     "t": "väte"
+    },
+    {
+     "id": "c",
+     "t": "kol"
+    },
+    {
+     "id": "n",
+     "t": "kväve"
+    },
+    {
+     "id": "o",
+     "t": "syre"
+    },
+    {
+     "id": "cl",
+     "t": "klor"
+    },
+    {
+     "id": "he",
+     "t": "helium"
+    },
+    {
+     "id": "na",
+     "t": "natrium"
+    },
+    {
+     "id": "fe",
+     "t": "järn"
+    },
+    {
+     "id": "au",
+     "t": "guld"
+    }
+   ],
+   "items": [
+    {
+     "id": "h",
+     "zone": "h",
+     "why": "H för väte (hydrogenium).",
+     "t": "H"
+    },
+    {
+     "id": "c",
+     "zone": "c",
+     "why": "C för kol (carbo).",
+     "t": "C"
+    },
+    {
+     "id": "n",
+     "zone": "n",
+     "why": "N för kväve (nitrogenium).",
+     "t": "N"
+    },
+    {
+     "id": "o",
+     "zone": "o",
+     "why": "O för syre (oxygenium).",
+     "t": "O"
+    },
+    {
+     "id": "cl",
+     "zone": "cl",
+     "why": "Cl för klor. Två bokstäver eftersom C redan är kol.",
+     "t": "Cl"
+    },
+    {
+     "id": "he",
+     "zone": "he",
+     "why": "He för helium.",
+     "t": "He"
+    },
+    {
+     "id": "na",
+     "zone": "na",
+     "why": "Na kommer från latinets natrium.",
+     "t": "Na"
+    },
+    {
+     "id": "fe",
+     "zone": "fe",
+     "why": "Fe kommer från latinets ferrum, järn.",
+     "t": "Fe"
+    },
+    {
+     "id": "au",
+     "zone": "au",
+     "why": "Au kommer från latinets aurum, guld.",
+     "t": "Au"
+    }
+   ]
+  },
+  {
+   "id": "armar",
+   "tier": "Grund",
+   "title": "Hur många armar har atomen?",
+   "intro": "Atomens \"armar\" är antalet bindningar den bildar. Sortera atomerna efter antal armar.",
+   "zones": [
+    {
+     "id": "1",
+     "t": "1 arm"
+    },
+    {
+     "id": "2",
+     "t": "2 armar"
+    },
+    {
+     "id": "3",
+     "t": "3 armar"
+    },
+    {
+     "id": "4",
+     "t": "4 armar"
+    }
+   ],
+   "items": [
+    {
+     "id": "h",
+     "zone": "1",
+     "why": "Väte har 1 elektron och behöver 1 till för att fylla sitt skal.",
+     "t": "H (väte)"
+    },
+    {
+     "id": "cl",
+     "zone": "1",
+     "why": "Klor har 7 elektroner på yttersta skalet och saknar 1.",
+     "t": "Cl (klor)"
+    },
+    {
+     "id": "o",
+     "zone": "2",
+     "why": "Syre har 6 yttre elektroner och saknar 2.",
+     "t": "O (syre)"
+    },
+    {
+     "id": "n",
+     "zone": "3",
+     "why": "Kväve har 5 yttre elektroner och saknar 3.",
+     "t": "N (kväve)"
+    },
+    {
+     "id": "c",
+     "zone": "4",
+     "why": "Kol har 4 yttre elektroner och saknar 4.",
+     "t": "C (kol)"
+    }
+   ]
+  },
+  {
+   "id": "grundamne-forening",
+   "tier": "Grund",
+   "title": "Grundämne, kemisk förening eller blandning?",
+   "intro": "Sortera ämnena. Tänk: bara en sorts atomer, flera sorters atomer som sitter ihop, eller flera ämnen som bara är blandade?",
+   "zones": [
+    {
+     "id": "g",
+     "t": "Grundämne"
+    },
+    {
+     "id": "f",
+     "t": "Kemisk förening"
+    },
+    {
+     "id": "b",
+     "t": "Blandning"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "g",
+     "why": "Bara syreatomer – ett grundämne.",
+     "f": "O2"
+    },
+    {
+     "id": "2",
+     "zone": "g",
+     "why": "Bara kväveatomer – ett grundämne.",
+     "f": "N2"
+    },
+    {
+     "id": "3",
+     "zone": "g",
+     "why": "Bara kolatomer – ett grundämne.",
+     "t": "Diamant (C)"
+    },
+    {
+     "id": "4",
+     "zone": "g",
+     "why": "Bara kloratomer – ett grundämne.",
+     "f": "Cl2"
+    },
+    {
+     "id": "5",
+     "zone": "f",
+     "why": "Väte och syre som sitter ihop – en förening.",
+     "f": "H2O"
+    },
+    {
+     "id": "6",
+     "zone": "f",
+     "why": "Kol och syre som sitter ihop – en förening.",
+     "f": "CO2"
+    },
+    {
+     "id": "7",
+     "zone": "f",
+     "why": "Kväve och väte som sitter ihop – en förening.",
+     "f": "NH3"
+    },
+    {
+     "id": "8",
+     "zone": "f",
+     "why": "Kol och väte som sitter ihop – en förening.",
+     "f": "CH4"
+    },
+    {
+     "id": "9",
+     "zone": "b",
+     "why": "Mest N₂ och O₂ som bara är blandade – en blandning.",
+     "t": "Luft"
+    },
+    {
+     "id": "10",
+     "zone": "b",
+     "why": "Salt och vatten som är blandade – en blandning.",
+     "t": "Saltvatten"
+    },
+    {
+     "id": "11",
+     "zone": "b",
+     "why": "Flera ämnen blandade – en blandning.",
+     "t": "Läsk"
+    }
+   ]
+  },
+  {
+   "id": "bindningar",
+   "tier": "Grund",
+   "title": "Enkel-, dubbel- eller trippelbindning?",
+   "intro": "Vilken sorts bindning har molekylen? Ledtråd: räkna strecken mellan atomerna i strukturformeln. Koldioxid har två likadana bindningar.",
+   "zones": [
+    {
+     "id": "1",
+     "t": "Enkelbindning"
+    },
+    {
+     "id": "2",
+     "t": "Dubbelbindning"
+    },
+    {
+     "id": "3",
+     "t": "Trippelbindning"
+    }
+   ],
+   "items": [
+    {
+     "id": "h2",
+     "zone": "1",
+     "why": "H–H: ett streck.",
+     "f": "H2"
+    },
+    {
+     "id": "cl2",
+     "zone": "1",
+     "why": "Cl–Cl: ett streck.",
+     "f": "Cl2"
+    },
+    {
+     "id": "hcl",
+     "zone": "1",
+     "why": "H–Cl: ett streck.",
+     "f": "HCl"
+    },
+    {
+     "id": "h2o",
+     "zone": "1",
+     "why": "Två enkelbindningar (H–O–H).",
+     "f": "H2O"
+    },
+    {
+     "id": "nh3",
+     "zone": "1",
+     "why": "Tre enkelbindningar.",
+     "f": "NH3"
+    },
+    {
+     "id": "ch4",
+     "zone": "1",
+     "why": "Fyra enkelbindningar.",
+     "f": "CH4"
+    },
+    {
+     "id": "o2",
+     "zone": "2",
+     "why": "O=O: två streck eftersom syre har två armar.",
+     "f": "O2"
+    },
+    {
+     "id": "co2",
+     "zone": "2",
+     "why": "O=C=O: två dubbelbindningar.",
+     "f": "CO2"
+    },
+    {
+     "id": "n2",
+     "zone": "3",
+     "why": "N≡N: tre streck eftersom kväve har tre armar.",
+     "f": "N2"
+    }
+   ]
+  },
+  {
+   "id": "bild-formel",
+   "tier": "Grund",
+   "title": "Nedsänkt siffra eller stor siffra? Bild till formel",
+   "intro": "Varje bild visar kulor. Vilken formel passar? Titta noga: hur många molekyler är det, och hur många atomer sitter ihop i varje molekyl?",
+   "cap1": true,
+   "zones": [
+    {
+     "id": "a",
+     "fig": [
+      "H",
+      1
+     ],
+     "label": "En väteatom"
+    },
+    {
+     "id": "b",
+     "fig": [
+      "H",
+      2
+     ],
+     "label": "Två väteatomer som inte sitter ihop"
+    },
+    {
+     "id": "c",
+     "fig": [
+      "H2",
+      1
+     ],
+     "label": "En vätemolekyl med två atomer"
+    },
+    {
+     "id": "d",
+     "fig": [
+      "H2",
+      2
+     ],
+     "label": "Två vätemolekyler"
+    },
+    {
+     "id": "e",
+     "fig": [
+      "H2O",
+      1
+     ],
+     "label": "En vattenmolekyl"
+    },
+    {
+     "id": "f",
+     "fig": [
+      "H2O",
+      2
+     ],
+     "label": "Två vattenmolekyler"
+    },
+    {
+     "id": "g",
+     "fig": [
+      "O2",
+      3
+     ],
+     "label": "Tre syremolekyler"
+    },
+    {
+     "id": "h",
+     "fig": [
+      "CO2",
+      2
+     ],
+     "label": "Två koldioxidmolekyler"
+    }
+   ],
+   "items": [
+    {
+     "id": "a",
+     "zone": "a",
+     "why": "Ingen siffra: en enda atom.",
+     "f": "H"
+    },
+    {
+     "id": "b",
+     "zone": "b",
+     "why": "Stor 2 framför: två separata atomer.",
+     "f": "2 H"
+    },
+    {
+     "id": "c",
+     "zone": "c",
+     "why": "Nedsänkt 2: två atomer sitter ihop i en molekyl.",
+     "f": "H2"
+    },
+    {
+     "id": "d",
+     "zone": "d",
+     "why": "Stor 2 = två molekyler, nedsänkt 2 = två atomer i varje. Totalt 4 atomer.",
+     "f": "2 H2"
+    },
+    {
+     "id": "e",
+     "zone": "e",
+     "why": "En molekyl med 2 H och 1 O.",
+     "f": "H2O"
+    },
+    {
+     "id": "f",
+     "zone": "f",
+     "why": "Två molekyler H₂O: 4 H och 2 O tillsammans.",
+     "f": "2 H2O"
+    },
+    {
+     "id": "g",
+     "zone": "g",
+     "why": "Tre molekyler, två syreatomer i varje: totalt 6 O.",
+     "f": "3 O2"
+    },
+    {
+     "id": "h",
+     "zone": "h",
+     "why": "Två molekyler CO₂: 2 C och 4 O tillsammans.",
+     "f": "2 CO2"
+    }
+   ]
+  },
+  {
+   "id": "rakna-atomer",
+   "tier": "Lär mer",
+   "title": "Räkna atomer: hur många sitter det totalt?",
+   "intro": "Sortera formlerna efter hur många atomer det är <em>totalt</em>. Multiplicera stor siffra med antalet atomer i en molekyl.",
+   "zones": [
+    {
+     "id": "3",
+     "t": "3 atomer"
+    },
+    {
+     "id": "4",
+     "t": "4 atomer"
+    },
+    {
+     "id": "5",
+     "t": "5 atomer"
+    },
+    {
+     "id": "6",
+     "t": "6 atomer"
+    },
+    {
+     "id": "9",
+     "t": "9 atomer"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "3",
+     "why": "2 H + 1 O = 3.",
+     "f": "H2O"
+    },
+    {
+     "id": "2",
+     "zone": "3",
+     "why": "1 C + 2 O = 3.",
+     "f": "CO2"
+    },
+    {
+     "id": "3",
+     "zone": "4",
+     "why": "2 × 2 = 4.",
+     "f": "2 H2"
+    },
+    {
+     "id": "4",
+     "zone": "4",
+     "why": "1 N + 3 H = 4.",
+     "f": "NH3"
+    },
+    {
+     "id": "5",
+     "zone": "4",
+     "why": "2 × 2 = 4.",
+     "f": "2 O2"
+    },
+    {
+     "id": "6",
+     "zone": "5",
+     "why": "1 C + 4 H = 5.",
+     "f": "CH4"
+    },
+    {
+     "id": "7",
+     "zone": "6",
+     "why": "2 × (2 + 1) = 6.",
+     "f": "2 H2O"
+    },
+    {
+     "id": "8",
+     "zone": "6",
+     "why": "3 × 2 = 6.",
+     "f": "3 O2"
+    },
+    {
+     "id": "9",
+     "zone": "9",
+     "why": "3 × (2 + 1) = 9.",
+     "f": "3 H2O"
+    }
+   ]
+  },
+  {
+   "id": "former",
+   "tier": "Lär mer",
+   "title": "Molekylernas former",
+   "intro": "Vilken form har molekylen? Titta på bilden av molekylen och tänk på hur atomerna sitter runt den mittersta.",
+   "zones": [
+    {
+     "id": "rak",
+     "t": "Rak"
+    },
+    {
+     "id": "vinklad",
+     "t": "Vinklad"
+    },
+    {
+     "id": "pyramid",
+     "t": "Pyramid"
+    },
+    {
+     "id": "tetra",
+     "t": "Tetraeder"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "rak",
+     "why": "Koldioxid är rak: O=C=O.",
+     "f": "CO2"
+    },
+    {
+     "id": "2",
+     "zone": "rak",
+     "why": "Med två atomer är molekylen alltid rak.",
+     "f": "N2"
+    },
+    {
+     "id": "3",
+     "zone": "rak",
+     "why": "Med två atomer är molekylen alltid rak.",
+     "f": "HCl"
+    },
+    {
+     "id": "4",
+     "zone": "vinklad",
+     "why": "Vatten är vinklat, ungefär 105°.",
+     "f": "H2O"
+    },
+    {
+     "id": "5",
+     "zone": "pyramid",
+     "why": "Ammoniak är en låg pyramid med kvävet i toppen.",
+     "f": "NH3"
+    },
+    {
+     "id": "6",
+     "zone": "tetra",
+     "why": "Metan är en tetraeder: fyra väten jämnt fördelade.",
+     "f": "CH4"
+    }
+   ]
+  },
+  {
+   "id": "struktur-namn",
+   "tier": "Lär mer",
+   "title": "Strukturformel till namn",
+   "intro": "Para ihop varje strukturformel med rätt namn. Varje ruta tar en bricka.",
+   "cap1": true,
+   "zones": [
+    {
+     "id": "h2",
+     "img": "h2"
+    },
+    {
+     "id": "o2",
+     "img": "o2"
+    },
+    {
+     "id": "n2",
+     "img": "n2"
+    },
+    {
+     "id": "cl2",
+     "img": "cl2"
+    },
+    {
+     "id": "co2",
+     "img": "co2"
+    },
+    {
+     "id": "h2o",
+     "img": "h2o"
+    },
+    {
+     "id": "nh3",
+     "img": "nh3"
+    },
+    {
+     "id": "ch4",
+     "img": "ch4"
+    }
+   ],
+   "items": [
+    {
+     "id": "h2",
+     "zone": "h2",
+     "why": "H–H är vätgas.",
+     "t": "vätgas"
+    },
+    {
+     "id": "o2",
+     "zone": "o2",
+     "why": "O=O är syrgas.",
+     "t": "syrgas"
+    },
+    {
+     "id": "n2",
+     "zone": "n2",
+     "why": "N≡N är kvävgas.",
+     "t": "kvävgas"
+    },
+    {
+     "id": "cl2",
+     "zone": "cl2",
+     "why": "Cl–Cl är klorgas.",
+     "t": "klorgas"
+    },
+    {
+     "id": "co2",
+     "zone": "co2",
+     "why": "O=C=O är koldioxid.",
+     "t": "koldioxid"
+    },
+    {
+     "id": "h2o",
+     "zone": "h2o",
+     "why": "Syre med två väten är vatten.",
+     "t": "vatten"
+    },
+    {
+     "id": "nh3",
+     "zone": "nh3",
+     "why": "Kväve med tre väten är ammoniak.",
+     "t": "ammoniak"
+    },
+    {
+     "id": "ch4",
+     "zone": "ch4",
+     "why": "Kol med fyra väten är metan.",
+     "t": "metan"
+    }
+   ]
+  },
+  {
+   "id": "reaktant-produkt",
+   "tier": "Lär mer",
+   "title": "Reaktanter och produkter",
+   "intro": "Reaktionen är förbränning av metan: <span class=\"fx\">CH<sub class=\"idx\">4</sub> + <b class=\"coef\">2</b>&nbsp;O<sub class=\"idx\">2</sub> → CO<sub class=\"idx\">2</sub> + <b class=\"coef\">2</b>&nbsp;H<sub class=\"idx\">2</sub>O</span>. Vilka ämnen är reaktanter (det man börjar med) och vilka är produkter (det som bildas)?",
+   "zones": [
+    {
+     "id": "r",
+     "t": "Reaktant"
+    },
+    {
+     "id": "p",
+     "t": "Produkt"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "r",
+     "why": "Metan finns till vänster om pilen – en reaktant.",
+     "f": "CH4"
+    },
+    {
+     "id": "2",
+     "zone": "r",
+     "why": "Syrgas finns till vänster om pilen – en reaktant.",
+     "f": "2 O2"
+    },
+    {
+     "id": "3",
+     "zone": "p",
+     "why": "Koldioxid finns till höger om pilen – en produkt.",
+     "f": "CO2"
+    },
+    {
+     "id": "4",
+     "zone": "p",
+     "why": "Vatten finns till höger om pilen – en produkt.",
+     "f": "2 H2O"
+    }
+   ]
+  },
+  {
+   "id": "fysikalisk-kemisk",
+   "tier": "Lär mer",
+   "title": "Fysikalisk förändring eller kemisk reaktion?",
+   "intro": "Vid en kemisk reaktion bildas nya ämnen. Vid en fysikalisk förändring är det samma ämne, bara i ny form eller blandat på nytt sätt.",
+   "zones": [
+    {
+     "id": "f",
+     "t": "Fysikalisk förändring"
+    },
+    {
+     "id": "k",
+     "t": "Kemisk reaktion"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "f",
+     "why": "Molekylerna är fortfarande H₂O.",
+     "t": "Vatten kokar och blir ånga"
+    },
+    {
+     "id": "2",
+     "zone": "f",
+     "why": "Samma ämne, bara annan form.",
+     "t": "Is smälter"
+    },
+    {
+     "id": "3",
+     "zone": "f",
+     "why": "Sockret finns kvar, bara blandat.",
+     "t": "Socker löses i te"
+    },
+    {
+     "id": "4",
+     "zone": "k",
+     "why": "Nya ämnen (koldioxid och vatten) bildas.",
+     "t": "Ved brinner"
+    },
+    {
+     "id": "5",
+     "zone": "k",
+     "why": "Järn reagerar med syre och bildar ett nytt ämne.",
+     "t": "Järn rostar"
+    },
+    {
+     "id": "6",
+     "zone": "k",
+     "why": "2 H₂ + O₂ → 2 H₂O: nya ämnen bildas.",
+     "t": "Vätgas och syrgas bildar vatten"
+    }
+   ]
+  }
+ ],
+ "balansering": [
+  {
+   "id": "b1",
+   "tier": "Grund",
+   "left": [
+    "H2",
+    "Cl2"
+   ],
+   "right": [
+    "HCl"
+   ],
+   "solution": [
+    1,
+    1,
+    2
+   ],
+   "tip": "Börja med Cl: det finns 2 Cl till vänster men bara 1 Cl i HCl."
+  },
+  {
+   "id": "b2",
+   "tier": "Grund",
+   "left": [
+    "C",
+    "O2"
+   ],
+   "right": [
+    "CO"
+   ],
+   "start": [
+    1,
+    1,
+    1
+   ],
+   "solution": [
+    2,
+    1,
+    2
+   ],
+   "tip": "Syre finns i par (O_2) till vänster. Hur många CO behövs för att få 2 O?"
+  },
+  {
+   "id": "b3",
+   "tier": "Lär mer",
+   "left": [
+    "H2",
+    "O2"
+   ],
+   "right": [
+    "H2O"
+   ],
+   "solution": [
+    2,
+    1,
+    2
+   ],
+   "tip": "Börja med syre. Räkna sedan väte."
+  },
+  {
+   "id": "b4",
+   "tier": "Lär mer",
+   "left": [
+    "N2",
+    "H2"
+   ],
+   "right": [
+    "NH3"
+   ],
+   "solution": [
+    1,
+    3,
+    2
+   ],
+   "tip": "Börja med N, sedan H."
+  },
+  {
+   "id": "b5",
+   "tier": "Lär mer",
+   "left": [
+    "CH4",
+    "O2"
+   ],
+   "right": [
+    "CO2",
+    "H2O"
+   ],
+   "solution": [
+    1,
+    2,
+    1,
+    2
+   ],
+   "tip": "Kol stämmer redan. Fixa H först och räkna sedan alla O."
+  },
+  {
+   "id": "b6",
+   "tier": "Lär mer",
+   "left": [
+    "CO",
+    "O2"
+   ],
+   "right": [
+    "CO2"
+   ],
+   "solution": [
+    2,
+    1,
+    2
+   ],
+   "tip": "Räkna O på båda sidor."
+  },
+  {
+   "id": "b7",
+   "tier": "Lär mer",
+   "left": [
+    "O2"
+   ],
+   "right": [
+    "O3"
+   ],
+   "solution": [
+    3,
+    2
+   ],
+   "tip": "Hitta det minsta talet som går att dela med både 2 och 3."
+  }
+ ]
+}

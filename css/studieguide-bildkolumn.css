@@ -34,21 +34,23 @@ main.guide-wide { max-width: 1180px; }
 
 /* Bildruta i sidokolumnen */
 .side-fig {
-  margin: 0; background: #faf9ff; border: 1px solid #ece9fb; border-radius: 10px;
+  margin: 0; background: var(--guide-soft, #faf9ff); border: 1px solid var(--guide-border, #ece9fb); border-radius: 10px;
   padding: 0.75rem 0.85rem;
 }
 .side-fig > img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 .side-fig figcaption { font-size: 0.88rem; line-height: 1.4; color: #4a4a5a; margin-top: 0.65rem; text-align: left; }
 .side-fig figcaption strong { color: #1a1a2e; }
 
+/* Färgtema: en studieguide kan sätta --guide-accent / --guide-soft / --guide-border / --guide-dash på <body> (standard = lila som kolkapitlet). */
+
 /* Molekylkort: namn + molekylformel, strukturformel (2D) och kulmodell (statisk bild) */
-.mol-card + .mol-card { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed #d9d4f5; }
+.mol-card + .mol-card { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed var(--guide-dash, #d9d4f5); }
 .mc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; margin-bottom: 0.35rem; }
 .mc-name { font-weight: 700; color: #1a1a2e; font-size: 0.98rem; line-height: 1.25; }
-.mc-formula { font-family: "Cambria Math", Georgia, serif; font-size: 1.05rem; color: #5b21b6; white-space: nowrap; }
+.mc-formula { font-family: "Cambria Math", Georgia, serif; font-size: 1.05rem; color: var(--guide-accent, #5b21b6); white-space: nowrap; }
 .mc-imgs { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.35rem 1.1rem; }
 .mc-imgs img { display: block; max-width: 100%; height: auto; }
-.mc-rotate { display: block; text-align: right; font-size: 0.8rem; margin-top: 0.2rem; color: #5b21b6; }
+.mc-rotate { display: block; text-align: right; font-size: 0.8rem; margin-top: 0.2rem; color: var(--guide-accent, #5b21b6); }
 .km-legend { display: block; margin-top: 0.4rem; font-size: 0.82rem; color: #4a4a5a; }
 .km-dot { display: inline-block; width: 0.7em; height: 0.7em; border-radius: 50%; margin: 0 0.25em 0 0.15em; vertical-align: -0.02em; border: 1px solid #555; }
 .km-dot--c { background: #4d4d4d; }
@@ -57,7 +59,7 @@ main.guide-wide { max-width: 1180px; }
 .km-dot--n { background: #3050f8; border-color: #1a2fa8; }
 
 /* Markering av kulmodell-kortet man kommit till via "Rotera i 3D" */
-.km-card.km-flash { outline: 3px solid #6d28d9; outline-offset: 3px; }
+.km-card.km-flash { outline: 3px solid var(--guide-accent, #6d28d9); outline-offset: 3px; }
 
 /* Smala skärmar: bilderna hamnar direkt efter den text de hör till */
 @media (max-width: 900px) {
@@ -71,7 +73,7 @@ main.guide-wide { max-width: 1180px; }
 }
 
 /* Kort utan molekylformel (t.ex. kolformerna): kort beskrivning i stället för formel */
-.mc-desc { font-size: 0.88rem; color: #5b21b6; text-align: right; line-height: 1.25; }
+.mc-desc { font-size: 0.88rem; color: var(--guide-accent, #5b21b6); text-align: right; line-height: 1.25; }
 
 /* Bildrad inne i löpande text/utfällbar ruta (t.ex. grafen + nanorör i "Nanorör och grafen") */
 .fig-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 0.8rem 1.2rem; margin: 0.9rem 0 0.2rem; }
@@ -95,3 +97,16 @@ main.guide-wide { max-width: 1180px; }
 @media (max-width: 900px) {
   .guide-wide .mc-viewer { width: calc(100% - 2.6rem); margin: 0 auto; }
 }
+
+/* Molekylkort med tydliga etiketter (kemi/atomer): "Molekylformel", "Strukturformel", "Kulmodell (3D)" */
+.mc-flab { display: block; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #4a4a5a; text-align: right; line-height: 1.1; }
+.mc-head--lab .mc-formula { display: block; text-align: right; }
+.mc-lab { display: block; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #4a4a5a; margin: 0.45rem 0 0.15rem; }
+.mc-struct { text-align: center; }
+.mc-struct img { display: inline-block; max-width: 100%; height: auto; }
+.mc-bond { font-size: 0.85rem; color: #333a4a; margin: 0.3rem 0 0; text-align: center; }
+/* Kort med strukturformel och 3D-ruta sida vid sida (kemi/atomer) */
+.mc-pair { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: 0.2rem 0.7rem; align-items: center; }
+.mc-pair .mc-struct { display: flex; align-items: center; justify-content: center; min-height: 100px; }
+.mc-pair .mc-viewer { width: 100%; }
+@media (max-width: 440px) { .mc-pair { grid-template-columns: minmax(0, 1fr); } }

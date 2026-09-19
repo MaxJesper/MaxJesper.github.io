@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bygg en molekyl – Atomer och molekyler</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+  <link rel="stylesheet" href="/css/molviewer.css" />
+  <link rel="stylesheet" href="/css/formelvisare.css" />
+  <style>
+    body { --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8; --fv-strong:#9d174d; --fv-soft:#fdf2f8; --fv-border:#fbcfe8; }
+    main { max-width: 900px; margin: 0 auto; }
+    .top-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; }
+    .intro-box { background:#fdf2f8; border:1px solid #fbcfe8; border-left:4px solid #9d174d; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .intro-box p { margin:0.35rem 0; }
+    .bm { background:#fff; border:1px solid #fbcfe8; border-left:5px solid #9d174d; border-radius:12px; padding:0.9rem 1rem 1rem; }
+    .bm-lab { display:block; font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; color:#333a4a; font-weight:700; margin:0.4rem 0 0.25rem; }
+    .bm-taskbtns, .bm-pbtns { display:flex; flex-wrap:wrap; gap:0.4rem; }
+    .bm-btn { font:inherit; font-size:0.95rem; font-weight:600; min-height:44px; padding:0.3rem 0.8rem; background:#fff; color:#1a1a2e; border:2px solid #9d174d; border-radius:10px; cursor:pointer; display:inline-flex; align-items:center; gap:0.4rem; }
+    .bm-btn:hover:not(:disabled) { background:#fdf2f8; }
+    .bm-btn:disabled { opacity:0.45; cursor:not-allowed; }
+    .bm-btn[aria-pressed="true"] { background:#9d174d; color:#fff; }
+    .bm-btn[aria-pressed="true"] .fx .coef, .bm-btn[aria-pressed="true"] .fx sub.idx { color:#fff; }
+    .bm-btn:focus-visible, .bm-atom:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .bm-atom { cursor:pointer; outline:none; }
+    .bm-atom:focus-visible circle:first-child { stroke:#1d4ed8; stroke-width:4; }
+    .bm-small { min-height:44px; font-size:0.9rem; }
+    .bm-dot { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; border:2px solid; font-weight:700; font-size:0.85rem; font-family:Arial, sans-serif; }
+    .bm-goal { margin:0.6rem 0; padding:0.5rem 0.7rem; background:#fdf2f8; border-radius:8px; }
+    .bm-canvas-wrap { border:1px solid #d5d7e0; border-radius:10px; background:#fafafe; margin:0.6rem 0; touch-action:none; }
+    .bm-svg { display:block; width:100%; height:auto; max-height:420px; user-select:none; }
+    .bm-actions { display:flex; flex-wrap:wrap; gap:0.4rem 0.6rem; align-items:center; min-height:52px; }
+    .bm-status { margin:0.4rem 0; min-height:1.6em; }
+    .bm-list { margin:0.6rem 0; }
+    .bm-list summary { cursor:pointer; font-weight:600; color:#9d174d; }
+    .bm-list summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .bm-result { margin-top:0.8rem; padding:0.8rem 1rem; background:#fdf2f8; border:1px solid #fbcfe8; border-radius:10px; }
+    .bm-h { margin:0 0 0.3rem; color:#9d174d; font-size:1.2rem; }
+    .bm-good { color:#14532d; font-weight:700; }
+    .bm-bad { color:#7c2d12; font-weight:700; }
+    .bm-figrow { margin:0.5rem 0; }
+    .bm-3d { max-width:320px; }
+    #bm-prog { font-weight:700; color:#14532d; }
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.6rem; margin-top:1.5rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#fdf2f8; border:1px solid #fbcfe8; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; }
+    .next-steps a:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#9d174d; font-weight:700; margin-bottom:0.2rem; }
+  </style>
+</head>
+<body>
+  <header class="kemi-header">
+    <h1>Bygg en molekyl</h1>
+    <p>Atomer och molekyler</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p class="top-row">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">Studieguiden</a>
+    </p>
+
+    <section class="intro-box">
+      <p><strong>Så här bygger du:</strong> 1) Välj en uppgift (eller fritt bygge). 2) Lägg till atomer med knapparna. Siffran i parentes är atomens antal <strong>armar</strong>. 3) Klicka på en atom och sedan på en till, och tryck på <em>Fler streck (+)</em> för att knyta en bindning. Siffran i cirkeln på varje atom visar hur många armar som är lediga. När alla är ✓ är molekylen färdig.</p>
+      <p id="bm-prog" role="status" aria-live="polite">Uppgifter klara: 0 av 8</p>
+    </section>
+
+    <div class="bm" id="bm"></div>
+
+    <div class="next-steps">
+      <a href="./ovningsverktyg.html"><span class="n-label">Träna</span>Dra-och-släpp-övningar</a>
+      <a href="./formelark.html"><span class="n-label">Skriv ut</span>Skriv formeln under bilden</a>
+      <a href="./studieguide.html#m3"><span class="n-label">Läs</span>Molekyler i studieguiden</a>
+    </div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/3Dmol-min.js"></script>
+  <script src="/kemi/atomer/js/molmodeller.js"></script>
+  <script src="/js/molviewer.js"></script>
+  <script src="/js/formelvisare.js"></script>
+  <script src="/kemi/atomer/js/bygg-molekyl.js"></script>
+  <script>ByggMolekyl.init(document.getElementById('bm'));</script>
+</body>
+</html>

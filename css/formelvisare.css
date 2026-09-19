@@ -1,0 +1,67 @@
+/* formelvisare.css – stil för js/formelvisare.js (kulbilder, Formelverkstaden, Balansera reaktionen).
+   Använder områdesfärgerna --area / --area-strong / --area-soft / --area-border om de finns. */
+.fv-widget {
+  --fv-strong: var(--area-strong, #1d4ed8); --fv-soft: var(--area-soft, #eff6ff); --fv-border: var(--area-border, #bfdbfe);
+  background: #fff; border: 1px solid var(--fv-border); border-left: 5px solid var(--fv-strong); border-radius: 12px;
+  padding: 0.9rem 1rem 1rem; margin: 1rem 0; color: #1a1a2e; position: relative;
+}
+.fv-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.fv-controls { display: flex; flex-wrap: wrap; gap: 0.8rem 1.6rem; align-items: flex-end; }
+.fv-field { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.9rem; font-weight: 600; }
+.fv-field select {
+  font: inherit; font-weight: 400; min-height: 44px; padding: 0.3rem 0.6rem; border: 2px solid #5b6478; border-radius: 8px; background: #fff; color: #1a1a2e;
+}
+.fv-stepper { display: inline-flex; align-items: center; gap: 0.3rem; }
+.fv-stepper button {
+  width: 44px; height: 44px; font-size: 1.5rem; line-height: 1; font-weight: 700; cursor: pointer;
+  background: #fff; color: var(--fv-strong); border: 2px solid var(--fv-strong); border-radius: 10px;
+}
+.fv-stepper button:hover:not(:disabled) { background: var(--fv-soft); }
+.fv-stepper button:disabled { opacity: 0.45; cursor: not-allowed; }
+.fv-stepper output { min-width: 2.2rem; text-align: center; font-size: 1.35rem; font-weight: 700; }
+.fv-widget button:focus-visible, .fv-widget select:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+
+.fv-formula { font-size: 2.2rem; font-family: "Cambria Math", Georgia, serif; margin: 0.6rem 0 0.2rem; line-height: 1.2; }
+.fv-formula .fv-coef { font-weight: 700; color: #9a3412; }                      /* stor siffra framför: brun/orange + fetstil */
+.fv-formula sub.fv-idx { font-weight: 700; color: var(--fv-strong); font-size: 0.6em; }
+.fv-legend { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 0.85rem; color: #333a4a; display: flex; flex-wrap: wrap; gap: 0.2rem 1.2rem; }
+.fv-legend b.fv-coef { color: #9a3412; }
+.fv-legend b.fv-idx-b { color: var(--fv-strong); }
+.fv-figure { margin: 0.5rem 0; min-height: 60px; }
+.fv-svg { max-width: 100%; height: auto; }
+.fv-count table, .fv-balcount table { border-collapse: collapse; font-size: 0.93rem; margin: 0.4rem 0; }
+.fv-count th, .fv-count td, .fv-balcount th, .fv-balcount td { border: 1px solid #c3c8d6; padding: 0.35rem 0.7rem; text-align: left; }
+.fv-count thead th, .fv-balcount thead th { background: var(--fv-soft); color: var(--fv-strong); }
+.fv-total th, .fv-total td { background: #f4f5f9; }
+.fv-text { margin: 0.5rem 0 0; font-size: 1rem; min-height: 1.5em; }
+.fv-good { color: #14532d; font-weight: 700; }
+.fv-almost { color: #7c2d12; font-weight: 700; }
+.fv-ok { color: #14532d; font-weight: 700; }
+.fv-bad { color: #7c2d12; font-weight: 700; }
+
+.fv-reaction { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.6rem 0.5rem; justify-content: center; }
+.fv-term { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; min-width: 96px; }
+.fv-tf { font-size: 1.5rem; font-family: "Cambria Math", Georgia, serif; }
+.fv-tfig { min-height: 50px; }
+.fv-op, .fv-arrow { font-size: 2rem; align-self: center; color: var(--fv-strong); font-weight: 700; padding: 0 0.2rem; }
+.fv-tip { margin-top: 0.5rem; font-size: 0.93rem; }
+.fv-tip summary { cursor: pointer; font-weight: 600; color: var(--fv-strong); }
+
+.fv-coefw { font-weight: 700; color: #9a3412; }
+.fv-static { text-align: center; }
+
+/* Formler i löpande text/tabeller: stor siffra framför (koefficient) och nedsänkt siffra (index) – skiljs åt av
+   läge OCH fetstil OCH färg (färg är aldrig ensam bärare). Användning: <span class="fx"><b class="coef">2</b> H<sub class="idx">2</sub>O</span> */
+.fx { font-family: "Cambria Math", Georgia, serif; white-space: nowrap; }
+.fx .coef { font-weight: 700; color: #9a3412; }
+.fx sub.idx { font-weight: 700; color: var(--fv-strong, var(--area-strong, #1d4ed8)); font-size: 0.7em; }
+
+/* Räknemaskinen */
+.fv-rk-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.3rem 1rem; font-size: 0.9rem; color: #333a4a; }
+.fv-rk-q { font-size: 1.15rem; margin: 0.6rem 0 0.4rem; }
+.fv-rk-form { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.5rem 0; }
+.fv-rk-form input { font: inherit; font-size: 1.2rem; width: 6rem; min-height: 44px; padding: 0.2rem 0.6rem; border: 2px solid #5b6478; border-radius: 8px; }
+.fv-rk-form input:focus-visible, .fv-btn:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.fv-btn { font: inherit; font-weight: 600; min-height: 44px; padding: 0.3rem 1rem; background: var(--fv-strong); color: #fff; border: 2px solid var(--fv-strong); border-radius: 999px; cursor: pointer; }
+.fv-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.fv-rk-next { margin-top: 0.5rem; }

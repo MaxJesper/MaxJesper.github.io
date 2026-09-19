@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Atomer och molekyler – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-atomer{--area:#be185d;--area-strong:#9d174d;--area-soft:#fdf2f8;--area-border:#fbcfe8;--area-hover:#fce7f3;}
+
+    .page-intro {
+      margin-bottom: 1.5rem;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .resource-box {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .resource-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .resource-thumb-link {
+      display: block;
+      text-decoration: none;
+    }
+
+    .resource-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #fdf2f8, #fbcfe8);
+      color: var(--area-strong);
+    }
+
+    .resource-title-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .resource-title-link h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      color: #1a1a2e;
+    }
+
+    .resource-title-link:hover h2 {
+      text-decoration: underline;
+    }
+
+    .resource-box p {
+      margin: 0;
+      color: #444;
+      line-height: 1.35;
+    }
+
+    .resource-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .resource-box li {
+      margin: 0;
+    }
+
+    .resource-box ul a {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--area-strong);
+    }
+
+    .study-tips {
+      margin-top: 1.5rem;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .study-tips summary {
+      cursor: pointer;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .study-tips a { color: var(--area-strong); text-decoration: underline; }
+    .study-tips ul {
+      margin: 0.75rem 0 0 1.2rem;
+    }
+
+    .study-tips li {
+      margin-bottom: 0.45rem;
+    }
+  </style>
+</head>
+<body class="area-atomer">
+
+  <header class="kemi-header">
+    <h1>Lärande spel</h1>
+    <p>Atomer och molekyler</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p>
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <section class="page-intro">
+      <p>
+        Här hittar du övningarna för atomer och molekyler: dra och släpp, bygg egna molekyler,
+        skriv formler under bilder och träna begreppen med begreppskort.
+      </p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./ovningsverktyg.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Dra och släpp</div>
+        </a>
+        <a class="resource-title-link" href="./ovningsverktyg.html">
+          <h2>Dra och släpp, sortera och balansera</h2>
+        </a>
+        <p>Sortera atomer, molekyler och formler genom att dra brickorna till rätt ruta, balansera reaktioner och träna på stor och nedsänkt siffra i Räknemaskinen. Direkt besked med förklaring.</p>
+        <ul>
+          <li><a href="./ovningsverktyg.html">Öppna övningarna</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./bygg-molekyl.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Bygg molekyl</div>
+        </a>
+        <a class="resource-title-link" href="./bygg-molekyl.html">
+          <h2>Bygg en molekyl</h2>
+        </a>
+        <p>Lägg till atomer och knyt bindningar mellan dem tills alla armar är upptagna. Åtta uppgifter, från vätgas till metan, eller bygg fritt.</p>
+        <ul>
+          <li><a href="./bygg-molekyl.html">Öppna molekylbyggaren</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./formelark.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Formelark</div>
+        </a>
+        <a class="resource-title-link" href="./formelark.html">
+          <h2>Skriv formeln under bilden</h2>
+        </a>
+        <p>Ett utskrivbart arbetsblad med kulbilder där du skriver formeln under varje bild: stor siffra framför och nedsänkt siffra. Nytt blad varje gång, med facit.</p>
+        <ul>
+          <li><a href="./formelark.html">Öppna arbetsbladet</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./begreppskort.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Begreppskort</div>
+        </a>
+        <a class="resource-title-link" href="./begreppskort.html">
+          <h2>Begreppskort</h2>
+        </a>
+        <p>Para ihop begrepp och förklaringar i två nivåer. Nivå 2 låses upp när du klarat nivå 1.</p>
+        <ul>
+          <li><a href="./begreppskort.html">Öppna begreppskorten</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Tips</summary>
+        <ul>
+          <li>Börja med sorteringsövningarna i Grund och gå vidare till Lär mer när du känner dig säker.</li>
+          <li>Skillnaden mellan stor och nedsänkt siffra är det som elever oftast blandar ihop. Träna den med arbetsbladet och Räknemaskinen.</li>
+          <li>Vill du se molekylerna först? Kulmodellerna går att rotera direkt i <a href="./studieguide.html#m3">studieguiden</a>.</li>
+          <li>De äldre <a href="./flashcards.html">flashcards</a> finns kvar för snabb repetition.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>

@@ -63,11 +63,12 @@
   function getMilestoneText(milestone) {
     // .mc-head/.mc-rotate/.km-legend: molekylkortens rubrikrad, "Rotera i 3D"-länk och färgförklaring
     // i bildkolumnen (studieguide-bildkolumn.css) ska inte läsas upp; bildtexterna läses.
-    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip', '.mc-head', '.mc-rotate', '.km-legend', '.km-hint']);
+    // .fv-widget (js/formelvisare.js: verkstad/balansera) och .no-listen (t.ex. periodiska systemets tabell) är interaktiva/tabellartade och läses inte upp.
+    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip', '.mc-head', '.mc-rotate', '.km-legend', '.km-hint', '.fv-widget', '.no-listen']);
   }
 
   function getDeepenText(deepen) {
-    return extractText(deepen, ['.listen-btn', '.km-legend', '.km-hint']);
+    return extractText(deepen, ['.listen-btn', '.km-legend', '.km-hint', '.fv-widget', '.no-listen']);
   }
 
   // Returnerar mp3-sökväg för en milstolpe eller fördjupning

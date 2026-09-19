@@ -99,12 +99,6 @@ Idag blandas `*-print-elev/larare.html` och `*-elevutskrift/lararutskrift.html`.
 ### D5. "Träna med AI" – finns bara i periodiska-systemet
 - [ ] Utvärdera och rulla ut `trana-med-ai.html` till fler områden.
 
-### D6. Bred studieguide med bildkolumn – bara pilot i kemi/kol-och-kolforeningar (sep 2026)
-Text till vänster, förklarande bilder till höger vid rätt text (`<main class="guide-wide">` + `/css/studieguide-bildkolumn.css`). Regler och markup: `CLAUDE.md`, avsnittet "Bred studieguide med bildkolumn".
-- [ ] Välj ut de studieguider/milstolpar som har många förklarande bilder (kemi: syror-och-baser, periodiska-systemet; biologi: cell, DNA, organsystem; fysik: kretsar, krafter) och inför layouten där.
-- [ ] Reaktioner och andra breda bilder: alltid full bredd (`m-row--full`), aldrig i sidokolumnen.
-- [ ] Statiska kulmodell-PNG bredvid texten, rotation bara i det samlade 3D-bladet – gäller för alla kemiområden med molekyler.
-
 ## E. Större förbättringsidéer (backlog)
 
 - [ ] Samlad **lärarhubb** per område (allt lärarmaterial på ett ställe).
@@ -121,3 +115,19 @@ Text till vänster, förklarande bilder till höger vid rätt text (`<main class
 - Återanvänd befintliga områden som mall – kraft-och-rorelse och periodiska-systemet
   är de mest kompletta att kopiera från.
 - **Kör aldrig** `git commit`/`git push` själv. Avsluta med push-kommandon till Jesper.
+
+
+---
+
+## Atomer och molekyler (kemi/atomer) – status sep 2026
+
+**Klart:** studieguide (6 milstolpar, bred bildkolumn, roterbar 3D i molekylkorten), alla standardsidor (index, checklista, instuderingsfrågor + print, övningsprov + print, facit + print, begreppslista, begreppskort, larande-spel), `ovningsverktyg` (dra-och-släpp, balansering, Räknemaskinen), `bygg-molekyl`, `formelark` (utskrivbart, stor vs nedsänkt siffra), flashcards moderniserade.
+
+- [ ] Översättningar: `data/begrepp.<prefix>.json` (en, es, ar, so, fa, am, ps, pl, bs, ur) + `data/termer.<prefix>.json` när inline-översättning införs.
+- [ ] Inline-översättning (`concept-inline`, `concept-lang-selector`) i studieguiden – kärnbegrepp och termer.
+- [ ] Lyssna: spela in mp3 om Jesper vill (TTS fungerar redan som reserv).
+- [ ] Begreppsbingo (+ lag) enligt mönstret från liv-och-cellen/ekologi.
+- [ ] Jesper granskar studieguidetext, prov och frågor (allt är nyskrivet, sep 2026).
+- [ ] Migrera de äldre HTML5-DnD-spelen i andra områden till `js/dra-och-slapp.js` (touch + tangentbord).
+- [ ] Delade WCAG-fel i `css/style.css` (`.subject-btn`/menyknapp vit på #007bff 3,97:1, `.print-green` 3,13:1, `.footer-sub` 4,25:1) – kräver Jespers OK, ändrar utseendet överallt.
+- [ ] Nästa steg: dra in samma formelverktyg i jonföreningar/syror-och-baser när reaktionsformler behandlas där.

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Atomer och molekyler</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+  <link rel="stylesheet" href="/css/molviewer.css" />
+  <link rel="stylesheet" href="/css/formelvisare.css" />
+
+  <style>
+    body { --listen-color:#9d174d; --listen-border:#fbcfe8; --listen-hover-bg:#fdf2f8; --listen-deepen-color:#7a5c00; --listen-deepen-border:#c9a640;
+           --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8;
+           --guide-accent:#9d174d; --guide-soft:#fffafc; --guide-border:#f5d0e2; --guide-dash:#f3c4dc; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro { background:#fdf2f8; border:1px solid #fbcfe8; border-left:4px solid #9d174d; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .guide-intro p { margin:0.35rem 0; }
+    .pill-btn { background:#fdf2f8; border:1px solid #f0abcb; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#9d174d; cursor:pointer; min-height:44px; }
+    .pill-btn:hover { background:#fce7f3; }
+    .pill-btn[aria-pressed="true"] { background:#9d174d; color:#fff; border-color:#9d174d; }
+    .pill-btn:focus-visible, .subject-btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .milestone { background:#fff; border:1px solid #d8d8d8; border-radius:12px; margin-bottom:0.9rem; box-shadow:0 2px 8px rgba(0,0,0,0.04); overflow:hidden; }
+    .milestone > summary { list-style:none; cursor:pointer; padding:1rem 1.1rem; display:flex; align-items:center; gap:0.75rem; font-weight:600; color:#1a1a2e; }
+    .milestone > summary::-webkit-details-marker { display:none; }
+    .milestone > summary::before { content:"▸"; color:#9d174d; font-size:0.95rem; transition:transform 0.15s ease; display:inline-block; }
+    .milestone[open] > summary::before { transform:rotate(90deg); }
+    .milestone > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:-3px; }
+    .milestone .m-num { font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; color:#9d174d; font-weight:700; white-space:nowrap; }
+    .milestone .m-title { font-size:1.1rem; flex:1; margin:0; font-weight:inherit; line-height:inherit; }
+    .milestone .m-body { padding:0 1.1rem 1.1rem 1.1rem; border-top:1px solid #eee; padding-top:0.9rem; }
+    .milestone .m-body p { margin:0.6rem 0; line-height:1.55; }
+    .milestone .m-body strong.term { color:#1a1a2e; }
+    .formula { font-family:"Cambria Math", Georgia, serif; white-space:nowrap; }
+
+    .fact-box { background:#fdf2f8; border-left:4px solid #9d174d; border-radius:6px; padding:0.75rem 0.95rem; margin:0.9rem 0; font-size:0.98rem; }
+    .fact-box > strong:first-child { display:block; margin-bottom:0.25rem; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:#9d174d; }
+    .safety-box { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid #ea7317; border-radius:8px; padding:0.7rem 0.95rem; margin:0.9rem 0; font-size:0.96rem; }
+    .safety-box strong { color:#9a3412; }
+
+    .deepen { background:#fffbe7; border-left:4px solid #d4a017; border-radius:6px; padding:0.65rem 0.9rem; margin:0.8rem 0; font-size:0.96rem; }
+    .deepen > summary { cursor:pointer; list-style:none; font-weight:700; color:#7a5c00; font-size:0.88rem; letter-spacing:1px; text-transform:uppercase; padding:0.1rem 0; }
+    .deepen > summary::-webkit-details-marker { display:none; }
+    .deepen > summary { gap:0.4rem; flex-wrap:wrap; }
+    .deepen > summary::before { content:"★ Fördjupning:"; display:block; }
+    .deepen > summary::after { content:" ▾"; }
+    .deepen[open] > summary::after { content:" ▴"; }
+    .deepen > summary ~ * { margin-top:0.6rem; }
+    .wonder { background:#f0fdfa; border-left:4px solid #0d9488; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .wonder > summary { cursor:pointer; font-weight:600; color:#115e59; list-style:none; }
+    .wonder > summary::-webkit-details-marker { display:none; }
+    .wonder > summary::before { content:"» Fundera vidare: "; }
+    .wonder > summary::after { content:" ▾"; }
+    .wonder[open] > summary::after { content:" ▴"; }
+    .wonder > summary ~ * { margin-top:0.6rem; }
+    .wonder .frontier { font-size:0.85rem; color:#0f766e; font-style:italic; border-top:1px dashed #99f6e4; margin-top:0.5rem; padding-top:0.5rem; }
+    .check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+    .check-q > summary::-webkit-details-marker { display:none; }
+    .check-q > summary::before { content:"✓ Kontrollera dig själv: "; }
+    .check-q > summary::after { content:" (visa svar)"; font-weight:400; color:#475569; }
+    .check-q[open] > summary::after { content:" (dölj svar)"; }
+    .check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+    .deepen > summary:focus-visible, .wonder > summary:focus-visible, .check-q > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.6rem; margin-top:1rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#fdf2f8; border:1px solid #fbcfe8; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; transition:background 0.12s ease, transform 0.12s ease; }
+    .next-steps a:hover { background:#fce7f3; transform:translateY(-1px); }
+    .next-steps a:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#9d174d; font-weight:700; margin-bottom:0.2rem; }
+
+    .compare-table { width:100%; border-collapse:collapse; font-size:0.93rem; margin:0.9rem 0; }
+    .compare-table th, .compare-table td { border:1px solid #d8d8d8; padding:0.45rem 0.7rem; text-align:left; vertical-align:middle; }
+    .compare-table th { background:#fdf2f8; color:#9d174d; font-weight:700; }
+    .compare-table tr:nth-child(even) td { background:#fffafc; }
+    .compare-table img { display:block; height:auto; }
+    .compare-table caption { text-align:left; font-size:0.85rem; color:#4a4a5a; padding-bottom:0.3rem; }
+
+    a.cite { font-size:0.78rem; color:#9d174d; font-weight:700; vertical-align:super; text-decoration:none; margin-left:0.05rem; }
+    a.cite:hover { text-decoration:underline; }
+    .m-body a:not(.cite):not(.mc-rotate) { color:#9d174d; text-decoration:underline; }
+    .tbl-scroll { overflow-x:auto; }
+    .tbl-scroll:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .deepen > summary .listen-btn { min-height:28px; padding:0.3rem 0.65rem; }
+    .references { margin-top:2rem; padding-top:1rem; border-top:1px solid #d8d8d8; font-size:0.9rem; line-height:1.65; }
+    .references h2 { font-size:1rem; color:#9d174d; margin:0 0 0.6rem; }
+    .references ol { margin:0 0 0 1.3rem; }
+    .references li { margin-bottom:0.4rem; }
+    .references a { color:#9d174d; text-decoration:underline; }
+    details.milestone, details.deepen, details.wonder { scroll-margin-top:0.75rem; }
+    @media (max-width:520px) { main { font-size:1.05em; } .milestone .m-title { font-size:1rem; } }
+
+    .m-body ol.steps { margin:0.6rem 0 0.6rem 1.4rem; }
+    .m-body ol.steps li { margin:0.3rem 0; line-height:1.5; }
+
+    /* Fyra sätt att skriva väte */
+    .quad { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:0.7rem; margin:0.9rem 0; }
+    .quad > div { background:#fffafc; border:1px solid #f5d0e2; border-radius:10px; padding:0.6rem 0.6rem 0.7rem; text-align:center; }
+    .quad .q-f { font-size:1.6rem; }
+    .quad .q-fig { min-height:60px; display:flex; align-items:center; justify-content:center; margin:0.25rem 0; }
+    .quad p { font-size:0.88rem; line-height:1.35; margin:0.2rem 0 0 !important; }
+
+    /* Periodiska systemets tre första rader */
+    .pt-wrap { overflow-x:auto; margin:0.8rem 0; position:relative; }
+    .pt { border-collapse:separate; border-spacing:3px; font-size:0.8rem; margin:0 auto; }
+    .pt-note { font-size:0.85rem !important; color:#4a4a5a; }
+    .pt-wrap:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .pt th { font-weight:600; color:#4a4a5a; font-size:0.72rem; padding:0 2px; text-align:center; }
+    .pt td { width:42px; min-width:42px; height:46px; text-align:center; border:1px solid #b9bfcf; border-radius:6px; background:#fff; line-height:1.1; padding:2px; }
+    .pt td.pt-e { border:none; background:none; }
+    .pt td.pt-on { border:3px solid #9d174d; background:#fdf2f8; }
+    .pt .pt-n { display:block; font-size:0.68rem; color:#4a4a5a; }
+    .pt .pt-s { display:block; font-size:1rem; font-weight:700; color:#1a1a2e; }
+    .pt td.pt-on .pt-s { font-weight:800; }
+
+  </style>
+</head>
+<body>
+
+  <header class="kemi-header">
+    <h1>Studieguide</h1>
+    <p>Atomer och molekyler</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="guide-wide">
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Öppna alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Du börjar med atomen och slutar med kemiska reaktioner. Innehållet följer det centrala innehållet i kursplanen i kemi för åk 7–9.<a class="cite" href="#ref-1">[1]</a></p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De gula rutorna är fördjupning, de turkosa är frågor att fundera vidare på och de blåa är snabba kontrollfrågor.</p>
+      <p>Kulmodellerna kan du <strong>rotera med musen eller fingret</strong>. Har du svårt att skilja färger kan du slå på atombokstäver på kulorna:</p>
+      <p><button type="button" id="lbl-btn" class="pill-btn" aria-pressed="false">Bokstäver på kulorna i 3D-modellerna: <span id="lbl-state" aria-hidden="true">av</span></button></p>
+      <div class="lang-selector-mount"></div>
+    </section>
+    <!-- M1 -->
+    <details class="milestone" id="m1" open>
+      <summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Allt består av atomer</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Alla ämnen omkring dig – luft, vatten, sten och din egen kropp – är uppbyggda av små partiklar som kallas <strong class="term">atomer</strong>. En atom är så liten att ungefär tio miljoner atomer får plats på rad över en millimeter. Man kan inte se en enskild atom, inte ens i ett vanligt mikroskop. Därför använder forskare <strong class="term">modeller</strong> för att beskriva hur atomer är uppbyggda, och det är sådana modeller du ser i den här studieguiden.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>I mitten av en atom sitter <strong class="term">atomkärnan</strong>. Den innehåller <strong class="term">protoner</strong>, som har positiv laddning, och oftast <strong class="term">neutroner</strong>, som saknar laddning. Utanför kärnan rör sig <strong class="term">elektroner</strong> med negativ laddning. De är ordnade i lager som kallas <strong class="term">elektronskal</strong>.</p>
+          <p>Bilderna visar tre olika atomer. Väte är den enklaste: bara en proton i kärnan och en elektron. Helium har två protoner, två neutroner och två elektroner. Kol har sex av varje.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig">
+            <img src="/images/kemi/atomer/atommodeller/atom-vate.svg" width="120" height="120" alt="Atommodell av väte: en proton i kärnan och en elektron på det inre skalet.">
+            <figcaption><strong>Väte (H)</strong> – 1 proton, 1 elektron. <span class="km-legend">I atombilderna är <strong>+</strong> en proton, <strong>n</strong> en neutron och <strong>−</strong> en elektron.</span></figcaption>
+          </figure>
+          <figure class="side-fig">
+            <img src="/images/kemi/atomer/atommodeller/atom-helium.svg" width="150" height="150" alt="Atommodell av helium: två protoner och två neutroner i kärnan och två elektroner på det inre skalet.">
+            <figcaption><strong>Helium (He)</strong> – 2 protoner, 2 neutroner, 2 elektroner.</figcaption>
+          </figure>
+          <figure class="side-fig">
+            <img src="/images/kemi/atomer/atommodeller/atom-kol.svg" width="240" height="240" alt="Atommodell av kol: sex protoner och sex neutroner i kärnan, två elektroner på inre skalet och fyra på yttre skalet.">
+            <figcaption><strong>Kol (C)</strong> – 6 protoner, 6 neutroner, 6 elektroner: 2 på det inre och 4 på det yttre skalet.</figcaption>
+          </figure>
+        </div>
+        <div class="m-rest">
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 1 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>De tre partiklarna i en atom</caption>
+            <thead><tr><th scope="col">Partikel</th><th scope="col">Laddning</th><th scope="col">Var finns den?</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Proton</th><td>positiv (+)</td><td>i atomkärnan</td></tr>
+              <tr><th scope="row">Neutron</th><td>ingen laddning</td><td>i atomkärnan</td></tr>
+              <tr><th scope="row">Elektron</th><td>negativ (−)</td><td>utanför kärnan, i elektronskal</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>En atom är oladdad eftersom den har <em>lika många protoner som elektroner</em>: de positiva och negativa laddningarna tar ut varandra. Protonerna och neutronerna är ungefär lika tunga, medan en elektron är omkring 1 800 gånger lättare. Nästan hela atomens massa sitter alltså i kärnan, som ändå är tiotusentals gånger mindre än hela atomen – resten är elektronernas område.</p>
+          <div class="fact-box">
+            <strong>Sammanfattning</strong>
+            Alla ämnen består av atomer. En atom har en liten kärna med protoner och neutroner, och elektroner i skal utanför. Antalet protoner är lika med antalet elektroner, så atomen är oladdad.
+          </div>
+          <details class="check-q">
+            <summary>En kolatom har 6 protoner. Hur många elektroner har den, och hur är de fördelade?</summary>
+            <div class="svar">6 elektroner, eftersom en atom har lika många elektroner som protoner. Två sitter på det inre skalet och fyra på det yttre (se bilden).</div>
+          </details>
+          <details class="deepen">
+            <summary>Det yttersta skalet bestämmer hur atomen binder</summary>
+            <p>Det inre skalet rymmer högst 2 elektroner och nästa skal högst 8. Det är elektronerna på det <strong>yttersta skalet</strong> som avgör hur en atom kan binda till andra atomer. En atom "vill" ha ett fullt yttersta skal, och den kan få det genom att dela elektroner med andra atomer. Kol har 4 elektroner på det yttre skalet och saknar alltså 4 – därför har kol fyra bindningar, precis som du lär dig i kapitlet om kolföreningar. Skalen, valenselektronerna (elektronerna i yttersta skalet) och sambandet med periodiska systemet behandlas mer i området <a href="/kemi/periodiska-systemet/">Periodiska systemet</a>.</p>
+          </details>
+          <details class="wonder">
+            <summary>Hur vet man hur atomer ser ut om man inte kan se dem?</summary>
+            <p>Vi kan inte fotografera atomer med vanligt ljus, för ljusets våglängd är mycket större än atomen själv. I stället används ett <strong>svepprobmikroskop</strong>: en extremt vass spets förs så nära ytan att den känner av en svag elektrisk ström som ändras med avståndet till atomerna. Datorn bygger sedan upp en bild av var atomerna sitter. Instrumentet uppfanns av Gerd Binnig och Heinrich Rohrer, som fick Nobelpriset i fysik 1986 för det.<a class="cite" href="#ref-4">[4]</a></p>
+            <p class="frontier">Forskningsfronten: med samma sorts mikroskop kan forskare i dag inte bara se atomer utan också flytta enstaka atomer och bygga små strukturer atom för atom. Vad tror du att man skulle kunna tillverka om man kunde placera varje atom exakt där man vill?</p>
+          </details>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m2"><span class="n-label">Fortsätt</span>Grundämnen och kemiska tecken</a>
+</div>
+        </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- M2 -->
+    <details class="milestone" id="m2">
+      <summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Grundämnen och kemiska tecken</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Ett <strong class="term">grundämne</strong> är ett ämne som bara består av en sorts atomer. Alla atomer i ett grundämne har lika många protoner, och det antalet kallas <strong class="term">atomnummer</strong>. Väte har atomnummer 1, kol 6, kväve 7, syre 8 och klor 17. Man känner i dag till 118 grundämnen.<a class="cite" href="#ref-3">[3]</a> Alla finns ordnade efter atomnummer i det <strong class="term">periodiska systemet</strong>.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Varje grundämne har ett <strong class="term">kemiskt tecken</strong>: en stor bokstav, ibland följd av en liten. H betyder väte, C kol, N kväve, O syre och Cl klor. Tecknen är internationella och används på samma sätt i alla länder. Ibland kommer tecknet från det latinska namnet: Na för natrium, Fe för järn (<em>ferrum</em>) och Au för guld (<em>aurum</em>).</p>
+          <p>I studieguidens bilder har varje sorts atom en egen färg, men <em>bokstaven</em> är det som räknas. Färgerna är bara ett extra stöd.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig">
+            <img src="/images/kemi/atomer/atommodeller/atomnyckel.svg" width="310" height="92" alt="Atomnyckel: väte (H, vit), kol (C, svart), syre (O, röd), kväve (N, blå) och klor (Cl, grön).">
+            <figcaption>Atomnyckeln: de fem grundämnen som förekommer i det här kapitlet, med tecken och namn.</figcaption>
+          </figure>
+        </div>
+        <div class="m-rest">
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 2 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>Fem viktiga grundämnen</caption>
+            <thead><tr><th scope="col">Tecken</th><th scope="col">Namn</th><th scope="col">Atomnummer</th><th scope="col">Yttre elektroner</th><th scope="col">Armar (bindningar)</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">H</th><td>väte</td><td>1</td><td>1</td><td>1</td></tr>
+              <tr><th scope="row">C</th><td>kol</td><td>6</td><td>4</td><td>4</td></tr>
+              <tr><th scope="row">N</th><td>kväve</td><td>7</td><td>5</td><td>3</td></tr>
+              <tr><th scope="row">O</th><td>syre</td><td>8</td><td>6</td><td>2</td></tr>
+              <tr><th scope="row">Cl</th><td>klor</td><td>17</td><td>7</td><td>1</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <div class="fact-box">
+            <strong>Kom ihåg – antal armar</strong>
+            En atom har lika många "armar" som antalet elektroner som saknas för att fylla yttersta skalet (för väte räcker 2 elektroner, för de andra behövs 8). <strong class="term">Väte</strong> har en arm, <strong class="term">syre</strong> två, <strong class="term">kväve</strong> tre, <strong class="term">kol</strong> fyra och <strong class="term">klor</strong> en. Armarna förklarar allt du ser i nästa milstolpe: varför vatten är H<sub>2</sub>O men koldioxid är CO<sub>2</sub>.
+          </div>
+        </div>
+        </div>
+        <div class="m-row m-row--full">
+          <p>Så här ser periodiska systemets första rader ut. Tänk på att det är <em>atomnumret</em> som bestämmer platsen.</p>
+          <div class="no-listen"><div class="pt-wrap" tabindex="0" role="region" aria-label="Periodiska systemets tre första rader (rulla i sidled om tabellen är bredare än skärmen)"><table class="pt"><caption class="fv-sr">Periodiska systemets tre första rader</caption><thead><tr><td class="pt-e"></td><th scope="col"><span class="fv-sr">grupp </span>1</th><th scope="col"><span class="fv-sr">grupp </span>2</th><th scope="col"><span class="fv-sr">grupp </span>3</th><th scope="col"><span class="fv-sr">grupp </span>4</th><th scope="col"><span class="fv-sr">grupp </span>5</th><th scope="col"><span class="fv-sr">grupp </span>6</th><th scope="col"><span class="fv-sr">grupp </span>7</th><th scope="col"><span class="fv-sr">grupp </span>8</th><th scope="col"><span class="fv-sr">grupp </span>9</th><th scope="col"><span class="fv-sr">grupp </span>10</th><th scope="col"><span class="fv-sr">grupp </span>11</th><th scope="col"><span class="fv-sr">grupp </span>12</th><th scope="col"><span class="fv-sr">grupp </span>13</th><th scope="col"><span class="fv-sr">grupp </span>14</th><th scope="col"><span class="fv-sr">grupp </span>15</th><th scope="col"><span class="fv-sr">grupp </span>16</th><th scope="col"><span class="fv-sr">grupp </span>17</th><th scope="col"><span class="fv-sr">grupp </span>18</th></tr></thead><tbody><tr><th scope="row"><span class="fv-sr">period </span>1</th><td class="pt-on" title="väte (H), atomnummer 1"><span class="pt-n">1</span><span class="pt-s">H</span></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="" title="helium (He), atomnummer 2"><span class="pt-n">2</span><span class="pt-s">He</span></td></tr><tr><th scope="row"><span class="fv-sr">period </span>2</th><td class="" title="litium (Li), atomnummer 3"><span class="pt-n">3</span><span class="pt-s">Li</span></td><td class="" title="beryllium (Be), atomnummer 4"><span class="pt-n">4</span><span class="pt-s">Be</span></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="" title="bor (B), atomnummer 5"><span class="pt-n">5</span><span class="pt-s">B</span></td><td class="pt-on" title="kol (C), atomnummer 6"><span class="pt-n">6</span><span class="pt-s">C</span></td><td class="pt-on" title="kväve (N), atomnummer 7"><span class="pt-n">7</span><span class="pt-s">N</span></td><td class="pt-on" title="syre (O), atomnummer 8"><span class="pt-n">8</span><span class="pt-s">O</span></td><td class="" title="fluor (F), atomnummer 9"><span class="pt-n">9</span><span class="pt-s">F</span></td><td class="" title="neon (Ne), atomnummer 10"><span class="pt-n">10</span><span class="pt-s">Ne</span></td></tr><tr><th scope="row"><span class="fv-sr">period </span>3</th><td class="" title="natrium (Na), atomnummer 11"><span class="pt-n">11</span><span class="pt-s">Na</span></td><td class="" title="magnesium (Mg), atomnummer 12"><span class="pt-n">12</span><span class="pt-s">Mg</span></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="pt-e"></td><td class="" title="aluminium (Al), atomnummer 13"><span class="pt-n">13</span><span class="pt-s">Al</span></td><td class="" title="kisel (Si), atomnummer 14"><span class="pt-n">14</span><span class="pt-s">Si</span></td><td class="" title="fosfor (P), atomnummer 15"><span class="pt-n">15</span><span class="pt-s">P</span></td><td class="" title="svavel (S), atomnummer 16"><span class="pt-n">16</span><span class="pt-s">S</span></td><td class="pt-on" title="klor (Cl), atomnummer 17"><span class="pt-n">17</span><span class="pt-s">Cl</span></td><td class="" title="argon (Ar), atomnummer 18"><span class="pt-n">18</span><span class="pt-s">Ar</span></td></tr></tbody></table></div><p class="pt-note">Grundämnen med tjock ram och fetstil är de som förekommer i det här kapitlet: väte, kol, kväve, syre och klor. Helium (He) visas i fördjupningen om ädelgaser. Mellan grupp 2 och 13 finns tio grupper till (metallerna i mitten) som inte visas här. På en smal skärm kan du rulla tabellen i sidled.</p></div>
+          <details class="check-q">
+            <summary>Vad har alla atomer i grundämnet syre gemensamt?</summary>
+            <div class="svar">De har alla 8 protoner, alltså atomnummer 8. Antalet neutroner kan variera lite, men det är protonerna som avgör vilket grundämne det är.</div>
+          </details>
+          <p>Vill du veta mer om perioder, grupper, metaller och icke-metaller? Det finns i området <a href="/kemi/periodiska-systemet/">Periodiska systemet</a>.</p>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m3"><span class="n-label">Fortsätt</span>Molekyler – när atomer sitter ihop</a>
+</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- M3 -->
+    <details class="milestone" id="m3">
+      <summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Molekyler – när atomer sitter ihop</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Atomer är sällan ensamma. De flesta atomer sitter ihop med andra atomer, och en grupp atomer som sitter ihop kallas en <strong class="term">molekyl</strong>. Det som håller ihop atomerna är en <strong class="term">kemisk bindning</strong>. I en bindning delar två atomer på elektroner. När två atomer delar på <em>ett</em> par elektroner kallas det en <strong class="term">enkelbindning</strong>, och i en strukturformel ritas den som ett streck.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Börja med väte. En väteatom har en arm, så två väteatomer kan ta tag i varandra och bilda <strong class="term">vätgas</strong>, H<sub>2</sub>: två atomer och en enkelbindning (H–H). Klor har också en arm och bildar på samma sätt <strong class="term">klorgas</strong>, Cl<sub>2</sub>.</p>
+          <p>Vi skriver alltså H<sub>2</sub> och inte bara H. En ensam väteatom är mycket reaktiv och finns knappt i naturen. Väte förekommer som vätgas, där atomerna sitter parvis.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card" id="km-h2"><div class="mc-head mc-head--lab"><span class="mc-name">Vätgas</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">H<sub>2</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/h2.svg" width="104" height="62" alt="Strukturformel för vätgas: H–H, två väteatomer med ett enkelt streck emellan." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="h2" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av vätgas: två små vita väteatomer (H) som sitter ihop med en enkel bindning. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/h2.png" width="63" height="33" alt="Kulmodell av vätgas: två små vita väteatomer (H) som sitter ihop med en enkel bindning."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: enkelbindning · Form: rak</p></div><div class="mol-card" id="km-cl2"><div class="mc-head mc-head--lab"><span class="mc-name">Klorgas</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">Cl<sub>2</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/cl2.svg" width="104" height="62" alt="Strukturformel för klorgas: Cl–Cl, två kloratomer med ett enkelt streck emellan." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="cl2" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av klorgas: två gröna kloratomer (Cl) som sitter ihop med en enkel bindning. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/cl2.png" width="125" height="46" alt="Kulmodell av klorgas: två gröna kloratomer (Cl) som sitter ihop med en enkel bindning."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: enkelbindning · Form: rak</p></div><div class="mol-card" id="km-o2"><div class="mc-head mc-head--lab"><span class="mc-name">Syrgas</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">O<sub>2</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/o2.svg" width="104" height="62" alt="Strukturformel för syrgas: O=O, två syreatomer med ett dubbelt streck emellan." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="o2" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av syrgas: två röda syreatomer (O) som sitter ihop med en dubbelbindning, ritad som två utåtböjda pinnar. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/o2.png" width="89" height="46" alt="Kulmodell av syrgas: två röda syreatomer (O) som sitter ihop med en dubbelbindning, ritad som två utåtböjda pinnar."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: dubbelbindning · Form: rak</p></div><div class="mol-card" id="km-n2"><div class="mc-head mc-head--lab"><span class="mc-name">Kvävgas</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">N<sub>2</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/n2.svg" width="104" height="62" alt="Strukturformel för kvävgas: N≡N, två kväveatomer med ett tredubbelt streck emellan." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="n2" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av kvävgas: två blå kväveatomer (N) som sitter ihop med en trippelbindning, ritad som tre utåtböjda pinnar. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/n2.png" width="85" height="48" alt="Kulmodell av kvävgas: två blå kväveatomer (N) som sitter ihop med en trippelbindning, ritad som tre utåtböjda pinnar."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: trippelbindning · Form: rak</p></div><figcaption>Fyra grundämnen som molekyler: vätgas, klorgas, syrgas och kvävgas. Räkna strecken i strukturformeln – de visar antalet bindningar.<span class="km-legend">Kulfärger: <span class="km-dot km-dot--h" aria-hidden="true"></span>väte (H) vitt, <span class="km-dot km-dot--c" aria-hidden="true"></span>kol (C) svart, <span class="km-dot km-dot--o" aria-hidden="true"></span>syre (O) rött, <span class="km-dot km-dot--n" aria-hidden="true"></span>kväve (N) blått, <span class="km-dot km-dot--cl" aria-hidden="true"></span>klor (Cl) grönt. Bokstavsknappen överst visar atombokstäver på kulorna.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Syre har två armar. Två syreatomer kan därför hålla i varandra med <em>båda</em> armarna, och då är de sammankopplade med två streck: en <strong class="term">dubbelbindning</strong>, O=O. Så ser <strong class="term">syrgas</strong>, O<sub>2</sub>, ut. Kväve har tre armar, så i <strong class="term">kvävgas</strong>, N<sub>2</sub>, sitter atomerna ihop med tre streck: en <strong class="term">trippelbindning</strong>, N≡N. I 3D-bilderna är dubbel- och trippelbindningarna ritade som två respektive tre böjda pinnar mellan atomerna.</p>
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 3 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>Grundämnen som förekommer som molekyler med två atomer</caption>
+            <thead><tr><th scope="col">Namn</th><th scope="col">Molekylformel</th><th scope="col">Strukturformel</th><th scope="col">Bindning</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Vätgas</th><td><span class="fx">H<sub class="idx">2</sub></span></td><td class="formula">H–H</td><td>enkelbindning</td></tr>
+              <tr><th scope="row">Klorgas</th><td><span class="fx">Cl<sub class="idx">2</sub></span></td><td class="formula">Cl–Cl</td><td>enkelbindning</td></tr>
+              <tr><th scope="row">Syrgas</th><td><span class="fx">O<sub class="idx">2</sub></span></td><td class="formula">O=O</td><td>dubbelbindning</td></tr>
+              <tr><th scope="row">Kvävgas</th><td><span class="fx">N<sub class="idx">2</sub></span></td><td class="formula">N≡N</td><td>trippelbindning</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>Två av dessa gaser har du med dig hela livet: luften består av ungefär 78&nbsp;% kvävgas och 21&nbsp;% syrgas.<a class="cite" href="#ref-2">[2]</a></p>
+          <div class="safety-box">
+            <strong>Säkerhet:</strong> klorgas är giftig och används bara av utbildade personer med rätt utrustning. Du ska aldrig försöka framställa den själv.
+          </div>
+          <details class="check-q">
+            <summary>Hur många streck sitter mellan atomerna i O<sub>2</sub> respektive N<sub>2</sub>, och varför?</summary>
+            <div class="svar">Två streck i O<sub>2</sub> och tre i N<sub>2</sub>. Syre har två armar och kväve tre, och alla armar ska hålla i något.</div>
+          </details>
+          <details class="deepen">
+            <summary>Ädelgaser – atomer som klarar sig ensamma</summary>
+            <p>Titta på heliumatomen i första milstolpen. Dess enda skal är fullt med två elektroner, så en heliumatom har inga "armar" och binder inte till något. Därför består helium av enskilda atomer, och skrivs He. Neon (Ne) och argon (Ar) har ett fullt yttersta skal med åtta elektroner och binder inte heller till något. Alla dessa gaser kallas <strong>ädelgaser</strong>.</p>
+          </details>
+          <details class="wonder">
+            <summary>Varför är kvävgas så oreaktiv när den är största delen av luften?</summary>
+            <p>Trippelbindningen i N<sub>2</sub> är en av de starkaste bindningarna som finns, så det krävs mycket energi för att bryta den. Därför kan varken vi eller växter använda kvävgas direkt, trots att vi är omgivna av den. Vissa bakterier, bland annat i rötterna hos ärtväxter, kan bryta bindningen, och det kan blixtar också. I industrin görs det vid hög temperatur och högt tryck, och kvävet används då till att tillverka ammoniak (NH<sub>3</sub>) för konstgödsel.</p>
+            <p class="frontier">Forskningsfronten: att göra gödsel kräver mycket energi, och forskare letar efter sätt att binda kväve som är mildare mot både energiräkningen och miljön. Vilka fördelar skulle en sådan metod ge, tror du?</p>
+          </details>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m4"><span class="n-label">Fortsätt</span>Kemiska föreningar</a>
+</div>
+        </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- M4 -->
+    <details class="milestone" id="m4">
+      <summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Kemiska föreningar</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Om atomerna i en molekyl kommer från <em>olika</em> grundämnen kallas ämnet en <strong class="term">kemisk förening</strong>. Vatten, koldioxid, ammoniak och metan är alla kemiska föreningar. En förening har helt andra egenskaper än grundämnena den är gjord av. Vatten består till exempel av väte, som brinner, och syre, som får saker att brinna – men vatten själv släcker eld.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p><strong class="term">Vatten</strong>, <span class="fx">H<sub class="idx">2</sub>O</span>, består av en syreatom och två väteatomer. Syre har två armar, och varje väte har en, så syret binder till båda väteatomerna med var sin enkelbindning. Molekylen är <em>vinklad</em>: vinkeln mellan de två H–O-bindningarna är ungefär 105°.</p>
+          <p><strong class="term">Koldioxid</strong>, <span class="fx">CO<sub class="idx">2</sub></span>, har en kolatom i mitten och en syreatom på varje sida. Kol har fyra armar, och varje syre har två. Kolet binder därför till varje syre med en dubbelbindning: O=C=O. Molekylen är <em>rak</em>. Koldioxid bildas när något som innehåller kol förbränns och när vi andas ut, och växter tar upp den när de bygger sitt socker.</p>
+          <p><strong class="term">Ammoniak</strong>, <span class="fx">NH<sub class="idx">3</sub></span>, har en kväveatom i mitten. Kväve har tre armar, så det binder tre väteatomer, och molekylen blir som en låg pyramid. <strong class="term">Metan</strong>, <span class="fx">CH<sub class="idx">4</sub></span>, har en kolatom med fyra väteatomer jämnt fördelade i rymden (en tetraeder), som du också ser i kapitlet om kolföreningar. Den sista molekylen, <strong class="term">väteklorid</strong>, HCl, har bara två atomer: väte och klor med var sin arm. Löser man väteklorid i vatten får man saltsyra.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card" id="km-h2o"><div class="mc-head mc-head--lab"><span class="mc-name">Vatten</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">H<sub>2</sub>O</span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/h2o.svg" width="129" height="88" alt="Strukturformel för vatten: en syreatom med två väteatomer, ritad vinklad som ett V." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="h2o" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av vatten: en röd syreatom (O) med två vita väteatomer (H) i en vinkel på ungefär 105 grader. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/h2o.png" width="94" height="59" alt="Kulmodell av vatten: en röd syreatom (O) med två vita väteatomer (H) i en vinkel på ungefär 105 grader."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: två enkelbindningar · Form: vinklad</p></div><div class="mol-card" id="km-co2"><div class="mc-head mc-head--lab"><span class="mc-name">Koldioxid</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">CO<sub>2</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/co2.svg" width="146" height="62" alt="Strukturformel för koldioxid: O=C=O, kolatomen i mitten med dubbla streck åt varje syreatom." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="co2" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av koldioxid: en svart kolatom (C) i mitten med en röd syreatom (O) på varje sida i en rak linje, med dubbelbindningar åt båda håll. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/co2.png" width="137" height="68" alt="Kulmodell av koldioxid: en svart kolatom (C) i mitten med en röd syreatom (O) på varje sida i en rak linje, med dubbelbindningar åt båda håll."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: två dubbelbindningar · Form: rak</p></div><div class="mol-card" id="km-nh3"><div class="mc-head mc-head--lab"><span class="mc-name">Ammoniak</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">NH<sub>3</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/nh3.svg" width="146" height="104" alt="Strukturformel för ammoniak: en kväveatom med tre väteatomer." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="nh3" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av ammoniak: en blå kväveatom (N) med tre vita väteatomer (H) under sig, som en låg pyramid. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/nh3.png" width="98" height="72" alt="Kulmodell av ammoniak: en blå kväveatom (N) med tre vita väteatomer (H) under sig, som en låg pyramid."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: tre enkelbindningar · Form: pyramid</p></div><div class="mol-card" id="km-ch4"><div class="mc-head mc-head--lab"><span class="mc-name">Metan</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">CH<sub>4</sub></span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/ch4.svg" width="146" height="146" alt="Strukturformel för metan: en kolatom med fyra väteatomer, en åt varje håll." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="ch4" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av metan: en svart kolatom (C) med fyra vita väteatomer (H) jämnt fördelade i rymden. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/ch4.png" width="84" height="100" alt="Kulmodell av metan: en svart kolatom (C) med fyra vita väteatomer (H) jämnt fördelade i rymden."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: fyra enkelbindningar · Form: tetraeder</p></div><div class="mol-card" id="km-hcl"><div class="mc-head mc-head--lab"><span class="mc-name">Väteklorid</span><span><span class="mc-flab">Molekylformel</span><span class="mc-formula">HCl</span></span></div><div class="mc-pair"><div><span class="mc-lab">Strukturformel</span><div class="mc-struct"><img src="/images/kemi/atomer/strukturformler/hcl.svg" width="104" height="62" alt="Strukturformel för väteklorid: H–Cl." loading="lazy"></div></div><div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="hcl" role="group" tabindex="0" style="height:190px" aria-label="Kulmodell av väteklorid: en liten vit väteatom (H) och en stor grön kloratom (Cl) med en enkel bindning. Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" src="/images/kemi/atomer/kulmodeller/hcl.png" width="90" height="46" alt="Kulmodell av väteklorid: en liten vit väteatom (H) och en stor grön kloratom (Cl) med en enkel bindning."></noscript></div><div class="km-hint">Dra för att rotera.</div></div></div><p class="mc-bond">Bindning: enkelbindning · Form: rak</p></div><figcaption>Fem kemiska föreningar. Vatten är vinklat, koldioxid rak, ammoniak en låg pyramid och metan en tetraeder.<span class="km-legend">Kulfärger: <span class="km-dot km-dot--h" aria-hidden="true"></span>väte (H) vitt, <span class="km-dot km-dot--c" aria-hidden="true"></span>kol (C) svart, <span class="km-dot km-dot--o" aria-hidden="true"></span>syre (O) rött, <span class="km-dot km-dot--n" aria-hidden="true"></span>kväve (N) blått, <span class="km-dot km-dot--cl" aria-hidden="true"></span>klor (Cl) grönt. Bokstavsknappen överst visar atombokstäver på kulorna.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Formen på en molekyl beror på hur atomerna ordnar sig runt den mittersta atomen, och den måste man lära sig molekyl för molekyl. Kolla gärna på de roterbara modellerna. Varför formerna blir just så lär du dig senare, då det handlar om att elektronparen stöter bort varandra.</p>
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 4 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>Molekylernas former</caption>
+            <thead><tr><th scope="col">Molekyl</th><th scope="col">Bindningar</th><th scope="col">Form</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><span class="fx">H<sub class="idx">2</sub>O</span> vatten</th><td>två enkelbindningar</td><td>vinklad</td></tr>
+              <tr><th scope="row"><span class="fx">CO<sub class="idx">2</sub></span> koldioxid</th><td>två dubbelbindningar</td><td>rak</td></tr>
+              <tr><th scope="row"><span class="fx">NH<sub class="idx">3</sub></span> ammoniak</th><td>tre enkelbindningar</td><td>pyramid</td></tr>
+              <tr><th scope="row"><span class="fx">CH<sub class="idx">4</sub></span> metan</th><td>fyra enkelbindningar</td><td>tetraeder</td></tr>
+              <tr><th scope="row"><span class="fx">HCl</span> väteklorid</th><td>en enkelbindning</td><td>rak</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>En <strong class="term">blandning</strong> är flera ämnen som bara ligger tillsammans utan att reagera med varandra, till exempel luft. De kan skiljas åt utan att någon kemisk reaktion sker. Tabellen visar hur du avgör vad ett ämne är.</p>
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 5 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>Grundämne, förening eller blandning?</caption>
+            <thead><tr><th scope="col">Exempel</th><th scope="col">Vad är det?</th><th scope="col">Varför?</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Syrgas <span class="fx">O<sub class="idx">2</sub></span></th><td>grundämne</td><td>bara syreatomer</td></tr>
+              <tr><th scope="row">Vatten <span class="fx">H<sub class="idx">2</sub>O</span></th><td>kemisk förening</td><td>två sorters atomer som sitter ihop på ett bestämt sätt</td></tr>
+              <tr><th scope="row">Luft</th><td>blandning</td><td>flera sorters ämnen (mest N<sub>2</sub> och O<sub>2</sub>) som bara ligger blandade och kan skiljas åt utan att någon reaktion sker</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>Alla föreningar består inte av molekyler. Vanligt bordssalt är en <em>jonförening</em>, och den möter du i området <a href="/kemi/jonforeningar/">Jonföreningar</a>.</p>
+          <div class="safety-box">
+            <strong>Ett litet index – stor skillnad:</strong> koldioxid (<span class="fx">CO<sub class="idx">2</sub></span>) andas vi ut hela tiden, men kolmonoxid (CO) som bildas vid ofullständig förbränning är livsfarlig, eftersom den hindrar blodet från att transportera syre. Därför ska man ventilera när man eldar, och därför finns kolmonoxidvarnare.
+          </div>
+          <details class="check-q">
+            <summary>Är O<sub>2</sub> en kemisk förening? Är H<sub>2</sub>O det?</summary>
+            <div class="svar">O<sub>2</sub> är inte en förening, eftersom det bara innehåller syreatomer – det är ett grundämne. H<sub>2</sub>O är en förening, eftersom det innehåller både väte och syre.</div>
+          </details>
+          <details class="deepen">
+            <summary>Samma grundämne, olika molekyler: syrgas och ozon</summary>
+            <p>Syre kan bilda molekyler med två atomer (<strong>syrgas</strong>, O<sub>2</sub>) men också med tre (<strong>ozon</strong>, O<sub>3</sub>). Båda består bara av syreatomer, men molekylerna är olika stora och ämnena har olika egenskaper. Ozon i atmosfärens övre delar skyddar oss mot en del av solens skadliga strålning.<a class="cite" href="#ref-5">[5]</a></p>
+          </details>
+          <details class="wonder">
+            <summary>Varför är vatten inte brandfarligt när det består av väte och syre?</summary>
+            <p>När väte och syre reagerar och bildar vatten frigörs mycket energi. Det är därför vatten inte brinner: det är redan "utbrunnet" väte. Vatten är slutprodukten, och man måste tillföra energi för att dela upp det igen i väte och syre.</p>
+            <p class="frontier">Forskningsfronten: vätgas kan användas som energibärare, eftersom det enda som bildas när den reagerar med syre i en bränslecell är vatten. Ett sätt att framställa vätgas är att spjälka vatten med hjälp av el. Vad tror du är de största hindren för att använda vätgas i stor skala?</p>
+          </details>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m5"><span class="n-label">Fortsätt</span>Formler – kemins språk</a>
+</div>
+        </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- M5 -->
+    <details class="milestone" id="m5">
+      <summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Formler – kemins språk</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Kemister beskriver ett ämne på tre sätt: med <strong class="term">namn</strong>, med <strong class="term">molekylformel</strong> och med <strong class="term">strukturformel</strong>. Molekylformeln berättar <em>vilka</em> atomer molekylen har och <em>hur många</em>. Strukturformeln visar dessutom <em>hur</em> atomerna sitter ihop, med ett streck för varje enkelbindning (en dubbelbindning ritas med två streck och en trippelbindning med tre).</p>
+        </div></div>
+        <div class="m-row m-row--full">
+          <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell 6 (rulla i sidled på smal skärm)">
+          <table class="compare-table">
+            <caption>Namn, molekylformel och strukturformel för molekylerna i kapitlet</caption>
+            <thead><tr><th scope="col">Namn</th><th scope="col">Molekylformel</th><th scope="col">Strukturformel</th><th scope="col">Atomer i en molekyl</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Vätgas</th><td><span class="fx">H<sub class="idx">2</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/h2.svg" width="83" height="49" alt="Strukturformel för vätgas: H–H." loading="lazy"></td><td>2 H</td></tr>
+              <tr><th scope="row">Syrgas</th><td><span class="fx">O<sub class="idx">2</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/o2.svg" width="83" height="49" alt="Strukturformel för syrgas: O=O." loading="lazy"></td><td>2 O</td></tr>
+              <tr><th scope="row">Kvävgas</th><td><span class="fx">N<sub class="idx">2</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/n2.svg" width="83" height="49" alt="Strukturformel för kvävgas: N≡N." loading="lazy"></td><td>2 N</td></tr>
+              <tr><th scope="row">Klorgas</th><td><span class="fx">Cl<sub class="idx">2</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/cl2.svg" width="83" height="49" alt="Strukturformel för klorgas: Cl–Cl." loading="lazy"></td><td>2 Cl</td></tr>
+              <tr><th scope="row">Vatten</th><td><span class="fx">H<sub class="idx">2</sub>O</span></td><td><img src="/images/kemi/atomer/strukturformler/h2o.svg" width="102" height="70" alt="Strukturformel för vatten: en syreatom med två väteatomer, vinklad." loading="lazy"></td><td>2 H och 1 O</td></tr>
+              <tr><th scope="row">Koldioxid</th><td><span class="fx">CO<sub class="idx">2</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/co2.svg" width="116" height="49" alt="Strukturformel för koldioxid: O=C=O." loading="lazy"></td><td>1 C och 2 O</td></tr>
+              <tr><th scope="row">Ammoniak</th><td><span class="fx">NH<sub class="idx">3</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/nh3.svg" width="116" height="83" alt="Strukturformel för ammoniak: en kväveatom med tre väteatomer." loading="lazy"></td><td>1 N och 3 H</td></tr>
+              <tr><th scope="row">Metan</th><td><span class="fx">CH<sub class="idx">4</sub></span></td><td><img src="/images/kemi/atomer/strukturformler/ch4.svg" width="116" height="116" alt="Strukturformel för metan: en kolatom med fyra väteatomer." loading="lazy"></td><td>1 C och 4 H</td></tr>
+              <tr><th scope="row">Väteklorid</th><td><span class="fx">HCl</span></td><td><img src="/images/kemi/atomer/strukturformler/hcl.svg" width="83" height="49" alt="Strukturformel för väteklorid: H–Cl." loading="lazy"></td><td>1 H och 1 Cl</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>I formlerna finns två olika sorters siffror, och de betyder helt olika saker.</p>
+          <p>En <strong class="term">nedsänkt siffra</strong> (index) står efter en atoms tecken och talar om hur många atomer av den sorten som finns i <em>en enda molekyl</em>. I <span class="fx">H<sub class="idx">2</sub>O</span> finns 2 H och 1 O. Står det ingen siffra betyder det 1.</p>
+          <p>En <strong class="term">stor siffra framför</strong> formeln (koefficient) talar om <em>hur många molekyler</em> det är. <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> betyder två vattenmolekyler, och <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> betyder tre syremolekyler.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig">
+            <div data-fv="figure" data-f="H2O" data-n="2" data-maxw="320" style="text-align:center"></div>
+            <p style="text-align:center;margin:0.3rem 0 0"><span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span></p>
+            <div data-fv="figure" data-f="O2" data-n="3" data-maxw="320" style="text-align:center;margin-top:0.9rem"></div>
+            <p style="text-align:center;margin:0.3rem 0 0"><span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span></p>
+            <figcaption>Vänster om formeln: hur många molekyler. Nedsänkt siffra: hur många atomer i varje molekyl. Två vattenmolekyler har 4 väteatomer och 2 syreatomer tillsammans.</figcaption>
+          </figure>
+        </div>
+        <div class="m-rest">
+          <p>För att räkna alla atomer <em>multiplicerar</em> du den stora siffran med indexet. Exempel: i <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> finns 2 &times; 2 = 4 H och 2 &times; 1 = 2 O, alltså 6 atomer. I <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> finns 3 &times; 2 = 6 O. I <span class="fx"><b class="coef">2</b>&nbsp;CO<sub class="idx">2</sub></span> finns 2 C och 2 &times; 2 = 4 O.</p>
+          <div class="fact-box">
+            <strong>Ändra aldrig en nedsänkt siffra</strong>
+            Indexet hör till ämnet: <span class="fx">H<sub class="idx">2</sub>O</span> är vatten, men <span class="fx">H<sub class="idx">2</sub>O<sub class="idx">2</sub></span> (väteperoxid) är ett helt annat ämne. Vill du ha fler molekyler ändrar du den <em>stora</em> siffran framför, aldrig den nedsänkta.
+          </div>
+        </div>
+        </div>
+        <div class="m-row m-row--full">
+          <p>Skillnaden är lätt att blanda ihop, så här är fyra sätt att skriva väte med bild:</p>
+          
+          <div class="quad no-listen">
+            <div><div class="q-f"><span class="fx">H</span></div><div class="q-fig" data-fv="figure" data-f="H" data-n="1" data-scale="0.8"></div><p><strong>En väteatom.</strong></p></div>
+            <div><div class="q-f"><span class="fx"><b class="coef">2</b>&nbsp;H</span></div><div class="q-fig" data-fv="figure" data-f="H" data-n="2" data-scale="0.8"></div><p><strong>Två separata väteatomer</strong> – de sitter inte ihop.</p></div>
+            <div><div class="q-f"><span class="fx">H<sub class="idx">2</sub></span></div><div class="q-fig" data-fv="figure" data-f="H2" data-n="1" data-scale="0.8"></div><p><strong>En vätemolekyl</strong> med två atomer.</p></div>
+            <div><div class="q-f"><span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub></span></div><div class="q-fig" data-fv="figure" data-f="H2" data-n="2" data-scale="0.8"></div><p><strong>Två vätemolekyler</strong> = 4 väteatomer.</p></div>
+          </div>
+
+          <p>Testa själv med Formelverkstaden: välj ett ämne, ändra antalet molekyler med plus och minus, och se hur bilden och atomräkningen förändras.</p>
+          <div data-fv="verkstad" data-species="H,O,H2,O2,N2,Cl2,H2O,CO2,NH3,CH4,HCl" data-start="H2O" data-n="2"></div>
+          <details class="check-q">
+            <summary>Hur många väteatomer och syreatomer finns tillsammans i <span class="fx"><b class="coef">3</b>&nbsp;H<sub class="idx">2</sub>O</span>?</summary>
+            <div class="svar">3 &times; 2 = 6 väteatomer och 3 &times; 1 = 3 syreatomer, alltså 9 atomer totalt.</div>
+          </details>
+          <div class="fact-box">
+            <strong>Sammanfattning</strong>
+            Namn, molekylformel och strukturformel beskriver samma ämne på olika sätt. Nedsänkt siffra = antal atomer i <em>en</em> molekyl. Stor siffra framför = antal molekyler.
+          </div>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="./ovningsverktyg.html"><span class="n-label">Träna</span>Dra-och-släpp-övningar</a>
+<a href="./formelark.html"><span class="n-label">Skriv ut</span>Skriv formeln under bilden</a>
+<a href="./bygg-molekyl.html"><span class="n-label">Bygg</span>Bygg en molekyl</a>
+<a href="#m6"><span class="n-label">Fortsätt</span>Kemiska reaktioner</a>
+</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- M6 -->
+    <details class="milestone" id="m6">
+      <summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Kemiska reaktioner – atomerna byter partner</h2></summary>
+      <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Vid en <strong class="term">kemisk reaktion</strong> bryts bindningar och nya bildas, så att atomerna hamnar i nya kombinationer och nya ämnen uppstår. Ämnena man börjar med kallas <strong class="term">reaktanter</strong> och ämnena som bildas kallas <strong class="term">produkter</strong>. Det viktigaste att komma ihåg är att atomerna varken försvinner eller skapas – de byter bara partner. Därför är antalet atomer av varje sort <em>lika stort före och efter</em> reaktionen.</p>
+        </div></div>
+        <div class="m-row m-row--full">
+          <p>Vätgas och syrgas kan reagera och bilda vatten. Så här ser det ut i en <strong class="term">reaktionsformel</strong>, där pilen betyder "ger":</p>
+          <div data-fv="reaction" data-reaction='{"left":[[2,"H2"],[1,"O2"]],"right":[[2,"H2O"]]}'></div>
+          <p>Räkna atomerna: till vänster finns 4 väteatomer och 2 syreatomer, och till höger finns lika många. En reaktionsformel där antalen stämmer kallas <strong class="term">balanserad</strong>.</p>
+          <div class="fact-box">
+            <strong>Så balanserar du</strong>
+            <ol class="steps">
+              <li>Skriv formlerna för reaktanterna och produkterna.</li>
+              <li>Räkna atomerna av varje sort på båda sidor.</li>
+              <li>Ändra bara de <em>stora siffrorna framför</em> formlerna (aldrig indexen) tills antalen är lika.</li>
+              <li>Räkna igen för att kontrollera. Använd de minsta hela talen.</li>
+            </ol>
+          </div>
+          <p>Prova nu själv. Ställ in siffrorna med plus och minus och se atomräkningen ändras. Meddelandet under bilden talar om när formeln är balanserad.</p>
+          <div data-fv="balance" data-reaction='{"left": ["H2", "O2"], "right": ["H2O"], "solution": [2, 1, 2]}' data-tip="Börja med syre: det finns 2 O till vänster men bara 1 O i H_2O. Vad händer med H när du ändrar antalet H_2O?"></div>
+          <p>Nästa reaktion är förbränning av metan. Det är den reaktion som sker när naturgas brinner. Koldioxid och vatten bildas, som du ser i kapitlet om kolföreningar.</p>
+          <div data-fv="balance" data-reaction='{"left": ["CH4", "O2"], "right": ["CO2", "H2O"], "solution": [1, 2, 1, 2]}' data-tip="Kol (C) stämmer redan. Fixa H först, och räkna sedan alla O."></div>
+          <p>Här reagerar kvävgas och vätgas och bildar ammoniak, som är råvaran till konstgödsel.</p>
+          <div data-fv="balance" data-reaction='{"left": ["N2", "H2"], "right": ["NH3"], "solution": [1, 3, 2]}' data-tip="Börja med N: 2 N till vänster kräver 2 NH_3. Sedan H."></div>
+          <div class="safety-box">
+            <strong>Säkerhet:</strong> vätgas och luft kan bilda en explosiv blandning (knallgas). Försök med vätgas görs därför bara av läraren med rätt utrustning.
+          </div>
+          <details class="check-q">
+            <summary>I 2 H<sub>2</sub> + O<sub>2</sub> → 2 H<sub>2</sub>O: hur många väteatomer finns före och efter reaktionen?</summary>
+            <div class="svar">Före: 2 &times; 2 = 4 väteatomer. Efter: 2 &times; 2 = 4 väteatomer. Lika många – atomerna har bara bytt partner.</div>
+          </details>
+          <details class="deepen">
+            <summary>Kemisk eller fysikalisk förändring?</summary>
+            <p>När vatten kokar blir det ånga, men molekylerna är fortfarande H<sub>2</sub>O – bara rörelsen har ändrats. Det är en <strong>fysikalisk förändring</strong>. Leder man däremot elektrisk ström genom vatten kan det spjälkas i vätgas och syrgas: 2 H<sub>2</sub>O → 2 H<sub>2</sub> + O<sub>2</sub>. Då bryts bindningarna och nya ämnen bildas, och det är en <strong>kemisk reaktion</strong>. Om du klarar av att balansera den reaktionen har du förstått idén.</p>
+          </details>
+          <details class="wonder">
+            <summary>Om atomer aldrig försvinner – vart tar veden vägen när den brinner?</summary>
+            <p>Veden består mest av kol, väte och syre. När den brinner reagerar kolet och vätet med syre i luften och bildar koldioxid och vattenånga, som är gaser och försvinner ut i luften. Atomerna är kvar, men de sitter nu i andra molekyler. Ett träd har byggt sin (torra) vedmassa av just koldioxid ur luften och vatten – så det mesta av trädet var luft från början.</p>
+            <p class="frontier">Forskningsfronten: forskare arbetar med att fånga in koldioxid ur luften eller ur rökgaser och antingen lagra den eller omvandla den till nya ämnen. Om atomerna ändå aldrig försvinner, varför är det då ett problem att koldioxid hamnar i luften?</p>
+          </details>
+          <div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="./ovningsverktyg.html"><span class="n-label">Träna</span>Dra-och-släpp-övningar</a>
+<a href="./formelark.html"><span class="n-label">Skriv ut</span>Skriv formeln under bilden</a>
+<a href="./bygg-molekyl.html"><span class="n-label">Bygg</span>Bygg en molekyl</a>
+</div>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Skolverket. <em>Kursplan – Kemi (Grundskolan)</em>, centralt innehåll för årskurs 7–9. <a href="https://syllabuswebb.skolverket.se/compulsorycw/jsp/subject.htm?subjectCode=GRGRKEM01&amp;tos=gr" target="_blank" rel="noopener">syllabuswebb.skolverket.se</a></li>
+        <li id="ref-2">NOAA JetStream. <em>Introduction to the Atmosphere</em> (luftens sammansättning). <a href="https://www.noaa.gov/jetstream/atmosphere" target="_blank" rel="noopener">noaa.gov</a></li>
+        <li id="ref-3">IUPAC. <em>IUPAC Announces the Names of the Elements 113, 115, 117, and 118</em> (det periodiska systemets 118 grundämnen). <a href="https://iupac.org/iupac-announces-the-names-of-the-elements-113-115-117-and-118/" target="_blank" rel="noopener">iupac.org</a></li>
+        <li id="ref-4">Kungl. Vetenskapsakademien. <em>Nobelpriset i fysik 1986</em> (svepprobmikroskopet, Binnig &amp; Rohrer). <a href="https://www.nobelprize.org/prizes/physics/1986/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-5">Naturvårdsverket. <em>Ozonskiktet.</em> <a href="https://www.naturvardsverket.se/amnesomraden/luft/ozonskiktet/" target="_blank" rel="noopener">naturvardsverket.se</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#555;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats. Alla bilder är egenritade för den här sajten.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash);
+      else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+      // Länkar #m2 osv. inifrån sidan öppnar också milstolpen
+    })();
+    (function () {
+      var btn = document.getElementById('lbl-btn'), st = document.getElementById('lbl-state');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var on = btn.getAttribute('aria-pressed') !== 'true';
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        st.textContent = on ? 'på' : 'av';
+        if (window.MolViewer) MolViewer.setLabels(on);
+      });
+    })();
+  </script>
+  <script src="/js/3Dmol-min.js"></script>
+  <script src="/kemi/atomer/js/molmodeller.js"></script>
+  <script src="/js/molviewer.js"></script>
+  <script src="/js/formelvisare.js"></script>
+  <script src="/js/language-selector.js"></script>
+</body>
+</html>

@@ -1,95 +1,315 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atomer & Molekyler – Kemi</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atomer och molekyler – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body.area-atomer {
+      --area: #be185d;
+      --area-strong: #9d174d;
+      --area-soft: #fdf2f8;
+      --area-border: #fbcfe8;
+      --area-hover: #fce7f3;
     }
+    main { font-size: 1.2em; }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) { .area-layout { grid-template-columns: 300px 1fr; align-items: start; } }
+    .area-main { min-width: 0; }
 
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
     .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: #1a1a2e; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
+
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+    .area-hero-image {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 16px;
+      padding: 1rem 1rem 1.1rem; margin: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image svg { width: 80%; max-width: 80%; height: auto; display: block; margin: 0 auto; }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
+    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .overview-intro { margin: 0 0 1rem 0; font-size: 1.35rem; font-weight: 600; color: var(--area-strong); text-align: center; }
+    .overview-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+    .overview-card {
+      background: #fff; border: 1px solid var(--area-border); border-radius: 10px;
+      padding: 0.55rem 0.6rem 0.65rem; width: 156px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .overview-card--wide { width: 306px; }
+    .overview-kat { font-size: 0.82rem; font-weight: 700; color: var(--area-strong); text-transform: uppercase; letter-spacing: .02em; }
+    .overview-stage { min-height: 74px; display: flex; align-items: center; justify-content: center; }
+    .overview-stage svg { max-width: 140px; max-height: 82px; }
+    .overview-card--wide .overview-stage svg { max-width: 290px; }
+    .overview-namn { font-size: 0.95rem; color: #1f2937; margin-top: 0.15rem; }
+
+    .overview-stage img { display:block; max-width:140px; max-height:82px; width:auto; height:auto; }
+    .overview-formler { font-size: 0.92rem; color:#1f2937; margin-top:0.1rem; }
+    .overview-formler .st { font-size:1.05rem; letter-spacing:0.04em; }
+    .overview-card--pad { width: calc((100% - 1.4rem) / 3); min-width: 150px; }
+    .resource-box li .note { font-weight:400; color:#374151; }
+    .resource-box a:focus-visible, .milestone-map-list a:focus-visible, .concept-btn:focus-visible, .subject-btn:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    .concept-section {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 12px;
+      padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem;
+    }
+    .concept-list li { margin: 0; }
+    .concept-list .concept-btn {
+      display: inline-block; background: #fff; border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.3rem 0.8rem; line-height: 1.3;
+      color: #1f2937; cursor: pointer; font: inherit; font-size: 1.05rem;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .concept-list .concept-btn:hover {
+      background: var(--area-hover); border-color: var(--area);
+      color: var(--area-strong); text-decoration: none;
+    }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem; background: var(--area-soft);
+      color: var(--area-strong); border: 1px solid var(--area-border); border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none; font-size: 0.93rem;
+      font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem;
+      border-radius: 50%; background: var(--area); color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
     }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
     }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      font-size: 1.2em;
-    }
-
   </style>
 </head>
+<body class="area-atomer">
 
-<body>
+  <header class="kemi-header">
+    <h1>Atomer och molekyler</h1>
+  </header>
 
-<header class="kemi-header">
-  <h1>Atomer & Molekyler</h1>
-</header>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+      <a href="/kemi/periodiska-systemet/" class="subject-btn">Nästa område →</a>
+    </p>
 
-<nav id="side-menu"></nav>
+    <div class="lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
-<main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-    <a href="/kemi/separationsprocesser/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om atomens uppbyggnad, grundämnen, molekyler och kemiska bindningar.</p>
-    </section>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a> – med kulmodeller som går att rotera</li>
+              <li><a href="./checklista.html"><strong>Checklista</strong></a></li>
+              <li><a href="./instuderingsfragor.html"><strong>Instuderingsfrågor</strong></a></li>
+              <li><a href="./ovningsprov.html"><strong>Övningsprov</strong></a></li>
+              <li><a href="./ovningsverktyg.html"><strong>Övningar</strong></a> – dra och släpp, balansera reaktioner och Räknemaskinen</li>
+              <li><a href="./bygg-molekyl.html"><strong>Bygg en molekyl</strong></a> – knyt bindningar mellan atomer</li>
+              <li><a href="./larande-spel.html"><strong>Lärande spel</strong></a> – övningarna samlade, plus begreppskort</li>
+              <li><a href="./studieguide.html#m3"><strong>Utforska i 3D</strong></a> – rotera och zooma molekylerna</li>
+            </ul>
+          </article>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./begreppslista.html"><strong>Begreppslista</strong></a></li>
+              <li><a href="./facit.html"><strong>Facit till övningsprovet</strong></a></li>
+              <li><a href="./formelark.html"><strong>Arbetsblad: skriv formeln under bilden</strong></a> – utskrivbart, med facit och nya blad varje gång</li>
+              <li><a href="./flashcards.html"><strong>Flashcards</strong></a> – äldre snabbrepetition</li>
+            </ul>
+          </article>
+        </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <ul>
-          <li><a href="flashcards.html">Flashcards – Atomer, Grundämnen & Föreningar</a></li>
-        </ul>
-      </article>
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Lär dig först de tre partiklarna i atomen och vilken laddning var och en har.</li>
+              <li>Lär dig <strong>antal armar</strong> för väte (1), syre (2), kväve (3), kol (4) och klor (1) – det förklarar varför molekylerna ser ut som de gör.</li>
+              <li>Räkna <strong>strecken</strong> i strukturformeln: ett streck är enkelbindning, två är dubbelbindning och tre är trippelbindning.</li>
+              <li>Skilj på <strong>grundämne</strong> (en sorts atomer), <strong>kemisk förening</strong> (flera sorters atomer som sitter ihop) och <strong>blandning</strong>.</li>
+              <li>Den <strong>nedsänkta siffran</strong> talar om antal atomer i en molekyl. Den <strong>stora siffran framför</strong> talar om antal molekyler.</li>
+              <li>En reaktionsformel är balanserad när det finns lika många atomer av varje sort på båda sidor. Ändra bara de stora siffrorna.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <p class="overview-intro">Nedan ser du ämnen som du kommer att studera i det här området!</p>
+          <div class="overview-grid">
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Atom</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/atommodeller/atom-kol.svg" width="98" height="98" alt="Atommodell av kol: sex protoner och sex neutroner i kärnan, två elektroner på inre skalet och fyra på yttre skalet." style="max-height:98px" /></div>
+              <div class="overview-namn">kolatom</div>
+              <div class="overview-formler">C · 6 protoner, 6 neutroner, 6 elektroner</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Enkelbindning</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/kulmodeller/h2.png" width="63" height="33" alt="Kulmodell av vätgas: två små vita väteatomer som sitter ihop." loading="lazy" /></div>
+              <div class="overview-namn">vätgas</div>
+              <div class="overview-formler"><span class="st">H–H</span> · H<sub>2</sub></div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Dubbelbindning</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/kulmodeller/o2.png" width="89" height="46" alt="Kulmodell av syrgas: två röda syreatomer som sitter ihop med en dubbelbindning." loading="lazy" /></div>
+              <div class="overview-namn">syrgas</div>
+              <div class="overview-formler"><span class="st">O=O</span> · O<sub>2</sub></div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Trippelbindning</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/kulmodeller/n2.png" width="85" height="48" alt="Kulmodell av kvävgas: två blå kväveatomer som sitter ihop med en trippelbindning." loading="lazy" /></div>
+              <div class="overview-namn">kvävgas</div>
+              <div class="overview-formler"><span class="st">N≡N</span> · N<sub>2</sub></div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Kemisk förening</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/kulmodeller/h2o.png" width="94" height="59" alt="Kulmodell av vatten: en röd syreatom med två vita väteatomer i en vinkel." loading="lazy" /></div>
+              <div class="overview-namn">vatten</div>
+              <div class="overview-formler"><span class="st">H–O–H</span> · H<sub>2</sub>O</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Kemisk förening</div>
+              <div class="overview-stage"><img src="/images/kemi/atomer/kulmodeller/co2.png" width="137" height="69" alt="Kulmodell av koldioxid: en svart kolatom med en röd syreatom på varje sida i en rak linje." loading="lazy" /></div>
+              <div class="overview-namn">koldioxid</div>
+              <div class="overview-formler"><span class="st">O=C=O</span> · CO<sub>2</sub></div>
+            </div>
+          </div>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Atom">Atom</button></li>
+            <li><button class="concept-btn" data-concept="Atomkärna">Atomkärna</button></li>
+            <li><button class="concept-btn" data-concept="Proton">Proton</button></li>
+            <li><button class="concept-btn" data-concept="Neutron">Neutron</button></li>
+            <li><button class="concept-btn" data-concept="Elektron">Elektron</button></li>
+            <li><button class="concept-btn" data-concept="Elektronskal">Elektronskal</button></li>
+            <li><button class="concept-btn" data-concept="Grundämne">Grundämne</button></li>
+            <li><button class="concept-btn" data-concept="Atomnummer">Atomnummer</button></li>
+            <li><button class="concept-btn" data-concept="Kemiskt tecken">Kemiskt tecken</button></li>
+            <li><button class="concept-btn" data-concept="Molekyl">Molekyl</button></li>
+            <li><button class="concept-btn" data-concept="Kemisk bindning">Kemisk bindning</button></li>
+            <li><button class="concept-btn" data-concept="Enkelbindning">Enkelbindning</button></li>
+            <li><button class="concept-btn" data-concept="Dubbelbindning">Dubbelbindning</button></li>
+            <li><button class="concept-btn" data-concept="Trippelbindning">Trippelbindning</button></li>
+            <li><button class="concept-btn" data-concept="Ädelgas">Ädelgas</button></li>
+            <li><button class="concept-btn" data-concept="Kemisk förening">Kemisk förening</button></li>
+            <li><button class="concept-btn" data-concept="Blandning">Blandning</button></li>
+            <li><button class="concept-btn" data-concept="Molekylformel">Molekylformel</button></li>
+            <li><button class="concept-btn" data-concept="Strukturformel">Strukturformel</button></li>
+            <li><button class="concept-btn" data-concept="Index (nedsänkt siffra)">Index (nedsänkt siffra)</button></li>
+            <li><button class="concept-btn" data-concept="Koefficient (stor siffra framför)">Koefficient (stor siffra framför)</button></li>
+            <li><button class="concept-btn" data-concept="Kemisk reaktion">Kemisk reaktion</button></li>
+            <li><button class="concept-btn" data-concept="Reaktant">Reaktant</button></li>
+            <li><button class="concept-btn" data-concept="Produkt">Produkt</button></li>
+            <li><button class="concept-btn" data-concept="Balanserad reaktionsformel">Balanserad reaktionsformel</button></li>
+            <li><button class="concept-btn" data-concept="Fysikalisk förändring">Fysikalisk förändring</button></li>
+          </ul>
+          <p class="concept-note">Grundämnena, perioderna och grupperna hör till <a href="/kemi/periodiska-systemet/">Periodiska systemet</a>. Kolföreningarna finns i <a href="/kemi/kol-och-kolforeningar/">Kol och kolföreningar</a>.</p>
+        </section>
+
+        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+          <h2>Studieguidens milstolpar</h2>
+          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+          <ul class="milestone-map-list">
+            <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Allt består av atomer</a></li>
+            <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Grundämnen och kemiska tecken</a></li>
+            <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Molekyler – när atomer sitter ihop</a></li>
+            <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Kemiska föreningar</a></li>
+            <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Formler – kemins språk</a></li>
+            <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Kemiska reaktioner</a></li>
+          </ul>
+        </section>
+      </div>
     </section>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>
+  window.BEGREPP = [
+    {"namn": "Atom", "definition": "Den lilla byggsten som alla ämnen består av. En atom har en kärna med protoner och neutroner och elektroner i skal utanför.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Atomkärna", "definition": "Atomens mitt. Här sitter protonerna och neutronerna, och nästan hela atomens massa.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Proton", "definition": "En positivt laddad partikel i atomkärnan. Antalet protoner bestämmer vilket grundämne atomen är.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Neutron", "definition": "En partikel i atomkärnan som inte har någon laddning.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Elektron", "definition": "En negativt laddad partikel som rör sig utanför kärnan, i elektronskal. En atom har lika många elektroner som protoner.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Elektronskal", "definition": "De lager där elektronerna finns. Det inre skalet rymmer 2 elektroner och nästa skal 8. Det yttersta skalet avgör hur atomen binder.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Grundämne", "definition": "Ett ämne som bara består av en sorts atomer, till exempel väte, kol, syre eller järn. Det finns 118 kända grundämnen.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Atomnummer", "definition": "Antalet protoner i atomkärnan. Det bestämmer grundämnet och atomens plats i det periodiska systemet.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Kemiskt tecken", "definition": "Grundämnets förkortning: en stor bokstav, ibland följd av en liten (H, C, N, O, Cl). Tecknen är internationella.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Molekyl", "definition": "En grupp atomer som sitter ihop med kemiska bindningar. Atomerna kan vara av samma grundämne (O₂) eller av olika (H₂O).", "anchor": "./studieguide.html#m3"},
+    {"namn": "Kemisk bindning", "definition": "Det som håller ihop atomer i en molekyl. Två atomer delar på elektroner, och i en strukturformel ritas ett par som ett streck.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Enkelbindning", "definition": "En bindning där två atomer delar på ett elektronpar. Ritas som ett streck, till exempel H–H.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Dubbelbindning", "definition": "En bindning där två atomer delar på två elektronpar. Ritas som två streck, till exempel O=O i syrgas.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Trippelbindning", "definition": "En bindning där två atomer delar på tre elektronpar. Ritas som tre streck, till exempel N≡N i kvävgas.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Ädelgas", "definition": "Ett grundämne vars atomer har fullt yttersta skal och därför inte binder till andra atomer, till exempel helium, neon och argon.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Kemisk förening", "definition": "Ett ämne vars atomer kommer från minst två olika grundämnen, till exempel vatten (H₂O) och koldioxid (CO₂).", "anchor": "./studieguide.html#m4"},
+    {"namn": "Blandning", "definition": "Flera ämnen som ligger tillsammans utan att reagera med varandra, till exempel luft. Ämnena kan skiljas åt utan en kemisk reaktion.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Molekylformel", "definition": "Visar vilka atomer en molekyl har och hur många av varje, till exempel H₂O eller CO₂.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Strukturformel", "definition": "En bild som visar hur atomerna i en molekyl sitter ihop. Enkelbindning ritas med ett streck, dubbelbindning med två och trippelbindning med tre.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Index (nedsänkt siffra)", "definition": "Den lilla siffran efter ett kemiskt tecken. Den talar om hur många atomer av sorten det finns i en molekyl. H₂O har 2 H och 1 O.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Koefficient (stor siffra framför)", "definition": "Den stora siffran framför en formel. Den talar om hur många molekyler det är. 2 H₂O är två vattenmolekyler.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Kemisk reaktion", "definition": "En förändring där bindningar bryts och nya bildas, så att nya ämnen uppstår. Atomerna byter partner men försvinner aldrig.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Reaktant", "definition": "Ett ämne man börjar med i en kemisk reaktion. Reaktanterna står till vänster om pilen.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Produkt", "definition": "Ett ämne som bildas i en kemisk reaktion. Produkterna står till höger om pilen.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Balanserad reaktionsformel", "definition": "En reaktionsformel där det finns lika många atomer av varje sort på båda sidor om pilen. Man balanserar genom att ändra de stora siffrorna, aldrig indexen.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Fysikalisk förändring", "definition": "En förändring där ämnets molekyler är kvar, bara ämnets form eller tillstånd ändras, till exempel när vatten kokar. Inga nya ämnen bildas.", "anchor": "./studieguide.html#m6"}
+  ];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
 </body>
 </html>
-

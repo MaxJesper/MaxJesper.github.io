@@ -2,7 +2,9 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
-<title>Flashcards – Atomer, Grundämnen & Föreningar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/style.css">
+<title>Flashcards – Atomer och molekyler</title>
 <style>
   body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
   .category-btns { text-align: center; margin: 15px; }
@@ -19,7 +21,14 @@
 </head>
 
 <body>
-<p><a href="index.html" class="subject-btn">← Tillbaka till Atomer & Molekyler</a></p>
+<header class="kemi-header">
+  <h1>Flashcards</h1>
+  <p>Atomer och molekyler</p>
+</header>
+<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+<nav id="side-menu"></nav>
+<main>
+<p style="margin:1rem;"><a href="./" class="subject-btn">← Tillbaka till Atomer & Molekyler</a></p>
 
 <div class="category-btns">
   <button onclick="startCategory('Atomer')">Atomer och molekyler</button>
@@ -30,7 +39,7 @@
 <div id="flashcard-container">
   <div id="flashcard">
     <p id="question">Välj en kategori ovan för att börja.</p>
-    <p id="answer"></p>
+    <p id="answer" aria-live="polite"></p>
   </div>
 
   <div class="controls">
@@ -41,7 +50,9 @@
 
   <div id="depth"></div>
 </div>
+</main>
 
+<script src="/js/menu.js"></script>
 <script>
 const flashcards = {
   "Atomer": [

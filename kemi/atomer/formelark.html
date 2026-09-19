@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skriv formeln under bilden – Atomer och molekyler</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/formelvisare.css" />
+  <style>
+    body { --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8; }
+    main { max-width: 980px; margin: 0 auto; }
+    .top-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; }
+    .intro-box { background:#fdf2f8; border:1px solid #fbcfe8; border-left:4px solid #9d174d; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1rem; }
+    .intro-box p { margin:0.35rem 0; }
+    fieldset.ctrl { border:1px solid #fbcfe8; border-radius:10px; padding:0.6rem 1rem 0.9rem; margin:0 0 1rem; background:#fff; }
+    fieldset.ctrl legend { font-weight:700; color:#9d174d; padding:0 0.4rem; }
+    .ctrl-grid { display:flex; flex-wrap:wrap; gap:0.8rem 1.4rem; align-items:flex-end; }
+    .ctrl label { display:flex; flex-direction:column; gap:0.2rem; font-size:0.9rem; font-weight:600; }
+    .ctrl label.chk { flex-direction:row; align-items:center; gap:0.5rem; min-height:44px; }
+    .ctrl select, .ctrl input[type=number] { font:inherit; font-weight:400; min-height:44px; padding:0.25rem 0.5rem; border:2px solid #5b6478; border-radius:8px; background:#fff; }
+    .ctrl input[type=checkbox] { width:22px; height:22px; }
+    .btn { font:inherit; font-weight:600; min-height:44px; padding:0.3rem 1.1rem; background:#fff; color:#9d174d; border:2px solid #9d174d; border-radius:999px; cursor:pointer; }
+    .btn.primary { background:#9d174d; color:#fff; }
+    .btn:hover { filter:brightness(0.95); }
+    .btn:focus-visible, .ctrl select:focus-visible, .ctrl input:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .sheet { background:#fff; border:1px solid #c9ccd8; border-radius:6px; padding:1.2rem 1.4rem 1.4rem; margin:0 0 1.2rem; box-shadow:0 2px 10px rgba(0,0,0,0.06); color:#000; }
+    .sheet h2 { margin:0 0 0.3rem; font-size:1.5rem; color:#000; }
+    .sheet .meta { display:flex; flex-wrap:wrap; gap:0.4rem 2rem; margin:0.4rem 0 0.7rem; font-size:0.95rem; }
+    .sheet .meta span.line { display:inline-block; border-bottom:1px solid #000; min-width:12rem; height:1.2em; vertical-align:bottom; }
+    .sheet .rules { border:1.5px solid #000; border-radius:6px; padding:0.5rem 0.8rem; margin:0.4rem 0 0.9rem; font-size:0.95rem; }
+    .sheet .rules p { margin:0.2rem 0; }
+    .grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:0.7rem; }
+    .cell { border:1.5px solid #000; border-radius:6px; padding:0.35rem 0.5rem 0.5rem; min-height:150px; display:flex; flex-direction:column; break-inside:avoid; page-break-inside:avoid; }
+    .cell .nr { font-weight:700; font-size:0.85rem; }
+    .cell .pic { flex:1; display:flex; align-items:center; justify-content:center; min-height:76px; padding:0.2rem 0; }
+    .cell .pic svg { max-width:100%; height:auto; }
+    .cell .draw { flex:1; min-height:88px; border:1.5px dashed #555; border-radius:4px; margin:0.3rem 0; }
+    .cell .formulaq { font-size:1.6rem; text-align:center; min-height:2.2rem; }
+    .cell .answer { display:flex; align-items:flex-end; gap:0.4rem; font-size:0.95rem; min-height:2rem; }
+    .cell .answer .blank { flex:1; border-bottom:1.5px solid #000; height:1.6em; text-align:center; font-size:1.25rem; }
+    .cell .answer2 { display:flex; align-items:flex-end; gap:0.4rem; font-size:0.85rem; margin-top:0.3rem; }
+    .cell .answer2 .blank { width:3.2rem; border-bottom:1.5px solid #000; height:1.4em; text-align:center; }
+    .ans-only { display:none; }
+    body.mode-facit .ans-only { display:inline; }
+    body.mode-facit .cell .blank { border-bottom-color:transparent; }
+    body:not(.mode-facit) #sheet-facit { display:none; }
+    body.mode-facit #sheet-ark { display:none; }
+    .answer .blank .fx { font-size:1.35rem; }
+    .foot { margin-top:0.8rem; font-size:0.8rem; color:#333a4a; display:flex; justify-content:space-between; }
+    @media (max-width:700px) { .grid { grid-template-columns:repeat(2, 1fr); } }
+    @media (max-width:440px) { .grid { grid-template-columns:1fr; } }
+    @page { size: A4 portrait; margin: 11mm; }
+    @media print {
+      header, nav, .hamburger, .top-row, .intro-box, fieldset.ctrl, .next-steps, footer, .no-print { display:none !important; }
+      body { background:#fff; font-size:12pt; }
+      main { max-width:none; padding:0; margin:0; }
+      .sheet { border:none; box-shadow:none; padding:0; margin:0; }
+      body.mode-ark #sheet-facit { display:none !important; }
+      body.mode-facit #sheet-ark { display:none !important; }
+      .btn, .foot { display:none !important; }
+      .cell { min-height:0; padding:1.5mm 2mm 1.5mm; }
+      .grid { gap:4mm; }
+      .cell .answer { min-height:0; }
+      .sheet h2 { font-size:17pt; }
+      .rules { font-size:9.5pt !important; padding:1.5mm 3mm !important; margin:1mm 0 3mm !important; }
+      .rules p { margin:0.5mm 0 !important; }
+      .meta { margin:1mm 0 2mm !important; }
+      .cell .pic { min-height:0; }
+      .cell .draw { min-height:18mm; margin:1mm 0; }
+      .cell .formulaq { font-size:15pt; min-height:0; }
+      .cell .pic { padding:0.5mm 0; }
+      /* Fasta radhöjder så att 12 uppgifter alltid ryms på en A4-sida, oavsett hur höga bilderna blir */
+      .grid:not(.rows5) { grid-auto-rows: 48mm; }
+      .grid:not(.rows5) .cell { height:48mm; overflow:hidden; box-sizing:border-box; }
+      .cell .pic { flex:1 1 0; min-height:0; overflow:hidden; }
+      .cell .pic svg { max-height:100%; width:auto; max-width:100%; }
+      .cell .draw { flex:1 1 0; min-height:12mm; }
+    }
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.6rem; margin-top:1.5rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#fdf2f8; border:1px solid #fbcfe8; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; }
+    .next-steps a:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#9d174d; font-weight:700; margin-bottom:0.2rem; }
+  </style>
+</head>
+<body class="mode-ark">
+  <header class="kemi-header">
+    <h1>Arbetsblad</h1>
+    <p>Skriv formeln under bilden</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p class="top-row">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html#m5" class="subject-btn">Studieguiden: formler</a>
+    </p>
+
+    <section class="intro-box">
+      <p><strong>Ett utskrivbart ark som övar skillnaden mellan den nedsänkta siffran och den stora siffran framför.</strong> Eleven tittar på bilder av kulor och skriver formeln under varje bild – till exempel <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> för två vattenmolekyler och <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> för tre syremolekyler. Varje ark slumpas fram och kan återskapas med arknumret, och det finns ett facit.</p>
+      <p>Välj inställningar nedan, kontrollera förhandsvisningen och tryck på <em>Skriv ut arket</em> eller <em>Skriv ut facit</em>.</p>
+    </section>
+
+    <fieldset class="ctrl">
+      <legend>Inställningar</legend>
+      <div class="ctrl-grid">
+        <label>Uppgiftstyp
+          <select id="typ">
+            <option value="bild">Bild → formel (skriv formeln under bilden)</option>
+            <option value="rita">Formel → bild (rita kulorna)</option>
+            <option value="mix">Blandat</option>
+          </select></label>
+        <label>Nivå
+          <select id="niva">
+            <option value="grund">Grund (färre ämnen, upp till 3 molekyler)</option>
+            <option value="alla">Alla ämnen (upp till 4 molekyler)</option>
+          </select></label>
+        <label>Antal bilder
+          <select id="antal"><option value="6">6</option><option value="9">9</option><option value="12" selected>12 (en sida)</option><option value="15">15 (blir två sidor)</option></select></label>
+        <label>Arknummer
+          <input type="number" id="seed" min="1" max="99999" value="1"></label>
+        <button type="button" class="btn" id="nytt">Nytt ark</button>
+        <label class="chk"><input type="checkbox" id="extra"> Fråga också efter antal atomer totalt</label>
+      </div>
+      <p style="margin:0.7rem 0 0; display:flex; gap:0.6rem; flex-wrap:wrap;">
+        <button type="button" class="btn primary" id="print-ark">Skriv ut arket</button>
+        <button type="button" class="btn" id="print-facit">Skriv ut facit</button>
+        <button type="button" class="btn" id="show-facit" aria-pressed="false">Visa facit på skärmen</button>
+      </p>
+    </fieldset>
+
+    <section id="sheet-ark" class="sheet" aria-label="Arbetsblad"></section>
+    <section id="sheet-facit" class="sheet" aria-label="Facit"></section>
+
+    <div class="next-steps">
+      <a href="./ovningsverktyg.html"><span class="n-label">Träna</span>Dra-och-släpp-övningar</a>
+      <a href="./bygg-molekyl.html"><span class="n-label">Bygg</span>Bygg en molekyl</a>
+      <a href="./studieguide.html#m5"><span class="n-label">Läs</span>Formler i studieguiden</a>
+    </div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/formelvisare.js"></script>
+  <script>
+  (function () {
+    var KF = window.KemiFormel, $ = function (id) { return document.getElementById(id); };
+    var ATOMER = ['H', 'C', 'N', 'O', 'Cl'];
+    var GRUND = ['H2', 'O2', 'N2', 'Cl2', 'HCl', 'H2O', 'CO2'], ALLA = GRUND.concat(['NH3', 'CH4']);
+    var NAMN = { H: 'väte', C: 'kol', N: 'kväve', O: 'syre', Cl: 'klor' };
+
+    function candidates(niva) {
+      var maxN = niva === 'grund' ? 3 : 4, out = [], list = niva === 'grund' ? GRUND : ALLA;
+      ATOMER.forEach(function (a) { for (var n = 1; n <= maxN; n++) out.push({ f: a, n: n }); });
+      list.forEach(function (m) { for (var n = 1; n <= maxN; n++) out.push({ f: m, n: n }); });
+      return out;
+    }
+    function pick(niva, N, seed) {
+      var cand = candidates(niva);
+      for (var attempt = 0; attempt < 60; attempt++) {
+        var rnd = KF.mulberry(seed * 7919 + attempt * 104729), a = cand.slice(), i, j, t;
+        for (i = a.length - 1; i > 0; i--) { j = Math.floor(rnd() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+        var sel = [], perF = {};
+        for (i = 0; i < a.length && sel.length < N; i++) {
+          if ((perF[a[i].f] || 0) >= 3) continue;
+          perF[a[i].f] = (perF[a[i].f] || 0) + 1; sel.push(a[i]);
+        }
+        var atoms = sel.filter(function (x) { return ATOMER.indexOf(x.f) >= 0; }).length, multi = sel.filter(function (x) { return x.n >= 2; }).length;
+        if (sel.length === N && atoms >= Math.floor(N / 6) && atoms <= Math.ceil(N / 2) && multi >= Math.ceil(N * 0.5) && multi <= Math.ceil(N * 0.8)) return sel;
+      }
+      return sel;
+    }
+    function total(x) { var c = KF.count(x.f), t = 0; Object.keys(c).forEach(function (e) { t += c[e]; }); return t * x.n; }
+    function perEl(x) { var c = KF.count(x.f), s = []; Object.keys(c).forEach(function (e) { s.push(c[e] * x.n + ' ' + e); }); return s.join(', '); }
+
+    function cellHtml(x, idx, mode, extra, facit) {
+      var nr = '<div class="nr">' + (idx + 1) + '</div>', f = KF.fmt(x.n + ' ' + x.f);
+      var q = '';
+      if (mode === 'bild') {
+        q = nr + '<div class="pic">' + KF.figure(x.f, x.n, { maxWidth: 210, scale: 0.95, maxHeight: extra ? 78 : 112 }) + '</div>' +
+          '<div class="answer"><span>Formel:</span><span class="blank">' + (facit ? f : '') + '</span></div>';
+      } else {
+        q = nr + '<div class="formulaq">' + f + '</div>' +
+          (facit ? '<div class="pic">' + KF.figure(x.f, x.n, { maxWidth: 210, scale: 0.95, maxHeight: extra ? 78 : 112 }) + '</div>' : '<div class="draw" role="img" aria-label="Tomt fält för att rita"></div>') +
+          '<div class="answer" style="justify-content:center;font-size:0.8rem"><span>' + (facit ? 'Så här ska bilden se ut' : 'Rita kulorna, med bokstav i varje.') + '</span></div>';
+      }
+      if (extra) q += '<div class="answer2"><span>Antal atomer totalt:</span><span class="blank">' + (facit ? total(x) : '') + '</span></div>' +
+        (facit ? '<div class="answer2" style="font-size:0.75rem">(' + perEl(x) + ')</div>' : '');
+      return '<div class="cell">' + q + '</div>';
+    }
+    function buildSheet(el, facit, items, types, extra, seed, niva) {
+      var titel = facit ? 'Facit – skriv formeln under bilden' : 'Skriv formeln under bilden';
+      var html = '<h2>' + titel + '</h2>' +
+        '<div class="meta"><span>Namn: <span class="line"></span></span><span>Datum: <span class="line" style="min-width:7rem"></span></span><span>Ark nr ' + seed + ', ' + (niva === 'grund' ? 'grundnivå' : 'alla ämnen') + '</span></div>' +
+        '<div class="rules"><p><strong>Så här läser du formler:</strong></p>' +
+        '<p>• Den <strong>nedsänkta siffran</strong> står efter atomens bokstav och visar hur många atomer av den sorten som sitter ihop i <em>en</em> molekyl. Exempel: H<sub>2</sub>O har 2 H och 1 O.</p>' +
+        '<p>• Den <strong>stora siffran framför</strong> visar hur många molekyler det är. Exempel: <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> är tre syremolekyler. Siffran 1 skrivs inte.</p>' +
+        '<p>• Kulorna: H = väte, C = kol, N = kväve, O = syre, Cl = klor. Kulor som sitter ihop är en molekyl, kulor som ligger för sig är enskilda atomer.</p></div>' +
+        '<div class="grid' + (items.length > 12 ? ' rows5' : '') + '">' + items.map(function (x, i) { return cellHtml(x, i, types[i], extra, facit); }).join('') + '</div>' +
+        '<div class="foot"><span>Atomer och molekyler</span><span>Ark nr ' + seed + '</span></div>';
+      el.innerHTML = html;
+    }
+
+    function state() { return { typ: $('typ').value, niva: $('niva').value, antal: +$('antal').value, seed: Math.max(1, Math.min(99999, +$('seed').value || 1)), extra: $('extra').checked }; }
+    function render() {
+      var s = state(), items = pick(s.niva, s.antal, s.seed), types = items.map(function (x, i) { return s.typ === 'mix' ? (i % 2 ? 'rita' : 'bild') : s.typ; });
+      buildSheet($('sheet-ark'), false, items, types, s.extra, s.seed, s.niva);
+      buildSheet($('sheet-facit'), true, items, types, s.extra, s.seed, s.niva);
+      var h = 'typ=' + s.typ + '&niva=' + s.niva + '&antal=' + s.antal + '&ark=' + s.seed + (s.extra ? '&extra=1' : '');
+      try { history.replaceState(null, '', '#' + h); } catch (e) { /* ignore */ }
+    }
+    // återställ från adressfältet
+    (function () {
+      var h = location.hash.slice(1), p = {};
+      h.split('&').forEach(function (kv) { var a = kv.split('='); if (a[0]) p[a[0]] = a[1]; });
+      if (p.typ && ['bild', 'rita', 'mix'].indexOf(p.typ) >= 0) $('typ').value = p.typ;
+      if (p.niva && ['grund', 'alla'].indexOf(p.niva) >= 0) $('niva').value = p.niva;
+      if (p.antal && ['6', '9', '12', '15'].indexOf(p.antal) >= 0) $('antal').value = p.antal;
+      if (p.ark && /^\d+$/.test(p.ark)) $('seed').value = p.ark; else $('seed').value = String(1 + Math.floor(Math.random() * 9999));
+      if (p.extra === '1') $('extra').checked = true;
+    })();
+    ['typ', 'niva', 'antal', 'seed', 'extra'].forEach(function (id) { $(id).addEventListener('change', render); });
+    $('nytt').addEventListener('click', function () { $('seed').value = String(1 + Math.floor(Math.random() * 9999)); render(); });
+    function printMode(m) { document.body.className = 'mode-' + m; window.print(); }
+    $('print-ark').addEventListener('click', function () { printMode('ark'); });
+    $('print-facit').addEventListener('click', function () { printMode('facit'); });
+    window.addEventListener('afterprint', function () { document.body.className = 'mode-ark'; $('show-facit').setAttribute('aria-pressed', 'false'); });
+    $('show-facit').addEventListener('click', function () {
+      var on = document.body.className !== 'mode-facit';
+      document.body.className = on ? 'mode-facit' : 'mode-ark';
+      this.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>
