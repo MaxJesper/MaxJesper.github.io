@@ -481,6 +481,18 @@ Risk Jesper lyfte (sep 2026): ju fler generella förbättringar vi kommer på un
 3. Ett `?` i matrisen betyder okontrollerat, inte "antas OK" — verifiera mot faktiska filer (grep) innan det ändras till ✓ eller ✗, gissa aldrig.
 4. Minnesfilen (Claudes minne, `/areas/no-plattform.md`) får gärna innehålla den narrativa historien (varför ett beslut togs), men ska INTE vara det enda stället där ett spridningsbeslut finns – det hör till repo-filen så Jesper också kan läsa den direkt, utan att fråga Claude.
 
+---
+
+## Ingen hänvisning till "skolan"/specifik skola som källa/ägare — STÅENDE REGEL, sep 2026
+
+Anledning (Jesper, sep 2026): (1) Text som kopplar material, foton eller arbete till "skolan"/arbetstid på skolan riskerar att stödja ett framtida kommunalt anspråk på ägarskap av plattformen. (2) Plattformen riktar sig brett – alla skolor/elever i Sverige, Finlands svenskspråkiga elever, och på sikt (efter engelsköversättning) engelsktalande länder som USA (bland annat hemundervisningsmarknaden där) – en lokal "vår skola"-koppling passar inte den målgruppen.
+
+**Regel:** nämn aldrig "skolan", "vår skola", "min skola" eller liknande som källa/ägare till material, foton eller specifikt undervisningsinnehåll. Håll ursprunget generiskt ("en samling uppstoppade fåglar", "riktiga foton", osv). Personlig fotokreditering (Jesper Tordsson, familjemedlemmar) är okej och ska vara kvar – det är institutionskopplingen som ska bort, inte den personliga krediteringen.
+
+**Åtgärdat sep 2026:** fågeltävlingen (`biologi/ekologi/faglar-tavling.html`, `larande-spel.html`, `data/faglar.json`) hade flera "skolans"-omnämnanden (rubrik, introtext, fotokreditering) – borttagna.
+
+**Kvarstår, ej ändrat – fråga Jesper:** `kemi/kol-och-kolforeningar/esterlab.html` och `alkoholdemo.html` har källhänvisningar till "skolans egen riskbedömning". Annan karaktär (källa för en riskbedömningsrutin, inte ägarskap av foton/material), men kan falla under samma princip.
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang
