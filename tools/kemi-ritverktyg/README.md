@@ -65,6 +65,33 @@ referensmolekyler (padding, inte omritning). M7 (syrorna) fick tabell-layout
 (CSS grid) och M8:s reaktionsrad grupperar produkterna så de wrappar
 tillsammans. Flerradiga bildtexter vänsterjusterades.
 
+## statiska-kulmodeller/  (PNG-bilder till studieguidens bildkolumn, sep 2026)
+BESLUT sep 2026 (tredje rundan): studieguiden fick en bred layout med bildkolumn bredvid texten
+(se CLAUDE.md, "Bred studieguide med bildkolumn"). Där ligger varje molekyl som ett kort med namn +
+molekylformel + 2D-strukturformel + kulmodell som STATISK PNG. De små live-3D-rutorna (.mini3d)
+är borta ur löptexten (de åt WebGL-kontexter) - rotation finns BARA i galleriet "Utforska i 3D" (M10),
+dit varje kort länkar (`#km-<stem>`). Galleriet växte från 12 till 21 modeller och släpper WebGL-kontexter
+för boxar som rullats ur bild.
+- `render_kulmodeller.py` - renderar alla (eller angivna) molekyler i MOLS/MULTI i studieguiden till
+  images/kemi/kol-och-kolforeningar/kulmodeller/<stem>.png. Fast skala 34 px/Å (PPA=...), rotX -25;
+  diolerna/glycerol ses från andra hållet (rotX +25) så att OH-grupperna inte döljs. Resultatet är
+  bit-för-bit reproducerbart. HTML-attribut: width/height = PNG-storlek / 3 (skrivs ut av skriptet).
+- `render_allotroper.py` + `allotroper.py` - kolets former (diamant, grafit, fulleren C60, grafen,
+  nanorör) genereras som atomlistor ur kända kristallstrukturer (bindningar efter avstånd, kontrollerade
+  mot grannantal och bindningslängd) och renderas med samma metod. Egna sfär-/pinnstorlekar per bild för
+  läsbarhet (diamant/fulleren/nanorör lättare); nanoröret visas som halvt rör (CUTZ), annars täcker
+  väggarna varandra. Bilderna är förenklade (alla bindningar som enkla pinnar).
+- `render-kulmodeller.html` + `_server.py` - renderhjälpen: 3Dmol.js (ortografisk projektion, samma
+  stilregler som galleriet, `modelToScreen` sätter exakt px/Å) i headless Chromium via Playwright
+  (mjukvaru-WebGL, inget grafikkort behövs). Kräver `pip install playwright pillow` + `playwright install chromium`.
+- chembuilder.py fick `build_rdkit(smiles)` (RDKit ETKDG + MMFF94, mest utsträckta lågenergikonformer,
+  orienterad längs axlarna) för föreningar utan handbyggt mönster: glykol, propan-1,2-diol, glycerol,
+  glycin, 2-metylbutan - samt `check_geometry(atoms, bonds)` som skriver ut bindningslängder/vinklar
+  att kontrollera mot förväntat innan bilden godkänns. Kräver `pip install rdkit`.
+Ny molekyl: 1) bygg med chembuilder (build_alkane/acid/ester/... eller build_rdkit), 2) `check_geometry`,
+3) `write_molblock` -> lägg i MOLS (+ MULTI för dubbel-/trippelbindningar) i studieguiden, 4) rita 2D-SVG med
+strukturformler.js, 5) kör render_kulmodeller.py <stem>, 6) lägg kortet i bildkolumnen och galleriet.
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.

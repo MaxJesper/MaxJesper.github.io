@@ -99,6 +99,12 @@ Idag blandas `*-print-elev/larare.html` och `*-elevutskrift/lararutskrift.html`.
 ### D5. "Träna med AI" – finns bara i periodiska-systemet
 - [ ] Utvärdera och rulla ut `trana-med-ai.html` till fler områden.
 
+### D6. Bred studieguide med bildkolumn – bara pilot i kemi/kol-och-kolforeningar (sep 2026)
+Text till vänster, förklarande bilder till höger vid rätt text (`<main class="guide-wide">` + `/css/studieguide-bildkolumn.css`). Regler och markup: `CLAUDE.md`, avsnittet "Bred studieguide med bildkolumn".
+- [ ] Välj ut de studieguider/milstolpar som har många förklarande bilder (kemi: syror-och-baser, periodiska-systemet; biologi: cell, DNA, organsystem; fysik: kretsar, krafter) och inför layouten där.
+- [ ] Reaktioner och andra breda bilder: alltid full bredd (`m-row--full`), aldrig i sidokolumnen.
+- [ ] Statiska kulmodell-PNG bredvid texten, rotation bara i det samlade 3D-bladet – gäller för alla kemiområden med molekyler.
+
 ## E. Större förbättringsidéer (backlog)
 
 - [ ] Samlad **lärarhubb** per område (allt lärarmaterial på ett ställe).

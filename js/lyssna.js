@@ -61,11 +61,13 @@
   }
 
   function getMilestoneText(milestone) {
-    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip']);
+    // .mc-head/.mc-rotate/.km-legend: molekylkortens rubrikrad, "Rotera i 3D"-länk och färgförklaring
+    // i bildkolumnen (studieguide-bildkolumn.css) ska inte läsas upp; bildtexterna läses.
+    return extractText(milestone.querySelector('.m-body'), ['.next-steps', '.deepen', '.listen-btn', '.m-num-chip', '.mc-head', '.mc-rotate', '.km-legend']);
   }
 
   function getDeepenText(deepen) {
-    return extractText(deepen, ['.listen-btn']);
+    return extractText(deepen, ['.listen-btn', '.km-legend']);
   }
 
   // Returnerar mp3-sökväg för en milstolpe eller fördjupning

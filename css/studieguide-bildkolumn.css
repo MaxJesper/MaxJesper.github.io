@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Studieguide med bildkolumn ("bred studieguide") – delad komponent
+   --------------------------------------------------------------------------
+   Aktiveras per studieguide: <main class="guide-wide"> + den här filen.
+   Text till vänster, förklarande bilder (molekylkort, figurer) i en kolumn
+   till höger om just den text de hör till – som i Enkel NO. Ordinarie
+   studieguider (utan .guide-wide) påverkas inte alls.
+   Markup och regler: se CLAUDE.md, avsnittet "Bred studieguide med bildkolumn".
+   ========================================================================== */
+
+main.guide-wide { max-width: 1180px; }
+
+/* En "rad" = en textdel (lead) + bilderna till den (side) + fortsatt text (rest). */
+.guide-wide .m-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "lead side" "rest side";
+  column-gap: 1.8rem;
+  align-items: start;
+}
+.guide-wide .m-row + .m-row { margin-top: 0.6rem; }
+.guide-wide .m-lead { grid-area: lead; min-width: 0; }
+.guide-wide .m-side { grid-area: side; min-width: 0; display: flex; flex-direction: column; gap: 0.9rem; padding-top: 0.5rem; }
+.guide-wide .m-rest { grid-area: rest; min-width: 0; margin-top: 0.6rem; }
+.guide-wide .m-lead > :first-child,
+.guide-wide .m-rest > :first-child { margin-top: 0; }
+.guide-wide .m-lead > :last-child,
+.guide-wide .m-rest > :last-child { margin-bottom: 0; }
+/* Rad utan bildkolumn: texten behåller samma bredd som övriga rader. */
+.guide-wide .m-row--plain { grid-template-rows: auto; grid-template-areas: "lead ."; }
+/* Rad som ska ta hela bredden (t.ex. en reaktion som behöver plats i sidled). */
+.guide-wide .m-row--full { display: block; }
+
+/* Bildruta i sidokolumnen */
+.side-fig {
+  margin: 0; background: #faf9ff; border: 1px solid #ece9fb; border-radius: 10px;
+  padding: 0.75rem 0.85rem;
+}
+.side-fig > img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.side-fig figcaption { font-size: 0.88rem; line-height: 1.4; color: #4a4a5a; margin-top: 0.65rem; text-align: left; }
+.side-fig figcaption strong { color: #1a1a2e; }
+
+/* Molekylkort: namn + molekylformel, strukturformel (2D) och kulmodell (statisk bild) */
+.mol-card + .mol-card { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px dashed #d9d4f5; }
+.mc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; margin-bottom: 0.35rem; }
+.mc-name { font-weight: 700; color: #1a1a2e; font-size: 0.98rem; line-height: 1.25; }
+.mc-formula { font-family: "Cambria Math", Georgia, serif; font-size: 1.05rem; color: #5b21b6; white-space: nowrap; }
+.mc-imgs { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.35rem 1.1rem; }
+.mc-imgs img { display: block; max-width: 100%; height: auto; }
+.mc-rotate { display: block; text-align: right; font-size: 0.8rem; margin-top: 0.2rem; color: #5b21b6; }
+.km-legend { display: block; margin-top: 0.4rem; font-size: 0.82rem; color: #4a4a5a; }
+.km-dot { display: inline-block; width: 0.7em; height: 0.7em; border-radius: 50%; margin: 0 0.25em 0 0.15em; vertical-align: -0.02em; border: 1px solid #555; }
+.km-dot--c { background: #4d4d4d; }
+.km-dot--h { background: #fff; }
+.km-dot--o { background: #e01010; border-color: #8a0a0a; }
+.km-dot--n { background: #3050f8; border-color: #1a2fa8; }
+
+/* Markering av kulmodell-kortet man kommit till via "Rotera i 3D" */
+.km-card.km-flash { outline: 3px solid #6d28d9; outline-offset: 3px; }
+
+/* Smala skärmar: bilderna hamnar direkt efter den text de hör till */
+@media (max-width: 900px) {
+  .guide-wide .m-row,
+  .guide-wide .m-row--plain {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "lead" "side" "rest";
+  }
+  .guide-wide .m-side { margin: 0.7rem auto 0.3rem; width: 100%; max-width: 420px; }
+}
+
+/* Kort utan molekylformel (t.ex. kolformerna): kort beskrivning i stället för formel */
+.mc-desc { font-size: 0.88rem; color: #5b21b6; text-align: right; line-height: 1.25; }
+
+/* Bildrad inne i löpande text/utfällbar ruta (t.ex. grafen + nanorör i "Nanorör och grafen") */
+.fig-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0.8rem 1.2rem; margin: 0.9rem 0 0.2rem; }
+.fig-row figure { margin: 0; text-align: center; flex: 1 1 0; min-width: 230px; max-width: 100%; }
+.fig-row figure img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.fig-row figcaption { font-size: 0.88rem; line-height: 1.4; color: #4a4a5a; margin-top: 0.4rem; max-width: 20em; margin-left: auto; margin-right: auto; }
+
+/* Reaktionsbilder (full bredd) på mobil: låt produkterna bryta rad i stället för att klippas */
+@media (max-width: 600px) {
+  .guide-wide .rxn-products { flex-wrap: wrap; justify-content: center; margin-left: 0; }
+}

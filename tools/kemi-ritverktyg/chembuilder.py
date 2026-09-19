@@ -433,3 +433,66 @@ def build_ethanol():
     atoms += [('H',*h) for h in H_c1] + [('H',*h) for h in H_c2] + [('H',*H_oh)]
     bonds = [(1,2,1),(2,3,1),(1,4,1),(1,5,1),(1,6,1),(2,7,1),(2,8,1),(3,9,1)]
     return atoms, bonds
+
+
+# ---------------------------------------------------------------------------
+# Generell byggare for foreningar som INTE tacks av de handbyggda monstren
+# ovan (flervarda alkoholer, aminosyror, grenade kedjor) - sep 2026.
+# Bindningarna bestams fortfarande av oss (SMILES = vilka atomer som sitter
+# ihop, precis som i alla andra byggare) - RDKit rakna bara ut geometrin:
+# ETKDG-konformerer + MMFF94-optimering (riktiga bindningslangder/-vinklar),
+# darefter valjs den mest utstrackta lagenergikonformern (inom 5 kcal/mol
+# fran minimum) och molekylen roteras sa att huvudaxeln ligger langs x och
+# nast-storsta axeln langs y (kedjan ligger da "i planet" som vara
+# handbyggda zigzag-kedjor). Kraver:  pip install rdkit
+# ---------------------------------------------------------------------------
+def build_rdkit(smiles, n_confs=120, seed=7, window_kcal=5.0):
+    from rdkit import Chem
+    from rdkit.Chem import AllChem
+    mol = Chem.AddHs(Chem.MolFromSmiles(smiles))
+    cids = list(AllChem.EmbedMultipleConfs(mol, n_confs, randomSeed=seed))
+    res = AllChem.MMFFOptimizeMoleculeConfs(mol, maxIters=5000)
+    energies = [e for _, e in res]
+    emin = min(energies)
+    heavy = [a.GetIdx() for a in mol.GetAtoms() if a.GetAtomicNum() > 1]
+
+    def extent(cid):
+        pts = mol.GetConformer(cid).GetPositions()[heavy]
+        return max(np.linalg.norm(p - q) for p in pts for q in pts)
+    ok = [c for c in cids if energies[c] - emin <= window_kcal]
+    best = max(ok, key=extent)
+    pos = mol.GetConformer(best).GetPositions()
+    # PCA pa de tunga atomerna: storsta axeln -> x, nast storsta -> y
+    ctr = pos[heavy].mean(axis=0)
+    u, s, vt = np.linalg.svd(pos[heavy] - ctr)
+    R = vt.copy()
+    if np.linalg.det(R) < 0: R[2] *= -1          # ratt handighet (ingen spegling)
+    newpos = (pos - ctr) @ R.T
+    if newpos[heavy[0], 0] > newpos[heavy[-1], 0]:  # forsta tunga atomen till vanster
+        newpos[:, 0] *= -1; newpos[:, 2] *= -1
+    atoms = [(a.GetSymbol(), *map(float, newpos[a.GetIdx()])) for a in mol.GetAtoms()]
+    order = {Chem.BondType.SINGLE: 1, Chem.BondType.DOUBLE: 2, Chem.BondType.TRIPLE: 3}
+    bonds = [(b.GetBeginAtomIdx() + 1, b.GetEndAtomIdx() + 1, order[b.GetBondType()]) for b in mol.GetBonds()]
+    return atoms, bonds
+
+
+def check_geometry(atoms, bonds):
+    """Numerisk kontroll fore rendering: min/max bindningslangd per bindningstyp
+    och bindningsvinklar kring varje tung atom. Returnerar (langder, vinklar)."""
+    P = np.array([[x, y, z] for _, x, y, z in atoms])
+    lengths = {}
+    nb = {i: [] for i in range(len(atoms))}
+    for i, j, o in bonds:
+        i -= 1; j -= 1
+        key = '-'.join(sorted([atoms[i][0], atoms[j][0]])) + ('=' if o == 2 else '#' if o == 3 else '')
+        lengths.setdefault(key, []).append(float(np.linalg.norm(P[i] - P[j])))
+        nb[i].append(j); nb[j].append(i)
+    angles = {}
+    for c, ns in nb.items():
+        if atoms[c][0] == 'H' or len(ns) < 2: continue
+        for a in range(len(ns)):
+            for b in range(a + 1, len(ns)):
+                v1, v2 = P[ns[a]] - P[c], P[ns[b]] - P[c]
+                ang = float(np.degrees(np.arccos(np.dot(v1, v2) / np.linalg.norm(v1) / np.linalg.norm(v2))))
+                angles.setdefault(f'{atoms[ns[a]][0]}-{atoms[c][0]}-{atoms[ns[b]][0]}', []).append(ang)
+    return ({k: (min(v), max(v)) for k, v in lengths.items()}, {k: (min(v), max(v)) for k, v in angles.items()})

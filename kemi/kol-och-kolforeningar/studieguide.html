@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Kol och kolföreningar</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
 
   <style>
     body { --listen-color:#6d28d9; --listen-border:#ddd6fe; --listen-hover-bg:#f5f3ff; }
@@ -123,7 +124,6 @@
 
     .mol-fig { margin: 1rem 0; overflow-x: auto; }
     .mol-fig .mol-row { display: flex; flex-wrap: wrap; gap: 1.6rem; justify-content: center; align-items: flex-end; }
-    .mol-fig .mol-table { display: grid; grid-template-columns: max-content max-content; column-gap: 1.6rem; row-gap: 0.9rem; align-items: center; justify-content: center; }
     .mol-fig .mol { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; }
     .mol-fig img { height: 108px; width: auto; }
     .mol-fig .mol-name { font-size: 0.88rem; color: #4a4a5a; }
@@ -150,10 +150,6 @@
 .km-card .km-2d img { max-width:100%; height:auto; display:block; }
 .km-viewerbox { position:relative; overflow:hidden; flex:1 1 160px; min-width:150px; height:170px; border-radius:8px; background:#fff; border:1px solid #eee; }
 .km-hint { font-size:0.72rem; color:#6b6b6b; margin-top:0.3rem; }
-    .mini3d { display:flex; flex-direction:column; align-items:center; gap:0.3rem; }
-    .mini3d .km-viewerbox { position:relative; overflow:hidden; width:150px; height:140px; border-radius:8px; background:#fff; border:1px solid #eee; }
-    .mini3d .mini3d-label { font-size:0.78rem; color:#6f6f85; }
-    .mini3d .mini3d-link { font-size:0.78rem; }
 
   </style>
 </head>
@@ -167,7 +163,7 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
-  <main>
+  <main class="guide-wide">
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
       <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f5f3ff; border:1px solid #ddd6fe; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#6d28d9; cursor:pointer;">Öppna alla</button>
@@ -183,22 +179,32 @@
     <details class="milestone" id="m1" open>
       <summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Organisk kemi och kolatomen</h2></summary>
       <div class="m-body">
-        <p>Den gren av kemin som handlar om kolets föreningar kallas <strong class="term">organisk kemi</strong>. Namnet kommer från att man förr trodde att sådana ämnen bara kunde bildas av levande organismer, med hjälp av en särskild "livskraft". På 1800-talet lyckades man dock framställa ett organiskt ämne på konstgjord väg, och därmed föll den idén. Idag kallas organisk kemi ofta helt enkelt <strong class="term">kolföreningarnas kemi</strong>.</p>
-        <p>Att just kol kan bilda så många ämnen – man känner till flera miljoner – beror på en unik egenskap hos <strong class="term">kolatomen</strong>: den kan bilda <strong class="term">fyra bindningar</strong>. Kolatomen kan binda till andra kolatomer och samtidigt till atomer av andra grundämnen. På så sätt kan kolatomerna kopplas ihop till långa kedjor, grenar och ringar, och det ger nästan oändliga möjligheter till nya ämnen.</p>
-        <p>För att visa hur atomerna sitter ihop ritar man en <strong class="term">strukturformel</strong>. Tänk dig att varje kolatom har fyra "armar" som var och en måste hålla i en annan atom. Metan, <span class="formula">CH₄</span>, är det enklaste exemplet: en kolatom i mitten som håller fyra väteatomer.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"><span class="mol-name">Metan</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="metan"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>Metan (CH₄): en kolatom som binder fyra väteatomer – den enklaste kolföreningen. <a href="#m10">Utforska i 3D – rotera molekylerna själv →</a></figcaption></figure>
-        <p>Förutom kol innehåller kolföreningarna ofta <strong class="term">väte</strong>, och dessutom kan syre, kväve och andra grundämnen ingå. Vilken grupp en kolförening tillhör beror på vilka grundämnen den innehåller och hur atomerna sitter ihop.</p>
-        <div class="fact-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Den gren av kemin som handlar om kolets föreningar kallas <strong class="term">organisk kemi</strong>. Namnet kommer från att man förr trodde att sådana ämnen bara kunde bildas av levande organismer, med hjälp av en särskild "livskraft". På 1800-talet lyckades man dock framställa ett organiskt ämne på konstgjord väg, och därmed föll den idén. Idag kallas organisk kemi ofta helt enkelt <strong class="term">kolföreningarnas kemi</strong>.</p>
+          <p>Att just kol kan bilda så många ämnen – man känner till flera miljoner – beror på en unik egenskap hos <strong class="term">kolatomen</strong>: den kan bilda <strong class="term">fyra bindningar</strong>. Kolatomen kan binda till andra kolatomer och samtidigt till atomer av andra grundämnen. På så sätt kan kolatomerna kopplas ihop till långa kedjor, grenar och ringar, och det ger nästan oändliga möjligheter till nya ämnen.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>För att visa hur atomerna sitter ihop ritar man en <strong class="term">strukturformel</strong>. Tänk dig att varje kolatom har fyra "armar" som var och en måste hålla i en annan atom. Metan, <span class="formula">CH₄</span>, är det enklaste exemplet: en kolatom i mitten som håller fyra väteatomer.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Metan</span><span class="mc-formula">CH<sub>4</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" width="107" height="107" alt="Strukturformel för Metan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/metan.png" width="72" height="87" alt="Kulmodell av Metan" loading="lazy"></div><a class="mc-rotate" href="#km-metan">Rotera i 3D →</a></div><figcaption>Metan (CH₄): en kolatom som binder fyra väteatomer – den enklaste kolföreningen.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart och <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Förutom kol innehåller kolföreningarna ofta <strong class="term">väte</strong>, och dessutom kan syre, kväve och andra grundämnen ingå. Vilken grupp en kolförening tillhör beror på vilka grundämnen den innehåller och hur atomerna sitter ihop.</p>
+          <div class="fact-box">
           <strong>Kom ihåg – antal bindningar</strong>
           Varje grundämne har ett bestämt antal "armar" (bindningar) det alltid använder i en kolförening: <strong class="term">kol</strong> har fyra, <strong class="term">kväve</strong> har tre, <strong class="term">syre</strong> har två och <strong class="term">väte</strong> har en. Kom ihåg detta – det förklarar varför en OH-grupp, en aminogrupp eller en dubbelbindning bara kan sitta på vissa ställen i molekylerna du möter längre fram.
         </div>
-        <div class="fact-box">
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           Organisk kemi är kolföreningarnas kemi. Kolatomen kan bilda fyra bindningar och kan därför kopplas ihop till kedjor, grenar och ringar – det är förklaringen till att det finns miljontals kolföreningar. En strukturformel visar hur atomerna binder till varandra.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m2"><span class="n-label">Fortsätt</span>Rent kol i olika former</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -207,11 +213,22 @@
     <details class="milestone" id="m2">
       <summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Rent kol i olika former</h2></summary>
       <div class="m-body">
-        <p>Rent kol – alltså ämnen som bara består av kolatomer – förekommer i flera helt olika former. Att formerna är så olika beror på att kolatomerna är sammanbundna på olika sätt.</p>
-        <p><strong class="term">Diamant</strong> är det hårdaste ämne vi känner till. I en diamant är varje kolatom hårt bunden till fyra andra kolatomer i ett fast, tredimensionellt mönster. De starka bindningarna åt alla håll gör diamanten stenhård. Slipade diamanter används som smycken, men diamant används också i verktyg som ska borra och skära i hårda material.</p>
-        <p><strong class="term">Grafit</strong> är tvärtom ett mjukt ämne som lätt svärtar av sig. Här sitter kolatomerna i plana skikt som är starkt bundna inuti varje skikt, men skikten glider lätt mot varandra. Därför fungerar grafit som "stiftet" i en blyertspenna – lager av kol lossnar och fastnar på pappret – och som smörjmedel.</p>
-        <p>En tredje form är <strong class="term">fullerener</strong>, som upptäcktes så sent som på 1980–90-talet. Här är kolatomerna sammanbundna till klotformade molekyler som påminner om en fotboll, uppbyggda av fem- och sexhörningar. Fullerenerna är mycket stabila, och forskare hoppas kunna använda dem för att skapa nya material.</p>
-        <div class="compare-table-wrap" style="overflow-x:auto;">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Rent kol – alltså ämnen som bara består av kolatomer – förekommer i flera helt olika former. Att formerna är så olika beror på att kolatomerna är sammanbundna på olika sätt.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p><strong class="term">Diamant</strong> är det hårdaste ämne vi känner till. I en diamant är varje kolatom hårt bunden till fyra andra kolatomer i ett fast, tredimensionellt mönster. De starka bindningarna åt alla håll gör diamanten stenhård. Slipade diamanter används som smycken, men diamant används också i verktyg som ska borra och skära i hårda material.</p>
+          <p><strong class="term">Grafit</strong> är tvärtom ett mjukt ämne som lätt svärtar av sig. Här sitter kolatomerna i plana skikt som är starkt bundna inuti varje skikt, men skikten glider lätt mot varandra. Därför fungerar grafit som "stiftet" i en blyertspenna – lager av kol lossnar och fastnar på pappret – och som smörjmedel.</p>
+          <p>En tredje form är <strong class="term">fullerener</strong>, som upptäcktes så sent som på 1980–90-talet. Här är kolatomerna sammanbundna till klotformade molekyler som påminner om en fotboll, uppbyggda av fem- och sexhörningar. Fullerenerna är mycket stabila, och forskare hoppas kunna använda dem för att skapa nya material.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Diamant</span><span class="mc-desc">nät i alla riktningar</span></div><div class="mc-imgs"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/diamant.png" width="223" height="225" alt="Kulmodell av en liten bit diamant: en kolatom i mitten som binder fyra grannar, och som en del av ett tredimensionellt nät av kolatomer." loading="lazy"></div></div></figure>
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Grafit</span><span class="mc-desc">plana skikt</span></div><div class="mc-imgs"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/grafit.png" width="252" height="219" alt="Kulmodell av grafit: tre plana skikt av kolatomer i sexhörningsmönster, staplade ovanpå varandra med luft emellan." loading="lazy"></div></div></figure>
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Fulleren</span><span class="mc-desc">C<sub>60</sub>, klot</span></div><div class="mc-imgs"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/fulleren.png" width="284" height="277" alt="Kulmodell av fulleren C60: 60 kolatomer bundna i fem- och sexhörningar som bildar ett klot, som en fotboll." loading="lazy"></div></div><figcaption><span class="km-legend">Varje kula är en kolatom (<span class="km-dot km-dot--c" aria-hidden="true"></span>svart) och varje pinne en bindning. Bilderna är förenklade och visar bara en liten del av strukturen.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <div class="compare-table-wrap" style="overflow-x:auto;">
         <table class="compare-table">
           <thead><tr><th>Form</th><th>Hur kolatomerna sitter</th><th>Egenskap / användning</th></tr></thead>
           <tbody>
@@ -221,23 +238,26 @@
           </tbody>
         </table>
         </div>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Tekniskt kol och aktivt kol</summary>
           <p>Om man hettar upp organiskt material utan lufttillförsel (så kallad <strong>torrdestillation</strong>) blir kol kvar som återstod. Träkol framställs så. Hettar man i stället upp finmalet kol i vattenånga får man <strong>aktivt kol</strong>, som är extremt poröst och har enorm yta. Tack vare den stora ytan kan aktivt kol suga åt sig färg-, lukt- och smakämnen – och till och med giftiga ämnen i magen. Därför finns aktivt kol i köksfläktfilter, i gasmasker och som medicin vid förgiftningar.</p>
         </details>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Nanorör och grafen – framtidens material?</summary>
           <p>Rullar man ihop ett enda lager av grafit – bara en atom tjockt – får man <strong>grafen</strong>. Ett sådant enskilt lager av kolatomer i ett sexkantigt mönster upptäcktes vara både mycket starkt och en utmärkt ledare av el och värme; upptäckten belönades med Nobelpriset i fysik 2010.<a class="cite" href="#ref-4">[4]</a> Rullar man i stället ihop grafenlagret till ett rör får man ett <strong>nanorör</strong>: extremt tunna, ihåliga rör där väggen bara är en atom tjock. Kolnanorör är starkare än diamant och samtidigt betydligt lättare än stål – till och med lättare än bomull.<a class="cite" href="#ref-5">[5]</a> Forskare undersöker hur nanorör och grafen kan användas i allt från lättare sportutrustning och byggmaterial till snabbare elektronik.</p>
+          <div class="fig-row"><figure><img class="fr-img" src="/images/kemi/kol-och-kolforeningar/kulmodeller/grafen.png" width="351" height="199" alt="Kulmodell av grafen: ett enda plant lager av kolatomer i ett mönster av sexhörningar." loading="lazy"><figcaption><strong>Grafen</strong> – ett enda lager kolatomer i sexhörningar.</figcaption></figure><figure><img class="fr-img" src="/images/kemi/kol-och-kolforeningar/kulmodeller/nanoror.png" width="297" height="275" alt="Kulmodell av ett kolnanorör: grafenlagret hoprullat till ett rör. Bara halva röret syns, så att sexhörningsmönstret blir tydligt." loading="lazy"><figcaption><strong>Nanorör</strong> – grafenlagret hoprullat till ett rör (bara främre halvan visas).</figcaption></figure></div>
         </details>
-        <details class="wonder">
+          <details class="wonder">
           <summary>Kan grafen leda till supraledning vid rumstemperatur?</summary>
           <p>En elev undrade: om kolnanorör kan bestå av rör innanför rör (flerväggiga nanorör), vad håller egentligen skikten samman? Svaret är enkelt: varje kolatom i ett grafenlager bildar bara tre bindningar &ndash; till sina tre grannar i samma sexkantiga lager. Lagren i sig är inte kemiskt bundna till varandra alls, utan hålls ihop av betydligt svagare <strong>van der Waals-krafter</strong>. Det är därför grafit känns fett och lagren lätt glider isär (blyertspennan!) &ndash; och det var precis den egenskapen som gjorde det möjligt att med vanlig tejp dra loss enstaka lager grafen ur grafit, vilket gav Nobelpriset i fysik 2010.<a class="cite" href="#ref-4">[4]</a></p>
           <p>Forskare har upptäckt något som verkar nästan magiskt: lägger man två lager grafen ovanpå varandra och vrider det ena lagret en mycket exakt, liten vinkel mot det andra &ndash; ungefär 1,1°, den s.k. <strong>"magiska vinkeln"</strong> &ndash; förändras materialets egenskaper dramatiskt. Vid precis den vinkeln, och vid extremt låg temperatur (nära absoluta nollpunkten), blir materialet en <strong>supraledare</strong>: ström flyter genom det helt utan motstånd, utan att någon energi går förlorad som värme. Upptäckten gjordes 2018 och väckte enorm uppmärksamhet i fysikvärlden.<a class="cite" href="#ref-8">[8]</a></p>
           <p class="frontier">Forskningsfronten: i dag fungerar det bara vid extrem kyla, men fysikens stora dröm är ett material som är supraledande redan vid rumstemperatur. Lyckas man med det skulle det kunna förändra samhället i grunden &ndash; elledningar utan energiförluster hur långa de än är, snabbtåg som svävar utan dyr kylning, betydligt effektivare datorer. Ingen har lyckats ännu, men det vridna grafenet är ett av de mest lovande spåren forskare haft på flera decennier för att förstå <em>hur</em> supraledning egentligen uppstår &ndash; kunskap som en dag kan hjälpa till att hitta eller konstruera ett sådant material. Vad tror du skulle krävas för att ta steget från nära absoluta nollpunkten till rumstemperatur? Vilka hinder tror du forskarna stöter på?</p>
         </details>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m3"><span class="n-label">Fortsätt</span>Alkanerna</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -246,9 +266,18 @@
     <details class="milestone" id="m3">
       <summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Alkaner – den mättade metanserien</h2></summary>
       <div class="m-body">
-        <p>De enklaste kolföreningarna kallas <strong class="term">kolväten</strong> – de innehåller bara kol och väte. Den viktigaste gruppen av kolväten är <strong class="term">alkanerna</strong>, som också kallas <strong class="term">metanserien</strong>. Alla ämnen i serien är byggda efter samma mönster: en kedja av kolatomer där varje kolatom binder så många väteatomer som möjligt.</p>
-        <p>Serien börjar med metan (en kolatom) och fortsätter med etan (två), propan (tre) och så vidare. För varje steg läggs en kolatom till. Namnen på de tio första alkanerna är värda att kunna:</p>
-        <div style="overflow-x:auto;">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>De enklaste kolföreningarna kallas <strong class="term">kolväten</strong> – de innehåller bara kol och väte. Den viktigaste gruppen av kolväten är <strong class="term">alkanerna</strong>, som också kallas <strong class="term">metanserien</strong>. Alla ämnen i serien är byggda efter samma mönster: en kedja av kolatomer där varje kolatom binder så många väteatomer som möjligt.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Serien börjar med metan (en kolatom) och fortsätter med etan (två), propan (tre) och så vidare. För varje steg läggs en kolatom till. Namnen på de tio första alkanerna är värda att kunna:</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Metan</span><span class="mc-formula">CH<sub>4</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" width="107" height="107" alt="Strukturformel för Metan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/metan.png" width="72" height="87" alt="Kulmodell av Metan" loading="lazy"></div><a class="mc-rotate" href="#km-metan">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Etan</span><span class="mc-formula">C<sub>2</sub>H<sub>6</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etan.svg" width="138" height="107" alt="Strukturformel för Etan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etan.png" width="133" height="121" alt="Kulmodell av Etan" loading="lazy"></div><a class="mc-rotate" href="#km-etan">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Propan</span><span class="mc-formula">C<sub>3</sub>H<sub>8</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/propan.svg" width="169" height="107" alt="Strukturformel för Propan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/propan.png" width="175" height="121" alt="Kulmodell av Propan" loading="lazy"></div><a class="mc-rotate" href="#km-propan">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Butan</span><span class="mc-formula">C<sub>4</sub>H<sub>10</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/butan.svg" width="200" height="107" alt="Strukturformel för Butan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/butan.png" width="218" height="121" alt="Kulmodell av Butan" loading="lazy"></div><a class="mc-rotate" href="#km-butan">Rotera i 3D →</a></div><figcaption>De fyra första alkanerna – alla gaser vid rumstemperatur. Varje kolatom binder fyra grannar med enkelbindningar.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart och <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <div style="overflow-x:auto;">
         <table class="compare-table">
           <thead><tr><th>Namn</th><th>Kolatomer</th><th>Molekylformel</th><th>Kokpunkt</th><th>Tillstånd i rumstemp.</th></tr></thead>
           <tbody>
@@ -265,12 +294,11 @@
           </tbody>
         </table>
         </div>
-        <p>Ser du mönstret i formlerna? För varje kolatom (C) som läggs till kommer det två väteatomer (H) till. Alla alkaner följer regeln <span class="formula">C<sub>n</sub>H<sub>2n+2</sub></span>. Ju längre kedjan är, desto högre blir kokpunkten: de fyra första är gaser, de följande vätskor, och riktigt långa kedjor (som paraffin och asfalt) är fasta ämnen.</p>
-<figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metan.svg" alt="Strukturformel för Metan"><span class="mol-name">Metan</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="metan"></div><span class="mol-name mini3d-label">3D-modell</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etan.svg" alt="Strukturformel för Etan"><span class="mol-name">Etan</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="etan"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>De två minsta alkanerna. Varje kolatom binder fyra grannar med enkelbindningar.</figcaption></figure>
-        <p>I alkanerna binder varje kolatom till fyra andra atomer med vanliga <strong class="term">enkelbindningar</strong>. Kolatomerna kan inte binda fler atomer – de är "fulltankade" med väte. Sådana kolväten kallas därför <strong class="term">mättade</strong>.</p>
-<h3 class="mol-sub">Systematisk namngivning – "förnamn" och "efternamn"</h3>
-        <p>Namnet på ett kolväte byggs av två delar. <strong>Förnamnet</strong> talar om hur många kolatomer den längsta kedjan har, och <strong>efternamnet</strong> talar om vilken sorts bindningar som finns.</p>
-        <div class="name-tables">
+          <p>Ser du mönstret i formlerna? För varje kolatom (C) som läggs till kommer det två väteatomer (H) till. Alla alkaner följer regeln <span class="formula">C<sub>n</sub>H<sub>2n+2</sub></span>. Ju längre kedjan är, desto högre blir kokpunkten: de fyra första är gaser, de följande vätskor, och riktigt långa kedjor (som paraffin och asfalt) är fasta ämnen.</p>
+          <p>I alkanerna binder varje kolatom till fyra andra atomer med vanliga <strong class="term">enkelbindningar</strong>. Kolatomerna kan inte binda fler atomer – de är "fulltankade" med väte. Sådana kolväten kallas därför <strong class="term">mättade</strong>.</p>
+          <h3 class="mol-sub">Systematisk namngivning – "förnamn" och "efternamn"</h3>
+          <p>Namnet på ett kolväte byggs av två delar. <strong>Förnamnet</strong> talar om hur många kolatomer den längsta kedjan har, och <strong>efternamnet</strong> talar om vilken sorts bindningar som finns.</p>
+          <div class="name-tables">
           <table class="compare-table"><thead><tr><th>Antal kolatomer</th><th>"Förnamn"</th></tr></thead><tbody><tr><td>1</td><td>met-</td></tr><tr><td>2</td><td>et-</td></tr><tr><td>3</td><td>prop-</td></tr><tr><td>4</td><td>but-</td></tr><tr><td>5</td><td>pent-</td></tr><tr><td>6</td><td>hex-</td></tr><tr><td>7</td><td>hept-</td></tr><tr><td>8</td><td>okt-</td></tr><tr><td>9</td><td>non-</td></tr><tr><td>10</td><td>dek-</td></tr></tbody></table>
           <table class="compare-table"><thead><tr><th>Bindningar</th><th>"Efternamn"</th></tr></thead><tbody>
             <tr><td>bara enkelbindningar</td><td>-an</td></tr>
@@ -279,20 +307,30 @@
             <tr><td>gren (sidogrupp)</td><td>-yl</td></tr>
           </tbody></table>
         </div>
-        <p>Exempel: <em>pent</em> + <em>-an</em> = pentan (fem kol, bara enkelbindningar). <em>Prop</em> + <em>-en</em> = propen (tre kol, en dubbelbindning). En kort sidogren på ett kol kallas en <em>metylgrupp</em> (met + -yl).</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/2-metylbutan.svg" alt="Strukturformel för 2-metylbutan"><span class="mol-name">2-metylbutan</span></div></div><figcaption>Här sitter en metylgrupp (–yl) som gren på huvudkedjan.</figcaption></figure>
-        <p>Ett och samma antal kolatomer kan sitta ihop på olika sätt – i en rak kedja eller i en grenad. Rak och grenad butan har till exempel samma molekylformel (<span class="formula">C₄H₁₀</span>) men lite olika egenskaper. Ju fler kolatomer, desto fler sätt att grena kedjan.</p>
-        <div class="fact-box">
+        </div>
+        </div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Exempel: <em>pent</em> + <em>-an</em> = pentan (fem kol, bara enkelbindningar). <em>Prop</em> + <em>-en</em> = propen (tre kol, en dubbelbindning). En kort sidogren på ett kol kallas en <em>metylgrupp</em> (met + -yl).</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">2-metylbutan</span><span class="mc-formula">C<sub>5</sub>H<sub>12</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/2-metylbutan.svg" width="200" height="169" alt="Strukturformel för 2-metylbutan" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/2-metylbutan.png" width="218" height="156" alt="Kulmodell av 2-metylbutan" loading="lazy"></div><a class="mc-rotate" href="#km-2-metylbutan">Rotera i 3D →</a></div><figcaption>Här sitter en metylgrupp (–yl) som gren på huvudkedjan.</figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Ett och samma antal kolatomer kan sitta ihop på olika sätt – i en rak kedja eller i en grenad. Rak och grenad butan har till exempel samma molekylformel (<span class="formula">C₄H₁₀</span>) men lite olika egenskaper. Ju fler kolatomer, desto fler sätt att grena kedjan.</p>
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           Alkaner (metanserien) är mättade kolväten med bara enkelbindningar och följer formeln C<sub>n</sub>H<sub>2n+2</sub>. De tio första är metan, etan, propan, butan, pentan, hexan, heptan, oktan, nonan och dekan. Kokpunkten stiger med kedjelängden.
         </div>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Kolväten som bränslen – från naturgas till råolja</summary>
           <p>De flesta av våra bränslen är kolväten. <strong>Naturgas</strong> består mest av metan. <strong>Gasol</strong> är hoppressad propan och butan. <strong>Bensin</strong> är en blandning av flytande kolväten (bl.a. heptan och oktan). Alla utvinns ur <strong>råolja</strong> (petroleum), som är en blandning av hundratals olika kolväten. På raffinaderiet delas råoljan upp med <strong>fraktionerad destillation</strong>: oljan värms tills den kokar, och de olika kolvätena skiljs åt efter kokpunkt – tunga ämnen (asfalt, tjockolja) längst ner, lätta gaser högst upp. Vid förbränning bildas koldioxid, som bidrar till växthuseffekten.</p>
         </details>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m4"><span class="n-label">Fortsätt</span>Alkener och alkyner</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -301,23 +339,31 @@
     <details class="milestone" id="m4">
       <summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Alkener och alkyner – omättade kolväten</h2></summary>
       <div class="m-body">
-        <p>I alkanerna binder varje kolatom fyra andra atomer med enkelbindningar. Men två kolatomer kan också dela på fler bindningar med varandra. Kolväten som innehåller en <strong class="term">dubbelbindning</strong> eller en <strong class="term">trippelbindning</strong> kallas <strong class="term">omättade</strong>.</p>
-        <p>Kolväten med en dubbelbindning bildar gruppen <strong class="term">alkener</strong>. Det enklaste är <strong class="term">eten</strong>, <span class="formula">C₂H₄</span>, där de två kolatomerna hålls ihop av en dubbelbindning. Eten är en färglös gas och en viktig råvara vid tillverkning av plast.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/eten.svg" alt="Strukturformel för Eten"><span class="mol-name">Eten</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="eten"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>Eten (C₂H₄): två kolatomer med en dubbelbindning.</figcaption></figure>
-        <p>Kolväten med en trippelbindning bildar gruppen <strong class="term">alkyner</strong>. Det enklaste är <strong class="term">etyn</strong>, <span class="formula">C₂H₂</span>, där kolatomerna delar på hela tre bindningar. Etyn kallas oftast <strong class="term">acetylen</strong>. Gasen brinner med en mycket het låga (omkring 3200 °C när den förbränns med rent syre) och används därför vid svetsning och skärning av metall.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etyn.svg" alt="Strukturformel för Etyn"><span class="mol-name">Etyn</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="etyn"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>Etyn/acetylen (C₂H₂): kolatomerna delar på tre bindningar.</figcaption></figure>
-        <p>En något större alkyn är <strong class="term">propyn</strong> (<span class="formula">C₃H₄</span>): en kedja på tre kolatomer med en trippelbindning i änden. Namnet följer samma mönster – <em>prop</em> (tre kol) + <em>-yn</em> (trippelbindning).</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propyn.svg" alt="Strukturformel för Propyn"><span class="mol-name">Propyn</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="propyn"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>Propyn (C₃H₄): trippelbindning i änden av en kedja på tre kol.</figcaption></figure>
-        <p>Att en bindning är dubbel eller trippel gör ämnet mer reaktivt: dubbelbindningen i eten kan brytas upp så att två nya atomer kan bindas in i molekylen. Det är just den egenskapen som gör omättade kolväten så användbara i industrin.</p>
-        <div class="fact-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>I alkanerna binder varje kolatom fyra andra atomer med enkelbindningar. Men två kolatomer kan också dela på fler bindningar med varandra. Kolväten som innehåller en <strong class="term">dubbelbindning</strong> eller en <strong class="term">trippelbindning</strong> kallas <strong class="term">omättade</strong>.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Kolväten med en dubbelbindning bildar gruppen <strong class="term">alkener</strong>. Det enklaste är <strong class="term">eten</strong>, <span class="formula">C₂H₄</span>, där de två kolatomerna hålls ihop av en dubbelbindning. Eten är en färglös gas och en viktig råvara vid tillverkning av plast.</p>
+          <p>Kolväten med en trippelbindning bildar gruppen <strong class="term">alkyner</strong>. Det enklaste är <strong class="term">etyn</strong>, <span class="formula">C₂H₂</span>, där kolatomerna delar på hela tre bindningar. Etyn kallas oftast <strong class="term">acetylen</strong>. Gasen brinner med en mycket het låga (omkring 3200 °C när den förbränns med rent syre) och används därför vid svetsning och skärning av metall.</p>
+          <p>En något större alkyn är <strong class="term">propyn</strong> (<span class="formula">C₃H₄</span>): en kedja på tre kolatomer med en trippelbindning i änden. Namnet följer samma mönster – <em>prop</em> (tre kol) + <em>-yn</em> (trippelbindning).</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Eten</span><span class="mc-formula">C<sub>2</sub>H<sub>4</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/eten.svg" width="120" height="89" alt="Strukturformel för Eten" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/eten.png" width="112" height="88" alt="Kulmodell av Eten" loading="lazy"></div><a class="mc-rotate" href="#km-eten">Rotera i 3D →</a></div><figcaption>Eten (C₂H₄): två kolatomer med en dubbelbindning.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart och <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt.</span></figcaption></figure>
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Etyn</span><span class="mc-formula">C<sub>2</sub>H<sub>2</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etyn.svg" width="138" height="89" alt="Strukturformel för Etyn" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etyn.png" width="143" height="39" alt="Kulmodell av Etyn" loading="lazy"></div><a class="mc-rotate" href="#km-etyn">Rotera i 3D →</a></div><figcaption>Etyn/acetylen (C₂H₂): kolatomerna delar på tre bindningar.</figcaption></figure>
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Propyn</span><span class="mc-formula">C<sub>3</sub>H<sub>4</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/propyn.svg" width="169" height="89" alt="Strukturformel för Propyn" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/propyn.png" width="168" height="90" alt="Kulmodell av Propyn" loading="lazy"></div><a class="mc-rotate" href="#km-propyn">Rotera i 3D →</a></div><figcaption>Propyn (C₃H₄): trippelbindning i änden av en kedja på tre kol.</figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Att en bindning är dubbel eller trippel gör ämnet mer reaktivt: dubbelbindningen i eten kan brytas upp så att två nya atomer kan bindas in i molekylen. Det är just den egenskapen som gör omättade kolväten så användbara i industrin.</p>
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           Omättade kolväten har en dubbel- eller trippelbindning mellan kolatomer. Alkener har en dubbelbindning (enklast: eten, C₂H₄). Alkyner har en trippelbindning (enklast: etyn/acetylen, C₂H₂). Alkaner, som bara har enkelbindningar, är däremot mättade.
         </div>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Ringformiga och aromatiska kolväten</summary>
           <p>Kolatomerna kan också kopplas ihop till <strong>ringar</strong> i stället för kedjor. Ett viktigt exempel är <strong>bensen</strong>, <span class="formula">C₆H₆</span>, en ring av sex kolatomer. Sådana ringformiga kolväten kallas ofta <strong>aromatiska</strong>. Många av dem, bland annat bensen, är cancerframkallande och måste hanteras försiktigt.</p>
         </details>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Plast &ndash; långa kedjor av alkener</summary>
           <p>Många vanliga plaster är polymerer byggda just på det sätt som beskrivs ovan: dubbelbindningen i en alken öppnas, och tiotusentals molekyler länkas samman till en enda lång kedja. Eten ger på så sätt <strong>polyeten</strong> (PE) &ndash; världens vanligaste plast &ndash; och samma princip (<strong>additionspolymerisation</strong>) ger propen till <strong>polypropen</strong> (PP), vinylklorid till <strong>PVC</strong> och styren till <strong>polystyren</strong> (PS). Andra plaster, till exempel PET, bildas i stället genom <strong>kondensationspolymerisation</strong> av två olika molekyler.</p>
           <figure>
@@ -327,14 +373,16 @@
             <figcaption><strong>Vanliga plaster.</strong> Ett faktablad om de sex vanligaste plasttyperna (PE, PP, PVC, PS, PET, PUR): monomerens strukturformel, egenskaper och användning, andel av världsproduktionen, återvinning och miljöpåverkan. Klicka på bilden för att öppna hela faktabladet som PDF.<br><span style="font-size:0.85rem;color:#777;font-style:italic;">Källa för andel av världsproduktionen: PlasticsEurope, <em>Plastics &ndash; the Facts 2025</em> (data för 2024).<a href="#ref-7" class="cite">[7]</a></span></figcaption>
           </figure>
         </details>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Halogenkolväten och ozonlagret</summary>
           <p>Om en eller flera väteatomer i ett kolväte byts ut mot en <strong>halogen</strong> (fluor, klor, brom eller jod) får man ett <strong>halogenkolväte</strong>. Ett känt exempel är <strong>klorfluorkarboner</strong>, förkortat <strong>CFC</strong> eller freoner, som under 1900-talet användes i stor skala som köldmedium i kylskåp och frysar och som drivgas i sprayflaskor.</p>
           <p>CFC är mycket stabilt nere vid marken, men högt uppe i stratosfären bryts molekylerna sönder av UV-strålning från solen. Då frigörs kloratomer som sätter igång en kedjereaktion där ozon (O₃) omvandlas till vanligt syre (O₂) &ndash; utan att kloratomen själv förbrukas kan den fortsätta bryta ner ozon om och om igen. Kemisterna Mario Molina och Sherwood Rowland varnade redan 1974 för att detta höll på att tunna ut ozonlagret, som annars skyddar allt liv på jorden från skadlig UV-strålning; upptäckten belönades (tillsammans med Paul Crutzen) med Nobelpriset i kemi 1995.<a href="#ref-9" class="cite">[9]</a> Sedan Montrealprotokollet 1987 förbjöd CFC i land efter land har ozonlagret sakta börjat återhämta sig.<a href="#ref-10" class="cite">[10]</a></p>
         </details>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m5"><span class="n-label">Fortsätt</span>Alkoholer</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -343,30 +391,40 @@
     <details class="milestone" id="m5">
       <summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Alkoholer</h2></summary>
       <div class="m-body">
-        <p>Hittills har vi bara haft kol och väte. Nu tar vi in <strong class="term">syre</strong>. Om man byter ut en väteatom i ett kolväte mot en <strong class="term">OH-grupp</strong> (en hydroxylgrupp, alltså en syreatom och en väteatom) får man en <strong class="term">alkohol</strong>. OH-gruppen är det som gör ett ämne till en alkohol.</p>
-        <p>Alkoholerna får sina namn från kolvätet de bygger på (stamkolvätet) genom att lägga till ändelsen <strong class="term">-ol</strong>. Byter man ut ett väte i metan (<span class="formula">CH₄</span>) mot en OH-grupp får man <strong class="term">metanol</strong>, <span class="formula">CH₃OH</span>. Byter man ut ett väte i etan (<span class="formula">C₂H₆</span>) får man <strong class="term">etanol</strong>, <span class="formula">C₂H₅OH</span>.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metanol.svg" alt="Strukturformel för Metanol"><span class="mol-name">Metanol</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="metanol"></div><span class="mol-name mini3d-label">3D-modell</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="Strukturformel för Etanol"><span class="mol-name">Etanol</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="etanol"></div><span class="mol-name mini3d-label">3D-modell</span></div></div><figcaption>Ett väte i metan respektive etan har bytts mot en OH-grupp. O–H-bindningen är utritad för tydlighet.</figcaption></figure>
-        <p>Etanol är alkoholen i vin och sprit. Den bildas naturligt när jästsvampar omvandlar socker – till exempel när saft från bär börjar jäsa. Etanol används också som lösningsmedel och bränsle. Alkoholer har i regel stark lukt och brännande smak, och de flesta är mer eller mindre giftiga.</p>
-        <div class="safety-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Hittills har vi bara haft kol och väte. Nu tar vi in <strong class="term">syre</strong>. Om man byter ut en väteatom i ett kolväte mot en <strong class="term">OH-grupp</strong> (en hydroxylgrupp, alltså en syreatom och en väteatom) får man en <strong class="term">alkohol</strong>. OH-gruppen är det som gör ett ämne till en alkohol.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Alkoholerna får sina namn från kolvätet de bygger på (stamkolvätet) genom att lägga till ändelsen <strong class="term">-ol</strong>. Byter man ut ett väte i metan (<span class="formula">CH₄</span>) mot en OH-grupp får man <strong class="term">metanol</strong>, <span class="formula">CH₃OH</span>. Byter man ut ett väte i etan (<span class="formula">C₂H₆</span>) får man <strong class="term">etanol</strong>, <span class="formula">C₂H₅OH</span>.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Metanol</span><span class="mc-formula">CH<sub>3</sub>OH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/metanol.svg" width="138" height="107" alt="Strukturformel för Metanol" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/metanol.png" width="126" height="90" alt="Kulmodell av Metanol" loading="lazy"></div><a class="mc-rotate" href="#km-metanol">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Etanol</span><span class="mc-formula">C<sub>2</sub>H<sub>5</sub>OH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" width="169" height="107" alt="Strukturformel för Etanol" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etanol.png" width="123" height="149" alt="Kulmodell av Etanol" loading="lazy"></div><a class="mc-rotate" href="#km-etanol">Rotera i 3D →</a></div><figcaption>Ett väte i metan respektive etan har bytts mot en OH-grupp. O–H-bindningen är utritad för tydlighet.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart, <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt och <span class="km-dot km-dot--o" aria-hidden="true"></span>syre rött.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Etanol är alkoholen i vin och sprit. Den bildas naturligt när jästsvampar omvandlar socker – till exempel när saft från bär börjar jäsa. Etanol används också som lösningsmedel och bränsle. Alkoholer har i regel stark lukt och brännande smak, och de flesta är mer eller mindre giftiga.</p>
+          <div class="safety-box">
           <strong>Farligt:</strong> <strong class="term">Metanol</strong> (träsprit) liknar vanlig sprit i lukt och smak men är mycket giftig – redan små mängder kan ge blindhet eller döden. Metanol och etanol ser lika ut men får aldrig förväxlas.
         </div>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Teknisk sprit – därför luktar T-sprit illa</summary>
           <p>Den etanol som säljs för tekniskt bruk, till exempel <strong>T-sprit</strong> (T-röd och T-blå), är <strong>denaturerad</strong>. Det betyder att man har tillsatt små mängder giftiga och illasmakande ämnen – bland annat metanol – just för att spriten inte ska kunna drickas. Denaturerad etanol används som bränsle, rengöringsmedel, frostskydd och lösningsmedel.</p>
         </details>
-        <details class="deepen">
+          <details class="deepen">
           <summary>Varför är metanol så farligt?</summary>
           <p>Både etanol och metanol bryts ner av samma enzym i levern, men till helt olika ämnen. Etanol bryts ner till acetaldehyd och sedan vidare till ättiksyra – ett ämne kroppen känns igen och kan göra sig av med. Metanol bryts i stället ner till <strong>formaldehyd</strong> och därefter till <strong>myrsyra</strong>, som kroppen inte kan bryta ner på samma sätt. Myrsyran hopar sig i blodet och gör det surare (<strong>acidos</strong>), vilket framför allt skadar synnerven – redan någon enstaka centiliter ren metanol kan ge bestående synskador eller blindhet.<a class="cite" href="#ref-6">[6]</a></p>
           <p>Eftersom etanol och metanol konkurrerar om samma nedbrytande enzym kan etanol faktiskt användas som motgift vid metanolförgiftning: så länge levern är upptagen med att bryta ner etanol hinner metanolen lämna kroppen innan den omvandlas till de farliga ämnena.<a class="cite" href="#ref-6">[6]</a></p>
         </details>
-        <div class="fact-box">
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           En alkohol är ett kolväte där en väteatom bytts mot en OH-grupp (hydroxylgrupp). Alkoholer namnges med ändelsen -ol: metanol (CH₃OH) och etanol (C₂H₅OH). Etanol finns i sprit; metanol är mycket giftig.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="./alkoholdemo.html"><span class="n-label">Demonstration</span>Brännbarhet, lågfärg och löslighet</a>
           <a href="#m6"><span class="n-label">Fortsätt</span>Flervärda alkoholer</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -375,19 +433,29 @@
     <details class="milestone" id="m6">
       <summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Flervärda alkoholer</h2></summary>
       <div class="m-body">
-        <p>Metanol och etanol har var sin ensam OH-grupp. En alkohol kan emellertid ha <strong class="term">flera OH-grupper</strong> – då kallas den en <strong class="term">flervärd alkohol</strong>. Antalet OH-grupper avgör hur "värd" alkoholen är: en OH-grupp ger en envärd alkohol, två ger en tvåvärd och så vidare.</p>
-        <p>Den vanligaste tvåvärda alkoholen är <strong class="term">glykol</strong> (etandiol), som har två OH-grupper. Glykol sänker vätskans fryspunkt kraftigt och är dessutom lättflytande, vilket gör den till ett effektivt <strong class="term">frostskyddsmedel</strong> i bilars kylare och i spolarvätska. Nackdelen är att glykol är giftigt att få i sig.</p>
-        <p>Den vanligaste trevärda alkoholen är <strong class="term">glycerol</strong> (glycerin), som har tre OH-grupper. Glycerol är ofarlig, men i stället trögflytande – alldeles för trögt för att fungera i en kylare. I naturen utnyttjar i stället vissa kallblodiga djur, bland annat flera grodarter, glycerol som ett eget frostskydd i cellerna för att överleva att frysa vintertid utan att cellerna spricker. Glycerol används annars som fuktbevarande ämne i hudkräm, tandkräm och livsmedel, och ingår som byggsten i alla fetter (se milstolpe 8).</p>
-        <p>Går det att få det bästa av två världar – glykolens lättflytande egenskaper och glycerolens ofarlighet? Ja: <strong class="term">propan-1,2-diol</strong> (propylenglykol) är en tvåvärd alkohol, precis som glykol, men med OH-grupperna på kol 1 och 2 i en trekolskedja i stället för i en tvåkolskedja. Den är varken giftig eller trögflytande, och säljs därför som ett hälso- och miljövänligare frostskyddsmedel för bilkylare, ofta marknadsfört som "P-glykol" eller miljöglykol.</p>
-<figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glykol.svg" alt="Strukturformel för Glykol (2 OH)"><span class="mol-name">Glykol (2 OH)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glycerol.svg" alt="Strukturformel för Glycerol (3 OH)"><span class="mol-name">Glycerol (3 OH)</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propan12diol.svg" alt="Strukturformel för Propan-1,2-diol (2 OH)"><span class="mol-name">Propan-1,2-diol (2 OH)</span></div></div><figcaption>Tre flervärda alkoholer: glykol har två OH-grupper på en tvåkolskedja, glycerol tre OH-grupper, och propan-1,2-diol två OH-grupper på en trekolskedja. Här skrivs OH-grupperna som –OH.</figcaption></figure>
-        <div class="fact-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Metanol och etanol har var sin ensam OH-grupp. En alkohol kan emellertid ha <strong class="term">flera OH-grupper</strong> – då kallas den en <strong class="term">flervärd alkohol</strong>. Antalet OH-grupper avgör hur "värd" alkoholen är: en OH-grupp ger en envärd alkohol, två ger en tvåvärd och så vidare.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Den vanligaste tvåvärda alkoholen är <strong class="term">glykol</strong> (etandiol), som har två OH-grupper. Glykol sänker vätskans fryspunkt kraftigt och är dessutom lättflytande, vilket gör den till ett effektivt <strong class="term">frostskyddsmedel</strong> i bilars kylare och i spolarvätska. Nackdelen är att glykol är giftigt att få i sig.</p>
+          <p>Den vanligaste trevärda alkoholen är <strong class="term">glycerol</strong> (glycerin), som har tre OH-grupper. Glycerol är ofarlig, men i stället trögflytande – alldeles för trögt för att fungera i en kylare. I naturen utnyttjar i stället vissa kallblodiga djur, bland annat flera grodarter, glycerol som ett eget frostskydd i cellerna för att överleva att frysa vintertid utan att cellerna spricker. Glycerol används annars som fuktbevarande ämne i hudkräm, tandkräm och livsmedel, och ingår som byggsten i alla fetter (se milstolpe 8).</p>
+          <p>Går det att få det bästa av två världar – glykolens lättflytande egenskaper och glycerolens ofarlighet? Ja: <strong class="term">propan-1,2-diol</strong> (propylenglykol) är en tvåvärd alkohol, precis som glykol, men med OH-grupperna på kol 1 och 2 i en trekolskedja i stället för i en tvåkolskedja. Den är varken giftig eller trögflytande, och säljs därför som ett hälso- och miljövänligare frostskyddsmedel för bilkylare, ofta marknadsfört som "P-glykol" eller miljöglykol.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Glykol (2 OH)</span><span class="mc-formula">C<sub>2</sub>H<sub>4</sub>(OH)<sub>2</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/glykol.svg" width="161" height="107" alt="Strukturformel för Glykol (2 OH)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/glykol.png" width="160" height="125" alt="Kulmodell av Glykol (2 OH)" loading="lazy"></div><a class="mc-rotate" href="#km-glykol">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Glycerol (3 OH)</span><span class="mc-formula">C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/glycerol.svg" width="200" height="107" alt="Strukturformel för Glycerol (3 OH)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/glycerol.png" width="200" height="143" alt="Kulmodell av Glycerol (3 OH)" loading="lazy"></div><a class="mc-rotate" href="#km-glycerol">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Propan-1,2-diol (2 OH)</span><span class="mc-formula">C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/propan12diol.svg" width="200" height="107" alt="Strukturformel för Propan-1,2-diol (2 OH)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/propan12diol.png" width="188" height="144" alt="Kulmodell av Propan-1,2-diol (2 OH)" loading="lazy"></div><a class="mc-rotate" href="#km-propan12diol">Rotera i 3D →</a></div><figcaption>Tre flervärda alkoholer: glykol har två OH-grupper på en tvåkolskedja, glycerol tre OH-grupper, och propan-1,2-diol två OH-grupper på en trekolskedja. Här skrivs OH-grupperna som –OH.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart, <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt och <span class="km-dot km-dot--o" aria-hidden="true"></span>syre rött.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           En flervärd alkohol har flera OH-grupper. Glykol (två OH-grupper) är lättflytande men giftigt. Glycerol (tre OH-grupper) är ofarligt men trögflytande – används i hudkräm, livsmedel och fetter. Propan-1,2-diol (två OH-grupper på tre kol) är varken giftigt eller trögflytande och används som ett säkrare frostskydd i bilkylare.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="./alkoholdemo.html"><span class="n-label">Demonstration</span>Brännbarhet, lågfärg och löslighet</a>
           <a href="#m7"><span class="n-label">Fortsätt</span>Organiska syror</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -396,22 +464,28 @@
     <details class="milestone" id="m7">
       <summary><span class="m-num">Milstolpe 7</span><h2 class="m-title">Organiska syror</h2></summary>
       <div class="m-body">
-        <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
-        <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Myrsyra används också för att konservera foder (ensilage), eftersom den sura miljön hindrar skadliga bakterier från att växa till. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
-        <figure class="mol-fig"><div class="mol-table">
-          <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" alt="Strukturformel för Metansyra (myrsyra)"><span class="mol-name">Metansyra (myrsyra)</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="metansyra"></div><span class="mol-name mini3d-label">3D-modell</span></div>
-          <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Etansyra (ättiksyra)"><span class="mol-name">Etansyra (ättiksyra)</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="etansyra"></div><span class="mol-name mini3d-label">3D-modell</span></div>
-          <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" alt="Strukturformel för Butansyra (smörsyra)"><span class="mol-name">Butansyra (smörsyra)</span></div><div class="mol mini3d-placeholder"></div>
-        </div><figcaption>Tre organiska syror, som i en tabell. Alla bär samma karboxylgrupp (–COOH) längst till höger; det som skiljer dem är kolkedjans längd.</figcaption></figure>
-        <p>Organiska syror finns i mängder av livsmedel: citronsyra i citrusfrukter, mjölksyra i filmjölk och i trötta muskler, äppelsyra i frukt. De är oftast svaga syror, men i koncentrerad form kan de ändå vara frätande.</p>
-        <p>Det finns ett fint samband mellan alkoholerna och syrorna: en organisk syra kan bildas när en <strong class="term">alkohol oxideras</strong> (reagerar med syre). Det är just därför ett glas vin som får stå framme till slut smakar surt – etanolen oxideras långsamt till ättiksyra. Sambandet syns också i namnen: etan<em>ol</em> och etan<em>syra</em> (ättiksyra) bygger båda på kolvätet etan.</p>
-        <div class="fact-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Om en kolförening i stället bär en <strong class="term">karboxylgrupp</strong> – skriven <span class="formula">−COOH</span> – blir ämnet en <strong class="term">organisk syra</strong> (karboxylsyra). Det är karboxylgruppen som gör lösningen sur, eftersom den kan avge en vätejon.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Precis som alkoholerna namnges de organiska syrorna efter sitt stamkolväte, men med ändelsen <strong class="term">-syra</strong>. Den enklaste är <strong class="term">myrsyra</strong> (metansyra), <span class="formula">HCOOH</span> – samma ämne som myror och nässlor använder för att svida. Myrsyra används också för att konservera foder (ensilage), eftersom den sura miljön hindrar skadliga bakterier från att växa till. Näst enklast är <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>, som ger ättika (vanlig ättika är utspädd ättiksyra) dess sura smak.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Metansyra (myrsyra)</span><span class="mc-formula">HCOOH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/metansyra.svg" width="138" height="107" alt="Strukturformel för Metansyra (myrsyra)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/metansyra.png" width="109" height="104" alt="Kulmodell av Metansyra (myrsyra)" loading="lazy"></div><a class="mc-rotate" href="#km-metansyra">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Etansyra (ättiksyra)</span><span class="mc-formula">CH<sub>3</sub>COOH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" width="169" height="107" alt="Strukturformel för Etansyra (ättiksyra)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etansyra.png" width="142" height="145" alt="Kulmodell av Etansyra (ättiksyra)" loading="lazy"></div><a class="mc-rotate" href="#km-etansyra">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Butansyra (smörsyra)</span><span class="mc-formula">C<sub>3</sub>H<sub>7</sub>COOH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" width="231" height="107" alt="Strukturformel för Butansyra (smörsyra)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/butansyra.png" width="228" height="145" alt="Kulmodell av Butansyra (smörsyra)" loading="lazy"></div><a class="mc-rotate" href="#km-butansyra">Rotera i 3D →</a></div><figcaption>Tre organiska syror. Alla bär samma karboxylgrupp (–COOH) längst till höger; det som skiljer dem är kolkedjans längd.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart, <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt och <span class="km-dot km-dot--o" aria-hidden="true"></span>syre rött.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Organiska syror finns i mängder av livsmedel: citronsyra i citrusfrukter, mjölksyra i filmjölk och i trötta muskler, äppelsyra i frukt. De är oftast svaga syror, men i koncentrerad form kan de ändå vara frätande.</p>
+          <p>Det finns ett fint samband mellan alkoholerna och syrorna: en organisk syra kan bildas när en <strong class="term">alkohol oxideras</strong> (reagerar med syre). Det är just därför ett glas vin som får stå framme till slut smakar surt – etanolen oxideras långsamt till ättiksyra. Sambandet syns också i namnen: etan<em>ol</em> och etan<em>syra</em> (ättiksyra) bygger båda på kolvätet etan.</p>
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           En organisk syra (karboxylsyra) känns igen på karboxylgruppen −COOH, som gör lösningen sur. De namnges med ändelsen -syra: myrsyra (metansyra, HCOOH) och ättiksyra (etansyra, CH₃COOH). Ättika är utspädd ättiksyra.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="#m8"><span class="n-label">Fortsätt</span>Estrar</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -420,8 +494,11 @@
     <details class="milestone" id="m8">
       <summary><span class="m-num">Milstolpe 8</span><h2 class="m-title">Estrar</h2></summary>
       <div class="m-body">
-        <p>Nu kan vi kombinera två av grupperna vi lärt oss. När en <strong class="term">alkohol</strong> reagerar med en <strong class="term">organisk syra</strong> bildas ett nytt ämne som kallas en <strong class="term">ester</strong>, och samtidigt frigörs en vattenmolekyl. Reaktionen kallas <strong class="term">förestring</strong>:</p>
-        <figure class="mol-fig">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Nu kan vi kombinera två av grupperna vi lärt oss. När en <strong class="term">alkohol</strong> reagerar med en <strong class="term">organisk syra</strong> bildas ett nytt ämne som kallas en <strong class="term">ester</strong>, och samtidigt frigörs en vattenmolekyl. Reaktionen kallas <strong class="term">förestring</strong>:</p>
+        </div></div>
+        <div class="m-row m-row--full"><div class="m-lead">
+          <figure class="mol-fig">
           <div class="rxn">
             <div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etanol.svg" alt="etanol"><span>etanol</span></div>
             <span class="op">+</span>
@@ -435,10 +512,17 @@
           </div>
           <figcaption>Förestring: en alkohol och en organisk syra bildar en ester och vatten. Svavelsyra (H₂SO₄) är katalysator – den skyndar på reaktionen utan att förbrukas.</figcaption>
         </figure>
-        <p>Estrar namnges i två delar, efter de två ämnen de bildats av. Först kommer <strong>alkoholdelen</strong> som en <em>-yl</em>-grupp (från alkoholens stamkolväte), sedan <strong>syradelen</strong> med ändelsen <em>-oat</em>. Etanol ger alltså <em>etyl</em> och butansyra ger <em>butanoat</em> – tillsammans <strong class="term">etylbutanoat</strong>, en ester som doftar ananas. Lägg märke till ordningen: i strukturformel, kulmodell och molekylformel visas syradelen till vänster och alkoholdelen till höger, men vid namngivningen namnges alkoholdelen först – det är därför en ester alltid slutar på ändelsen <em>-oat</em>.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylbutanoat.svg" alt="Strukturformel för Etylbutanoat"><span class="mol-name">Etylbutanoat</span></div></div><figcaption>Estergruppen (–C(=O)–O–) sitter i mitten: butanoat-delen till vänster, etyldelen till höger. Etylbutanoat är en ester som doftar ananas.</figcaption></figure>
-        <p>Många estrar har en stark, god doft och finns naturligt i frukter och blommor – det är estrar som ger bananer, jordgubbar och äpplen mycket av sin doft och smak. Därför används estrar som doft- och smakämnen i livsmedel och parfym.</p>
-        <table class="compare-table">
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Estrar namnges i två delar, efter de två ämnen de bildats av. Först kommer <strong>alkoholdelen</strong> som en <em>-yl</em>-grupp (från alkoholens stamkolväte), sedan <strong>syradelen</strong> med ändelsen <em>-oat</em>. Etanol ger alltså <em>etyl</em> och butansyra ger <em>butanoat</em> – tillsammans <strong class="term">etylbutanoat</strong>, en ester som doftar ananas. Lägg märke till ordningen: i strukturformel, kulmodell och molekylformel visas syradelen till vänster och alkoholdelen till höger, men vid namngivningen namnges alkoholdelen först – det är därför en ester alltid slutar på ändelsen <em>-oat</em>.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Etylbutanoat</span><span class="mc-formula">C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub></span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etylbutanoat.svg" width="292" height="107" alt="Strukturformel för Etylbutanoat" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etylbutanoat.png" width="340" height="137" alt="Kulmodell av Etylbutanoat" loading="lazy"></div><a class="mc-rotate" href="#km-etylbutanoat">Rotera i 3D →</a></div><figcaption>Estergruppen (–C(=O)–O–) sitter i mitten: butanoat-delen till vänster, etyldelen till höger. Etylbutanoat är en ester som doftar ananas.<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart, <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt och <span class="km-dot km-dot--o" aria-hidden="true"></span>syre rött.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Många estrar har en stark, god doft och finns naturligt i frukter och blommor – det är estrar som ger bananer, jordgubbar och äpplen mycket av sin doft och smak. Därför används estrar som doft- och smakämnen i livsmedel och parfym.</p>
+          <table class="compare-table">
           <thead><tr><th>Karboxylsyra</th><th>Alkohol</th><th>Ester</th><th>Doft/smak</th></tr></thead>
           <tbody>
             <tr><td>Metansyra (myrsyra)</td><td>Etanol</td><td>Etylmetanoat</td><td>Rom, hallon</td></tr>
@@ -449,16 +533,18 @@
             <tr><td>Butansyra (smörsyra)</td><td>Etanol</td><td>Etylbutanoat</td><td>Ananas</td></tr>
           </tbody>
         </table>
-        <p style="font-size:0.85rem;color:#666;margin-top:-0.4rem">Doften av en ester upplevs ofta lite olika av olika personer och kan variera mellan källor – tabellen visar den doft som brukar anges som mest typisk.</p>
-        <p>Estrar är också något mycket vardagligare: <strong class="term">fetter</strong> och oljor är estrar. Ett fett är en ester av den trevärda alkoholen glycerol och tre långa organiska syror (fettsyror). När kroppen tar upp fett bryts esterbindningarna och glycerolen och fettsyrorna frigörs igen.</p>
-        <div class="fact-box">
+          <p style="font-size:0.85rem;color:#666;margin-top:-0.4rem">Doften av en ester upplevs ofta lite olika av olika personer och kan variera mellan källor – tabellen visar den doft som brukar anges som mest typisk.</p>
+          <p>Estrar är också något mycket vardagligare: <strong class="term">fetter</strong> och oljor är estrar. Ett fett är en ester av den trevärda alkoholen glycerol och tre långa organiska syror (fettsyror). När kroppen tar upp fett bryts esterbindningarna och glycerolen och fettsyrorna frigörs igen.</p>
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           En ester bildas när en alkohol reagerar med en organisk syra, samtidigt som vatten frigörs (förestring). Många estrar doftar frukt och används som smak- och doftämnen. Fetter är estrar av glycerol och fettsyror.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="./esterlab.html"><span class="n-label">Laboration</span>Framställning av estrar</a>
           <a href="#m9"><span class="n-label">Fördjupning</span>Aminosyror</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -467,19 +553,29 @@
     <details class="milestone" id="m9">
       <summary><span class="m-num">Milstolpe 9 · Fördjupning</span><h2 class="m-title">Aminosyror</h2></summary>
       <div class="m-body">
-        <p>Det här avsnittet är för dig som vill komma längre och koppla ihop kolkemin med biologin. Vi utgår från ett ämne du redan känner: <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>.</p>
-        <p>Tänk dig att vi byter ut en av väteatomerna på ättiksyrans kolkedja mot en <strong class="term">aminogrupp</strong>, <span class="formula">−NH₂</span> (en kvävegrupp). Då har vi gjort en <strong class="term">aminosyra</strong>. Den enklaste aminosyran heter <strong class="term">glycin</strong> – den minsta av de 20 aminosyrorna – och är just en sådan modifierad ättiksyra: <span class="formula">NH₂−CH₂−COOH</span>.</p>
-        <figure class="mol-fig"><div class="mol-row"><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" alt="Strukturformel för Ättiksyra (etansyra)"><span class="mol-name">Ättiksyra (etansyra)</span></div><div class="mol mini3d"><div class="km-viewerbox" data-mol="etansyra"></div><span class="mol-name mini3d-label">3D-modell</span></div><div class="mol"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glycin.svg" alt="Strukturformel för Glycin"><span class="mol-name">Glycin</span></div></div><figcaption>Glycin, den minsta av de 20 aminosyrorna, är en ättiksyra där ett väte på kolkedjan bytts mot en aminogrupp (–NH₂, kvävegruppen till vänster).</figcaption></figure>
-        <p>Det utmärkande för en aminosyra är alltså att den bär <em>två</em> grupper samtidigt: en <strong class="term">karboxylgrupp</strong> (−COOH, den sura delen) och en <strong class="term">aminogrupp</strong> (−NH₂, kvävedelen). Det finns 20 olika aminosyror, som skiljer sig åt i resten av molekylen. (Om du vill se hur alla de 20 aminosyrorna som bygger upp din kropps proteiner ser ut och namnges, se <a href="./ovningsverktyg.html#amino">här</a>.)</p>
-        <p>Poängen med aminosyrorna är att de är byggstenarna i <strong class="term">proteiner</strong>. Karboxylgruppen på en aminosyra kan kopplas till aminogruppen på nästa – och släpper då ifrån sig vatten, precis som vid förestringen i förra milstolpen. På så sätt kan tusentals aminosyror länkas ihop till långa proteinkedjor. Vilka aminosyror som sitter i vilken ordning bestäms av arvsmassan (DNA) – och där möter kolkemin genetiken.</p>
-        <div class="fact-box">
+        <div class="m-row m-row--plain"><div class="m-lead">
+          <p>Det här avsnittet är för dig som vill komma längre och koppla ihop kolkemin med biologin. Vi utgår från ett ämne du redan känner: <strong class="term">ättiksyra</strong> (etansyra), <span class="formula">CH₃COOH</span>.</p>
+        </div></div>
+        <div class="m-row">
+        <div class="m-lead">
+          <p>Tänk dig att vi byter ut en av väteatomerna på ättiksyrans kolkedja mot en <strong class="term">aminogrupp</strong>, <span class="formula">−NH₂</span> (en kvävegrupp). Då har vi gjort en <strong class="term">aminosyra</strong>. Den enklaste aminosyran heter <strong class="term">glycin</strong> – den minsta av de 20 aminosyrorna – och är just en sådan modifierad ättiksyra: <span class="formula">NH₂−CH₂−COOH</span>.</p>
+        </div>
+        <div class="m-side">
+          <figure class="side-fig"><div class="mol-card"><div class="mc-head"><span class="mc-name">Ättiksyra (etansyra)</span><span class="mc-formula">CH<sub>3</sub>COOH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/etansyra.svg" width="169" height="107" alt="Strukturformel för Ättiksyra (etansyra)" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/etansyra.png" width="142" height="145" alt="Kulmodell av Ättiksyra (etansyra)" loading="lazy"></div><a class="mc-rotate" href="#km-etansyra">Rotera i 3D →</a></div><div class="mol-card"><div class="mc-head"><span class="mc-name">Glycin</span><span class="mc-formula">NH<sub>2</sub>CH<sub>2</sub>COOH</span></div><div class="mc-imgs"><img class="mc-2d" src="/images/kemi/kol-och-kolforeningar/strukturformler/glycin.svg" width="200" height="107" alt="Strukturformel för Glycin" loading="lazy"><img class="mc-3d" src="/images/kemi/kol-och-kolforeningar/kulmodeller/glycin.png" width="179" height="127" alt="Kulmodell av Glycin" loading="lazy"></div><a class="mc-rotate" href="#km-glycin">Rotera i 3D →</a></div><figcaption>Glycin, den minsta av de 20 aminosyrorna, är en ättiksyra där ett väte på kolkedjan bytts mot en aminogrupp (–NH₂, kvävegruppen till vänster).<span class="km-legend">I kulmodellerna är <span class="km-dot km-dot--c" aria-hidden="true"></span>kol svart, <span class="km-dot km-dot--h" aria-hidden="true"></span>väte vitt, <span class="km-dot km-dot--o" aria-hidden="true"></span>syre rött och <span class="km-dot km-dot--n" aria-hidden="true"></span>kväve blått.</span></figcaption></figure>
+        </div>
+        <div class="m-rest">
+          <p>Det utmärkande för en aminosyra är alltså att den bär <em>två</em> grupper samtidigt: en <strong class="term">karboxylgrupp</strong> (−COOH, den sura delen) och en <strong class="term">aminogrupp</strong> (−NH₂, kvävedelen). Det finns 20 olika aminosyror, som skiljer sig åt i resten av molekylen. (Om du vill se hur alla de 20 aminosyrorna som bygger upp din kropps proteiner ser ut och namnges, se <a href="./ovningsverktyg.html#amino">här</a>.)</p>
+          <p>Poängen med aminosyrorna är att de är byggstenarna i <strong class="term">proteiner</strong>. Karboxylgruppen på en aminosyra kan kopplas till aminogruppen på nästa – och släpper då ifrån sig vatten, precis som vid förestringen i förra milstolpen. På så sätt kan tusentals aminosyror länkas ihop till långa proteinkedjor. Vilka aminosyror som sitter i vilken ordning bestäms av arvsmassan (DNA) – och där möter kolkemin genetiken.</p>
+          <div class="fact-box">
           <strong>Sammanfattning</strong>
           En aminosyra är i grunden en organisk syra (som ättiksyra) där ett väte bytts mot en aminogrupp −NH₂. Den har alltså både en karboxylgrupp (−COOH) och en aminogrupp (−NH₂). Aminosyror är byggstenarna i proteiner.
         </div>
-        <div class="next-steps">
+          <div class="next-steps">
           <a href="./ovningsverktyg.html#amino"><span class="n-label">Övning</span>Om du vill se eller till och med lära dig strukturformeln för de 20 aminosyrorna som bygger upp proteiner</a>
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
           <a href="/biologi/genetik/studieguide.html#m5"><span class="n-label">Koppling</span>Proteinsyntesen (Genetik)</a>
+        </div>
+        </div>
         </div>
       </div>
     </details>
@@ -490,7 +586,7 @@
   <div class="m-body">
     <p>Här kan du rotera och zooma riktiga 3D-modeller av några av de viktigaste molekylerna i det här kapitlet. Modellerna är byggda efter kolatomens verkliga bindningsvinklar (VSEPR-teorin): kolatomens fyra bindningar pekar ut mot hörnen i en tetraeder (109,5°), medan atomer med dubbelbindningar (t.ex. i eten och karboxylsyrorna) är platta med 120° mellan bindningarna, och trippelbindningen i propyn gör den delen av molekylen helt rak (180°). Förstora och förminska kulmodellen genom att skrolla med mushjulet eller föra två fingrar uppåt/nedåt på styrplattan – det brukar kännas smidigare än att dra isär och föra ihop fingrarna – och rotera modellen med ett finger eller genom att dra med musen.</p>
     <div class="km-grid">
-<div class="km-card">
+<div class="km-card" id="km-metan">
   <h3>Metan</h3>
   <div class="km-formula">CH<sub>4</sub></div>
   <div class="km-row">
@@ -499,7 +595,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-etan">
   <h3>Etan</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>6</sub></div>
   <div class="km-row">
@@ -508,7 +604,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-propan">
   <h3>Propan</h3>
   <div class="km-formula">C<sub>3</sub>H<sub>8</sub></div>
   <div class="km-row">
@@ -517,7 +613,25 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-butan">
+  <h3>Butan</h3>
+  <div class="km-formula">C<sub>4</sub>H<sub>10</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butan.svg" alt="Strukturformel för Butan"></div>
+    <div class="km-viewerbox" data-mol="butan" id="viewer-butan"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-2-metylbutan">
+  <h3>2-metylbutan</h3>
+  <div class="km-formula">C<sub>5</sub>H<sub>12</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/2-metylbutan.svg" alt="Strukturformel för 2-metylbutan"></div>
+    <div class="km-viewerbox" data-mol="2-metylbutan" id="viewer-2-metylbutan"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-eten">
   <h3>Eten</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>4</sub></div>
   <div class="km-row">
@@ -526,7 +640,16 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-etyn">
+  <h3>Etyn (acetylen)</h3>
+  <div class="km-formula">C<sub>2</sub>H<sub>2</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etyn.svg" alt="Strukturformel för Etyn (acetylen)"></div>
+    <div class="km-viewerbox" data-mol="etyn" id="viewer-etyn"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-propyn">
   <h3>Propyn</h3>
   <div class="km-formula">C<sub>3</sub>H<sub>4</sub></div>
   <div class="km-row">
@@ -535,7 +658,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-metanol">
   <h3>Metanol</h3>
   <div class="km-formula">CH<sub>3</sub>OH</div>
   <div class="km-row">
@@ -544,7 +667,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-etanol">
   <h3>Etanol</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>OH</div>
   <div class="km-row">
@@ -553,7 +676,34 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-glykol">
+  <h3>Glykol (etandiol)</h3>
+  <div class="km-formula">C<sub>2</sub>H<sub>4</sub>(OH)<sub>2</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glykol.svg" alt="Strukturformel för Glykol (etandiol)"></div>
+    <div class="km-viewerbox" data-mol="glykol" id="viewer-glykol"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-propan12diol">
+  <h3>Propan-1,2-diol</h3>
+  <div class="km-formula">C<sub>3</sub>H<sub>6</sub>(OH)<sub>2</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/propan12diol.svg" alt="Strukturformel för Propan-1,2-diol"></div>
+    <div class="km-viewerbox" data-mol="propan12diol" id="viewer-propan12diol"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-glycerol">
+  <h3>Glycerol (glycerin)</h3>
+  <div class="km-formula">C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glycerol.svg" alt="Strukturformel för Glycerol (glycerin)"></div>
+    <div class="km-viewerbox" data-mol="glycerol" id="viewer-glycerol"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-metansyra">
   <h3>Metansyra (myrsyra)</h3>
   <div class="km-formula">HCOOH</div>
   <div class="km-row">
@@ -562,7 +712,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-etansyra">
   <h3>Etansyra (ättiksyra)</h3>
   <div class="km-formula">CH<sub>3</sub>COOH</div>
   <div class="km-row">
@@ -571,7 +721,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-propansyra">
   <h3>Propansyra</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOH</div>
   <div class="km-row">
@@ -580,7 +730,16 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-butansyra">
+  <h3>Butansyra (smörsyra)</h3>
+  <div class="km-formula">C<sub>3</sub>H<sub>7</sub>COOH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/butansyra.svg" alt="Strukturformel för Butansyra (smörsyra)"></div>
+    <div class="km-viewerbox" data-mol="butansyra" id="viewer-butansyra"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-metylpropanoat">
   <h3>Metylpropanoat</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOCH<sub>3</sub></div>
   <div class="km-row">
@@ -589,7 +748,7 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
-<div class="km-card">
+<div class="km-card" id="km-etylpropanoat">
   <h3>Etylpropanoat</h3>
   <div class="km-formula">C<sub>2</sub>H<sub>5</sub>COOC<sub>2</sub>H<sub>5</sub></div>
   <div class="km-row">
@@ -598,10 +757,40 @@
   </div>
   <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
 </div>
+<div class="km-card" id="km-etylbutanoat">
+  <h3>Etylbutanoat</h3>
+  <div class="km-formula">C<sub>3</sub>H<sub>7</sub>COOC<sub>2</sub>H<sub>5</sub></div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/etylbutanoat.svg" alt="Strukturformel för Etylbutanoat"></div>
+    <div class="km-viewerbox" data-mol="etylbutanoat" id="viewer-etylbutanoat"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
+<div class="km-card" id="km-glycin">
+  <h3>Glycin (aminosyra)</h3>
+  <div class="km-formula">NH<sub>2</sub>CH<sub>2</sub>COOH</div>
+  <div class="km-row">
+    <div class="km-2d"><img src="/images/kemi/kol-och-kolforeningar/strukturformler/glycin.svg" alt="Strukturformel för Glycin (aminosyra)"></div>
+    <div class="km-viewerbox" data-mol="glycin" id="viewer-glycin"></div>
+  </div>
+  <div class="km-hint">Dra för att rotera, scrolla för att zooma.</div>
+</div>
     </div>
   </div>
 </details>
 
+
+    <details class="wonder">
+      <summary>Varför är vattenmolekylen vinklad &ndash; och varför spelar det roll?</summary>
+      <p>Jämför koldioxid och vatten: båda är små molekyler med en central atom omgiven av två andra atomer, men formen är helt olika. I koldioxid (CO&#8322;) har kolatomen inga lediga elektronpar, bara två dubbelbindningar till syre &ndash; molekylen blir därför helt <strong>rak</strong> (180&deg;). I vattenmolekylen (H&#8322;O) har syreatomen två lediga elektronpar utöver de två bindningarna till väte, och de lediga paren tar större plats och trycker ihop bindningsvinkeln &ndash; molekylen blir i stället <strong>vinklad</strong>, ungefär 104,5&deg;.</p>
+      <p>Den vinkeln påverkar hur laddningen fördelar sig i molekylen. Eftersom vattenmolekylen är vinklad, och syre drar hårdare i de gemensamma elektronerna än väte gör, blir molekylen <strong>polär</strong> &ndash; den ena sidan lite negativ, den andra lite positiv. Koldioxidmolekylen är däremot helt symmetrisk (rak), så de små laddningsförskjutningarna tar ut varandra och molekylen blir <strong>opolär</strong>.</p>
+      <p class="frontier">Fundera på: vilken betydelse tror du det skulle ha haft om vattenmolekylen inte hade varit polär? Kommer du inte på något själv &ndash; fråga din lärare om ledtrådar för hur du kan tänka vidare!</p>
+      <!-- Framtida lärarhandledning/lärarinloggning (idé, sep 2026): ledtrådskedja för denna wonder-fråga, ej synlig för elever:
+           1) Polära molekyler drar betydligt starkare i varandra än opolära (jfr H2O vs CO2).
+           2) Om vatten varit opolärt hade attraktionen mellan molekylerna varit mycket svagare (som mellan CO2-molekyler) - jämför då kokpunkterna: CO2 är gas vid rumstemperatur, sublimerar vid -78 C, medan H2O kokar vid 100 C. Ett opolärt vatten hade sannolikt varit en gas vid jordens temperaturer, inte flytande.
+           3) Levande celler är fulla av salter, sockerarter och proteiner som måste lösas upp och transporteras - polära lösningsmedel är generellt mycket bättre på att lösa upp sådana ämnen än opolära. Ett opolärt vatten hade sannolikt varit ett dåligt lösningsmedel för livsavgörande ämnen.
+           4) Slutsats att leda eleven mot: med största sannolikhet inget liv på jorden - både för att vatten då hade varit en gas, och för att det inte hade fungerat bra som lösningsmedel för många livsavgörande ämnen. -->
+    </details>
 
     <section class="references" id="kallor">
       <h2>Källor</h2>
@@ -636,6 +825,20 @@
   <script>
     (function () {
       function openFromHash() {
+        // #km-<molekyl>: "Rotera i 3D"-lankarna fran bildkolumnen - oppna galleriet och lyft fram kortet
+        var km = window.location.hash.match(/^#km-([a-z0-9-]+)$/);
+        if (km) {
+          var gallery = document.getElementById("m10");
+          var card = document.getElementById("km-" + km[1]);
+          if (!gallery || !card) return;
+          if (!gallery.open) gallery.open = true;
+          setTimeout(function () {
+            card.scrollIntoView({ behavior: "smooth", block: "center" });
+            card.classList.add("km-flash");
+            setTimeout(function () { card.classList.remove("km-flash"); }, 2200);
+          }, 80);
+          return;
+        }
         var match = window.location.hash.match(/^#m([0-9]+)$/);
         if (!match) return;
         var target = document.getElementById("m" + match[1]);
@@ -652,8 +855,8 @@
   <script>
 
 window.addEventListener('load', function() {
-  var MOLS = {"metan": "Metan\n  Claude3D\n\n  5  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293    0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293   -0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293    0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293   -0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\nM  END", "etan": "Etan\n  Claude3D\n\n  8  7  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1478    0.2597   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  2  1  0\n  2  6  1  0\n  2  7  1  0\n  2  8  1  0\nM  END", "propan": "Propan\n  Claude3D\n\n 11 10  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.4054    0.6291    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  1  2  1  0\n  2  7  1  0\n  2  8  1  0\n  2  3  1  0\n  3  9  1  0\n  3 10  1  0\n  3 11  1  0\nM  END", "eten": "Eten\n  Claude3D\n\n  6  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.3300    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  2  5  1  0\n  2  6  1  0\nM  END", "etyn": "Etyn\n  Claude3D\n\n  4  2  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.2600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  2  4  1  0\nM  END", "propyn": "Propyn\n  Claude3D\n\n  7  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.6600    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238    1.0275    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  2  3  1  0\n  1  4  1  0\n  3  5  1  0\n  3  6  1  0\n  3  7  1  0\nM  END", "metanol": "Metanol\n  Claude3D\n\n  6  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1678    0.8253    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9518    0.2713    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  2  6  1  0\nM  END", "etanol": "Etanol\n  Claude3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8695    2.2651    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.6534    2.8192    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  2  7  1  0\n  2  8  1  0\n  3  9  1  0\nM  END", "metansyra": "Metansyra (myrsyra)\n  Claude3D\n\n  5  3  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8733   -0.8230    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    0.3290    1.3916    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0440   -0.3132    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2834    1.4953    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  3  5  1  0\nM  END", "etansyra": "Etansyra (ättiksyra)\n  Claude3D\n\n  8  6  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3474    0.3864    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1268    2.3128    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9986    2.7147    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  2  4  1  0\n  1  2  1  0\n  1  5  1  0\n  1  6  1  0\n  1  7  1  0\n  4  8  1  0\nM  END", "propansyra": "Propansyra\n  Claude3D\n\n 11  9  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.4055   -1.1950    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.8139    0.5987    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.4838   -0.0890    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  1  6  1  0\n  1  7  1  0\n  1  8  1  0\n  2  9  1  0\n  2 10  1  0\n  5 11  1  0\nM  END", "metylpropanoat": "Metylpropanoat\n  Claude3D\n\n 14 12  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.5499   -1.2183    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  1  7  1  0\n  1  8  1  0\n  1  9  1  0\n  2 10  1  0\n  2 11  1  0\n  6 12  1  0\n  6 13  1  0\n  6 14  1  0\nM  END", "etylpropanoat": "Etylpropanoat\n  Claude3D\n\n 17 15  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6484   -3.5326    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.6383   -3.9889    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  6  7  1  0\n  1  8  1  0\n  1  9  1  0\n  1 10  1  0\n  2 11  1  0\n  2 12  1  0\n  6 13  1  0\n  6 14  1  0\n  7 15  1  0\n  7 16  1  0\n  7 17  1  0\nM  END"};
-  var MULTI = {"eten": [{"a": [0.0, 0.0, 0.0], "b": [1.33, 0.0, 0.0], "order": 2}], "etyn": [{"a": [0.0, 0.0, 0.0], "b": [1.2, 0.0, 0.0], "order": 3}], "propyn": [{"a": [0.0, 0.0, 0.0], "b": [1.2, 0.0, 0.0], "order": 3}], "metansyra": [{"a": [0.0, 0.0, 0.0], "b": [0.8733164534817295, -0.8229935431569888, 0.0], "order": 2}], "etansyra": [{"a": [1.2576279949489855, 0.8888035926573398, 0.0], "b": [2.347399803539083, 0.3864119076124257, 0.0], "order": 2}], "propansyra": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [2.4054540475018884, -1.194965913089594, 0.0], "order": 2}], "metylpropanoat": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [3.6050277984880688, 0.5023916850449143, 0.0], "order": 2}], "etylpropanoat": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [3.6050277984880688, 0.5023916850449143, 0.0], "order": 2}]}; // extra double/triple-bond bonds drawn manually, wider apart (nu ALLA sadana bindningar, inkl. C=O)
+  var MOLS = {"metan": "Metan\n  Claude3D\n\n  5  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293    0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293   -0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293    0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293   -0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\nM  END", "etan": "Etan\n  Claude3D\n\n  8  7  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1478    0.2597   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2583    1.5183   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  2  1  0\n  2  6  1  0\n  2  7  1  0\n  2  8  1  0\nM  END", "propan": "Propan\n  Claude3D\n\n 11 10  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.4054    0.6291    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5159   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  1  2  1  0\n  2  7  1  0\n  2  8  1  0\n  2  3  1  0\n  3  9  1  0\n  3 10  1  0\n  3 11  1  0\nM  END", "eten": "Eten\n  Claude3D\n\n  6  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.3300    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5450   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750   -0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8750    0.9440    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  2  5  1  0\n  2  6  1  0\nM  END", "etyn": "Etyn\n  Claude3D\n\n  4  2  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.2600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  2  4  1  0\nM  END", "propyn": "Propyn\n  Claude3D\n\n  7  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.6600    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0600    0.0000    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238    1.0275    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.0238   -0.5137    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  2  3  1  0\n  1  4  1  0\n  3  5  1  0\n  3  6  1  0\n  3  7  1  0\nM  END", "metanol": "Metanol\n  Claude3D\n\n  6  5  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1678    0.8253    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9518    0.2713    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\n  2  6  1  0\nM  END", "etanol": "Etanol\n  Claude3D\n\n  9  8  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8695    2.2651    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8506    0.6788    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.6534    2.8192    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  1  4  1  0\n  1  5  1  0\n  1  6  1  0\n  2  7  1  0\n  2  8  1  0\n  3  9  1  0\nM  END", "metansyra": "Metansyra (myrsyra)\n  Claude3D\n\n  5  3  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8733   -0.8230    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    0.3290    1.3916    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0440   -0.3132    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2834    1.4953    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  3  1  0\n  1  4  1  0\n  3  5  1  0\nM  END", "etansyra": "Etansyra (ättiksyra)\n  Claude3D\n\n  8  6  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3474    0.3864    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.1268    2.3128    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9986    2.7147    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  2  4  1  0\n  1  2  1  0\n  1  5  1  0\n  1  6  1  0\n  1  7  1  0\n  4  8  1  0\nM  END", "propansyra": "Propansyra\n  Claude3D\n\n 11  9  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.4055   -1.1950    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.8139    0.5987    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.4838   -0.0890    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  1  6  1  0\n  1  7  1  0\n  1  8  1  0\n  2  9  1  0\n  2 10  1  0\n  5 11  1  0\nM  END", "metylpropanoat": "Metylpropanoat\n  Claude3D\n\n 14 12  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.5499   -1.2183    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.9047   -2.6179    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  1  7  1  0\n  1  8  1  0\n  1  9  1  0\n  2 10  1  0\n  2 11  1  0\n  6 12  1  0\n  6 13  1  0\n  6 14  1  0\nM  END", "etylpropanoat": "Etylpropanoat\n  Claude3D\n\n 17 15  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6050    0.5024    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3908   -1.3543    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7894   -1.9990    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6484   -3.5326    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.3342   -1.6845   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.6383   -3.9889    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.1036   -3.8479    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  3  5  1  0\n  2  3  1  0\n  1  2  1  0\n  5  6  1  0\n  6  7  1  0\n  1  8  1  0\n  1  9  1  0\n  1 10  1  0\n  2 11  1  0\n  2 12  1  0\n  6 13  1  0\n  6 14  1  0\n  7 15  1  0\n  7 16  1  0\n  7 17  1  0\nM  END", "butansyra": "Butansyra\n  Claude3D\n\n 14 13  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7729    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    4.8627    0.3864    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6420    2.3128    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.5139    2.7147    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  4  5  2  0\n  4  6  1  0\n  3  4  1  0\n  1  2  1  0\n  2  3  1  0\n  1  7  1  0\n  1  8  1  0\n  1  9  1  0\n  2 10  1  0\n  2 11  1  0\n  3 12  1  0\n  3 13  1  0\n  6 14  1  0\nM  END", "etylbutanoat": "Etylbutanoat\n  Claude3D\n\n 20 19  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7729    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.6631    2.0838    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    5.0080    0.3194    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    6.0826    1.4225    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    7.4811    0.7778    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    5.9679    2.0411    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    5.9679    2.0411   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    8.2417    1.5586    0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    7.5964    0.1589   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    7.5964    0.1589    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  4  5  2  0\n  4  6  1  0\n  3  4  1  0\n  1  2  1  0\n  2  3  1  0\n  6  7  1  0\n  7  8  1  0\n  1  9  1  0\n  1 10  1  0\n  1 11  1  0\n  2 12  1  0\n  2 13  1  0\n  3 14  1  0\n  3 15  1  0\n  7 16  1  0\n  7 17  1  0\n  8 18  1  0\n  8 19  1  0\n  8 20  1  0\nM  END", "butan": "Butan\n  Claude3D\n\n 14 13  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7729    0.8888    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8901    0.6291   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0006   -0.6295   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2576    1.5179   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291   -0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.5153   -0.6291    0.8901 H  0  0  0  0  0  0  0  0  0  0  0  0\n    4.6630    0.2597   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7735    1.5183    0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n    3.7735    1.5183   -0.8898 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  5  1  0\n  1  6  1  0\n  1  7  1  0\n  1  2  1  0\n  2  8  1  0\n  2  9  1  0\n  2  3  1  0\n  3 10  1  0\n  3 11  1  0\n  3  4  1  0\n  4 12  1  0\n  4 13  1  0\n  4 14  1  0\nM  END", "glykol": "Glykol\n  Claude3D\n\n 10  9  0  0  0  0  0  0  0  0999 V2000\n   -1.8307    0.1574   -0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5729   -0.5028    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.5729    0.5028    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    1.8307   -0.1574   -0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.9189    0.6141   -0.8549 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5167   -1.1401    0.8886 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.5134   -1.1650   -0.8705 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.5134    1.1650    0.8705 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.5167    1.1401   -0.8886 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9189   -0.6141    0.8549 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  1  5  1  0\n  2  6  1  0\n  2  7  1  0\n  3  8  1  0\n  3  9  1  0\n  4 10  1  0\nM  END", "glycerol": "Glycerol\n  Claude3D\n\n 14 13  0  0  0  0  0  0  0  0999 V2000\n   -2.4178   -0.0057   -0.2378 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.2687    0.6935    0.2374 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0000   -0.0094   -0.2439 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.0000   -1.3661    0.2447 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.2687    0.6935    0.2374 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.4178   -0.0057   -0.2378 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1870   -0.9553   -0.2373 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.3233    0.6993    1.3308 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.3176    1.7242   -0.1253 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0000   -0.0912   -1.3364 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0000   -1.3331    1.2189 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.3176    1.7242   -0.1254 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.3233    0.6993    1.3308 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1870   -0.9553   -0.2372 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  3  5  1  0\n  5  6  1  0\n  1  7  1  0\n  2  8  1  0\n  2  9  1  0\n  3 10  1  0\n  4 11  1  0\n  5 12  1  0\n  5 13  1  0\n  6 14  1  0\nM  END", "propan12diol": "Propan-1,2-diol\n  Claude3D\n\n 13 12  0  0  0  0  0  0  0  0999 V2000\n   -1.9456    0.0036   -0.1133 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7571    0.6990    0.2602 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.4613   -0.0148   -0.3314 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.4766   -1.3639    0.1525 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.7647    0.6761    0.0321 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.7122   -0.9460   -0.1089 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7156    0.7047    1.3542 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8316    1.7297   -0.0983 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.3585   -0.0773   -1.4201 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.7088   -1.3405    1.0978 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.7927    1.6989   -0.3553 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.6166    0.1226   -0.3773 H  0  0  0  0  0  0  0  0  0  0  0  0\n    1.9039    0.7092    1.1182 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  1  0\n  3  5  1  0\n  1  6  1  0\n  2  7  1  0\n  2  8  1  0\n  3  9  1  0\n  4 10  1  0\n  5 11  1  0\n  5 12  1  0\n  5 13  1  0\nM  END", "glycin": "Glycin\n  Claude3D\n\n 10  9  0  0  0  0  0  0  0  0999 V2000\n   -1.9588   -0.1224    0.0000 N  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7726    0.7546   -0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.5118   -0.0619   -0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6032   -1.2800   -0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n    1.6164    0.7096    0.0000 O  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8894   -0.7488   -0.8051 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8894   -0.7488    0.8051 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7932    1.3835    0.8945 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7932    1.3835   -0.8946 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.3573    0.0676   -0.0000 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  3  4  2  0\n  3  5  1  0\n  1  6  1  0\n  1  7  1  0\n  2  8  1  0\n  2  9  1  0\n  5 10  1  0\nM  END", "2-metylbutan": "2-metylbutan\n  Claude3D\n\n 17 16  0  0  0  0  0  0  0  0999 V2000\n   -1.7135   -0.8259    0.0186 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.4737    0.0025   -0.3270 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6689    1.4450    0.1423 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.7775   -0.6492    0.2868 C  0  0  0  0  0  0  0  0  0  0  0  0\n    2.0786    0.0276   -0.1207 C  0  0  0  0  0  0  0  0  0  0  0  0\n   -2.6094   -0.3973   -0.4431 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.6100   -1.8529   -0.3475 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.8759   -0.8661    1.1011 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.3676    0.0087   -1.4192 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.1486    2.0883   -0.1968 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7195    1.5037    1.2348 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5979    1.8620   -0.2615 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.8262   -1.6989   -0.0287 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.7027   -0.6526    1.3811 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.9324   -0.5417    0.2609 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1687    0.0831   -1.2101 H  0  0  0  0  0  0  0  0  0  0  0  0\n    2.1499    1.0403    0.2865 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\n  2  4  1  0\n  4  5  1  0\n  1  6  1  0\n  1  7  1  0\n  1  8  1  0\n  2  9  1  0\n  3 10  1  0\n  3 11  1  0\n  3 12  1  0\n  4 13  1  0\n  4 14  1  0\n  5 15  1  0\n  5 16  1  0\n  5 17  1  0\nM  END"};
+  var MULTI = {"eten": [{"a": [0.0, 0.0, 0.0], "b": [1.33, 0.0, 0.0], "order": 2}], "etyn": [{"a": [0.0, 0.0, 0.0], "b": [1.2, 0.0, 0.0], "order": 3}], "propyn": [{"a": [0.0, 0.0, 0.0], "b": [1.2, 0.0, 0.0], "order": 3}], "metansyra": [{"a": [0.0, 0.0, 0.0], "b": [0.8733164534817295, -0.8229935431569888, 0.0], "order": 2}], "etansyra": [{"a": [1.2576279949489855, 0.8888035926573398, 0.0], "b": [2.347399803539083, 0.3864119076124257, 0.0], "order": 2}], "propansyra": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [2.4054540475018884, -1.194965913089594, 0.0], "order": 2}], "metylpropanoat": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [3.6050277984880688, 0.5023916850449143, 0.0], "order": 2}], "etylpropanoat": [{"a": [2.5152559898979714, 1.1102230246251565e-16, 0.0], "b": [3.6050277984880688, 0.5023916850449143, 0.0], "order": 2}], "butansyra": [{"a": [3.772883984846957, 0.8888035926573401, 0.0], "b": [4.862655793437055, 0.38641190761242605, 0.0], "order": 2}], "etylbutanoat": [{"a": [3.772883984846957, 0.8888035926573401, 0.0], "b": [3.663082042450874, 2.0837695057469343, 0.0], "order": 2}], "glycin": [{"a": [0.5118183774949077, -0.06191725964934147, -1.1789252064404574e-07], "b": [0.6031672391564558, -1.279983292889803, -1.9235488679704327e-06], "order": 2}]}; // extra double/triple-bond bonds drawn manually, wider apart (nu ALLA sadana bindningar, inkl. C=O)
 
   function addMultiBond(viewer, spec) {
     var a = spec.a, b = spec.b, order = spec.order;
@@ -713,7 +916,8 @@ window.addEventListener('load', function() {
     // ("zooma in"/forstora) ska forstora modellen, precis som pa alla andra
     // sajter/kartor - testat empiriskt av Jesper, formeln nedan ar rattad
     // efter hans direkta feedback (factor OKAR nar man drar isar).
-    el.addEventListener('wheel', function(ev) {
+    el._km3dViewer = viewer;
+    el._km3dWheel = function(ev) {
       ev.preventDefault();
       ev.stopPropagation();
       var delta = ev.deltaY;
@@ -724,20 +928,40 @@ window.addEventListener('load', function() {
       if (factor > 1.06) factor = 1.06;
       viewer.zoom(factor, 0);
       viewer.render();
-    }, {capture: true, passive: false});
+    };
+    el.addEventListener('wheel', el._km3dWheel, {capture: true, passive: false});
   }
 
-  // Alla kulmodell-boxar (bade det stora galleriet langst ner och de smaa
-  // som vavts in bredvid 2D-strukturformlerna i loptexten) skapas FORST nar
-  // de rullas in i vy (IntersectionObserver) - det haller nere antalet
-  // samtidiga WebGL-kontexter och gor sidladdningen snabbare.
+  // Webblasare tillater bara ~16 samtidiga WebGL-kontexter. Galleriet har fler
+  // modeller an sa, sa en box som rullats ur bild slapps och skapas pa nytt
+  // nar den kommer i vy igen.
+  function destroyViewerIn(el) {
+    if (!el._km3dViewer) return;
+    try {
+      var cv = el.querySelector('canvas');
+      var gl = cv && (cv.getContext('webgl2') || cv.getContext('webgl'));
+      var ext = gl && gl.getExtension('WEBGL_lose_context');
+      if (ext) ext.loseContext();
+      el._km3dViewer.clear();
+    } catch (e) {}
+    el.removeEventListener('wheel', el._km3dWheel, {capture: true});
+    el.innerHTML = '';
+    el._km3dViewer = null; el._km3dWheel = null;
+    delete el.dataset.km3dReady;
+  }
+
+  // Kulmodell-boxarna i galleriet skapas FORST nar de rullas in i vy
+  // (IntersectionObserver) - det haller nere antalet samtidiga WebGL-kontexter
+  // och gor sidladdningen snabbare. Bilderna bredvid texten i milstolparna ar
+  // statiska PNG-bilder (kulmodeller/*.png) och behover ingen WebGL alls.
   var boxes = document.querySelectorAll('.km-viewerbox[data-mol]');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           createViewerIn(entry.target, entry.target.dataset.mol);
-          io.unobserve(entry.target);
+        } else {
+          destroyViewerIn(entry.target);
         }
       });
     }, {rootMargin: '200px'});

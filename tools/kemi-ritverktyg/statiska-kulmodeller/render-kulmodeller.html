@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}#v{position:relative;width:520px;height:420px}</style></head>
+<body><div id="v"></div>
+<script src="/js/3Dmol-min.js"></script>
+<script>
+function addMultiBond(viewer, spec) {
+  var a = spec.a, b = spec.b, order = spec.order;
+  var axis = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
+  var len = Math.sqrt(axis[0]*axis[0]+axis[1]*axis[1]+axis[2]*axis[2]);
+  axis = [axis[0]/len, axis[1]/len, axis[2]/len];
+  var ref = Math.abs(axis[2]) < 0.9 ? [0,0,1] : [0,1,0];
+  function cross(u,v){ return [u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]]; }
+  function norm(u){ var l=Math.sqrt(u[0]*u[0]+u[1]*u[1]+u[2]*u[2]); return [u[0]/l,u[1]/l,u[2]/l]; }
+  var e1 = norm(cross(axis, ref));
+  var e2 = norm(cross(axis, e1));
+  var gap = 0.17, radius = 0.085, color = '#777777', dirs = [];
+  if (order === 2) { dirs = [e1, [-e1[0],-e1[1],-e1[2]]]; }
+  else if (order === 3) {
+    for (var k = 0; k < 3; k++) { var th = k*2*Math.PI/3, c=Math.cos(th), s=Math.sin(th);
+      dirs.push([e1[0]*c+e2[0]*s, e1[1]*c+e2[1]*s, e1[2]*c+e2[2]*s]); }
+  } else { dirs = [[0,0,0]]; }
+  dirs.forEach(function(d) {
+    viewer.addCylinder({start:{x:a[0]+d[0]*gap,y:a[1]+d[1]*gap,z:a[2]+d[2]*gap}, end:{x:b[0]+d[0]*gap,y:b[1]+d[1]*gap,z:b[2]+d[2]*gap}, radius:radius, color:color, fromCap:1, toCap:1});
+  });
+}
+// Renderar EN molekyl med fast skala (px per angstrom) och returnerar PNG som data-URI.
+window.renderMol = function(sdf, multi, opts) {
+  opts = opts || {};
+  var el = document.getElementById('v');
+  el.innerHTML = '';
+  var viewer = $3Dmol.createViewer(el, {backgroundColor: 'white', backgroundAlpha: 0, antialias: true});
+  viewer.addModel(sdf, 'sdf');
+  var sr = opts.stick || 0.12, ss = opts.sphere || 0.28;
+  viewer.setStyle({}, {stick:{radius:sr}, sphere:{scale:ss}});
+  viewer.setStyle({elem:'C'}, {stick:{radius:sr, color:'#777777'}, sphere:{scale:ss, color:'#4d4d4d'}});
+  (multi || []).forEach(function(spec){ addMultiBond(viewer, spec); });
+  viewer.setProjection('orthographic');
+  viewer.zoomTo();
+  if (opts.rotX) viewer.rotate(opts.rotX, 'x');
+  if (opts.rotY) viewer.rotate(opts.rotY, 'y');
+  viewer.render();
+  // mät skalan (CSS-px per angstrom) och sätt den till målvärdet
+  var p0 = viewer.modelToScreen({x:0,y:0,z:0}), p1 = viewer.modelToScreen({x:1,y:0,z:0});
+  var dx = p1.x-p0.x, dy = p1.y-p0.y; var s = Math.sqrt(dx*dx+dy*dy);
+  var target = opts.pxPerAng || 36;
+  viewer.zoom(target / s, 0);
+  viewer.render();
+  var q0 = viewer.modelToScreen({x:0,y:0,z:0}), q1 = viewer.modelToScreen({x:1,y:0,z:0});
+  return {png: viewer.pngURI(), scale: Math.hypot(q1.x-q0.x, q1.y-q0.y), scaleBefore: s};
+};
+</script></body></html>

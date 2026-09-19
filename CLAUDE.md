@@ -184,6 +184,51 @@ Välj Universum-stil när ett bra licensierat foto finns. Välj Magnetism-stil f
 
 ---
 
+## Bred studieguide med bildkolumn — STÅENDE REGEL för bildrika studieguider, sep 2026
+
+Inspirerat av Enkel NO (bara idén med förklarande bilder **bredvid** texten – egen text och egna bilder, aldrig kopierat). Text till vänster, förklarande bilder i en kolumn till höger, placerade vid just den text de hör till. Pilot: `kemi/kol-och-kolforeningar/studieguide.html`. Används i alla studieguider som har många förklarande bilder (kemi: strukturformler/kulmodeller; biologi: cell-, DNA- och organbilder; fysik: kretsschema, kraftdiagram m.m.). Ordinarie studieguider utan `.guide-wide` påverkas inte.
+
+### Aktivering (opt-in per sida)
+
+1. Länka den delade komponenten efter `style.css`: `<link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />`
+2. Sätt klassen på huvudelementet: `<main class="guide-wide">` (max-bredd 1180 px i stället för normalbredden; sidokolumnen är 370 px).
+3. Bygg varje milstolpes `.m-body` av **rader**. En rad = en textbit + bilderna till den:
+
+```html
+<div class="m-row">
+  <div class="m-lead"> …den text bilderna hör till… </div>
+  <div class="m-side"> <figure class="side-fig">…</figure> <figure class="side-fig">…</figure> </div>
+  <div class="m-rest"> …fortsättning (tabell, fördjupning, mer text) som får stå bredvid bildkolumnen… </div>
+</div>
+```
+
+- `m-rest` är valfri. Bilderna i `m-side` ligger i höjd med `m-lead` och fortsätter ned bredvid `m-rest`. **Passa ihop höjderna** (flytta block mellan lead och rest) så att det inte blir stora tomrum bredvid långa tabeller.
+- Rad utan bilder: `<div class="m-row m-row--plain"><div class="m-lead">…</div></div>` (samma textbredd som övriga rader).
+- Rad som ska ha **hela bredden**: `m-row--full`. Används när bilden behöver plats i sidled, t.ex. en **reaktionsformel** (karboxylsyra + alkohol → ester + vatten). Reaktioner och andra breda bilder ska ALLTID ligga i löptexten i full bredd, inte i sidokolumnen.
+- Bild i löpande text/fördjupning (t.ex. inne i en `<details class="deepen">`): `<div class="fig-row"><figure><img …><figcaption>…</figcaption></figure>…</div>`.
+- Smalare än 900 px staplas allt: lead, bilder direkt efter, rest. Bilderna hamnar alltså alltid i närheten av sin text – testa 1440, 1024, 768 och 390 px.
+
+### Molekylkort (kemi)
+
+Varje molekyl i texten får ett `.mol-card` i sidokolumnen: **namn + molekylformel** (rubrikrad, siffror som `<sub>`), **strukturformel** (2D-SVG, skala 0,88) och **kulmodell** (statisk PNG), plus länken `Rotera i 3D →` (`href="#km-<stem>"`) till samma molekyl i galleriet "Utforska i 3D" (M10). Flera kort i samma `.side-fig` delar en `<figcaption>` (bildtext + `.km-legend` med färgförklaring – bara text/prick, aldrig enbart färg). Kort utan molekylformel (t.ex. kolets former) använder `.mc-desc` i stället.
+
+### Statiska bilder bredvid texten – rotation bara i M10
+
+- Bilderna i bildkolumnen är **statiska PNG** (`images/kemi/<område>/kulmodeller/<stem>.png`, transparent, 3x upplösning, `width`/`height` = PNG-storlek/3, `loading="lazy"`, beskrivande `alt`). Inga live-3Dmol-rutor i löptexten: de tar WebGL-kontexter (max ca 16 per sida) och gör sidan seg.
+- **Möjligheten att rotera finns bara i det befintliga bladet "Utforska i 3D" (M10)**. Kortens länk `#km-<stem>` öppnar M10 och lyfter fram rätt kort (`.km-flash`). Nya molekyler ska in i BÅDE bildkolumnen och galleriet (`MOLS`/`MULTI` i sidans script är källan för båda).
+- Galleriets 3Dmol-boxar skapas lat (IntersectionObserver) och **släpps igen när de rullas ur bild** (`destroyViewerIn`, WEBGL_lose_context) – nödvändigt när galleriet har fler än ~16 molekyler.
+- Alla kulmodeller har **samma atomstorlek** (fast px/Å, standard 34) så att storleksskillnader mellan molekyler är verkliga. Färger: kol svart (sfär #4d4d4d, pinne #777), väte vitt, syre rött, kväve blått (#3050f8).
+- Rendering: `tools/kemi-ritverktyg/statiska-kulmodeller/` (`render_kulmodeller.py`, `render_allotroper.py`, se README där). Geometrin kommer från `chembuilder.py` (för molekyler utan handbyggt mönster: `build_rdkit(smiles)` + `check_geometry`). Ritas alltid med skript – aldrig frihand.
+
+### Övrigt
+
+- `lyssna.js` läser `.m-body`-texten: rubrikraden (`.mc-head`), `Rotera i 3D`-länken och färgförklaringen är uteslutna, bildtexterna läses.
+- Egna bilder och egen text bara – Enkel NO, läroböcker m.fl. är inspiration, aldrig förlaga (se Originalitet).
+- WCAG 2.2 AA: alla bilder har `alt`, färgförklaring som text, kontrast ≥ 4.5:1 på bildtexter, inget som bara går att förstå via färg.
+- Nästa sida som kan få layouten: välj ut milstolpar med många molekyl-/organ-/kretsbilder först; sidor med få bilder behåller normalbredd.
+
+---
+
 ## Utskriftsstandard
 
 Alla utskriftsvyer följer namnmönstret `*-print-elev.html`, `*-print-larare.html`, `ovningsprov-print.html`, `facit-print.html`.
