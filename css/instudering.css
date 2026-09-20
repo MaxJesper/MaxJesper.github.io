@@ -260,3 +260,20 @@
 .tag {
   font-weight: 700;
 }
+
+/* Ritfrågor: notering på skärmen, ritutrymme vid utskrift */
+.study-drawnote {
+  font-size: 0.9rem;
+  color: #334155;
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  margin: 0.4rem 0 0.2rem;
+}
+.print-draw {
+  border: 1px dashed #9aa0aa;
+  border-radius: 4px;
+  margin: 6px 0 12px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}

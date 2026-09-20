@@ -63,7 +63,8 @@
     var st = document.createElement('style');
     st.id = 'kemi-inmatning-style';
     st.textContent =
-      '.kemi-tools{display:flex;flex-wrap:wrap;align-items:center;gap:0.4rem;margin:0.35rem 0 0;font-size:0.85rem;color:#334155}' +
+      '.kemi-tools{display:none;flex-wrap:wrap;align-items:center;gap:0.4rem;margin:0.35rem 0 0;font-size:0.85rem;color:#334155}' +
+      '.kemi-tools.open{display:flex}' +
       '.kemi-tools button{font:inherit;font-size:1.3rem;line-height:1;font-weight:700;min-width:44px;min-height:44px;padding:0 0.6rem;background:#fff;color:#1e293b;border:2px solid #475569;border-radius:8px;cursor:pointer}' +
       '.kemi-tools button:hover{background:#f1f5f9}' +
       '.kemi-tools button:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}' +
@@ -94,6 +95,9 @@
         btn.type = 'button';
         btn.textContent = b[0];
         btn.setAttribute('aria-label', b[1]);
+        // pointerdown/mousedown: behåll fokus i textrutan så att verktygsfältet inte stängs innan klicket
+        btn.addEventListener('mousedown', function (ev) { ev.preventDefault(); });
+        btn.addEventListener('pointerdown', function (ev) { ev.preventDefault(); });
         btn.addEventListener('click', function () { insertAt(el, b[0]); });
         bar.appendChild(btn);
       });
@@ -102,6 +106,10 @@
       hint.textContent = 'Skriv formeln själv: H2O blir H₂O (siffra efter bokstav = nedsänkt). Pil: skriv -> eller tryck →. Laddning: ^2+ eller knapparna.';
       bar.appendChild(hint);
       el.insertAdjacentElement('afterend', bar);
+      // Verktygsfältet visas bara för den ruta som eleven skriver i (annars upprepas det under varje fråga)
+      el.addEventListener('focus', function () { bar.classList.add('open'); });
+      el.addEventListener('blur', function (ev) { if (!bar.contains(ev.relatedTarget)) bar.classList.remove('open'); });
+      bar.addEventListener('focusout', function (ev) { if (ev.relatedTarget !== el && !bar.contains(ev.relatedTarget)) bar.classList.remove('open'); });
     }
   }
 

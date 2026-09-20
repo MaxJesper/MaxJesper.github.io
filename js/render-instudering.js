@@ -53,6 +53,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
                   <span class="study-q-text">${escapeHtml(q)}</span>
                 </button>
 
+                ${drawNoteHtml(it)}
                 <div class="study-youranswer">
                   <div class="study-youranswer-label">Mitt svar</div>
                   <textarea class="study-youranswer-input"
@@ -89,6 +90,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
                 <div class="print-student-answer">
                   ${escapeHtml(saved).replaceAll("\n", "<br>")}
                 </div>
+                ${drawBoxHtml(it)}
               </div>
             `;
           } else {
@@ -98,6 +100,7 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
               <div class="print-item">
                 <div class="print-q"><span class="tag">Fråga ${qNum}:</span> ${escapeHtml(q)}</div>
                 <div class="print-lines">${linesHtml}</div>
+                ${drawBoxHtml(it)}
               </div>
             `;
           }
@@ -114,12 +117,41 @@ function renderStudySet({ jsonPath, mountId, mode = "interactive" }) {
       if (mode === "interactive") {
         wireInteractions(mount);
         hydrateAndAutosaveTextareas(mount);
+        enableKemiInput(mount);
       }
     })
     .catch(err => {
       console.error(err);
       mount.innerHTML = `<p>Det gick inte att ladda instuderingsfrågorna. Kontrollera: <code>${escapeHtml(jsonPath)}</code></p>`;
     });
+}
+
+/* ===== Ritdelar och kemiska formler ===== */
+
+// "draw": <höjd i mm> på en fråga = frågan innehåller något eleven ska RITA (strukturformel, atom …).
+// På skärmen går det inte att rita: en tydlig notering visas. Vid utskrift får eleven ett fritt ritutrymme.
+function drawNoteHtml(it) {
+  if (!(Number(it.draw) > 0)) return "";
+  const txt = it.drawNote || "Ritdelen gör du på papper eller i ditt skrivhäfte – skriv här bara det som ska skrivas.";
+  return `<p class="study-drawnote">✏️ ${escapeHtml(txt)}</p>`;
+}
+
+function drawBoxHtml(it) {
+  const mm = Number(it.draw);
+  if (!(mm > 0)) return "";
+  const h = Math.min(Math.max(mm, 20), 120);
+  return `<div class="print-draw" style="height:${h}mm" role="img" aria-label="Utrymme för att rita"></div>`;
+}
+
+// Kemiområden: eleven ska kunna skriva formler digitalt (nedsänkta siffror, pil, laddning) – se js/kemi-inmatning.js
+function enableKemiInput(root) {
+  if (!/(^|\/)kemi\//.test(location.pathname)) return;
+  const run = () => root.querySelectorAll(".study-youranswer-input").forEach(el => window.KemiInput.enhance(el));
+  if (window.KemiInput) { run(); return; }
+  const sc = document.createElement("script");
+  sc.src = "/js/kemi-inmatning.js";
+  sc.onload = run;
+  document.head.appendChild(sc);
 }
 
 /* ===== Tangentbord + toggle ===== */
