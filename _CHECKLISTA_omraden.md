@@ -98,6 +98,8 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 ### Konkreta byggen
 
+- **Kursplanetäckning kemi åk 7–9 (analys 20 sep 2026):** se `_KURSPLAN_kemi_tackning_2026-09-20.md`. Största luckorna: Separationsprocesser (tomt), Vatten och lösningar, Jonföreningar (bara lab), Matens kemi (kolhydrater saknas), Kemi i miljön (kolets kretslopp, växthuseffekt, vattenrening, miljögifter), Produkter och material (läkemedel, funktionsmaterial, livscykel) samt tvärgående: undersökningsmetodik, digitala verktyg, källkritik, kemihistoria, argumentation.
+
 - **Byt språkväljarens etiketter (påminnelse, Jesper 20 sep 2026):** i `js/concept-lang-selector.js` ändras `STOD` till `'begrepp+checklistor'` när ALLA checklistor är översatta (11 språk) och korrekturlästa, samt `ENGELSK_HELA = true` när hela siten finns på engelska och är godkänd. Tills dess står "(begrepp)" efter språken. Checklistesidorna behöver då också få samma språkväljare (`concept-lang-selector-mount`).
 
 - **Kemi-hudsidan (`kemi/index.html`) byggs om (Jespers önskemål 19 sep 2026, se CLAUDE.md Idé 24):** bort med ren länksida; in med uppstart + kemihistoria, faropiktogram-spel och labbutrustnings-spel (fågelspelets design; **väntar på Jespers foton**) samt ett **säkerhetsintyg** (övning som skrivs ut och skrivs under; en sida, länkas även från Ämnet Fysik och Ämnet Biologi).
