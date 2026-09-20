@@ -98,6 +98,8 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 ### Konkreta byggen
 
+- **Byt språkväljarens etiketter (påminnelse, Jesper 20 sep 2026):** i `js/concept-lang-selector.js` ändras `STOD` till `'begrepp+checklistor'` när ALLA checklistor är översatta (11 språk) och korrekturlästa, samt `ENGELSK_HELA = true` när hela siten finns på engelska och är godkänd. Tills dess står "(begrepp)" efter språken. Checklistesidorna behöver då också få samma språkväljare (`concept-lang-selector-mount`).
+
 - **Kemi-hudsidan (`kemi/index.html`) byggs om (Jespers önskemål 19 sep 2026, se CLAUDE.md Idé 24):** bort med ren länksida; in med uppstart + kemihistoria, faropiktogram-spel och labbutrustnings-spel (fågelspelets design; **väntar på Jespers foton**) samt ett **säkerhetsintyg** (övning som skrivs ut och skrivs under; en sida, länkas även från Ämnet Fysik och Ämnet Biologi).
 
 - Fanerozoikum-frågespel (biologi/evolution): porta från kraft-och-rorelse/fragespel.html (chansa/säkra, timer, poäng, lösen 'JTo').

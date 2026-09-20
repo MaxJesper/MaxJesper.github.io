@@ -37,10 +37,11 @@
   // Format (Jesper, 20 sep 2026): svenska först, sedan SAMMA text på språket självt, t.ex.
   //   "🇸🇦 Arabiska (begrepp och checklistor) – العربية (المفاهيم وقوائم التحقق)"
   // Svenska och engelska visas utan tillägg. Engelska = hela siten på engelska (när den är översatt).
-  // STOD = texten efter språknamnet för alla andra språk. Jesper vill ha 'begrepp och checklistor' (beslut 20 sep 2026);
-  // checklistorna måste alltså översättas – annars lovar etiketten mer än siten håller.
-  var STOD = 'begrepp+checklistor';
-  var ENGELSK_HELA = true;
+  // STOD = texten efter språknamnet för alla andra språk. Etiketten ska spegla det som FAKTISKT är översatt.
+  // ATT GÖRA (Jesper, 20 sep 2026): sätt STOD = 'begrepp+checklistor' först när ALLA checklistor är översatta OCH korrekturlästa;
+  // sätt ENGELSK_HELA = true (engelska visas då utan tillägg) först när hela siten är översatt till engelska och godkänd.
+  var STOD = 'begrepp';
+  var ENGELSK_HELA = false;
 
   var STOD_SV = { 'begrepp': 'begrepp', 'begrepp+checklistor': 'begrepp och checklistor' };
 
