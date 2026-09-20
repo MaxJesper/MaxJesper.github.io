@@ -349,10 +349,17 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 ## Begreppsöversättning vid läsning (inline i löptexten) — STÅENDE REGEL för ALLA studieguider, sep 2026
 
+### Ett gemensamt språkval (beslut 20 sep 2026)
+- Det finns EN språkväljare på hela siten: "📖 Begrepp översätts till:" (`js/concept-lang-selector.js`, `<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp">` + `data-termer-base="./data/termer"` i studieguiden). Valet sparas i `localStorage` `site.concept-lang` och gäller överallt: översikt (index), Begreppslista, checklistor och klickbara ord i studieguiden.
+- Den gamla "Språk"-väljaren (TTS, `lang-selector-mount`, `site.tts-lang`) är BORTTAGEN från alla 35 sidor: den styrde bara uppläsningsrösten och gav svensk text med utländsk röst. `js/language-selector.js` finns kvar eftersom den exponerar `loadBegreppForLang`, men renderar ingen väljare. `js/lyssna.js` läser alltid upp på svenska.
+- **Etiketter i rullistan (Jesper, 20 sep 2026):** svenska först, sedan samma text på språket självt, t.ex. "🇸🇦 Arabiska (begrepp och checklistor) – العربية (المفاهيم وقوائم التحقق)". Engelska får inget tillägg när hela siten finns på engelska. Etiketterna byggs i `js/concept-lang-selector.js` utifrån två flaggor: `STOD` (`'begrepp'` nu → sätt `'begrepp+checklistor'` när checklistorna är översatta och lägg samma väljare på checklistesidorna) och `ENGELSK_HELA` (sätt `true` när hela siten är översatt till engelska). Etiketten ska alltid spegla vad som FAKTISKT är översatt. Väljarens etikett: "🌐 Språk / Language:". De inbyggda översättningarna av "begrepp"/"begrepp och checklistor" är AI-genererade – låt modersmålstalare titta på dem.
+- **Framtid:** när engelsk helText finns (först efter Jespers korrektur) blir "🇬🇧 English" i SAMMA rullista valet för hela siten på engelska (ingen separat flagg-växel; växlar textspråk + uppläsningsröst, `getPreferredLang()` i `lyssna.js` ska då returnera `en-GB` för engelsk text). Övriga språk förblir begrepps-/checklistestöd, inte helöversättning.
+- **Omfattning av översättning (rekommendation):** (1) begrepp + termer – klart för 11 språk; (2) checklistor – nästa steg, korta meningar, bra nytta; (3) studieguidens fulltext ENDAST engelska (Jesper kan korrekturläsa, sajten riktar sig även mot engelsktalande); ev. mellanting: korta milstolpesammanfattningar på andra språk om modersmålstalare kan granska. Instuderingsfrågor och prov översätts inte.
+
 **REGEL (Jesper, 20 sep 2026):** Varje studieguide – befintlig och NY – ska ha begreppsöversättning vid läsning. En elev med annat modersmål som förstår en del svenska ska kunna välja språk överst i studieguiden ("📖 Begrepp översätts till:") och sedan klicka på fetmarkerade nyckelord i löptexten och få (a) full popup med översättning + förklaring + länk om ordet är ett kärnbegrepp i `data/begrepp.<prefix>.json`, eller (b) bara den översatta termen om det är en övrig fetmarkerad term (`data/termer.<prefix>.json`). Motivering: helöversättning av alla texter till många språk är orealistiskt – detta ger ändå läsestöd begrepp för begrepp.
 
 **Krav för varje ny studieguide (bocka av innan området är "klart"):**
-1. `<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>` överst i studieguiden (bredvid den vanliga `lang-selector-mount`).
+1. `<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>` överst i studieguiden. Det finns INGEN separat TTS-"Språk"-väljare längre (se "Ett gemensamt språkval" nedan).
 2. Scripten `concepts-popup.js`, `language-selector.js`, `concept-lang-selector.js` inlästa (i den ordningen) + begrepp.json-fetch-snutten (se nedan).
 3. ALLA kärnbegrepp får `<span class="concept-inline" data-concept="…">` vid sin första fetmarkering; ALLA övriga `<strong class="term">`-ord som är riktiga vokabulärord (inte beskrivande fraser) wrapas likadant.
 4. `data/begrepp.<prefix>.json` OCH `data/termer.<prefix>.json` för alla **11 språk**: am, ar, bs, en, es, fa, pl, ps, rw, so, ur. Nya begrepp/termer i ett befintligt område ska översättas till alla 11 språk samma session.
@@ -370,7 +377,7 @@ Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knapp
 
 **Status (kärnbegrepp):** pilotbyggd i `fysik/magnetism-induktion/studieguide.html` – alla 15 begrepp i området har en klickbar förekomst VID SIN FÖRSTA FETMARKERADE nämning i respektive milstolpe (dvs. samma ställe där `<strong class="term">` redan introducerar begreppet). Jesper testade och beslutade den slutgiltiga regeln (sep 2026): kärnbegreppen förblir som de är (fortsätter poppa upp, full förklaring). Övriga fetmarkerade ord ska visa BARA en översättning vid klick, utan att läggas till i begreppslistan – se "Termer"-avsnittet nedan för hur det är löst. Jesper har beslutat (sep 2026) att funktionen (både kärnbegrepp- och termer-nivån) ska spridas till alla färdiga och framtida områden – se _CHECKLISTA_omraden.md, avsnitt "Sprid funktioner", för status per område. Motivering: viktig USP (se om-plattformen.html) – ett digitalt läromedel kan möta varje elev på sitt eget språk begrepp för begrepp, vilket väger tungt för elever med annat modersmål än svenska, även om den pedagogiska trenden i övrigt talar för tryckta läromedel.
 
-**Viktigt designval:** en HELT EGEN språkväljare styr detta, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
+**Historik (ersatt 20 sep 2026, se "Ett gemensamt språkval"):** tidigare fanns en HELT EGEN språkväljare bredvid, separat från den vanliga TTS-språkväljaren (`lang-selector-mount` / `site.tts-lang`). Annars skulle en elev som vill lyssna på/läsa svensk text tvingas byta hela sidans språk bara för att få begreppen översatta – och TTS:en skulle då försöka läsa (ännu oöversatt) svensk text med fel röst.
 
 **Filer:**
 - `js/concept-lang-selector.js` – ny, oberoende väljare. Egen `localStorage`-nyckel `site.concept-lang`. Återanvänder `window.LangSelector.loadBegreppForLang(lang, begreppBase)` (exponerad från `language-selector.js`) för hämtning/cache av kärnbegrepps-JSON, men har DESSUTOM sin egen separata fetch/cache för termer-JSON (se nedan) – påverkar ALDRIG TTS-rösten.
@@ -379,7 +386,6 @@ Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knapp
 
 **Markup per område (i `studieguide.html`):**
 ```html
-<div class="lang-selector-mount"></div>
 <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
 ```
 och i själva löptexten, ordagrant matchande `namn`-fältet i respektive JSON (attributvärdet, inte den synliga ordformen – böjda/gemena former i texten är okej):
@@ -480,7 +486,7 @@ I dag täcker flerspråksstödet bara begreppen (`data/begrepp.<prefix>.json`). 
 
 **Steg 2 – generering av översättningen.** Automatöversättning (AI) av den redan godkända svenska texten, milstolpe för milstolpe. Jesper förväntas INTE läsa igenom hela textmassan i alla språk ord för ord, men bör göra stickprov – särskilt av facktermer. Viktigast: facktermerna i den översatta löptexten måste matcha EXAKT de redan godkända översättningarna i `data/begrepp.<prefix>.json` (annars får eleven två olika ord för samma begrepp – ett i löptexten, ett i begreppspopupen).
 
-**Steg 3 – rendering.** Klientsidesväxling, samma mönster som begreppen redan använder: vid språkbyte i `lang-selector-mount` hämtas `data/studieguide.<prefix>.json` och byter ut brödtexten i varje märkt textblock. Enklare (men tyngre DOM) alternativ: rendera båda språkversionerna i HTML från start och toggla synlighet med CSS/JS. Föredra klientsidesväxling via fetch – konsekvent med hur begreppen redan hanteras.
+**Steg 3 – rendering.** Klientsidesväxling, samma mönster som begreppen redan använder: vid språkbyte (flagg-växel, se "Ett gemensamt språkval") hämtas `data/studieguide.<prefix>.json` och byter ut brödtexten i varje märkt textblock. Enklare (men tyngre DOM) alternativ: rendera båda språkversionerna i HTML från start och toggla synlighet med CSS/JS. Föredra klientsidesväxling via fetch – konsekvent med hur begreppen redan hanteras.
 
 **Steg 4 – TTS-koppling.** `lyssna.js` måste uppdateras så att när ett annat språk än svenska är valt OCH en översatt textfil finns för området, läses den ÖVERSATTA texten upp med en röst som matchar språkkoden (samma `LANG_PREFIX`-mappning som redan finns i `language-selector.js`). Saknas översatt text eller röst: falla tillbaka till nuvarande beteende (svensk röst läser svensk text) – aldrig fel röst på fel språk.
 

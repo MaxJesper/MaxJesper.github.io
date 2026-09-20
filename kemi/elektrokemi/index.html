@@ -362,7 +362,7 @@
       <button type="button" id="role-elev" class="active">Elev</button>
       <button type="button" id="role-larare">Lärare</button>
     </div>
-    <div class="lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
     <section class="area-layout">
       <div class="area-main">
@@ -516,6 +516,7 @@
     })();
   </script>
   <script src="/js/language-selector.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
   <script>
     /* ENDA KÄLLA: hämta begreppen från data/begrepp.json. Inbäddad window.BEGREPP är reserv. */
     fetch("./data/begrepp.json", { cache: "no-store" })

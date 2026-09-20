@@ -34,7 +34,9 @@
   // ── Hjälpfunktioner ──────────────────────────────────────────────────────
 
   function getPreferredLang() {
-    try { return localStorage.getItem('site.tts-lang') || 'sv-SE'; } catch (e) { return 'sv-SE'; }
+    // Uppläsningsspråket = språket på den TEXT som läses (nu alltid svenska). Tidigare styrdes det av en egen Språk-väljare,
+    // vilket gav svensk text med utländsk röst. När engelska helTexter finns ska detta returnera 'en-GB' när engelsk text visas.
+    return 'sv-SE';
   }
 
   function getVoiceForLang(lang) {

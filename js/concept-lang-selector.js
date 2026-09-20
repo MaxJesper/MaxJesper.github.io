@@ -23,7 +23,9 @@
  *    Filformat: [{ "namn": "Rotor", "namn_native": "Rotor" }, ...] – samma
  *    fält som begrepp.json men utan definition/anchor.
  *
- * Montering (i studieguide.html, bredvid den vanliga lang-selector-mount):
+ * Detta är sitens enda språkväljare (den gamla TTS-väljaren är borttagen). Valet gäller på alla sidor.
+ *
+ * Montering (i studieguide.html; på index/begreppslista utan data-termer-base):
  *   <div class="concept-lang-selector-mount"
  *        data-begrepp-base="./data/begrepp"
  *        data-termer-base="./data/termer"></div>
@@ -31,20 +33,44 @@
 (function () {
   var STORAGE_KEY = 'site.concept-lang';
 
-  var LANGUAGES = [
-    { code: 'sv-SE', label: '🇸🇪 Svenska (ingen översättning)' },
-    { code: 'ar-SA', label: '🇸🇦 Arabiska (عربية)' },
-    { code: 'so',    label: '🇸🇴 Somaliska (Soomaali)' },
-    { code: 'fa',    label: '🇮🇷 Persiska/Dari (فارسی)' },
-    { code: 'am-ET', label: '🇪🇹 Amhariska (አማርኛ)' },
-    { code: 'ps-AF', label: '🇦🇫 Pashto (پښتو)' },
-    { code: 'pl-PL', label: '🇵🇱 Polska (Polski)' },
-    { code: 'en-GB', label: '🇬🇧 Engelska (English)' },
-    { code: 'bs',    label: '🇧🇦 Bosniska (Bosanski)' },
-    { code: 'es-ES', label: '🇪🇸 Spanska (Español)' },
-    { code: 'ur-PK', label: '🇵🇰 Urdu (اردو)' },
-    { code: 'rw', label: '🇷🇼 Kinyarwanda (Ikinyarwanda)' }
+  // ── Alternativen i rullistan ───────────────────────────────────────────────
+  // Format (Jesper, 20 sep 2026): svenska först, sedan SAMMA text på språket självt, t.ex.
+  //   "🇸🇦 Arabiska (begrepp och checklistor) – العربية (المفاهيم وقوائم التحقق)"
+  // Engelska: visas utan tillägg när hela siten finns på engelska (ENGELSK_HELA = true).
+  // STOD styr vad som faktiskt är översatt: 'begrepp' nu; sätt till 'begrepp+checklistor'
+  // när checklistorna är översatta – då uppdateras alla etiketter automatiskt.
+  var STOD = 'begrepp';
+  var ENGELSK_HELA = false;
+
+  var STOD_SV = { 'begrepp': 'begrepp', 'begrepp+checklistor': 'begrepp och checklistor' };
+
+  // [kod, flagga, svenskt namn, språkets eget namn, "begrepp" på språket, "begrepp och checklistor" på språket]
+  var SPRAK = [
+    ['ar-SA', '🇸🇦', 'Arabiska',   'العربية',       'المفاهيم',           'المفاهيم وقوائم التحقق'],
+    ['so',    '🇸🇴', 'Somaliska',  'Soomaali',      'Erayada muhiimka ah', 'Erayada muhiimka ah iyo liisaska hubinta'],
+    ['fa',    '🇮🇷', 'Persiska/Dari', 'فارسی',      'مفاهیم',             'مفاهیم و چک‌لیست‌ها'],
+    ['am-ET', '🇪🇹', 'Amhariska',  'አማርኛ',         'ጽንሰ ሐሳቦች',         'ጽንሰ ሐሳቦች እና ማረጋገጫ ዝርዝሮች'],
+    ['ps-AF', '🇦🇫', 'Pashto',     'پښتو',          'مفهومونه',           'مفهومونه او چک لیستونه'],
+    ['pl-PL', '🇵🇱', 'Polska',     'Polski',        'pojęcia',            'pojęcia i listy kontrolne'],
+    ['bs',    '🇧🇦', 'Bosniska',   'Bosanski',      'pojmovi',            'pojmovi i kontrolne liste'],
+    ['es-ES', '🇪🇸', 'Spanska',    'Español',       'conceptos',          'conceptos y listas de verificación'],
+    ['ur-PK', '🇵🇰', 'Urdu',       'اردو',          'تصورات',             'تصورات اور چیک لسٹیں'],
+    ['rw',    '🇷🇼', 'Kinyarwanda', 'Ikinyarwanda', "Amagambo y'ingenzi", "Amagambo y'ingenzi n'urutonde rwo kugenzura"]
   ];
+
+  // Unicode-isolat (FSI/PDI) så att höger-till-vänster-text inte flyttar om resten av raden
+  function iso(t) { return '\u2068' + t + '\u2069'; }
+
+  function buildLanguages() {
+    var out = [{ code: 'sv-SE', label: '🇸🇪 Svenska (ingen översättning)' }];
+    out.push({ code: 'en-GB', label: ENGELSK_HELA ? '🇬🇧 English' : '🇬🇧 English (' + STOD_SV[STOD] + ')' });
+    SPRAK.forEach(function (l) {
+      var native = STOD === 'begrepp' ? l[4] : l[5];
+      out.push({ code: l[0], label: l[1] + ' ' + l[2] + ' (' + STOD_SV[STOD] + ') – ' + iso(l[3] + ' (' + native + ')') });
+    });
+    return out;
+  }
+  var LANGUAGES = buildLanguages();
 
   // Samma prefix-mappning som language-selector.js använder för begrepp.<prefix>.json –
   // duplicerad här (inte importerad) så att denna fil kan hämta termer.<prefix>.json
@@ -72,7 +98,7 @@
     'border-radius:999px;width:fit-content;font-size:0.88rem;margin:0.3rem 0 0.6rem;}',
     '.concept-lang-label{color:#555;font-weight:600;white-space:nowrap;}',
     '.concept-lang-select{border:none;background:transparent;font-family:inherit;',
-    'font-size:0.88rem;cursor:pointer;color:#1a1a2e;max-width:220px;}'
+    'font-size:0.88rem;cursor:pointer;color:#1a1a2e;max-width:min(30rem,78vw);}'
   ].join('');
 
   function injectCSS() {
@@ -152,7 +178,7 @@
       var uid = 'concept-lang-' + Math.random().toString(36).slice(2, 7);
 
       var label = document.createElement('label');
-      label.textContent = '📖 Begrepp översätts till:';
+      label.textContent = '🌐 Språk / Language:';
       label.className = 'concept-lang-label';
       label.htmlFor = uid;
 
