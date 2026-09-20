@@ -42,7 +42,8 @@
     { code: 'en-GB', label: '🇬🇧 Engelska (English)' },
     { code: 'bs',    label: '🇧🇦 Bosniska (Bosanski)' },
     { code: 'es-ES', label: '🇪🇸 Spanska (Español)' },
-    { code: 'ur-PK', label: '🇵🇰 Urdu (اردو)' }
+    { code: 'ur-PK', label: '🇵🇰 Urdu (اردو)' },
+    { code: 'rw', label: '🇷🇼 Kinyarwanda (Ikinyarwanda)' }
   ];
 
   // Samma prefix-mappning som language-selector.js använder för begrepp.<prefix>.json –
@@ -58,7 +59,8 @@
     'pl-PL': 'pl',
     'ps-AF': 'ps',
     'so':    'so',
-    'ur-PK': 'ur'
+    'ur-PK': 'ur',
+    'rw': 'rw'
   };
 
   // Cache: termerCache["<termerBase>|<prefix>"] = redan hämtad JSON-array

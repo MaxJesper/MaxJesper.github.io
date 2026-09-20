@@ -139,7 +139,7 @@
     .deepen::before {
       content: "★ Fördjupning ";
       font-weight: 700;
-      color: #a37a00;
+      color: #7a5c00;
       font-size: 0.8rem;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -180,7 +180,7 @@
     }
 
     .milestone.stub .m-body {
-      color: #777;
+      color: #595959;
       font-style: italic;
     }
 
@@ -213,6 +213,7 @@
       <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar ett begrepp kort och leder dig sedan vidare till övningar, spel eller fördjupning.</p>
       <p><em>Nyckelord</em> står i fet stil i texten och återkommer i checklistan. Stjärnmärkt material (★) är fördjupning för den som vill komma längre.</p>
           <div class="lang-selector-mount"></div>
+          <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
     </section>
 
     <!-- ========== MILSTOLPE 1 ========== -->
@@ -222,7 +223,7 @@
         <span class="m-title">Elektrisk ström – vad rör sig i en ledare</span>
       </summary>
       <div class="m-body">
-        <p>Här ska texten förklara vad en <strong class="term">elektrisk ström</strong> är: ett riktat flöde av laddningar (i metaller: fria elektroner) genom en ledare. Strömstyrka mäts i <strong class="term">ampere (A)</strong>. Begreppen <em>konventionell strömriktning</em> och <em>elektronflöde</em> introduceras.</p>
+        <p>Här ska texten förklara vad en <strong class="term"><span class="concept-inline" data-concept="Elektrisk ström">elektrisk ström</span></strong> är: ett riktat flöde av laddningar (i metaller: fria elektroner) genom en ledare. Strömstyrka mäts i <strong class="term"><span class="concept-inline" data-concept="ampere">ampere (A)</span></strong>. Begreppen <em>konventionell strömriktning</em> och <em>elektronflöde</em> introduceras.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om ström i checklistan</a>
@@ -239,7 +240,7 @@
         <span class="m-title">Spänning – drivkraften i kretsen</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska förklara <strong class="term">spänning (U)</strong> som den energi per laddning som driver fram strömmen. Enheten är <strong class="term">volt (V)</strong>. Exempel: batteri 1,5 V, bilbatteri 12 V, vägguttag 230 V.</p>
+        <p>Texten ska förklara <strong class="term"><span class="concept-inline" data-concept="Spänning">spänning (U)</span></strong> som den energi per laddning som driver fram strömmen. Enheten är <strong class="term"><span class="concept-inline" data-concept="volt">volt (V)</span></strong>. Exempel: batteri 1,5 V, bilbatteri 12 V, vägguttag 230 V.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om spänning i checklistan</a>
@@ -255,7 +256,7 @@
         <span class="m-title">Ledare och isolatorer</span>
       </summary>
       <div class="m-body">
-        <p>Här ska skillnaden mellan <strong class="term">ledare</strong> och <strong class="term">isolator</strong> förklaras. Metaller leder ström eftersom de har fria elektroner. Plast, gummi, glas och torr luft är goda isolatorer. Halvledare nämns kort som en mellanform.</p>
+        <p>Här ska skillnaden mellan <strong class="term"><span class="concept-inline" data-concept="Ledare">ledare</span></strong> och <strong class="term"><span class="concept-inline" data-concept="Isolator">isolator</span></strong> förklaras. Metaller leder ström eftersom de har fria elektroner. Plast, gummi, glas och torr luft är goda isolatorer. Halvledare nämns kort som en mellanform.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om ledare i checklistan</a>
@@ -271,7 +272,7 @@
         <span class="m-title">Resistans och enheten ohm</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska beskriva <strong class="term">resistans (R)</strong> som ledarens motstånd mot strömmen. Enheten är <strong class="term">ohm (Ω)</strong>. Resistansen beror på materialet, ledarens längd, tjocklek och temperatur. Längre och tunnare ledare har högre resistans. Varm metall har högre resistans än kall.</p>
+        <p>Texten ska beskriva <strong class="term"><span class="concept-inline" data-concept="Resistans">resistans (R)</span></strong> som ledarens motstånd mot strömmen. Enheten är <strong class="term"><span class="concept-inline" data-concept="ohm">ohm (Ω)</span></strong>. Resistansen beror på materialet, ledarens längd, tjocklek och temperatur. Längre och tunnare ledare har högre resistans. Varm metall har högre resistans än kall.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om resistans i checklistan</a>
@@ -287,7 +288,7 @@
         <span class="m-title">Ohms lag: U = R · I</span>
       </summary>
       <div class="m-body">
-        <p>Här ska sambandet mellan spänning, ström och resistans införas: <strong class="term">U = R · I</strong>. Formeln skrivs om till <em>I = U / R</em> och <em>R = U / I</em>. Typiska räkneexempel: hitta strömmen genom en 10 Ω-lampa vid 6 V, osv.</p>
+        <p>Här ska sambandet mellan spänning, ström och resistans införas: <strong class="term"><span class="concept-inline" data-concept="Ohms lag">U = R · I</span></strong>. Formeln skrivs om till <em>I = U / R</em> och <em>R = U / I</em>. Typiska räkneexempel: hitta strömmen genom en 10 Ω-lampa vid 6 V, osv.</p>
 
         <figure>
           <a href="./ohms-lag-spel.html">
@@ -313,7 +314,7 @@
         <span class="m-title">Serie- och parallellkoppling av lampor</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska jämföra <strong class="term">seriekoppling</strong> (strömmen går genom lamporna efter varandra, alla slocknar om en går sönder) med <strong class="term">parallellkoppling</strong> (varje lampa har en egen slinga, de andra lyser vidare om en går sönder). Koppling av julgransbelysning och hemmets lampor som exempel.</p>
+        <p>Texten ska jämföra <strong class="term"><span class="concept-inline" data-concept="Seriekoppling">seriekoppling</span></strong> (strömmen går genom lamporna efter varandra, alla slocknar om en går sönder) med <strong class="term"><span class="concept-inline" data-concept="Parallellkoppling">parallellkoppling</span></strong> (varje lampa har en egen slinga, de andra lyser vidare om en går sönder). Koppling av julgransbelysning och hemmets lampor som exempel.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om kopplingar i checklistan</a>
@@ -329,7 +330,7 @@
         <span class="m-title">Serie- och parallellkoppling av batterier</span>
       </summary>
       <div class="m-body">
-        <p>Här ska två batterier kopplas på två sätt. Vid <strong class="term">seriekoppling</strong> adderas spänningarna (två 1,5 V-batterier ger 3 V) men strömmen begränsas som ett batteri. Vid <strong class="term">parallellkoppling</strong> står spänningen kvar (1,5 V) men batterierna räcker dubbelt så länge.</p>
+        <p>Här ska två batterier kopplas på två sätt. Vid <strong class="term"><span class="concept-inline" data-concept="Seriekoppling">seriekoppling</span></strong> adderas spänningarna (två 1,5 V-batterier ger 3 V) men strömmen begränsas som ett batteri. Vid <strong class="term"><span class="concept-inline" data-concept="Parallellkoppling">parallellkoppling</span></strong> står spänningen kvar (1,5 V) men batterierna räcker dubbelt så länge.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om batterier i checklistan</a>
@@ -345,7 +346,7 @@
         <span class="m-title">Kopplingsscheman</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska introducera de vanligaste symbolerna: <strong class="term">batteri</strong>, <strong class="term">lampa</strong>, <strong class="term">strömbrytare</strong>, <strong class="term">motstånd</strong>, <strong class="term">amperemeter</strong> och <strong class="term">voltmeter</strong>. Amperemetern seriekopplas med kretsen, voltmetern parallellkopplas över komponenten man mäter.</p>
+        <p>Texten ska introducera de vanligaste symbolerna: <strong class="term"><span class="concept-inline" data-concept="batteri">batteri</span></strong>, <strong class="term"><span class="concept-inline" data-concept="lampa">lampa</span></strong>, <strong class="term"><span class="concept-inline" data-concept="strömbrytare">strömbrytare</span></strong>, <strong class="term"><span class="concept-inline" data-concept="motstånd">motstånd</span></strong>, <strong class="term"><span class="concept-inline" data-concept="amperemeter">amperemeter</span></strong> och <strong class="term"><span class="concept-inline" data-concept="voltmeter">voltmeter</span></strong>. Amperemetern seriekopplas med kretsen, voltmetern parallellkopplas över komponenten man mäter.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om scheman i checklistan</a>
@@ -361,7 +362,7 @@
         <span class="m-title">Effekt och energi i elektriska apparater</span>
       </summary>
       <div class="m-body">
-        <p>Här ska begreppen <strong class="term">effekt (P = U · I)</strong> i watt och <strong class="term">energi (W = P · t)</strong> i kilowattimmar (kWh) införas. Elräkning som vardagsexempel. Varför en vattenkokare på 2000 W drar mer än en lampa på 40 W.</p>
+        <p>Här ska begreppen <strong class="term"><span class="concept-inline" data-concept="Elektrisk effekt">effekt (P = U · I)</span></strong> i watt och <strong class="term"><span class="concept-inline" data-concept="energi">energi (W = P · t)</span></strong> i <span class="concept-inline" data-concept="Kilowattimme">kilowattimmar</span> (kWh) införas. Elräkning som vardagsexempel. Varför en vattenkokare på 2000 W drar mer än en lampa på 40 W.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om effekt i checklistan</a>
@@ -377,7 +378,7 @@
         <span class="m-title">Elsäkerhet – säkring och jordfelsbrytare</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska förklara varför en <strong class="term">säkring</strong> bryter strömmen när den blir för stor (överhettning, brandrisk) och hur en <strong class="term">jordfelsbrytare</strong> löser ut vid minsta läckström till jord. <strong class="term">Skyddsjord</strong> som tredje ledare förklaras.</p>
+        <p>Texten ska förklara varför en <strong class="term"><span class="concept-inline" data-concept="Säkring">säkring</span></strong> bryter strömmen när den blir för stor (överhettning, brandrisk) och hur en <strong class="term"><span class="concept-inline" data-concept="Jordfelsbrytare">jordfelsbrytare</span></strong> löser ut vid minsta läckström till jord. <strong class="term"><span class="concept-inline" data-concept="skyddsjord">Skyddsjord</span></strong> som tredje ledare förklaras.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om elsäkerhet i checklistan</a>
@@ -393,7 +394,7 @@
         <span class="m-title">Risker och regler i hemmet</span>
       </summary>
       <div class="m-body">
-        <p>Här ska farliga situationer tas upp: el och vatten, skadade sladdar, överbelastade grenuttag och varför inte allt får kopplas in var som helst. <strong class="term">CE-märkning</strong> som kvalitetsstämpel för att apparaten är testad mot EU-krav.</p>
+        <p>Här ska farliga situationer tas upp: el och vatten, skadade sladdar, överbelastade grenuttag och varför inte allt får kopplas in var som helst. <strong class="term"><span class="concept-inline" data-concept="CE-märkning">CE-märkning</span></strong> som kvalitetsstämpel för att apparaten är testad mot EU-krav.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om hemmet i checklistan</a>
@@ -409,7 +410,7 @@
         <span class="m-title">Elektricitet i samhället</span>
       </summary>
       <div class="m-body">
-        <p>Texten ska koppla elförbrukningen till vardagen och miljön: vad använder vi mest el till, skillnaden mellan <strong class="term">effekt</strong> (W vid en given tidpunkt) och <strong class="term">energi</strong> (kWh per år), och varför det är rimligt att fundera över hur elen produceras. Leder vidare till nästa område, <em>Magnetism och induktion</em>, där elproduktionen behandlas.</p>
+        <p>Texten ska koppla elförbrukningen till vardagen och miljön: vad använder vi mest el till, skillnaden mellan <strong class="term"><span class="concept-inline" data-concept="Elektrisk effekt">effekt</span></strong> (W vid en given tidpunkt) och <strong class="term"><span class="concept-inline" data-concept="energi">energi</span></strong> (kWh per år), och varför det är rimligt att fundera över hur elen produceras. Leder vidare till nästa område, <em>Magnetism och induktion</em>, där elproduktionen behandlas.</p>
 
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span> Punkter om samhället i checklistan</a>
@@ -445,5 +446,21 @@
     })();
   </script>
   <script src="/js/language-selector.js"></script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.length) return;
+        window.BEGREPP = data;
+        var savedConceptLang = 'sv-SE';
+        try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+        /* Skriv inte över ett redan valt annat begrepp-språk (undviker kapplöpning mot concept-lang-selector.js). */
+        if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+      })
+      .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+  </script>
 </body>
 </html>

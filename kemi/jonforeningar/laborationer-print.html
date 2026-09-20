@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Laborationsprotokoll – Anjoner (Utskrift)</title>
 
+  <link rel="stylesheet" href="/css/knappar.css" />
   <style>
     /* ── Grundlayout ── */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -145,8 +146,8 @@
 <body>
 
   <!-- Utskriftsknapp (visas bara på skärmen) -->
-  <div class="screen-only">
-    <button class="print-btn" onclick="window.print()">🖨 Skriv ut</button>
+  <div class="screen-only page-actions">
+    <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
   </div>
 
   <!-- ══ SIDA 1 ════════════════════════════════════════════════════════════ -->

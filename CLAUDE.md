@@ -253,9 +253,43 @@ Skillnaden mellan `H₂O` (index = antal atomer i molekylen) och `2 H₂O` (koef
 
 `index` (area-layout + hero med kulmodeller + begrepp + milstolpsnavigering), `studieguide`, `checklista`, `instuderingsfragor` (+print-elev/-larare), `ovningsprov` (+print), `facit` (+print), `begreppslista`, `begreppskort`, `larande-spel`, `ovningsverktyg` (dra-och-släpp), `bygg-molekyl`, `formelark`, `flashcards` (äldre). Färgtema per område via `body.area-<namn>` (atomer: `--area:#be185d; --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8; --area-hover:#fce7f3`).
 
-### WCAG-notering (öppna, delade problem — inte lösta i atomer)
+### WCAG-notering (delade problem – åtgärdade 20 sep 2026)
 
-Axe/kontrastmätning sep 2026 visar tre återkommande fel i **delad** CSS/JS som drabbar alla områden: `.subject-btn` och menyknappen (vit text på `#007bff` = 3,97:1, kräver ≥ 4,5:1 → mörkare blå, t.ex. `#0056b3`), `.print-green` (`#28a745` med vit text = 3,13:1) och `.footer-sub` (`#777` på `#f8f9fb` = 4,25:1). Åtgärdas en gång i `css/style.css` (kräver Jespers OK eftersom det ändrar knapparnas utseende överallt). Dessutom ligger Lyssna-knappen inuti `<summary>` (interaktivt element i interaktivt element).
+`.subject-btn`, menyknappen, `.print-green`, `.footer-sub`, länkfärgen i `main a` och lyssna-knappens fördjupningsfärg är nu rättade i delad CSS (se "Knappar, navigering och utskrift" nedan). **Kvarstår:** Lyssna-knappen ligger inuti `<summary>` (interaktivt element i interaktivt element, axe `nested-interactive`, ca 200 träffar på 12 studieguider). Att lösa det kräver att knappen flyttas ut ur `<summary>` (t.ex. wrapper runt `<details>`), vilket ändrar layouten – gör tillsammans med Jesper.
+
+---
+
+## Knappar, navigering och utskrift – STÅENDE REGEL, sep 2026
+
+Jesper (20 sep 2026): **navigeringsknappar (← Tillbaka …) och utskriftsknappar ska ALLTID ligga överst på sidan** och se likadana ut överallt, och alla färger ska klara WCAG 2.2 AA.
+
+**Placering.** Första elementet i `<main>` är en åtgärdsrad: navigering först, utskrift sist. Fristående sidor (spel, laborationsprotokoll) har raden överst i sidan (eller fast i övre vänstra hörnet, `.print-fab`).
+
+```html
+<div class="page-actions no-print">
+  <a href="./" class="subject-btn">← Tillbaka till området</a>
+  <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>          <!-- valfria fler navigeringsknappar -->
+  <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
+</div>
+```
+
+- En extra upprepning av "Tillbaka" längst ned är tillåten, men den övre är obligatorisk.
+- Utskriftsknappen ska ha skrivarikonen 🖨️ + text (inte enbart färg). Länkar till en utskriftssida (`facit-print.html` m.fl.) har samma klasser med `target="_blank"`.
+- Knappar som är en del av själva övningen (Nästa, Föregående, Byt roll, Visa facit, Visa alla/Fäll ihop) är inte navigering/utskrift och styrs av sidans egen design.
+- `.page-actions`, `.no-print` döljs vid utskrift (regeln finns i `css/knappar.css`). Behållarna `.prov-actions`, `.study-actions`, `.checklist-actions` har samma flex-layout.
+
+**Utseende – en enda källa: `css/knappar.css`** (importeras överst i `css/style.css`; fristående sidor utan style.css länkar `<link rel="stylesheet" href="/css/knappar.css" />`). Ändra färger BARA där.
+
+| Knapp | Klass | Utseende | Kontrast |
+|---|---|---|---|
+| Navigering | `subject-btn` | fylld blå `#0b5cad`, vit text, hover `#084a8c` | 6,9:1 / 8,9:1 |
+| Utskrift | `subject-btn print-green` | kantad mörkgrön `#14532d` på vit, hover fylld | 9,1:1 |
+| Menyknapp (hamburger) | `.hamburger` | samma blå som navigering (`--btn-nav`) | 6,9:1 |
+| Fokus | – | 3 px mörkblå ring `#0b3d75`, 3 px avstånd | – |
+
+Utskrift skiljs alltså från navigering på form (kantad vs fylld) och ikon, inte bara färg (Jesper är rödgrön färgblind). Länkar i löptext: `main a` = `#0b5cad`. Sidfotens undertext `#595959`. Använd aldrig `.print-green`-klassen med egen färg i sidans `<style>`.
+
+**Kontrastmätning hela siten (20 sep 2026):** axe-core `color-contrast` över alla 279 sidor: 1 437 träffar före, ca 140 efter (rester: Lyssna-knappen i `<summary>` och enstaka sidspecifika färger). Gråa textfärger `#777/#888` → `#595959`, `#64748b` → `#475569`, grön `#16a34a` → `#15803d`, gul `#a37a00` → `#7a5c00`. **Nya sidor:** kör axe (color-contrast) innan de räknas som klara.
 
 ---
 
@@ -302,7 +336,21 @@ Datafilen heter `data/begreppskort.json` med formatet:
 
 ---
 
-## Begreppsöversättning vid läsning (inline i löptexten) — PROTOTYP, sep 2026
+## Begreppsöversättning vid läsning (inline i löptexten) — STÅENDE REGEL för ALLA studieguider, sep 2026
+
+**REGEL (Jesper, 20 sep 2026):** Varje studieguide – befintlig och NY – ska ha begreppsöversättning vid läsning. En elev med annat modersmål som förstår en del svenska ska kunna välja språk överst i studieguiden ("📖 Begrepp översätts till:") och sedan klicka på fetmarkerade nyckelord i löptexten och få (a) full popup med översättning + förklaring + länk om ordet är ett kärnbegrepp i `data/begrepp.<prefix>.json`, eller (b) bara den översatta termen om det är en övrig fetmarkerad term (`data/termer.<prefix>.json`). Motivering: helöversättning av alla texter till många språk är orealistiskt – detta ger ändå läsestöd begrepp för begrepp.
+
+**Krav för varje ny studieguide (bocka av innan området är "klart"):**
+1. `<div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>` överst i studieguiden (bredvid den vanliga `lang-selector-mount`).
+2. Scripten `concepts-popup.js`, `language-selector.js`, `concept-lang-selector.js` inlästa (i den ordningen) + begrepp.json-fetch-snutten (se nedan).
+3. ALLA kärnbegrepp får `<span class="concept-inline" data-concept="…">` vid sin första fetmarkering; ALLA övriga `<strong class="term">`-ord som är riktiga vokabulärord (inte beskrivande fraser) wrapas likadant.
+4. `data/begrepp.<prefix>.json` OCH `data/termer.<prefix>.json` för alla **11 språk**: am, ar, bs, en, es, fa, pl, ps, rw, so, ur. Nya begrepp/termer i ett befintligt område ska översättas till alla 11 språk samma session.
+5. Testa med Playwright: klicka på varje `.concept-inline` med ett annat språk valt – popupen ska öppnas och visa `namn_native` (sätt `localStorage['site.concept-lang']` före sidladdning, loopa över `.concept-inline`, kontrollera `#concept-modal.open`).
+6. Uppdatera raden i `_CHECKLISTA_omraden.md`.
+
+**Status 20 sep 2026:** utrullat i ALLA 12 studieguider (atomer, magnetism-induktion, elektricitet, kraft-och-rorelse, universum, arbete-energi-effekt, elektrokemi, periodiska-systemet, syror-och-baser, kol-och-kolforeningar, genetik, liv-och-cellen), 11 språk vardera, testat i 6 språk (alla `.concept-inline` öppnar popup). Översättningarna är AI-genererade – lägre konfidens för amhariska, pashto, somaliska och kinyarwanda; stickprov av modersmålstalare önskas. Några kärnbegrepp saknar fetmarkerad förekomst i texten (atomer: "Fysikalisk förändring"; genetik: "AB0-systemet", "Crossing-over", "Dihybrid korsning") – de kommer med i begreppslistan men har ingen klickbar plats i löptexten förrän texten kompletteras.
+
+**Prototyphistorik:**
 
 Ny, fristående funktion utöver den vanliga begrepp-popupen (som nås via knappar i concept-section på `index.html`/`begreppslista.html`): enskilda ord *inne i studieguidens löptext* går att klicka på och ger en popup, utan att eleven lämnar sidan. Två nivåer, med olika djup, se nästa avsnitt för den lättviktiga nivån:
 
@@ -346,13 +394,13 @@ Dessutom krävs, sist i `<body>` (EFTER `language-selector.js`, annars finns int
 ```
 Kapplöpnings-skyddet i sista scriptet (kolla `site.concept-lang` innan `BEGREPPPopup.update` anropas) är avsiktligt – annars kan den svenska bas-hämtningen skriva över ett redan valt annat begrepp-språk beroende på vilket `fetch`-anrop som svarar sist. Ingen motsvarande svensk bas-fetch behövs för termer (se nedan – på svenska ska termer-klick inte göra något).
 
-**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma steg: mount-div med båda data-attributen, script-inklusion, wrapa kärnbegrepp OCH termer i löptexten (se till att ALLA kärnbegrepp i områdets `data/begrepp.json` får minst en förekomst vid sin första fetmarkering).
+**Spridning:** klar för alla nuvarande studieguider (20 sep 2026) – gäller som regel för alla nya, se kravlistan överst i detta avsnitt.
 
 ### Fetmarkerade termer utan egen definition ("termer")
 
 Jespers slutgiltiga beslut (sep 2026), ordagrant: "de begrepp som är viktiga för förståelsen (de vi redan valt ut) ska vara kvar och de poppar också upp i texten. De fetstilta ord som inte tillhör dessa vill jag ska översättas vid popupen, men behöver inte ha en tillhörande förklaring i övrigt och behöver inte vara med i begreppsordlistan." Alltså: fetstil ska konsekvent betyda "viktigt, klickbart" – men bara kärnbegreppen får full förklaring; övriga fetmarkerade ord får bara en översättning.
 
-**Datastruktur:** `data/termer.json` (svensk bas – finns INTE som fil, behövs inte eftersom svenska aldrig visar någon termer-popup, se nedan) + `data/termer.<prefix>.json` per språk (samma 10 prefix som begrepp: am/ar/bs/en/es/fa/pl/ps/so/ur), format:
+**Datastruktur:** `data/termer.json` (svensk bas – finns INTE som fil, behövs inte eftersom svenska aldrig visar någon termer-popup, se nedan) + `data/termer.<prefix>.json` per språk (samma 11 prefix som begrepp: am/ar/bs/en/es/fa/pl/ps/rw/so/ur), format:
 ```json
 [{ "namn": "rotor", "namn_native": "rotor" }, ...]
 ```
@@ -364,7 +412,7 @@ Bara `namn` (måste matcha `data-concept`-attributets värde exakt) och `namn_na
 
 **Pilot:** `fysik/magnetism-induktion/studieguide.html`, 22 termer identifierade genom att gå igenom samtliga `<strong class="term">`-förekomster och plocka bort generiska/beskrivande fraser (t.ex. "lika poler stöter bort varandra") som inte är egna vokabulärord: magnetiserat, keramiska magneter, neodymmagneter, högerhandsregeln, Lorentzkraften, nordände, sydände, antalet varv, kommutator, rotor, stator, induktionsspänning, inducerad ström, likström, primärspolen, sekundärspolen, uppstegringstransformator, stamnätet, nedstegringstransformatorer, fas, nolla, skyddsjord. Dessutom länkades en extra bar förekomst av "nordpol" (i Kompassen-avsnittet, M3) till det BEFINTLIGA kärnbegreppet `data-concept="Nordpol och sydpol"` istället för att bli en egen termer-post. Översättningarna (särskilt amhariska, pashto och somaliska) är AI-genererade utan inbyggd verifiering – lägre konfidens än för kärnbegreppens redan etablerade begrepp.<prefix>.json-filer; värt att stämma av med modersmålstalare vid tillfälle, men inget som blockerar utrullning eftersom termer-popupen bara är ett litet extra stöd, inte huvudförklaringen.
 
-**Kvarstående:** sprid till alla färdiga och framtida områden (se _CHECKLISTA_omraden.md) – samma mönster: identifiera icke-kärnbegrepp `.term`-ord per område, skapa `data/termer.<prefix>.json`, wrapa i löptexten.
+**Spridning:** klar för alla nuvarande studieguider (20 sep 2026). Mönster för nya områden: identifiera icke-kärnbegrepp `.term`-ord, skapa `data/termer.<prefix>.json` för alla 11 språk, wrapa i löptexten.
 
 ---
 
@@ -412,6 +460,8 @@ Tills filer finns används syntetisk röst (TTS) som standard.
 ---
 
 ## Helöversättning av studieguidetexter + flerspråkig uppläsning (PLANERAD, EJ PÅBÖRJAD)
+
+**Jespers riktning (20 sep 2026):** helöversättning av alla texter till många språk är orealistiskt – språkstödet för de flesta språk är därför begreppsöversättningen vid läsning (se ovan). För **engelska** ska däremot HELA texten översättas när eleven trycker på språkknappen. Själva helöversättningen görs FÖRST när allt är korrekturläst och godkänt av Jesper – inte innan.
 
 I dag täcker flerspråksstödet bara begreppen (`data/begrepp.<prefix>.json`). Själva löptexten i studieguiden finns bara på svenska, och `lyssna.js` läser bara upp svensk text (inspelad mp3 eller annars Web Speech API på `sv-SE`). Detta är en medveten SENARE fas: påbörjas först när ett områdes svenska text är helt slutgranskad och godkänd av Jesper (se `pedagogik.md`). Det här avsnittet dokumenterar HUR det ska göras när den fasen inleds, så inget går förlorat mellan sessioner.
 

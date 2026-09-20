@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stafetten – lärare</title>
+<style>
+  :root{
+    --bg:#AEC9DE; --surface:#FFFFFF; --surface-alt:#EAEFEA;
+    --ink:#16211C; --ink-soft:#4B5850; --border:#C7D0D5;
+    --accent:#2F7D5E; --accent-ink:#FFFFFF;
+    --gold:#A9691A; --gold-line:#C98A2C; --gold-soft:#F7ECD8;
+    --svar-a:#E69F00; --svar-b:#0072B2; --svar-c:#F0E442; --svar-d:#009E73;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  }
+  .stage{ max-width:760px; margin:0 auto; padding:26px 18px 60px; }
+  .dold{ display:none !important; }
+  .yta{ background:var(--surface); border-radius:12px; padding:22px; margin-bottom:18px; }
+  .knapp{ background:var(--accent); color:var(--accent-ink); border:none; border-radius:6px; padding:12px 18px; font:inherit; font-size:1rem; font-weight:700; cursor:pointer; }
+  .knapp:disabled{ opacity:.45; cursor:default; }
+  .knapp.sekundar{ background:var(--surface-alt); color:var(--ink); }
+  .kodvisning{ font-family:ui-monospace,monospace; font-size:3rem; font-weight:800; letter-spacing:.08em; text-align:center; color:var(--accent); margin:10px 0; }
+  .lag-lista{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .lag-chip{ background:var(--surface-alt); border-radius:20px; padding:6px 14px; font-size:.88rem; }
+  .lag-chip .p{ color:var(--ink-soft); font-family:ui-monospace,monospace; margin-left:6px; }
+
+  .fraga-etikett{ font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px; text-align:center; }
+  .stold-etikett{ color:var(--gold); font-weight:700; }
+  .stold-forklaring{ color:var(--gold); font-size:.92rem; font-weight:600; margin:2px 0 14px; text-align:center; }
+  .fraga-text{ font-size:1.35rem; font-weight:700; line-height:1.3; margin:0 0 20px; text-align:center; }
+  .timerspar{ height:8px; background:var(--surface-alt); border-radius:4px; overflow:hidden; margin-bottom:22px; }
+  .timerfyllning{ height:100%; background:var(--accent); border-radius:4px; }
+  .svarsantal{ text-align:center; font-family:ui-monospace,monospace; font-size:1.1rem; margin:10px 0 20px; color:var(--ink-soft); }
+  .svarsantal strong{ color:var(--ink); font-size:1.4rem; }
+  .formnyckel{ display:flex; justify-content:center; gap:18px; margin-top:6px; margin-bottom:20px; }
+  .formnyckel .form{ width:26px; height:26px; }
+  .formnyckel .r0{ background:var(--svar-a); clip-path:polygon(50% 0%, 0% 100%, 100% 100%); }
+  .formnyckel .r1{ background:var(--svar-b); clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  .formnyckel .r2{ background:var(--svar-c); border-radius:50%; }
+  .formnyckel .r3{ background:var(--svar-d); border-radius:3px; }
+  .formnyckel .rad{ display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--ink-soft); }
+  .knapprad{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
+
+  .annons{ display:flex; align-items:center; justify-content:center; padding:60px 0; }
+  .taggig-badge{
+    width:250px; height:140px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg,#C98A2C,var(--gold));
+    clip-path: polygon(50.0% 0.0%, 58.5% 13.0%, 71.7% 5.0%, 73.7% 20.3%, 89.1% 18.8%, 84.2% 33.5%, 98.7% 38.9%, 88.0% 50.0%, 98.7% 61.1%, 84.2% 66.5%, 89.1% 81.2%, 73.7% 79.7%, 71.7% 95.0%, 58.5% 87.0%, 50.0% 100.0%, 41.5% 87.0%, 28.3% 95.0%, 26.3% 79.7%, 10.9% 81.2%, 15.8% 66.5%, 1.3% 61.1%, 12.0% 50.0%, 1.3% 38.9%, 15.8% 33.5%, 10.9% 18.8%, 26.3% 20.3%, 28.3% 5.0%, 41.5% 13.0%);
+    color:#fff; font-weight:800; font-size:1.15rem; text-transform:uppercase; letter-spacing:.03em;
+    animation: blink-badge 0.7s steps(1,end) infinite;
+  }
+  @keyframes blink-badge{ 50%{ opacity:.35; } }
+
+  .tavla{ display:flex; flex-direction:column; gap:14px; margin-top:10px; }
+  .tavla-rad{ display:grid; grid-template-columns:26px 1fr auto; align-items:center; gap:12px; }
+  .tavla-plac{ font-family:ui-monospace,monospace; color:var(--ink-soft); font-size:.9rem; }
+  .tavla-stapelspar{ background:var(--surface-alt); border-radius:5px; overflow:hidden; height:34px; }
+  .tavla-stapel{ height:100%; background:var(--accent); display:flex; align-items:center; padding-left:12px; color:#fff; font-weight:700; font-size:.92rem; border-radius:5px; }
+  .tavla-poang{ font-family:ui-monospace,monospace; font-weight:700; text-align:right; min-width:52px; }
+  .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <div id="vy-skapa" class="yta">
+    <h1 style="margin-top:0">Stafetten — lärarvy</h1>
+    <p>Skapa ett nytt rum. Rumskoden visas stort så eleverna kan skriva in den.</p>
+    <button class="knapp" id="btn-skapa-rum">Skapa rum</button>
+  </div>
+
+  <div id="vy-rum" class="dold">
+    <div class="yta" id="yta-kod">
+      <div class="fraga-etikett">Rumskod</div>
+      <div class="kodvisning" id="kodvisning"></div>
+      <div class="fraga-etikett" style="margin-top:14px">Anslutna lag</div>
+      <div class="lag-lista" id="lag-lista"></div>
+      <div class="knapprad" style="margin-top:18px">
+        <button class="knapp" id="btn-starta-fraga">Starta fråga 1</button>
+      </div>
+    </div>
+
+    <div id="vy-annons" class="yta annons dold"><div class="taggig-badge">Stöldfråga</div></div>
+
+    <div id="vy-fraga" class="yta dold">
+      <p class="fraga-etikett dold" id="fraga-etikett"><span class="stold-etikett">⚡ Stöldfråga</span></p>
+      <p class="stold-forklaring dold" id="stold-forklaring">Snabbast rätt får välja ett lag att stjäla från.</p>
+      <p class="fraga-text" id="fraga-text"></p>
+      <div class="timerspar"><div class="timerfyllning" id="timer-fyllning" style="width:100%"></div></div>
+      <div class="svarsantal"><strong id="antal-svarat">0</strong> av <span id="antal-lag">0</span> lag har svarat</div>
+      <div class="formnyckel" id="formnyckel"></div>
+      <div class="knapprad">
+        <button class="knapp" id="btn-sammanstall">Sammanställ resultat</button>
+      </div>
+    </div>
+
+    <div id="vy-sammanstalld" class="yta dold">
+      <p class="fraga-etikett" style="text-align:center">Sammanställt</p>
+      <p class="fraga-text" style="text-align:center; font-size:1.05rem;" id="sammanstalld-text">Alla lag har sett sitt eget resultat privat.</p>
+      <div class="knapprad">
+        <button class="knapp" id="btn-visa-resultat">Visa resultat för klassen</button>
+      </div>
+    </div>
+
+    <div id="vy-tavla" class="yta dold">
+      <p class="fraga-etikett" style="text-align:center; margin-bottom:18px;">Ställning</p>
+      <div class="tavla" id="tavla-omrade"></div>
+      <div class="knapprad" style="margin-top:22px">
+        <button class="knapp" id="btn-nasta-fraga">Nästa fråga</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API = "https://stafetten.jesper-tordsson.workers.dev";
+const POLL_MS = 1500;
+const $ = sel => document.querySelector(sel);
+
+/* ====== Enkel demo-frågebank – ersätts senare av riktigt innehåll från kol-och-kolföreningar ====== */
+const FRAGOR = [
+  { typ:"vanlig", text:"Vilken av dessa föreningar är en alkohol?",
+    alternativ:[{typ:"text",text:"Etansyra"},{typ:"text",text:"Etanol"},{typ:"text",text:"Etan"},{typ:"text",text:"Eten"}],
+    rattSvar:[1] },
+  { typ:"stold", text:"Vilken av dessa föreningar är en karboxylsyra?",
+    alternativ:[{typ:"text",text:"Metanol"},{typ:"text",text:"Metansyra"},{typ:"text",text:"Metan"},{typ:"text",text:"Metanal"}],
+    rattSvar:[1] },
+  { typ:"forstRatt", text:"Vilken av dessa är en alken?",
+    alternativ:[{typ:"text",text:"Propan"},{typ:"text",text:"Propen"},{typ:"text",text:"Propanol"},{typ:"text",text:"Propansyra"}],
+    rattSvar:[1] },
+  { typ:"vanlig", flerval:true, text:"Vilka av dessa är alkoholer? (Kryssa i alla rätt.)",
+    alternativ:[{typ:"text",text:"Metanol"},{typ:"text",text:"Etan"},{typ:"text",text:"Etanol"},{typ:"text",text:"Propansyra"}],
+    rattSvar:[0,2] },
+  { typ:"stold", text:"Vilken förening skiljer sig från de andra tre?",
+    alternativ:[
+      {typ:"struktur", byggare:"keton", args:[3,2]},
+      {typ:"struktur", byggare:"keton", args:[4,2]},
+      {typ:"struktur", byggare:"keton", args:[5,3]},
+      {typ:"struktur", byggare:"aldehyd", args:[3]},
+    ], rattSvar:[3] },
+  { typ:"vanlig", text:"Vad kallas kolväten där alla kolatomer bara har enkelbindningar?",
+    alternativ:[{typ:"text",text:"Alkaner"},{typ:"text",text:"Alkener"},{typ:"text",text:"Alkyner"},{typ:"text",text:"Alkoholer"}],
+    rattSvar:[0] },
+];
+
+let kod=null, fragaIndex=-1, pollTimer=null;
+
+async function api(path, method, body){
+  const res = await fetch(API + path, {
+    method, headers: body ? {"Content-Type":"application/json"} : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if(!res.ok){ const e = await res.json().catch(()=>({})); throw new Error(e.fel || ("HTTP "+res.status)); }
+  return res.json();
+}
+
+$("#btn-skapa-rum").addEventListener("click", async () => {
+  const r = await api("/rum", "POST");
+  kod = r.kod;
+  $("#kodvisning").textContent = kod;
+  $("#vy-skapa").classList.add("dold");
+  $("#vy-rum").classList.remove("dold");
+  pollRum();
+});
+
+async function pollRum(){
+  try{
+    const state = await api(`/rum/${kod}`, "GET");
+    const antalLag = Object.keys(state.lag).length;
+    $("#lag-lista").innerHTML = Object.entries(state.lag).map(([namn,l])=>
+      `<span class="lag-chip">${namn}<span class="p">${l.poang} p${l.sparatStold?(" · spar "+l.sparatStold):""}${l.turNu?(" · tur: "+l.turNu):""}</span></span>`
+    ).join("") || "<span style=\"color:var(--ink-soft)\">Väntar på lag …</span>";
+
+    if(state.aktuellFraga && !state.aktuellFraga.sammanstalld){
+      $("#antal-lag").textContent = antalLag;
+      const r = await api(`/rum/${kod}/svarsantal/${state.aktuellFraga.id}`, "GET");
+      $("#antal-svarat").textContent = r.antal;
+    }
+    if(state.aktuellFraga && state.aktuellFraga.sammanstalld && !state.aktuellFraga.avslojadForKlassen){
+      visaSammanstalld();
+    }
+  }catch(e){ /* nätverksglapp, försök igen */ }
+  pollTimer = setTimeout(pollRum, POLL_MS);
+}
+
+$("#btn-starta-fraga").addEventListener("click", () => startaFraga(0));
+$("#btn-nasta-fraga").addEventListener("click", () => startaFraga(fragaIndex+1));
+
+async function startaFraga(index){
+  if(index >= FRAGOR.length){ alert("Inga fler demo-frågor — lägg till fler i FRAGOR-listan."); return; }
+  fragaIndex = index;
+  const f = FRAGOR[index];
+  await api(`/rum/${kod}/startaFraga`, "POST", { fragaId: index, ...f });
+
+  visaYta("vy-fraga");
+  if(f.typ === "stold"){
+    visaYta("vy-annons");
+    setTimeout(()=>visaFragevy(f), 4000);
+  } else {
+    visaFragevy(f);
+  }
+}
+
+function visaYta(id){
+  ["yta-kod","vy-annons","vy-fraga","vy-sammanstalld","vy-tavla"].forEach(x=>$("#"+x).classList.toggle("dold", x!==id));
+}
+
+function visaFragevy(f){
+  visaYta("vy-fraga");
+  $("#fraga-etikett").classList.toggle("dold", f.typ==="vanlig");
+  $("#stold-forklaring").classList.toggle("dold", f.typ!=="stold");
+  $("#fraga-text").textContent = f.text;
+  $("#timer-fyllning").style.width = "100%";
+  requestAnimationFrame(()=>{ $("#timer-fyllning").style.transition="width 20s linear"; $("#timer-fyllning").style.width = "0%"; });
+  const raknarklass = ["r0","r1","r2","r3"];
+  $("#formnyckel").innerHTML = f.alternativ.map((_,i)=>
+    `<span class="rad"><span class="form ${raknarklass[i%4]}"></span>${String.fromCharCode(65+i)}</span>`).join("");
+  $("#antal-svarat").textContent = "0";
+}
+
+$("#btn-sammanstall").addEventListener("click", async () => {
+  await api(`/rum/${kod}/sammanstall`, "POST", { fragaId: fragaIndex });
+  visaSammanstalld();
+});
+function visaSammanstalld(){ visaYta("vy-sammanstalld"); }
+
+$("#btn-visa-resultat").addEventListener("click", async () => {
+  const state = await api(`/rum/${kod}/visaResultat`, "POST");
+  renderTavla(state);
+});
+
+function renderTavla(state){
+  visaYta("vy-tavla");
+  const rader = Object.entries(state.lag).map(([namn,l])=>({namn, poang:l.poang}));
+  rader.sort((a,b)=>b.poang-a.poang);
+  const max = Math.max(1, ...rader.map(r=>r.poang), 1);
+  $("#tavla-omrade").innerHTML = rader.map((r,i)=>{
+    const bredd = Math.max(6, Math.round(100 * Math.max(r.poang,0) / max));
+    return `<div class="tavla-rad ${i===0?"ledare":""}"><span class="tavla-plac">${i+1}</span>
+      <div class="tavla-stapelspar"><div class="tavla-stapel" style="width:${bredd}%">${r.namn}</div></div>
+      <span class="tavla-poang">${r.poang}</span></div>`;
+  }).join("");
+}
+</script>
+</body>
+</html>

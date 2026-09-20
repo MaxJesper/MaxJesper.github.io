@@ -43,7 +43,7 @@
  *                                       etikett:"...", riktning:"ta"|"ge"} flyttar poäng
  *                                       från laget gerBricknummer till laget tarBricknummer
  *                                       (kan aldrig göra det givande laget negativt).
- *                                       riktning:"ta" kapas alltid vid högst 40 poäng (så
+ *                                       riktning:"ta" kapas alltid vid högst 150 poäng (så
  *                                       att inget lag kan sänkas helt av ett enda tagande);
  *                                       riktning:"ge" är fritt upp till hela det givande
  *                                       lagets poäng. Vid "ge" loggas ett slumpat, skämtsamt
@@ -144,8 +144,13 @@ async function sparaRum(env, kod, state) {
   });
 }
 
-export default {
-  async fetch(request, env) {
+// hanteraForfragan innehåller all routing/logik. fetch() nedan är bara ett tunt skal som
+// fångar upp ALLA oväntade fel – framför allt att Cloudflare KV:s gratiskvot (1 000
+// sparningar per dygn) är full för dagen. Utan den fångsten kraschar hela svaret UTAN
+// CORS-headers, vilket i webbläsaren visar sig som "Ej uppkopplad"/nätverksfel istället för
+// ett begripligt felmeddelande – och är den troliga förklaringen till både den tidigare
+// "Ej uppkopplad"-incidenten och elevrapporterna om poäng som försvinner/uteblir.
+async function hanteraForfragan(request, env) {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders() });
     }
@@ -398,10 +403,10 @@ export default {
         return json(404, { fel: "okänt lag" });
       }
 
-      // "ta" kapas hårt vid 40 poäng (oavsett vad klienten skickar) så att inget lag kan
+      // "ta" kapas hårt vid 150 poäng (oavsett vad klienten skickar) så att inget lag kan
       // sänkas helt genom att ett annat lag tar en godtycklig stor summa. "ge" är fritt –
       // den enda gränsen är att det givande laget aldrig kan gå under 0 (nästa rad).
-      const TA_MAX = 40;
+      const TA_MAX = 150;
       const GE_MAX = 1000;
       const poangCap = Math.min(riktning === "ta" ? TA_MAX : GE_MAX, onskadPoang);
       const faktiskPoang = Math.max(0, Math.min(poangCap, state.spelare[gerId].poang));
@@ -477,5 +482,24 @@ export default {
     }
 
     return json(404, { fel: "hittades inte" });
+}
+
+export default {
+  async fetch(request, env) {
+    try {
+      return await hanteraForfragan(request, env);
+    } catch (e) {
+      // Fångar bl.a. att Cloudflare KV:s dygnskvot (1 000 sparningar/dygn på gratisplanen)
+      // är full – env.BINGO_KV.put/.get kastar då ett fel som annars kraschar hela svaret
+      // (utan CORS-headers). Nu får klienten istället ett tydligt, begripligt felmeddelande
+      // med rätt CORS-headers, så det syns i spelet vad som faktiskt gick fel.
+      const meddelande = (e && e.message) ? String(e.message) : String(e);
+      const troligenKvotfull = /429|rate.?limit|too many|quota|kv namespace/i.test(meddelande);
+      return json(503, {
+        fel: troligenKvotfull
+          ? "Kunde inte spara/hämta just nu – Cloudflares gratiskvot (1000 sparningar per dygn) är förmodligen full för idag. Prova igen efter midnatt (UTC), eller uppgradera till Workers Paid om ni behöver köra fler lektioner samma dag."
+          : "Ett oväntat fel inträffade på servern, försök igen om en liten stund.",
+      });
+    }
   },
 };

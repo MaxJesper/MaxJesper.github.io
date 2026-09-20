@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Stafetten – gränssnittsskiss v2</title>
+<style>
+  :root{
+    --bg:#AEC9DE; --bg-blue:#AEC9DE; --bg-gray:#D6D9DC;
+    --surface:#FFFFFF; --surface-alt:#EAEFEA;
+    --ink:#16211C; --ink-soft:#4B5850; --border:#C7D0D5;
+    --accent:#2F7D5E; --accent-ink:#FFFFFF;
+    --gold:#A9691A; --gold-line:#C98A2C; --gold-soft:#F7ECD8;
+    --alert:#A23543; --alert-soft:#F7E7E5;
+    --ratt:#2e9e5b; --ratt-l:#e4f6ea;
+
+    /* Okabe–Ito, en färgblindsäker palett (fungerar för de vanligaste typerna,
+       inkl. röd-grön). Formen är fortfarande huvudnyckeln, färgen ett extra stöd. */
+    --svar-a:#E69F00; /* triangel, orange */
+    --svar-b:#0072B2; /* diamant, blå */
+    --svar-c:#F0E442; /* cirkel, gul – mörk text/ikon för kontrast */
+    --svar-d:#009E73; /* kvadrat, blågrön */
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    padding:0; min-height:100vh;
+  }
+  body.tema-gra{ --bg:var(--bg-gray); }
+  body.tema-bla{ --bg:var(--bg-blue); }
+
+  .toolbar{
+    display:flex; gap:8px; flex-wrap:wrap; padding:14px 16px;
+    background:var(--surface); border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:10;
+  }
+  .toolbar button{
+    font:inherit; font-size:.85rem; padding:8px 14px; border-radius:6px;
+    border:1px solid var(--border); background:var(--surface-alt); color:var(--ink);
+    cursor:pointer;
+  }
+  .toolbar button.aktiv{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  .toolbar .skiljelinje{ width:1px; background:var(--border); margin:2px 6px; }
+  .toolbar .bg-vaxlare{ margin-left:auto; display:flex; gap:6px; }
+
+  .stage{ max-width:640px; margin:0 auto; padding:22px 16px 60px; }
+  .skarm{ display:none; }
+  .skarm.visas{ display:block; }
+
+  /* --- banner (statusrad): egen accentfärg, tydligt skild från sidans bakgrund --- */
+  .banner{
+    background:var(--accent); color:var(--accent-ink);
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:14px 18px; border-radius:10px; margin-bottom:18px;
+  }
+  .banner .vanster{ display:flex; align-items:baseline; gap:10px; }
+  .banner .lagnamn{ font-weight:700; font-size:1rem; }
+  .banner .poang{ font-size:1.5rem; font-weight:800; font-variant-numeric:tabular-nums; }
+  .banner .sparat{ font-size:.8rem; opacity:.92; text-align:right; }
+  .banner .sparat strong{ font-size:.95rem; }
+
+  .timerspar{ height:8px; background:var(--surface-alt); border-radius:4px; overflow:hidden; margin-bottom:22px; }
+  .timerfyllning{ height:100%; background:var(--accent); width:62%; border-radius:4px; }
+
+  .fraga-etikett{ font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:6px; }
+  .stold-etikett{ color:var(--gold); font-weight:700; }
+  .fraga-text{ font-size:1.35rem; font-weight:700; line-height:1.3; margin:0 0 24px; }
+
+  /* --- svarsplattor: form + färgblindsäker färg --- */
+  .svarsrutnat{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .svarsruta{
+    display:flex; align-items:center; gap:12px;
+    padding:18px 16px; border-radius:8px; border:none;
+    color:#fff; font:inherit; font-size:1.02rem; font-weight:600; text-align:left;
+    cursor:pointer;
+  }
+  .svarsruta .form{ width:22px; height:22px; flex:none; background:rgba(255,255,255,.95); }
+  .a .form{ clip-path:polygon(50% 0%, 0% 100%, 100% 100%); }
+  .b .form{ clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  .c .form{ border-radius:50%; }
+  .d .form{ border-radius:3px; }
+  .a{ background:var(--svar-a); }
+  .b{ background:var(--svar-b); }
+  .c{ background:var(--svar-c); color:#16211C; }
+  .c .form{ background:rgba(22,33,28,.85); }
+  .d{ background:var(--svar-d); }
+  .svarsruta.vald{ outline:3px solid var(--ink); outline-offset:2px; }
+
+  /* --- ny: stöldfråga-varsel, bara den taggiga blixt-badgen, blinkande, i 4 sekunder --- */
+  .annons{
+    display:flex; align-items:center; justify-content:center;
+    padding:80px 0;
+  }
+  .taggig-badge{
+    width:250px; height:140px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg,#C98A2C,var(--gold));
+    clip-path: polygon(50.0% 0.0%, 58.5% 13.0%, 71.7% 5.0%, 73.7% 20.3%, 89.1% 18.8%, 84.2% 33.5%, 98.7% 38.9%, 88.0% 50.0%, 98.7% 61.1%, 84.2% 66.5%, 89.1% 81.2%, 73.7% 79.7%, 71.7% 95.0%, 58.5% 87.0%, 50.0% 100.0%, 41.5% 87.0%, 28.3% 95.0%, 26.3% 79.7%, 10.9% 81.2%, 15.8% 66.5%, 1.3% 61.1%, 12.0% 50.0%, 1.3% 38.9%, 15.8% 33.5%, 10.9% 18.8%, 26.3% 20.3%, 28.3% 5.0%, 41.5% 13.0%);
+    color:#fff; font-weight:800; font-size:1.15rem; text-transform:uppercase; letter-spacing:.03em;
+    animation: blink-badge 0.7s steps(1,end) infinite;
+  }
+  @keyframes blink-badge{ 50%{ opacity:.35; } }
+  .stold-forklaring{ color:var(--gold); font-size:.92rem; font-weight:600; margin:2px 0 14px; }
+
+  /* --- resultat-toast (privat, egen skärm) --- */
+  .resultat-kort{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:22px; text-align:center;
+  }
+  .resultat-kort.ratt{ border-color:var(--ratt); background:var(--ratt-l); }
+  .resultat-poang{ font-size:2.4rem; font-weight:800; color:var(--ratt); margin:6px 0; }
+  .resultat-text{ color:var(--ink-soft); font-size:.95rem; }
+  .stold-rad{
+    margin-top:14px; padding:12px 14px; background:var(--gold-soft); border:1px solid var(--gold-line);
+    border-radius:6px; font-size:.9rem; text-align:left; display:flex; justify-content:space-between; gap:10px;
+  }
+  .sparat-rad{
+    margin-top:10px; padding:10px 14px; background:var(--surface-alt); border-radius:6px;
+    font-size:.85rem; color:var(--ink-soft); display:flex; justify-content:space-between;
+  }
+  .sparat-rad strong{ color:var(--ink); }
+
+  /* --- lärarskärm: väntar på svar --- */
+  .larare-rubrik{ text-align:center; }
+  .larare-rubrik .fraga-text{ text-align:center; }
+  .svarsantal{ text-align:center; font-family:ui-monospace,monospace; font-size:1.1rem; margin:18px 0 26px; color:var(--ink-soft); }
+  .svarsantal strong{ color:var(--ink); font-size:1.4rem; }
+  .formnyckel{ display:flex; justify-content:center; gap:18px; margin-top:10px; }
+  .formnyckel .form{ width:26px; height:26px; }
+  .formnyckel .a{ background:var(--svar-a); } .formnyckel .b{ background:var(--svar-b); }
+  .formnyckel .c{ background:var(--svar-c); } .formnyckel .d{ background:var(--svar-d); }
+  .formnyckel .rad{ display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--ink-soft); }
+  .formnyckel .a.pil{ clip-path:polygon(50% 0%, 0% 100%, 100% 100%); }
+  .formnyckel .b.pil{ clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+  .formnyckel .c.pil{ border-radius:50%; }
+  .formnyckel .d.pil{ border-radius:3px; }
+
+  /* --- poängtavla --- */
+  .tavla{ display:flex; flex-direction:column; gap:14px; margin-top:10px; }
+  .tavla-rad{ display:grid; grid-template-columns:26px 1fr auto; align-items:center; gap:12px; }
+  .tavla-plac{ font-family:ui-monospace,monospace; color:var(--ink-soft); font-size:.9rem; }
+  .tavla-stapelspar{ background:var(--surface-alt); border-radius:5px; overflow:hidden; height:34px; position:relative; }
+  .tavla-stapel{ height:100%; background:var(--accent); display:flex; align-items:center; padding-left:12px; color:#fff; font-weight:700; font-size:.92rem; border-radius:5px; }
+  .tavla-poang{ font-family:ui-monospace,monospace; font-weight:700; text-align:right; min-width:52px; }
+  .tavla-rad.ledare .tavla-stapel{ background:var(--gold); }
+
+  .yta{ background:var(--surface); border-radius:12px; padding:18px 18px 22px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button data-mal="stold-annons" class="aktiv">1. Elev — stöldfråga varslas</button>
+  <button data-mal="elev-svara">2. Elev — svarar</button>
+  <button data-mal="elev-resultat">3. Elev — privat resultat</button>
+  <button data-mal="larare-vantar">4. Lärare — väntar på svar</button>
+  <button data-mal="larare-tavla">5. Lärare — poängtavla</button>
+  <div class="bg-vaxlare">
+    <button data-bg="bla" class="aktiv-bg">Bakgrund: ljusblå</button>
+    <button data-bg="gra">Bakgrund: grå</button>
+  </div>
+</div>
+
+<div class="stage">
+
+  <!-- 1. ELEV: stöldfråga-varsel – bara badgen blinkar i ca 4 sekunder, inget annat -->
+  <div class="skarm visas" id="stold-annons">
+    <div class="annons">
+      <div class="taggig-badge">Stöldfråga</div>
+    </div>
+  </div>
+
+  <!-- 2. ELEV: svarsskärm -->
+  <div class="skarm" id="elev-svara">
+    <div class="banner">
+      <div class="vanster"><span class="lagnamn">Lag Elektronerna</span><span class="poang">18 p</span></div>
+      <div class="sparat">Sparade stöldpoäng<br><strong>20 p</strong></div>
+    </div>
+    <div class="timerspar"><div class="timerfyllning"></div></div>
+    <p class="fraga-etikett"><span class="stold-etikett">⚡ Stöldfråga</span></p>
+    <p class="stold-forklaring">Snabbast rätt får välja ett lag att stjäla från.</p>
+    <p class="fraga-text">Vilken av dessa föreningar är en alkohol?</p>
+    <div class="svarsrutnat">
+      <button class="svarsruta a"><span class="form"></span>Etansyra</button>
+      <button class="svarsruta b vald"><span class="form"></span>Etanol</button>
+      <button class="svarsruta c"><span class="form"></span>Etan</button>
+      <button class="svarsruta d"><span class="form"></span>Eten</button>
+    </div>
+  </div>
+
+  <!-- 3. ELEV: privat resultat -->
+  <div class="skarm" id="elev-resultat">
+    <div class="resultat-kort ratt">
+      <div class="resultat-text">Ni svarade rätt, och snabbast av alla lag!</div>
+      <div class="resultat-poang">+20</div>
+      <div class="resultat-text">Etanol är rätt svar.</div>
+      <div class="stold-rad">
+        <span>Ni stal av <strong>Lag Protonerna</strong></span>
+        <span>−40 → dem</span>
+      </div>
+    </div>
+    <div class="sparat-rad"><span>Sparade stöldpoäng kvar att använda</span><strong>20 p</strong></div>
+  </div>
+
+  <!-- 4. LÄRARE: väntar på svar -->
+  <div class="skarm" id="larare-vantar">
+    <div class="yta">
+      <div class="larare-rubrik">
+        <p class="fraga-etikett"><span class="stold-etikett">⚡ Stöldfråga</span></p>
+        <p class="stold-forklaring">Snabbast rätt får välja ett lag att stjäla från.</p>
+        <p class="fraga-text">Vilken av dessa föreningar är en alkohol?</p>
+      </div>
+      <div class="timerspar"><div class="timerfyllning" style="width:38%"></div></div>
+      <div class="svarsantal"><strong>3</strong> av 5 lag har svarat</div>
+      <div class="formnyckel">
+        <span class="rad"><span class="form pil a"></span>A</span>
+        <span class="rad"><span class="form pil b"></span>B</span>
+        <span class="rad"><span class="form pil c"></span>C</span>
+        <span class="rad"><span class="form pil d"></span>D</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. LÄRARE: poängtavla -->
+  <div class="skarm" id="larare-tavla">
+    <div class="yta">
+      <p class="fraga-etikett" style="text-align:center; margin-bottom:18px;">Ställning efter fråga 7</p>
+      <div class="tavla">
+        <div class="tavla-rad ledare"><span class="tavla-plac">1</span><div class="tavla-stapelspar"><div class="tavla-stapel" style="width:92%">Lag Elektronerna</div></div><span class="tavla-poang">128</span></div>
+        <div class="tavla-rad"><span class="tavla-plac">2</span><div class="tavla-stapelspar"><div class="tavla-stapel" style="width:78%">Lag Neutronerna</div></div><span class="tavla-poang">109</span></div>
+        <div class="tavla-rad"><span class="tavla-plac">3</span><div class="tavla-stapelspar"><div class="tavla-stapel" style="width:60%">Lag Protonerna</div></div><span class="tavla-poang">84</span></div>
+        <div class="tavla-rad"><span class="tavla-plac">4</span><div class="tavla-stapelspar"><div class="tavla-stapel" style="width:41%">Lag Isotoperna</div></div><span class="tavla-poang">58</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll(".toolbar button[data-mal]").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".toolbar button[data-mal]").forEach(b=>b.classList.remove("aktiv"));
+    btn.classList.add("aktiv");
+    document.querySelectorAll(".skarm").forEach(s=>s.classList.remove("visas"));
+    document.getElementById(btn.dataset.mal).classList.add("visas");
+  });
+});
+document.querySelectorAll(".svarsruta").forEach(b=>{
+  b.addEventListener("click", ()=>{
+    document.querySelectorAll(".svarsruta").forEach(x=>x.classList.remove("vald"));
+    b.classList.add("vald");
+  });
+});
+document.querySelectorAll(".bg-vaxlare button").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".bg-vaxlare button").forEach(b=>b.classList.remove("aktiv-bg"));
+    btn.classList.add("aktiv-bg");
+    document.body.classList.toggle("tema-gra", btn.dataset.bg==="gra");
+    document.body.classList.toggle("tema-bla", btn.dataset.bg==="bla");
+  });
+});
+</script>
+</body>
+</html>

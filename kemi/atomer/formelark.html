@@ -9,7 +9,7 @@
   <style>
     body { --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8; }
     main { max-width: 980px; margin: 0 auto; }
-    .top-row { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; }
+    .top-row { margin-bottom:1rem; }
     .intro-box { background:#fdf2f8; border:1px solid #fbcfe8; border-left:4px solid #9d174d; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1rem; }
     .intro-box p { margin:0.35rem 0; }
     fieldset.ctrl { border:1px solid #fbcfe8; border-radius:10px; padding:0.6rem 1rem 0.9rem; margin:0 0 1rem; background:#fff; }
@@ -92,14 +92,16 @@
   <nav id="side-menu"></nav>
 
   <main>
-    <p class="top-row">
+    <div class="top-row page-actions no-print">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <a href="./studieguide.html#m5" class="subject-btn">Studieguiden: formler</a>
-    </p>
+      <a href="./studieguide.html#m5" class="subject-btn">📖 Studieguiden: formler</a>
+      <button type="button" class="subject-btn print-green" id="print-ark">🖨️ Skriv ut arket</button>
+      <button type="button" class="subject-btn print-green" id="print-facit">🖨️ Skriv ut facit</button>
+    </div>
 
     <section class="intro-box">
       <p><strong>Ett utskrivbart ark som övar skillnaden mellan den nedsänkta siffran och den stora siffran framför.</strong> Eleven tittar på bilder av kulor och skriver formeln under varje bild – till exempel <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> för två vattenmolekyler och <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> för tre syremolekyler. Varje ark slumpas fram och kan återskapas med arknumret, och det finns ett facit.</p>
-      <p>Välj inställningar nedan, kontrollera förhandsvisningen och tryck på <em>Skriv ut arket</em> eller <em>Skriv ut facit</em>.</p>
+      <p>Välj inställningar nedan, kontrollera förhandsvisningen och använd knapparna <em>Skriv ut arket</em> eller <em>Skriv ut facit</em> högst upp på sidan.</p>
     </section>
 
     <fieldset class="ctrl">
@@ -124,8 +126,6 @@
         <label class="chk"><input type="checkbox" id="extra"> Fråga också efter antal atomer totalt</label>
       </div>
       <p style="margin:0.7rem 0 0; display:flex; gap:0.6rem; flex-wrap:wrap;">
-        <button type="button" class="btn primary" id="print-ark">Skriv ut arket</button>
-        <button type="button" class="btn" id="print-facit">Skriv ut facit</button>
         <button type="button" class="btn" id="show-facit" aria-pressed="false">Visa facit på skärmen</button>
       </p>
     </fieldset>

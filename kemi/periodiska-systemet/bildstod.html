@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bildstöd – Periodiska systemet</title>
   <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="/css/knappar.css" />
   <style>
     :root {
       --kortbredd: 4cm;
@@ -256,7 +257,10 @@
 </head>
 <body>
   <main class="sida">
-    <p class="tillbaka-lank"><a href="./index.html">← Tillbaka</a></p>
+    <div class="page-actions no-print">
+      <a href="./index.html" class="subject-btn">← Tillbaka</a>
+      <button id="skriv-ut-knapp" class="subject-btn print-green" type="button">🖨️ Skriv ut</button>
+    </div>
 
     <header class="sidhuvud">
       <h1>Bildstöd</h1>
@@ -284,7 +288,6 @@
       <div class="knappar">
         <button id="uppdatera-knapp" class="knapp" type="button">Visa språk</button>
         <button id="rensa-knapp" class="knapp" type="button">Visa bara svenska</button>
-        <button id="skriv-ut-knapp" class="knapp" type="button">Skriv ut</button>
       </div>
     </section>
 

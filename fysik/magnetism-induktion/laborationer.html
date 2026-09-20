@@ -159,9 +159,11 @@
   <nav id="side-menu"></nav>
 
   <main>
-    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+    <div class="page-actions no-print">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-    </p>
+      <a href="./laborationshandledningar.html?print=1" target="_blank" rel="noopener" class="subject-btn print-green">🖨️ Skriv ut alla handledningar</a>
+      <a href="./laborationshandledningar.html" target="_blank" rel="noopener" class="subject-btn print-green">📄 Förhandsgranska</a>
+    </div>
 
     <section class="page-intro">
       <p>
@@ -260,12 +262,8 @@
     </section>
 
     <section class="print-all">
-      <p><strong>Skriv ut alla laborationshandledningar</strong></p>
+      <p><strong>Skriv ut alla laborationshandledningar</strong> – knapparna finns högst upp på sidan.</p>
       <p>Varje laboration blir ett uppslag: protokoll på framsidan och relevant bild på baksidan.</p>
-      <div class="print-btns">
-        <a href="./laborationshandledningar.html?print=1" target="_blank" rel="noopener" class="print-btn">🖨️ Skriv ut alla handledningar</a>
-        <a href="./laborationshandledningar.html" target="_blank" rel="noopener" class="print-btn secondary">📄 Öppna för förhandsgranskning</a>
-      </div>
       <p class="print-tip">Tips: välj <strong>Skriv ut på båda sidor · Vänd på långa kanten</strong> i skrivardialogen för dubbelsidig utskrift.</p>
     </section>
   </main>

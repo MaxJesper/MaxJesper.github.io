@@ -39,24 +39,13 @@
     .compare-table tr:nth-child(even) td { background: #faf9ff; }
     .compare-table.fillin td { height: 1.4em; }
 
-    .foot-note { font-size: 0.78rem; color: #777; font-style: italic; margin: 0.3rem 0 0.8rem; }
-    .source-line { font-size: 0.78rem; color: #888; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
+    .foot-note { font-size: 0.78rem; color: #595959; font-style: italic; margin: 0.3rem 0 0.8rem; }
+    .source-line { font-size: 0.78rem; color: #595959; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
 
     .print-fab {
       position: fixed; top: 1rem; left: 1rem; z-index: 1000; display: flex; gap: 0.5rem;
     }
-    .print-fab button {
-      background: #6d28d9; color: #fff; border: none; border-radius: 8px; padding: 0.55rem 1rem;
-      font-weight: 600; font-size: 0.95rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      font-family: inherit;
-    }
-    .print-fab button:hover { background: #5b21b6; }
-    .print-fab a {
-      display: inline-flex; align-items: center; padding: 0.55rem 1rem; background: #fff; color: #6d28d9;
-      border: 1px solid #6d28d9; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.95rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: inherit;
-    }
-    .print-fab a:hover { background: #f5f3ff; }
+    .print-fab .subject-btn { margin: 0; }
 
     @page { size: A4; margin: 16mm 16mm 14mm; }
 
@@ -79,8 +68,8 @@
 <body>
 
 <div class="print-fab no-print">
-  <button onclick="window.print()">🖨️ Skriv ut</button>
-  <a href="./studieguide.html#m8">← Tillbaka</a>
+  <a href="./studieguide.html#m8" class="subject-btn">← Tillbaka</a>
+  <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
 </div>
 
 <main>

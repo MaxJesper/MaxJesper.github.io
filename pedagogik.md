@@ -1,6 +1,6 @@
 # Pedagogisk filosofi – NO-plattformen
 
-**Version 0.3** · Uppdaterad 2026-09-15
+**Version 0.4** · Uppdaterad 2026-09-15
 
 Detta dokument beskriver hur vi tänker när vi bygger plattformen. Det är levande – det
 ändras när klassrummet lär oss något nytt. Version 0.1 skrevs av Jesper tillsammans med
@@ -219,6 +219,11 @@ sida per område med öppna, hypotesdrivna frågor som eleven uppmanas gissa på
 tar reda på svaret (t.ex. genom att vrida på en 3D-modell, mäta, eller läsa vidare i
 studieguiden). Poängen är inte att ersätta det sakliga med det utforskande, utan att
 erbjuda båda ingångarna och låta eleven själv välja vilken som passar bäst för stunden.
+Just därför finns inget facit på dessa sidor, i någon form: poängen är att eleven ska
+pröva sitt eget resonemang – genom att själv ta reda på svaret eller diskutera det med
+läraren – inte få det bekräftat eller avfärdat direkt på sidan. Vissa frågor saknar
+dessutom ett känt svar, eller är öppna forskningsfrågor; då är en förnuftig hypotes själva
+poängen, inte en gissning som väntar på att rättas.
 
 **Spelen fyller ännu ett, delvis annat, behov.** Begreppsbingo, Stafetten och liknande är
 inte bara repetition – de sänker tröskeln för två grupper som annars lätt hamnar utanför:

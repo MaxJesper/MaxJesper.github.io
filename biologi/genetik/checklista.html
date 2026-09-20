@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/checklista.css" />
   <style>
-    body.area-genetik{--area:#16a34a;--area-strong:#15803d;--area-soft:#f0fdf4;--area-border:#bbf7d0;}
+    body.area-genetik{--area:#15803d;--area-strong:#15803d;--area-soft:#f0fdf4;--area-border:#bbf7d0;}
   </style>
 </head>
 <body class="area-genetik">
@@ -20,15 +20,18 @@
   <nav id="side-menu"></nav>
 
   <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till Genetik</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button class="subject-btn print-green" type="button" onclick="window.print()">🖨️ Skriv ut</button>
+    </div>
+
     <p class="checklist-intro">
       Använd checklistan för att se vad du behöver kunna i arbetsområdet. Arbeta steg för steg
       och markera det du känner dig säker på. Punkterna följer studieguidens milstolpar.
     </p>
 
     <div class="checklist-actions">
-      <a href="./" class="subject-btn">← Tillbaka till Genetik</a>
-      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
-      <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
       <button id="expand-all-btn" class="checklist-btn" type="button">Visa alla</button>
       <button id="collapse-all-btn" class="checklist-btn" type="button">Fäll ihop alla</button>
     </div>

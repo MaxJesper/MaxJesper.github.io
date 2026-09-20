@@ -94,13 +94,20 @@ utforskande frågorna är två komplementära ingångar, inte konkurrerande peda
   på vad som känns naturligast för området) — aldrig inbakad i studieguiden eller i
   Lärande spel.
 - Varje fråga ber eleven **gissa/hypotisera först**, och pekar sedan mot hur eleven själv
-  kan ta reda på svaret (rotera en 3D-modell, mäta, läsa vidare i studieguiden). Facit ska
-  gå att fälla ut/dölja, aldrig stå omedelbart bredvid frågan.
+  kan ta reda på svaret (rotera en 3D-modell, mäta, läsa vidare i studieguiden, diskutera
+  med läraren).
+- **Inget facit, i någon form** (Jespers uttryckliga beslut, sep 2026) — varken synligt
+  direkt eller bakom en utfällbar "Visa facit"-ruta. Poängen är att eleven ska resonera
+  själv och sedan pröva sitt resonemang genom att antingen ta reda på svaret självständigt
+  eller diskutera det med läraren — ett facit på sidan tar bort just den poängen. Ingen
+  lärarfacit-lista någon annanstans heller i V1.
+- Vissa frågor har inget känt svar än, eller är öppna forskningsfrågor där vetenskapen
+  ännu inte vet säkert. Det är tillåtet och ska i så fall framgå av frågetexten själv
+  (t.ex. "Det här vet forskarna faktiskt inte säkert än, men vad är din bästa hypotes och
+  varför?") — en sådan fråga ska aldrig få en låtsad "rätt" lösning.
 - Frågor som hör ihop med en specifik 3D-modell (se `studieguide.html`, avsnittet
   "Utforska i 3D") får gärna referera till den modellen rakt av, men sidan `vad-tror-du.html`
   är ändå fristående — eleven ska kunna läsa och fundera utan att först ha öppnat 3D-vyn.
-- Ingen lärarfacit-lista på samma sida. Om en lärarversion med resonemang/facit behövs,
-  blir det ett separat lärarkort-tillägg senare, inte en del av V1 av denna sida.
 
 ---
 

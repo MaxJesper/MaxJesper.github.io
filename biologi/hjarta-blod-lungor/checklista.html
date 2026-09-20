@@ -18,19 +18,20 @@
 <nav id="side-menu"></nav>
 
 <main>
+  <div class="page-actions no-print">
+    <a href="./" class="subject-btn">← Tillbaka</a>
+    <button class="subject-btn print-green" type="button" onclick="window.print()">🖨️ Skriv ut</button>
+  </div>
+
   <p class="checklist-intro">
     Kryssa i det du kan. Om något känns osäkert: skriv upp det längst ner.
   </p>
 
   <div class="checklist-actions">
-    <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
     <button class="checklist-btn" type="button" id="expandAllBtn">Visa alla</button>
     <button class="checklist-btn" type="button" id="collapseAllBtn">Fäll ihop</button>
   </div>
 
-  <p>
-    <a href="./" class="subject-btn">← Tillbaka</a>
-  </p>
 
   <div id="checklist-container" aria-live="polite"></div>
 

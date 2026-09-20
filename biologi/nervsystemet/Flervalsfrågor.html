@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Flervalsfrågor – Nervsystemet</title>
+  <link rel="stylesheet" href="/css/knappar.css" />
   <style>
     /* Grundinställningar */
     body { 
@@ -24,18 +25,18 @@
       font-size: 14px;
       transition: background-color 0.2s;
     }
-    #startBtn { background-color: #2196F3; color: white; }
+    #startBtn { background-color: #0b5cad; color: white; }
     #retryButton { background-color: #FFC107; color: black; }
-    #resetButton { background-color: #f44336; color: white; }
+    #resetButton { background-color: #c62828; color: white; }
     #topButtons button:hover { opacity: 0.9; }
 
     /* Rätt/fel markering */
     .correct { 
-      background-color: #4CAF50; 
+      background-color: #2e7d32; 
       color: white; 
     }
     .incorrect { 
-      background-color: #f44336; 
+      background-color: #c62828; 
       color: white; 
     }
 
@@ -92,7 +93,7 @@
 <body>
 
 <div id="topButtons">
-  <button onclick="window.location.href='index.html'">⬅ Tillbaka</button>
+  <a href="index.html" class="subject-btn">← Tillbaka</a>
   <button id="startBtn">Starta testet</button>
   <button id="retryButton">Nytt försök</button>
   <button id="resetButton">Nollställ resultat</button>

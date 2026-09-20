@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vad tror du? – Kol och kolföreningar – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <style>
+    body.area-kol{--area:#7c3aed;--area-strong:#6d28d9;--area-soft:#f5f3ff;--area-border:#ddd6fe;--area-hover:#ede9fe;}
+
+    .page-intro { margin-bottom: 1.5rem; }
+    .page-intro p { margin: 0 0 0.6rem 0; }
+
+    .fraga-card {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem 1.3rem;
+      margin-bottom: 1.4rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .fraga-card h2 { margin: 0 0 0.7rem 0; font-size: 1.15rem; color: var(--area-strong); }
+    .fraga-card .fraga-text { margin: 0 0 1rem 0; line-height: 1.55; }
+    .fraga-card .fraga-text:last-of-type { margin-bottom: 0; }
+
+    .fraga-hjalp {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      margin: 1rem 0;
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+    }
+    .mini3d { display:flex; flex-direction:column; align-items:center; gap:0.3rem; }
+    .mini3d .km-viewerbox { position:relative; overflow:hidden; width:150px; height:140px; border-radius:8px; background:#fff; border:1px solid #eee; }
+    .mini3d .mini3d-label { font-size:0.78rem; color:#5f5f78; }
+    .fraga-hjalp-text { flex: 1 1 220px; font-size: 0.92rem; color: #444; margin: 0; }
+
+    .tips {
+      margin-top: 1rem;
+      background: #f8f9fb;
+      border: 1px solid #d8e0ea;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.92rem;
+      color: #444;
+    }
+    .tips strong { color: var(--area-strong); }
+
+    .kommer-snart {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="area-kol">
+
+  <header class="kemi-header">
+    <h1>Vad tror du?</h1>
+    <p>Kol och kolföreningar</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p>
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+    </p>
+
+    <section class="page-intro">
+      <p>
+        Här är frågor utan givet svar på sidan. Gissa (gör en <strong>hypotes</strong>) och
+        resonera själv innan du tar reda på svaret – på egen hand eller genom att diskutera
+        med din lärare. Det spelar ingen roll om du gissar rätt eller fel, det viktiga är att
+        du funderar själv först.
+      </p>
+      <p>
+        Några av frågorna har inget säkert svar än, ens för forskarna – då räcker det att ha
+        en förnuftig hypotes och kunna förklara hur du tänker.
+      </p>
+    </section>
+
+    <article class="fraga-card">
+      <h2>1. Metan – varför just de vinklarna?</h2>
+      <p class="fraga-text">
+        Studera metan! Varför tror du att kolet binder väteatomerna i just de vinklar du ser om
+        du vrider på molekylen i 3D-fältet? Kan du räkna ut vilken vinkel det blir mellan två
+        väteatomer, om kolatomen representerar vinkelns spets?
+      </p>
+      <p class="fraga-text">
+        Varför binder egentligen kol med fyra bindningar, medan väte bara binder med en enda
+        bindning – och vad är egentligen en bindning mellan två atomer?
+      </p>
+
+      <div class="fraga-hjalp">
+        <div class="mini3d">
+          <div class="km-viewerbox" data-mol="metan"></div>
+          <span class="mini3d-label">Metan – vrid och zooma</span>
+        </div>
+        <p class="fraga-hjalp-text">
+          Dra med musen eller ett finger för att rotera. Skrolla eller nyp med två fingrar för
+          att zooma.
+        </p>
+      </div>
+
+      <p class="tips">
+        <strong>Tips:</strong> använd 3D-modellen till att själv uppskatta eller mäta vinkeln.
+        Läs gärna vidare om atomer och bindningar i studieguiden, eller diskutera ditt
+        resonemang med din lärare.
+      </p>
+    </article>
+
+    <article class="fraga-card">
+      <h2>2. Grafen och diamant – båda är rent kol, men…</h2>
+      <p class="fraga-text">
+        I de allra flesta fall bildar kolatomen fyra bindningar till andra atomer – både i
+        kolväteföreningar och i diamant, som är en av flera former av rent kol.
+      </p>
+      <p class="fraga-text">
+        Studera nu grafen och fundera: varför leder grafen ström, men inte diamant – fast båda
+        bara består av kolatomer? Har grafen någon likhet med metaller?
+        <span class="kommer-snart">Bild på gång</span>
+      </p>
+
+      <p class="tips">
+        <strong>Tips:</strong> fundera på hur många av kolatomens fyra bindningar som faktiskt
+        används mot grannatomer i respektive material, och vad som händer med eventuella
+        elektroner som blir "över". Diskutera gärna ditt resonemang med din lärare.
+      </p>
+    </article>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/3Dmol-min.js"></script>
+  <script>
+  window.addEventListener('load', function() {
+    var MOLS = {"metan": "Metan\n  Claude3D\n\n  5  4  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293    0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n    0.6293   -0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293    0.6293   -0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n   -0.6293   -0.6293    0.6293 H  0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  1  3  1  0\n  1  4  1  0\n  1  5  1  0\nM  END"};
+
+    function createViewerIn(el, key) {
+      if (!MOLS[key] || el.dataset.km3dReady) return;
+      el.dataset.km3dReady = '1';
+      var viewer = $3Dmol.createViewer(el, {backgroundColor: 'white'});
+      viewer.addModel(MOLS[key], 'sdf');
+      viewer.setStyle({}, {stick:{radius:0.12}, sphere:{scale:0.28}});
+      viewer.setStyle({elem:'C'}, {stick:{radius:0.12, color:'#777777'}, sphere:{scale:0.28, color:'#4d4d4d'}});
+      viewer.zoomTo();
+      viewer.render();
+      viewer.zoom(1.15);
+
+      el.addEventListener('wheel', function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        var delta = ev.deltaY;
+        var clamped = Math.max(-25, Math.min(25, delta));
+        var sensitivity = ev.ctrlKey ? 0.0018 : 0.0035;
+        var factor = 1 + clamped * sensitivity;
+        if (factor < 0.94) factor = 0.94;
+        if (factor > 1.06) factor = 1.06;
+        viewer.zoom(factor, 0);
+        viewer.render();
+      }, {capture: true, passive: false});
+    }
+
+    var boxes = document.querySelectorAll('.km-viewerbox[data-mol]');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            createViewerIn(entry.target, entry.target.dataset.mol);
+            io.unobserve(entry.target);
+          }
+        });
+      }, {rootMargin: '200px'});
+      boxes.forEach(function(el) { io.observe(el); });
+    } else {
+      boxes.forEach(function(el) { createViewerIn(el, el.dataset.mol); });
+    }
+  });
+  </script>
+</body>
+</html>

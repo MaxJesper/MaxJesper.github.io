@@ -1,0 +1,123 @@
+/* =====================================================================
+   css/knappar.css – SITENS KNAPPSTANDARD (navigering + utskrift)
+   Laddas automatiskt via @import i css/style.css. Fristående spelsidor som
+   inte använder style.css länkar den direkt:
+   <link rel="stylesheet" href="/css/knappar.css" />
+   ===================================================================== */
+
+/* =================== KNAPPAR – SITENS STANDARD (WCAG 2.2 AA) =================== */
+/* Färger (alla text/bakgrund-par ≥ 4,5:1, mätt sep 2026):
+   navigering  vit på #0b5cad = 6,9:1   (hover #084a8c = 8,9:1)
+   utskrift    #14532d på vit = 9,1:1   (hover: vit på #14532d)
+   Utskrift skiljs från navigering även utan färg: kantad knapp + skrivarikon + text. */
+:root {
+  --btn-nav: #0b5cad;
+  --btn-nav-hover: #084a8c;
+  --btn-print: #14532d;
+  --focus-ring: #0b3d75;
+}
+
+/* Standard för navigering (← Tillbaka …) och åtgärder. Gäller både <a> och <button>. */
+a.subject-btn,
+button.subject-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  margin: 10px 0;
+  padding: 8px 16px;
+  background-color: var(--btn-nav);
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid var(--btn-nav);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+a.subject-btn:hover,
+button.subject-btn:hover {
+  background-color: var(--btn-nav-hover);
+  border-color: var(--btn-nav-hover);
+  text-decoration: none;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+
+a.subject-btn:active,
+button.subject-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Utskriftsknapp: kantad i mörkgrönt med skrivarikon i texten (🖨️ Skriv ut). */
+a.subject-btn.print-green,
+button.subject-btn.print-green {
+  background-color: #fff;
+  color: var(--btn-print);
+  border-color: var(--btn-print);
+  box-shadow: none;
+}
+
+a.subject-btn.print-green:hover,
+button.subject-btn.print-green:hover {
+  background-color: var(--btn-print);
+  border-color: var(--btn-print);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Knapprad högst upp på sidan: navigering först, utskrift efter. */
+.page-actions,
+.prov-actions,
+.study-actions,
+.checklist-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.page-actions {
+  margin: 0 0 14px 0;
+}
+
+.page-actions a.subject-btn,
+.page-actions button.subject-btn {
+  margin: 0;
+}
+
+/* Tydlig fokusram på alla knappar och länkar-som-knappar (mörk ring med luft) */
+a.subject-btn:focus-visible,
+button.subject-btn:focus-visible,
+.controls button:focus-visible,
+.menu-toggle:focus-visible,
+.hamburger:focus-visible,
+.checklist-btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.subject-btn,
+  button.subject-btn {
+    transition: none;
+  }
+  a.subject-btn:hover,
+  button.subject-btn:hover {
+    transform: none;
+  }
+}
+
+/* Knappar och knappraden ska aldrig komma med på papper */
+@media print {
+  .no-print,
+  .page-actions {
+    display: none !important;
+  }
+}

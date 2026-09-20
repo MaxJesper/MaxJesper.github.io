@@ -60,9 +60,9 @@
       'table.ktbl .pos3{background:#ecfdf3;color:#15803d;font-weight:700;width:1.2rem;text-align:center;}',
       'table.ktbl td.cell{white-space:nowrap;text-align:left;}',
       'table.ktbl td.cell .aa{font-weight:600;color:#1f2937;}',
-      'table.ktbl td.cell .cdn{font-size:0.66rem;color:#64748b;letter-spacing:0.5px;margin-left:0.4rem;}',
+      'table.ktbl td.cell .cdn{font-size:0.66rem;color:#334155;letter-spacing:0.5px;margin-left:0.4rem;}',
       'table.ktbl td.start{outline:2px solid #15803d;outline-offset:-2px;}',
-      'table.ktbl td.stop .aa{color:#dc2626;font-weight:700;}',
+      'table.ktbl td.stop .aa{color:#b91c1c;font-weight:700;}',
       'table.ktbl td.be,table.ktbl .pos.be{border-bottom:3px solid #15803d;}',
       '.ktbl-legend{font-size:0.82rem;color:#555;margin-top:0.5rem;}'
     ].join('\n');

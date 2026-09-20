@@ -19,12 +19,16 @@
 <nav id="side-menu"></nav>
 
 <main>
+  <div class="page-actions no-print">
+    <a href="/fysik/materia/" class="subject-btn">← Tillbaka till Materia</a>
+    <button class="subject-btn print-green" type="button" onclick="window.print()">🖨️ Skriv ut</button>
+  </div>
+
   <p class="checklist-intro">
     Kryssa i det du kan. Om något känns osäkert: skriv upp det längst ner.
   </p>
 
   <div class="checklist-actions">
-    <button class="checklist-btn" type="button" onclick="window.print()">Skriv ut</button>
     <button class="checklist-btn" type="button" id="expandAllBtn">Visa alla</button>
     <button class="checklist-btn" type="button" id="collapseAllBtn">Fäll ihop</button>
   </div>
@@ -41,9 +45,6 @@
     </div>
   </section>
 
-  <p>
-    <a href="/fysik/materia/" class="subject-btn">← Tillbaka till Materia</a>
-  </p>
 </main>
 
 <script src="/js/menu.js"></script>

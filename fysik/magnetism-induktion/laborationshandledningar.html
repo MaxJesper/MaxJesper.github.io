@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laborationshandledningar – Magnetism och induktion</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/knappar.css" />
 <style>
   :root {
     --ink: #1a1a2e;
     --ink-muted: #4a4a6a;
-    --ink-light: #8a8aaa;
+    --ink-light: #5a5a80;
     --rule: #c8c8e0;
     --accent: #2e4a8a;
     --accent-light: #e8edf8;
-    --accent-mid: #6a85c0;
+    --accent-mid: #4a63a0;
     --bg: #faf9f6;
     --paper: #ffffff;
     --line-h: 10mm;
@@ -423,40 +424,8 @@
     gap: 0.5rem;
   }
 
-  .print-fab button {
-    background: #2e4a8a;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.55rem 1rem;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .print-fab button:hover {
-    background: #253d73;
-  }
-
-  .print-fab a {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.55rem 1rem;
-    background: #fff;
-    color: #2e4a8a;
-    border: 1px solid #2e4a8a;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .print-fab a:hover {
-    background: #eef2fa;
+  .print-fab .subject-btn {
+    margin: 0;
   }
 
   /* ===== Skärm-filtrering: när body[data-print-only="lab-N"] visas endast den laborationen ===== */
@@ -600,8 +569,8 @@
 
 <!-- Flytande utskriftsknapp (övre vänstra hörnet, syns ej vid utskrift) -->
 <div class="print-fab no-print">
-  <button id="print-btn" onclick="window.print()" title="Skriv ut">🖨️ Skriv ut</button>
-  <a href="./laborationer.html" title="Tillbaka till laborationslistan">← Tillbaka</a>
+  <a href="./laborationer.html" class="subject-btn" title="Tillbaka till laborationslistan">← Tillbaka</a>
+  <button id="print-btn" type="button" class="subject-btn print-green" onclick="window.print()" title="Skriv ut">🖨️ Skriv ut</button>
 </div>
 
 <!-- Infobanner som syns på skärmen när man filtrerar till en enskild laboration -->
@@ -1276,7 +1245,7 @@
   <div class="back-hint">Denna sida skrivs ut på baksidan av laboration 6 (dubbelsidig utskrift).</div>
 </div>
 
-<div class="no-print" style="text-align:center; padding: 2rem; color: #8a8aaa; font-size: 0.85rem;">
+<div class="no-print" style="text-align:center; padding: 2rem; color: #5a5a80; font-size: 0.85rem;">
   <p><strong>Utskrift:</strong> Använd dubbelsidig utskrift (<em>Skriv ut på båda sidor · Vänd på långa kanten</em>) i skrivardialogen. Varje laboration blir då ett uppslag – protokoll på framsidan, bild och slutsats på baksidan.</p>
   <p>Använd knappen uppe i vänstra hörnet eller Ctrl+P / Cmd+P.</p>
 </div>

@@ -22,14 +22,7 @@
   margin-bottom: 14px;
 }
 
-/* Gröna utskriftsknappar (stilrent, utan !important) */
-.study-actions a.subject-btn.print-green {
-  background-color: #28a745;
-}
-
-.study-actions a.subject-btn.print-green:hover {
-  background-color: #1e7e34;
-}
+/* Utskriftsknappar (.print-green) och knapprad: se css/style.css (sitens knappstandard) */
 
 /* =================== GRUPPER =================== */
 
@@ -253,14 +246,6 @@
   .study-youranswer {
     display: none !important;
   }
-}
-
-main .study-actions a.subject-btn.print-green {
-  background-color: #28a745;
-}
-
-main .study-actions a.subject-btn.print-green:hover {
-  background-color: #1e7e34;
 }
 
 .print-item {

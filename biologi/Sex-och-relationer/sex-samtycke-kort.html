@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Sex, samtycke och relationer – Kort</title>
-<style>
+<link rel="stylesheet" href="/css/knappar.css" />
+  <style>
 * {
   box-sizing: border-box;
   margin: 0;
@@ -124,8 +125,8 @@ body { font-family: Georgia, serif; background: #e8e8e8; }
   justify-content: space-between;
   padding: 4mm 3mm;
 }
-.back.p { background: #D04870; }
-.back.b { background: #1E78BC; }
+.back.p { background: #B83D63; }
+.back.b { background: #1A6AA8; }
 
 /* Övre etikett + underrubrik */
 .back-top { display: flex; flex-direction: column; align-items: center; gap: 2mm; }
@@ -175,8 +176,10 @@ body { font-family: Georgia, serif; background: #e8e8e8; }
   <h1>Sex, samtycke och relationer – Spelkort</h1>
   <p>Skriv ut liggande A4 · Klipp längs kanterna · Vik vid den streckade linjen · Klistra ihop</p>
   <p style="color:#b00; font-size:13px; margin-top:6px;">⚠️ Viktigt: Slå på <strong>Bakgrundsgrafik</strong> i utskriftsinställningarna för att få färgerna.</p>
-  <button class="print-btn" onclick="window.print()">🖨️ Skriv ut</button>
-  <a href="./larande-spel.html" style="display:inline-block; margin-left:10px; padding:10px 22px; font-size:15px; background:#e0e0e0; color:#333; border-radius:8px; text-decoration:none;">← Tillbaka</a>
+  <div class="page-actions">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka</a>
+    <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
+  </div>
 </div>
 
 <script>

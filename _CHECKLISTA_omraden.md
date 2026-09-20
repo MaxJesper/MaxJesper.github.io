@@ -60,7 +60,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ### Nya grunder byggda (behöver kompletteras)
 
-- **kemi/atomer (åk7, sep 2026):** komplett standarduppsättning (13/13 HTML, 5/5 data) + `ovningsverktyg` (11 dra-och-släpp-sorteringar, 7 balanseringar, Räknemaskinen), `bygg-molekyl` (8 uppgifter), `formelark` (utskrivbart arbetsblad med facit: stor vs nedsänkt siffra), studieguide med 6 milstolpar, bred bildkolumn och roterbar 3D i molekylkorten. Inspirerat av (aldrig kopierat från) Gleerups Titano kemi och Enkel NO. Återstår: översättningar (10 språk, `data/begrepp.<prefix>.json`), begreppsbingo, ev. korsord, inline-översättning (`concept-inline`), lyssna-ljudfiler (TTS används), mp3.
+- **kemi/atomer (åk7, sep 2026):** komplett standarduppsättning (13/13 HTML, 5/5 data) + `ovningsverktyg` (11 dra-och-släpp-sorteringar, 7 balanseringar, Räknemaskinen), `bygg-molekyl` (8 uppgifter), `formelark` (utskrivbart arbetsblad med facit: stor vs nedsänkt siffra), studieguide med 6 milstolpar, bred bildkolumn och roterbar 3D i molekylkorten. Inspirerat av (aldrig kopierat från) Gleerups Titano kemi och Enkel NO. Översättningar av begreppslistan (11 språk, `data/begrepp.<prefix>.json`) och inline-översättning (`concept-inline`, termer) klara 20 sep 2026. Återstår: begreppsbingo, ev. korsord, lyssna-ljudfiler (TTS används), mp3.
 
 - **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar, uppdaterad med valensregel/nanorör-grafen/metanolförgiftning), begrepp (28), index (med översiktsbilder), lärande spel, checklista, instuderingsfrågor (+print elev/lärare), övningsprov+facit (+print), begreppslista klara. Återstår: begreppskort (görs ev. via lärande-spelet istället för egen sida, se mönster i CLAUDE.md), översättningar. Källa: TEFY + Gleerups + Enkel Kemi (uppladdade PDF:er).
 
@@ -78,8 +78,9 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 | Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TTS-uppläsning + begreppsöversättning (10 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? |
-| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå) | ✗ | ✗ | ✓ (pilot) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? |
+| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ |
+| Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) |
 | Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ? | – | – | ✓ | ✓ (live i molekylkorten) | – | – |
 | Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ |

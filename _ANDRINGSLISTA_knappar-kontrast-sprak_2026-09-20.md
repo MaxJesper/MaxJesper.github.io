@@ -1,0 +1,281 @@
+# Ändringslista – knappar, kontrast och språkstöd (20 sep 2026)
+
+Lista över alla sidor som ändrats, så att du kan titta på dem och se att allt ser ok ut. Tre sorters ändringar:
+
+1. **Knappar överst** – navigerings- och utskriftsknappar ligger nu överst på sidan i en gemensam åtgärdsrad (`.page-actions`), med gemensam stil från `css/knappar.css`. Tillbaka/navigering är blå fylld knapp, utskrift är grön kontur med 🖨️-ikon (alltså inte bara färg – du är röd-grön-färgblind).
+2. **Endast färg/kontrast** – texter, länkar och ramar justerade så att kontrasten uppfyller WCAG AA (minst 4,5:1). Utseendet ska vara i stort sett detsamma, bara lite mörkare/tydligare nyanser.
+3. **Språkstöd** – klick på fetmarkerade nyckelord i studieguiden ger översättning/förklaring på valt språk (11 språk). Ny språkväljare 📖 överst i studieguiden.
+
+## 1. Knappar överst (+ kontrast) – 44 sidor
+
+**biologi/Sex-och-relationer**
+
+- `biologi/Sex-och-relationer/larande-spel.html`
+- `biologi/Sex-och-relationer/menstruationscykeln.html`
+- `biologi/Sex-och-relationer/sex-samtycke-kort.html`
+
+**biologi/evolution**
+
+- `biologi/evolution/Fanerozoikum-lar-mer.html`
+- `biologi/evolution/nardada_regler.html`
+
+**biologi/genetik**
+
+- `biologi/genetik/checklista.html`
+- `biologi/genetik/korsningsscheman.html`
+
+**biologi/hjarta-blod-lungor**
+
+- `biologi/hjarta-blod-lungor/checklista.html`
+- `biologi/hjarta-blod-lungor/korsord.html`
+
+**biologi/liv-och-cellen**
+
+- `biologi/liv-och-cellen/checklista.html`
+
+**biologi/nervsystemet**
+
+- `biologi/nervsystemet/Flervalsfrågor.html`
+
+**fysik/arbete-energi-effekt**
+
+- `fysik/arbete-energi-effekt/checklista.html`
+- `fysik/arbete-energi-effekt/for-lararen.html`
+- `fysik/arbete-energi-effekt/larande-spel.html`
+
+**fysik/elektricitet**
+
+- `fysik/elektricitet/checklista.html`
+- `fysik/elektricitet/larande-spel.html`
+
+**fysik/kraft-och-rorelse**
+
+- `fysik/kraft-och-rorelse/checklista.html`
+- `fysik/kraft-och-rorelse/gungbrada.html`
+- `fysik/kraft-och-rorelse/korsord.html`
+- `fysik/kraft-och-rorelse/larande-spel.html`
+- `fysik/kraft-och-rorelse/pickup-simulering.html`
+
+**fysik/ljus**
+
+- `fysik/ljus/flashcards-ljus.html`
+
+**fysik/magnetism-induktion**
+
+- `fysik/magnetism-induktion/checklista.html`
+- `fysik/magnetism-induktion/korsord.html`
+- `fysik/magnetism-induktion/laborationer.html`
+- `fysik/magnetism-induktion/laborationshandledningar.html`
+- `fysik/magnetism-induktion/larande-spel.html`
+
+**fysik/materia**
+
+- `fysik/materia/checklista.html`
+
+**fysik/universum**
+
+- `fysik/universum/checklista.html`
+- `fysik/universum/larande-spel.html`
+
+**kemi/atomer**
+
+- `kemi/atomer/checklista.html`
+- `kemi/atomer/formelark.html`
+
+**kemi/elektrokemi**
+
+- `kemi/elektrokemi/checklista.html`
+- `kemi/elektrokemi/korsord.html`
+
+**kemi/jonforeningar**
+
+- `kemi/jonforeningar/laborationer-print.html`
+- `kemi/jonforeningar/laborationer.html`
+
+**kemi/kol-och-kolforeningar**
+
+- `kemi/kol-och-kolforeningar/alkoholdemo.html`
+- `kemi/kol-och-kolforeningar/checklista.html`
+- `kemi/kol-och-kolforeningar/esterlab.html`
+
+**kemi/periodiska-systemet**
+
+- `kemi/periodiska-systemet/bildstod.html`
+- `kemi/periodiska-systemet/checklista.html`
+- `kemi/periodiska-systemet/korsord.html`
+- `kemi/periodiska-systemet/trana-med-ai.html`
+
+**kemi/syror-och-baser**
+
+- `kemi/syror-och-baser/checklista.html`
+
+## 2. Endast färg/kontrast – 49 sidor
+
+**(rot)**
+
+- `Status-NOsida.html`
+
+**biologi/ekologi**
+
+- `biologi/ekologi/index.html`
+
+**biologi/evolution**
+
+- `biologi/evolution/Fanerozoikum.html`
+
+**biologi/genetik**
+
+- `biologi/genetik/begrepp-bingo.html`
+- `biologi/genetik/begreppskort.html`
+- `biologi/genetik/begreppslista.html`
+- `biologi/genetik/facit.html`
+- `biologi/genetik/index.html`
+- `biologi/genetik/instuderingsfragor.html`
+- `biologi/genetik/klona-genen.html`
+- `biologi/genetik/kromosomer-i-siffror.html`
+- `biologi/genetik/larande-spel.html`
+- `biologi/genetik/laxor.html`
+- `biologi/genetik/ovningsprov.html`
+- `biologi/genetik/tankekarta.html`
+
+**biologi/hjarta-blod-lungor**
+
+- `biologi/hjarta-blod-lungor/bygg-blodet.html`
+
+**biologi/immunologi**
+
+- `biologi/immunologi/index.html`
+
+**biologi/infektionssjukdomar**
+
+- `biologi/infektionssjukdomar/index.html`
+
+**biologi/liv-och-cellen**
+
+- `biologi/liv-och-cellen/begrepp-bingo-lag.html`
+- `biologi/liv-och-cellen/begrepp-bingo.html`
+- `biologi/liv-och-cellen/begreppslista.html`
+- `biologi/liv-och-cellen/livet-och-cellen.html`
+
+**biologi/matspjalkningen**
+
+- `biologi/matspjalkningen/index.html`
+
+**biologi/sinnena**
+
+- `biologi/sinnena/index.html`
+
+**fysik/arbete-energi-effekt**
+
+- `fysik/arbete-energi-effekt/begreppslista.html`
+- `fysik/arbete-energi-effekt/raknekort.html`
+- `fysik/arbete-energi-effekt/storheter-spel.html`
+
+**fysik/atomfysik**
+
+- `fysik/atomfysik/index.html`
+
+**fysik/elektricitet**
+
+- `fysik/elektricitet/begreppslista.html`
+- `fysik/elektricitet/ohms-lag-spel.html`
+- `fysik/elektricitet/raknekort.html`
+
+**fysik/kraft-och-rorelse**
+
+- `fysik/kraft-och-rorelse/begreppslista.html`
+- `fysik/kraft-och-rorelse/fragespel.html`
+
+**fysik/magnetism-induktion**
+
+- `fysik/magnetism-induktion/begreppslista.html`
+- `fysik/magnetism-induktion/raknekort.html`
+- `fysik/magnetism-induktion/studieguide.html`
+
+**fysik/universum**
+
+- `fysik/universum/begreppslista.html`
+- `fysik/universum/stjarnbilder-spel.html`
+
+**kemi/atomer**
+
+- `kemi/atomer/begreppslista.html`
+
+**kemi/elektrokemi**
+
+- `kemi/elektrokemi/adel-eller-oadel.html`
+- `kemi/elektrokemi/begreppslista.html`
+
+**kemi/jonforeningar**
+
+- `kemi/jonforeningar/index.html`
+
+**kemi/kol-och-kolforeningar**
+
+- `kemi/kol-och-kolforeningar/begreppslista.html`
+- `kemi/kol-och-kolforeningar/ovningsverktyg.html`
+
+**kemi/matens-kemi**
+
+- `kemi/matens-kemi/index.html`
+
+**kemi/periodiska-systemet**
+
+- `kemi/periodiska-systemet/begreppslista.html`
+
+**kemi/separationsprocesser**
+
+- `kemi/separationsprocesser/index.html`
+
+**kemi/syror-och-baser**
+
+- `kemi/syror-och-baser/begreppslista.html`
+- `kemi/syror-och-baser/syra-eller-bas.html`
+
+## 3. Språkstöd i studieguiden – 11 sidor (+ färgjustering av Lyssna-knappen)
+
+- `biologi/genetik/studieguide.html` – språkväljare, klickbara nyckelord
+- `biologi/liv-och-cellen/studieguide.html` – språkväljare, klickbara nyckelord
+- `fysik/arbete-energi-effekt/studieguide.html` – språkväljare, klickbara nyckelord
+- `fysik/elektricitet/studieguide.html` – språkväljare, klickbara nyckelord
+- `fysik/kraft-och-rorelse/studieguide.html` – språkväljare, klickbara nyckelord
+- `fysik/universum/studieguide.html` – språkväljare, klickbara nyckelord
+- `kemi/atomer/studieguide.html` – språkväljare, klickbara nyckelord
+- `kemi/elektrokemi/studieguide.html` – språkväljare, klickbara nyckelord
+- `kemi/kol-och-kolforeningar/studieguide.html` – språkväljare, klickbara nyckelord
+- `kemi/periodiska-systemet/studieguide.html` – språkväljare, klickbara nyckelord
+- `kemi/syror-och-baser/studieguide.html` – språkväljare, klickbara nyckelord
+
+Nya datafiler: `data/termer.<språk>.json` för alla 12 områden (11 språk vardera) + `kemi/atomer/data/begrepp.<språk>.json` (11 st). Språk: am, ar, bs, en, es, fa, pl, ps, rw (kinyarwanda), so, ur.
+
+## 4. Gemensamma filer (påverkar hela siten)
+
+- `css/knappar.css (NY)`
+- `css/style.css`
+- `css/checklista.css`
+- `css/instudering.css`
+- `css/prov.css`
+- `js/concept-lang-selector.js (kinyarwanda tillagt)`
+- `fysik/elektricitet/data/begrepp.es.json (nyckelfel rättat)`
+- `fysik/universum/data/begrepp.so.json (nyckelfel rättat)`
+- `CLAUDE.md (nya stående regler)`
+- `_CHECKLISTA_omraden.md (matris uppdaterad)`
+
+## 5. Övriga kontrasträttningar (upptäcktes i sista provkörningen)
+
+- `js/kodontabell.js` – kodontabellens grå kodonbokstäver och röda "Stopp" mörkare (påverkar alla sidor med kodontabell, t.ex. genetik-studieguiden)
+- `fysik/kraft-och-rorelse/fragespel.html` – framstegsrutorna för ännu ej påbörjade ämnen: ljusgrå ruta med mörk text i stället för genomskinlig färg (aktiv ruta är oförändrad)
+- `biologi/liv-och-cellen/begreppslista.html` – tabellhuvudet mörkare grön
+- `biologi/liv-och-cellen/index.html` – vald rollknapp (Elev/Lärare) mörkare grön
+- `Status-NOsida.html` – grå siffra i "Ej påbörjad"-rutan mörkare
+- `kemi/kol-och-kolforeningar/vad-tror-du.html` – bildtext under 3D-molekylen mörkare
+- `biologi/hjarta-blod-lungor/bygg-blodet.html` – plasma-fältet och Blodplättar-rubriken mörkare orange
+- `biologi/nervsystemet/Flervalsfrågor.html` – Starta-, Nollställ-, rätt- och fel-färger mörkare (blå/röd/grön med vit text)
+
+## Kvar / att känna till
+
+- **Lyssna-knappen** ligger inuti studieguidens `<summary>` (nästlad interaktiv kontroll – axe-varning `nested-interactive`). Kan inte flyttas enkelt utan att bygga om detaljstrukturen; ligger kvar som känt problem.
+- Kontrastprovet (axe, alla 279 sidor) gav före arbetet 1 437 träffar på 226 sidor och efter arbetet 0 (de sista 80 – bl.a. kodontabellens grå kodonbokstäver i genetik, Flervalsfrågor-knapparna, bygg-blodet, liv-och-cellen-tabellhuvud – åtgärdades också). Se avsnitt 5 ovan.
+- **Backup-sidor** (`index_backup_*.html`, `backupfile.html`, `backupindex.html`) rördes inte.
+- **Översättningarna** är AI-genererade. Extra osäkra: amhariska, pashto, somaliska, kinyarwanda. Bra att låta någon modersmålstalare titta på stickprov innan siten släpps.
+- Några kärnbegrepp saknar fetmarkerad förekomst i texten (atomer: *Fysikalisk förändring*; genetik: *AB0-systemet*, *Crossing-over*, *Dihybrid korsning*) – de finns i begreppslistan men går inte att klicka på i löptexten förrän texten kompletteras.
