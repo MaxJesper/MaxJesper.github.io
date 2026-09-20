@@ -284,3 +284,4 @@ Nya datafiler: `data/termer.<språk>.json` för alla 12 områden (11 språk vard
 
 - `kemi/atomer/formelark.html` – går nu att skriva i på skärmen (namn, datum, formler med automatiskt nedsänkta siffror, antal atomer); utskrift av 15 bilder fixad (bilderna försvann); förklaring av arknumret.
 - Ritfrågor i övningsprov: fritt ritutrymme i stället för skrivlinjer vid utskrift – `js/render-prov.js`, `css/prov.css`, `kemi/atomer/data/ovningsprov.json` (fråga 5 och 11), `biologi/hjarta-blod-lungor/data/ovningsprov.json` (fråga 6), `kemi/periodiska-systemet/data/ovningsprov.json` (fråga 1).
+- Formler digitalt i kemi-övningsprov (fråga 14 m.fl.): NY `js/kemi-inmatning.js` + `js/render-prov.js` – nedsänkta siffror, pil och laddning medan eleven skriver, plus tecken-knappar. Gäller alla kemi-övningsprov (atomer, elektrokemi, kol-och-kolforeningar, periodiska-systemet, syror-och-baser).

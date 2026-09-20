@@ -47,6 +47,7 @@ function renderProv({ jsonPath, mountId, mode = "exam" }) {
 
       if (mode === "exam") {
         hydrateAndAutosaveTextareas(mount);
+        enableKemiInput(mount);
         hydrateAndAutosaveMatchInputs(mount);
       }
     })
@@ -221,6 +222,17 @@ function renderQuestion({ qObj, si, qi, qNumber, mode, storageKeyBase }) {
 /* =========================================================
    Autosave: textareas
    ========================================================= */
+// Kemiområden: eleven ska kunna skriva formler digitalt (nedsänkta siffror, pil, laddning) – se js/kemi-inmatning.js
+function enableKemiInput(root) {
+  if (!/(^|\/)kemi\//.test(location.pathname)) return;
+  const run = () => root.querySelectorAll(".prov-answer").forEach(el => window.KemiInput.enhance(el));
+  if (window.KemiInput) { run(); return; }
+  const sc = document.createElement("script");
+  sc.src = "/js/kemi-inmatning.js";
+  sc.onload = run;
+  document.head.appendChild(sc);
+}
+
 function hydrateAndAutosaveTextareas(root) {
   const areas = Array.from(root.querySelectorAll(".prov-answer"));
   areas.forEach(area => {
