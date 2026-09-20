@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partikelsimulatorn – Separationsprocesser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-separation { --area:#0e7490; --area-strong:#155e75; --area-soft:#ecfeff; --area-border:#a5f3fc; --area-hover:#cffafe; }
+    main { max-width: 1000px; margin: 0 auto; font-size: 1.05em; }
+    .intro-box { background:#ecfeff; border:1px solid #a5f3fc; border-left:4px solid #155e75; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .intro-box p { margin:0.35rem 0; }
+    .tasks { background:#fff; border:1px solid #d8d8d8; border-left:5px solid var(--area); border-radius:12px; padding:1rem 1.3rem; margin:1.2rem 0; }
+    .tasks h2 { margin:0 0 0.4rem; font-size:1.2rem; color:var(--area-strong); }
+    .tasks ol { margin:0.3rem 0 0 1.3rem; padding:0; }
+    .tasks li { margin:0.55rem 0; line-height:1.5; }
+    details.svar { margin:0.3rem 0 0; background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.4rem 0.8rem; }
+    details.svar summary { cursor:pointer; font-weight:600; color:#1e3a8a; }
+    details.svar summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .grid2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(440px, 1fr)); gap:1rem; }
+    @media (max-width: 520px) { .grid2 { grid-template-columns:1fr; } }
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:0.6rem; margin-top:1.2rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#ecfeff; border:1px solid #a5f3fc; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; }
+    .next-steps a:hover { background:#cffafe; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#155e75; font-weight:700; margin-bottom:0.2rem; }
+  </style>
+</head>
+<body class="area-separation">
+  <header class="kemi-header">
+    <h1>Partikelsimulatorn</h1>
+    <p>Separationsprocesser</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html#m1" class="subject-btn">📖 Studieguiden</a>
+      <a href="./larande-spel.html" class="subject-btn">🎮 Lärande spel</a>
+    </div>
+
+    <section class="intro-box">
+      <p><strong>Så här använder du simulatorn:</strong> varje kula är en partikel (en molekyl eller en atom). Dra i temperaturreglaget, eller använd piltangenterna när reglaget är valt. Du kan också klicka på <em>Fast</em>, <em>Flytande</em> eller <em>Gas</em> för att hoppa till en temperatur i det området. Under simulatorn står vilken form ämnet har, med ord, så du behöver aldrig gissa utifrån färgen.</p>
+      <p>Modellen är förenklad: partiklarna ritas som kulor och avstånd och hastigheter är inte skalenliga.</p>
+    </section>
+
+    <div data-partikel data-amne="vatten"></div>
+
+    <section class="tasks">
+      <h2>Uppgifter att prova</h2>
+      <ol>
+        <li>Sätt vatten på −20 °C och värm sakta. Vid vilken temperatur börjar isen smälta? Vad händer med partiklarna?
+          <details class="svar"><summary>Visa svar</summary><p>Vid 0 °C. Partiklarna får så mycket rörelse att de lossnar från sina platser och börjar glida förbi varandra.</p></details></li>
+        <li>Fortsätt värma. Vid vilken temperatur börjar vattnet koka, och vad har partiklarna hunnit göra vid 130 °C?
+          <details class="svar"><summary>Visa svar</summary><p>Vid 100 °C. Vid 130 °C har partiklarna lämnat vätskan och far runt med stora avstånd, alltså vattenånga.</p></details></li>
+        <li>Byt ämne till etanol och sätt temperaturen på 20 °C. Vilken form har etanol? Jämför med vatten.
+          <details class="svar"><summary>Visa svar</summary><p>Flytande. Etanol kokar vid 78 °C, alltså redan innan vatten. Därför kan man skilja dem med destillation.</p></details></li>
+        <li>Byt ämne till järn och sätt temperaturen på 20 °C. Vilken form har järn, och hur långt måste man värma för att smälta det?
+          <details class="svar"><summary>Visa svar</summary><p>Fast. Järn smälter först vid 1 538 °C och kokar vid 2 862 °C.</p></details></li>
+        <li>Förklara med partikelmodellen varför en gas kan pressas ihop lätt men inte en vätska.
+          <details class="svar"><summary>Visa svar</summary><p>I en gas är det stora avstånd mellan partiklarna, så de kan komma närmare. I en vätska ligger de redan tätt.</p></details></li>
+      </ol>
+    </section>
+
+    <div class="next-steps">
+      <a href="./studieguide.html#m2"><span class="n-label">Läs</span>Fasövergångar i studieguiden</a>
+      <a href="./ovningsverktyg.html#ov-former"><span class="n-label">Öva</span>Fast, flytande eller gas?</a>
+      <a href="./laborationer.html#lab-7"><span class="n-label">Laborera</span>Värmekurva för is</a>
+      <a href="./checklista.html"><span class="n-label">Kontrollera</span>Checklistan</a>
+    </div>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/kemi/separationsprocesser/js/partikelmodell.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+"""Scenarier till valj-metod.html (data/valjmetod.json)."""
+METODER = [
+ {"id": "sil", "namn": "Silning", "egenskap": "storlek"},
+ {"id": "mag", "namn": "Magnet", "egenskap": "magnetism"},
+ {"id": "sed", "namn": "Sedimentering", "egenskap": "densitet"},
+ {"id": "dek", "namn": "Dekantering (hälla av)", "egenskap": "densitet"},
+ {"id": "fil", "namn": "Filtrering", "egenskap": "storlek"},
+ {"id": "cen", "namn": "Centrifugering", "egenskap": "densitet"},
+ {"id": "ext", "namn": "Lösa i vatten (extraktion)", "egenskap": "löslighet"},
+ {"id": "fal", "namn": "Fällning", "egenskap": "löslighet"},
+ {"id": "ind", "namn": "Indunstning", "egenskap": "kokpunkt"},
+ {"id": "des", "namn": "Destillation", "egenskap": "kokpunkt"},
+ {"id": "kro", "namn": "Kromatografi", "egenskap": "hur snabbt ämnet vandrar"},
+]
+
+S = lambda **k: k
+SCENARIER = [
+ S(id="s1", tier="Grund", titel="Pasta i kokvatten", beskrivning="Pastan är färdig. Du vill ha pastan och slänga vattnet.",
+   svar=["sil"], varfor="Pastan är mycket större än hålen i silen, så vattnet rinner igenom och pastan blir kvar. Silning skiljer på storlek."),
+ S(id="s2", tier="Grund", titel="Järnspån i sand", beskrivning="En ask med sand har råkat blandas med järnspån. Du vill få ut järnet.",
+   svar=["mag"], varfor="Järn är magnetiskt men sand är det inte, så magneten drar bara upp järnet."),
+ S(id="s3", tier="Grund", titel="Sand i vatten", beskrivning="En slamning av sand i vatten. Du vill ha klart vatten. (Du kan välja två steg.)",
+   svar=["sed", "dek"], alt=[["fil"]], varfor="Sanden är tyngre än vattnet och sjunker (sedimentering). Sedan hälls det klara vattnet försiktigt av (dekantering). Filtrering fungerar också, eftersom sandkornen är för stora för filtret."),
+ S(id="s4", tier="Grund", titel="Saltvatten – du vill ha saltet", beskrivning="Du har saltvatten och vill få fram saltet. Vattnet behövs inte.",
+   svar=["ind"], varfor="Vattnet förångas (kokpunkt) och saltet, som inte förångas, blir kvar som fast ämne."),
+ S(id="s5", tier="Grund", titel="Saltvatten – du vill ha rent vatten", beskrivning="Du har saltvatten och vill få fram rent vatten som kan användas.",
+   svar=["des"], varfor="Vid destillation kokar vattnet och kondenseras i kylaren till rent vatten, medan saltet blir kvar i kolven. Indunstning ger bara saltet, för ångan går förlorad."),
+ S(id="s6", tier="Grund", titel="Färgen i en tuschpenna", beskrivning="Du vill veta vilka färgämnen som finns i en svart vattenlöslig tusch.",
+   svar=["kro"], varfor="Färgämnena vandrar olika långt på ett fuktigt filterpapper och bildar band. Det kallas kromatografi."),
+ S(id="s7", tier="Grund", titel="Grädde ur mjölk", beskrivning="Du vill skilja fettet (grädde) från mjölken i en mejerimaskin, snabbt.",
+   svar=["cen"], varfor="I en centrifug snurras mjölken snabbt så att fettet, som har lägre densitet, samlas i mitten medan skummjölken pressas utåt."),
+ S(id="s8", tier="Lär mer", titel="Sand och salt", beskrivning="Torr sand och salt är blandade. Du vill ha ut båda. (Tre steg.)",
+   svar=["ext", "fil", "ind"], varfor="Salt löser sig i vatten men sand gör det inte (löslighet). Filtreringen håller kvar sanden, och saltlösningen indunstas så att saltet blir kvar. Steg 1 måste komma före filtreringen."),
+ S(id="s9", tier="Lär mer", titel="Järnspån, sand och salt", beskrivning="En blandning av järnspån, sand och salt. Du vill ha ut alla tre. (Fyra steg.)",
+   svar=["mag", "ext", "fil", "ind"], varfor="Magneten tar järnet först, så att det inte hamnar i vattnet. Saltet löses (löslighet), sanden filtreras bort och saltlösningen indunstas."),
+ S(id="s10", tier="Lär mer", titel="Kaffe", beskrivning="Smaken ska ur det malda kaffet och kaffesumpen ska bort. (Två steg.)",
+   svar=["ext", "fil"], varfor="Varmt vatten löser ut smakämnena (extraktion), och filtret stoppar de olösta kornen (filtrering)."),
+ S(id="s11", tier="Lär mer", titel="Fosfor i avloppsvatten", beskrivning="Löst fosfor i avloppsvatten ska bort. Vattnet är klart. (Två steg.)",
+   svar=["fal", "sed"], alt=[["fal", "fil"]], varfor="Fosforn bildar med en fällningskemikalie ett fast, olösligt ämne (fällning). Flingorna sjunker sedan eller filtreras bort."),
+ S(id="s12", tier="Lär mer", titel="Etanol ur vatten", beskrivning="Vin innehåller mest vatten och etanol. Du vill få en vätska med mer etanol.",
+   svar=["des"], varfor="Etanol kokar redan vid 78 °C, vatten vid 100 °C. Ångan blir rikare på etanol och kan kylas till en starkare vätska."),
+ S(id="s13", tier="Lär mer", titel="Socker ur sockerbetor", beskrivning="Sockret sitter i betorna. Du vill ha ut det. (Tre steg, efter att betorna skurits i skivor.)",
+   svar=["ext", "fil", "ind"], alt=[["ext", "ind"]], varfor="Varmt vatten löser ut sockret (extraktion), de fasta delarna av betan filtreras bort, och vattnet indunstas så att sockerkristaller bildas."),
+ S(id="s14", tier="Lär mer", titel="Olja på vatten", beskrivning="En blandning av olja och vatten har fått stå och skilts i två skikt. Du vill få loss oljan.",
+   svar=["dek"], varfor="Oljan har lägre densitet och flyter ovanpå. Man kan hälla av den (dekantera) eller använda en skiljetratt."),
+]

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Separationsprocesser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+  <style>
+
+    body { --listen-color:#155e75; --listen-border:#a5f3fc; --listen-hover-bg:#ecfeff; --listen-deepen-color:#7a5c00; --listen-deepen-border:#c9a640;
+           --area-strong:#155e75; --area-soft:#ecfeff; --area-border:#a5f3fc;
+           --guide-accent:#155e75; --guide-soft:#f7feff; --guide-border:#b6eef7; --guide-dash:#a5eaf6; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro { background:#ecfeff; border:1px solid #a5f3fc; border-left:4px solid #155e75; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .guide-intro p { margin:0.35rem 0; }
+    .pill-btn { background:#ecfeff; border:1px solid #67e8f9; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#155e75; cursor:pointer; min-height:44px; }
+    .pill-btn:hover { background:#cffafe; }
+    .pill-btn[aria-pressed="true"] { background:#155e75; color:#fff; border-color:#155e75; }
+    .pill-btn:focus-visible, .subject-btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .milestone { background:#fff; border:1px solid #d8d8d8; border-radius:12px; margin-bottom:0.9rem; box-shadow:0 2px 8px rgba(0,0,0,0.04); overflow:hidden; }
+    .milestone > summary { list-style:none; cursor:pointer; padding:1rem 1.1rem; display:flex; align-items:center; gap:0.75rem; font-weight:600; color:#1a1a2e; }
+    .milestone > summary::-webkit-details-marker { display:none; }
+    .milestone > summary::before { content:"▸"; color:#155e75; font-size:0.95rem; transition:transform 0.15s ease; display:inline-block; }
+    .milestone[open] > summary::before { transform:rotate(90deg); }
+    .milestone > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:-3px; }
+    .milestone .m-num { font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; color:#155e75; font-weight:700; white-space:nowrap; }
+    .milestone .m-title { font-size:1.1rem; flex:1; margin:0; font-weight:inherit; line-height:inherit; }
+    .milestone .m-body { padding:0 1.1rem 1.1rem 1.1rem; border-top:1px solid #eee; padding-top:0.9rem; }
+    .milestone .m-body p { margin:0.6rem 0; line-height:1.55; }
+    .milestone .m-body strong.term { color:#1a1a2e; }
+    .formula { font-family:"Cambria Math", Georgia, serif; white-space:nowrap; }
+
+    .fact-box { background:#ecfeff; border-left:4px solid #155e75; border-radius:6px; padding:0.75rem 0.95rem; margin:0.9rem 0; font-size:0.98rem; }
+    .fact-box > strong:first-child { display:block; margin-bottom:0.25rem; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:#155e75; }
+    .safety-box { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid #ea7317; border-radius:8px; padding:0.7rem 0.95rem; margin:0.9rem 0; font-size:0.96rem; }
+    .safety-box strong { color:#9a3412; }
+
+    .deepen { background:#fffbe7; border-left:4px solid #d4a017; border-radius:6px; padding:0.65rem 0.9rem; margin:0.8rem 0; font-size:0.96rem; }
+    .deepen > summary { cursor:pointer; list-style:none; font-weight:700; color:#7a5c00; font-size:0.88rem; letter-spacing:1px; text-transform:uppercase; padding:0.1rem 0; }
+    .deepen > summary::-webkit-details-marker { display:none; }
+    .deepen > summary { gap:0.4rem; flex-wrap:wrap; }
+    .deepen > summary::before { content:"★ Fördjupning:"; display:block; }
+    .deepen > summary::after { content:" ▾"; }
+    .deepen[open] > summary::after { content:" ▴"; }
+    .deepen > summary ~ * { margin-top:0.6rem; }
+    .wonder { background:#f0fdfa; border-left:4px solid #0d9488; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .wonder > summary { cursor:pointer; font-weight:600; color:#115e59; list-style:none; }
+    .wonder > summary::-webkit-details-marker { display:none; }
+    .wonder > summary::before { content:"» Fundera vidare: "; }
+    .wonder > summary::after { content:" ▾"; }
+    .wonder[open] > summary::after { content:" ▴"; }
+    .wonder > summary ~ * { margin-top:0.6rem; }
+    .wonder .frontier { font-size:0.85rem; color:#0f766e; font-style:italic; border-top:1px dashed #99f6e4; margin-top:0.5rem; padding-top:0.5rem; }
+    .check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+    .check-q > summary::-webkit-details-marker { display:none; }
+    .check-q > summary::before { content:"✓ Kontrollera dig själv: "; }
+    .check-q > summary::after { content:" (visa svar)"; font-weight:400; color:#475569; }
+    .check-q[open] > summary::after { content:" (dölj svar)"; }
+    .check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+    .deepen > summary:focus-visible, .wonder > summary:focus-visible, .check-q > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.6rem; margin-top:1rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#ecfeff; border:1px solid #a5f3fc; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; transition:background 0.12s ease, transform 0.12s ease; }
+    .next-steps a:hover { background:#cffafe; transform:translateY(-1px); }
+    .next-steps a:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#155e75; font-weight:700; margin-bottom:0.2rem; }
+
+    .compare-table { width:100%; border-collapse:collapse; font-size:0.93rem; margin:0.9rem 0; }
+    .compare-table th, .compare-table td { border:1px solid #d8d8d8; padding:0.45rem 0.7rem; text-align:left; vertical-align:middle; }
+    .compare-table th { background:#ecfeff; color:#155e75; font-weight:700; }
+    .compare-table tr:nth-child(even) td { background:#f7feff; }
+    .compare-table img { display:block; height:auto; }
+    @media (max-width:640px){ .compare-table { display:block; overflow-x:auto; } }
+    .compare-table caption { text-align:left; font-size:0.85rem; color:#4a4a5a; padding-bottom:0.3rem; }
+
+    a.cite { font-size:0.78rem; color:#155e75; font-weight:700; vertical-align:super; text-decoration:none; margin-left:0.05rem; }
+    a.cite:hover { text-decoration:underline; }
+    .m-body a:not(.cite):not(.mc-rotate) { color:#155e75; text-decoration:underline; }
+    .tbl-scroll { overflow-x:auto; }
+    .tbl-scroll:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .deepen > summary .listen-btn { min-height:28px; padding:0.3rem 0.65rem; }
+    .references { margin-top:2rem; padding-top:1rem; border-top:1px solid #d8d8d8; font-size:0.9rem; line-height:1.65; }
+    .references h2 { font-size:1rem; color:#155e75; margin:0 0 0.6rem; }
+    .references ol { margin:0 0 0 1.3rem; }
+    .references li { margin-bottom:0.4rem; }
+    .references a { color:#155e75; text-decoration:underline; }
+    details.milestone, details.deepen, details.wonder { scroll-margin-top:0.75rem; }
+    @media (max-width:520px) { main { font-size:1.05em; } .milestone .m-title { font-size:1rem; } }
+
+    .m-body ol.steps { margin:0.6rem 0 0.6rem 1.4rem; }
+    .m-body ol.steps li { margin:0.3rem 0; line-height:1.5; }
+
+    body.area-separation { --area:#0e7490; --area-strong:#155e75; --area-soft:#ecfeff; --area-border:#a5f3fc; --area-hover:#cffafe; }
+    .guide-wide .fig-wide { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; align-items:flex-start; margin:0.8rem 0; }
+    .guide-wide .fig-wide .side-fig { margin:0; }
+    .guide-wide .fig-wide .side-fig figcaption { max-width:none; text-align:center; }
+    .m-body ul { margin:0.6rem 0 0.6rem 0; padding-left:1.4rem; }
+    .m-body ul li { margin:0.3rem 0; line-height:1.5; }
+
+    main p a:not(.subject-btn):not(.listen-btn), main .m-body li a:not(.subject-btn) { text-decoration: underline; }
+
+  </style>
+</head>
+<body class="area-separation">
+
+  <header class="kemi-header">
+    <h1>Studieguide</h1>
+    <p>Separationsprocesser</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="guide-wide">
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./checklista.html" class="subject-btn">✅ Checklistan</a>
+      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Öppna alla</button>
+    </div>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Du börjar med materiens former och blandningar, går vidare till hur man delar upp blandningar och slutar med hur man undersöker systematiskt. Innehållet följer det centrala innehållet i kursplanen i kemi för åk 7–9.<a class="cite" href="#ref-1">[1]</a></p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De gula rutorna är fördjupning, de turkosa är frågor att fundera vidare på och de blåa är snabba kontrollfrågor.</p>
+      <p>Partikelmodellen kan du <strong>utforska själv</strong> i <a href="./partiklar.html">partikelsimulatorn</a>. Där ser du vad som händer med partiklarna när du värmer eller kyler ett ämne.</p>
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+    </section>
+ <!-- M1 -->
+<details class="milestone" id="m1" open="">
+<summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Materiens tre former</h2></summary>
+<div class="m-body">
+<div class="m-row">
+<div class="m-lead">
+<p>Allt omkring dig är gjort av materia, och materia kan finnas i tre olika former: <strong class="term"><span class="concept-inline" data-concept="fast form">fast form</span></strong>, <strong class="term"><span class="concept-inline" data-concept="flytande form">flytande form</span></strong> och <strong class="term"><span class="concept-inline" data-concept="gasform">gasform</span></strong>. En sten är fast, vatten från kranen är flytande och luften är en gas. Samma ämne kan finnas i alla tre formerna. Vatten är det bästa exemplet: is, flytande vatten och vattenånga består alla av samma molekyler, H<sub>2</sub>O. Det som skiljer är <em>hur molekylerna rör sig</em>, och det styrs av temperaturen.</p>
+<p>De tre formerna kallas tillsammans ämnets <strong class="term"><span class="concept-inline" data-concept="Aggregationstillstånd">aggregationstillstånd</span></strong>. I formler och reaktionsformler skriver man formen efter ämnet med små bokstäver inom parentes: <strong class="term">(s)</strong> för fast, <strong class="term">(l)</strong> för flytande och <strong class="term">(g)</strong> för gas, till exempel H<sub>2</sub>O(s), H<sub>2</sub>O(l) och H<sub>2</sub>O(g).</p>
+<p>För att förklara varför fasta ämnen, vätskor och gaser beter sig så olika använder man <strong class="term"><span class="concept-inline" data-concept="Partikelmodellen">partikelmodellen</span></strong>: ämnet ritas som små kulor, <strong class="term"><span class="concept-inline" data-concept="partiklar">partiklar</span></strong>. En partikel kan vara en atom eller en molekyl. Modellen bygger på två idéer: partiklarna är alltid i rörelse, och ju högre temperatur, desto snabbare rör de sig. Värme är alltså i grunden partiklarnas rörelse.</p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="Tre rutor med partiklar: fast form med partiklar i ett tätt regelbundet mönster, flytande form med tätt packade partiklar i oordning och gasform med få partiklar långt från varandra." height="316" src="/images/kemi/separationsprocesser/tre-former.svg" width="340"/>
+<figcaption><strong>Partikelmodellen.</strong> Fast form: partiklarna sitter på bestämda platser. Flytande form: tätt men rörligt. Gas: stora avstånd och snabb rörelse.</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Fast, flytande och gas i partikelmodellen</caption>
+<thead><tr><th scope="col"></th><th scope="col">Fast</th><th scope="col">Flytande</th><th scope="col">Gas</th></tr></thead>
+<tbody>
+<tr><th scope="row">Form</th><td>egen form</td><td>tar kärlets form</td><td>fyller hela utrymmet</td></tr>
+<tr><th scope="row">Volym</th><td>egen volym</td><td>egen volym</td><td>ingen fast volym, går att pressa ihop</td></tr>
+<tr><th scope="row">Partiklarna</th><td>på bestämda platser, tätt</td><td>tätt, men glider förbi varandra</td><td>långt från varandra</td></tr>
+<tr><th scope="row">Rörelse</th><td>vibrerar på plats</td><td>rör sig runt bland varandra</td><td>far runt fritt och snabbt</td></tr>
+</tbody>
+</table>
+</div>
+<div data-kompakt="" data-partikel=""></div>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Ett ämne kan vara fast, flytande eller gas, och det är temperaturen som avgör. Partiklarna är alltid i rörelse: de vibrerar i fast form, glider runt i flytande form och far fritt i gasform. Ju varmare, desto snabbare rörelse.
+          </div>
+<details class="check-q">
+<summary>Varför går det att pressa ihop en gas men knappt en vätska?</summary>
+<div class="svar">I en gas är det stora avstånd mellan partiklarna, så de kan komma närmare varandra. I en vätska ligger partiklarna redan tätt och det finns nästan inget utrymme kvar att pressa ihop dem i.</div>
+</details>
+<details class="deepen">
+<summary>Det finns en fjärde form: plasma</summary>
+<p>Värmer man en gas till mycket höga temperaturer slits elektronerna loss från atomerna, och gasen består då av laddade partiklar. Det kallas <strong class="term"><span class="concept-inline" data-concept="Plasma">plasma</span></strong>. Plasma finns i blixtar, norrsken och lysrör, och solen består till största delen av plasma. På jorden möter vi det sällan, men i universum är plasma en av de vanligaste formerna av materia.<a class="cite" href="#ref-2">[2]</a></p>
+</details>
+<details class="wonder">
+<summary>Varför flyter is, när nästan alla andra ämnen sjunker som fasta?</summary>
+<p>För de flesta ämnen är den fasta formen tätare än den flytande, så ett fast stycke sjunker i sin egen smälta. Vatten är ett ovanligt undantag: is tar större plats än samma mängd flytande vatten och flyter därför. Fundera på vad som skulle hända i en sjö om isen i stället sjönk till botten varje vinter. Hur skulle det påverka fiskar och andra djur som lever i vattnet?</p>
+<p class="frontier">Forskningsfronten: vattnets ovanliga egenskaper är fortfarande ett aktivt forskningsområde, till exempel hur rent vatten kan förbli flytande långt under 0 °C. Hur skulle du kunna undersöka själv om isen verkligen flyter, och hur stor del av isbiten som ligger under ytan?</p>
+</details>
+<div class="next-steps">
+<a href="./partiklar.html"><span class="n-label">Utforska</span>Partikelsimulatorn i helskärm</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m2"><span class="n-label">Fortsätt</span>Fasövergångar</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M2 -->
+<details class="milestone" id="m2">
+<summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Fasövergångar – när ämnen byter form</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>När ett ämne värms eller kyls kan det byta form. Ändringarna har egna namn. När fast form blir flytande kallas det <strong class="term"><span class="concept-inline" data-concept="Smältning">smältning</span></strong>, och det omvända, flytande till fast, kallas <strong class="term"><span class="concept-inline" data-concept="Stelning">stelning</span></strong> (eller frysning). Den temperatur där ett rent ämne smälter och stelnar är ämnets <strong class="term"><span class="concept-inline" data-concept="Smältpunkt">smältpunkt</span></strong>. För vatten är den 0 °C.</p>
+<p>När en vätska blir gas finns två sätt. Vid <strong class="term"><span class="concept-inline" data-concept="Avdunstning">avdunstning</span></strong> lämnar enstaka partiklar vätskans yta och blir gas, och det sker vid alla temperaturer, fast snabbare när det är varmt, torrt och blåsigt. Vid <strong class="term"><span class="concept-inline" data-concept="Kokning">kokning</span></strong> bildas gasbubblor i hela vätskan. Det sker vid ämnets <strong class="term"><span class="concept-inline" data-concept="Kokpunkt">kokpunkt</span></strong>, som för vatten är 100 °C. Gas som blir flytande igen, till exempel när vattenånga kyls mot ett kallt glas, kallas <strong class="term"><span class="concept-inline" data-concept="Kondensering">kondensering</span></strong>.</p>
+<p>Vissa ämnen hoppar över det flytande steget. Fast koldioxid, som kallas <strong class="term"><span class="concept-inline" data-concept="torris">torris</span></strong>, blir gas direkt när den värms och rimfrost bildas direkt av vattenånga som möter en kall yta. Övergången mellan fast form och gas utan att ämnet blir flytande kallas <strong class="term"><span class="concept-inline" data-concept="Sublimering">sublimering</span></strong>.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 680px;max-width:100%;">
+<img alt="Värmekurva för vatten: temperaturen stiger, står still vid 0 grader medan isen smälter, stiger till 100 grader, står still medan vattnet kokar och stiger sedan som vattenånga." height="360" src="/images/kemi/separationsprocesser/varmekurva.svg" style="max-width:100%;height:auto;" width="640"/>
+<figcaption><strong>Värmekurva för vatten.</strong> Under smältning och kokning står temperaturen still, fast värme tillförs hela tiden.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<p>Titta på värmekurvan. Trots att man värmer jämnt hela tiden står temperaturen still medan isen smälter och medan vattnet kokar. Energin går då åt till att lösgöra partiklarna från varandra, inte till att öka deras rörelse. Först när allt har bytt form stiger temperaturen igen.</p>
+</div></div>
+<div class="m-row m-row--full">
+<figure class="side-fig" style="max-width:820px;margin:0.8rem auto;">
+<img alt="Schema över fasövergångarna: smältning och stelning mellan fast och flytande, kokning eller avdunstning och kondensering mellan flytande och gas, samt sublimering direkt mellan fast och gas." height="416" src="/images/kemi/separationsprocesser/fasovergangar.svg" style="max-width:100%;height:auto;" width="760"/>
+<figcaption><strong>Alla fasövergångar.</strong> Pilar åt höger kräver att energi tillförs. Pilar åt vänster gör att ämnet avger energi.</figcaption>
+</figure>
+</div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Smältpunkt och kokpunkt är olika för olika ämnen, och de kan användas för att känna igen ett ämne. Tabellen visar några exempel. Jämför med rumstemperatur (ungefär 20 °C) för att se vilken form ämnet har i ett rum.</p>
+<div aria-label="Tabell 2 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Smältpunkt och kokpunkt för några ämnen (vid normalt lufttryck)<a class="cite" href="#ref-3">[3]</a></caption>
+<thead><tr><th scope="col">Ämne</th><th scope="col">Smältpunkt (°C)</th><th scope="col">Kokpunkt (°C)</th><th scope="col">Form vid 20 °C</th></tr></thead>
+<tbody>
+<tr><th scope="row">Vatten</th><td>0</td><td>100</td><td>flytande</td></tr>
+<tr><th scope="row">Etanol</th><td>−114</td><td>78</td><td>flytande</td></tr>
+<tr><th scope="row">Kvicksilver</th><td>−39</td><td>357</td><td>flytande</td></tr>
+<tr><th scope="row">Syre</th><td>−219</td><td>−183</td><td>gas</td></tr>
+<tr><th scope="row">Kväve</th><td>−210</td><td>−196</td><td>gas</td></tr>
+<tr><th scope="row">Järn</th><td>1 538</td><td>2 862</td><td>fast</td></tr>
+</tbody>
+</table>
+</div>
+<div class="fact-box">
+<strong>Viktigt att veta: ingen ny molekyl bildas</strong>
+            När is smälter, vatten kokar eller ånga kondenserar är molekylerna fortfarande H<sub>2</sub>O. Bara rörelsen och avstånden ändras. En förändring där inga nya ämnen bildas kallas <strong class="term"><span class="concept-inline" data-concept="Fysikalisk förändring">fysikalisk förändring</span></strong> (jämför med en kemisk reaktion i <a href="/kemi/atomer/#m6">Atomer och molekyler</a>). Alla metoder du möter i det här området är fysikaliska: de skiljer ämnen åt utan att någon reaktion sker.
+          </div>
+<details class="check-q">
+<summary>Ett ämne har smältpunkten −10 °C och kokpunkten 80 °C. Vilken form har det vid 20 °C?</summary>
+<div class="svar">Flytande. 20 °C ligger över smältpunkten (−10 °C) men under kokpunkten (80 °C).</div>
+</details>
+<details class="check-q">
+<summary>Varför bildas vattendroppar utanpå ett kallt glas en varm sommardag?</summary>
+<div class="svar">Vattenångan i luften kyls mot det kalla glaset och kondenserar, alltså blir den flytande igen. Vattnet kommer från luften, inte från glaset.</div>
+</details>
+<details class="deepen">
+<summary>Ånga syns inte – molnet över kastrullen är vattendroppar</summary>
+<p>Vattenånga är en genomskinlig gas. Det vita du ser ovanför en kokande kastrull är små vattendroppar som har hunnit kondensera i den kallare luften. Precis över vattenytan, där det är som varmast, är luften klar: där är det riktig ånga.</p>
+</details>
+<details class="deepen">
+<summary>Kelvin och den absoluta nollpunkten</summary>
+<p>Partiklarnas rörelse kan minska tills den nästan står still. Den lägsta temperatur som är möjlig är −273,15 °C. Den kallas den <strong class="term"><span class="concept-inline" data-concept="absoluta nollpunkten">absoluta nollpunkten</span></strong> och är utgångspunkten för <strong class="term"><span class="concept-inline" data-concept="kelvinskalan">kelvinskalan</span></strong>. En kelvin är lika stor som en grad Celsius, men 0 K är den absoluta nollpunkten. Man räknar om med T(K) = T(°C) + 273,15, ofta avrundat till +273. Vattnets smältpunkt är därför omkring 273 K och kokpunkt omkring 373 K.<a class="cite" href="#ref-4">[4]</a></p>
+</details>
+<details class="wonder">
+<summary>Hur kan tvätt torka utomhus när det är −10 °C?</summary>
+<p>Tvätten fryser först till stelfrusna plagg, men efter en tid blir den ändå torr. Isen har inte hunnit smälta. Hur kan vattnet lämna tyget då? Använd vad du lärt dig om övergångar och om partiklarnas rörelse för att förklara det.</p>
+<p class="frontier">Svar: isen sublimerar, alltså går direkt till vattenånga, fast långsamt. Samma process sker i stor skala på kometer: när de närmar sig solen sublimerar deras is och bildar den lysande svansen. Vilka andra vardagsfenomen tror du beror på sublimering?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-7"><span class="n-label">Laborera</span>Värmekurva för is</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m3"><span class="n-label">Fortsätt</span>Rena ämnen och blandningar</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M3 -->
+<details class="milestone" id="m3">
+<summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Rena ämnen och blandningar</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Ett <strong class="term"><span class="concept-inline" data-concept="Rent ämne">rent ämne</span></strong> innehåller bara en sorts partiklar: antingen bara atomer av ett grundämne, som järn eller syre, eller bara molekyler av en kemisk förening, som vatten eller koldioxid. Rena ämnen har fasta, mätbara egenskaper: en bestämd smältpunkt, en bestämd kokpunkt och en bestämd <strong class="term"><span class="concept-inline" data-concept="Densitet">densitet</span></strong>.</p>
+<p>I vardagen betyder "rent" ofta "utan smuts". För en kemist betyder det något strängare: <em>bara en sorts partiklar</em>. Kranvattnet är rent nog att dricka, men kemiskt är det ingen ren vätska. Det innehåller små mängder lösta salter och kalk. Det är en blandning. Rent vatten som saknar lösta ämnen kallas <strong class="term"><span class="concept-inline" data-concept="destillerat vatten">destillerat vatten</span></strong>. Det behövs till exempel i bilbatterier, ångstrykjärn och laboratorier, eftersom salterna där kan orsaka skador och störa mätningar.</p>
+<p>Det mesta i naturen är blandningar: luft, havsvatten, jord, bergarter, mjölk och blod. En <strong class="term"><span class="concept-inline" data-concept="Blandning">blandning</span></strong> består av två eller flera ämnen som ligger tillsammans utan att reagera med varandra. Varje ämne behåller sina egna egenskaper, och mängdförhållandet kan variera. Därför går det att skilja ämnena åt igen utan kemisk reaktion.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 800px;max-width:100%;">
+<img alt="Tre bägare: slamning med bruna korn som sjunker, emulsion med gula droppar och lösning med små jämnt fördelade violetta prickar." height="290" src="/images/kemi/separationsprocesser/blandningstyper.svg" style="max-width:100%;height:auto;" width="760"/>
+<figcaption><strong>Tre sorters blandningar.</strong> I en slamning syns kornen, i en emulsion syns dropparna, i en lösning syns ingenting.</figcaption>
+</figure><figure class="side-fig" style="flex:0 1 680px;max-width:100%;">
+<img alt="Till vänster ett rent metallgitter med lika stora atomer, till höger en legering där två sorters atomer i olika storlek sitter blandade i samma gitter." height="260" src="/images/kemi/separationsprocesser/legering.svg" style="max-width:100%;height:auto;" width="640"/>
+<figcaption><strong>Legering.</strong> Olika stora atomer i samma gitter gör metallen hårdare än en ren metall.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<div aria-label="Tabell 3 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Rent ämne eller blandning?</caption>
+<thead><tr><th scope="col"></th><th scope="col">Rent ämne</th><th scope="col">Blandning</th></tr></thead>
+<tbody>
+<tr><th scope="row">Innehåller</th><td>en sorts partiklar</td><td>minst två sorters ämnen</td></tr>
+<tr><th scope="row">Sammansättning</th><td>alltid densamma</td><td>kan variera</td></tr>
+<tr><th scope="row">Smältpunkt och kokpunkt</th><td>bestämda värden</td><td>varierar med innehållet</td></tr>
+<tr><th scope="row">Kan delas i delar med fysikaliska metoder</th><td>nej</td><td>ja</td></tr>
+<tr><th scope="row">Exempel</th><td>järn, syre, vatten, socker</td><td>luft, havsvatten, mjölk, brons</td></tr>
+</tbody>
+</table>
+</div>
+<p>Blandningar delas in efter hur de ser ut. I en <strong class="term"><span class="concept-inline" data-concept="Homogen blandning">homogen blandning</span></strong> ser det likadant ut överallt och man kan inte urskilja olika delar, till exempel saltvatten och luft. I en <strong class="term"><span class="concept-inline" data-concept="Heterogen blandning">heterogen blandning</span></strong> ser man att den består av olika delar, till exempel sand i vatten, granit eller müsli. Den vanligaste indelningen i kemin är dock efter vilken sorts blandning det är:</p>
+<ul>
+<li>En <strong class="term"><span class="concept-inline" data-concept="Lösning">lösning</span></strong> är en homogen blandning där ett ämne är utspritt som mycket små partiklar i ett annat, till exempel salt i vatten. Lösningen är genomskinlig, men den kan vara färgad.</li>
+<li>I en <strong class="term"><span class="concept-inline" data-concept="Slamning">slamning</span></strong> svävar fasta korn i en vätska, till exempel lera i vatten. Den är grumlig, och kornen sjunker med tiden.</li>
+<li>I en <strong class="term"><span class="concept-inline" data-concept="Emulsion">emulsion</span></strong> svävar små droppar av en vätska i en annan vätska som de inte löser sig i, till exempel olja i vatten. Mjölk är en emulsion: fettdroppar i vatten. Låter man en emulsion stå skiljs vätskorna åt. Ett <strong class="term"><span class="concept-inline" data-concept="Emulgeringsmedel">emulgeringsmedel</span></strong> hindrar det, som äggulan i majonnäs.</li>
+<li>En <strong class="term"><span class="concept-inline" data-concept="Legering">legering</span></strong> är en blandning av metaller (eller metall med litet av ett annat grundämne). Brons är koppar och tenn, mässing är koppar och zink, och stål är järn med lite kol. Legeringar är ofta hårdare och starkare än de rena metallerna. Äldre lödtenn innehåller tenn och bly och smälter vid en lägre temperatur än båda metallerna var för sig, vilket gör lödning enklare.</li>
+</ul>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Ett rent ämne har bara en sorts partiklar. En blandning innehåller minst två ämnen som inte har reagerat med varandra. Lösning, slamning, emulsion och legering är olika sorters blandningar.
+          </div>
+<details class="check-q">
+<summary>Är luft ett rent ämne? Motivera.</summary>
+<div class="svar">Nej, luft är en blandning. Den består mest av kvävgas (ungefär 78 %) och syrgas (ungefär 21 %), plus små mängder argon, koldioxid och andra gaser. Ämnena har inte reagerat med varandra och kan skiljas åt.</div>
+</details>
+<details class="deepen">
+<summary>Hur vet man om ett ämne är rent?</summary>
+<p>Ett rent ämne smälter vid en skarp, bestämd temperatur och kokar vid en bestämd temperatur. En blandning smälter och kokar i stället över ett temperaturintervall, och punkterna ligger annorlunda än för de rena ämnena. Saltvatten fryser till exempel vid en lägre temperatur än rent vatten. Det förklaras närmare i nästa milstolpe.</p>
+</details>
+<details class="wonder">
+<summary>Rent vatten är renast – varför dricker vi det ändå inte?</summary>
+<p>Destillerat vatten är ett av de renaste ämnen vi har tillgång till, men vi dricker det inte till vardags. Fundera på varför, och på vilka situationer där det verkligen behövs att vattnet är så rent som möjligt.</p>
+<p class="frontier">Forskningsfronten: vid tillverkning av datorchips använder man ultrarent vatten, så rent att det knappt leder elektricitet, eftersom en enda förorening kan förstöra ett chip. Vad tror du kan vara svårt när man ska mäta att ett vatten är "tillräckligt rent"?</p>
+</details>
+<div class="next-steps">
+<a href="./ovningsverktyg.html#ov-blandningar"><span class="n-label">Öva</span>Rent ämne eller blandning?</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m4"><span class="n-label">Fortsätt</span>Lösningar och löslighet</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M4 -->
+<details class="milestone" id="m4">
+<summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Lösningar och löslighet</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>När du rör ned en sockerbit i te försvinner bitten. Sockret finns kvar, vilket du känner på smaken, men du kan inte se det. Sockermolekylerna har lämnat sockerbiten, spritt sig mellan vattenmolekylerna och blivit så utspridda att de inte syns. Resultatet är en <strong class="term"><span class="concept-inline" data-concept="Lösning">lösning</span></strong>. Ämnet som löser upp är <strong class="term"><span class="concept-inline" data-concept="Lösningsmedel">lösningsmedlet</span></strong> (här vatten) och ämnet som blir upplöst är det <strong class="term"><span class="concept-inline" data-concept="Löst ämne">lösta ämnet</span></strong> (här socker).</p>
+<p>Ett ämne som löses upp försvinner inte. Löser du 20 g salt i 100 g vatten väger lösningen 120 g. Massan är densamma före och efter, för alla partiklar finns kvar.</p>
+<p>Vatten är det vanligaste lösningsmedlet, men inte det enda. <strong class="term"><span class="concept-inline" data-concept="aceton">Aceton</span></strong> (i nagellacksborttagare) och <strong class="term"><span class="concept-inline" data-concept="lacknafta">lacknafta</span></strong> löser fett och färg som vatten inte kan lösa. Som tumregel löser lika ämnen lika: vatten löser salt och socker, medan oljeliknande lösningsmedel löser fett och oljefärg. Inte bara fasta ämnen kan lösas. Bubblorna i kolsyrad dryck är koldioxid som har varit löst i vätskan, och fiskar andas syre som är löst i vattnet.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 820px;max-width:100%;">
+<img alt="Tre bägare med violetta prickar: utspädd lösning med få prickar, koncentrerad lösning med många prickar och mättad lösning med många prickar och olöst ämne på botten." height="236" src="/images/kemi/separationsprocesser/loslighet-tre.svg" style="max-width:100%;height:auto;" width="780"/>
+<figcaption><strong>Utspädd, koncentrerad och mättad.</strong> Mättad betyder att lösningen inte kan ta upp mer: överskottet ligger kvar olöst.</figcaption>
+</figure><figure class="side-fig" style="flex:0 1 680px;max-width:100%;">
+<img alt="Diagram: hur mycket som går att lösa mot temperatur. Fasta ämnen löser mer när det är varmt, gaser löser mindre när det är varmt." height="340" src="/images/kemi/separationsprocesser/loslighet-temp.svg" style="max-width:100%;height:auto;" width="640"/>
+<figcaption><strong>Temperaturen påverkar.</strong> Fasta ämnen löser sig oftast bättre i varmt, gaser bättre i kallt.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<p>Man kan lösa olika mycket. En lösning med lite löst ämne är <strong class="term"><span class="concept-inline" data-concept="utspädd">utspädd</span></strong> och en med mycket löst ämne är <strong class="term"><span class="concept-inline" data-concept="koncentrerad">koncentrerad</span></strong>. Till slut går det inte att lösa mer: den extra biten sjunker till botten hur mycket du än rör om. Då är lösningen en <strong class="term"><span class="concept-inline" data-concept="Mättad lösning">mättad lösning</span></strong>. Hur mycket som går att lösa kallas ämnets <strong class="term"><span class="concept-inline" data-concept="Löslighet">löslighet</span></strong>. Vid 20 °C löser sig ungefär 36 g koksalt i 100 g vatten, men hela 200 g socker.<a class="cite" href="#ref-5">[5]</a> Löslighet är alltså en egenskap som skiljer ämnen åt, och den kan användas för att separera dem.</p>
+<p>Temperaturen spelar roll. De flesta fasta ämnen löser sig bättre i varmt vatten än i kallt, därför löser sig socker snabbare i varmt te och tvätten blir renare i varmt vatten. Koksalt är ett undantag: det löser sig nästan lika bra i kallt som i varmt vatten. För gaser är det tvärtom: de löser sig bäst i kallt. En kolsyrad dryck som får stå varm blir därför fort platt, och i mycket varmt vatten kan fiskar få syrebrist. Bubblorna som syns i en kastrull långt innan vattnet kokar är luft som inte längre får plats i det varma vattnet.</p>
+<div class="fact-box">
+<strong>Hur snabbt eller hur mycket?</strong>
+            Rör man om, finfördelar det fasta ämnet (strösocker i stället för bit) eller värmer, går det <em>snabbare</em> att lösa. Det påverkar inte alltid <em>hur mycket</em> som kan lösas totalt. Det senare bestäms av ämnet, lösningsmedlet och temperaturen.
+          </div>
+<p>När en mättad varm lösning kyls kan lösningen inte längre hålla kvar allt, och en del av det lösta ämnet bildar fasta <strong class="term"><span class="concept-inline" data-concept="kristaller">kristaller</span></strong>. Det utnyttjas för att framställa rena ämnen, se milstolpe 6.</p>
+<details class="check-q">
+<summary>Du rör ned 30 g socker i 200 g vatten och allt löser sig. Hur många gram väger lösningen?</summary>
+<div class="svar">m = 200 g + 30 g = 230 g. Sockret har inte försvunnit, det är bara utspritt i vattnet.</div>
+</details>
+<details class="check-q">
+<summary>Varför blir en kolsyrad dryck platt fortare om den står varm?</summary>
+<div class="svar">Gaser löser sig sämre i varm vätska. När drycken blir varm kan den inte hålla kvar lika mycket koldioxid, så gasen lämnar vätskan som bubblor.</div>
+</details>
+<details class="deepen">
+<summary>Lösta ämnen sänker fryspunkten och höjer kokpunkten</summary>
+<p>Löser man ett ämne i vatten ändras vattnets fryspunkt och kokpunkt. Fryspunkten sänks och kokpunkten höjs. Saltvatten fryser därför vid en lägre temperatur än rent vatten: en mättad koksaltlösning fryser först vid ungefär −21 °C. Det utnyttjas när man saltar vägar på vintern, eftersom saltet gör att isen smälter vid några minusgrader. Nackdelen är att salt fräter på bilar och skadar vägkanternas växter, och man sandar därför ofta i stället. På samma sätt blandas bilens kylarvätska med glykol så att den inte fryser, och havsvatten fryser vid ungefär −2 °C i stället för 0 °C.<a class="cite" href="#ref-6">[6]</a></p>
+</details>
+<details class="wonder">
+<summary>Varför fryser inte havet lika lätt som en sjö?</summary>
+<p>Havsvatten innehåller cirka 3,5 % lösta salter. Använd vad du vet om fryspunkten för att förklara varför havet kräver lägre temperatur för att bilda is än en insjö. Vad händer med saltet när havsvatten fryser till is, tror du?</p>
+<p class="frontier">Forskningsfronten: när havsis bildas trycks mycket av saltet ut i små fickor av mycket salt vatten inne i isen. Där lever bakterier och alger som är anpassade till att klara både kyla och salt. Hur skulle du kunna ta reda på hur salt isen är, jämfört med vattnet den frusit ur?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-1"><span class="n-label">Laborera</span>Vad löser sig i vatten?</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m5"><span class="n-label">Fortsätt</span>Blandningar med olösta delar</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M5 -->
+<details class="milestone" id="m5">
+<summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Att dela upp blandningar med olösta delar</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Ibland vill man skilja ämnena i en blandning från varandra: till exempel få rent vatten ur avloppsvatten, ta fram salt ur havsvatten eller få bort en giftig förorening. Ett sätt att göra det kallas en <strong class="term"><span class="concept-inline" data-concept="Separationsmetod">separationsmetod</span></strong>. Metoderna är fysikaliska, det vill säga ingen kemisk reaktion sker och ämnena är oförändrade efteråt. Varje metod fungerar för att ämnena i blandningen skiljer sig åt i <em>någon egenskap</em>: storlek, densitet, magnetism, löslighet eller kokpunkt. Att välja rätt metod är att fråga sig vad som skiljer ämnena åt.</p>
+<div aria-label="Tabell 4 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Vad skiljer ämnena åt? Då fungerar denna metod</caption>
+<thead><tr><th scope="col">Skillnad</th><th scope="col">Metod</th><th scope="col">Exempel</th></tr></thead>
+<tbody>
+<tr><th scope="row">Storlek på delarna</th><td>silning, filtrering</td><td>pasta och kokvatten, kaffesump och kaffe</td></tr>
+<tr><th scope="row">Densitet (tyngd per volym)</th><td>sedimentering, dekantering, centrifugering</td><td>lera i vatten, grädde i mjölk</td></tr>
+<tr><th scope="row">Magnetism</th><td>magnet</td><td>järn ur sand, stål ur skrot</td></tr>
+<tr><th scope="row">Löslighet</th><td>extraktion, fällning</td><td>smak ur teblad, fosfor ur avloppsvatten</td></tr>
+<tr><th scope="row">Kokpunkt</th><td>indunstning, destillation</td><td>salt ur havsvatten, sprit ur vin</td></tr>
+<tr><th scope="row">Hur snabbt ämnet vandrar</th><td>kromatografi</td><td>färgerna i en tuschpenna</td></tr>
+</tbody>
+</table>
+</div>
+<p>Vi börjar med blandningar där något är olöst, alltså slamningar, blandningar av fasta ämnen och emulsioner. Sedan, i milstolpe 6, tar vi blandningar där ämnet är löst.</p>
+</div></div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p><strong class="term">Sortera för hand och magnet.</strong> Är delarna stora kan man plocka isär dem. Är ett av ämnena magnetiskt går det snabbare: en <strong class="term"><span class="concept-inline" data-concept="magnet">magnet</span></strong> drar till sig järn, nickel och kobolt, och därmed stål, men inte aluminium, koppar, guld eller plast. Så plockas stålburkar ut ur hushållssopor och skrot.</p>
+<p><strong class="term"><span class="concept-inline" data-concept="Silning">Silning</span></strong> är att låta en blandning passera en sil eller ett såll med hål av en viss storlek. Små delar går igenom och stora blir kvar. Silning är vad du gör med pastan och kokvattnet. Metoden fungerar bara när delarna skiljer sig tydligt i storlek.</p>
+<p>Är kornen för små för silen kan man låta dem sjunka. Vid <strong class="term"><span class="concept-inline" data-concept="Sedimentering">sedimentering</span></strong> får en slamning stå stilla, så att kornen, som är tätare (har högre <strong class="term"><span class="concept-inline" data-concept="Densitet">densitet</span></strong>) än vätskan, sjunker och samlas som ett lager på botten, ett <strong class="term"><span class="concept-inline" data-concept="Sediment">sediment</span></strong>. Därefter kan man hälla av vätskan försiktigt så att bottensatsen blir kvar. Det kallas <strong class="term"><span class="concept-inline" data-concept="Dekantering">dekantering</span></strong>. Sedimentering är första steget i ett reningsverk: avloppsvattnet får stå i stora bassänger där sand och slam sjunker.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 860px;max-width:100%;">
+<img alt="Tre steg: grumligt vatten, kornen har sjunkit till botten och det klara vattnet hälls försiktigt över i en ny bägare." height="299" src="/images/kemi/separationsprocesser/sedimentering.svg" style="max-width:100%;height:auto;" width="820"/>
+<figcaption><strong>Sedimentering och dekantering.</strong> Kornen sjunker och blir kvar när det klara vattnet hälls av.</figcaption>
+</figure><figure class="side-fig" style="flex:0 1 460px;max-width:100%;">
+<img alt="En magnet över en skål med sand drar upp järnfilspån." height="280" src="/images/kemi/separationsprocesser/magnet.svg" style="max-width:100%;height:auto;" width="420"/>
+<figcaption><strong>Magnetseparation.</strong> Bara det magnetiska ämnet dras upp.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<div class="fact-box">
+<strong>Densitet – minns från Materia</strong>
+            Densiteten säger hur tungt ett ämne är per volym, ρ = m / V, ofta i g/cm³. Ett ämne med högre densitet än vätskan sjunker i den, ett med lägre flyter. Vatten har densiteten 1,0 g/cm³ och olja ungefär 0,9 g/cm³, så olja flyter på vatten. Läs mer i <a href="/fysik/materia/">Materia</a>.
+          </div>
+</div></div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Vid <strong class="term"><span class="concept-inline" data-concept="Filtrering">filtrering</span></strong> hälls blandningen genom ett <strong class="term"><span class="concept-inline" data-concept="filterpapper">filterpapper</span></strong> eller annat filter med mycket små hål. Vätskan och det som är löst i den går igenom, men de olösta kornen fastnar. Vätskan som har passerat kallas <strong class="term"><span class="concept-inline" data-concept="Filtrat">filtrat</span></strong> och det som blir kvar på filtret kallas <strong class="term"><span class="concept-inline" data-concept="återstod">återstod</span></strong>. Kaffebryggaren är ett filter: vatten och kaffets lösta ämnen rinner igenom, kaffesumpen blir kvar. Filtret fångar dock bara olösta delar. Filtrerar du saltvatten är filtratet lika salt som förut, eftersom det lösta saltet är för litet för att fastna.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 510px;max-width:100%;">
+<img alt="Blandning hälls i en tratt med filterpapper. Olösta korn blir kvar på filtret som återstod och den klara vätskan, filtratet, rinner ned i en bägare." height="370" src="/images/kemi/separationsprocesser/filtrering.svg" style="max-width:100%;height:auto;" width="470"/>
+<figcaption><strong>Filtrering.</strong> Kornen blir kvar på filtret, vätskan rinner igenom.</figcaption>
+</figure></div></div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Ibland tar sedimentering för lång tid, särskilt när kornen är mycket små. Då kan man i stället använda <strong class="term"><span class="concept-inline" data-concept="Centrifugering">centrifugering</span></strong>. Blandningen snurras mycket snabbt, och de tyngre delarna pressas utåt och hamnar längst ned i röret medan de lättare blir kvar närmare mitten. En centrifug ger en kraft som är många gånger större än tyngdkraften. Metoden används på laboratorier för att skilja blodkropparna från blodplasman. I en mjölkseparator skiljs grädden (fett) från skummjölken, eftersom fettet är lättare. Tvättmaskinen centrifugerar tvätten på ett liknande sätt: vattnet slungas ut genom hålen i trumman.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 860px;max-width:100%;">
+<img alt="Före: blandat prov i ett rör. Under: röret snurrar mycket snabbt och tunga delar pressas utåt. Efter: provet är delat i skikt med bottensats längst ned och klar vätska ovanför." height="298" src="/images/kemi/separationsprocesser/centrifug.svg" style="max-width:100%;height:auto;" width="820"/>
+<figcaption><strong>Centrifugering.</strong> De tunga delarna pressas utåt och hamnar längst ned.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<details class="check-q">
+<summary>Vilken metod skiljer järnfilspån från sand? Varför fungerar den?</summary>
+<div class="svar">Med en magnet. Järn är magnetiskt men sand är det inte, så magneten drar bara upp järnspånet.</div>
+</details>
+<details class="check-q">
+<summary>Du filtrerar en saltlösning. Vad innehåller filtratet, och varför?</summary>
+<div class="svar">Filtratet innehåller fortfarande vatten och löst salt. Saltet är löst och därmed så litet att det följer med vätskan genom filtret.</div>
+</details>
+<details class="deepen">
+<summary>Skiljetratt – när olja och vatten ska skiljas</summary>
+<p>En emulsion av olja och vatten som får stå ett tag skiljs i två skikt, eftersom vattnet har högre densitet och sjunker medan oljan flyter ovanpå. I en <strong class="term"><span class="concept-inline" data-concept="skiljetratt">skiljetratt</span></strong>, en glastratt med kran längst ned, kan man tappa ut det tunga vattnet först och sedan oljan. Metoden bygger på att vätskorna inte blandar sig och har olika densitet.</p>
+</details>
+<details class="wonder">
+<summary>Hur kan man sortera plast, glas och metall i en hög blandat skräp?</summary>
+<p>Ett återvinningsföretag får en stor hög blandat avfall och vill dela upp det. Vilka av egenskaperna i tabellen ovan (storlek, densitet, magnetism, löslighet) kan de utnyttja, och i vilken ordning skulle du sätta ihop metoderna?</p>
+<p class="frontier">Forskningsfronten: moderna sorteringsanläggningar använder kameror som känner igen olika plaster med ljus av olika våglängder och blåser sedan ut rätt bit ur flödet med tryckluft. Vilka nya sätt att sortera tror du kan komma?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-2"><span class="n-label">Laborera</span>Separera en blandning</a>
+<a href="./valj-metod.html"><span class="n-label">Öva</span>Välj rätt metod</a>
+<a href="#m6"><span class="n-label">Fortsätt</span>Att få loss lösta ämnen</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M6 -->
+<details class="milestone" id="m6">
+<summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Att få loss lösta ämnen</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Filtret hjälper inte när ämnet är löst. Då behövs metoder som utnyttjar löslighet eller kokpunkt.</p>
+<p>Vid <strong class="term"><span class="concept-inline" data-concept="Indunstning">indunstning</span></strong> låter man lösningsmedlet avdunsta eller koka bort. Det lösta ämnet, som inte förångas, blir kvar som ett fast ämne. Så kan man få fram salt ur saltvatten. Jorden är full av sådana exempel: i varma länder utvinns havssalt genom att havsvatten släpps in i grunda bassänger där solen och vinden får vattnet att avdunsta. Kylning av en mättad lösning ger också kristaller, och långsam avdunstning ger större och finare kristaller.</p>
+<div class="safety-box">
+<strong>Säkerhet:</strong> vid indunstning som laboration värms lösningen försiktigt och avbryts innan allt vatten är borta, så att det inte sprutar. Använd skyddsglasögon och en värmetålig skål, och rör aldrig vid en het skål.
+          </div>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 820px;max-width:100%;">
+<img alt="Före: en skål med saltlösning värms. Efter: vattnet har blivit vattenånga och saltet ligger kvar i skålen." height="310" src="/images/kemi/separationsprocesser/indunstning.svg" style="max-width:100%;height:auto;" width="780"/>
+<figcaption><strong>Indunstning.</strong> Vattnet lämnar som ånga, saltet blir kvar.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<p><strong class="term"><span class="concept-inline" data-concept="Destillation">Destillation</span></strong> utnyttjar att ämnen har olika kokpunkter, och den behåller även vätskan. Blandningen värms i en kolv tills det ämne som har lägst kokpunkt kokar och blir ånga. Ångan leds genom ett rör som kyls med rinnande vatten, en <strong class="term"><span class="concept-inline" data-concept="kylare">kylare</span></strong>. Där kondenserar ångan till vätska igen och droppar ned i en bägare. Vätskan man får är <strong class="term"><span class="concept-inline" data-concept="Destillat">destillatet</span></strong>. På så vis kan man få rent vatten ur saltvatten: vattnet kokar och blir ånga, medan saltet blir kvar i kolven. Avsaltat havsvatten kan användas som dricksvatten. På platser med brist på sötvatten används ibland destillation, men oftare filtrering genom mycket fina membran (omvänd osmos, se milstolpe 8).</p>
+<p>Destillation kan även skilja vätskor från varandra. Vin är en blandning av vatten och etanol (sprit) med mera. Etanol kokar redan vid 78 °C, vatten först vid 100 °C, så när vinet värms blir ångan rikare på etanol. Kondenserar man den får man en starkare dryck. Detta är principen för att tillverka sprit, men i Sverige får privatpersoner inte tillverka sprit på det här sättet.<a class="cite" href="#ref-7">[7]</a> Råolja delas på raffinaderier upp med en större variant, <strong class="term"><span class="concept-inline" data-concept="fraktionerad destillation">fraktionerad destillation</span></strong>, där olika delar kokar vid olika temperaturer: gasol, bensin, fotogen, diesel och tjocka oljor.</p>
+</div></div>
+<div class="m-row m-row--full">
+<figure class="side-fig" style="max-width:820px;margin:0.8rem auto;">
+<img alt="Destillationsuppställning: kolv över låga med termometer, kylare med kylvatten in nedtill och ut upptill och en bägare som samlar destillatet." height="440" src="/images/kemi/separationsprocesser/destillation.svg" style="max-width:100%;height:auto;" width="840"/>
+<figcaption><strong>Destillation i fyra steg.</strong> 1 vätskan värms, 2 ångan stiger, 3 ångan kyls och blir vätska, 4 destillatet samlas upp.</figcaption>
+</figure>
+</div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Vid <strong class="term"><span class="concept-inline" data-concept="Extraktion">extraktion</span></strong> används ett lösningsmedel för att lösa ut det man vill åt ur en fast blandning. När du brygger te eller kaffe är det extraktion: det varma vattnet löser smakämnena ur bladen eller kaffepulvret, och de olösta delarna filtreras bort. Socker tillverkas av sockerbetor på liknande sätt: betorna skivas och sockret löses ut med varmt vatten, vätskan renas och vattnet indunstas tills sockerkristaller bildas.<a class="cite" href="#ref-8">[8]</a> Det är ett bra exempel på att man ofta kombinerar flera metoder efter varandra.</p>
+<p><strong class="term"><span class="concept-inline" data-concept="Kromatografi">Kromatografi</span></strong> är en metod för att skilja och identifiera ämnen i en blandning genom att de vandrar olika snabbt. I <strong class="term"><span class="concept-inline" data-concept="papperskromatografi">papperskromatografi</span></strong> sätter man en färgpunkt nära ena kanten av ett filterpapper och ställer kanten i lite vatten. Vattnet vandrar uppåt i pappret och tar med sig färgämnena. Ett ämne som löser sig lätt i vattnet och sitter löst på pappret vandrar långt, ett som sitter fast hårt vandrar kort. Därför delas blandningen i band. En svart tusch kan till exempel visa sig bestå av flera olika färgämnen.</p>
+</div></div><div class="m-row m-row--full"><div class="fig-wide"><figure class="side-fig" style="flex:0 1 860px;max-width:100%;">
+<img alt="Tre steg: en färgpunkt på filterpapper, pappret hängs så att kanten står i vatten, och färgen har delats i band på olika höjd." height="310" src="/images/kemi/separationsprocesser/kromatografi.svg" style="max-width:100%;height:auto;" width="820"/>
+<figcaption><strong>Papperskromatografi.</strong> Ämnena vandrar olika långt och bildar band.</figcaption>
+</figure></div></div><div class="m-row m-row--plain"><div class="m-lead">
+<p>Kromatografi används för att analysera blandningar, till exempel för att se vilka färgämnen ett godis innehåller eller vilka ämnen som finns i ett blodprov. Man kan jämföra bandens plats med kända ämnen för att avgöra vad ett okänt ämne är. Idag finns avancerade instrument som utnyttjar samma idé, där ämnena kan vandra genom en vätska eller en gas i stället för genom papper. Metoden utvecklades under 1900-talet, och 1952 fick Archer Martin och Richard Synge Nobelpriset i kemi för sin variant.<a class="cite" href="#ref-9">[9]</a></p>
+<div aria-label="Tabell 5 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Metoderna i milstolpe 5 och 6</caption>
+<thead><tr><th scope="col">Metod</th><th scope="col">Skiljer på</th><th scope="col">Ger</th></tr></thead>
+<tbody>
+<tr><th scope="row">Silning</th><td>storlek</td><td>stora delar kvar på silen</td></tr>
+<tr><th scope="row">Sedimentering och dekantering</th><td>densitet</td><td>bottensats och klar vätska</td></tr>
+<tr><th scope="row">Filtrering</th><td>storlek (olöst mot löst)</td><td>filtrat och återstod</td></tr>
+<tr><th scope="row">Centrifugering</th><td>densitet, snabbt</td><td>tunga delar längst ned</td></tr>
+<tr><th scope="row">Magnet</th><td>magnetism</td><td>magnetiskt ämne uppdraget</td></tr>
+<tr><th scope="row">Indunstning</th><td>kokpunkt (lösta ämnen förångas inte)</td><td>fast ämne kvar</td></tr>
+<tr><th scope="row">Destillation</th><td>kokpunkt</td><td>destillat (vätskan tas tillvara)</td></tr>
+<tr><th scope="row">Extraktion</th><td>löslighet</td><td>lösning med det man vill åt</td></tr>
+<tr><th scope="row">Kromatografi</th><td>hur snabbt ämnet vandrar</td><td>band på olika höjd</td></tr>
+</tbody>
+</table>
+</div>
+<details class="check-q">
+<summary>Du har saltvatten och vill få tillbaka både vattnet och saltet. Vilken metod och vad blir vad?</summary>
+<div class="svar">Destillation. Vattnet kokar och kondenserar i kylaren och blir destillat (rent vatten). Saltet blir kvar i kolven. Indunstning ger bara saltet, för ångan går förlorad.</div>
+</details>
+<details class="check-q">
+<summary>Varför delas färgen i en tuschpenna i flera band i papperskromatografi?</summary>
+<div class="svar">Tuschen består av flera färgämnen. De löser sig olika lätt i vattnet och sitter olika hårt fast på pappret, så de vandrar olika långt.</div>
+</details>
+<details class="deepen">
+<summary>Rf-värde – att jämföra ämnen på papperet</summary>
+<p>För att kunna jämföra kromatogram mäter man hur långt ett ämne har vandrat i förhållande till hur långt vattnet har vandrat. Kvoten heter <strong class="term"><span class="concept-inline" data-concept="Rf-värde">Rf-värde</span></strong> (Rf = sträckan ämnet vandrat / sträckan vätskan vandrat). Ett Rf-värde är alltid mellan 0 och 1. Samma ämne får samma Rf-värde under samma förhållanden, så man kan känna igen ämnen genom att jämföra med kända prov som kört på samma papper.</p>
+</details>
+<details class="wonder">
+<summary>Hur skulle du få dricksvatten på en öde ö omgiven av saltvatten?</summary>
+<p>Du har havsvatten, sol, en plastskål och en genomskinlig plastfolie. Kan du bygga en enkel anordning som ger sötvatten? Beskriv vilka fasövergångar som ingår och vad som händer med saltet.</p>
+<p class="frontier">Forskningsfronten: på många platser i världen behövs mer sötvatten, och forskare arbetar med avsaltningsanläggningar som drivs av solenergi. Vilka för- och nackdelar tror du att destillation har jämfört med andra sätt att avsalta vatten?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-3"><span class="n-label">Laborera</span>Kromatografi</a>
+<a href="./laborationer.html#lab-4"><span class="n-label">Laborera</span>Destillation av saltvatten</a>
+<a href="./valj-metod.html"><span class="n-label">Öva</span>Välj rätt metod</a>
+<a href="#m7"><span class="n-label">Fortsätt</span>Fällning och analys</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M7 -->
+<details class="milestone" id="m7">
+<summary><span class="m-num">Milstolpe 7</span><h2 class="m-title">Fällning och analys</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Hittills har vi delat upp blandningar utan att ämnena har förändrats. Ibland får man lösta ämnen att lämna lösningen på ett annat sätt: man blandar två klara lösningar, och plötsligt blir vätskan grumlig. Ett nytt, olösligt ämne har bildats och sjunker till botten som ett fast ämne. Det kallas <strong class="term"><span class="concept-inline" data-concept="Fällning">fällning</span></strong>, och det fasta ämnet kallas ofta en <strong class="term"><span class="concept-inline" data-concept="Fällning">fällning</span></strong> eller ett <strong class="term"><span class="concept-inline" data-concept="bottenfall">bottenfall</span></strong>. Här sker alltså en kemisk reaktion, eftersom ett nytt ämne bildas. Därefter separeras fällningen från vätskan på vanligt sätt, med filtrering eller sedimentering.</p>
+<p>Ett känt exempel är <strong class="term"><span class="concept-inline" data-concept="kalkvatten">kalkvatten</span></strong>, en klar lösning som innehåller kalciumhydroxid. Blåser du ned koldioxid i kalkvattnet med ett sugrör blir det snabbt grumligt vitt, eftersom det bildas kalciumkarbonat (kalk) som inte löser sig i vatten. Det används därför som ett enkelt test för att <em>påvisa</em> koldioxid. Fällning ligger också bakom kalkavlagringarna i vattenkokaren och tvålfläckarna i hårt vatten: kalcium i vattnet bildar ett fast ämne med tvålen, som inte löser sig.</p>
+</div></div>
+<div class="m-row m-row--full">
+<figure class="side-fig" style="max-width:820px;margin:0.8rem auto;">
+<img alt="Två bägare med klara lösningar A och B hälls ihop. I den tredje bägaren är vätskan grumlig och en fällning sjunker till botten. Fällningen kan sedan filtreras bort." height="320" src="/images/kemi/separationsprocesser/fallning.svg" style="max-width:100%;height:auto;" width="800"/>
+<figcaption><strong>Fällning.</strong> Två klara lösningar blandas och ett fast ämne bildas, som kan filtreras bort.</figcaption>
+</figure>
+</div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Fällning används för att ta bort oönskade ämnen ur vatten. På reningsverket tillsätts ett järn- eller aluminiumsalt (en fällningskemikalie, till exempel järnsulfat) till avloppsvattnet. Det binder fosfor, som annars skulle ge övergödning i sjöar och hav, och bildar flingor som sjunker till botten och sedan avlägsnas.<a class="cite" href="#ref-10">[10]</a> Metoden fungerar för att fällningen är olöslig, medan ämnena man började med var lösta.</p>
+<details class="deepen">
+<summary>Fällning på jonnivå</summary>
+<p>Salter består av laddade partiklar, joner, och löser man dem i vatten sprids jonerna ut bland vattenmolekylerna. Fällning sker när en positiv jon från den ena lösningen och en negativ jon från den andra binder ihop sig till ett salt som inte löser sig. I kalkvattnet reagerar kalciumjoner med karbonatjoner: Ca²⁺ + CO₃²⁻ → CaCO₃(s). Bokstaven (s) betyder att ämnet är fast (solid). Läs mer om joner i <a href="/kemi/jonforeningar/">Jonföreningar</a>.</p>
+</details>
+</div></div>
+<div class="m-row">
+<div class="m-lead">
+<p>Att skilja ämnen åt är ett sätt att ta reda på vad en blandning innehåller. Att ta reda på vad ett ämne är, eller vad ett prov innehåller, kallas en <strong class="term"><span class="concept-inline" data-concept="Analys">analys</span></strong>. Det finns två frågor man kan ställa: <em>Vad</em> finns i provet? (påvisa) och <em>hur mycket</em> finns det? (mäta). Redan i kromatografin i milstolpe 6 såg vi ett exempel: färgerna i tuschen visar vad den innehåller.</p>
+<p>Ett bra sätt att identifiera ett ämne är att mäta egenskaper som är typiska för just det ämnet och jämföra med en tabell. <strong class="term"><span class="concept-inline" data-concept="Smältpunkt">Smältpunkt</span></strong> och <strong class="term"><span class="concept-inline" data-concept="Kokpunkt">kokpunkt</span></strong> är sådana egenskaper, och det är även <strong class="term"><span class="concept-inline" data-concept="Densitet">densitet</span></strong>. Ett rent ämne har en skarp smältpunkt och kokpunkt, medan en blandning smälter och kokar inom ett intervall (se milstolpe 2). Tillsammans fungerar egenskaperna som ett fingeravtryck: en enda egenskap kan sammanfalla för olika ämnen, men kombinationen pekar oftast ut ett enda.</p>
+<div class="fact-box">
+<strong>Densitet – att räkna ut vilket ämne det är</strong>
+            Du har en metallbit som väger 54 g. Sänks den ned i vatten i en mätcylinder stiger vattennivån från 50 ml till 70 ml, så metallens volym är 20 cm³ (1 ml = 1 cm³). Densiteten blir ρ = m / V = 54 g / 20 cm³ = 2,7 g/cm³. Enligt tabellen är det aluminium.
+          </div>
+</div>
+<div class="m-side">
+<div aria-label="Tabell 6 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Densitet vid rumstemperatur<a class="cite" href="#ref-11">[11]</a></caption>
+<thead><tr><th scope="col">Ämne</th><th scope="col">g/cm³</th></tr></thead>
+<tbody>
+<tr><th scope="row">Is</th><td>0,92</td></tr>
+<tr><th scope="row">Vatten</th><td>1,0</td></tr>
+<tr><th scope="row">Aluminium</th><td>2,7</td></tr>
+<tr><th scope="row">Järn</th><td>7,9</td></tr>
+<tr><th scope="row">Koppar</th><td>9,0</td></tr>
+<tr><th scope="row">Bly</th><td>11,3</td></tr>
+<tr><th scope="row">Guld</th><td>19,3</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="m-rest">
+<p>Många ämnen kan också <em>påvisas</em> med ett särskilt test. Testet ger ett tydligt tecken som är typiskt för just det ämnet. Några enkla exempel finns i tabellen nedan. Notera att testerna påvisar ett visst ämne men inte säger hur mycket det finns.</p>
+<div aria-label="Tabell 7 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Enkla tester för att påvisa ämnen</caption>
+<thead><tr><th scope="col">Ämne</th><th scope="col">Test</th><th scope="col">Tecken</th></tr></thead>
+<tbody>
+<tr><th scope="row">Koldioxid</th><td>Kalkvatten</td><td>klart blir grumligt vitt</td></tr>
+<tr><th scope="row">Syrgas</th><td>Glödande sticka</td><td>flammar upp</td></tr>
+<tr><th scope="row">Stärkelse</th><td>Jodlösning (brunorange)</td><td>blir blåsvart</td></tr>
+<tr><th scope="row">Surt eller basiskt</th><td>pH-papper eller pH-mätare</td><td>pH under eller över 7</td></tr>
+</tbody>
+</table>
+</div>
+<p>Den vanligaste analysen i vardagen är <strong class="term"><span class="concept-inline" data-concept="pH-värde">pH-mätning</span></strong>. pH är ett mått på hur surt eller basiskt något är. Skalan går ungefär från 0 till 14. Rent vatten har pH 7 och kallas <strong class="term"><span class="concept-inline" data-concept="neutralt">neutralt</span></strong>. Lägre pH än 7 betyder surt (citronsaft har ungefär pH 2) och högre betyder basiskt (tvål har ungefär pH 10). Ett <strong class="term"><span class="concept-inline" data-concept="pH-papper">pH-papper</span></strong> eller en <strong class="term"><span class="concept-inline" data-concept="Indikator">indikator</span></strong> ändrar färg beroende på pH, och en <strong class="term"><span class="concept-inline" data-concept="pH-mätare">pH-mätare</span></strong> visar värdet som ett tal. Man mäter pH i bland annat sjöar, akvarier, jord och simbassänger. Mer om vad pH betyder finns i <a href="/kemi/syror-och-baser/">Syror och baser</a>.</p>
+<div class="fact-box">
+<strong>Om du har svårt att se skillnad på rött och grönt</strong>
+            Färgskalan för pH-papper och universalindikator går från rött via gult och grönt till blått, och blir svår att läsa vid rödgrön färgblindhet. Använd då en digital pH-mätare, be en kamrat läsa av, eller jämför färgernas <em>ljushet</em> mot skalan. Skriv alltid ned det värde ni kom fram till, inte bara färgen.
+          </div>
+<details class="check-q">
+<summary>Kan du filtrera bort en fällning? Varför kan du inte filtrera bort löst salt?</summary>
+<div class="svar">En fällning består av fasta korn som är för stora för att komma genom filtret, så de blir kvar. Löst salt består av joner som är så små att de följer med vätskan genom filtret.</div>
+</details>
+<details class="check-q">
+<summary>En metallbit på 27 g har volymen 10 cm³. Vad är dess densitet, och kan det vara aluminium?</summary>
+<div class="svar">ρ = 27 g / 10 cm³ = 2,7 g/cm³. Det stämmer med aluminium (2,7 g/cm³) i tabellen.</div>
+</details>
+<details class="wonder">
+<summary>Hur skulle du ta reda på om ett vitt pulver är socker, salt eller kalk?</summary>
+<p>Du har tre vita pulver och får inte smaka på dem. Vilka egenskaper skulle du undersöka och i vilken ordning? Planera ett par tester som ger olika resultat för de tre pulvren, och förklara hur du drar din slutsats.</p>
+<p class="frontier">Forskningsfronten: i dag kan man med instrument som analyserar ljus från ett ämne (spektroskopi) avgöra vad ett prov innehåller på några sekunder, även när halterna är mycket små. Var i samhället tror du sådana analyser behövs?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-5"><span class="n-label">Laborera</span>Fällning och kalkvatten</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m8"><span class="n-label">Fortsätt</span>Separation i samhället</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M8 -->
+<details class="milestone" id="m8">
+<summary><span class="m-num">Milstolpe 8</span><h2 class="m-title">Separation i samhället</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>Separationsmetoderna finns överallt runt omkring dig. Kaffefiltret, pastasilen och tvättmaskinens centrifugering är vardagsexempel, men samhället är också beroende av separation i mycket större skala: för att få rent dricksvatten, för att rena avloppsvatten, för att få fram bensin ur råolja och för att återvinna material. Nästan alltid kombineras flera metoder i en följd, där varje steg tar bort det som just den metoden klarar.</p>
+</div></div>
+<div class="m-row m-row--full">
+<figure class="side-fig" style="max-width:860px;margin:0.8rem auto;">
+<img alt="Flödesschema med sex steg i ett reningsverk: rensgaller, sandfång, försedimentering, biologisk rening, kemisk fällning och sedimentering med filter. Under varje steg står vad som skiljer ämnena åt." height="400" src="/images/kemi/separationsprocesser/reningsverk.svg" style="max-width:100%;height:auto;" width="900"/>
+<figcaption><strong>Ett reningsverk.</strong> Avloppsvatten renas i flera steg där varje steg utnyttjar en egenskap: storlek, densitet eller löslighet.</figcaption>
+</figure>
+</div>
+<div class="m-row m-row--plain"><div class="m-lead">
+<p><strong class="term"><span class="concept-inline" data-concept="avloppsvatten">Avloppsvatten</span></strong> från hushåll och industrier innehåller allt från toalettpapper och sand till fosfor, kväve och bakterier. På ett <strong class="term"><span class="concept-inline" data-concept="Reningsverk">reningsverk</span></strong> tas det bort i flera steg. Först fångar ett galler de stora föremålen. I sandfånget sjunker sand och grus, och i försedimenteringen sjunker slam till botten (sedimentering). Därefter äter bakterier upp en stor del av de lösta ämnena. Fosfor fälls ut med en fällningskemikalie, och de bildade flingorna sjunker eller silas bort. Till slut släpps det renade vattnet ut i en å, en sjö eller havet.<a class="cite" href="#ref-10">[10]</a></p>
+<p><strong class="term"><span class="concept-inline" data-concept="dricksvatten">Dricksvatten</span></strong> framställs på liknande sätt ur sjövatten eller grundvatten. Sjövatten kan renas med fällning och filtrering (ofta genom sand), och därefter desinficeras vattnet, till exempel med UV-ljus eller klor, för att döda bakterier och andra mikroorganismer.<a class="cite" href="#ref-12">[12]</a> På platser med brist på sötvatten renas saltvatten till dricksvatten. Det görs ofta med <strong class="term"><span class="concept-inline" data-concept="Omvänd osmos">omvänd osmos</span></strong>, där vattnet pressas genom ett mycket tätt membran som släpper igenom vattenmolekyler men stoppar det lösta saltet. Membranet fungerar som ett extremt fint filter.</p>
+<div aria-label="Tabell 8 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Separation i samhället</caption>
+<thead><tr><th scope="col">Var</th><th scope="col">Vad som separeras</th><th scope="col">Metod</th></tr></thead>
+<tbody>
+<tr><th scope="row">Reningsverk</th><td>Slam, sand och fosfor ur avloppsvatten</td><td>galler, sedimentering, fällning</td></tr>
+<tr><th scope="row">Vattenverk</th><td>Grumlighet och mikrober ur dricksvatten</td><td>fällning, filtrering</td></tr>
+<tr><th scope="row">Raffinaderi</th><td>Bensin, diesel med mera ur råolja</td><td>fraktionerad destillation</td></tr>
+<tr><th scope="row">Mejeri</th><td>Grädde och skummjölk</td><td>centrifugering</td></tr>
+<tr><th scope="row">Sockerbruk</th><td>Socker ur sockerbetor</td><td>extraktion, indunstning, kristallisering</td></tr>
+<tr><th scope="row">Avfallssortering</th><td>Stål, plast, glas, papper</td><td>magnet, densitet, storlek</td></tr>
+<tr><th scope="row">Sjukhuslaboratorium</th><td>Blodkroppar och blodplasma</td><td>centrifugering</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Återvinning</strong> bygger också på separation. Vid avfallssortering skiljer man metaller med magneter, sorterar efter storlek med siktar och använder olika densitet för att skilja plaster i vattenbad. Att återvinna metall kräver mindre energi än att utvinna ny ur malm, så sorteringen sparar både energi och naturresurser. Ju bättre avfallet sorteras redan i hushållet, desto lättare blir separationen.</p>
+<div class="fact-box">
+<strong>Lösta ämnen är svårast</strong>
+            Olösta delar går relativt lätt att fånga med galler, sedimentering och filter. Lösta ämnen är mycket svårare, för de är små och följer med vattnet genom filtren. Därför släpper avloppsvatten ändå igenom en del lösta ämnen, till exempel rester av läkemedel, och för sådana behövs mer avancerade metoder.
+          </div>
+<details class="check-q">
+<summary>Varför kan reningsverket ta bort sand med sedimentering men inte lösta läkemedelsrester?</summary>
+<div class="svar">Sand är olöst och har högre densitet än vatten, så den sjunker. Läkemedelsrester är lösta och bildar en lösning med vattnet, så de sjunker inte och fastnar inte i filter.</div>
+</details>
+<details class="check-q">
+<summary>Vilken egenskap använder en mjölkseparator för att skilja grädde från mjölk?</summary>
+<div class="svar">Densitet. Fettet i grädden har lägre densitet än vätskan, så i centrifugen samlas det närmare mitten medan skummjölken pressas ut.</div>
+</details>
+<details class="deepen">
+<summary>Luft kan destilleras</summary>
+<p>Även luft kan delas upp med destillation. Man kyler luft till omkring −195 °C tills den blir flytande och låter den sedan värmas långsamt. Kväve kokar först (vid −196 °C), sedan argon (−186 °C) och därefter syre (−183 °C). På så vis får man rent syre till sjukvård, rent kväve till industrin och argon till svetsning.</p>
+</details>
+<details class="wonder">
+<summary>Vad händer med det som separeras bort?</summary>
+<p>Ett reningsverk producerar stora mängder slam. Vad tror du att man kan göra med det? Tänk på vad slammet innehåller och vad som kan vara både nyttigt och skadligt i det.</p>
+<p class="frontier">Forskningsfronten: forskare arbetar med att få tillbaka fosfor ur avloppsslam, för fosfor är en ändlig resurs som jordbruket behöver, och samtidigt vill man undvika föroreningar i slammet. Hur skulle du väga dessa mot varandra?</p>
+</details>
+<div class="next-steps">
+<a href="./valj-metod.html"><span class="n-label">Öva</span>Välj rätt metod</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m9"><span class="n-label">Fortsätt</span>Undersök systematiskt</a>
+</div>
+</div></div>
+</div>
+</details>
+<!-- M9 -->
+<details class="milestone" id="m9">
+<summary><span class="m-num">Milstolpe 9</span><h2 class="m-title">Undersök systematiskt</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain"><div class="m-lead">
+<p>I kemi svarar man på frågor genom att undersöka. En bra undersökning kan upprepas av någon annan och ger ett svar man kan lita på. Den följer ett mönster: fråga, gissning, planering, genomförande, redovisning och värdering. Här får du träna det, med separation som exempel.</p>
+<p><strong class="term">1. Frågeställning.</strong> Börja med en fråga som går att besvara med en mätning eller iakttagelse. »Vilket filter är bäst?« är för oprecist. »Hur mycket grumlighet släpper kaffefilter, hushållspapper och bomullsvadd igenom?« går att undersöka. En bra fråga innehåller något du kan mäta eller jämföra.</p>
+<p><strong class="term">2. Hypotes.</strong> En <strong class="term"><span class="concept-inline" data-concept="Hypotes">hypotes</span></strong> är en gissning som bygger på det du redan vet, och som går att pröva. »Jag tror att kaffefiltret släpper igenom minst grumlighet, eftersom det har tätast fibrer.« Det spelar ingen roll om gissningen visar sig fel. Då har du lärt dig något.</p>
+<p><strong class="term">3. Planering.</strong> Bestäm vad du ändrar, vad du mäter och vad du håller lika. Det som du ändrar med avsikt (här filtret) kallas <strong class="term"><span class="concept-inline" data-concept="Variabel">oberoende variabel</span></strong>. Det du mäter (grumligheten hos filtratet) kallas <strong class="term"><span class="concept-inline" data-concept="beroende variabel">beroende variabel</span></strong>. Allt annat, till exempel mängden och sorten av blandning, hälltempo och hur länge du väntar, ska hållas <strong class="term"><span class="concept-inline" data-concept="konstant">konstant</span></strong>, annars vet du inte vad som orsakade skillnaden. Ändra alltså bara en sak i taget. Gör helst flera försök av varje sort, så att ett slumpmässigt misstag inte styr slutsatsen.</p>
+<div aria-label="Tabell 9 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Exempel på planering: vilket filter renar bäst?</caption>
+<thead><tr><th scope="col">Del i planen</th><th scope="col">Så gör vi</th></tr></thead>
+<tbody>
+<tr><th scope="row">Ändrar (oberoende)</th><td>filtertyp: kaffefilter, hushållspapper, bomullsvadd</td></tr>
+<tr><th scope="row">Mäter (beroende)</th><td>hur klart filtratet blir, till exempel skala 1–5 eller avläsning mot text bakom glaset</td></tr>
+<tr><th scope="row">Hålls lika (konstanta)</th><td>samma blandning (t.ex. 5 g jord i 200 ml vatten), samma mängd, samma tratt</td></tr>
+<tr><th scope="row">Upprepning</th><td>tre försök per filter</td></tr>
+<tr><th scope="row">Säkerhet</th><td>skyddsglasögon, torka upp spill, inget ätande eller drickande i labbet</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong class="term">4. Genomförande.</strong> Följ planen, mät med rätt redskap och skriv ned resultaten direkt i en tabell. Anteckna också det oväntade, för det kan visa sig vara viktigt. Använd mätcylinder för volym, våg för massa och termometer för temperatur, och läs av i ögonhöjd.</p>
+<p><strong class="term">5. Redovisning.</strong> Sammanställ dina resultat i en tydlig <em>tabell</em> med rubriker och enheter, och i ett <em>diagram</em> när det passar. Har du flera mätningar kan du räkna ut ett medelvärde: summan delat med antalet mätningar. Skriv sedan en slutsats som svarar på frågan och som stöds av dina mätningar.</p>
+<p><strong class="term">6. Värdering.</strong> Diskutera hur säkra resultaten är. Vad kan ha gett fel? Sådant kallas <strong class="term"><span class="concept-inline" data-concept="Felkälla">felkällor</span></strong>, till exempel att ni hällde olika snabbt, att filtren var olika stora eller att en tratt hade hål. Hur mycket skilde sig försöken från varandra? Vad skulle du ändra nästa gång? Var slutsatsen förenlig med din hypotes, och kan du förklara varför med hjälp av vad du vet om partiklar och egenskaper?</p>
+<div class="fact-box">
+<strong>Bra svar – tre nivåer</strong>
+            Ett godtagbart svar beskriver vad som gjordes och vad som hände. Ett utvecklat svar förklarar <em>varför</em> med hjälp av begrepp som partiklar, densitet eller löslighet. Ett välutvecklat svar drar generella slutsatser, jämför metoder, och värderar resultatens trovärdighet och vad som kan förbättras.
+          </div>
+<details class="check-q">
+<summary>Du vill jämföra hur snabbt socker löser sig i vatten av olika temperatur. Vad ska du hålla lika?</summary>
+<div class="svar">Mängden socker, sockrets form (t.ex. strösocker eller bit), mängden vatten, hur mycket du rör om, och hur du mäter tiden. Bara temperaturen får ändras.</div>
+</details>
+<details class="check-q">
+<summary>Varför gör man flera försök av samma sort?</summary>
+<div class="svar">Ett enda försök kan påverkas av slumpen eller av ett misstag. Med flera försök kan man se hur mycket resultaten varierar och räkna ut ett medelvärde som är mer pålitligt.</div>
+</details>
+<details class="deepen">
+<summary>Mätosäkerhet och siffror som är värda att skriva</summary>
+<p>Varje mätning har en osäkerhet, för mätinstrumentet kan bara avläsas med en viss noggrannhet. En mätcylinder med streck för varje 1 ml kan avläsas på ungefär en halv ml när. Skriv därför inte med fler siffror än instrumentet motiverar. Om vågen visar 54 g och volymen är 20 cm³ är svaret 2,7 g/cm³, inte 2,700000. Man kan också redovisa resultatet som ett intervall från det minsta till det största man fick.</p>
+</details>
+<details class="wonder">
+<summary>Är alla filter lika bra hela tiden?</summary>
+<p>Formulera en frågeställning och en hypotes om vad som händer med ett filter när man filtrerar många gånger. Hur skulle du planera en undersökning som prövar det?</p>
+<p class="frontier">Forskningsfronten: forskare testar nya filter, till exempel av kolbaserade material, som kan fånga mikroplast och läkemedelsrester ur vatten. Hur skulle man kunna jämföra sådana filter rättvist?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-6"><span class="n-label">Laborera</span>Undersök: vilket filter renar bäst?</a>
+<a href="./ovningsprov.html"><span class="n-label">Testa dig</span>Övningsprov</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Checklista</a>
+</div>
+</div></div>
+</div>
+</details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Skolverket. <em>Kursplan – Kemi (Grundskolan)</em>, centralt innehåll för årskurs 7–9. <a href="https://syllabuswebb.skolverket.se/compulsorycw/jsp/subject.htm?subjectCode=GRGRKEM01&amp;tos=gr" target="_blank" rel="noopener">syllabuswebb.skolverket.se</a></li>
+        <li id="ref-2">ITER. <em>Plasma: a strange state of matter</em> (plasma i universum). <a href="https://www.iter.org/mag/7/plasma-strange-state-matter" target="_blank" rel="noopener">iter.org</a></li>
+        <li id="ref-3">NIST. <em>NIST Chemistry WebBook</em> (smält- och kokpunkter för etanol, vatten m.fl.). <a href="https://webbook.nist.gov/chemistry/" target="_blank" rel="noopener">webbook.nist.gov</a></li>
+        <li id="ref-4">NIST. <em>Kelvin: Introduction</em> (kelvinskalan och absoluta nollpunkten). <a href="https://www.nist.gov/si-redefinition/kelvin-introduction" target="_blank" rel="noopener">nist.gov</a></li>
+        <li id="ref-5">Wikipedia. <em>Sodium chloride</em> och <em>Sucrose</em> (löslighet i vatten). <a href="https://en.wikipedia.org/wiki/Sodium_chloride" target="_blank" rel="noopener">en.wikipedia.org/wiki/Sodium_chloride</a> · <a href="https://en.wikipedia.org/wiki/Sucrose" target="_blank" rel="noopener">en.wikipedia.org/wiki/Sucrose</a></li>
+        <li id="ref-6">NOAA. <em>Can the ocean freeze?</em> (havsvattnets fryspunkt) <a href="https://oceanservice.noaa.gov/facts/oceanfreeze.html" target="_blank" rel="noopener">oceanservice.noaa.gov</a>; Wikipedia. <em>Freezing-point depression</em> (salt och fryspunktssänkning). <a href="https://en.wikipedia.org/wiki/Freezing-point_depression" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+        <li id="ref-7">Folkhälsomyndigheten. <em>Tillverkning av sprit och alkoholdrycker</em> (förbud mot att tillverka sprit för eget bruk). <a href="https://www.folkhalsomyndigheten.se/regler-och-tillsyn/alkohol-regler-for-tillverkning-handel-och-hantering/alkoholdrycker-sa-foljer-du-reglerna/tillverkning-av-sprit-och-alkoholdrycker/" target="_blank" rel="noopener">folkhalsomyndigheten.se</a></li>
+        <li id="ref-8">Dansukker. <em>Sött från naturen</em> (hur socker tillverkas av sockerbetor). <a href="https://www.dansukker.se/se/om-socker/sott-fraan-naturen" target="_blank" rel="noopener">dansukker.se</a></li>
+        <li id="ref-9">Nobelprize.org. <em>The Nobel Prize in Chemistry 1952</em> (Martin och Synge, uppfinningen av partitionskromatografi). <a href="https://www.nobelprize.org/prizes/chemistry/1952/summary/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-10">Stockholm Vatten och Avfall. <em>Reningsprocessen steg för steg</em> (rening av avloppsvatten, fosforfällning). <a href="https://www.stockholmvattenochavfall.se/kunskap/sahar-renas-vatten-och-avlopp/avloppsrening/reningsprocessen/" target="_blank" rel="noopener">stockholmvattenochavfall.se</a></li>
+        <li id="ref-11">Engineering ToolBox. <em>Metals and alloys – densities</em>. <a href="https://www.engineeringtoolbox.com/metal-alloys-densities-d_50.html" target="_blank" rel="noopener">engineeringtoolbox.com</a></li>
+        <li id="ref-12">Svenskt Vatten. <em>Vattenverk och reningsprocesser</em> (fällning, filtrering och desinfektion av dricksvatten). <a href="https://www.svensktvatten.se/vara-sakomraden/dricksvatten/vattenverk-och-reningsprocesser/" target="_blank" rel="noopener">svensktvatten.se</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#4a4a4a;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats. Alla bilder är egenritade för den här sajten.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash);
+      else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/kemi/separationsprocesser/js/partikelmodell.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.length) return;
+        window.BEGREPP = data;
+        var savedConceptLang = 'sv-SE';
+        try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+        /* Skriv inte över ett redan valt annat begrepp-språk (undviker kapplöpning mot concept-lang-selector.js). */
+        if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+      })
+      .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+  </script>
+</body>
+</html>

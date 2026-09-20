@@ -1,92 +1,324 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Separationsprocesser – Kemi</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body.area-separation {
+      --area: #0e7490;
+      --area-strong: #155e75;
+      --area-soft: #ecfeff;
+      --area-border: #a5f3fc;
+      --area-hover: #cffafe;
     }
+    main { font-size: 1.2em; }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) { .area-layout { grid-template-columns: 300px 1fr; align-items: start; } }
+    .area-main { min-width: 0; }
 
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
     .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: #1a1a2e; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
+
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+    .area-hero-image {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 16px;
+      padding: 1rem 1rem 1.1rem; margin: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image svg { width: 80%; max-width: 80%; height: auto; display: block; margin: 0 auto; }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
+    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .overview-intro { margin: 0 0 1rem 0; font-size: 1.35rem; font-weight: 600; color: var(--area-strong); text-align: center; }
+    .overview-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+    .overview-card {
+      background: #fff; border: 1px solid var(--area-border); border-radius: 10px;
+      padding: 0.55rem 0.6rem 0.65rem; width: 156px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .overview-card--wide { width: 306px; }
+    .overview-kat { font-size: 0.82rem; font-weight: 700; color: var(--area-strong); text-transform: uppercase; letter-spacing: .02em; }
+    .overview-stage { min-height: 74px; display: flex; align-items: center; justify-content: center; }
+    .overview-stage svg { max-width: 140px; max-height: 82px; }
+    .overview-card--wide .overview-stage svg { max-width: 290px; }
+    .overview-namn { font-size: 0.95rem; color: #1f2937; margin-top: 0.15rem; }
+
+    .overview-stage img { display:block; max-width:140px; max-height:82px; width:auto; height:auto; }
+    .overview-formler { font-size: 0.92rem; color:#1f2937; margin-top:0.1rem; }
+    .overview-formler .st { font-size:1.05rem; letter-spacing:0.04em; }
+    .overview-card--pad { width: calc((100% - 1.4rem) / 3); min-width: 150px; }
+    .overview-stage img { max-width: 140px; max-height: 84px; }
+    .resource-box li .note { font-weight:400; color:#374151; }
+    .resource-box a:focus-visible, .milestone-map-list a:focus-visible, .concept-btn:focus-visible, .subject-btn:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    .concept-section {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 12px;
+      padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem;
+    }
+    .concept-list li { margin: 0; }
+    .concept-list .concept-btn {
+      display: inline-block; background: #fff; border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.3rem 0.8rem; line-height: 1.3;
+      color: #1f2937; cursor: pointer; font: inherit; font-size: 1.05rem;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .concept-list .concept-btn:hover {
+      background: var(--area-hover); border-color: var(--area);
+      color: var(--area-strong); text-decoration: none;
+    }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem; background: var(--area-soft);
+      color: var(--area-strong); border: 1px solid var(--area-border); border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none; font-size: 0.93rem;
+      font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem;
+      border-radius: 50%; background: var(--area); color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
     }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
     }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      font-size: 1.2em;
-    }
-
-  </style>
+  
+    .study-tips a { text-decoration: underline; }
+</style>
 </head>
+<body class="area-separation">
 
-<body>
+  <header class="kemi-header">
+    <h1>Separationsprocesser</h1>
+  </header>
 
-<header class="kemi-header">
-  <h1>Separationsprocesser</h1>
-</header>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
+  <main>
+    <div class="page-actions no-print" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+      <a href="/kemi/syror-och-baser/index.html" class="subject-btn">Nästa område →</a>
+    </div>
 
-<nav id="side-menu"></nav>
+    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
 
-<main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-    <a href="/kemi/syror-och-baser/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om filtrering, destillation, extraktion, kromatografi och andra separationsmetoder.</p>
-    </section>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a> – nio milstolpar med bilder och partikelmodeller</li>
+              <li><a href="./checklista.html"><strong>Checklista</strong></a></li>
+              <li><a href="./instuderingsfragor.html"><strong>Instuderingsfrågor</strong></a></li>
+              <li><a href="./ovningsprov.html"><strong>Övningsprov</strong></a></li>
+              <li><a href="./partiklar.html"><strong>Partikelsimulatorn</strong></a> – värm och kyl vatten, etanol och järn och se partiklarna röra sig</li>
+              <li><a href="./valj-metod.html"><strong>Välj rätt metod</strong></a> – vilken separationsmetod passar blandningen?</li>
+              <li><a href="./ovningsverktyg.html"><strong>Övningar</strong></a> – dra och släpp och sortera</li>
+              <li><a href="./laborationer.html"><strong>Laborationer</strong></a> – sju laborationsinstruktioner att skriva ut</li>
+              <li><a href="./larande-spel.html"><strong>Lärande spel</strong></a> – begreppskort, bingo och korsord</li>
+            </ul>
+          </article>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./begreppslista.html"><strong>Begreppslista</strong></a></li>
+              <li><a href="./facit.html"><strong>Facit till övningsprovet</strong></a></li>
+              <li><a href="./instuderingsfragor-print-larare.html"><strong>Instuderingsfrågor med svar</strong></a> – utskrift för läraren</li>
+              <li><a href="./laborationer.html"><strong>Laborationer med lärarnotiser</strong></a> – risker, material och tips för de sju laborationerna</li>
+            </ul>
+          </article>
+        </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <p style="color:#595959; font-style:italic;">Material kommer snart.</p>
-      </article>
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Lär dig först de tre formerna – fast, flytande och gas – och vad partiklarna gör i var och en.</li>
+              <li>Skilj på <strong>rent ämne</strong> och <strong>blandning</strong>. Ett rent ämne har en bestämd smältpunkt och kokpunkt.</li>
+              <li>Skilj på <strong>lösning</strong> (ser likadan ut överallt), <strong>slamning</strong> (korn i vätska) och <strong>emulsion</strong> (droppar i vätska).</li>
+              <li>Varje separationsmetod utnyttjar <strong>en egenskap</strong> som ämnena skiljer sig åt i, till exempel storlek, tyngd eller kokpunkt. Fråga dig alltid: vad är olika här?</li>
+              <li>Träna på att välja metod för en blandning i <a href="./valj-metod.html">Välj rätt metod</a> och motivera med rätt egenskap.</li>
+              <li>Vid en undersökning: ändra <strong>en</strong> sak i taget och håll allt annat lika.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <p class="overview-intro">Metoderna du kommer att studera i det här området!</p>
+          <div class="overview-grid">
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-filtrering.svg" width="140" height="84" alt="Ikon: kolv, trattar och filter" loading="lazy" /></div>
+              <div class="overview-namn">Filtrering</div>
+              <div class="overview-formler">utnyttjar: olösta korn</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-centrifug.svg" width="140" height="84" alt="Ikon: centrifug" loading="lazy" /></div>
+              <div class="overview-namn">Centrifugering</div>
+              <div class="overview-formler">utnyttjar: tyngd (densitet)</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-magnet.svg" width="140" height="84" alt="Ikon: magnet" loading="lazy" /></div>
+              <div class="overview-namn">Magnet</div>
+              <div class="overview-formler">utnyttjar: magnetism</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-destillation.svg" width="140" height="84" alt="Ikon: destillation" loading="lazy" /></div>
+              <div class="overview-namn">Destillation</div>
+              <div class="overview-formler">utnyttjar: kokpunkt</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-indunstning.svg" width="140" height="84" alt="Ikon: indunstning" loading="lazy" /></div>
+              <div class="overview-namn">Indunstning</div>
+              <div class="overview-formler">utnyttjar: avdunstning</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Separationsmetod</div>
+              <div class="overview-stage"><img src="/images/kemi/separationsprocesser/icon-kromatografi.svg" width="140" height="84" alt="Ikon: kromatografi" loading="lazy" /></div>
+              <div class="overview-namn">Kromatografi</div>
+              <div class="overview-formler">utnyttjar: hur fort ämnena vandrar</div>
+            </div>
+          </div>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Aggregationstillstånd">Aggregationstillstånd</button></li>
+            <li><button class="concept-btn" data-concept="Partikelmodellen">Partikelmodellen</button></li>
+            <li><button class="concept-btn" data-concept="Plasma">Plasma</button></li>
+            <li><button class="concept-btn" data-concept="Smältning">Smältning</button></li>
+            <li><button class="concept-btn" data-concept="Stelning">Stelning</button></li>
+            <li><button class="concept-btn" data-concept="Smältpunkt">Smältpunkt</button></li>
+            <li><button class="concept-btn" data-concept="Avdunstning">Avdunstning</button></li>
+            <li><button class="concept-btn" data-concept="Kokning">Kokning</button></li>
+            <li><button class="concept-btn" data-concept="Kokpunkt">Kokpunkt</button></li>
+            <li><button class="concept-btn" data-concept="Kondensering">Kondensering</button></li>
+            <li><button class="concept-btn" data-concept="Sublimering">Sublimering</button></li>
+            <li><button class="concept-btn" data-concept="Fysikalisk förändring">Fysikalisk förändring</button></li>
+            <li><button class="concept-btn" data-concept="Rent ämne">Rent ämne</button></li>
+            <li><button class="concept-btn" data-concept="Densitet">Densitet</button></li>
+            <li><button class="concept-btn" data-concept="Blandning">Blandning</button></li>
+            <li><button class="concept-btn" data-concept="Homogen blandning">Homogen blandning</button></li>
+            <li><button class="concept-btn" data-concept="Heterogen blandning">Heterogen blandning</button></li>
+            <li><button class="concept-btn" data-concept="Lösning">Lösning</button></li>
+            <li><button class="concept-btn" data-concept="Slamning">Slamning</button></li>
+            <li><button class="concept-btn" data-concept="Emulsion">Emulsion</button></li>
+            <li><button class="concept-btn" data-concept="Emulgeringsmedel">Emulgeringsmedel</button></li>
+            <li><button class="concept-btn" data-concept="Legering">Legering</button></li>
+            <li><button class="concept-btn" data-concept="Lösningsmedel">Lösningsmedel</button></li>
+            <li><button class="concept-btn" data-concept="Löst ämne">Löst ämne</button></li>
+            <li><button class="concept-btn" data-concept="Mättad lösning">Mättad lösning</button></li>
+            <li><button class="concept-btn" data-concept="Löslighet">Löslighet</button></li>
+            <li><button class="concept-btn" data-concept="Separationsmetod">Separationsmetod</button></li>
+            <li><button class="concept-btn" data-concept="Silning">Silning</button></li>
+            <li><button class="concept-btn" data-concept="Sedimentering">Sedimentering</button></li>
+            <li><button class="concept-btn" data-concept="Sediment">Sediment</button></li>
+            <li><button class="concept-btn" data-concept="Dekantering">Dekantering</button></li>
+            <li><button class="concept-btn" data-concept="Filtrering">Filtrering</button></li>
+            <li><button class="concept-btn" data-concept="Filtrat">Filtrat</button></li>
+            <li><button class="concept-btn" data-concept="Centrifugering">Centrifugering</button></li>
+            <li><button class="concept-btn" data-concept="Indunstning">Indunstning</button></li>
+            <li><button class="concept-btn" data-concept="Destillation">Destillation</button></li>
+            <li><button class="concept-btn" data-concept="Destillat">Destillat</button></li>
+            <li><button class="concept-btn" data-concept="Extraktion">Extraktion</button></li>
+            <li><button class="concept-btn" data-concept="Kromatografi">Kromatografi</button></li>
+            <li><button class="concept-btn" data-concept="Rf-värde">Rf-värde</button></li>
+            <li><button class="concept-btn" data-concept="Fällning">Fällning</button></li>
+            <li><button class="concept-btn" data-concept="Analys">Analys</button></li>
+            <li><button class="concept-btn" data-concept="pH-värde">pH-värde</button></li>
+            <li><button class="concept-btn" data-concept="Indikator">Indikator</button></li>
+            <li><button class="concept-btn" data-concept="Reningsverk">Reningsverk</button></li>
+            <li><button class="concept-btn" data-concept="Omvänd osmos">Omvänd osmos</button></li>
+            <li><button class="concept-btn" data-concept="Hypotes">Hypotes</button></li>
+            <li><button class="concept-btn" data-concept="Variabel">Variabel</button></li>
+            <li><button class="concept-btn" data-concept="Felkälla">Felkälla</button></li>
+          </ul>
+          <p class="concept-note">Grundämnen, kemiska föreningar och blandningar förklaras även i <a href="/kemi/atomer/index.html">Atomer och molekyler</a>. Salter som fälls ut i vatten hör ihop med <a href="/kemi/jonforeningar/index.html">Jonföreningar</a>, och pH-värde och indikatorer med <a href="/kemi/syror-och-baser/index.html">Syror och baser</a>. Destillation av råolja tas upp i <a href="/kemi/kol-och-kolforeningar/index.html">Kol och kolföreningar</a>.</p>
+        </section>
+
+        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+          <h2>Studieguidens milstolpar</h2>
+          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+          <ul class="milestone-map-list">
+            <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Materiens tre former</a></li>
+            <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Fasövergångar – när ämnen byter form</a></li>
+            <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Rena ämnen och blandningar</a></li>
+            <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Lösningar och löslighet</a></li>
+            <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Att dela upp blandningar med olösta delar</a></li>
+            <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Att få loss lösta ämnen</a></li>
+            <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Fällning och analys</a></li>
+            <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Separation i samhället</a></li>
+            <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Undersök systematiskt</a></li>
+          </ul>
+        </section>
+      </div>
     </section>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>
+  window.BEGREPP = [{"namn": "Aggregationstillstånd", "definition": "Den form ett ämne har: fast, flytande eller gas. Samma ämne kan finnas i alla tre formerna, beroende på temperaturen.", "anchor": "./studieguide.html#m1"}, {"namn": "Partikelmodellen", "definition": "En modell där ämnen ritas som små kulor, partiklar. Partiklarna är alltid i rörelse, och ju högre temperatur, desto snabbare rör de sig.", "anchor": "./studieguide.html#m1"}, {"namn": "Plasma", "definition": "En fjärde form av materia där gasen är så het att elektroner slitits loss från atomerna. Plasma finns i blixtar, norrsken och i solen.", "anchor": "./studieguide.html#m1"}, {"namn": "Smältning", "definition": "Övergången från fast form till flytande form när ämnet värms upp, till exempel när is blir vatten.", "anchor": "./studieguide.html#m2"}, {"namn": "Stelning", "definition": "Övergången från flytande form till fast form när ämnet kyls, till exempel när vatten fryser till is.", "anchor": "./studieguide.html#m2"}, {"namn": "Smältpunkt", "definition": "Den temperatur då ett rent ämne smälter (och stelnar). För vatten är den 0 °C.", "anchor": "./studieguide.html#m2"}, {"namn": "Avdunstning", "definition": "När partiklar lämnar ytan på en vätska och blir gas. Det sker vid alla temperaturer, men snabbare när det är varmt, torrt och blåsigt.", "anchor": "./studieguide.html#m2"}, {"namn": "Kokning", "definition": "När en vätska blir gas i hela vätskan, så att det bildas bubblor. Det sker vid ämnets kokpunkt.", "anchor": "./studieguide.html#m2"}, {"namn": "Kokpunkt", "definition": "Den temperatur då en vätska kokar. För vatten är den 100 °C vid normalt lufttryck.", "anchor": "./studieguide.html#m2"}, {"namn": "Kondensering", "definition": "Övergången från gas till vätska när gasen kyls, till exempel när vattenånga blir droppar på ett kallt glas.", "anchor": "./studieguide.html#m2"}, {"namn": "Sublimering", "definition": "Övergången direkt från fast form till gas utan att ämnet blir flytande, till exempel när torris blir koldioxidgas.", "anchor": "./studieguide.html#m2"}, {"namn": "Fysikalisk förändring", "definition": "En förändring där inga nya ämnen bildas. Ämnet är detsamma efteråt, bara i en annan form eller blandat med något annat.", "anchor": "./studieguide.html#m2"}, {"namn": "Rent ämne", "definition": "Ett ämne som bara innehåller en sorts partiklar, antingen ett grundämne eller en kemisk förening. Det har bestämda smält- och kokpunkter.", "anchor": "./studieguide.html#m3"}, {"namn": "Densitet", "definition": "Hur mycket massa ämnet har per volym, ρ = m / V, ofta i g/cm³. Ämnen med högre densitet än vätskan sjunker i den.", "anchor": "./studieguide.html#m3"}, {"namn": "Blandning", "definition": "Två eller flera ämnen som ligger tillsammans utan att ha reagerat med varandra. Varje ämne behåller sina egenskaper.", "anchor": "./studieguide.html#m3"}, {"namn": "Homogen blandning", "definition": "En blandning som ser likadan ut överallt, så att man inte kan se de olika delarna, till exempel saltvatten och luft.", "anchor": "./studieguide.html#m3"}, {"namn": "Heterogen blandning", "definition": "En blandning där man kan se att den består av olika delar, till exempel sand i vatten eller granit.", "anchor": "./studieguide.html#m3"}, {"namn": "Lösning", "definition": "En homogen blandning där ett ämne är utspritt som mycket små partiklar i ett annat, till exempel salt i vatten.", "anchor": "./studieguide.html#m3"}, {"namn": "Slamning", "definition": "En blandning där fasta korn svävar i en vätska, till exempel lera i vatten. Kornen sjunker med tiden.", "anchor": "./studieguide.html#m3"}, {"namn": "Emulsion", "definition": "En blandning där små droppar av en vätska svävar i en annan vätska som de inte löser sig i, till exempel olja i vatten eller mjölk.", "anchor": "./studieguide.html#m3"}, {"namn": "Emulgeringsmedel", "definition": "Ett ämne som hindrar en emulsion från att skiljas åt, till exempel äggula i majonnäs.", "anchor": "./studieguide.html#m3"}, {"namn": "Legering", "definition": "En blandning av metaller (eller metall med litet av ett annat grundämne), till exempel brons, mässing och stål.", "anchor": "./studieguide.html#m3"}, {"namn": "Lösningsmedel", "definition": "Ämnet som löser upp något annat i en lösning, till exempel vattnet i saltvatten.", "anchor": "./studieguide.html#m4"}, {"namn": "Löst ämne", "definition": "Ämnet som har blivit upplöst i en lösning, till exempel saltet i saltvatten.", "anchor": "./studieguide.html#m4"}, {"namn": "Mättad lösning", "definition": "En lösning som inte kan lösa mer av ämnet. Tillsätter man mer ligger det olöst på botten.", "anchor": "./studieguide.html#m4"}, {"namn": "Löslighet", "definition": "Hur mycket av ett ämne som går att lösa i ett visst lösningsmedel vid en viss temperatur.", "anchor": "./studieguide.html#m4"}, {"namn": "Separationsmetod", "definition": "Ett sätt att dela upp en blandning i sina delar. Metoden utnyttjar att ämnena skiljer sig åt i någon egenskap.", "anchor": "./studieguide.html#m5"}, {"namn": "Silning", "definition": "Att låta en blandning passera en sil med hål av en viss storlek, så att små delar går igenom och stora blir kvar.", "anchor": "./studieguide.html#m5"}, {"namn": "Sedimentering", "definition": "Att låta en slamning stå stilla så att de tyngre kornen sjunker och samlas på botten.", "anchor": "./studieguide.html#m5"}, {"namn": "Sediment", "definition": "Bottensatsen: de korn som har sjunkit till botten när en slamning fått stå.", "anchor": "./studieguide.html#m5"}, {"namn": "Dekantering", "definition": "Att försiktigt hälla av vätskan från ett sediment så att bottensatsen blir kvar.", "anchor": "./studieguide.html#m5"}, {"namn": "Filtrering", "definition": "Att hälla en blandning genom ett filter med mycket små hål. Vätskan går igenom, de olösta kornen blir kvar.", "anchor": "./studieguide.html#m5"}, {"namn": "Filtrat", "definition": "Vätskan som har passerat genom filtret.", "anchor": "./studieguide.html#m5"}, {"namn": "Centrifugering", "definition": "Att snurra en blandning mycket snabbt så att de tyngre delarna pressas utåt och hamnar längst ned i röret.", "anchor": "./studieguide.html#m5"}, {"namn": "Indunstning", "definition": "Att låta lösningsmedlet avdunsta eller koka bort så att det lösta ämnet blir kvar som fast ämne.", "anchor": "./studieguide.html#m6"}, {"namn": "Destillation", "definition": "Att värma en blandning så att ämnet med lägst kokpunkt blir ånga, som sedan kyls och blir vätska igen i en kylare.", "anchor": "./studieguide.html#m6"}, {"namn": "Destillat", "definition": "Vätskan som samlas upp när ångan har kylts och kondenserat vid en destillation.", "anchor": "./studieguide.html#m6"}, {"namn": "Extraktion", "definition": "Att använda ett lösningsmedel för att lösa ut det man vill åt ur en fast blandning, till exempel smak ur teblad.", "anchor": "./studieguide.html#m6"}, {"namn": "Kromatografi", "definition": "En metod för att skilja och identifiera ämnen i en blandning genom att de vandrar olika snabbt, till exempel på filterpapper.", "anchor": "./studieguide.html#m6"}, {"namn": "Rf-värde", "definition": "Sträckan ett ämne har vandrat delat med sträckan lösningsmedlet har vandrat i kromatografi. Värdet ligger mellan 0 och 1.", "anchor": "./studieguide.html#m6"}, {"namn": "Fällning", "definition": "När två lösningar blandas och ett nytt, olösligt fast ämne bildas som sjunker till botten. Ämnet kallas också fällning.", "anchor": "./studieguide.html#m7"}, {"namn": "Analys", "definition": "Att ta reda på vad ett ämne är eller vad ett prov innehåller (påvisa), och hur mycket det innehåller (mäta).", "anchor": "./studieguide.html#m7"}, {"namn": "pH-värde", "definition": "Ett mått på hur surt eller basiskt något är, på en skala från ungefär 0 till 14. pH 7 är neutralt.", "anchor": "./studieguide.html#m7"}, {"namn": "Indikator", "definition": "Ett ämne som ändrar färg beroende på om lösningen är sur eller basisk, till exempel pH-papper.", "anchor": "./studieguide.html#m7"}, {"namn": "Reningsverk", "definition": "En anläggning som renar avloppsvatten i flera steg, med bland annat galler, sedimentering, bakterier och fällning, innan vattnet släpps ut.", "anchor": "./studieguide.html#m8"}, {"namn": "Omvänd osmos", "definition": "En metod där vatten pressas genom ett mycket tätt membran som stoppar det lösta saltet. Används för att avsalta havsvatten.", "anchor": "./studieguide.html#m8"}, {"namn": "Hypotes", "definition": "En gissning som bygger på det man redan vet och som går att pröva genom en undersökning.", "anchor": "./studieguide.html#m9"}, {"namn": "Variabel", "definition": "Något som kan ändras eller mätas i en undersökning. Den man ändrar är den oberoende variabeln, den man mäter är den beroende, och allt annat ska hållas lika (konstant).", "anchor": "./studieguide.html#m9"}, {"namn": "Felkälla", "definition": "Något som kan ha gjort ett mätresultat mindre pålitligt, till exempel en dålig mätning, olika förutsättningar mellan försök eller ett trasigt redskap.", "anchor": "./studieguide.html#m9"}];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          var saved = "sv-SE";
+          try { saved = localStorage.getItem("site.concept-lang") || "sv-SE"; } catch (e) {}
+          /* Skriv inte över ett redan valt annat begreppsspråk (undviker kapplöpning mot concept-lang-selector.js). */
+          if (saved === "sv-SE") {
+            if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+            window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+          }
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
 </body>
 </html>

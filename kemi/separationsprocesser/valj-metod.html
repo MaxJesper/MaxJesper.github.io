@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Välj rätt metod – Separationsprocesser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-separation { --area:#0e7490; --area-strong:#155e75; --area-soft:#ecfeff; --area-border:#a5f3fc; --area-hover:#cffafe; }
+    main { max-width: 900px; margin: 0 auto; font-size: 1.05em; }
+    .intro-box { background:#ecfeff; border:1px solid #a5f3fc; border-left:4px solid #155e75; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .intro-box p { margin:0.35rem 0; }
+    #prog { font-weight:700; color:#1e3a8a; }
+    .jump { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.6rem 0 0; padding:0; list-style:none; }
+    .jump button { font:inherit; font-size:0.9rem; padding:0.3rem 0.8rem; min-height:36px; border:2px solid #67e8f9; border-radius:999px; background:#fff; color:#155e75; cursor:pointer; }
+    .jump button[aria-current=true] { background:#155e75; color:#fff; border-color:#155e75; }
+    .jump button.klar::after { content:" ✓"; }
+    .jump button:focus-visible, .chip:focus-visible, .btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .card { background:#fff; border:1px solid #d8d8d8; border-left:5px solid var(--area); border-radius:12px; padding:1.1rem 1.3rem; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+    .card h2 { margin:0 0 0.2rem; color:var(--area-strong); font-size:1.25rem; }
+    .tierlabel { font-size:0.75rem; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:#155e75; }
+    .sec-label { font-weight:700; margin:1rem 0 0.3rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .chip { font:inherit; font-weight:600; padding:0.5rem 0.9rem; min-height:44px; border:2px solid #155e75; border-radius:10px; background:#fff; color:#155e75; cursor:pointer; }
+    .chip:hover { background:#ecfeff; }
+    .seq { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.4rem; min-height:2.6rem; }
+    .seq li { display:flex; align-items:center; gap:0.6rem; background:#f8fafc; border:2px solid #94a3b8; border-radius:10px; padding:0.35rem 0.6rem; }
+    .seq .num { font-weight:800; background:#155e75; color:#fff; border-radius:50%; width:1.7rem; height:1.7rem; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; }
+    .seq .namn { flex:1; font-weight:600; }
+    .seq .rm { font:inherit; border:2px solid #475569; background:#fff; color:#1f2937; border-radius:8px; padding:0.2rem 0.6rem; min-height:36px; cursor:pointer; }
+    .seq li.ratt { border-color:#1d4ed8; background:#eff6ff; }
+    .seq li.fel { border-color:#9a3412; background:#fff7ed; border-style:dashed; }
+    .seq .mark { font-weight:800; }
+    .empty { color:#475569; font-style:italic; }
+    .actions { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.9rem; }
+    .btn { font:inherit; font-weight:700; padding:0.55rem 1.1rem; min-height:44px; border-radius:10px; cursor:pointer; border:2px solid #155e75; background:#155e75; color:#fff; }
+    .btn.sek { background:#fff; color:#155e75; }
+    .btn[disabled] { opacity:0.5; cursor:not-allowed; }
+    .fb { margin-top:0.9rem; padding:0.8rem 1rem; border-radius:10px; border:2px solid #94a3b8; background:#f8fafc; }
+    .fb.ok { border-color:#1d4ed8; background:#eff6ff; }
+    .fb.no { border-color:#9a3412; background:#fff7ed; }
+    .fb strong.h { display:block; margin-bottom:0.2rem; }
+    .fb p { margin:0.25rem 0; }
+    .hint { margin-top:0.5rem; font-size:0.95rem; color:#334155; }
+    .navrow { display:flex; justify-content:space-between; gap:0.5rem; margin-top:1rem; flex-wrap:wrap; }
+  </style>
+</head>
+<body class="area-separation">
+  <header class="kemi-header">
+    <h1>Välj rätt metod</h1>
+    <p>Separationsprocesser</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html#m5" class="subject-btn">📖 Studieguiden</a>
+      <a href="./larande-spel.html" class="subject-btn">🎮 Lärande spel</a>
+    </div>
+
+    <section class="intro-box">
+      <p><strong>Så här gör du:</strong> läs problemet och klicka på metoderna i den ordning du vill använda dem. Ofta behövs mer än en metod, och ordningen spelar roll. Klicka på <em>Kontrollera</em> för att få besked och en förklaring. Fråga dig alltid: <em>vad skiljer ämnena åt?</em></p>
+      <p id="prog" role="status" aria-live="polite">Rätt på första försöket: 0 av …</p>
+      <div role="group" aria-label="Välj scenario"><ul class="jump" id="jump"></ul></div>
+    </section>
+
+    <section class="card" id="kort"></section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  (function () {
+    var DATA, cur = 0, seq = [], fel = 0, klar = {}, forsta = {};
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function met(id) { return DATA.metoder.filter(function (m) { return m.id === id; })[0]; }
+    function eq(a, b) { return a.length === b.length && a.every(function (x, i) { return x === b[i]; }); }
+    function godkant(sc, s) { return eq(s, sc.svar) || (sc.alt || []).some(function (a) { return eq(s, a); }); }
+
+    function renderJump() {
+      var ul = document.getElementById('jump'); ul.innerHTML = '';
+      DATA.scenarier.forEach(function (sc, i) {
+        var li = document.createElement('li'), b = document.createElement('button');
+        b.type = 'button'; b.textContent = (i + 1) + '. ' + sc.titel;
+        if (i === cur) b.setAttribute('aria-current', 'true');
+        if (klar[sc.id]) b.className = 'klar';
+        b.addEventListener('click', function () { go(i); });
+        li.appendChild(b); ul.appendChild(li);
+      });
+      var n = Object.keys(forsta).filter(function (k) { return forsta[k]; }).length;
+      document.getElementById('prog').textContent = 'Rätt på första försöket: ' + n + ' av ' + DATA.scenarier.length + ' · Klara: ' + Object.keys(klar).length;
+    }
+    function go(i) { cur = i; seq = []; fel = 0; render(); renderJump(); }
+
+    function render(fbHtml, fbCls, marks) {
+      var sc = DATA.scenarier[cur], root = document.getElementById('kort');
+      var h = '<div class="tierlabel">' + esc(sc.tier) + ' · Scenario ' + (cur + 1) + ' av ' + DATA.scenarier.length + '</div>';
+      h += '<h2>' + esc(sc.titel) + '</h2><p>' + esc(sc.beskrivning) + '</p>';
+      h += '<div class="sec-label" id="lbl-m">Metoder (klicka för att lägga till i din plan):</div><div class="chips" role="group" aria-labelledby="lbl-m">';
+      DATA.metoder.forEach(function (m) { h += '<button type="button" class="chip" data-id="' + m.id + '">' + esc(m.namn) + '</button>'; });
+      h += '</div><div class="sec-label" id="lbl-s">Din plan, steg för steg:</div>';
+      if (!seq.length) h += '<p class="empty">Ingen metod vald ännu.</p>';
+      else {
+        h += '<ol class="seq" aria-labelledby="lbl-s">';
+        seq.forEach(function (id, i) {
+          var cls = marks ? (marks[i] ? 'ratt' : 'fel') : '';
+          var mk = marks ? (marks[i] ? '<span class="mark"> ✔ rätt plats</span>' : '<span class="mark"> ✖ fel</span>') : '';
+          h += '<li class="' + cls + '"><span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="namn">' + esc(met(id).namn) + mk + '</span><button type="button" class="rm" data-rm="' + i + '" aria-label="Ta bort steg ' + (i + 1) + '">Ta bort</button></li>';
+        });
+        h += '</ol>';
+      }
+      h += '<div class="actions"><button type="button" class="btn" id="chk"' + (seq.length ? '' : ' disabled') + '>Kontrollera</button>';
+      h += '<button type="button" class="btn sek" id="clr"' + (seq.length ? '' : ' disabled') + '>Töm planen</button>';
+      h += '<button type="button" class="btn sek" id="hint">Ledtråd</button>';
+      if (fel >= 2 && !klar[sc.id]) h += '<button type="button" class="btn sek" id="show">Visa svaret</button>';
+      h += '</div><div id="hintbox" class="hint" aria-live="polite"></div>';
+      if (fbHtml) h += '<div class="fb ' + fbCls + '" role="status">' + fbHtml + '</div>';
+      h += '<div class="navrow"><button type="button" class="btn sek" id="prev"' + (cur === 0 ? ' disabled' : '') + '>← Föregående</button><button type="button" class="btn sek" id="next"' + (cur === DATA.scenarier.length - 1 ? ' disabled' : '') + '>Nästa →</button></div>';
+      root.innerHTML = h;
+      root.querySelectorAll('.chip').forEach(function (b) { b.addEventListener('click', function () { var id = b.getAttribute('data-id'); seq.push(id); render(); var nb = document.querySelector('.chip[data-id="' + id + '"]'); if (nb) nb.focus(); }); });
+      root.querySelectorAll('.rm').forEach(function (b) { b.addEventListener('click', function () { var i = +b.getAttribute('data-rm'); seq.splice(i, 1); render(); var n = document.querySelectorAll('.seq .rm'); var f = n[Math.min(i, n.length - 1)] || document.querySelector('.chip'); if (f) f.focus(); }); });
+      var c = document.getElementById('chk'); if (c) c.addEventListener('click', check);
+      var cl = document.getElementById('clr'); if (cl) cl.addEventListener('click', function () { seq = []; render(); });
+      document.getElementById('hint').addEventListener('click', function () {
+        var egs = []; sc.svar.forEach(function (id) { var e = met(id).egenskap; if (egs.indexOf(e) < 0) egs.push(e); });
+        document.getElementById('hintbox').textContent = 'Ledtråd: du behöver ' + sc.svar.length + ' steg. Egenskaper som skiljer ämnena åt här: ' + egs.join(', ') + '.';
+      });
+      var sh = document.getElementById('show'); if (sh) sh.addEventListener('click', function () { seq = sc.svar.slice(); klar[sc.id] = 1; render('<strong class="h">Så här kan man göra:</strong><p>' + esc(sc.varfor) + '</p>', 'ok'); renderJump(); });
+      document.getElementById('prev').addEventListener('click', function () { go(cur - 1); });
+      document.getElementById('next').addEventListener('click', function () { go(cur + 1); });
+    }
+
+    function check() {
+      var sc = DATA.scenarier[cur];
+      if (godkant(sc, seq)) {
+        if (!klar[sc.id]) forsta[sc.id] = (fel === 0);
+        klar[sc.id] = 1;
+        render('<strong class="h">✔ Rätt!</strong><p>' + esc(sc.varfor) + '</p>', 'ok', seq.map(function () { return true; }));
+        renderJump(); return;
+      }
+      fel++;
+      var marks = seq.map(function (id, i) { return sc.svar[i] === id; });
+      var missing = sc.svar.filter(function (id) { return seq.indexOf(id) < 0; });
+      var extra = seq.filter(function (id) { return sc.svar.indexOf(id) < 0; });
+      var msg = '<strong class="h">✖ Inte riktigt än.</strong>';
+      if (!missing.length && !extra.length && seq.length === sc.svar.length) msg += '<p>Du har rätt metoder men i fel ordning. Tänk på vad som måste göras först.</p>';
+      else {
+        if (extra.length) msg += '<p>Metoder som inte passar här: ' + extra.map(function (id) { return esc(met(id).namn); }).join(', ') + '. Fråga dig vad som skiljer ämnena åt.</p>';
+        if (missing.length) msg += '<p>Något saknas i din plan (' + missing.length + ' steg till).</p>';
+        if (seq.length > sc.svar.length && !extra.length) msg += '<p>Du har med fler steg än som behövs.</p>';
+      }
+      render(msg, 'no', marks);
+    }
+
+    fetch('data/valjmetod.json').then(function (r) { return r.json(); }).then(function (d) { DATA = d; render(); renderJump(); })
+      .catch(function () { document.getElementById('kort').innerHTML = '<p>Scenarierna kunde inte laddas. Ladda om sidan.</p>'; });
+  })();
+  </script>
+</body>
+</html>

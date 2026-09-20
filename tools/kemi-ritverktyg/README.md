@@ -125,3 +125,9 @@ Skillnad mot kolkapitlet: här ligger live-3D direkt i studieguiden (få molekyl
 Uppdatera de här skripten (strukturformler.js, chembuilder.py, kulmodeller3d.py)
 OCH minnet/skillen varje gång vi optimerar en ritfunktion - gäller oberoende av
 vilken session/dator det görs ifrån.
+
+## separationsprocesser/  (Python, sep 2026)
+Bygger HELA området `kemi/separationsprocesser/` (studieguide, data, standardsidor, verktyg, laborationer, bingo, korsord, index)
+och de 22 SVG-bilderna i `images/kemi/separationsprocesser/` från källfiler i mappen. Redigera källorna, inte de genererade filerna.
+Kör: `cd tools/kemi-ritverktyg/separationsprocesser && python3 bygg_alla.py` (kräver python3 + beautifulsoup4).
+Detaljer, regler och testlista: CLAUDE.md, avsnittet "Separationsprocesser – byggt 20 sep 2026".

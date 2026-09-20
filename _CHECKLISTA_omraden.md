@@ -47,14 +47,14 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
 | kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
-| kemi/separationsprocesser | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/separationsprocesser | 13/13 | 5/5 | 10/10 (+rw) | ✓ | ✗ |
 | kemi/syror-och-baser | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
 
 ## Öppna punkter (backlog)
 
 ### Klart
 
-- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, **liv-och-cellen (nytt, åk7)**.
+- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**.
 
 - Flerspråk (10 språk inkl. urdu) i 7 fysik/kemi-områden. Namnstandard utskrifter enhetlig.
 
@@ -98,7 +98,7 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 ### Konkreta byggen
 
-- **Kursplanetäckning kemi åk 7–9 (analys 20 sep 2026):** se `_KURSPLAN_kemi_tackning_2026-09-20.md`. Största luckorna: Separationsprocesser (tomt), Vatten och lösningar, Jonföreningar (bara lab), Matens kemi (kolhydrater saknas), Kemi i miljön (kolets kretslopp, växthuseffekt, vattenrening, miljögifter), Produkter och material (läkemedel, funktionsmaterial, livscykel) samt tvärgående: undersökningsmetodik, digitala verktyg, källkritik, kemihistoria, argumentation.
+- **Kursplanetäckning kemi åk 7–9 (analys 20 sep 2026):** se `_KURSPLAN_kemi_tackning_2026-09-20.md`. Största luckorna: ~~Separationsprocesser (tomt)~~ (BYGGT 20 sep 2026, se CLAUDE.md), Vatten och lösningar, Jonföreningar (bara lab), Matens kemi (kolhydrater saknas), Kemi i miljön (kolets kretslopp, växthuseffekt, vattenrening, miljögifter), Produkter och material (läkemedel, funktionsmaterial, livscykel) samt tvärgående: undersökningsmetodik, digitala verktyg, källkritik, kemihistoria, argumentation.
 
 - **Byt språkväljarens etiketter (påminnelse, Jesper 20 sep 2026):** i `js/concept-lang-selector.js` ändras `STOD` till `'begrepp+checklistor'` när ALLA checklistor är översatta (11 språk) och korrekturlästa, samt `ENGELSK_HELA = true` när hela siten finns på engelska och är godkänd. Tills dess står "(begrepp)" efter språken. Checklistesidorna behöver då också få samma språkväljare (`concept-lang-selector-mount`).
 

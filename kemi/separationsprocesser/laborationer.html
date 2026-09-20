@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationer – Separationsprocesser</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-separation { --area:#0e7490; --area-strong:#155e75; --area-soft:#ecfeff; --area-border:#a5f3fc; --area-hover:#cffafe; }
+    main { max-width: 900px; margin: 0 auto; font-size: 1.05em; }
+    .intro-card { background: var(--area-soft); border: 1px solid var(--area-border); border-left: 4px solid var(--area-strong); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.2rem; }
+    .intro-card ul { margin: 0.4rem 0 0 1.2rem; padding: 0; }
+    .intro-card li { margin: 0.25rem 0; }
+    .intro-card a { color: var(--area-strong); }
+    .lab-sheet { background: #fff; border: 1px solid #d8d8d8; border-left: 5px solid var(--area); border-radius: 12px; padding: 1.2rem 1.5rem 1.5rem; margin-bottom: 1.6rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); scroll-margin-top: 0.75rem; }
+    .lab-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .lab-tag { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; color: var(--area-strong); text-transform: uppercase; }
+    .lab-top .subject-btn { margin: 0; }
+    .meta-row { display: flex; border: 1px solid #aaa; border-radius: 4px; margin: 0.4rem 0 0.7rem; overflow: hidden; }
+    .meta-row span { flex: 1; padding: 0.35rem 0.6rem; border-right: 1px solid #aaa; font-size: 0.92rem; min-height: 1.9rem; }
+    .meta-row span:last-child { border-right: none; }
+    .lab-title { margin: 0.2rem 0 0.6rem; color: var(--area-strong); font-size: 1.35rem; }
+    .lab-body h3 { color: var(--area-strong); border-bottom: 2px solid var(--area-border); padding-bottom: 0.2rem; margin: 1.1rem 0 0.4rem; font-size: 1.05rem; }
+    .lab-body p { margin: 0.3rem 0 0.5rem; }
+    .lab-body ul.mat, .lab-body ol.steg { margin: 0.2rem 0 0.6rem 1.4rem; padding: 0; }
+    .lab-body li { margin-bottom: 0.3rem; line-height: 1.45; }
+    .steg-del { font-weight: 700; margin: 0.6rem 0 0.2rem; color: var(--area-strong); }
+    .risk-box { background: #fef2f2; border: 3px solid #b91c1c; border-radius: 8px; padding: 0.7rem 1rem; margin: 0.6rem 0 0.4rem; }
+    .risk-title { font-weight: 800; color: #991b1b; margin-bottom: 0.3rem; }
+    .risk-box ul { margin: 0 0 0 1.2rem; padding: 0; }
+    .risk-box li { margin-bottom: 0.25rem; color: #222; }
+    .resultat-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.93rem; }
+    .resultat-table th { background: var(--area-strong); color: #fff; padding: 0.4rem 0.55rem; text-align: left; font-weight: 600; }
+    .resultat-table td { padding: 0.4rem 0.55rem; border: 1px solid #b5b5b5; height: 2.2rem; vertical-align: top; }
+    .resultat-table td.hoog { height: 5.5rem; }
+    @media (max-width: 640px) { .resultat-table { display: block; overflow-x: auto; } }
+    .fragor ol { margin: 0.2rem 0 0 1.4rem; padding: 0; }
+    .fragor li { margin-bottom: 0.9rem; }
+    .svarslinje { display: block; width: 100%; height: 1.7rem; border-bottom: 1px solid #999; }
+    .plan-box { margin: 0.5rem 0; }
+    .grafruta { height: 75mm; border: 1.5px dashed #6b7280; border-radius: 4px; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 5mm 5mm; }
+    .lararnotis { margin-top: 1rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.5rem 0.9rem; font-size: 0.93rem; }
+    .lararnotis summary { cursor: pointer; font-weight: 700; color: #334155; }
+
+    @page { size: A4; margin: 13mm 14mm; }
+    @media print {
+      header, nav, .hamburger, .no-print, .intro-card { display: none !important; }
+      body { background: #fff !important; font-size: 10.5pt; }
+      main { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; }
+      .lab-sheet { border: none; border-radius: 0; box-shadow: none; padding: 0; margin: 0; page-break-after: always; break-after: page; }
+      .lab-sheet:last-of-type { page-break-after: auto; break-after: auto; }
+      .lab-title { font-size: 15pt; }
+      .resultat-table th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .risk-box { border: 2.5pt solid #b91c1c; background: #fff !important; }
+      .lab-body h3 { break-after: avoid; }
+      .resultat-table, .risk-box, .fragor li, .plan-box { break-inside: avoid; }
+      body[data-print] .lab-sheet:not(.lab-active) { display: none !important; }
+    }
+  </style>
+</head>
+<body class="area-separation">
+  <header class="kemi-header">
+    <h1>Laborationer</h1>
+    <p>Separationsprocesser</p>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button type="button" class="subject-btn print-green" id="print-all">🖨️ Skriv ut alla laborationer</button>
+    </div>
+
+    <section class="intro-card no-print">
+      <p><strong>Utskrivbara laborationsprotokoll.</strong> Varje laboration har syfte, risker, material, genomförande, resultattabell och frågor, och skrivs ut på två A4-sidor. Använd knappen i varje protokoll för att skriva ut just den laborationen. Läs riskerna innan ni börjar och använd skyddsglasögon.</p>
+      <ul><li><a href="#lab-1">Laboration 1: Vad löser sig i vatten?</a> <span style="color:#475569">(M4, 30–40 min)</span></li><li><a href="#lab-2">Laboration 2: Separera en blandning</a> <span style="color:#475569">(M5–M6, 60 min)</span></li><li><a href="#lab-3">Laboration 3: Kromatografi med tusch</a> <span style="color:#475569">(M6, 40 min)</span></li><li><a href="#lab-4">Laboration 4: Destillation av saltvatten</a> <span style="color:#475569">(M6, 45 min)</span></li><li><a href="#lab-5">Laboration 5: Fällning och kalkvatten</a> <span style="color:#475569">(M7, 30–40 min)</span></li><li><a href="#lab-6">Laboration 6: Undersök: vilket filter renar bäst?</a> <span style="color:#475569">(M9, 60–80 min)</span></li><li><a href="#lab-7">Laboration 7: Värmekurva för is</a> <span style="color:#475569">(M2, 45–60 min)</span></li></ul>
+    </section>
+
+  <section class="lab-sheet" id="lab-1" data-lab="lab-1">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 1 · M4 · 30–40 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-1">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 1: Vad löser sig i vatten?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att undersöka vilka ämnen som löser sig i vatten, och om temperaturen spelar roll, samt att öva på att göra en rättvis jämförelse.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden.</li><li>Varmt vatten kan skålla. Hantera glasen försiktigt och torka upp spill direkt.</li><li>Smaka aldrig på något i laborationen, inte heller sockret eller saltet.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Fem provrör eller små genomskinliga glas med etikett</li><li>Koksalt, strösocker, sand, matolja och kaffepulver (en tesked av varje)</li><li>Kallt kranvatten och varmt vatten (ca 50 °C, från en vattenkokare, hälls upp av läraren)</li><li>Tesked eller omrörare, mätcylinder (10 ml), klocka</li><li>Skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Sätt på skyddsglasögonen. Märk fem glas med ämnenas namn.</li><li>Mät upp 10 ml <strong>kallt</strong> vatten i varje glas.</li><li>Tillsätt en halv tesked av ett ämne i varje glas. Rör om i 30 sekunder och lika mycket i alla glas.</li><li>Titta noga. Är ämnet borta (klart eller färgat), grumligt, ligger det kvar på botten, eller flyter det? Skriv i tabellen.</li><li>Häll ut och skölj glasen. Upprepa försöket med <strong>varmt</strong> vatten.</li><li>Jämför resultaten och fyll i frågorna.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Ämne</th><th>Kallt vatten: syns ämnet kvar?</th><th>Varmt vatten: syns ämnet kvar?</th><th>Blir det en lösning? (ja/nej)</th></tr></thead><tbody><tr><td>Koksalt</td><td></td><td></td><td></td></tr><tr><td>Socker</td><td></td><td></td><td></td></tr><tr><td>Sand</td><td></td><td></td><td></td></tr><tr><td>Matolja</td><td></td><td></td><td></td></tr><tr><td>Kaffepulver</td><td></td><td></td><td></td></tr></tbody></table>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vilka ämnen bildade en lösning? Hur kan du se det?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad var lösningsmedel och vad var löst ämne i de lösningar som bildades?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilket ämne påverkades mest av temperaturen? Förklara med partikelmodellen.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Sanden och oljan löste sig inte. Vilken sorts blandning bildades i de fallen?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka delar av försöket gjorde du lika för att jämförelsen skulle vara rättvis?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Ett tillägg för C-nivå: låt eleverna ta reda på hur mycket salt respektive socker som går att lösa i 10 ml vatten genom att tillsätta en nypa i taget tills det ligger kvar (mättad lösning). Man kan lösa cirka 3,5 g salt men cirka 20 g socker i 10 ml vatten vid rumstemperatur.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-2" data-lab="lab-2">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 2 · M5–M6 · 60 min · nivå C–A</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-2">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 2: Separera en blandning</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att planera och genomföra en separation av en blandning med fyra ämnen och att kontrollera om ingen massa försvinner.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden.</li><li>Kokplattan är het även efter avstängning. Rör inte vid skålen. Använd tång.</li><li>Avbryt indunstningen när det är lite vätska kvar och låt värmen från skålen göra resten, så sprutar det inte.</li><li>Smaka aldrig på saltet.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Blandning av sand, koksalt, järnfilspån och korkbitar (ca 20 g totalt, väg de olika delarna i förväg)</li><li>Magnet (gärna i en plastpåse)</li><li>Två bägare, tratt och filterpapper, stativ</li><li>Omrörare, vatten, värmetålig skål och värmekälla (kokplatta)</li><li>Våg, skyddsglasögon</li></ul>
+      <h3>Din plan</h3>
+      <div class="plan-box"><strong>Vilken egenskap skiljer varje ämne? I vilken ordning ska metoderna användas, och varför?</strong><span class="svarslinje"></span><span class="svarslinje"></span><span class="svarslinje"></span></div>
+      <h3>Genomförande</h3><p class="steg-del">Planera</p><ol class="steg" start="1"><li>Titta på blandningen och skriv i rutan nedan vilken egenskap som skiljer varje ämne från de andra. Bestäm en ordning för metoderna och motivera den.</li></ol><p class="steg-del">Genomför</p><ol class="steg" start="2"><li>Väg hela blandningen och skriv ned massan.</li><li>Dra ut järnspånet med magneten (lägg magneten i en plastpåse så är det lätt att få loss spånet). Väg järnet.</li><li>Häll blandningen i en bägare med ca 100 ml vatten. Rör om. Korkbitarna flyter: sila eller häll av dem. Torka och väg dem.</li><li>Filtrera resten. Sanden blir kvar på filtret. Torka sanden och väg den.</li><li>Indunsta filtratet i en värmetålig skål. Väg saltet när det är torrt.</li><li>Lägg ihop massorna och jämför med den ursprungliga massan.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Del</th><th>Vilken egenskap utnyttjas?</th><th>Massa (g)</th></tr></thead><tbody><tr><td>Järnspån</td><td></td><td></td></tr><tr><td>Korkbitar</td><td></td><td></td></tr><tr><td>Sand</td><td></td><td></td></tr><tr><td>Salt</td><td></td><td></td></tr><tr><td>Summa (ska bli lika med startmassan)</td><td></td><td></td></tr><tr><td>Startmassa</td><td></td><td></td></tr></tbody></table>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Varför måste ordningen vara just den du valde? Vad skulle hända om du indunstade först?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur stor skillnad var det mellan startmassan och summan av delarna? Ge två möjliga felkällor.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Är någon av metoderna en kemisk reaktion? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur skulle du få ut sanden om det i stället var mycket små lerkorn (som inte fastnar lätt)?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Blanda ut blandningen i förväg och väg ingående delar för facit. Ett vanligt fel är att elever försöker filtrera innan de har löst saltet. Låt dem prova och diskutera vad som hände i stället för att rätta direkt.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-3" data-lab="lab-3">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 3 · M6 · 40 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-3">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 3: Kromatografi med tusch</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att skilja färgämnena i vattenlösliga pennor med papperskromatografi och att beräkna Rf-värden.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Använd bara vattenlösliga pennor. Använd inte permanentpennor, som innehåller lösningsmedel.</li><li>Torka upp vatten som spills.</li><li>Skyddsglasögon rekommenderas.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Filterpapper eller kaffefilter (remsor ca 3 × 12 cm)</li><li>Vattenlösliga tuschpennor i olika färger, gärna två svarta av olika märke</li><li>Glas eller bägare, vatten (ca 1 cm djup)</li><li>Blyertspenna och linjal</li><li>Gem eller klädnypa och en penna att hänga remsan på</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Dra en blyertslinje 2 cm från remsans nedre kant. Gör en liten prick av tuschen på linjen. Skriv pennans färg och märke med blyerts högst upp.</li><li>Häll 1 cm vatten i glaset. Häng remsan så att nedre kanten når vattnet men <em>pricken är ovanför vattenytan</em>.</li><li>Vänta tills vattnet har vandrat nästan upp till toppen (ca 10–15 min). Ta upp remsan och markera med blyerts hur långt vattnet kom.</li><li>Låt remsan torka. Rita av hur det ser ut i tabellen.</li><li>Mät avståndet från startlinjen till vattenfronten och till mitten av varje färgband. Räkna ut Rf = avstånd färg / avstånd vatten.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Penna</th><th>Färger i bandet</th><th>Avstånd färg (mm)</th><th>Avstånd vatten (mm)</th><th>Rf</th></tr></thead><tbody><tr><td>Svart, märke 1</td><td></td><td></td><td></td><td></td></tr><tr><td>Svart, märke 2</td><td></td><td></td><td></td><td></td></tr><tr><td>Blå</td><td></td><td></td><td></td><td></td></tr><tr><td>Orange</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+      <h3>Så här såg mina kromatogram ut</h3><div class="grafruta" role="img" aria-label="Utrymme för att rita"></div>
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vilka färger fanns i de svarta pennorna? Var de lika?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilket färgämne vandrade längst? Vad säger det om hur det löser sig i vatten?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Varför måste pricken vara ovanför vattenytan i början?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur skulle du kunna använda kromatografi för att avgöra vilken penna som skrivit ett hotbrev?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Vattenlösliga tuschpennor i olika märken ger stor variation. Testa i förväg. Fungerar även med färgade godisar (lös en bit i en droppe vatten) men de får inte ätas efteråt.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-4" data-lab="lab-4">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 4 · M6 · 45 min · nivå C–A</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-4">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 4: Destillation av saltvatten</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att utvinna rent vatten ur saltvatten med destillation och att kontrollera att destillatet är fritt från salt.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden. Läraren ska kontrollera uppställningen innan värmen sätts på.</li><li><strong>Uppställningen får aldrig vara helt tillsluten.</strong> Den ska vara öppen i änden där destillatet kommer ut, annars kan trycket spränga glaset.</li><li>Kolven, ångan och röret blir mycket heta. Rör inte vid dem. Ånga kan ge brännskador.</li><li>Värm aldrig tills kolven är helt torr. Avbryt när ca en tredjedel av vätskan är kvar.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Kolv (t.ex. rundkolv eller Erlenmeyer) med kork och böjt glasrör</li><li>Kylare (eller ett långt rör som kyls av ett hölje med kallt vatten)</li><li>Bägare som samlar destillatet</li><li>Saltvatten (ca 1 msk salt i 100 ml vatten), kokstenar</li><li>Stativ, klämmor, värmekälla</li><li>Två objektglas eller urglas, skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Häll 100 ml saltvatten och två kokstenar i kolven (högst halvfull). Ställ upp enligt figuren i studieguiden och kontrollera med läraren.</li><li>Anslut kylvattnet: in nedtill, ut upptill.</li><li>Värm försiktigt tills vätskan kokar. Skriv ned temperaturen och notera när första dropparna kommer i bägaren.</li><li>Samla ca 20 ml destillat. Avbryt värmen när en tredjedel av vätskan är kvar och låt allt svalna.</li><li>Lägg en droppe destillat på ett objektglas och en droppe av det ursprungliga saltvattnet på ett annat. Låt dem torka (använd svag värme om det går för långsamt) och jämför vad som blir kvar.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Iakttagelse</th><th>Skriv här</th></tr></thead><tbody><tr><td>Temperatur när vätskan kokar</td><td></td></tr><tr><td>Tid tills första dropparna kommer</td><td></td></tr><tr><td>Mängd destillat (ml)</td><td></td></tr><tr><td>Kvar efter torkad droppe saltvatten</td><td></td></tr><tr><td>Kvar efter torkad droppe destillat</td><td></td></tr></tbody></table>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vad händer i kolven, i kylaren och i bägaren? Förklara med partikelmodellen.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad blev kvar i kolven och varför?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad visar de torkade dropparna om destillatet?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka två fasövergångar ingår? Ange deras namn.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Är destillation en fysikalisk förändring eller en kemisk reaktion? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Kan genomföras som lärardemonstration om kylare saknas: en böjd rörledning i en bägare med isvatten fungerar. Rinnande vatten i kylaren ska gå nedtill uppåt. Smaka aldrig på destillatet i laborationen, men det går bra att mäta med en ledningsförmågemätare om sådan finns.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-5" data-lab="lab-5">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 5 · M7 · 30–40 min · nivå C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-5">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 5: Fällning och kalkvatten</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att iaktta en fällning, påvisa koldioxid med kalkvatten och undersöka hur hårt vatten påverkar tvål.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden. Kalkvatten är svagt basiskt och irriterar ögonen. Vid stänk: skölj med mycket vatten och säg till läraren.</li><li><strong>Blås i sugröret, sug aldrig.</strong> Bara en person använder varje sugrör.</li><li>Smaka inte på något.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Kalkvatten (mättad lösning av kalciumhydroxid) i bägare</li><li>Sugrör (ett per elev), pipetter</li><li>Tvållösning (flytande tvål utspädd med vatten), kranvatten, destillerat vatten</li><li>Fyra provrör med propp, provrörsställ</li><li>Skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><p class="steg-del">Del 1 – koldioxid i kalkvatten</p><ol class="steg" start="1"><li>Häll ca 20 ml kalkvatten i en bägare. Notera hur det ser ut.</li><li>Blås försiktigt genom sugröret ned i vattnet i ca en minut. Notera vad som händer.</li><li>Låt bägaren stå en stund. Vad händer med det grumliga? Filtrera en del och titta på filtratet.</li></ol><p class="steg-del">Del 2 – hårt och mjukt vatten</p><ol class="steg" start="4"><li>Fyll två provrör med 10 ml kranvatten och två med 10 ml destillerat vatten.</li><li>Tillsätt 5 droppar tvållösning i varje provrör, sätt på proppen och skaka i 10 sekunder.</li><li>Jämför skum och grumlighet i kranvatten och destillerat vatten. Skriv i tabellen.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Försök</th><th>Före</th><th>Efter</th><th>Slutsats</th></tr></thead><tbody><tr><td>Kalkvatten + utandning</td><td></td><td></td><td></td></tr><tr><td>Kranvatten + tvål</td><td></td><td></td><td></td></tr><tr><td>Destillerat vatten + tvål</td><td></td><td></td><td></td></tr></tbody></table>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Varför blev kalkvattnet grumligt? Vad kallas det som bildas, och vad är det för ämne?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilken gas finns i din utandningsluft som orsakade detta?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Är det en fysikalisk förändring eller en kemisk reaktion? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Varför kan man skilja bort fällningen med filtrering, men inte något löst ämne?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad fällde tvålen ut i kranvattnet? Hur märktes det på skummet?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Kalkvatten görs genom att skaka kalciumhydroxid i destillerat vatten och filtrera bort överskottet. Kalciumhydroxid är irriterande, så bered i dragskåp och hantera med skyddsglasögon. Är kranvattnet mjukt blir skillnaden liten: tillsätt då en droppe kalciumklorid till vattnet, eller använd lite kalkvatten i stället.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-6" data-lab="lab-6">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 6 · M9 · 60–80 min · nivå C–A</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-6">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 6: Undersök: vilket filter renar bäst?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att planera, genomföra och utvärdera en egen undersökning med rättvis jämförelse, upprepade försök och slutsats.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon. Torka upp spill så ingen halkar.</li><li>Drick aldrig av det filtrerade vattnet.</li><li>Tvätta händerna efter laborationen.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Grumligt vatten (5 g jord eller lera i 200 ml vatten, omrört)</li><li>Tre sorters filter: kaffefilter, hushållspapper och bomullsvadd</li><li>Tratt (samma för alla), mätcylinder, tre genomskinliga glas</li><li>Ett papper med text eller streck, att titta på genom glaset</li><li>Timer</li><li>Skyddsglasögon</li></ul>
+      <h3>Din plan</h3>
+      <div class="plan-box"><strong>Frågeställning:</strong><span class="svarslinje"></span></div>
+      <div class="plan-box"><strong>Hypotes (och varför du tror det):</strong><span class="svarslinje"></span><span class="svarslinje"></span></div>
+      <table class="resultat-table"><thead><tr><th>Jag ändrar (oberoende)</th><th>Jag mäter (beroende)</th><th>Jag håller lika (konstant)</th></tr></thead>
+      <tbody><tr><td class="hoog"></td><td class="hoog"></td><td class="hoog"></td></tr></tbody></table>
+      <div class="plan-box"><strong>Så mäter jag:</strong><span class="svarslinje"></span></div>
+      <h3>Genomförande</h3><p class="steg-del">Planera (innan du börjar)</p><ol class="steg" start="1"><li>Skriv en frågeställning som går att mäta.</li><li>Skriv en hypotes och motivera den.</li><li>Fyll i tabellen över variabler: vad ändrar du, vad mäter du, vad håller du lika?</li><li>Bestäm hur du mäter hur klart vattnet blir (till exempel en skala 1–5, eller hur väl du ser texten genom glaset). Bestäm hur många försök du gör per filter.</li></ol><p class="steg-del">Genomför</p><ol class="steg" start="5"><li>Rör om det grumliga vattnet noga före varje försök så att blandningen är lika.</li><li>Filtrera 50 ml av det grumliga vattnet genom ett filter. Mät tiden och bedöm klarheten.</li><li>Upprepa för alla filter, minst tre gånger per filter. Skriv resultaten direkt i tabellen.</li></ol><p class="steg-del">Redovisa och värdera</p><ol class="steg" start="8"><li>Räkna ut medelvärden och gör ett stapeldiagram.</li><li>Skriv en slutsats som svarar på din fråga och förklara varför utifrån vad du vet om filtrering.</li><li>Diskutera felkällor och hur du skulle förbättra undersökningen.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Filter</th><th>Försök 1</th><th>Försök 2</th><th>Försök 3</th><th>Medelvärde</th></tr></thead><tbody><tr><td>Kaffefilter</td><td></td><td></td><td></td><td></td></tr><tr><td>Hushållspapper</td><td></td><td></td><td></td><td></td></tr><tr><td>Bomullsvadd</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+      <h3>Graf</h3><div class="grafruta" role="img" aria-label="Utrymme för graf"></div>
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Svara på din frågeställning. Stödde resultaten din hypotes?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur stor var variationen mellan försöken med samma filter? Vad säger det om tillförlitligheten?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Nämn minst två felkällor och hur du skulle minska dem.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur kan resultaten förklaras med filtrering och storleken på hålen i filtret?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka resultat skulle bli annorlunda om du filtrerade saltvatten i stället? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Lämpligt för bedömning: hypotes, planering, variabelkontroll, redovisning och värdering (jämför 'Bra svar – tre nivåer' i M9). Låt elever byta planering med en kamrat och testa varandras.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-7" data-lab="lab-7">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 7 · M2 · 45–60 min · nivå C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-7">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 7: Värmekurva för is</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att mäta hur temperaturen förändras när krossad is värms upp, smälter och kokar, och att koppla kurvan till partikelmodellen.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden.</li><li>Kokplattan och bägaren blir heta. Rör inte vid dem och använd tång.</li><li>Rör försiktigt med omrörare, inte med termometern (den kan gå sönder).</li><li>Vattnet kan kasta upp droppar när det kokar. Håll ansiktet på avstånd.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Bägare (250 ml) med krossad is och lite vatten</li><li>Termometer eller temperatursensor</li><li>Kokplatta eller brännare med stativ</li><li>Omrörare, klocka, millimeterpapper</li><li>Skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Fyll bägaren till hälften med krossad is och lite vatten. Rör om och låt termometern visa temperaturen.</li><li>Ställ bägaren på kokplattan. Sätt på värmen på svag effekt.</li><li>Avläs temperaturen var 30:e sekund och skriv i tabellen. Rör om hela tiden.</li><li>Fortsätt tills vattnet har kokat i minst två minuter. Skriv ned vad du ser (is, vatten, bubblor).</li><li>Rita en graf med tid på x-axeln och temperatur på y-axeln.</li></ol>
+      <h3>Resultat</h3>
+      <table class="resultat-table"><thead><tr><th>Tid (s)</th><th>Temp (°C)</th><th>Iakttagelse</th><th>Tid (s)</th><th>Temp (°C)</th><th>Iakttagelse</th></tr></thead><tbody><tr><td>0</td><td></td><td></td><td>180</td><td></td><td></td></tr><tr><td>30</td><td></td><td></td><td>210</td><td></td><td></td></tr><tr><td>60</td><td></td><td></td><td>240</td><td></td><td></td></tr><tr><td>90</td><td></td><td></td><td>270</td><td></td><td></td></tr><tr><td>120</td><td></td><td></td><td>300</td><td></td><td></td></tr><tr><td>150</td><td></td><td></td><td>330</td><td></td><td></td></tr></tbody></table>
+      <h3>Graf</h3><div class="grafruta" role="img" aria-label="Utrymme för graf"></div>
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vad hände med temperaturen medan isen smälte? Vilken temperatur var det?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Förklara med partikelmodellen varför temperaturen stod still under smältningen.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vid vilken temperatur kokade vattnet? Stämmer det med värdet i studieguiden?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka fasövergångar ingick i försöket, i ordning?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Varför är det en fysikalisk förändring?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Kan även göras med tempsensor och dator för en direkt graf. Kurvan visar tydligt platåerna vid 0 °C och ca 100 °C. Höjden över havet påverkar kokpunkten något.</p></details>
+    </div>
+  </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    (function () {
+      function printLab(id) {
+        var sheet = document.getElementById(id);
+        if (!sheet) return;
+        document.body.setAttribute('data-print', id);
+        sheet.classList.add('lab-active');
+        function done() {
+          document.body.removeAttribute('data-print');
+          sheet.classList.remove('lab-active');
+          window.removeEventListener('afterprint', done);
+        }
+        window.addEventListener('afterprint', done);
+        window.print();
+      }
+      document.querySelectorAll('[data-print-lab]').forEach(function (b) {
+        b.addEventListener('click', function () { printLab(b.getAttribute('data-print-lab')); });
+      });
+      document.getElementById('print-all').addEventListener('click', function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>

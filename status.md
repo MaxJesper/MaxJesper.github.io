@@ -51,7 +51,7 @@ Totalt 29 områden.
 | kolforeningar | — | — | — | — | — | — | — | — | — | — |
 | matens-kemi | — | — | — | — | — | — | — | — | — | — |
 | periodiska-systemet | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | tts | — | ✓ | — |
-| separationsprocesser | — | — | — | — | — | — | — | — | — | — |
+| separationsprocesser | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | tts | — | ✓ | — |
 | syror-och-baser | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | tts | — | ✓ | — |
 
 ## Biologi

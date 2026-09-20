@@ -633,6 +633,28 @@ Anledning (Jesper, sep 2026): (1) Text som kopplar material, foton eller arbete 
 
 **Åtgärdat sep 2026:** fågeltävlingen (`biologi/ekologi/faglar-tavling.html`, `larande-spel.html`, `data/faglar.json`) hade flera "skolans"-omnämnanden (rubrik, introtext, fotokreditering) – borttagna. `kemi/kol-och-kolforeningar/esterlab.html` och `alkoholdemo.html` hade källhänvisningar till "skolans egen riskbedömning" – ändrat till "egen riskbedömning".
 
+## Separationsprocesser – byggt 20 sep 2026 (verktyg, standarder, återanvändning)
+
+Området `kemi/separationsprocesser/` är byggt som ett komplett kemikapitel (alla 13 standardsidor + specialverktyg). Allt genereras från källor i `tools/kemi-ritverktyg/separationsprocesser/`; **redigera källorna, inte de genererade HTML/JSON-filerna**, och kör sedan `python3 bygg_alla.py` (kräver python3 + beautifulsoup4; skriver bara i `kemi/separationsprocesser/` och `images/kemi/separationsprocesser/`). Ordning: `rita_alla` → `bygg_studieguide` → `bygg_data` → `bygg_sidor` → `bygg_verktyg` → `bygg_lab` → `bygg_bingo` → `bygg_korsord` → `bygg_index`. Ombyggnad ger bit-identiska filer (verifierat).
+
+**Källor:** `src/m1_m3.html`, `m4_m6.html`, `m7_m9.html` (studieguidens nio milstolpar; makro `[[Begrepp|visad text]]` = klickbart kärnbegrepp), `studieguide.css`, `kallor.json` (12 verifierade källor), `data_begrepp.py` (49 begrepp, begreppskort, checklista), `data_fragor.py` (instuderingsfrågor + övningsprov), `data_ovningar.py` (11 dra-och-släpp-övningar), `data_valj.py` (metoder + 14 scenarier), `labdata.py` (7 laborationer), `svglib.py` + `rita_1.py`/`rita_2.py` (22 SVG-bilder, ritade i kod; teal palett, färgblindsäkra: form + text, aldrig bara rött/grönt).
+
+**Studieguide:** bred layout (`css/studieguide-bildkolumn.css`) där bilderna ligger i egna fullbredds-rader (`m-row--full > .fig-wide`) eftersom sidokolumnens bilder blev oläsliga. Fetmarkerade *kärnbegrepp* (`data/begrepp.json`) och *termer* (29 övriga fetmarkerade ord, listade i `bygg_studieguide.py` → `TERMER`, sparas i `termer_i_text.json`) är klickbara enligt "Begreppsöversättning vid läsning". Nytt ord i texten: lägg det i BEGREPP (`data_begrepp.py`) eller TERMER, bygg om, och översätt till 11 språk. Bygget stoppar om ett klickbart begrepp saknar definition.
+
+**Partikelsimulatorn** (`partiklar.html`, `js/partikelmodell.js`): live-modell av fast/flytande/gas med temperaturreglage för vatten, etanol och järn (smält- och kokpunkter från källorna); `<div data-partikel data-amne="vatten|etanol|jarn" data-kompakt>` kan bäddas in i studieguiden. Reglaget är en vanlig `range`-input (går att styra med tangentbord), en statusrad läser upp tillståndet i ord för skärmläsare, och `prefers-reduced-motion` respekteras.
+
+**Övningar lyfta från Atomer:** `grundamne-forening` och `fysikalisk-kemisk` fanns i Atomer och hör även hemma här. De är *anpassade med egna påståenden* i Separationsprocessers `ovningsverktyg.html`, med länk tillbaka till Atomer. Ingenting är borttaget i Atomer. Övriga övningar är nya. Samma delade komponent `js/dra-och-slapp.js` används överallt.
+
+**Specialverktyg:** `valj-metod.html` (bygg en plan av metoder i rätt ordning för 14 scenarier), `begrepp-bingo.html` (mall: elektrokemi; markerade rutor är brunorange med ✓, inte grönt), `korsord.html` (`bygg_korsord.py` genererar rutnätet: 20 ord i 19×19; `MAXS`, `MAXLEN`, `SEEDS` styr; fel ruta = mörk orange + ✕), `begreppskort.html` (Tailwind-CDN borttagen och ersatt av `box-sizing`-regel), `laborationer.html` (7 utskrivbara protokoll med röd "Risker"-ruta och lärarnotiser).
+
+**Översättning:** `data/begrepp.<språk>.json` + `data/termer.<språk>.json` för alla 11 språk (am, ar, bs, en, es, fa, pl, ps, rw, so, ur) är **AI-genererade** (en subagent per språk, med områdenas befintliga ordlistor som glossar) och validerade maskinellt (struktur, siffror/enheter, skript) men **ej korrekturlästa av modersmålstalare**. Checklistan är inte översatt (som i övriga områden). Kända osäkra termer att låta någon granska: slamning/suspension, fällning/bottenfall, dekantering, indunstning, lacknafta, omvänd osmos; bosniska följer den kroatiskinfluerade befintliga ordlistan (tvar, plin, otopina).
+
+**Testat:** alla sidor vid 1280 och 390 px utan konsolfel; klick på alla 78 klickbara ord i alla 11 språk; alla 14 scenarier i Välj metod och alla 11 sorteringsövningar lösta via klick; axe (WCAG 2.2 AA) utan träffar utom det redan kända "Lyssna-knapp inuti `<summary>`" (delad `lyssna.js`, se WCAG-notering ovan); utskrift till PDF av protokoll, korsord, prov, instuderingsfrågor och facit.
+
+**Kvarstår:** studieguidens lyssna-mp3 (inte inspelade), checklistans översättning och språkgranskning, klassrumstest av Välj metod och partikelsimulatorn, Jespers kontroll av bilder/text/källor mot hans egna Gleerups-/Enkel kemi-foton. Begreppskort-sidan har kvar den delade mallens engelska "Level 1/2" (även i Atomer); byt till "Nivå" i alla områden samtidigt.
+
+---
+
 ## Idéer och påminnelser
 
 ### Pedagogisk bakgrund – spel och engagemang

@@ -1,0 +1,831 @@
+{
+ "sortering": [
+  {
+   "id": "former",
+   "tier": "Grund",
+   "title": "Fast form, flytande form eller gas?",
+   "intro": "Vilken form beskriver varje bricka? Tänk på hur partiklarna sitter och rör sig.",
+   "zones": [
+    {
+     "id": "s",
+     "t": "Fast form"
+    },
+    {
+     "id": "l",
+     "t": "Flytande form"
+    },
+    {
+     "id": "g",
+     "t": "Gas"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "s",
+     "t": "Partiklarna sitter på bestämda platser",
+     "why": "I fast form vibrerar partiklarna men byter inte plats."
+    },
+    {
+     "id": "2",
+     "zone": "s",
+     "t": "Har egen form och egen volym",
+     "why": "Fasta ämnen behåller sin form."
+    },
+    {
+     "id": "3",
+     "zone": "s",
+     "t": "En isbit",
+     "why": "Is är vatten i fast form."
+    },
+    {
+     "id": "4",
+     "zone": "l",
+     "t": "Partiklarna glider förbi varandra men ligger tätt",
+     "why": "Det är kännetecknet för en vätska."
+    },
+    {
+     "id": "5",
+     "zone": "l",
+     "t": "Tar formen av kärlet men har egen volym",
+     "why": "En vätska fyller inte hela kärlet, bara så mycket som volymen räcker till."
+    },
+    {
+     "id": "6",
+     "zone": "l",
+     "t": "Vatten från kranen",
+     "why": "Vatten är flytande vid rumstemperatur."
+    },
+    {
+     "id": "7",
+     "zone": "g",
+     "t": "Partiklarna far runt med stora avstånd",
+     "why": "I en gas är det långt mellan partiklarna."
+    },
+    {
+     "id": "8",
+     "zone": "g",
+     "t": "Kan pressas ihop lätt",
+     "why": "Det är mycket tomrum mellan partiklarna i en gas."
+    },
+    {
+     "id": "9",
+     "zone": "g",
+     "t": "Fyller hela utrymmet den är i",
+     "why": "En gas sprider ut sig så att den fyller kärlet."
+    },
+    {
+     "id": "10",
+     "zone": "g",
+     "t": "Vattenånga",
+     "why": "Vattenånga är vatten i gasform."
+    }
+   ]
+  },
+  {
+   "id": "fasovergangar",
+   "tier": "Grund",
+   "title": "Vilken fasövergång är det?",
+   "intro": "Sortera händelserna efter vad som sker med ämnet.",
+   "zones": [
+    {
+     "id": "sm",
+     "t": "Smältning"
+    },
+    {
+     "id": "st",
+     "t": "Stelning"
+    },
+    {
+     "id": "ko",
+     "t": "Kokning eller avdunstning"
+    },
+    {
+     "id": "kd",
+     "t": "Kondensering"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "sm",
+     "t": "Isen i glaset blir till vatten",
+     "why": "Fast form blir flytande: smältning."
+    },
+    {
+     "id": "2",
+     "zone": "sm",
+     "t": "Choklad blir mjuk i handen",
+     "why": "Choklad smälter: fast blir flytande."
+    },
+    {
+     "id": "3",
+     "zone": "st",
+     "t": "Vattnet i en pöl blir till is en kall natt",
+     "why": "Flytande blir fast: stelning (frysning)."
+    },
+    {
+     "id": "4",
+     "zone": "st",
+     "t": "Smält vax blir hårt igen",
+     "why": "Flytande vax blir fast: stelning."
+    },
+    {
+     "id": "5",
+     "zone": "ko",
+     "t": "Vattnet i kastrullen bubblar och blir ånga",
+     "why": "Vätska blir gas i hela vätskan: kokning."
+    },
+    {
+     "id": "6",
+     "zone": "ko",
+     "t": "Tvätten på tvättlinan torkar",
+     "why": "Vattnet lämnar tyget som gas: avdunstning."
+    },
+    {
+     "id": "7",
+     "zone": "kd",
+     "t": "Det blir droppar på insidan av ett kallt fönster",
+     "why": "Vattenånga i luften kyls och blir vätska: kondensering."
+    },
+    {
+     "id": "8",
+     "zone": "kd",
+     "t": "Ångan från duschen blir imma på spegeln",
+     "why": "Gas blir vätska på den kalla ytan: kondensering."
+    }
+   ]
+  },
+  {
+   "id": "blandningar",
+   "tier": "Grund",
+   "title": "Rent ämne eller blandning?",
+   "intro": "Har ämnet bara en sorts partiklar, eller är det flera ämnen som är blandade?",
+   "zones": [
+    {
+     "id": "r",
+     "t": "Rent ämne"
+    },
+    {
+     "id": "b",
+     "t": "Blandning"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "r",
+     "t": "Syre (O₂)",
+     "why": "Bara en sorts molekyler: ett rent ämne."
+    },
+    {
+     "id": "2",
+     "zone": "r",
+     "t": "Destillerat vatten",
+     "why": "Vatten som renats från lösta ämnen: ett rent ämne."
+    },
+    {
+     "id": "3",
+     "zone": "r",
+     "t": "Järn",
+     "why": "Ett grundämne: ett rent ämne."
+    },
+    {
+     "id": "4",
+     "zone": "r",
+     "t": "Koldioxid (CO₂)",
+     "why": "Bara en sorts molekyler: ett rent ämne."
+    },
+    {
+     "id": "5",
+     "zone": "r",
+     "t": "Socker",
+     "why": "Ren sackaros består av bara en sorts molekyler."
+    },
+    {
+     "id": "6",
+     "zone": "b",
+     "t": "Luft",
+     "why": "Mest kväve och syre som är blandade: en blandning."
+    },
+    {
+     "id": "7",
+     "zone": "b",
+     "t": "Saltvatten",
+     "why": "Salt och vatten som är blandade: en blandning."
+    },
+    {
+     "id": "8",
+     "zone": "b",
+     "t": "Mjölk",
+     "why": "Vatten, fett, proteiner med mera: en blandning."
+    },
+    {
+     "id": "9",
+     "zone": "b",
+     "t": "Brons",
+     "why": "Koppar och tenn: en blandning av metaller (legering)."
+    },
+    {
+     "id": "10",
+     "zone": "b",
+     "t": "Jord",
+     "why": "Många ämnen blandade: en blandning."
+    }
+   ]
+  },
+  {
+   "id": "blandningstyper",
+   "tier": "Grund",
+   "title": "Vilken sorts blandning?",
+   "intro": "Lösning, slamning, emulsion eller legering? Tänk på vad som är blandat med vad.",
+   "zones": [
+    {
+     "id": "lo",
+     "t": "Lösning"
+    },
+    {
+     "id": "sl",
+     "t": "Slamning"
+    },
+    {
+     "id": "em",
+     "t": "Emulsion"
+    },
+    {
+     "id": "le",
+     "t": "Legering"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "lo",
+     "t": "Salt i vatten",
+     "why": "Saltet är löst och syns inte: en lösning."
+    },
+    {
+     "id": "2",
+     "zone": "lo",
+     "t": "Socker i te",
+     "why": "Sockret är löst: en lösning."
+    },
+    {
+     "id": "3",
+     "zone": "sl",
+     "t": "Lera i vatten",
+     "why": "Fasta korn svävar i vätskan och sjunker med tiden: en slamning."
+    },
+    {
+     "id": "4",
+     "zone": "sl",
+     "t": "Kaffesump i kaffe",
+     "why": "Fasta korn i vätska: en slamning."
+    },
+    {
+     "id": "5",
+     "zone": "em",
+     "t": "Mjölk",
+     "why": "Små fettdroppar i vatten: en emulsion."
+    },
+    {
+     "id": "6",
+     "zone": "em",
+     "t": "Majonnäs",
+     "why": "Oljedroppar i vatten stabiliserade av äggula: en emulsion."
+    },
+    {
+     "id": "7",
+     "zone": "le",
+     "t": "Brons",
+     "why": "Koppar och tenn: en legering."
+    },
+    {
+     "id": "8",
+     "zone": "le",
+     "t": "Stål",
+     "why": "Järn med lite kol: en legering."
+    }
+   ]
+  },
+  {
+   "id": "losningsdelar",
+   "tier": "Grund",
+   "title": "Lösningsmedel eller löst ämne?",
+   "intro": "Vad är vattnet och vad är det andra ämnet i varje lösning?",
+   "zones": [
+    {
+     "id": "lm",
+     "t": "Lösningsmedel"
+    },
+    {
+     "id": "ls",
+     "t": "Löst ämne"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "lm",
+     "t": "Vattnet i saltvatten",
+     "why": "Vattnet löser upp saltet."
+    },
+    {
+     "id": "2",
+     "zone": "lm",
+     "t": "Vattnet i sockerlösning",
+     "why": "Vattnet är det som löser upp."
+    },
+    {
+     "id": "3",
+     "zone": "lm",
+     "t": "Aceton i nagellacksborttagare",
+     "why": "Acetonet löser upp nagellacket."
+    },
+    {
+     "id": "4",
+     "zone": "lm",
+     "t": "Vattnet i en kolsyrad dryck",
+     "why": "Vattnet håller koldioxiden löst."
+    },
+    {
+     "id": "5",
+     "zone": "ls",
+     "t": "Saltet i saltvatten",
+     "why": "Saltet är det som blir upplöst."
+    },
+    {
+     "id": "6",
+     "zone": "ls",
+     "t": "Sockret i te",
+     "why": "Sockret är det lösta ämnet."
+    },
+    {
+     "id": "7",
+     "zone": "ls",
+     "t": "Koldioxiden i läsk",
+     "why": "Koldioxiden är lösta gasen."
+    },
+    {
+     "id": "8",
+     "zone": "ls",
+     "t": "Syret som fiskar andas i vattnet",
+     "why": "Syre är löst i vattnet."
+    }
+   ]
+  },
+  {
+   "id": "vilkenmetod",
+   "tier": "Grund",
+   "title": "Vilken metod passar?",
+   "intro": "Välj den separationsmetod som passar varje problem bäst.",
+   "zones": [
+    {
+     "id": "si",
+     "t": "Silning eller filtrering"
+    },
+    {
+     "id": "se",
+     "t": "Sedimentering och dekantering"
+    },
+    {
+     "id": "ma",
+     "t": "Magnet"
+    },
+    {
+     "id": "in",
+     "t": "Indunstning"
+    },
+    {
+     "id": "de",
+     "t": "Destillation"
+    },
+    {
+     "id": "kr",
+     "t": "Kromatografi"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "si",
+     "t": "Pasta och kokvatten",
+     "why": "Pastan är stor nog att fastna i silen."
+    },
+    {
+     "id": "2",
+     "zone": "si",
+     "t": "Kaffesump och kaffe",
+     "why": "Sumpen är olöst och fastnar i filtret."
+    },
+    {
+     "id": "3",
+     "zone": "se",
+     "t": "Lera som ska sjunka i ett glas vatten",
+     "why": "Leran är tyngre än vattnet och sjunker."
+    },
+    {
+     "id": "4",
+     "zone": "ma",
+     "t": "Stålburkar bland hushållsavfall",
+     "why": "Stål är magnetiskt."
+    },
+    {
+     "id": "5",
+     "zone": "ma",
+     "t": "Järnspån i sand",
+     "why": "Bara järnet dras till magneten."
+    },
+    {
+     "id": "6",
+     "zone": "in",
+     "t": "Salt ur havsvatten (vattnet behövs inte)",
+     "why": "Vattnet dunstar bort och saltet blir kvar."
+    },
+    {
+     "id": "7",
+     "zone": "de",
+     "t": "Rent vatten ur saltvatten (vattnet ska tas tillvara)",
+     "why": "Vattnet kokar och kondenseras till destillat."
+    },
+    {
+     "id": "8",
+     "zone": "kr",
+     "t": "Vilka färger finns i en svart tusch?",
+     "why": "Färgämnena vandrar olika långt på pappret."
+    }
+   ]
+  },
+  {
+   "id": "egenskap",
+   "tier": "Lär mer",
+   "title": "Vad skiljer ämnena åt?",
+   "intro": "Vilken egenskap utnyttjar metoden? Storlek, densitet, magnetism, kokpunkt eller löslighet.",
+   "zones": [
+    {
+     "id": "st",
+     "t": "Storlek"
+    },
+    {
+     "id": "de",
+     "t": "Densitet"
+    },
+    {
+     "id": "ma",
+     "t": "Magnetism"
+    },
+    {
+     "id": "ko",
+     "t": "Kokpunkt"
+    },
+    {
+     "id": "lo",
+     "t": "Löslighet"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "st",
+     "t": "Silen släpper igenom små delar men stoppar stora",
+     "why": "Silning bygger på storleken."
+    },
+    {
+     "id": "2",
+     "zone": "st",
+     "t": "Filtret stoppar korn men släpper igenom vätska",
+     "why": "Filtrering bygger på storleken."
+    },
+    {
+     "id": "3",
+     "zone": "de",
+     "t": "Sanden sjunker och vattnet blir klart",
+     "why": "Sedimentering bygger på densitet."
+    },
+    {
+     "id": "4",
+     "zone": "de",
+     "t": "Grädden samlas när mjölken snurras",
+     "why": "Centrifugering bygger på densitet."
+    },
+    {
+     "id": "5",
+     "zone": "ma",
+     "t": "Stålskrot plockas ut med en kran med magnet",
+     "why": "Bara magnetiska ämnen dras till magneten."
+    },
+    {
+     "id": "6",
+     "zone": "ko",
+     "t": "Vattnet ångar bort och saltet blir kvar",
+     "why": "Indunstning bygger på skillnad i kokpunkt."
+    },
+    {
+     "id": "7",
+     "zone": "ko",
+     "t": "Etanol och vatten skiljs genom att värmas",
+     "why": "Destillation bygger på olika kokpunkter."
+    },
+    {
+     "id": "8",
+     "zone": "lo",
+     "t": "Smaken lösas ut ur tebladen med varmt vatten",
+     "why": "Extraktion bygger på löslighet."
+    },
+    {
+     "id": "9",
+     "zone": "lo",
+     "t": "Fosfor fälls ut som flingor i reningsverket",
+     "why": "Fällning bygger på att ämnet blir olösligt."
+    }
+   ]
+  },
+  {
+   "id": "losning-grad",
+   "tier": "Lär mer",
+   "title": "Utspädd, koncentrerad eller mättad?",
+   "intro": "Beskriv lösningen med rätt ord.",
+   "zones": [
+    {
+     "id": "u",
+     "t": "Utspädd"
+    },
+    {
+     "id": "k",
+     "t": "Koncentrerad"
+    },
+    {
+     "id": "m",
+     "t": "Mättad"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "u",
+     "t": "Bara en nypa salt i en stor kastrull vatten",
+     "why": "Lite löst ämne: utspädd."
+    },
+    {
+     "id": "2",
+     "zone": "u",
+     "t": "Saft med mycket vatten och lite koncentrat",
+     "why": "Lite löst ämne i mycket lösningsmedel: utspädd."
+    },
+    {
+     "id": "3",
+     "zone": "k",
+     "t": "Mycket salt i lite vatten, men allt är löst",
+     "why": "Mycket löst ämne: koncentrerad."
+    },
+    {
+     "id": "4",
+     "zone": "k",
+     "t": "Tjock saftsirap som ännu inte är full",
+     "why": "Mycket löst ämne: koncentrerad."
+    },
+    {
+     "id": "5",
+     "zone": "m",
+     "t": "Socker ligger kvar på botten hur mycket man än rör",
+     "why": "Mer kan inte lösas: mättad."
+    },
+    {
+     "id": "6",
+     "zone": "m",
+     "t": "Lösningen kan inte ta upp mer salt vid den temperaturen",
+     "why": "Definitionen av mättad lösning."
+    },
+    {
+     "id": "7",
+     "zone": "m",
+     "t": "Vid kylning bildas kristaller i den varma lösningen",
+     "why": "Den kalla lösningen kan inte hålla kvar allt: den är mättad."
+    }
+   ]
+  },
+  {
+   "id": "fysikalisk-kemisk",
+   "tier": "Lär mer",
+   "title": "Fysikalisk förändring eller kemisk reaktion?",
+   "intro": "Vid en kemisk reaktion bildas nya ämnen. Vid en fysikalisk förändring är det samma ämne, bara i ny form eller blandat på nytt sätt. Vilken förändring är varje separationsmetod?",
+   "zones": [
+    {
+     "id": "f",
+     "t": "Fysikalisk förändring"
+    },
+    {
+     "id": "k",
+     "t": "Kemisk reaktion"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "f",
+     "t": "Is smälter",
+     "why": "Samma ämne, bara annan form."
+    },
+    {
+     "id": "2",
+     "zone": "f",
+     "t": "Saltvatten destilleras",
+     "why": "Vattnet kokar och kondenserar, men det är hela tiden H₂O."
+    },
+    {
+     "id": "3",
+     "zone": "f",
+     "t": "Sand silas ur vatten",
+     "why": "Inga nya ämnen bildas."
+    },
+    {
+     "id": "4",
+     "zone": "f",
+     "t": "Socker löses i te",
+     "why": "Sockret finns kvar, bara blandat."
+    },
+    {
+     "id": "5",
+     "zone": "f",
+     "t": "Vatten indunstas och saltet blir kvar",
+     "why": "Saltet är oförändrat."
+    },
+    {
+     "id": "6",
+     "zone": "k",
+     "t": "Kalkvatten blir grumligt av koldioxid",
+     "why": "Ett nytt ämne, kalciumkarbonat, bildas."
+    },
+    {
+     "id": "7",
+     "zone": "k",
+     "t": "Järn rostar",
+     "why": "Järn reagerar med syre och bildar ett nytt ämne."
+    },
+    {
+     "id": "8",
+     "zone": "k",
+     "t": "Ved brinner",
+     "why": "Nya ämnen, koldioxid och vatten, bildas."
+    },
+    {
+     "id": "9",
+     "zone": "k",
+     "t": "Fosfor fälls ut med järnsalt",
+     "why": "Ett nytt, olösligt ämne bildas: en fällning."
+    }
+   ]
+  },
+  {
+   "id": "grundamne-forening",
+   "tier": "Lär mer",
+   "title": "Grundämne, kemisk förening eller blandning?",
+   "intro": "Sortera ämnena. Tänk: bara en sorts atomer, flera sorters atomer som sitter ihop, eller flera ämnen som bara är blandade?",
+   "zones": [
+    {
+     "id": "g",
+     "t": "Grundämne"
+    },
+    {
+     "id": "f",
+     "t": "Kemisk förening"
+    },
+    {
+     "id": "b",
+     "t": "Blandning"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "g",
+     "t": "Järn (Fe)",
+     "why": "Bara järnatomer: ett grundämne."
+    },
+    {
+     "id": "2",
+     "zone": "g",
+     "t": "Syre (O₂)",
+     "why": "Bara syreatomer: ett grundämne."
+    },
+    {
+     "id": "3",
+     "zone": "g",
+     "t": "Guld (Au)",
+     "why": "Bara guldatomer: ett grundämne."
+    },
+    {
+     "id": "4",
+     "zone": "f",
+     "t": "Vatten (H₂O)",
+     "why": "Väte och syre som sitter ihop: en kemisk förening."
+    },
+    {
+     "id": "5",
+     "zone": "f",
+     "t": "Koldioxid (CO₂)",
+     "why": "Kol och syre som sitter ihop: en förening."
+    },
+    {
+     "id": "6",
+     "zone": "f",
+     "t": "Koksalt (NaCl)",
+     "why": "Natrium och klor i en förening."
+    },
+    {
+     "id": "7",
+     "zone": "b",
+     "t": "Luft",
+     "why": "Mest kväve och syre som bara är blandade."
+    },
+    {
+     "id": "8",
+     "zone": "b",
+     "t": "Saltvatten",
+     "why": "Salt och vatten som är blandade."
+    },
+    {
+     "id": "9",
+     "zone": "b",
+     "t": "Brons",
+     "why": "Koppar och tenn som är blandade: en legering."
+    }
+   ]
+  },
+  {
+   "id": "reningsverk",
+   "tier": "Lär mer",
+   "title": "Vad händer i vilket steg på reningsverket?",
+   "intro": "Koppla ihop varje händelse med rätt steg i reningsverket.",
+   "zones": [
+    {
+     "id": "ga",
+     "t": "Rensgaller"
+    },
+    {
+     "id": "sa",
+     "t": "Sandfång och sedimentering"
+    },
+    {
+     "id": "bi",
+     "t": "Biologisk rening"
+    },
+    {
+     "id": "fa",
+     "t": "Kemisk fällning"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "ga",
+     "t": "Stora föremål fastnar i gallret",
+     "why": "Gallret skiljer på storlek."
+    },
+    {
+     "id": "2",
+     "zone": "ga",
+     "t": "Trasor och skräp tas bort",
+     "why": "Stora delar fångas av gallret."
+    },
+    {
+     "id": "3",
+     "zone": "sa",
+     "t": "Sand och grus sjunker till botten",
+     "why": "Sandfånget utnyttjar densitet."
+    },
+    {
+     "id": "4",
+     "zone": "sa",
+     "t": "Slam sjunker i stora bassänger",
+     "why": "Sedimentering: tyngre delar sjunker."
+    },
+    {
+     "id": "5",
+     "zone": "bi",
+     "t": "Bakterier bryter ned lösta ämnen",
+     "why": "Biologisk rening: mikroorganismer omvandlar lösta ämnen."
+    },
+    {
+     "id": "6",
+     "zone": "bi",
+     "t": "Kväve omvandlas till kvävgas",
+     "why": "Bakterier omvandlar kväveföreningar."
+    },
+    {
+     "id": "7",
+     "zone": "fa",
+     "t": "Fosfor bildar flingor som sjunker",
+     "why": "Fällningskemikalien ger en olöslig fällning."
+    },
+    {
+     "id": "8",
+     "zone": "fa",
+     "t": "Järnsalt tillsätts vattnet",
+     "why": "Järnsalt är fällningskemikalien."
+    }
+   ]
+  }
+ ],
+ "balansering": []
+}
