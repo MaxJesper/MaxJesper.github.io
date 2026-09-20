@@ -138,16 +138,16 @@ function wireInteractions(root) {
 
       if (k === "ArrowDown" || k === "Down") {
         e.preventDefault();
-        focusButton(buttons, idx + 1);
+        focusButton(buttons, idx + 1, btn);
       } else if (k === "ArrowUp" || k === "Up") {
         e.preventDefault();
-        focusButton(buttons, idx - 1);
+        focusButton(buttons, idx - 1, btn);
       } else if (k === "Home") {
         e.preventDefault();
-        focusButton(buttons, 0);
+        focusButton(buttons, 0, btn);
       } else if (k === "End") {
         e.preventDefault();
-        focusButton(buttons, buttons.length - 1);
+        focusButton(buttons, buttons.length - 1, btn);
       } else if (k === " " || k === "Spacebar" || k === "Enter") {
         e.preventDefault();
         toggleAnswer(btn);
@@ -156,14 +156,25 @@ function wireInteractions(root) {
   });
 }
 
-function focusButton(buttons, newIndex) {
+// Flytta fokus till en annan fråga OCH rulla sidan så att den nya frågan hamnar exakt där den
+// förra stod på skärmen. Då kan eleven bläddra med piltangenterna utan att röra pekplattan.
+// Står den förra frågan långt ner (eller utanför skärmen) placeras den nya i stället ca 20 %
+// från skärmens överkant, och därefter hålls positionen konstant.
+function focusButton(buttons, newIndex, fromBtn) {
   if (newIndex < 0) newIndex = 0;
   if (newIndex >= buttons.length) newIndex = buttons.length - 1;
 
   buttons.forEach(b => b.tabIndex = -1);
   const target = buttons[newIndex];
   target.tabIndex = 0;
-  target.focus();
+
+  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  let anchor = fromBtn ? fromBtn.getBoundingClientRect().top : null;
+  if (anchor === null || anchor < 16 || anchor > vh * 0.5) anchor = Math.round(vh * 0.2);
+
+  target.focus({ preventScroll: true });
+  const delta = target.getBoundingClientRect().top - anchor;
+  if (Math.abs(delta) > 1) window.scrollBy(0, delta);
 }
 
 function toggleAnswer(btn) {
