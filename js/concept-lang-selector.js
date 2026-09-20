@@ -24,6 +24,7 @@
  *    fält som begrepp.json men utan definition/anchor.
  *
  * Detta är sitens enda språkväljare (den gamla TTS-väljaren är borttagen). Valet gäller på alla sidor.
+ * Vid byte skickas händelsen 'conceptLangChange' (detail.code) på window; checklistorna (render-checklista.js) lyssnar på den.
  *
  * Montering (i studieguide.html; på index/begreppslista utan data-termer-base):
  *   <div class="concept-lang-selector-mount"
@@ -38,9 +39,14 @@
   //   "🇸🇦 Arabiska (begrepp och checklistor) – العربية (المفاهيم وقوائم التحقق)"
   // Svenska och engelska visas utan tillägg. Engelska = hela siten på engelska (när den är översatt).
   // STOD = texten efter språknamnet för alla andra språk. Etiketten ska spegla det som FAKTISKT är översatt.
-  // ATT GÖRA (Jesper, 20 sep 2026): sätt STOD = 'begrepp+checklistor' först när ALLA checklistor är översatta OCH korrekturlästa;
-  // sätt ENGELSK_HELA = true (engelska visas då utan tillägg) först när hela siten är översatt till engelska och godkänd.
+  // Checklistor är översatta till CHECKLISTA_SPRAK (Jesper 20 sep 2026: arabiska, amhariska, kinyarwanda) – de
+  // språken visas som "begrepp och checklistor". OBS: översättningarna är AI-gjorda och ännu inte korrekturlästa;
+  // sätt VISA_CHECKLISTETIKETT = false om etiketten ska stanna på "begrepp" tills de är korrekturlästa.
+  // ATT GÖRA: lägg till språkkod i CHECKLISTA_SPRAK när nästa språk får översatta checklistor (och i
+  // CHECKLIST_LANGS i js/render-checklista.js). Sätt ENGELSK_HELA = true först när hela siten är på engelska och godkänd.
   var STOD = 'begrepp';
+  var CHECKLISTA_SPRAK = ['ar-SA', 'am-ET', 'rw'];
+  var VISA_CHECKLISTETIKETT = true;
   var ENGELSK_HELA = false;
 
   var STOD_SV = { 'begrepp': 'begrepp', 'begrepp+checklistor': 'begrepp och checklistor' };
@@ -66,8 +72,9 @@
     var out = [{ code: 'sv-SE', label: '🇸🇪 Svenska' }];
     out.push({ code: 'en-GB', label: ENGELSK_HELA ? '🇬🇧 English' : '🇬🇧 English (' + STOD_SV[STOD] + ')' });
     SPRAK.forEach(function (l) {
-      var native = STOD === 'begrepp' ? l[4] : l[5];
-      out.push({ code: l[0], label: l[1] + ' ' + l[2] + ' (' + STOD_SV[STOD] + ') – ' + iso(l[3] + ' (' + native + ')') });
+      var stod = (VISA_CHECKLISTETIKETT && CHECKLISTA_SPRAK.indexOf(l[0]) >= 0) ? 'begrepp+checklistor' : STOD;
+      var native = stod === 'begrepp' ? l[4] : l[5];
+      out.push({ code: l[0], label: l[1] + ' ' + l[2] + ' (' + STOD_SV[stod] + ') – ' + iso(l[3] + ' (' + native + ')') });
     });
     return out;
   }
@@ -198,6 +205,8 @@
       sel.addEventListener('change', function () {
         save(sel.value);
         apply(sel.value, begreppBase, termerBase);
+        // Meddela andra skript på sidan (t.ex. render-checklista.js) att språket bytts
+        try { window.dispatchEvent(new CustomEvent('conceptLangChange', { detail: { code: sel.value } })); } catch (e) {}
       });
 
       wrap.appendChild(label);

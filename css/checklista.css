@@ -51,6 +51,8 @@
 
 .checklist-section-title {
   font-weight: 700;
+  flex: 1;
+  min-width: 0;
 }
 
 .checklist-section-toggle {
@@ -96,6 +98,63 @@
 
 .checklist-item span {
   display: block;
+}
+
+/* ===== Översättning (ar/am/rw) visas under den svenska texten ===== */
+/* Skillnaden mot svenskan bärs av indrag + vänsterlinje (inte bara färg) – fungerar även vid färgblindhet. */
+
+.checklist-section-title .checklist-sv,
+.checklist-section-title .checklist-tr,
+.checklist-section-note .checklist-sv,
+.checklist-section-note .checklist-tr {
+  display: block;
+}
+
+.checklist-tr:empty {
+  display: none !important;
+}
+
+.checklist-tr {
+  margin-top: 3px;
+  padding-inline-start: 8px;
+  border-inline-start: 3px solid #4b5563;
+  color: #1f2937;
+  font-size: 0.97em;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: start;
+}
+
+.checklist-section-title .checklist-tr {
+  font-weight: 600;
+}
+
+.checklist-tr-inline {
+  font-weight: 600;
+}
+
+.checklist-tr-info {
+  margin: 0 0 10px 0;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-left: 3px solid #4b5563;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  color: #1f2937;
+}
+
+.checklist-tr-info p {
+  margin: 0 0 4px 0;
+  line-height: 1.55;
+}
+
+.checklist-tr-info p:last-child {
+  margin-bottom: 0;
+}
+
+.checklist-tr-ai {
+  font-style: italic;
+  color: #374151;
 }
 
 /* ===== Reflektion ===== */
@@ -151,6 +210,13 @@
 
   header h1 {
     margin-bottom: 2mm !important;   /* liten luft till underraden */
+  }
+
+  /* Rubrikens text är vit på bannerbilden – utan bild måste den bli mörk, annars syns den inte på papper */
+  header h1,
+  header p {
+    color: #111 !important;
+    text-shadow: none !important;
   }
 
   header p {
