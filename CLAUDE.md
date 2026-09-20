@@ -315,6 +315,13 @@ Mönster (referens: `fysik/magnetism-induktion/laborationshandledningar.html`, s
 
 ---
 
+## Ritfrågor i övningsprov + utskrivbara arbetsblad – regler, sep 2026
+
+- **Ritfrågor i övningsprov (Jesper, 20 sep 2026):** frågor där eleven ska RITA (strukturformel, atom, skiss) får INGA skrivlinjer vid utskrift – i stället ett fritt utrymme. I `data/ovningsprov.json` läggs `"draw": <höjd i mm>` på frågan (t.ex. 50 för en liten strukturformel, 65 för formel + förklaring, 80–90 för atom/hjärta). `js/render-prov.js` (`print-exam`) ritar då en streckad ruta (`.prov-draw`, `css/prov.css`) i stället för linjer. `lines` behålls (styr textrutans höjd på skärmen). Gäller alla nya prov med ritfrågor.
+- **Utskrivbara arbetsblad ska också gå att fylla i på skärmen** (namn, datum, svarsfält som riktiga `<input>` med `aria-label`, utskrift visar det som skrivits). Exempel: `kemi/atomer/formelark.html` – där blir siffror efter en bokstav automatiskt nedsänkta (H2O → H₂O). Uppgifter som kräver ritning hänvisas till papper.
+- **Arknummer** i slumpade ark = frö för slumpen: samma nummer ger alltid samma ark + facit (kan skrivas ut i efterhand, olika nummer till olika grupper, står på arket). Ska förklaras med en hjälptext vid fältet.
+- **Kontrollera ALLTID utskriften** (Playwright `emulate_media('print')` + `page.pdf`) för alla storlekar/varianter av ett arbetsblad – 15 uppgifter på formelarket gav bilder med höjd 0 tills raderna fick fast höjd (`.grid.rows5`).
+
 ## Begreppskort – placering
 
 `begreppskort.html` ska vara tillgänglig via `larande-spel.html` (länkkort i spelnätet), inte direkt från index.

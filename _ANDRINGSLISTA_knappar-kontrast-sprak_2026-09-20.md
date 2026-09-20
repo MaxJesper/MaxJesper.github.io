@@ -279,3 +279,8 @@ Nya datafiler: `data/termer.<språk>.json` för alla 12 områden (11 språk vard
 - **Backup-sidor** (`index_backup_*.html`, `backupfile.html`, `backupindex.html`) rördes inte.
 - **Översättningarna** är AI-genererade. Extra osäkra: amhariska, pashto, somaliska, kinyarwanda. Bra att låta någon modersmålstalare titta på stickprov innan siten släpps.
 - Några kärnbegrepp saknar fetmarkerad förekomst i texten (atomer: *Fysikalisk förändring*; genetik: *AB0-systemet*, *Crossing-over*, *Dihybrid korsning*) – de finns i begreppslistan men går inte att klicka på i löptexten förrän texten kompletteras.
+
+## 6. Tillägg senare samma dag
+
+- `kemi/atomer/formelark.html` – går nu att skriva i på skärmen (namn, datum, formler med automatiskt nedsänkta siffror, antal atomer); utskrift av 15 bilder fixad (bilderna försvann); förklaring av arknumret.
+- Ritfrågor i övningsprov: fritt ritutrymme i stället för skrivlinjer vid utskrift – `js/render-prov.js`, `css/prov.css`, `kemi/atomer/data/ovningsprov.json` (fråga 5 och 11), `biologi/hjarta-blod-lungor/data/ovningsprov.json` (fråga 6), `kemi/periodiska-systemet/data/ovningsprov.json` (fråga 1).

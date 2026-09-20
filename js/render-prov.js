@@ -173,17 +173,32 @@ function renderQuestion({ qObj, si, qi, qNumber, mode, storageKeyBase }) {
           rows="${lines}"
           data-storage-key="${escapeHtml(key)}"
           placeholder="Skriv ditt svar här..."></textarea>
+        ${Number(qObj.draw) > 0 ? `<p class="prov-draw-hint">✏️ Ritar du delen av svaret gör du det på papper – skriv här bara det som ska skrivas.</p>` : ""}
       </div>
     `;
   }
 
   if (mode === "print-exam") {
     const saved = getStored(key);
-    if (saved && saved.trim().length > 0) {
+    const drawMm0 = Number(qObj.draw);
+    if (!(drawMm0 > 0) && saved && saved.trim().length > 0) {
       return `
         <div class="prov-item">
           <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
           <div class="prov-student-answer">${escapeHtml(saved).replaceAll("\n", "<br>")}</div>
+        </div>
+      `;
+    }
+
+    // Ritfrågor ("draw": <höjd i mm>): inga skrivlinjer, i stället ett fritt utrymme att rita i.
+    const drawMm = Number(qObj.draw);
+    if (drawMm > 0) {
+      const h = Math.min(Math.max(drawMm, 20), 160);
+      return `
+        <div class="prov-item">
+          <p class="prov-q"><strong>${qNumber}.</strong> ${escapeHtml(q)}</p>
+          ${saved && saved.trim().length > 0 ? `<div class="prov-student-answer">${escapeHtml(saved).replaceAll("\n", "<br>")}</div>` : ""}
+          <div class="prov-draw" style="height:${h}mm" role="img" aria-label="Utrymme för att rita"></div>
         </div>
       `;
     }

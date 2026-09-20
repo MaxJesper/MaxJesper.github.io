@@ -46,6 +46,15 @@
     body:not(.mode-facit) #sheet-facit { display:none; }
     body.mode-facit #sheet-ark { display:none; }
     .answer .blank .fx { font-size:1.35rem; }
+    /* Ifyllbara fält (skärm + utskrift av det som skrivits) */
+    .sheet input.ans, .sheet input.meta-in { font:inherit; color:#000; background:transparent; border:0; min-width:0; }
+    .sheet input.ans { display:block; width:100%; height:100%; text-align:center; padding:0; font-size:inherit; }
+    .cell .answer2 .blank input.ans { font-size:0.95rem; }
+    .sheet input.meta-in { border-bottom:1px solid #000; width:12rem; padding:0 0.2rem; }
+    .sheet input.meta-in.short { width:7rem; }
+    .sheet input.ans:focus-visible, .sheet input.meta-in:focus-visible { outline:3px solid #1d4ed8; outline-offset:1px; background:#eff6ff; }
+    .sheet .hint { font-size:0.9rem; color:#333a4a; background:#f1f5f9; border-radius:6px; padding:0.4rem 0.7rem; margin:0.4rem 0 0.8rem; }
+    .ctrl .lbl-hint { font-size:0.78rem; font-weight:400; color:#333a4a; max-width:15rem; }
     .foot { margin-top:0.8rem; font-size:0.8rem; color:#333a4a; display:flex; justify-content:space-between; }
     @media (max-width:700px) { .grid { grid-template-columns:repeat(2, 1fr); } }
     @media (max-width:440px) { .grid { grid-template-columns:1fr; } }
@@ -70,8 +79,12 @@
       .cell .formulaq { font-size:15pt; min-height:0; }
       .cell .pic { padding:0.5mm 0; }
       /* Fasta radhöjder så att 12 uppgifter alltid ryms på en A4-sida, oavsett hur höga bilderna blir */
-      .grid:not(.rows5) { grid-auto-rows: 48mm; }
-      .grid:not(.rows5) .cell { height:48mm; overflow:hidden; box-sizing:border-box; }
+      .grid { grid-auto-rows: 48mm; }
+      .grid .cell { height:48mm; overflow:hidden; box-sizing:border-box; }
+      /* 15 uppgifter = fem rader på en sida: lägre rader, annars fick bilderna höjden 0 och försvann */
+      .grid.rows5 { grid-auto-rows: 37mm; }
+      .grid.rows5 .cell { height:37mm; }
+      .sheet input.meta-in, .sheet input.ans { outline:none !important; background:transparent !important; }
       .cell .pic { flex:1 1 0; min-height:0; overflow:hidden; }
       .cell .pic svg { max-height:100%; width:auto; max-width:100%; }
       .cell .draw { flex:1 1 0; min-height:12mm; }
@@ -100,7 +113,7 @@
     </div>
 
     <section class="intro-box">
-      <p><strong>Ett utskrivbart ark som övar skillnaden mellan den nedsänkta siffran och den stora siffran framför.</strong> Eleven tittar på bilder av kulor och skriver formeln under varje bild – till exempel <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> för två vattenmolekyler och <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> för tre syremolekyler. Varje ark slumpas fram och kan återskapas med arknumret, och det finns ett facit.</p>
+      <p><strong>Ett utskrivbart ark som övar skillnaden mellan den nedsänkta siffran och den stora siffran framför.</strong> Eleven tittar på bilder av kulor och skriver formeln under varje bild – till exempel <span class="fx"><b class="coef">2</b>&nbsp;H<sub class="idx">2</sub>O</span> för två vattenmolekyler och <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> för tre syremolekyler. Varje ark slumpas fram utifrån ett arknummer – samma nummer ger alltid samma ark och samma facit. Det finns ett facit. Eleven kan skriva svaren direkt på skärmen (och sedan skriva ut) eller skriva på det utskrivna arket.</p>
       <p>Välj inställningar nedan, kontrollera förhandsvisningen och använd knapparna <em>Skriv ut arket</em> eller <em>Skriv ut facit</em> högst upp på sidan.</p>
     </section>
 
@@ -119,9 +132,10 @@
             <option value="alla">Alla ämnen (upp till 4 molekyler)</option>
           </select></label>
         <label>Antal bilder
-          <select id="antal"><option value="6">6</option><option value="9">9</option><option value="12" selected>12 (en sida)</option><option value="15">15 (blir två sidor)</option></select></label>
+          <select id="antal"><option value="6">6</option><option value="9">9</option><option value="12" selected>12 (en sida)</option><option value="15">15 (en sida, mindre bilder)</option></select></label>
         <label>Arknummer
-          <input type="number" id="seed" min="1" max="99999" value="1"></label>
+          <input type="number" id="seed" min="1" max="99999" value="1">
+          <span class="lbl-hint">Samma nummer ger alltid samma ark + facit. Du behöver inte ändra det – tryck på <em>Nytt ark</em> för ett annat.</span></label>
         <button type="button" class="btn" id="nytt">Nytt ark</button>
         <label class="chk"><input type="checkbox" id="extra"> Fråga också efter antal atomer totalt</label>
       </div>
@@ -178,24 +192,25 @@
       var q = '';
       if (mode === 'bild') {
         q = nr + '<div class="pic">' + KF.figure(x.f, x.n, { maxWidth: 210, scale: 0.95, maxHeight: extra ? 78 : 112 }) + '</div>' +
-          '<div class="answer"><span>Formel:</span><span class="blank">' + (facit ? f : '') + '</span></div>';
+          '<div class="answer"><span>Formel:</span><span class="blank">' + (facit ? f : '<input type="text" class="ans ans-f" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Formel för uppgift ' + (idx + 1) + '">') + '</span></div>';
       } else {
         q = nr + '<div class="formulaq">' + f + '</div>' +
           (facit ? '<div class="pic">' + KF.figure(x.f, x.n, { maxWidth: 210, scale: 0.95, maxHeight: extra ? 78 : 112 }) + '</div>' : '<div class="draw" role="img" aria-label="Tomt fält för att rita"></div>') +
           '<div class="answer" style="justify-content:center;font-size:0.8rem"><span>' + (facit ? 'Så här ska bilden se ut' : 'Rita kulorna, med bokstav i varje.') + '</span></div>';
       }
-      if (extra) q += '<div class="answer2"><span>Antal atomer totalt:</span><span class="blank">' + (facit ? total(x) : '') + '</span></div>' +
+      if (extra) q += '<div class="answer2"><span>Antal atomer totalt:</span><span class="blank">' + (facit ? total(x) : '<input type="text" class="ans" inputmode="numeric" autocomplete="off" aria-label="Antal atomer totalt i uppgift ' + (idx + 1) + '">') + '</span></div>' +
         (facit ? '<div class="answer2" style="font-size:0.75rem">(' + perEl(x) + ')</div>' : '');
       return '<div class="cell">' + q + '</div>';
     }
     function buildSheet(el, facit, items, types, extra, seed, niva) {
       var titel = facit ? 'Facit – skriv formeln under bilden' : 'Skriv formeln under bilden';
       var html = '<h2>' + titel + '</h2>' +
-        '<div class="meta"><span>Namn: <span class="line"></span></span><span>Datum: <span class="line" style="min-width:7rem"></span></span><span>Ark nr ' + seed + ', ' + (niva === 'grund' ? 'grundnivå' : 'alla ämnen') + '</span></div>' +
+        '<div class="meta"><span>Namn: ' + (facit ? '<span class="line"></span>' : '<input type="text" class="meta-in" aria-label="Namn" autocomplete="name">') + '</span><span>Datum: ' + (facit ? '<span class="line" style="min-width:7rem"></span>' : '<input type="text" class="meta-in short" aria-label="Datum" autocomplete="off">') + '</span><span>Ark nr ' + seed + ', ' + (niva === 'grund' ? 'grundnivå' : 'alla ämnen') + '</span></div>' +
         '<div class="rules"><p><strong>Så här läser du formler:</strong></p>' +
         '<p>• Den <strong>nedsänkta siffran</strong> står efter atomens bokstav och visar hur många atomer av den sorten som sitter ihop i <em>en</em> molekyl. Exempel: H<sub>2</sub>O har 2 H och 1 O.</p>' +
         '<p>• Den <strong>stora siffran framför</strong> visar hur många molekyler det är. Exempel: <span class="fx"><b class="coef">3</b>&nbsp;O<sub class="idx">2</sub></span> är tre syremolekyler. Siffran 1 skrivs inte.</p>' +
         '<p>• Kulorna: H = väte, C = kol, N = kväve, O = syre, Cl = klor. Kulor som sitter ihop är en molekyl, kulor som ligger för sig är enskilda atomer.</p></div>' +
+        (facit ? '' : '<p class="hint no-print">Du kan skriva direkt i arket på skärmen. Skriv t.ex. <strong>2 H2O</strong> – siffror som kommer efter en bokstav blir automatiskt nedsänkta (H₂O), medan den stora siffran framför skrivs som vanligt.' + (types.indexOf('rita') >= 0 ? ' Uppgifter där kulorna ska ritas görs på papper.' : '') + '</p>') +
         '<div class="grid' + (items.length > 12 ? ' rows5' : '') + '">' + items.map(function (x, i) { return cellHtml(x, i, types[i], extra, facit); }).join('') + '</div>' +
         '<div class="foot"><span>Atomer och molekyler</span><span>Ark nr ' + seed + '</span></div>';
       el.innerHTML = html;
@@ -229,6 +244,14 @@
       var on = document.body.className !== 'mode-facit';
       document.body.className = on ? 'mode-facit' : 'mode-ark';
       this.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    // Nedsänkta siffror direkt när eleven skriver formeln (H2O → H₂O). Bara siffror efter en bokstav eller parentes.
+    var SUB = '\u2080\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089';
+    $('sheet-ark').addEventListener('input', function (e) {
+      var el = e.target;
+      if (!el.classList || !el.classList.contains('ans-f')) return;
+      var nv = el.value.replace(/([A-Za-z\u00e5\u00e4\u00f6)\]])(\d+)/g, function (m, a, d) { return a + d.replace(/\d/g, function (c) { return SUB.charAt(+c); }); });
+      if (nv !== el.value) { var pos = el.selectionStart; el.value = nv; try { el.setSelectionRange(pos, pos); } catch (err) { /* ignore */ } }
     });
     render();
   })();
