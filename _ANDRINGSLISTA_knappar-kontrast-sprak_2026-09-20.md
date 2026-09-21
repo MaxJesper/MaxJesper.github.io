@@ -304,3 +304,10 @@ Hela området `kemi/separationsprocesser/` är nybyggt (tidigare bara en tom pla
 - Alla 15 `*/*/checklista.html` – språkväljaren + `concept-lang-selector.js` tillagda.
 - `kemi/atomer/data/ovningsprov.json` – fråga 10 (grundämne/förening/blandning, som dubblerade Separationsprocesser) ersatt med en fråga om elektronskal (syre och neon). `kemi/atomer/data/instuderingsfragor.json` har kvar den gamla frågan (orörd).
 - Kvar: övriga åtta språk (so, fa, ps, pl, bs, es, ur, en) saknar checklistöversättning.
+
+## 8. Faropiktogram-spel (20 sep 2026)
+
+- NY `kemi/faropiktogram.html` – spel i fågeltävlingens stil: läge 1 (bild → namn), läge 2 (varning → välj piktogram), poäng efter svarstid, ping-ljud, "träna på de svåra", ovaler som öppnar en ruta med betydelse/exempel/"Så gör du". ✓/✕ + ram så att rätt/fel inte bara skiljs med färg. WCAG 2.2 AA (axe 0 fel, dator och mobil).
+- NY `kemi/data/faropiktogram.json` (nio piktogram, påståenden, källor), NY `images/kemi/faropiktogram/*.svg` (9 st, egna teckningar), NY `tools/kemi-ritverktyg/faropiktogram/rita.py` (+ README).
+- `kemi/index.html` – ny ruta "Övningar" med länk. `js/menu.js` – länk "Övning: faropiktogram" under Kemi.
+- Kvar: granska exemplen per piktogram och teckningarna; labbutrustnings-spelet väntar på dina foton.

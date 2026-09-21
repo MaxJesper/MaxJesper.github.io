@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="menu-toggle">Kemi</button>
         <ul class="submenu">
           <li><a href="/kemi/index.html">Ämnet kemi</a></li>
+          <li><a href="/kemi/faropiktogram.html">Övning: faropiktogram</a></li>
           <li><a href="/kemi/atomer/">Atomer & Molekyler</a></li>
           <li><a href="/kemi/separationsprocesser/">Separationsprocesser</a></li>
           <li><a href="/kemi/syror-och-baser/">Syror & Baser</a></li>

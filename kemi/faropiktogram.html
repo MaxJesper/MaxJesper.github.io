@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Övning: faropiktogram – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    /* Samma spelidé som fågeltävlingen i Ekologi – här med kemins blågröna tema. Allt är scopat under .faro. */
+    .faro {
+      --tema: #0b6172;
+      --tema-stark: #084652;
+      --tema-mjuk: #eaf5f7;
+      --tema-kant: #b3d6dc;
+      --ok: #166534;
+      --ok-mjuk: #dcfce7;
+      --fel: #9a3412;
+      --fel-mjuk: #ffedd5;
+      --nasta: #1d4ed8;
+      --nasta-stark: #1e3a8a;
+      --text: #212529;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .faro *, .faro *::before, .faro *::after { box-sizing: border-box; }
+    .faro h2 { font-size: 1.3rem; color: var(--tema-stark); margin: 1.6rem 0 0.7rem; }
+    .faro h3 { font-size: 1.05rem; color: var(--tema-stark); margin: 1.1rem 0 0.4rem; }
+    .faro p { margin: 0 0 0.8rem; }
+    .faro .mellan { max-width: 760px; margin: 0 auto; }
+    .faro .doldt { display: none !important; }
+    .faro .note { font-size: 0.88rem; color: #555; }
+
+    .faro .panel {
+      background: #fff;
+      border: 1px solid var(--tema-kant);
+      border-radius: 14px;
+      padding: 1.1rem 1.2rem 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+    .faro .panel.soft { background: var(--tema-mjuk); }
+
+    .faro .btn {
+      font: inherit;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 2px solid var(--tema-kant);
+      background: #fff;
+      color: var(--tema-stark);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .faro .btn:hover { background: var(--tema-mjuk); }
+    .faro .btn.primary { background: var(--tema); border-color: var(--tema); color: #fff; }
+    .faro .btn.primary:hover { background: var(--tema-stark); }
+    .faro .btn:focus-visible, .faro .art-chip:focus-visible, .faro .svar-btn:focus-visible,
+    .faro .btn-nasta:focus-visible, .faro .art-dialog-close:focus-visible { outline: 3px solid var(--nasta); outline-offset: 3px; }
+    .faro .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+    /* Lägesval: två stora knappar */
+    .faro .lagen { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-top: 1rem; }
+    .faro .lage-btn {
+      font: inherit; text-align: left; cursor: pointer;
+      padding: 0.9rem 1rem; border-radius: 14px;
+      border: 2px solid var(--tema); background: var(--tema); color: #fff;
+    }
+    .faro .lage-btn:hover { background: var(--tema-stark); border-color: var(--tema-stark); }
+    .faro .lage-btn strong { display: block; font-size: 1.05rem; }
+    .faro .lage-btn span { display: block; font-size: 0.9rem; margin-top: 0.15rem; }
+    .faro .lage-btn:focus-visible { outline: 3px solid var(--nasta); outline-offset: 3px; }
+    @media (max-width: 560px) { .faro .lagen { grid-template-columns: 1fr; } }
+
+    /* Ovalerna: klicka för att se piktogrammet och läsa vad det betyder */
+    .faro .art-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0 0.2rem; }
+    .faro .art-chips-hint { font-size: 0.92rem; color: #444; margin: 1rem 0 0.3rem; }
+    .faro .art-chip {
+      font: inherit; font-size: 0.92rem;
+      padding: 0.3rem 0.8rem 0.3rem 0.4rem;
+      border-radius: 999px;
+      border: 2px solid var(--tema-kant);
+      background: var(--tema-mjuk);
+      color: var(--tema-stark);
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .faro .art-chip img { width: 1.7rem; height: 1.7rem; display: block; }
+    .faro .art-chip:hover { background: var(--tema); color: #fff; border-color: var(--tema); }
+
+    /* Rutan som öppnas från ovalerna */
+    .faro-dialog {
+      margin: auto; border: none; border-radius: 16px; padding: 0;
+      max-width: 540px; width: calc(100% - 2.4rem);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      color: #212529; font-size: 16px; line-height: 1.55;
+    }
+    .faro-dialog::backdrop { background: rgba(10,35,42,0.6); }
+    .faro-dialog .inner { padding: 1.2rem 1.3rem 1.4rem; position: relative; max-height: 88vh; overflow: auto; }
+    .faro-dialog .close {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      width: 2.2rem; height: 2.2rem; border-radius: 999px;
+      border: 2px solid #b3d6dc; background: #fff; color: #084652;
+      font-size: 1rem; line-height: 1; cursor: pointer;
+    }
+    .faro-dialog .close:hover { background: #eaf5f7; }
+    .faro-dialog .close:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    .faro-dialog .bildrad { text-align: center; background: #eaf5f7; border-radius: 12px; padding: 0.8rem; margin-bottom: 0.9rem; }
+    .faro-dialog img { width: 170px; max-width: 60%; height: auto; }
+    .faro-dialog h3 { margin: 0 0 0.15rem; color: #084652; font-size: 1.3rem; }
+    .faro-dialog .kod { margin: 0 0 0.6rem; font-size: 0.88rem; color: #555; }
+    .faro-dialog .betyder { font-weight: 700; margin: 0 0 0.5rem; }
+    .faro-dialog p { margin: 0 0 0.7rem; }
+    .faro-dialog ul { margin: 0 0 0.7rem; padding-left: 1.2rem; }
+    .faro-dialog .rubrik { font-weight: 700; color: #084652; margin: 0.6rem 0 0.15rem; }
+
+    /* Resultat- och spellayout */
+    .faro .stor-ruta {
+      display: flex; background: var(--tema); color: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 4px 14px rgba(8,70,82,0.25); margin-bottom: 1.2rem;
+    }
+    .faro .stor-ruta .del { flex: 1 1 0; text-align: center; padding: 1rem 0.6rem; }
+    .faro .stor-ruta .del + .del { border-left: 1px solid rgba(255,255,255,0.35); }
+    .faro .stor-ruta .siffra { display: block; font-size: 2.3rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .faro .stor-ruta .etikett { display: block; font-size: 0.82rem; margin-top: 0.15rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .faro .resultat-text { text-align: center; font-size: 1.08rem; font-weight: 700; color: var(--tema-stark); margin: -0.3rem 0 1rem; }
+    .faro .fraga-igen { text-align: center; font-weight: 600; color: var(--tema-stark); margin: 0.4rem 0 0.2rem; }
+
+    .faro .spel-layout { display: flex; align-items: flex-start; gap: 1.1rem; }
+    .faro .foto-kolumn { flex: 1 1 0; min-width: 0; }
+    .faro .info-ruta, .faro .stat-kolumn { flex: 0 0 190px; }
+    .faro .info-ruta { background: var(--tema-mjuk); border: 1px solid var(--tema-kant); border-radius: 14px; padding: 0.9rem 1rem; font-size: 0.88rem; }
+    .faro .info-ruta h2 { font-size: 0.95rem; margin: 0 0 0.4rem; }
+    .faro .info-ruta p { margin: 0 0 0.3rem; }
+    .faro .info-ruta ul { padding-left: 1.1rem; margin: 0.4rem 0; }
+    .faro .info-note { color: #444; font-size: 0.82rem; margin-top: 0.4rem; }
+    .faro .stat-kolumn { display: flex; flex-direction: column; gap: 0.6rem; }
+    .faro .stat-box { background: var(--tema); color: #fff; border-radius: 14px; padding: 0.8rem 0.6rem; text-align: center; }
+    .faro .stat-siffra { display: block; font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .faro .stat-etikett { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; margin-top: 0.1rem; }
+    .faro .stat-procent { display: block; font-size: 0.92rem; margin-top: 0.15rem; }
+    .faro .stat-progress { text-align: center; color: #444; font-size: 0.85rem; }
+    @media (max-width: 880px) {
+      .faro .spel-layout { flex-direction: column; }
+      .faro .info-ruta, .faro .stat-kolumn { flex: none; width: 100%; }
+      .faro .foto-kolumn { order: 1; width: 100%; }
+      .faro .stat-kolumn { order: 2; flex-direction: row; }
+      .faro .stat-box { flex: 1; }
+      .faro .info-ruta { order: 3; }
+    }
+
+    .faro .foto-ruta { background: var(--tema-mjuk); border: 1px solid var(--tema-kant); border-radius: 16px; padding: 1rem; margin-bottom: 1.1rem; text-align: center; }
+    .faro .foto-ruta img { width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto; }
+    .faro .paastaende { font-size: 1.25rem; font-weight: 700; color: var(--tema-stark); margin: 0.6rem 0.2rem; line-height: 1.4; }
+    .faro .paastaende-etikett { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: #444; margin: 0; }
+
+    .faro .svar-rad { display: flex; align-items: flex-start; gap: 1rem; }
+    .faro .svar-rad .svar-grid { flex: 1 1 0; min-width: 0; }
+    .faro .svar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+    @media (max-width: 560px) {
+      .faro .svar-grid.text { grid-template-columns: 1fr; }
+      .faro .svar-rad { flex-direction: column; }
+    }
+    .faro .fortsatt-kolumn { flex: 0 0 168px; display: flex; flex-direction: column; align-items: center; }
+    @media (max-width: 560px) { .faro .fortsatt-kolumn { flex: none; width: 100%; } }
+    .faro .btn-nasta {
+      font: inherit; font-weight: 700; font-size: 1.02rem; padding: 0.9rem 1rem; width: 100%;
+      border-radius: 12px; border: none; background: var(--nasta); color: #fff; cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .faro .btn-nasta:hover { background: var(--nasta-stark); }
+    .faro .btn-lasmer { margin-top: 0.6rem; width: 100%; font-size: 0.92rem; }
+
+    .faro .svar-btn {
+      font: inherit; font-weight: 600; font-size: 1.05rem; text-align: center;
+      padding: 0.9rem 0.6rem; border-radius: 12px;
+      border: 3px solid var(--tema-kant); background: #fff; color: var(--tema-stark); cursor: pointer;
+    }
+    .faro .svar-btn:hover:not(:disabled) { background: var(--tema-mjuk); border-color: var(--tema); }
+    .faro .svar-btn:disabled { cursor: default; }
+    .faro .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); color: #14361f; }
+    .faro .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); border-style: dashed; color: var(--fel); }
+    .faro .svar-btn .markering { font-weight: 800; }
+    /* Bildsvar (läge 2) */
+    .faro .svar-btn.bild { padding: 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+    .faro .svar-btn.bild img { width: 100%; max-width: 130px; height: auto; display: block; }
+    .faro .svar-btn.bild .namnrad { min-height: 1.5em; font-size: 0.95rem; }
+
+    .faro .besked { min-height: 1.6em; margin-top: 0.7rem; font-weight: 700; text-align: center; font-size: 0.98rem; }
+    .faro .besked.ok { color: var(--ok); }
+    .faro .besked.nej { color: var(--fel); }
+    .faro #nasta-rad { width: 100%; }
+    .faro .missad-lista { margin-top: 0.6rem; padding-left: 1.2rem; }
+    .faro .missad-lista li { margin-bottom: 0.2rem; }
+    .faro .kallor { font-size: 0.9rem; }
+    .faro .kallor ul { margin: 0.3rem 0 0.8rem; padding-left: 1.2rem; }
+
+    @media (prefers-reduced-motion: reduce) { .faro * { transition: none !important; } }
+    @media print { .no-print, .hamburger, #side-menu { display: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="kemi-header">
+    <h1>Övning: faropiktogram</h1>
+    <p>Kemi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="faro">
+    <div class="page-actions no-print">
+      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+    </div>
+
+    <div class="mellan">
+      <!-- ================= START ================= -->
+      <section class="panel" id="start-panel">
+        <h2 style="margin-top:0;">Hur många faropiktogram kan du?</h2>
+        <p id="intro-text">Du ser ett faropiktogram i taget. Välj vad det heter – eller läs en varning och välj rätt piktogram.</p>
+        <p class="note">Faropiktogram är de röda rutorna på spetsen som sitter på kemikalier hemma och på labbet. De är likadana i hela Europa. Har en produkt flera piktogram gäller alla. Signalordet <strong>Fara</strong> betyder allvarligare risk än <strong>Varning</strong>.</p>
+        <div class="lagen">
+          <button type="button" class="lage-btn" id="lage1Btn"><strong>Läge 1: Vad heter piktogrammet?</strong><span>Du ser ett piktogram och väljer rätt namn.</span></button>
+          <button type="button" class="lage-btn" id="lage2Btn"><strong>Läge 2: Vilket piktogram passar?</strong><span>Du läser en varning och väljer rätt piktogram.</span></button>
+        </div>
+        <p class="art-chips-hint">Nyfiken redan nu? Klicka på ett namn nedan för att se piktogrammet och läsa vad det betyder.</p>
+        <div class="art-chips" id="art-chips"></div>
+      </section>
+    </div>
+
+    <!-- ================= SPEL ================= -->
+    <section class="doldt" id="spel-panel" aria-label="Spelet">
+      <div class="spel-layout">
+        <div class="info-ruta">
+          <h2>Så räknas poängen</h2>
+          <p>Snabba och rätta svar ger flest poäng:</p>
+          <ul>
+            <li>Under 3 sek: <strong>10 p</strong></li>
+            <li>Under 6 sek: <strong>8 p</strong></li>
+            <li>Under 10 sek: <strong>6 p</strong></li>
+            <li>Under 15 sek: <strong>4 p</strong></li>
+            <li>15 sek eller mer: <strong>2 p</strong></li>
+          </ul>
+          <p class="info-note">Fel svar ger inga poäng.</p>
+        </div>
+
+        <div class="foto-kolumn">
+          <div class="foto-ruta" id="fraga-ruta"></div>
+          <div class="svar-rad">
+            <div class="svar-grid" id="svar-grid"></div>
+            <div class="fortsatt-kolumn">
+              <div id="nasta-rad" class="doldt">
+                <button class="btn-nasta" id="nastaBtn" type="button">Fortsätt →</button>
+                <button class="btn btn-lasmer" id="lasmerBtn" type="button">Läs om piktogrammet</button>
+              </div>
+              <p class="besked" id="besked" role="status" aria-live="polite">&nbsp;</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-kolumn">
+          <div class="stat-box">
+            <span class="stat-siffra" id="s-rattantal">0/0</span>
+            <span class="stat-etikett">rätt</span>
+            <span class="stat-procent" id="s-procent">–</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-siffra" id="s-poang">0</span>
+            <span class="stat-etikett">snabbhetspoäng</span>
+          </div>
+          <div class="stat-progress" id="s-bildnr">Fråga 1 av 0</div>
+        </div>
+      </div>
+      <div class="btn-row" style="justify-content:center; margin-top:1.2rem;">
+        <button class="btn" id="avbrytBtn" type="button">Avbryt</button>
+      </div>
+    </section>
+
+    <div class="mellan">
+      <!-- ================= SLUT ================= -->
+      <section class="panel doldt" id="slut-panel">
+        <h2 style="margin-top:0;" id="slut-rubrik" tabindex="-1">Klart!</h2>
+        <div class="stor-ruta">
+          <div class="del"><span class="siffra" id="slut-poang">0</span><span class="etikett">Snabbhetspoäng</span></div>
+          <div class="del"><span class="siffra" id="slut-procent">0%</span><span class="etikett">Rätt</span></div>
+        </div>
+        <p class="resultat-text" id="slut-text"></p>
+        <div id="slut-missade"></div>
+        <div class="btn-row doldt" id="trana-svara-rad" style="margin-top:0.6rem;">
+          <button class="btn primary" id="tranaSvaraBtn" type="button">Träna bara på de piktogram du tyckte var svårast</button>
+        </div>
+        <p class="fraga-igen">Vill du träna igen?</p>
+        <div class="btn-row">
+          <button class="btn primary" id="igenBtn" type="button">Ja, träna igen</button>
+          <button class="btn" id="bytLageBtn" type="button">Byt läge</button>
+          <a href="/kemi/index.html" class="btn">Nej, avsluta</a>
+        </div>
+      </section>
+
+      <section class="panel soft kallor" id="kallor-panel" aria-labelledby="kallor-rubrik">
+        <h2 id="kallor-rubrik" style="margin-top:0; font-size:1.05rem;">Källor och om bilderna</h2>
+        <p>Faktatexterna bygger på följande källor. Läs alltid varningstexten på själva förpackningen – den är viktigare än den här sidan.</p>
+        <ul id="kallor-lista"></ul>
+        <p class="note">Piktogrammen är standardiserade symboler enligt EU:s CLP-förordning (EG) nr 1272/2008 och FN:s GHS. Teckningarna på den här sidan är ritade för NO-sidan.</p>
+      </section>
+    </div>
+  </main>
+
+  <dialog class="faro-dialog" id="artDialog" aria-labelledby="artDialogNamn">
+    <div class="inner">
+      <button type="button" class="close" id="artDialogClose" aria-label="Stäng">✕</button>
+      <div class="bildrad"><img id="artDialogImg" src="" alt="" /></div>
+      <h3 id="artDialogNamn"></h3>
+      <p class="kod" id="artDialogKod"></p>
+      <p class="betyder" id="artDialogBetyder"></p>
+      <p id="artDialogForklaring"></p>
+      <p class="rubrik">Du hittar det till exempel på</p>
+      <ul id="artDialogExempel"></ul>
+      <p class="rubrik">Så gör du</p>
+      <p id="artDialogGordu"></p>
+    </div>
+  </dialog>
+
+  <script src="/js/menu.js"></script>
+  <script>
+"use strict";
+
+const BILDBAS = "/images/kemi/faropiktogram/";
+let PIKT = [];
+let RUNDA = [];        // { pikt, pastaende? }
+let lage = 1;          // 1 = bild -> namn, 2 = påstående -> bild
+let index = 0;
+let ratt = 0, poang = 0;
+let fragaStart = 0;
+let missade = [];      // { id, namn }
+let laser = false;
+let aktuell = null;    // pikt som hör till pågående fråga
+let senastFokus = null;
+
+function el(id) { return document.getElementById(id); }
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function esc(t) {
+  return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+/* ── Ljud: mjukt "ping" via Web Audio, ingen ljudfil behövs ── */
+let audioCtx = null;
+function playPing() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(660, now);
+    osc.frequency.exponentialRampToValueAtTime(990, now + 0.09);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.18, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.24);
+  } catch (e) { /* ljud kan blockeras – spelet funkar ändå */ }
+}
+
+async function ladda() {
+  try {
+    const res = await fetch("./data/faropiktogram.json", { cache: "no-store" });
+    const data = await res.json();
+    PIKT = data.piktogram;
+    if (data.intro) el("intro-text").textContent = data.intro;
+    el("art-chips").innerHTML = PIKT.map(p =>
+      '<button type="button" class="art-chip" data-id="' + p.id + '">' +
+      '<img src="' + BILDBAS + p.bild + '" alt="" />' + esc(p.namn) + '</button>').join("");
+    el("kallor-lista").innerHTML = (data.kallor || []).map(k =>
+      '<li><a href="' + esc(k.url) + '" target="_blank" rel="noopener">' + esc(k.namn) + '</a></li>').join("");
+  } catch (e) {
+    el("intro-text").textContent = "Det gick inte att ladda piktogrammen. Ladda om sidan och försök igen.";
+  }
+}
+
+function byggRunda(lista) {
+  const urval = lista || PIKT;
+  const fragor = [];
+  urval.forEach(p => {
+    if (lage === 1) fragor.push({ pikt: p });
+    else p.pastaenden.forEach(t => fragor.push({ pikt: p, pastaende: t }));
+  });
+  RUNDA = shuffle(fragor);
+}
+
+function startaRunda(lista) {
+  byggRunda(lista);
+  index = 0; ratt = 0; poang = 0; missade = [];
+  el("start-panel").classList.add("doldt");
+  el("slut-panel").classList.add("doldt");
+  el("spel-panel").classList.remove("doldt");
+  el("kallor-panel").classList.add("doldt");
+  visaFraga();
+}
+
+function beraknaPoang(tidSek) {
+  if (tidSek < 3) return 10;
+  if (tidSek < 6) return 8;
+  if (tidSek < 10) return 6;
+  if (tidSek < 15) return 4;
+  return 2;
+}
+
+function uppdateraStat() {
+  el("s-rattantal").textContent = ratt + "/" + RUNDA.length;
+  el("s-procent").textContent = RUNDA.length ? "(" + Math.round((ratt / RUNDA.length) * 100) + "%)" : "";
+  el("s-poang").textContent = poang;
+  el("s-bildnr").textContent = "Fråga " + Math.min(index + 1, RUNDA.length) + " av " + RUNDA.length;
+}
+
+function visaFraga() {
+  if (index >= RUNDA.length) { visaSlut(); return; }
+  laser = false;
+  fragaStart = Date.now();
+  const fraga = RUNDA[index];
+  aktuell = fraga.pikt;
+  el("besked").textContent = " ";
+  el("besked").className = "besked";
+  el("nasta-rad").classList.add("doldt");
+  const grid = el("svar-grid");
+  grid.innerHTML = "";
+
+  const fel3 = shuffle(PIKT.filter(p => p.id !== fraga.pikt.id)).slice(0, 3);
+  const alternativ = shuffle([fraga.pikt, ...fel3]);
+
+  if (lage === 1) {
+    el("fraga-ruta").innerHTML = '<img src="' + BILDBAS + fraga.pikt.bild + '" alt="Faropiktogram – vilket är det?" />';
+    grid.className = "svar-grid text";
+    alternativ.forEach(p => {
+      const b = document.createElement("button");
+      b.className = "svar-btn";
+      b.type = "button";
+      b.innerHTML = '<span class="markering" aria-hidden="true"></span>' + esc(p.namn);
+      b.addEventListener("click", () => valSvar(b, p, fraga));
+      grid.appendChild(b);
+    });
+  } else {
+    el("fraga-ruta").innerHTML = '<p class="paastaende-etikett">Vilket piktogram passar?</p><p class="paastaende">' + esc(fraga.pastaende) + '</p>';
+    grid.className = "svar-grid bilder";
+    alternativ.forEach(p => {
+      const b = document.createElement("button");
+      b.className = "svar-btn bild";
+      b.type = "button";
+      b.innerHTML = '<img src="' + BILDBAS + p.bild + '" alt="' + esc(p.alt) + '" /><span class="namnrad"></span>';
+      b.addEventListener("click", () => valSvar(b, p, fraga));
+      grid.appendChild(b);
+    });
+  }
+  uppdateraStat();
+}
+
+function markera(knapp, symbol, namn) {
+  if (lage === 1) {
+    knapp.querySelector(".markering").textContent = symbol + " ";
+  } else {
+    knapp.querySelector(".namnrad").innerHTML = '<span class="markering" aria-hidden="true">' + symbol + "</span> " + esc(namn);
+  }
+}
+
+function valSvar(knapp, val, fraga) {
+  if (laser) return;
+  laser = true;
+  const alla = Array.from(el("svar-grid").querySelectorAll(".svar-btn"));
+  alla.forEach(b => { b.disabled = true; });
+  const ratta = fraga.pikt;
+
+  if (val.id === ratta.id) {
+    const vunna = beraknaPoang((Date.now() - fragaStart) / 1000);
+    ratt++; poang += vunna;
+    knapp.classList.add("ratt");
+    markera(knapp, "✓", ratta.namn);
+    el("besked").textContent = "Rätt! Det är " + ratta.namn + ". (+" + vunna + " p)";
+    el("besked").className = "besked ok";
+    playPing();
+  } else {
+    missade.push({ id: ratta.id, namn: ratta.namn });
+    knapp.classList.add("fel");
+    markera(knapp, "✕", val.namn);
+    // markera rätt svar
+    const idx = Array.from(el("svar-grid").children).indexOf(knapp);
+    alla.forEach(b => {
+      const namnUt = lage === 1 ? b.textContent.replace(/^[✓✕]\s*/, "").trim() : null;
+      if (lage === 1 && namnUt === ratta.namn) { b.classList.add("ratt"); markera(b, "✓", ratta.namn); }
+    });
+    if (lage === 2) {
+      alla.forEach(b => {
+        const src = b.querySelector("img").getAttribute("src");
+        if (src.endsWith(ratta.bild)) { b.classList.add("ratt"); markera(b, "✓", ratta.namn); }
+      });
+    }
+    el("besked").textContent = "Fel. Rätt svar är " + ratta.namn + ".";
+    el("besked").className = "besked nej";
+  }
+  // Visa namnen på alla bildalternativ i läge 2 så eleven kan lära sig
+  if (lage === 2) {
+    alla.forEach(b => {
+      const rad = b.querySelector(".namnrad");
+      if (!rad.textContent.trim()) {
+        const src = b.querySelector("img").getAttribute("src");
+        const p = PIKT.find(x => src.endsWith(x.bild));
+        if (p) rad.textContent = p.namn;
+      }
+    });
+  }
+  uppdateraStat();
+  el("nasta-rad").classList.remove("doldt");
+  el("nastaBtn").focus();
+}
+
+function nastaFraga() {
+  index++;
+  visaFraga();
+}
+
+function visaSlut() {
+  el("spel-panel").classList.add("doldt");
+  el("kallor-panel").classList.remove("doldt");
+  el("slut-panel").classList.remove("doldt");
+  const totalt = RUNDA.length;
+  const procent = totalt ? Math.round((ratt / totalt) * 100) : 0;
+  el("slut-poang").textContent = poang;
+  el("slut-procent").textContent = procent + "%";
+  el("slut-text").textContent = "Du fick " + ratt + "/" + totalt + " rätt (" + procent + " % rätt) och " + poang + " snabbhetspoäng.";
+  const unika = [...new Map(missade.map(m => [m.id, m.namn])).values()];
+  if (unika.length) {
+    el("slut-missade").innerHTML =
+      '<p style="margin-top:0.8rem;">Du kan öva lite extra på:</p><ul class="missad-lista">' +
+      unika.map(n => "<li>" + esc(n) + "</li>").join("") + "</ul>";
+  } else {
+    el("slut-missade").innerHTML = '<p style="margin-top:0.8rem;">Alla rätt – snyggt jobbat!</p>';
+  }
+  el("trana-svara-rad").classList.toggle("doldt", !(unika.length && procent < 100));
+  el("slut-rubrik").focus();
+}
+
+el("lage1Btn").addEventListener("click", () => { lage = 1; startaRunda(); });
+el("lage2Btn").addEventListener("click", () => { lage = 2; startaRunda(); });
+el("nastaBtn").addEventListener("click", nastaFraga);
+el("igenBtn").addEventListener("click", () => startaRunda());
+el("bytLageBtn").addEventListener("click", () => {
+  el("slut-panel").classList.add("doldt");
+  el("start-panel").classList.remove("doldt");
+  el("lage1Btn").focus();
+});
+el("tranaSvaraBtn").addEventListener("click", () => {
+  const ider = new Set(missade.map(m => m.id));
+  const delmangd = PIKT.filter(p => ider.has(p.id));
+  if (delmangd.length) startaRunda(delmangd);
+});
+el("avbrytBtn").addEventListener("click", () => {
+  el("spel-panel").classList.add("doldt");
+  el("kallor-panel").classList.remove("doldt");
+  el("start-panel").classList.remove("doldt");
+  el("lage1Btn").focus();
+});
+
+/* ── Rutan som öppnas från ovalerna (och efter varje svar) ── */
+function visaPiktogramInfo(p) {
+  senastFokus = document.activeElement;
+  el("artDialogImg").src = BILDBAS + p.bild;
+  el("artDialogImg").alt = p.alt;
+  el("artDialogNamn").textContent = p.namn;
+  el("artDialogKod").textContent = p.kod + " (CLP/GHS)";
+  el("artDialogBetyder").textContent = p.betyder;
+  el("artDialogForklaring").textContent = p.forklaring;
+  el("artDialogExempel").innerHTML = p.exempel.map(t => "<li>" + esc(t) + "</li>").join("");
+  el("artDialogGordu").textContent = p.gordu;
+  el("artDialog").showModal();
+}
+el("art-chips").addEventListener("click", (e) => {
+  const knapp = e.target.closest(".art-chip");
+  if (!knapp) return;
+  const p = PIKT.find(x => x.id === knapp.dataset.id);
+  if (p) visaPiktogramInfo(p);
+});
+el("lasmerBtn").addEventListener("click", () => { if (aktuell) visaPiktogramInfo(aktuell); });
+el("artDialogClose").addEventListener("click", () => el("artDialog").close());
+el("artDialog").addEventListener("click", (e) => { if (e.target === el("artDialog")) el("artDialog").close(); });
+el("artDialog").addEventListener("close", () => {
+  if (senastFokus && senastFokus.focus) { try { senastFokus.focus(); } catch (e) {} }
+});
+
+ladda();
+  </script>
+</body>
+</html>

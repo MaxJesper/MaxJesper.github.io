@@ -1,0 +1,194 @@
+{
+  "title": "Övning: faropiktogram",
+  "intro": "Du ser ett faropiktogram i taget. Välj vad det heter – eller läs en varning och välj rätt piktogram. Varje rätt svar ger poäng, och du kan när som helst klicka på ett namn för att läsa vad symbolen betyder.",
+  "piktogram": [
+    {
+      "id": "ghs01",
+      "kod": "GHS01",
+      "namn": "Explosiv",
+      "bild": "ghs01-explosiv.svg",
+      "alt": "Faropiktogram Explosiv: en svart bomb som exploderar med en stjärnformad smäll.",
+      "betyder": "Produkten eller ämnet kan explodera.",
+      "forklaring": "Explosiva ämnen kan detonera eller brinna våldsamt om de utsätts för slag, friktion, gnistor eller värme. Symbolen är en bomb som exploderar.",
+      "exempel": [
+        "fyrverkerier och krut",
+        "sprängämnen"
+      ],
+      "gordu": "Skydda produkten mot stötar, värme och gnistor. Öppna, slå på eller kasta aldrig något med den här symbolen.",
+      "pastaenden": [
+        "Ämnet kan explodera om det utsätts för slag, gnistor eller värme.",
+        "Den här varningen finns på fyrverkerier och krut."
+      ]
+    },
+    {
+      "id": "ghs02",
+      "kod": "GHS02",
+      "namn": "Brandfarlig",
+      "bild": "ghs02-brandfarlig.svg",
+      "alt": "Faropiktogram Brandfarlig: en svart låga.",
+      "betyder": "Produkten kan lätt börja brinna.",
+      "forklaring": "Brandfarliga gaser, vätskor och fasta ämnen kan fatta eld av en låga, en gnista eller en het yta. Ofta räcker det att ångorna når en gnista – då kan elden slå tillbaka till burken.",
+      "exempel": [
+        "denaturerad sprit och aceton",
+        "sprayburkar och tändvätska",
+        "gasol"
+      ],
+      "gordu": "Håll borta från öppen eld, gnistor och varma ytor. Ventilera väl, och stäng av brännare och värmekällor innan du öppnar flaskan.",
+      "pastaenden": [
+        "Ämnet kan lätt börja brinna, och du ska hålla det borta från eld och gnistor.",
+        "Ångorna från vätskan kan antändas av en gnista en bit därifrån."
+      ]
+    },
+    {
+      "id": "ghs03",
+      "kod": "GHS03",
+      "namn": "Oxiderande",
+      "bild": "ghs03-oxiderande.svg",
+      "alt": "Faropiktogram Oxiderande: en svart låga ovanför en cirkel.",
+      "betyder": "Produkten kan orsaka eller förvärra en brand.",
+      "forklaring": "Oxiderande ämnen avger syre, och syre får en brand att växa snabbt. De kan börja brinna eller explodera tillsammans med brännbart material som papper, trä eller brandfarliga vätskor. Symbolen är en låga ovanför en cirkel (syre).",
+      "exempel": [
+        "kaliumpermanganat",
+        "starkare vätesuperoxid (väteperoxid)",
+        "vissa poolkemikalier"
+      ],
+      "gordu": "Förvara skilt från brandfarliga ämnen och från papper och trä. Blanda inte olika kemikalier på egen hand.",
+      "pastaenden": [
+        "Ämnet avger syre och får en brand att växa mycket snabbare.",
+        "Ämnet kan orsaka brand när det kommer i kontakt med papper, trä eller andra brännbara material."
+      ]
+    },
+    {
+      "id": "ghs04",
+      "kod": "GHS04",
+      "namn": "Gas under tryck",
+      "bild": "ghs04-gas-under-tryck.svg",
+      "alt": "Faropiktogram Gas under tryck: en svart gasflaska.",
+      "betyder": "Behållaren innehåller gas under tryck.",
+      "forklaring": "Gasen är hoppressad i en flaska, eller så är den kyld så att den blivit flytande. Flaskan kan explodera om den blir varm, och kall (djupkyld) gas kan ge köldskador på huden.",
+      "exempel": [
+        "gasolflaskor och campingbrännare",
+        "syrgas- och kolsyreflaskor",
+        "flytande kväve (djupkyld gas)"
+      ],
+      "gordu": "Skydda flaskan mot sol och värme och se till att den inte välter eller tappas. Rör aldrig kall gas eller köldskadade föremål med bara händer.",
+      "pastaenden": [
+        "Behållaren innehåller gas under tryck och kan explodera om den blir varm.",
+        "Behållaren innehåller hoppressad eller djupkyld gas som kan ge köldskador."
+      ]
+    },
+    {
+      "id": "ghs05",
+      "kod": "GHS05",
+      "namn": "Frätande",
+      "bild": "ghs05-fratande.svg",
+      "alt": "Faropiktogram Frätande: två provrör som droppar på en metallbit och en hand så att de fräts sönder.",
+      "betyder": "Produkten kan fräta sönder hud, ögon och metall.",
+      "forklaring": "Frätande ämnen ger allvarliga frätskador på hud och i ögon, och kan angripa metaller. Symbolen visar hur droppar fräter på en metallbit och en hand. Både starka syror och starka baser kan vara frätande.",
+      "exempel": [
+        "avloppsrens (natriumhydroxid)",
+        "saltsyra och andra starka syror",
+        "batterisyra"
+      ],
+      "gordu": "Använd skyddsglasögon och handskar. Får du stänk på huden eller i ögonen: skölj genast med mycket vatten, säg till en vuxen och sök vård vid behov.",
+      "pastaenden": [
+        "Ämnet kan ge svåra frätskador på hud och ögon.",
+        "Ämnet kan fräta sönder metall."
+      ]
+    },
+    {
+      "id": "ghs06",
+      "kod": "GHS06",
+      "namn": "Akut giftig",
+      "bild": "ghs06-akut-giftig.svg",
+      "alt": "Faropiktogram Akut giftig: en dödskalle med två korsade ben.",
+      "betyder": "Produkten är giftig och kan vara livsfarlig.",
+      "forklaring": "Akut giftiga ämnen kan ge allvarlig sjukdom eller dödsfall redan vid små mängder, om man får i sig dem, andas in dem eller får dem på huden. Symbolen är en dödskalle med korsade ben.",
+      "exempel": [
+        "metanol (finns i vissa spolarvätskor)",
+        "kvicksilver",
+        "vissa bekämpningsmedel"
+      ],
+      "gordu": "Ät, drick och lukta aldrig på ämnet. Arbeta bara med det om en vuxen säger att det är tillåtet. Vid förgiftning: ring 112 och be om Giftinformation, eller ring Giftinformationscentralen 010-456 6700 i mindre akuta fall.",
+      "pastaenden": [
+        "Ämnet kan vara livsfarligt redan i små mängder.",
+        "Om du sväljer eller andas in ämnet kan du bli mycket sjuk eller dö."
+      ]
+    },
+    {
+      "id": "ghs07",
+      "kod": "GHS07",
+      "namn": "Skadlig",
+      "bild": "ghs07-skadlig.svg",
+      "alt": "Faropiktogram Skadlig: ett svart utropstecken.",
+      "betyder": "Produkten är skadlig eller irriterande.",
+      "forklaring": "Utropstecknet varnar för ämnen som är mindre farliga än de giftiga, men som ändå kan skada. De kan irritera hud och ögon, ge allergi, ge yrsel och dåsighet, irritera luftvägarna eller vara skadliga om man får i sig dem.",
+      "exempel": [
+        "många rengöringsmedel",
+        "maskindiskmedel",
+        "aceton och vissa färger"
+      ],
+      "gordu": "Undvik kontakt med hud och ögon, ventilera, och tvätta händerna efteråt. Läs varningstexten på förpackningen.",
+      "pastaenden": [
+        "Ämnet kan irritera hud och ögon eller ge allergi.",
+        "Ämnet kan ge yrsel och irriterade luftvägar, men är inte livsfarligt."
+      ]
+    },
+    {
+      "id": "ghs08",
+      "kod": "GHS08",
+      "namn": "Allvarlig hälsofara",
+      "bild": "ghs08-allvarlig-halsofara.svg",
+      "alt": "Faropiktogram Allvarlig hälsofara: en människosiluett med en vit stjärna i bröstet.",
+      "betyder": "Produkten kan skada hälsan allvarligt och långvarigt.",
+      "forklaring": "Symbolen med en person och en stjärna i bröstet varnar för skador som kan visa sig först efter lång tid: cancer, skador på arvsmassan eller på foster, skador på organ som lungor, lever eller nervsystem, samt allergi och astma. Den används också när en vätska kan vara dödlig om den kommer ned i lungorna.",
+      "exempel": [
+        "lacknafta och bensin",
+        "tändvätska",
+        "bensen"
+      ],
+      "gordu": "Undvik att andas in ångor och att få ämnet på huden – även små mängder många gånger kan vara farligt. Använd handskar och god ventilation.",
+      "pastaenden": [
+        "Ämnet kan orsaka cancer eller skada fosterutvecklingen.",
+        "Ämnet kan skada lungor, lever eller nervsystem om du utsätts för det under lång tid."
+      ]
+    },
+    {
+      "id": "ghs09",
+      "kod": "GHS09",
+      "namn": "Miljöfarlig",
+      "bild": "ghs09-miljofarlig.svg",
+      "alt": "Faropiktogram Miljöfarlig: ett dött träd och en död fisk som flyter på vattnet.",
+      "betyder": "Produkten är farlig för miljön.",
+      "forklaring": "Miljöfarliga ämnen är giftiga för vattenlevande djur och växter, och skadan kan ligga kvar länge. Symbolen visar ett dött träd och en död fisk.",
+      "exempel": [
+        "bensin och diesel",
+        "vissa färger och bekämpningsmedel",
+        "vissa rengöringsmedel"
+      ],
+      "gordu": "Häll aldrig ämnet i avloppet eller i naturen. Lämna rester som farligt avfall på en återvinningscentral eller miljöstation.",
+      "pastaenden": [
+        "Ämnet kan skada fiskar och andra vattenlevande djur.",
+        "Ämnet ska lämnas som farligt avfall och inte hällas i avloppet."
+      ]
+    }
+  ],
+  "kallor": [
+    {
+      "namn": "Kemikalieinspektionen – Farosymboler",
+      "url": "https://www.kemi.se/rad-till-privatpersoner/material-till-skola-och-forskola/hannas-hus/farosymboler"
+    },
+    {
+      "namn": "Arbetsmiljöverket – Läs varningstexten! Farosymboler för märkning (CLP)",
+      "url": "https://www.av.se/globalassets/filer/halsa-och-sakerhet/luftfororeningar-och-kemiska-risker/kemivagledning/clp-farosymboler-piktogram.pdf"
+    },
+    {
+      "namn": "ECHA – CLP-piktogram",
+      "url": "https://echa.europa.eu/sv/regulations/clp/clp-pictograms"
+    },
+    {
+      "namn": "Giftinformationscentralen",
+      "url": "https://giftinformation.se/kontakta-oss/"
+    }
+  ]
+}
