@@ -308,6 +308,7 @@ Hela området `kemi/separationsprocesser/` är nybyggt (tidigare bara en tom pla
 ## 8. Faropiktogram-spel (20 sep 2026)
 
 - NY `kemi/faropiktogram.html` – spel i fågeltävlingens stil: läge 1 (bild → namn), läge 2 (varning → välj piktogram), poäng efter svarstid, ping-ljud, "träna på de svåra", ovaler som öppnar en ruta med betydelse/exempel/"Så gör du". ✓/✕ + ram så att rätt/fel inte bara skiljs med färg. WCAG 2.2 AA (axe 0 fel, dator och mobil).
-- NY `kemi/data/faropiktogram.json` (nio piktogram, påståenden, källor), NY `images/kemi/faropiktogram/*.svg` (9 st, egna teckningar), NY `tools/kemi-ritverktyg/faropiktogram/rita.py` (+ README).
+- NY `kemi/data/faropiktogram.json` (nio piktogram, påståenden, källor), NY `images/kemi/faropiktogram/*.svg` (9 st, OFFICIELLA symboler ur npm-paketet `@ghs-hazard-pictograms/assets`; mina egenritade versioner ersattes 21 sep eftersom de inte var exakt rätt), NY `tools/kemi-ritverktyg/faropiktogram/rita.py` (stubb, kan tas bort).
+- Varje piktogram länkar till sin film i UR Play-serien "Vi förklarar kemi" (rutan som öppnas från ovalerna + källistan).
 - `kemi/index.html` – ny ruta "Övningar" med länk. `js/menu.js` – länk "Övning: faropiktogram" under Kemi.
 - Kvar: granska exemplen per piktogram och teckningarna; labbutrustnings-spelet väntar på dina foton.

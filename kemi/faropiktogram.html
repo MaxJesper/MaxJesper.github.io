@@ -112,6 +112,7 @@
     .faro-dialog .betyder { font-weight: 700; margin: 0 0 0.5rem; }
     .faro-dialog p { margin: 0 0 0.7rem; }
     .faro-dialog ul { margin: 0 0 0.7rem; padding-left: 1.2rem; }
+    .faro-dialog a { color: #0b4f8a; text-decoration: underline; }
     .faro-dialog .rubrik { font-weight: 700; color: #084652; margin: 0.6rem 0 0.15rem; }
 
     /* Resultat- och spellayout */
@@ -301,7 +302,8 @@
         <h2 id="kallor-rubrik" style="margin-top:0; font-size:1.05rem;">Källor och om bilderna</h2>
         <p>Faktatexterna bygger på följande källor. Läs alltid varningstexten på själva förpackningen – den är viktigare än den här sidan.</p>
         <ul id="kallor-lista"></ul>
-        <p class="note">Piktogrammen är standardiserade symboler enligt EU:s CLP-förordning (EG) nr 1272/2008 och FN:s GHS. Teckningarna på den här sidan är ritade för NO-sidan.</p>
+        <p class="note">Filmerna på UR Play är gjorda för åk 4–6 och är tillgängliga till 15 december 2027 (därefter kan länkarna sluta fungera).</p>
+        <p class="note">Piktogrammen är de officiella, standardiserade symbolerna enligt EU:s CLP-förordning (EG) nr 1272/2008 och FN:s GHS. Bilderna är fria SVG-versioner av symbolerna.</p>
       </section>
     </div>
   </main>
@@ -318,6 +320,8 @@
       <ul id="artDialogExempel"></ul>
       <p class="rubrik">Så gör du</p>
       <p id="artDialogGordu"></p>
+      <p class="rubrik">Se filmen</p>
+      <p id="artDialogFilm"></p>
     </div>
   </dialog>
 
@@ -578,6 +582,9 @@ function visaPiktogramInfo(p) {
   el("artDialogForklaring").textContent = p.forklaring;
   el("artDialogExempel").innerHTML = p.exempel.map(t => "<li>" + esc(t) + "</li>").join("");
   el("artDialogGordu").textContent = p.gordu;
+  el("artDialogFilm").innerHTML = p.film
+    ? '<a href="' + esc(p.film.url) + '" target="_blank" rel="noopener">' + esc(p.film.titel) + ' (UR Play, 6 min, öppnas i ny flik)</a>'
+    : "";
   el("artDialog").showModal();
 }
 el("art-chips").addEventListener("click", (e) => {
