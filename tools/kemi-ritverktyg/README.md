@@ -117,6 +117,18 @@ ritar utåtböjda bågar (regel 9 i kulmodeller3d.py); valfri `rot` (grader) vri
 (används i `render-kulmodeller.html` som `spec.rot`, så att PNG och live-3D ser likadana ut).
 Skillnad mot kolkapitlet: här ligger live-3D direkt i studieguiden (få molekyler); se CLAUDE.md, "Live-3D i korta kemikapitel".
 
+## syror-och-baser/bygg_syror.py  (Syror och baser, sep 2026)
+Bygger bild- och modellmaterialet till den breda studieguiden `kemi/syror-och-baser/`: `js/molmodeller.js`
+(`window.MOLDATA`, samma format som atomer), 2D-strukturformler (`images/kemi/syror-och-baser/strukturformler/*.svg`,
+husstil via `bygg_atomer.struct_svg`), jonkort för jonföreningar (`jonkort/*.svg`: NaOH, Ca(OH)2, Na2CO3 – ingen
+molekylmodell eftersom de inte är molekyler), statiska kulmodell-PNG:er (`kulmodeller/`, reserv utan JavaScript) och den
+färgblindsäkra pH-skalan (`ph-skala.svg`). Kör `python3 tools/kemi-ritverktyg/syror-och-baser/bygg_syror.py`
+(allt), `… data` (JS + SVG), `… png [nycklar]` (kräver playwright + pillow + chromium) eller `… kort <nyckel>…` (skriver
+ut färdig HTML för ett ämneskort/jonkort). Ny förening: lägg en geometrifunktion (Å, gradtal från NIST/CRC) + rad i MOLS,
+kör, läs `check_geometry`-utskriften och titta på PNG:en; `auto_view` väljer en vy där ingen atom skymmer en annan.
+Svavel med fler än två bindningar kräver `A.VALENS`-tilläggen (`S`, `S4`, `N+`, `O-`) och `DISPLAY`-mappningen längst upp.
+Studieguidens HTML redigeras för hand (gula rutor = `css/viktigt.css`, se CLAUDE.md "Syror och baser – optimerad…").
+
 ## Arbetsgång
 1. Claude bestämmer innehållet (namn, summaformel, kondenserad, SMILES/bindningar) – kemin.
 2. Skriptet ritar (geometrin). Aldrig frihands-SVG eller bild-AI för strukturer.

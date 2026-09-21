@@ -83,8 +83,9 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 | Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ |
 | Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Kemikartan: cirkulär innehållskarta som områdets framsida (valfritt mönster, byggt 21 sep 2026) | – | – | – | – | – | – | – | – | – | – | – | – | – | ✓ |
+| Gul "Viktigt!"-ruta för sådant som behöver betonas extra (`css/viktigt.css`, byggd 21 sep 2026; max 1–2 per milstolpe) | – | – | – | – | ✗ | ✗ | ✓ (8 rutor, bl.a. SIV) | ✗ | ✗ | ✗ | ✗ | – | – | ✗ |
 | Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) | ✓ (.check-q i studieguiden + 10 kontrollfrågor i säkerhetsintyget) |
-| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ? | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – |
+| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ✓ (live i ämneskorten, jonkort för jonföreningar) | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – |
 | Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ | ✓ (densitet, calc-box) |
 | Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) | ✓ |
 | Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ |

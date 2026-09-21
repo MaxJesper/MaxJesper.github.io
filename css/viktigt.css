@@ -1,0 +1,48 @@
+/* ==========================================================================
+   viktigt.css – gul "Viktigt!"-ruta (delad komponent, sep 2026)
+   --------------------------------------------------------------------------
+   Används för det som behöver betonas extra: säkerhetsregler (t.ex. SIV) och vanliga missförstånd.
+   Max en eller två per milstolpe – annars tappar rutan sin betydelse.
+   Färgblindsäker: gulbrun ram + varningstriangel + ordet "Viktigt!" bär informationen, aldrig bara färgen.
+   Kontrast: text #1a1a2e på #fff3b0 ≈ 15:1, etikett #5c4300 på #fff3b0 ≈ 8:1.
+
+   Markup:
+   <div class="viktigt" role="note">
+     <svg class="viktigt-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">…</svg>
+     <div class="viktigt-body"><strong class="viktigt-label">Viktigt!</strong><p>…</p></div>
+   </div>
+   Valfritt: <img class="viktigt-pikto" …> (officiellt faropiktogram, oförändrat) före .viktigt-body.
+   ========================================================================== */
+.viktigt {
+  display: flex; gap: 0.85rem; align-items: flex-start;
+  margin: 1rem 0; padding: 0.8rem 1rem;
+  background: #fff3b0; color: #1a1a2e;
+  border: 2px solid #7a5a00; border-left-width: 10px; border-radius: 8px;
+  font-size: 0.98rem; line-height: 1.5;
+}
+.viktigt-mark { flex: none; width: 2rem; height: 2rem; margin-top: 0.1rem; }
+.viktigt-pikto { flex: none; width: 4.4rem; height: 4.4rem; }
+.viktigt-body { flex: 1; min-width: 0; }
+.viktigt-label {
+  display: block; margin-bottom: 0.15rem;
+  font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5c4300;
+}
+.viktigt-body p { margin: 0.3rem 0; }
+.viktigt a { color: #5c4300; text-decoration: underline; }
+.viktigt-body p:first-of-type { margin-top: 0; }
+.viktigt-body p:last-child { margin-bottom: 0; }
+.viktigt-regel {
+  display: inline-block; padding: 0 0.45rem; border: 2px solid #5c4300; border-radius: 6px;
+  background: #fff; font-weight: 800; letter-spacing: 0.08em;
+}
+@media (max-width: 520px) {
+  .viktigt { padding: 0.7rem 0.8rem; gap: 0.6rem; }
+  .viktigt-pikto { width: 3.4rem; height: 3.4rem; }
+}
+@media print {
+  .viktigt { background: #fff; border-color: #000; color: #000; break-inside: avoid; }
+  .viktigt-label { color: #000; }
+}
+@media (forced-colors: active) {
+  .viktigt { border-color: CanvasText; }
+}
