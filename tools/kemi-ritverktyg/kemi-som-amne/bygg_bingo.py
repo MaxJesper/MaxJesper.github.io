@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Genererar data/begreppsbingo.json och begrepp-bingo.html för Kemi som ämne (mall: elektrokemi)."""
+"""Genererar data/begreppsbingo.json och begrepp-bingo.html för Ämnet kemi (mall: elektrokemi)."""
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from data_begrepp import BEGREPP
@@ -30,7 +30,7 @@ def bygg_json():
     for t, d in BEGREPP.items():
         if t in UTAN: continue
         lst.append({"term": t, "def": OVERRIDE.get(t, d)})
-    out = {"title": "Begreppsbingo – Kemi som ämne", "begrepp": lst}
+    out = {"title": "Begreppsbingo – Ämnet kemi", "begrepp": lst}
     with open(f"{DST}/data/begreppsbingo.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     return lst
@@ -42,7 +42,7 @@ def bygg_html():
         nonlocal h
         if a not in h: raise SystemExit("saknas i mallen: " + a[:60])
         h = h.replace(a, b) if n is None else h.replace(a, b, n)
-    rep("<title>Begreppsbingo – Elektrokemi</title>", "<title>Begreppsbingo – Kemi som ämne – Kemi</title>")
+    rep("<title>Begreppsbingo – Elektrokemi</title>", "<title>Begreppsbingo – Ämnet kemi – Kemi</title>")
     rep("--gron:#1d4ed8; --gron-m:#597fe9; --gron-l:#ecf0fb;", "--gron:#3730a3; --gron-m:#4338ca; --gron-l:#eef2ff;")
     # markerade rutor: brunorange + bock i stället för grönt (rödgrön färgblindhet)
     rep("--ratt:#2e9e5b; --ratt-l:#e4f6ea;", "--ratt:#7c2d12; --ratt-l:#ffedd5;")
@@ -53,12 +53,12 @@ def bygg_html():
     rep('"#2e8b6f","#3b7dd8","#f0a500","#d64545"', '"#4338ca","#3b7dd8","#f0a500","#9a3412"')
     rep("  #bingo .cell.darrar{", "  #bingo .cell.markerad::after{content:\"✓\";position:absolute;top:4px;right:8px;font-size:1rem;font-weight:900;color:var(--ratt)}\n  #bingo .cell.markerad.fri::after{content:\"\"}\n  #bingo .cell.darrar{")
     rep('<body>\n', '<body class="area-amne">\n')
-    rep("<h1>Elektrokemi</h1>\n  <p>Begreppsbingo</p>", "<h1>Begreppsbingo</h1>\n  <p>Kemi som ämne</p>")
+    rep("<h1>Elektrokemi</h1>\n  <p>Begreppsbingo</p>", "<h1>Begreppsbingo</h1>\n  <p>Ämnet kemi</p>")
     rep('<button class="hamburger" onclick="toggleMenu()">', '<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">')
     rep('<p>\n    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>\n  </p>',
         '<div class="page-actions no-print">\n    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>\n  </div>')
-    h = h.replace("om elektrokemi istället för siffror", "om kemi som ämne i stället för siffror")
-    h = h.replace("om elektrokemi", "om kemi som ämne")
+    h = h.replace("om elektrokemi istället för siffror", "om ämnet kemi i stället för siffror")
+    h = h.replace("om elektrokemi", "om ämnet kemi")
     h = h.replace("istället", "i stället")
     if "lektrokemi" in h: print("VARNING: elektrokemi kvar:", [m.start() for m in re.finditer("lektrokemi", h)])
     open(f"{DST}/begrepp-bingo.html", "w", encoding="utf-8").write(h)

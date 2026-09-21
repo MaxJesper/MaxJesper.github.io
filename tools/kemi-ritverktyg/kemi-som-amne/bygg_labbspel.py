@@ -56,7 +56,7 @@ HTML = r'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Labbutrustning: känn igen föremålen – Kemi som ämne – Kemi</title>
+<title>Labbutrustning: känn igen föremålen – Ämnet kemi – Kemi</title>
 <link rel="stylesheet" href="/css/style.css" />
 <style>
   body.area-amne { --area:#4338ca; --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe; --area-hover:#e0e7ff; }
@@ -155,7 +155,7 @@ HTML = r'''<!DOCTYPE html>
 
 <header class="kemi-header">
   <h1>Labbutrustning: känn igen föremålen</h1>
-  <p>Kemi som ämne</p>
+  <p>Ämnet kemi</p>
 </header>
 
 <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>

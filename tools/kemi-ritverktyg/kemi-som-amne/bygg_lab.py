@@ -123,14 +123,14 @@ def build():
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laborationer – Kemi som ämne</title>
+  <title>Laborationer – Ämnet kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
   <style>{CSS}  </style>
 </head>
 <body class="area-amne">
   <header class="kemi-header">
     <h1>Laborationer</h1>
-    <p>Kemi som ämne</p>
+    <p>Ämnet kemi</p>
   </header>
 
   <button class="hamburger no-print" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>

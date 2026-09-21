@@ -41,7 +41,7 @@ labs = "\n".join(f'              <li><a href="./laborationer.html#{l["id"]}">{es
 body = f'''<body class="area-amne">
 
   <header class="kemi-header">
-    <h1>Kemi som ämne</h1>
+    <h1>Ämnet kemi</h1>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
@@ -49,7 +49,7 @@ body = f'''<body class="area-amne">
 
   <main>
     <div class="page-actions no-print" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-      <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
+      <a href="/index.html" class="subject-btn">← Tillbaka till startsidan</a>
       <a href="/kemi/atomer/index.html" class="subject-btn">Nästa område →</a>
     </div>
 
@@ -159,7 +159,7 @@ head = f'''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kemi som ämne – Kemi</title>
+  <title>Ämnet kemi – Kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
 
   <style>{css}</style>

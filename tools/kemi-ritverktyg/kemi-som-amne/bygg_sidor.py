@@ -19,7 +19,7 @@ def write(n, t):
     open(os.path.join(OUT, n), "w", encoding="utf-8").write(t); print("skrev", n, len(t))
 
 def base(t, colors2=False):
-    t = t.replace("Atomer och molekyler", "Kemi som ämne").replace("area-atomer", "area-amne")
+    t = t.replace("Atomer och molekyler", "Ämnet kemi").replace("area-atomer", "area-amne")
     for a, b in COL.items(): t = t.replace(a, b)
     if colors2:
         for a, b in COL2.items(): t = t.replace(a, b)
@@ -59,7 +59,7 @@ def main():
       <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
       <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut / Spara som PDF</button>
     </div>''')
-    t = t.replace("Alla viktiga begrepp inom atomer och molekyler med förklaringar.", "Alla viktiga begrepp inom kemi som ämne med förklaringar.")
+    t = t.replace("Alla viktiga begrepp inom atomer och molekyler med förklaringar.", "Alla viktiga begrepp inom ämnet kemi med förklaringar.")
     assert "page-actions" in t
     write("begreppslista.html", t)
 

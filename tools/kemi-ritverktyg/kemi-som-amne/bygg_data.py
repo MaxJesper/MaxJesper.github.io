@@ -28,7 +28,7 @@ if extra: print("OBS: definierade men ej klickbara i texten:", extra)
 order = list(first.keys()) + extra
 begrepp = [{"namn": t, "definition": BEGREPP[t], "anchor": "./studieguide.html#" + first.get(t, "m1")} for t in order]
 w("begrepp.json", begrepp)
-w("begreppskort.json", {"title": "Begreppskort – Kemi som ämne",
+w("begreppskort.json", {"title": "Begreppskort – Ämnet kemi",
                         "levels": {k: [{"term": a, "def": b} for a, b in v] for k, v in KORT.items()}})
 w("checklista.json", CHECKLISTA)
 w("instuderingsfragor.json", INSTUDERING)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Genererar korsord.html för Kemi som ämne (mall: elektrokemi/korsord.html). Ord ur BEGREPP, egna ledtrådar."""
+"""Genererar korsord.html för Ämnet kemi (mall: elektrokemi/korsord.html). Ord ur BEGREPP, egna ledtrådar."""
 import json, os, random, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
 ROOT = os.environ.get("SITE", os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..")))
@@ -167,9 +167,9 @@ def html():
     d_html = "\n            ".join(li(n, w, orden) for n, w in sorted(down.items()))
     h = re.sub(r'(<h2>Vågrätt</h2>\s*<ol>).*?(</ol>)', lambda m: m.group(1) + "\n            " + a_html + "\n          " + m.group(2), h, count=1, flags=re.S)
     h = re.sub(r'(<h2 style="margin-top:10px;">Lodrätt</h2>\s*<ol>).*?(</ol>)', lambda m: m.group(1) + "\n            " + d_html + "\n          " + m.group(2), h, count=1, flags=re.S)
-    rep("<title>Korsord: Elektrokemi</title>", "<title>Korsord – Kemi som ämne – Kemi</title>")
-    rep("<h1>Korsord: Elektrokemi</h1>", "<h1>Korsord: Kemi som ämne</h1>")
-    rep("Facit – Korsord: Elektrokemi", "Facit – Korsord: Kemi som ämne")
+    rep("<title>Korsord: Elektrokemi</title>", "<title>Korsord – Ämnet kemi – Kemi</title>")
+    rep("<h1>Korsord: Elektrokemi</h1>", "<h1>Korsord: Ämnet kemi</h1>")
+    rep("Facit – Korsord: Elektrokemi", "Facit – Korsord: Ämnet kemi")
     rep("background: #ede7f6;", "background: #eef2ff;")
     rep("grid-template-columns: repeat(17, var(--cell));", f"grid-template-columns: repeat({C}, var(--cell));")
     rep("--cell: 34px;", f"--cell: 34px;")

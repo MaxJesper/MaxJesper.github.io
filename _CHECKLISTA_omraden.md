@@ -45,7 +45,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
-| kemi/kemi-som-amne | 15/15 (+sakerhetsintyg, rapportmall, laborationer) | 7/7 | 11 (begrepp+termer) + checklista ar/am/rw | ✓ | ✗ |
+| kemi/kemi-som-amne (Ämnet kemi) | 15/15 (+sakerhetsintyg, rapportmall, laborationer) | 7/7 | 11 (begrepp+termer) + checklista ar/am/rw | ✓ | ✗ |
 | kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/separationsprocesser | 13/13 | 5/5 | 10/10 (+rw) | ✓ | ✗ |
@@ -55,7 +55,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ### Klart
 
-- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 31 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**.
+- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 33 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**.
 
 - Flerspråk (10 språk inkl. urdu) i 7 fysik/kemi-områden. Namnstandard utskrifter enhetlig.
 
@@ -77,7 +77,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för området · ? = okontrollerat (behöver verifieras mot faktiska filer, gissa inte)
 
-| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | kemi-som-amne |
+| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | Ämnet kemi (kemi-som-amne) |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ |
 | Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ |
@@ -97,7 +97,7 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 | Checklista översatt till arabiska, amhariska, kinyarwanda (`data/checklista.<ar\|am\|rw>.json`; visas under svenskan när språket valts i språkväljaren; AI-översatt, ej korrekturläst; STÅENDE REGEL: ny checklista → nya språkfiler + `concept-lang-selector.js`-etikett) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen checklista än) | ✓ | ✓ |
 | Säkerhetsintyg med interaktiva kontrollfrågor + utskrivbart intyg (`kemi/kemi-som-amne/sakerhetsintyg.html`; länkas från fysik- och biologi-hudsidorna) | – (gemensamt, ligger i kemi-som-amne) |
 | Rapportmall för laborationsrapport (utskrivbar, `rapportmall.html`; bygger på vetenskaplig metod, gäller alla NO-ämnen) | – (gemensamt, ligger i kemi-som-amne) |
-| Labbutrustnings-fotospel (`kemi/kemi-som-amne/labbutrustning-spel.html`; fågeltävlingens mönster, Jespers egna foton, två lägen: foto→namn och beskrivning→namn; symbol+text, tangentbord 1–4) | ✓ (kemi/kemi-som-amne, 31 föremål, byggt 21 sep 2026; fotogalleri i M6; kan utökas med fler foton) |
+| Labbutrustnings-fotospel (`kemi/kemi-som-amne/labbutrustning-spel.html`; fågeltävlingens mönster, Jespers egna foton, två lägen: foto→namn och beskrivning→namn; symbol+text, tangentbord 1–4) | ✓ (kemi/kemi-som-amne, 33 föremål inkl. våg och termometer, byggt 21 sep 2026; fotogalleri i M6; kan utökas med fler foton) |
 
 **Checklistöversättning (20 sep 2026):** gäller alla 15 checklistor (även hjarta-blod-lungor, materia och separationsprocesser som saknar egen kolumn). Övriga åtta språk (so, fa, ps, pl, bs, es, ur, en) saknar ännu checklistöversättning – Jesper har bara efterfrågat ar, am, rw tills vidare.
 
@@ -109,7 +109,7 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 - **Byt språkväljarens etiketter (påminnelse, Jesper 20 sep 2026):** i `js/concept-lang-selector.js` ändras `STOD` till `'begrepp+checklistor'` när ALLA checklistor är översatta (11 språk) och korrekturlästa, samt `ENGELSK_HELA = true` när hela siten finns på engelska och är godkänd. Tills dess står "(begrepp)" efter språken. Checklistesidorna behöver då också få samma språkväljare (`concept-lang-selector-mount`).
 
-- **Kemi-hudsidan (`kemi/index.html`) byggs om (Jespers önskemål 19 sep 2026, se CLAUDE.md Idé 24):** bort med ren länksida; in med uppstart + kemihistoria, faropiktogram-spel (**KLART 20 sep 2026:** `kemi/faropiktogram.html`, ritade SVG, inga foton behövdes) och labbutrustnings-spel (fågelspelets design; **foton inlagda av Jesper 21 sep 2026, byggs direkt efter kapitlet Kemi som ämne**) samt ett **säkerhetsintyg** (**KLART 21 sep 2026:** `kemi/kemi-som-amne/sakerhetsintyg.html`, 10 kontrollfrågor + utskrivbart intyg på 2 sidor; länkas från kemi/index, Ämnet Fysik och Ämnet Biologi).
+- **Kemi-hudsidan (`kemi/index.html`) byggs om (Jespers önskemål 19 sep 2026, se CLAUDE.md Idé 24):** bort med ren länksida (**KLART 21 sep 2026:** `kemi/index.html` är en vidarebefordran till kapitlet Ämnet kemi, som nu ÄR kemis ämnessida); in med uppstart + kemihistoria, faropiktogram-spel (**KLART 20 sep 2026:** `kemi/faropiktogram.html`, ritade SVG, inga foton behövdes) och labbutrustnings-spel (fågelspelets design; **KLART 21 sep 2026 i kapitlet Ämnet kemi**) samt ett **säkerhetsintyg** (**KLART 21 sep 2026:** `kemi/kemi-som-amne/sakerhetsintyg.html`, 10 kontrollfrågor + utskrivbart intyg på 2 sidor; länkas från kemi/index, Ämnet Fysik och Ämnet Biologi).
 
 - Fanerozoikum-frågespel (biologi/evolution): porta från kraft-och-rorelse/fragespel.html (chansa/säkra, timer, poäng, lösen 'JTo').
 

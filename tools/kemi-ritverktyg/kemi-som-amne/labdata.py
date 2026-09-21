@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Laborationer för Kemi som ämne (egen text). Används av bygg_lab.py.
+"""Laborationer för Ämnet kemi (egen text). Används av bygg_lab.py.
 Flaggor: planering=True (planeringsruta med variabler), plan_text (egen planeringsruta), graf=("Rubrik", "aria-text")."""
 
 LABS = [

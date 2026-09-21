@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Begrepp, begreppskort och checklista för Kemi som ämne. Körs av bygg_data.py."""
+"""Begrepp, begreppskort och checklista för Ämnet kemi. Körs av bygg_data.py."""
 
 # term -> definition (svenska). Ankaret (milstolpen där begreppet först förekommer i löptexten) sätts automatiskt.
 BEGREPP = {
@@ -71,9 +71,9 @@ KORT = {
 }
 
 CHECKLISTA = {
-"title": "Checklista – Kemi som ämne",
+"title": "Checklista – Ämnet kemi",
 "subject": "Kemi",
-"area": "Kemi som ämne",
+"area": "Ämnet kemi",
 "intro": "Checklistan följer studieguidens milstolpar. Bocka av det du känner dig trygg med, ett steg i taget. Fördjupningspunkterna är för den som vill komma längre.",
 "sections": [
  {"title": "1. Vad är kemi – och varför läsa det? (M1)", "items": [

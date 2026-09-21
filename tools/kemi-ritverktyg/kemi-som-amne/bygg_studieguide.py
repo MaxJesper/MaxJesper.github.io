@@ -130,7 +130,7 @@ head = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studieguide – Kemi som ämne</title>
+  <title>Studieguide – Ämnet kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <style>
@@ -141,7 +141,7 @@ head = """<!DOCTYPE html>
 
   <header class="kemi-header">
     <h1>Studieguide</h1>
-    <p>Kemi som ämne</p>
+    <p>Ämnet kemi</p>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Dra-och-släpp-övningar (sortering) för Kemi som ämne. Ankare på sidan: ov-<id>."""
+"""Dra-och-släpp-övningar (sortering) för Ämnet kemi. Ankare på sidan: ov-<id>."""
 
 def act(id, tier, title, intro, zones, items):
     """zones: [(id, text)], items: [(zone, text, why[, hint])]"""

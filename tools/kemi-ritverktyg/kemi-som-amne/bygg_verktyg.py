@@ -15,7 +15,7 @@ OVN = '''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Övningar – Kemi som ämne</title>
+  <title>Övningar – Ämnet kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/dra-och-slapp.css" />
   <style>
@@ -43,7 +43,7 @@ OVN = '''<!DOCTYPE html>
 <body class="area-amne">
   <header class="kemi-header">
     <h1>Övningar</h1>
-    <p>Kemi som ämne</p>
+    <p>Ämnet kemi</p>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
@@ -126,7 +126,7 @@ def cards():
      ("./labbutrustning-spel.html", "Labbutrustning", "Labbutrustning: känn igen föremålen", "Se ett foto av ett föremål i kemisalen och välj rätt namn, eller läs vad det används till och gissa vad det är. Snabba svar ger poäng.", "Spela spelet"),
      ("./begreppskort.html", "Begreppskort", "Begreppskort", "Para ihop begrepp och förklaringar i två nivåer. Nivå 2 låses upp när du klarat nivå 1.", "Öppna begreppskorten"),
      ("./begrepp-bingo.html", "Bingo", "Begreppsbingo", "Spela bingo med begreppen. Läraren läser förklaringar, du markerar begreppet på din bricka.", "Öppna bingot"),
-     ("./korsord.html", "Korsord", "Korsord", "Lös korsordet med begrepp från Kemi som ämne. Ledtrådarna är förklaringar.", "Öppna korsordet"),
+     ("./korsord.html", "Korsord", "Korsord", "Lös korsordet med begrepp från ämnet kemi. Ledtrådarna är förklaringar.", "Öppna korsordet"),
     ]
 
 LARANDE = '''<!DOCTYPE html>
@@ -134,7 +134,7 @@ LARANDE = '''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lärande spel – Kemi som ämne – Kemi</title>
+  <title>Lärande spel – Ämnet kemi – Kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
   <style>
     __AREA__
@@ -161,7 +161,7 @@ LARANDE = '''<!DOCTYPE html>
 
   <header class="kemi-header">
     <h1>Lärande spel</h1>
-    <p>Kemi som ämne</p>
+    <p>Ämnet kemi</p>
   </header>
 
   <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
@@ -174,7 +174,7 @@ LARANDE = '''<!DOCTYPE html>
     </div>
 
     <section class="page-intro">
-      <p>Här hittar du övningarna för Kemi som ämne: känn igen faropiktogram och laboratorieutrustning, sortera säkerhet och egenskaper, och träna begreppen med kort, bingo och korsord.</p>
+      <p>Här hittar du övningarna för ämnet kemi: känn igen faropiktogram och laboratorieutrustning, sortera säkerhet och egenskaper, och träna begreppen med kort, bingo och korsord.</p>
     </section>
 
     <section class="resource-grid">

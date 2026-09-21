@@ -7,7 +7,8 @@ Metod (inga nedladdningar, ingen AI-modell):
      ("flat-field"). Papperet blir jämnt vitt medan glasets skuggor och reflexer bevaras. Glas och blank metall
      behåller alltså sin bakgrund i stället för att frilägga dem, vilket ger fel kanter.
   2. Beskärning runt föremålet (proportion 3:4 till 4:3) och skalning till 900 px längsta sida.
-  3. Undantag: 8277 (grått golv) beskärs utan flat-field, 8283 (trä) behålls, 8286 (trä) friläggs med GrabCut.
+  3. Undantag: 8277 (grått golv) beskärs utan flat-field, 8283 (trä) behålls, 8286 (trä) och 8294 (våg på mörk bänk) friläggs med
+  GrabCut, 8295 (termometer) vrids liggande.
 Kör:  python3 bearbeta_labbfoton.py <mapp med IMG_XXXX.jpg> <utmapp>
 """
 import os, sys, numpy as np, cv2
@@ -15,18 +16,20 @@ from PIL import Image
 
 # (id, [foton], undantag)
 FOTON = [
- ("glasskal",[8255]),("urglas",[8256]),("bagare",[8257]),("matglas",[8260]),("degeltang",[8261]),
+ ("kristallisationsskal",[8255]),("urglas",[8256]),("bagare",[8257]),("matglas",[8260]),("degeltang",[8261]),
  ("provrorshallare",[8262]),("porslinstriangel",[8263]),("tradnat",[8264]),("trefot",[8265]),
  ("spatel",[8266,8267]),("molekylmodell",[8268]),("tratt",[8269]),("erlenmeyerkolv",[8270]),
  ("mortel",[8271]),("provrorsstall",[8272]),("provror",[8273]),("skyddsglasogon",[8274]),
  ("provrorsborste",[8276]),("stativ",[8277]),("muff",[8278]),("klamma",[8279]),("droppflaska",[8280]),
  ("glasstav",[8281]),("pipett",[8283]),("smaltskopa",[8284]),("porslinsskepp",[8285]),
- ("spanningskalla",[8286]),("sprutflaska",[8287]),("degel",[8288]),("rundkolv",[8289]),("bunsenbrannare",[8290]),
+ ("spanningskalla",[8286]),("vag",[8294]),("termometer",[8295]),("sprutflaska",[8287]),("degel",[8288]),("rundkolv",[8289]),("bunsenbrannare",[8290]),
 ]
 PAINT = {8268: [(0,0,1350,45)], 8274: [(0,0,1350,45)]}   # papperskant (bord) längst upp i bild
 RAW_CROP = {8277}      # grått golv: beskär, ingen flat-field
 RAW_FULL = {8283}      # trä: behåll hela bilden
-GRABCUT = {8286}       # trä: frilägg
+GRABCUT = {8286, 8294}  # trä / mörk arbetsbänk: friläggs med GrabCut
+ROTERA = {8295: -90}     # termometern vrids liggande (kulan åt vänster) så att skalan blir läsbar i spelramen
+MAXASP = {8295: 6.0}     # tillåt mycket avlång bildruta
 
 def fit_bg(img):
     h, w = img.shape[:2]; s = 8
@@ -103,7 +106,11 @@ def process(path, num, out=900):
     for (a, b, c, d) in PAINT.get(num, []): norm[b:d, a:c] = 1
     if num in RAW_CROP:
         return to_img(crop_canvas(im, bbox(norm, 0.20), pad=0.07, clamp=True), out)
-    return to_img(crop_canvas(np.clip(norm/0.95, 0, 1), bbox(norm, 0.075)), out)
+    img = to_img(crop_canvas(np.clip(norm/0.95, 0, 1), bbox(norm, 0.075), maxasp=MAXASP.get(num, 1.333)), out*2 if num in ROTERA else out)
+    if num in ROTERA:
+        img = img.rotate(ROTERA[num], expand=True)
+        img.thumbnail((out, out), Image.LANCZOS)
+    return img
 
 if __name__ == "__main__":
     src, dst = sys.argv[1], sys.argv[2]

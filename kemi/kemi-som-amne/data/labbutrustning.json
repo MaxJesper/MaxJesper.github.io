@@ -17,7 +17,7 @@
       "lik": [
         "erlenmeyerkolv",
         "matglas",
-        "glasskal"
+        "kristallisationsskal"
       ],
       "bilder": [
         "bagare-1.jpg"
@@ -59,8 +59,8 @@
       "fakta": "Rundkolven har en rund botten som värms jämnare än en platt botten. Kolven på bilden har en gummipropp i halsen. Rundkolvar används ofta vid destillation."
     },
     {
-      "id": "glasskal",
-      "namn": "Glasskål",
+      "id": "kristallisationsskal",
+      "namn": "Kristallisationsskål",
       "ocksa": "",
       "grupp": "Glas och kärl",
       "lik": [
@@ -68,11 +68,11 @@
         "bagare"
       ],
       "bilder": [
-        "glasskal-1.jpg"
+        "kristallisationsskal-1.jpg"
       ],
-      "fraga": "Vilket öppet, lågt och brett kärl av glas med raka kanter passar när ett ämne ska ligga synligt, till exempel när vatten får dunsta från en lösning?",
-      "anvands": "Att hålla ett ämne öppet och synligt, till exempel vid indunstning.",
-      "fakta": "Glasskålen är ett lågt och brett kärl av glas. Den passar när ett ämne ska ligga öppet och synas väl, till exempel när vatten får dunsta bort från en lösning."
+      "fraga": "Vilket öppet, lågt och brett kärl av glas används när vatten får dunsta från en lösning, så att ett fast ämne kristalliserar?",
+      "anvands": "Att låta ett ämne kristallisera, till exempel när vatten dunstar från en lösning.",
+      "fakta": "Kristallisationsskålen är ett lågt och brett kärl av glas. Den används när ett löst ämne ska kristallisera, till exempel när vattnet får dunsta bort från en lösning. Då finns en stor yta där vattnet kan dunsta, och kristallerna syns väl."
     },
     {
       "id": "urglas",
@@ -80,7 +80,7 @@
       "ocksa": "",
       "grupp": "Glas och kärl",
       "lik": [
-        "glasskal",
+        "kristallisationsskal",
         "bagare"
       ],
       "bilder": [
@@ -277,7 +277,7 @@
       "grupp": "Porslin och värme",
       "lik": [
         "degel",
-        "glasskal"
+        "kristallisationsskal"
       ],
       "bilder": [
         "mortel-1.jpg"
@@ -433,6 +433,38 @@
       "fraga": "Vad använder du för att suga upp och släppa ut små mängder vätska droppvis?",
       "anvands": "Att föra över små mängder vätska droppvis.",
       "fakta": "Pipetter finns i plast och i glas. Du trycker ihop gummikupan eller plastkulan, sätter spetsen i vätskan och släpper efter, så sugs vätskan upp. Bilden visar en pipett av plast och en av glas med gummikupa."
+    },
+    {
+      "id": "vag",
+      "namn": "Våg",
+      "ocksa": "",
+      "grupp": "Mäta och föra över",
+      "lik": [
+        "spanningskalla",
+        "matglas"
+      ],
+      "bilder": [
+        "vag-1.jpg"
+      ],
+      "fraga": "Vad använder du för att bestämma massan hos ett ämne eller ett föremål?",
+      "anvands": "Att mäta massa, i gram (g).",
+      "fakta": "Vågen används för att bestämma massan hos ett ämne eller ett föremål, i gram (g). Ställ först ett tomt kärl på vågen och nollställ (tarera) den, så räknas inte kärlets massa med. Vågen på bilden visar två decimaler."
+    },
+    {
+      "id": "termometer",
+      "namn": "Termometer",
+      "ocksa": "",
+      "grupp": "Mäta och föra över",
+      "lik": [
+        "matglas",
+        "glasstav"
+      ],
+      "bilder": [
+        "termometer-1.jpg"
+      ],
+      "fraga": "Vad använder du för att mäta temperaturen, till exempel hos vattnet i en bägare?",
+      "anvands": "Att mäta temperatur, i grader Celsius (°C).",
+      "fakta": "Termometern mäter temperatur i grader Celsius (°C). Vätskan i det tunna röret stiger när det blir varmare. Läs av med ögonen i höjd med vätskeytan. Termometern är av glas och går lätt sönder, så använd den inte för att röra om."
     },
     {
       "id": "skyddsglasogon",

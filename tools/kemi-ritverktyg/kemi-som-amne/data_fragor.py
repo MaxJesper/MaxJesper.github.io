@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Instuderingsfrågor och övningsprov för Kemi som ämne. Egna uppgifter och egna tal."""
+"""Instuderingsfrågor och övningsprov för Ämnet kemi. Egna uppgifter och egna tal."""
 
 def Q(q, a, lines=None, draw=None, note=None):
     d = {"q": q, "a": a}

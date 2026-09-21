@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Föremål i labbutrustningsspelet (Kemi som ämne). Egen text; foton av Jesper Tordsson.
+"""Föremål i labbutrustningsspelet (Ämnet kemi). Egen text; foton av Jesper Tordsson.
 Fält: id, namn, ocksa (annat vanligt namn), grupp, lik (id:n som ofta förväxlas), bilder (antal foton),
       fraga (frågan i läget "Vad är det?"; får inte avslöja namnet), anvands (kort, visas efter svar), fakta (rutan "Läs mer")."""
 
 GRUPPER = ["Glas och kärl", "Porslin och värme", "Hålla och stödja", "Mäta och föra över", "Skydd och övrigt"]
 
 FOREMAL = [
- dict(id="bagare", namn="Bägare", grupp=0, lik=["erlenmeyerkolv", "matglas", "glasskal"], bilder=1,
+ dict(id="bagare", namn="Bägare", grupp=0, lik=["erlenmeyerkolv", "matglas", "kristallisationsskal"], bilder=1,
   fraga="Vilket kärl av glas har platt botten, raka sidor och en pip, och används för att blanda, förvara och värma vätskor?",
   anvands="Att blanda, förvara och värma vätskor.",
   fakta="Bägaren har platt botten och en pip som gör det lätt att hälla. Skalan på sidan är bara ungefärlig, så använd ett mätglas när volymen ska vara noggrann. Bägare av värmetåligt glas kan värmas över en låga."),
@@ -18,11 +18,11 @@ FOREMAL = [
   fraga="Vilken kolv har rund botten, så att vätskan värms jämnt, till exempel vid destillation?",
   anvands="Att värma vätskor jämnt, till exempel vid destillation.",
   fakta="Rundkolven har en rund botten som värms jämnare än en platt botten. Kolven på bilden har en gummipropp i halsen. Rundkolvar används ofta vid destillation."),
- dict(id="glasskal", namn="Glasskål", grupp=0, lik=["urglas", "bagare"], bilder=1,
-  fraga="Vilket öppet, lågt och brett kärl av glas med raka kanter passar när ett ämne ska ligga synligt, till exempel när vatten får dunsta från en lösning?",
-  anvands="Att hålla ett ämne öppet och synligt, till exempel vid indunstning.",
-  fakta="Glasskålen är ett lågt och brett kärl av glas. Den passar när ett ämne ska ligga öppet och synas väl, till exempel när vatten får dunsta bort från en lösning."),
- dict(id="urglas", namn="Urglas", grupp=0, lik=["glasskal", "bagare"], bilder=1,
+ dict(id="kristallisationsskal", namn="Kristallisationsskål", grupp=0, lik=["urglas", "bagare"], bilder=1,
+  fraga="Vilket öppet, lågt och brett kärl av glas används när vatten får dunsta från en lösning, så att ett fast ämne kristalliserar?",
+  anvands="Att låta ett ämne kristallisera, till exempel när vatten dunstar från en lösning.",
+  fakta="Kristallisationsskålen är ett lågt och brett kärl av glas. Den används när ett löst ämne ska kristallisera, till exempel när vattnet får dunsta bort från en lösning. Då finns en stor yta där vattnet kan dunsta, och kristallerna syns väl."),
+ dict(id="urglas", namn="Urglas", grupp=0, lik=["kristallisationsskal", "bagare"], bilder=1,
   fraga="Vad kallas den böjda, tunna glasskivan som kan läggas som lock över en bägare?",
   anvands="Att täcka en bägare eller hålla en liten mängd ämne.",
   fakta="Urglaset är en böjd glasskiva. Det har fått sitt namn efter formen på glaset på ett gammalt fickur. Du kan använda det som lock på en bägare eller för att hålla en liten mängd av ett ämne."),
@@ -71,7 +71,7 @@ FOREMAL = [
   fraga="Vilket långskaftat verktyg, med en liten skål av metall, används för att hetta upp små mängder fast ämne över lågan?",
   anvands="Att hetta upp små mängder fast ämne över lågan.",
   fakta="Smältskopan har en liten metallskål på ett långt skaft med handtag. Med den kan du hålla ett ämne över lågan på avstånd från handen."),
- dict(id="mortel", namn="Mortel med pistill", grupp=1, lik=["degel", "glasskal"], bilder=1,
+ dict(id="mortel", namn="Mortel med pistill", grupp=1, lik=["degel", "kristallisationsskal"], bilder=1,
   fraga="Vad används för att krossa och mala ett fast ämne till pulver?",
   anvands="Att mala fasta ämnen till pulver.",
   fakta="Med pistillen krossar och mal du ämnet mot insidan av mortelns skål. Pulver reagerar ofta snabbare än stora bitar, eftersom det finns mer yta som kan reagera."),
@@ -113,6 +113,15 @@ FOREMAL = [
   fraga="Vad använder du för att suga upp och släppa ut små mängder vätska droppvis?",
   anvands="Att föra över små mängder vätska droppvis.",
   fakta="Pipetter finns i plast och i glas. Du trycker ihop gummikupan eller plastkulan, sätter spetsen i vätskan och släpper efter, så sugs vätskan upp. Bilden visar en pipett av plast och en av glas med gummikupa."),
+
+ dict(id="vag", namn="Våg", grupp=3, lik=["spanningskalla", "matglas"], bilder=1,
+  fraga="Vad använder du för att bestämma massan hos ett ämne eller ett föremål?",
+  anvands="Att mäta massa, i gram (g).",
+  fakta="Vågen används för att bestämma massan hos ett ämne eller ett föremål, i gram (g). Ställ först ett tomt kärl på vågen och nollställ (tarera) den, så räknas inte kärlets massa med. Vågen på bilden visar två decimaler."),
+ dict(id="termometer", namn="Termometer", grupp=3, lik=["matglas", "glasstav"], bilder=1,
+  fraga="Vad använder du för att mäta temperaturen, till exempel hos vattnet i en bägare?",
+  anvands="Att mäta temperatur, i grader Celsius (°C).",
+  fakta="Termometern mäter temperatur i grader Celsius (°C). Vätskan i det tunna röret stiger när det blir varmare. Läs av med ögonen i höjd med vätskeytan. Termometern är av glas och går lätt sönder, så använd den inte för att röra om."),
 
  dict(id="skyddsglasogon", namn="Skyddsglasögon", grupp=4, lik=[], bilder=1,
   fraga="Vad ska du ha på dig hela tiden under en laboration, för att skydda ögonen mot stänk?",
