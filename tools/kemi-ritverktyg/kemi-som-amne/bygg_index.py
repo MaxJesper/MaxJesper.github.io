@@ -16,25 +16,106 @@ css = css.replace("body.area-atomer", "body.area-amne").replace("--area: #be185d
 css = css.replace(".overview-card--pad { width: calc((100% - 1.4rem) / 3); min-width: 150px; }",
                   ".overview-card--pad { width: calc((100% - 1.4rem) / 3); min-width: 150px; }\n    .overview-stage img { max-width: 140px; max-height: 84px; }")
 css += "\n    .study-tips a { text-decoration: underline; }\n"
+css += r'''
+    /* ---------- Kemikartan ---------- */
+    .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .kemikarta { margin: 0.5rem 0 1.5rem; }
+    .karta { container-type:inline-size; position:relative; width:100%; max-width:1040px; margin:0 auto; aspect-ratio:1040/820; background:var(--area-soft); border:1px solid var(--area-border); border-radius:18px; }
+    .karta svg.bana { position:absolute; inset:0; width:100%; height:100%; }
+    .karta-mitt { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:23%; aspect-ratio:1; border-radius:50%; background:var(--area-strong); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1rem; box-shadow:0 6px 20px rgba(55,48,163,.35); }
+    .karta-mitt strong { font-size:clamp(1.1rem,2.6vw,1.9rem); line-height:1.1; }
+    .karta-mitt span { font-size:clamp(.72rem,1.2vw,.92rem); margin-top:.4rem; }
+    .karta ol { list-style:none; margin:0; padding:0; }
+    .karta .st { position:absolute; width:max(112px, 14.4cqw); transform:translate(-50%,-50%); text-align:center; margin:0; }
+    .karta .st a { display:block; text-decoration:none; color:#1a1a2e; border-radius:12px; }
+    .karta .st a:focus-visible { outline:3px solid #1d4ed8; outline-offset:4px; }
+    .karta .disc { position:relative; display:flex; align-items:center; justify-content:center; width:clamp(76px, 10cqw, 104px); height:clamp(76px, 10cqw, 104px); margin:0 auto; border-radius:50%; background:#fff; border:4px solid var(--area); }
+    .karta .g2 .disc { border-style:double; border-width:7px; }
+    .karta .g3 .disc { border-style:dashed; }
+    .karta .g4 .disc { border-style:dotted; }
+    .karta .in { display:flex; align-items:center; justify-content:center; width:100%; height:100%; border-radius:50%; overflow:hidden; }
+    .karta .in img { max-width:78%; max-height:78%; mix-blend-mode:multiply; }
+    .karta .in svg.ic { width:64%; height:64%; stroke:var(--area-strong); fill:none; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
+    .karta .pikto4 { display:grid; grid-template-columns:1fr 1fr; gap:1px; width:78%; }
+    .karta .pikto4 img { width:100%; max-width:none; max-height:none; mix-blend-mode:normal; }
+    .karta .num { position:absolute; left:-8px; top:-8px; width:clamp(26px, 3.1cqw, 32px); height:clamp(26px, 3.1cqw, 32px); border-radius:50%; background:var(--area-strong); color:#fff; font-weight:800; font-size:1rem; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+    .karta .ttl { display:block; margin-top:.35rem; font-weight:700; font-size:clamp(.82rem, 1.6cqw, .95rem); line-height:1.2; color:var(--area-strong); }
+    .karta .hook { display:none; font-size:.9rem; color:#333a4a; }
+    .karta .st a:hover .ttl { text-decoration:underline; }
+    .karta .st a:hover .disc { background:var(--area-hover); }
+    .karta .grp { display:none; }
+    .karta-legend { font-size:.9rem; color:#333a4a; margin:.6rem 0 0; text-align:center; }
+    /* Lodrät stig på smal skärm och vid utskrift */
+    @media (max-width: 860px), print {
+      .karta { aspect-ratio:auto; background:transparent; border:0; border-radius:0; }
+      .karta svg.bana { display:none; }
+      .karta-mitt { position:static; transform:none; width:auto; aspect-ratio:auto; border-radius:16px; margin:0 0 1rem; padding:.8rem; }
+      .karta ol { position:relative; }
+      .karta ol::before { content:""; position:absolute; left:41px; top:20px; bottom:20px; border-left:3px dashed var(--area-border); }
+      .karta .st { position:relative; left:auto !important; width:auto !important; top:auto !important; transform:none; width:auto; text-align:left; margin:0 0 .5rem; break-inside:avoid; }
+      .karta .st a { display:flex; gap:.8rem; align-items:center; background:#fff; border:1px solid var(--area-border); border-radius:14px; padding:.5rem .7rem .5rem .5rem; position:relative; }
+      .karta .disc { width:72px; height:72px; margin:0; flex:0 0 72px; border-width:4px; }
+      .karta .g2 .disc { border-width:6px; }
+      .karta .num { width:28px; height:28px; font-size:.9rem; }
+      .karta .ttl { font-size:1.05rem; }
+      .karta .ttl { margin:0; font-size:1.05rem; }
+      .karta .hook { display:block; }
+      .karta .grp { display:block; width:fit-content; position:relative; background:#fff; padding:.1rem .5rem .1rem 0; margin:1rem 0 .3rem; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:var(--area-strong); break-after:avoid; }
+    }
+    @media print { .karta-mitt { background:#fff; color:#000; border:2px solid #000; box-shadow:none; } }
+'''
 assert "area-amne" in css
 
-PIKTO = json.load(open(f"{ROOT}/kemi/data/faropiktogram.json", encoding="utf-8"))["piktogram"]
-cards = ""
-for p in PIKTO:
-    cards += f'''
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">{esc(p["kod"])}</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/{p["bild"]}" width="84" height="84" alt="{esc(p["alt"])}" loading="lazy" /></div>
-              <div class="overview-namn">{esc(p["namn"])}</div>
-              <div class="overview-formler">{esc(p["betyder"])}</div>
-            </div>'''
+PIKTO = {p["kod"]: p for p in json.load(open(f"{ROOT}/kemi/data/faropiktogram.json", encoding="utf-8"))["piktogram"]}
+
+# ---------- Kemikartan: tio stationer på en ellips, samma ordning som studieguiden ----------
+LABB = "/images/kemi/kemi-som-amne/labb/"
+def foto(namn):
+    return f'<img src="{LABB}{namn}-1-t.jpg" alt="" loading="lazy" />'
+def ikon(paths):
+    return f'<svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false">{paths}</svg>'
+IK = {
+    "bok": ikon('<path d="M32 16c-6-4-14-5-22-4v36c8-1 16 0 22 4 6-4 14-5 22-4V12c-8-1-16 0-22 4z"/><path d="M32 16v36"/>'),
+    "lupp": ikon('<circle cx="27" cy="27" r="14"/><path d="M38 38l16 16"/><path d="M21 27h12M27 21v12"/>'),
+    "glasogon": ikon('<rect x="5" y="22" width="22" height="18" rx="8"/><rect x="37" y="22" width="22" height="18" rx="8"/><path d="M27 30h10M5 30H1M59 30h4"/>'),
+    "rapport": ikon('<path d="M16 8h26l8 8v40H16z"/><path d="M42 8v8h8"/><path d="M23 28h20M23 36h20M23 44h13"/>'),
+    "timglas": ikon('<path d="M18 8h28M18 56h28"/><path d="M20 8c0 14 12 16 12 24S20 42 20 56M44 8c0 14-12 16-12 24s12 10 12 24"/>'),
+    "medalj": ikon('<circle cx="32" cy="38" r="15"/><path d="M22 8l10 18 10-18"/><path d="M32 30v16M26 38h12"/>'),
+}
+# Piktogrammen används oförändrade (officiella SVG:er), utan text – bara vid station 5 där de betyder något.
+pikto4 = "".join(f'<img src="/images/kemi/faropiktogram/{PIKTO[k]["bild"]}" alt="" loading="lazy" />' for k in ("GHS02", "GHS05", "GHS06", "GHS09"))
+IK["pikto"] = f'<span class="pikto4">{pikto4}</span>'
+
+DELAR = {1: "Börja här", 2: "Arbeta säkert", 3: "I labbet", 4: "Kemi i världen"}
+# (titel, del, bild, kort ledtråd som visas i mobilvyn)
+STATIONER = [
+    ("Vad är kemi?", 1, foto("molekylmodell"), "Och varför ska du läsa det?"),
+    ("Så lär du dig", 1, IK["bok"], "Fakta, samband, räkna och laborera"),
+    ("Arbeta som forskare", 1, IK["lupp"], "Fråga, gissa, testa, dra slutsats"),
+    ("Säkerhet", 2, IK["glasogon"], "Regler för kemisalen"),
+    ("Faropiktogram", 2, IK["pikto"], "De nio symbolerna"),
+    ("Utrustning", 3, foto("bunsenbrannare"), "Känn igen och mät"),
+    ("Rapporten", 3, IK["rapport"], "Så skriver du den"),
+    ("Ämnens egenskaper", 3, foto("vag"), "Känn igen och beskriv"),
+    ("Kemins historia", 4, IK["timglas"], "Från alkemi till modern kemi"),
+    ("Nobelpris och forskning", 4, IK["medalj"], "Vad händer idag?"),
+]
+assert len(STATIONER) == 10
+import math
+CX, CY, RX, RY, VW, VH = 520, 410, 390, 290, 1040, 820
+kartpunkter, senaste = "", 0
+for i, (titel, del_, bild, hook) in enumerate(STATIONER, 1):
+    v = math.radians(-90 + (i - 1) * 36)
+    x, y = CX + RX * math.cos(v), CY + RY * math.sin(v)
+    if del_ != senaste:
+        kartpunkter += f'\n            <li class="grp" aria-hidden="true">{esc(DELAR[del_])}</li>'
+        senaste = del_
+    kartpunkter += f'''
+            <li class="st g{del_}" style="left:{x / VW * 100:.2f}%;top:{y / VH * 100:.2f}%">
+              <a href="./studieguide.html#m{i}"><span class="disc"><span class="in">{bild}</span><span class="num" aria-hidden="true">{i}</span></span><span class="txt"><span class="ttl">{esc(titel)}</span><span class="hook">{esc(hook)}</span><span class="sr-only"> Milstolpe {i} av 10, del: {esc(DELAR[del_])}.</span></span></a>
+            </li>'''
 
 btns = "\n".join(f'            <li><button class="concept-btn" data-concept="{esc(b["namn"])}">{esc(b["namn"])}</button></li>' for b in begr)
-
-MILSTOLPAR = ["Vad är kemi – och varför ska du läsa det?", "Så lär du dig kemi", "Att arbeta naturvetenskapligt", "Säkerhet i kemisalen",
-              "Faropiktogram och etiketter", "Laboratorieutrustning och att mäta", "Laborationsrapporten", "Ämnens egenskaper",
-              "Kemins historia", "Nobelpris och forskning idag"]
-chips = "\n".join(f'            <li><a href="./studieguide.html#m{i}"><span class="m-num-chip">{i}</span>{esc(t)}</a></li>' for i, t in enumerate(MILSTOLPAR, 1))
 
 labs = "\n".join(f'              <li><a href="./laborationer.html#{l["id"]}">{esc(l["title"])}</a></li>' for l in LABS)
 
@@ -54,6 +135,17 @@ body = f'''<body class="area-amne">
     </div>
 
     <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+
+    <section class="kemikarta" aria-labelledby="karta-h">
+      <h2 id="karta-h" class="sr-only">Kemikartan: tio stationer i Ämnet kemi</h2>
+      <div class="karta">
+        <svg class="bana" viewBox="0 0 1040 820" aria-hidden="true" focusable="false"><ellipse cx="520" cy="410" rx="390" ry="290" fill="none" stroke="#818cf8" stroke-width="4" stroke-dasharray="4 12" stroke-linecap="round"/></svg>
+        <div class="karta-mitt"><strong>Ämnet kemi</strong><span>Börja på 1 och följ stigen medurs</span></div>
+        <ol>{kartpunkter}
+        </ol>
+      </div>
+      <p class="karta-legend">Kantlinjen visar vilken del stationen hör till: heldragen = <strong>Börja här</strong>, dubbel = <strong>Arbeta säkert</strong>, streckad = <strong>I labbet</strong>, prickad = <strong>Kemi i världen</strong>. Klicka på en station för att komma till samma milstolpe i studieguiden.</p>
+    </section>
 
     <section class="area-layout">
       <div class="area-main">
@@ -102,26 +194,12 @@ body = f'''<body class="area-amne">
       </div>
 
       <div class="area-right">
-        <figure class="area-hero-image">
-          <p class="overview-intro">De nio faropiktogrammen som du lär dig känna igen!</p>
-          <div class="overview-grid">{cards}
-          </div>
-        </figure>
-
         <section class="concept-section" aria-label="Viktiga begrepp">
           <h2>Viktiga begrepp att lära sig</h2>
           <ul class="concept-list">
 {btns}
           </ul>
           <p class="concept-note">Här lägger vi grunden för alla kemiområden. Ämnens uppbyggnad från partiklar tas upp i <a href="/kemi/atomer/index.html">Atomer och molekyler</a>, och hur man delar upp blandningar och undersöker systematiskt i <a href="/kemi/separationsprocesser/index.html">Separationsprocesser</a>.</p>
-        </section>
-
-        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
-          <h2>Studieguidens milstolpar</h2>
-          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
-          <ul class="milestone-map-list">
-{chips}
-          </ul>
         </section>
       </div>
     </section>

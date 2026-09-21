@@ -116,6 +116,53 @@
     }
   
     .study-tips a { text-decoration: underline; }
+
+    /* ---------- Kemikartan ---------- */
+    .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+    .kemikarta { margin: 0.5rem 0 1.5rem; }
+    .karta { container-type:inline-size; position:relative; width:100%; max-width:1040px; margin:0 auto; aspect-ratio:1040/820; background:var(--area-soft); border:1px solid var(--area-border); border-radius:18px; }
+    .karta svg.bana { position:absolute; inset:0; width:100%; height:100%; }
+    .karta-mitt { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:23%; aspect-ratio:1; border-radius:50%; background:var(--area-strong); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1rem; box-shadow:0 6px 20px rgba(55,48,163,.35); }
+    .karta-mitt strong { font-size:clamp(1.1rem,2.6vw,1.9rem); line-height:1.1; }
+    .karta-mitt span { font-size:clamp(.72rem,1.2vw,.92rem); margin-top:.4rem; }
+    .karta ol { list-style:none; margin:0; padding:0; }
+    .karta .st { position:absolute; width:max(112px, 14.4cqw); transform:translate(-50%,-50%); text-align:center; margin:0; }
+    .karta .st a { display:block; text-decoration:none; color:#1a1a2e; border-radius:12px; }
+    .karta .st a:focus-visible { outline:3px solid #1d4ed8; outline-offset:4px; }
+    .karta .disc { position:relative; display:flex; align-items:center; justify-content:center; width:clamp(76px, 10cqw, 104px); height:clamp(76px, 10cqw, 104px); margin:0 auto; border-radius:50%; background:#fff; border:4px solid var(--area); }
+    .karta .g2 .disc { border-style:double; border-width:7px; }
+    .karta .g3 .disc { border-style:dashed; }
+    .karta .g4 .disc { border-style:dotted; }
+    .karta .in { display:flex; align-items:center; justify-content:center; width:100%; height:100%; border-radius:50%; overflow:hidden; }
+    .karta .in img { max-width:78%; max-height:78%; mix-blend-mode:multiply; }
+    .karta .in svg.ic { width:64%; height:64%; stroke:var(--area-strong); fill:none; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
+    .karta .pikto4 { display:grid; grid-template-columns:1fr 1fr; gap:1px; width:78%; }
+    .karta .pikto4 img { width:100%; max-width:none; max-height:none; mix-blend-mode:normal; }
+    .karta .num { position:absolute; left:-8px; top:-8px; width:clamp(26px, 3.1cqw, 32px); height:clamp(26px, 3.1cqw, 32px); border-radius:50%; background:var(--area-strong); color:#fff; font-weight:800; font-size:1rem; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
+    .karta .ttl { display:block; margin-top:.35rem; font-weight:700; font-size:clamp(.82rem, 1.6cqw, .95rem); line-height:1.2; color:var(--area-strong); }
+    .karta .hook { display:none; font-size:.9rem; color:#333a4a; }
+    .karta .st a:hover .ttl { text-decoration:underline; }
+    .karta .st a:hover .disc { background:var(--area-hover); }
+    .karta .grp { display:none; }
+    .karta-legend { font-size:.9rem; color:#333a4a; margin:.6rem 0 0; text-align:center; }
+    /* Lodrät stig på smal skärm och vid utskrift */
+    @media (max-width: 860px), print {
+      .karta { aspect-ratio:auto; background:transparent; border:0; border-radius:0; }
+      .karta svg.bana { display:none; }
+      .karta-mitt { position:static; transform:none; width:auto; aspect-ratio:auto; border-radius:16px; margin:0 0 1rem; padding:.8rem; }
+      .karta ol { position:relative; }
+      .karta ol::before { content:""; position:absolute; left:41px; top:20px; bottom:20px; border-left:3px dashed var(--area-border); }
+      .karta .st { position:relative; left:auto !important; width:auto !important; top:auto !important; transform:none; width:auto; text-align:left; margin:0 0 .5rem; break-inside:avoid; }
+      .karta .st a { display:flex; gap:.8rem; align-items:center; background:#fff; border:1px solid var(--area-border); border-radius:14px; padding:.5rem .7rem .5rem .5rem; position:relative; }
+      .karta .disc { width:72px; height:72px; margin:0; flex:0 0 72px; border-width:4px; }
+      .karta .g2 .disc { border-width:6px; }
+      .karta .num { width:28px; height:28px; font-size:.9rem; }
+      .karta .ttl { font-size:1.05rem; }
+      .karta .ttl { margin:0; font-size:1.05rem; }
+      .karta .hook { display:block; }
+      .karta .grp { display:block; width:fit-content; position:relative; background:#fff; padding:.1rem .5rem .1rem 0; margin:1rem 0 .3rem; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:var(--area-strong); break-after:avoid; }
+    }
+    @media print { .karta-mitt { background:#fff; color:#000; border:2px solid #000; box-shadow:none; } }
 </style>
 </head>
 <body class="area-amne">
@@ -134,6 +181,51 @@
     </div>
 
     <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+
+    <section class="kemikarta" aria-labelledby="karta-h">
+      <h2 id="karta-h" class="sr-only">Kemikartan: tio stationer i Ämnet kemi</h2>
+      <div class="karta">
+        <svg class="bana" viewBox="0 0 1040 820" aria-hidden="true" focusable="false"><ellipse cx="520" cy="410" rx="390" ry="290" fill="none" stroke="#818cf8" stroke-width="4" stroke-dasharray="4 12" stroke-linecap="round"/></svg>
+        <div class="karta-mitt"><strong>Ämnet kemi</strong><span>Börja på 1 och följ stigen medurs</span></div>
+        <ol>
+            <li class="grp" aria-hidden="true">Börja här</li>
+            <li class="st g1" style="left:50.00%;top:14.63%">
+              <a href="./studieguide.html#m1"><span class="disc"><span class="in"><img src="/images/kemi/kemi-som-amne/labb/molekylmodell-1-t.jpg" alt="" loading="lazy" /></span><span class="num" aria-hidden="true">1</span></span><span class="txt"><span class="ttl">Vad är kemi?</span><span class="hook">Och varför ska du läsa det?</span><span class="sr-only"> Milstolpe 1 av 10, del: Börja här.</span></span></a>
+            </li>
+            <li class="st g1" style="left:72.04%;top:21.39%">
+              <a href="./studieguide.html#m2"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M32 16c-6-4-14-5-22-4v36c8-1 16 0 22 4 6-4 14-5 22-4V12c-8-1-16 0-22 4z"/><path d="M32 16v36"/></svg></span><span class="num" aria-hidden="true">2</span></span><span class="txt"><span class="ttl">Så lär du dig</span><span class="hook">Fakta, samband, räkna och laborera</span><span class="sr-only"> Milstolpe 2 av 10, del: Börja här.</span></span></a>
+            </li>
+            <li class="st g1" style="left:85.66%;top:39.07%">
+              <a href="./studieguide.html#m3"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="27" cy="27" r="14"/><path d="M38 38l16 16"/><path d="M21 27h12M27 21v12"/></svg></span><span class="num" aria-hidden="true">3</span></span><span class="txt"><span class="ttl">Arbeta som forskare</span><span class="hook">Fråga, gissa, testa, dra slutsats</span><span class="sr-only"> Milstolpe 3 av 10, del: Börja här.</span></span></a>
+            </li>
+            <li class="grp" aria-hidden="true">Arbeta säkert</li>
+            <li class="st g2" style="left:85.66%;top:60.93%">
+              <a href="./studieguide.html#m4"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="5" y="22" width="22" height="18" rx="8"/><rect x="37" y="22" width="22" height="18" rx="8"/><path d="M27 30h10M5 30H1M59 30h4"/></svg></span><span class="num" aria-hidden="true">4</span></span><span class="txt"><span class="ttl">Säkerhet</span><span class="hook">Regler för kemisalen</span><span class="sr-only"> Milstolpe 4 av 10, del: Arbeta säkert.</span></span></a>
+            </li>
+            <li class="st g2" style="left:72.04%;top:78.61%">
+              <a href="./studieguide.html#m5"><span class="disc"><span class="in"><span class="pikto4"><img src="/images/kemi/faropiktogram/ghs02-brandfarlig.svg" alt="" loading="lazy" /><img src="/images/kemi/faropiktogram/ghs05-fratande.svg" alt="" loading="lazy" /><img src="/images/kemi/faropiktogram/ghs06-akut-giftig.svg" alt="" loading="lazy" /><img src="/images/kemi/faropiktogram/ghs09-miljofarlig.svg" alt="" loading="lazy" /></span></span><span class="num" aria-hidden="true">5</span></span><span class="txt"><span class="ttl">Faropiktogram</span><span class="hook">De nio symbolerna</span><span class="sr-only"> Milstolpe 5 av 10, del: Arbeta säkert.</span></span></a>
+            </li>
+            <li class="grp" aria-hidden="true">I labbet</li>
+            <li class="st g3" style="left:50.00%;top:85.37%">
+              <a href="./studieguide.html#m6"><span class="disc"><span class="in"><img src="/images/kemi/kemi-som-amne/labb/bunsenbrannare-1-t.jpg" alt="" loading="lazy" /></span><span class="num" aria-hidden="true">6</span></span><span class="txt"><span class="ttl">Utrustning</span><span class="hook">Känn igen och mät</span><span class="sr-only"> Milstolpe 6 av 10, del: I labbet.</span></span></a>
+            </li>
+            <li class="st g3" style="left:27.96%;top:78.61%">
+              <a href="./studieguide.html#m7"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M16 8h26l8 8v40H16z"/><path d="M42 8v8h8"/><path d="M23 28h20M23 36h20M23 44h13"/></svg></span><span class="num" aria-hidden="true">7</span></span><span class="txt"><span class="ttl">Rapporten</span><span class="hook">Så skriver du den</span><span class="sr-only"> Milstolpe 7 av 10, del: I labbet.</span></span></a>
+            </li>
+            <li class="st g3" style="left:14.34%;top:60.93%">
+              <a href="./studieguide.html#m8"><span class="disc"><span class="in"><img src="/images/kemi/kemi-som-amne/labb/vag-1-t.jpg" alt="" loading="lazy" /></span><span class="num" aria-hidden="true">8</span></span><span class="txt"><span class="ttl">Ämnens egenskaper</span><span class="hook">Känn igen och beskriv</span><span class="sr-only"> Milstolpe 8 av 10, del: I labbet.</span></span></a>
+            </li>
+            <li class="grp" aria-hidden="true">Kemi i världen</li>
+            <li class="st g4" style="left:14.34%;top:39.07%">
+              <a href="./studieguide.html#m9"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M18 8h28M18 56h28"/><path d="M20 8c0 14 12 16 12 24S20 42 20 56M44 8c0 14-12 16-12 24s12 10 12 24"/></svg></span><span class="num" aria-hidden="true">9</span></span><span class="txt"><span class="ttl">Kemins historia</span><span class="hook">Från alkemi till modern kemi</span><span class="sr-only"> Milstolpe 9 av 10, del: Kemi i världen.</span></span></a>
+            </li>
+            <li class="st g4" style="left:27.96%;top:21.39%">
+              <a href="./studieguide.html#m10"><span class="disc"><span class="in"><svg class="ic" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="38" r="15"/><path d="M22 8l10 18 10-18"/><path d="M32 30v16M26 38h12"/></svg></span><span class="num" aria-hidden="true">10</span></span><span class="txt"><span class="ttl">Nobelpris och forskning</span><span class="hook">Vad händer idag?</span><span class="sr-only"> Milstolpe 10 av 10, del: Kemi i världen.</span></span></a>
+            </li>
+        </ol>
+      </div>
+      <p class="karta-legend">Kantlinjen visar vilken del stationen hör till: heldragen = <strong>Börja här</strong>, dubbel = <strong>Arbeta säkert</strong>, streckad = <strong>I labbet</strong>, prickad = <strong>Kemi i världen</strong>. Klicka på en station för att komma till samma milstolpe i studieguiden.</p>
+    </section>
 
     <section class="area-layout">
       <div class="area-main">
@@ -182,66 +274,6 @@
       </div>
 
       <div class="area-right">
-        <figure class="area-hero-image">
-          <p class="overview-intro">De nio faropiktogrammen som du lär dig känna igen!</p>
-          <div class="overview-grid">
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS01</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs01-explosiv.svg" width="84" height="84" alt="Faropiktogram Explosiv: en bomb som exploderar med skärvor åt alla håll." loading="lazy" /></div>
-              <div class="overview-namn">Explosiv</div>
-              <div class="overview-formler">Produkten eller ämnet kan explodera.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS02</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs02-brandfarlig.svg" width="84" height="84" alt="Faropiktogram Brandfarlig: en svart låga." loading="lazy" /></div>
-              <div class="overview-namn">Brandfarlig</div>
-              <div class="overview-formler">Produkten kan lätt börja brinna.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS03</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs03-oxiderande.svg" width="84" height="84" alt="Faropiktogram Oxiderande: en svart låga ovanför en cirkel." loading="lazy" /></div>
-              <div class="overview-namn">Oxiderande</div>
-              <div class="overview-formler">Produkten kan orsaka eller förvärra en brand.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS04</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs04-gas-under-tryck.svg" width="84" height="84" alt="Faropiktogram Gas under tryck: en gasflaska." loading="lazy" /></div>
-              <div class="overview-namn">Gas under tryck</div>
-              <div class="overview-formler">Behållaren innehåller gas under tryck.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS05</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs05-fratande.svg" width="84" height="84" alt="Faropiktogram Frätande: två provrör som droppar på en metallbit och en hand så att de fräts sönder." loading="lazy" /></div>
-              <div class="overview-namn">Frätande</div>
-              <div class="overview-formler">Produkten kan fräta sönder hud, ögon och metall.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS06</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs06-akut-giftig.svg" width="84" height="84" alt="Faropiktogram Akut giftig: en dödskalle med två korsade ben." loading="lazy" /></div>
-              <div class="overview-namn">Akut giftig</div>
-              <div class="overview-formler">Produkten är giftig och kan vara livsfarlig.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS07</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs07-skadlig.svg" width="84" height="84" alt="Faropiktogram Skadlig: ett svart utropstecken." loading="lazy" /></div>
-              <div class="overview-namn">Skadlig</div>
-              <div class="overview-formler">Produkten är skadlig eller irriterande.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS08</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs08-allvarlig-halsofara.svg" width="84" height="84" alt="Faropiktogram Allvarlig hälsofara: en människosiluett med en stjärnformad skada i bröstet." loading="lazy" /></div>
-              <div class="overview-namn">Allvarlig hälsofara</div>
-              <div class="overview-formler">Produkten kan skada hälsan allvarligt och långvarigt.</div>
-            </div>
-            <div class="overview-card overview-card--pad">
-              <div class="overview-kat">GHS09</div>
-              <div class="overview-stage"><img src="/images/kemi/faropiktogram/ghs09-miljofarlig.svg" width="84" height="84" alt="Faropiktogram Miljöfarlig: ett dött träd och en död fisk vid vattnet." loading="lazy" /></div>
-              <div class="overview-namn">Miljöfarlig</div>
-              <div class="overview-formler">Produkten är farlig för miljön.</div>
-            </div>
-          </div>
-        </figure>
-
         <section class="concept-section" aria-label="Viktiga begrepp">
           <h2>Viktiga begrepp att lära sig</h2>
           <ul class="concept-list">
@@ -281,23 +313,6 @@
             <li><button class="concept-btn" data-concept="Nobelpris">Nobelpris</button></li>
           </ul>
           <p class="concept-note">Här lägger vi grunden för alla kemiområden. Ämnens uppbyggnad från partiklar tas upp i <a href="/kemi/atomer/index.html">Atomer och molekyler</a>, och hur man delar upp blandningar och undersöker systematiskt i <a href="/kemi/separationsprocesser/index.html">Separationsprocesser</a>.</p>
-        </section>
-
-        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
-          <h2>Studieguidens milstolpar</h2>
-          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
-          <ul class="milestone-map-list">
-            <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vad är kemi – och varför ska du läsa det?</a></li>
-            <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Så lär du dig kemi</a></li>
-            <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Att arbeta naturvetenskapligt</a></li>
-            <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Säkerhet i kemisalen</a></li>
-            <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Faropiktogram och etiketter</a></li>
-            <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Laboratorieutrustning och att mäta</a></li>
-            <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Laborationsrapporten</a></li>
-            <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Ämnens egenskaper</a></li>
-            <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Kemins historia</a></li>
-            <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Nobelpris och forskning idag</a></li>
-          </ul>
         </section>
       </div>
     </section>
