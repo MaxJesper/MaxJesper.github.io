@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <ul class="submenu">
           <li><a href="/kemi/index.html">Ämnet kemi</a></li>
           <li><a href="/kemi/faropiktogram.html">Övning: faropiktogram</a></li>
+          <li><a href="/kemi/kemi-som-amne/">Kemi som ämne</a></li>
           <li><a href="/kemi/atomer/">Atomer & Molekyler</a></li>
           <li><a href="/kemi/separationsprocesser/">Separationsprocesser</a></li>
           <li><a href="/kemi/syror-och-baser/">Syror & Baser</a></li>

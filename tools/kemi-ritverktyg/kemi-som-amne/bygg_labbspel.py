@@ -1,0 +1,444 @@
+#!/usr/bin/env python3
+"""Genererar labbutrustning-spel: kemi/kemi-som-amne/labbutrustning-spel.html + data/labbutrustning.json.
+Mall: biologi/ekologi/faglar-tavling.html (fotot visas, fyra svarsalternativ, snabbhetspoäng), här med
+tillgänglighetskrav: symbol + text (aldrig bara färg), tangentbord (1-4, Fortsätt), aria-live, ljud på/av."""
+import os, json
+from data_labbutrustning import FOREMAL, GRUPPER
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+OUT = os.path.join(ROOT, "kemi", "kemi-som-amne")
+BILD = "/images/kemi/kemi-som-amne/labb/"
+
+def bygg_json():
+    arter = []
+    for f in FOREMAL:
+        arter.append({
+            "id": f["id"], "namn": f["namn"], "ocksa": f.get("ocksa", ""), "grupp": GRUPPER[f["grupp"]],
+            "lik": f["lik"],
+            "bilder": ["%s-%d.jpg" % (f["id"], k) for k in range(1, f["bilder"] + 1)],
+            "fraga": f["fraga"], "anvands": f["anvands"], "fakta": f["fakta"],
+        })
+    return {
+        "title": "Labbutrustning: känner du igen föremålen?",
+        "intro": "Du får se ett fotografi av ett föremål i taget och väljer vad det heter bland fyra alternativ. I läget \"Vad används det till?\" får du en beskrivning i stället, och fotot visas när du har svarat.",
+        "grupper": GRUPPER, "foremal": arter,
+    }
+
+def galleri_html():
+    """Fotogalleri (miniatyrer) som läggs in i milstolpe 6 i studieguidens källa."""
+    from PIL import Image
+    rader = ['          <details class="utrustning-galleri">',
+             '            <summary>Se utrustningen på foto (%d föremål)</summary>' % len(FOREMAL)]
+    for gi, g in enumerate(GRUPPER):
+        rader.append('            <h3 class="galleri-grupp">%s</h3>' % g)
+        rader.append('            <ul class="foto-galleri">')
+        for f in [x for x in FOREMAL if x["grupp"] == gi]:
+            fn = "%s-1-t.jpg" % f["id"]
+            w, h = Image.open(os.path.join(ROOT, "images", "kemi", "kemi-som-amne", "labb", fn)).size
+            namn = f["namn"] + (" (%s)" % f["ocksa"] if f.get("ocksa") else "")
+            rader.append('              <li><figure><img src="%s%s" width="%d" height="%d" loading="lazy" alt="Fotografi av %s"><figcaption>%s</figcaption></figure></li>'
+                         % (BILD, fn, w, h, f["namn"].lower(), namn))
+        rader.append('            </ul>')
+    rader.append('            <p class="lyft">Vill du testa dig? <a href="./labbutrustning-spel.html">Spela labbutrustningsspelet</a>. Foton: Jesper Tordsson.</p>')
+    rader.append('          </details>')
+    return "\n".join(rader)
+
+def injicera_galleri():
+    p = os.path.join(HERE, "src", "m4_m6.html")
+    s = open(p, encoding="utf-8").read()
+    a, b = s.index("<!--LABBFOTO-->"), s.index("<!--/LABBFOTO-->")
+    s = s[:a] + "<!--LABBFOTO-->\n" + galleri_html() + "\n          " + s[b:]
+    open(p, "w", encoding="utf-8").write(s)
+    print("uppdaterade fotogalleriet i src/m4_m6.html")
+
+HTML = r'''<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Labbutrustning: känn igen föremålen – Kemi som ämne – Kemi</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  body.area-amne { --area:#4338ca; --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe; --area-hover:#e0e7ff; }
+  :root { --ok:#14532d; --ok-mjuk:#dcfce7; --ok-kant:#15803d; --fel:#7c2d12; --fel-mjuk:#ffedd5; --fel-kant:#c2410c; --fokus:#1d4ed8; }
+  main { max-width: 1040px; margin: 0 auto; }
+  .doldt { display: none !important; }
+  .panel { background:#fff; border:1px solid var(--area-border); border-radius:14px; padding:1.1rem 1.2rem 1.3rem; margin-bottom:1.2rem; }
+  .panel.soft { background: var(--area-soft); }
+  .panel h2 { margin-top:0; color: var(--area-strong); }
+  .note { font-size:0.9rem; color:#333a4a; }
+  .btn { font:inherit; font-weight:600; padding:0.5rem 1.05rem; min-height:44px; border-radius:999px; border:1px solid var(--area-border); background:#fff; color:var(--area-strong); cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; }
+  .btn:hover { background: var(--area-hover); }
+  .btn.primary { background: var(--area); border-color: var(--area); color:#fff; }
+  .btn.primary:hover { background: var(--area-strong); }
+  .btn:focus-visible, .svar-btn:focus-visible, .chip:focus-visible, .btn-nasta:focus-visible, input:focus-visible, select:focus-visible { outline:3px solid var(--fokus); outline-offset:2px; }
+  .btn-row { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:0.9rem; }
+
+  fieldset.val { border:1px solid var(--area-border); border-radius:12px; padding:0.6rem 0.9rem 0.8rem; margin:1rem 0 0; }
+  fieldset.val legend { font-weight:700; color:var(--area-strong); padding:0 0.4rem; }
+  .val label { display:block; margin:0.3rem 0; cursor:pointer; }
+  .val input[type=radio] { margin-right:0.5rem; width:1.1rem; height:1.1rem; vertical-align:-0.15rem; }
+  .val-rad { display:flex; flex-wrap:wrap; gap:1.2rem; align-items:center; margin-top:0.8rem; }
+  .val-rad select { font:inherit; padding:0.35rem 0.5rem; min-height:40px; border:1px solid #6b7280; border-radius:8px; }
+
+  .chip-grupp { margin:0.9rem 0 0.2rem; font-size:0.95rem; color:var(--area-strong); }
+  .chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.2rem 0; }
+  .chip { font:inherit; font-size:0.9rem; padding:0.3rem 0.75rem; min-height:36px; border-radius:999px; border:1px solid var(--area-border); background: var(--area-soft); color: var(--area-strong); cursor:pointer; }
+  .chip:hover { background: var(--area); color:#fff; border-color: var(--area); }
+
+  dialog.dia { border:none; border-radius:16px; padding:0; max-width:520px; width:calc(100% - 2.4rem); box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+  dialog.dia::backdrop { background: rgba(20,20,60,0.55); }
+  .dia-inner { padding:1.2rem 1.3rem 1.4rem; position:relative; }
+  .dia-close { position:absolute; top:0.6rem; right:0.6rem; width:2.6rem; height:2.6rem; border-radius:999px; border:1px solid var(--area-border); background:#fff; color:var(--area-strong); font-size:1.1rem; cursor:pointer; }
+  .dia-close:hover { background: var(--area-hover); }
+  .dia img { display:block; width:100%; max-height:280px; object-fit:contain; background:#fff; border:1px solid var(--area-border); border-radius:10px; margin:0.4rem 0 0.8rem; }
+  .dia h3 { margin:0 2.8rem 0.2rem 0; color: var(--area-strong); }
+  .dia .ocksa { margin:0 0 0.5rem; color:#333a4a; font-size:0.92rem; }
+  .dia p { margin:0 0 0.6rem; }
+
+  .stor-ruta { display:flex; background: var(--area-strong); color:#fff; border-radius:16px; overflow:hidden; margin-bottom:1.1rem; }
+  .stor-ruta .del { flex:1 1 0; text-align:center; padding:1rem 0.6rem; }
+  .stor-ruta .del + .del { border-left:1px solid rgba(255,255,255,0.3); }
+  .stor-ruta .siffra { display:block; font-size:2.3rem; font-weight:800; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .stor-ruta .etikett { display:block; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.03em; margin-top:0.15rem; }
+  .resultat-text { text-align:center; font-size:1.08rem; font-weight:700; color: var(--area-strong); }
+
+  .spel-layout { display:flex; align-items:flex-start; gap:1.1rem; }
+  .foto-kolumn { flex:1 1 0; min-width:0; }
+  .info-ruta, .stat-kolumn { flex:0 0 190px; }
+  .info-ruta { background: var(--area-soft); border:1px solid var(--area-border); border-radius:14px; padding:0.9rem 1rem; font-size:0.88rem; }
+  .info-ruta h2 { font-size:0.98rem; margin:0 0 0.4rem; color: var(--area-strong); }
+  .info-ruta ul { padding-left:1.1rem; margin:0.4rem 0; }
+  .info-ruta li { margin-bottom:0.2rem; }
+  .stat-kolumn { display:flex; flex-direction:column; gap:0.6rem; }
+  .stat-box { background: var(--area-strong); color:#fff; border-radius:14px; padding:0.8rem 0.6rem; text-align:center; }
+  .stat-siffra { display:block; font-size:1.6rem; font-weight:800; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .stat-etikett { display:block; font-size:0.74rem; text-transform:uppercase; letter-spacing:0.03em; margin-top:0.1rem; }
+  .stat-procent { display:block; font-size:0.92rem; margin-top:0.15rem; }
+  .stat-progress { text-align:center; color:#333a4a; font-size:0.86rem; }
+  @media (max-width: 880px) {
+    .spel-layout { flex-direction:column; }
+    .info-ruta, .stat-kolumn { flex:none; width:100%; }
+    .foto-kolumn { order:1; } .stat-kolumn { order:2; flex-direction:row; } .stat-kolumn .stat-box { flex:1; } .info-ruta { order:3; }
+  }
+
+  .foto-ruta { background:#fff; border:1px solid var(--area-border); border-radius:16px; padding:1rem; margin-bottom:1.1rem; text-align:center; min-height:260px; display:flex; align-items:center; justify-content:center; }
+  .foto-ruta img { max-width:100%; max-height:340px; width:auto; height:auto; display:block; margin:0 auto; border-radius:8px; }
+  .fraga-text { font-size:1.25rem; font-weight:700; color:#1a1a2e; max-width:34rem; margin:0 auto; line-height:1.4; }
+  .fraga-lbl { display:block; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color: var(--area-strong); margin-bottom:0.4rem; }
+
+  .svar-rad { display:flex; align-items:flex-start; gap:1rem; }
+  .svar-grid { flex:1 1 0; display:grid; grid-template-columns:repeat(2, 1fr); gap:0.7rem; }
+  @media (max-width: 560px) { .svar-grid { grid-template-columns:1fr; } .svar-rad { flex-direction:column; } }
+  .svar-btn { font:inherit; font-weight:600; font-size:1.05rem; text-align:left; padding:0.8rem 0.9rem; min-height:56px; border-radius:12px; border:2px solid var(--area-border); background:#fff; color:#1a1a2e; cursor:pointer; display:flex; align-items:center; gap:0.6rem; }
+  .svar-btn .nr { flex:0 0 1.7rem; height:1.7rem; border-radius:6px; background: var(--area-soft); border:1px solid var(--area-border); color: var(--area-strong); font-size:0.9rem; display:flex; align-items:center; justify-content:center; }
+  .svar-btn .sym { margin-left:auto; font-size:1.3rem; font-weight:800; line-height:1; }
+  .svar-btn:hover:not(:disabled) { background: var(--area-soft); border-color: var(--area); }
+  .svar-btn:disabled { cursor:default; }
+  .svar-btn.ratt { background: var(--ok-mjuk); border:3px solid var(--ok-kant); color: var(--ok); }
+  .svar-btn.fel { background: var(--fel-mjuk); border:3px dashed var(--fel-kant); color: var(--fel); }
+  .fortsatt-kolumn { flex:0 0 168px; display:flex; flex-direction:column; align-items:center; }
+  @media (max-width: 560px) { .fortsatt-kolumn { flex:none; width:100%; } }
+  .btn-nasta { font:inherit; font-weight:700; font-size:1.02rem; padding:0.9rem 1rem; width:100%; min-height:56px; border-radius:12px; border:none; background:#1d4ed8; color:#fff; cursor:pointer; }
+  .btn-nasta:hover { background:#1e3a8a; }
+  #nasta-rad { width:100%; }
+  .besked { margin:0.7rem 0 0; font-weight:700; text-align:center; min-height:1.6em; }
+  .besked.ok { color: var(--ok); } .besked.nej { color: var(--fel); }
+  .lar { margin-top:0.8rem; padding:0.7rem 0.9rem; background: var(--area-soft); border-left:4px solid var(--area-strong); border-radius:8px; font-size:0.95rem; }
+  .lar p { margin:0 0 0.3rem; }
+  .missad-lista { margin-top:0.6rem; padding-left:1.2rem; }
+  .tips-tang { font-size:0.85rem; color:#333a4a; margin-top:0.5rem; }
+  @media (prefers-reduced-motion: no-preference) { .svar-btn, .btn { transition: background 0.12s, border-color 0.12s; } }
+</style>
+</head>
+<body class="area-amne">
+
+<header class="kemi-header">
+  <h1>Labbutrustning: känn igen föremålen</h1>
+  <p>Kemi som ämne</p>
+</header>
+
+<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+<nav id="side-menu"></nav>
+
+<main>
+  <div class="page-actions no-print">
+    <a href="./" class="subject-btn">← Tillbaka till området</a>
+    <a href="./larande-spel.html" class="subject-btn">🎮 Lärande spel</a>
+    <a href="./studieguide.html#m6" class="subject-btn">📖 Utrustningen i studieguiden</a>
+  </div>
+
+  <!-- START -->
+  <section class="panel" id="start-panel" aria-labelledby="start-rubrik">
+    <h2 id="start-rubrik">Hur många föremål i kemisalen känner du igen?</h2>
+    <p id="intro-text">Du får se ett fotografi av ett föremål i taget och väljer vad det heter bland fyra alternativ.</p>
+
+    <fieldset class="val">
+      <legend>Välj läge</legend>
+      <label><input type="radio" name="lage" value="foto" checked /> <strong>Vad heter det?</strong> Du ser ett foto och väljer namnet.</label>
+      <label><input type="radio" name="lage" value="text" /> <strong>Vad används det till?</strong> Du läser en beskrivning och väljer namnet. Fotot visas när du har svarat.</label>
+      <label><input type="radio" name="lage" value="mix" /> <strong>Blandat.</strong> Frågorna växlar mellan de två lägena.</label>
+    </fieldset>
+    <div class="val-rad">
+      <label for="antal">Antal frågor:
+        <select id="antal"><option value="10">10</option><option value="20">20</option><option value="alla" selected>Alla föremål</option></select>
+      </label>
+      <label><input type="checkbox" id="ljud" checked /> Ljud vid rätt svar</label>
+    </div>
+    <div class="btn-row"><button class="btn primary" id="startBtn" type="button">Starta →</button></div>
+
+    <h3 style="margin:1.4rem 0 0.2rem;font-size:1.05rem;color:var(--area-strong)">Nyfiken redan nu?</h3>
+    <p class="note" style="margin:0 0 0.2rem">Klicka på ett föremål för att se fotot och läsa kort om vad det används till.</p>
+    <div id="chips"></div>
+  </section>
+
+  <!-- SPEL -->
+  <section class="doldt" id="spel-panel" aria-label="Spelet">
+    <div class="spel-layout">
+      <div class="info-ruta">
+        <h2>Så räknas poängen</h2>
+        <p>Snabba och rätta svar ger flest poäng:</p>
+        <ul>
+          <li>Under 3 sek: <strong>10 p</strong></li>
+          <li>Under 6 sek: <strong>8 p</strong></li>
+          <li>Under 10 sek: <strong>6 p</strong></li>
+          <li>Under 15 sek: <strong>4 p</strong></li>
+          <li>15 sek eller mer: <strong>2 p</strong></li>
+        </ul>
+        <p class="note">Fel svar ger inga poäng. I läget med beskrivning får du 4 sekunder extra för att läsa.</p>
+        <p class="note">Tangentbord: tryck 1–4 för att svara och Enter för att gå vidare.</p>
+      </div>
+
+      <div class="foto-kolumn">
+        <div class="foto-ruta" id="foto-ruta"></div>
+        <div class="svar-rad">
+          <div class="svar-grid" id="svar-grid" role="group" aria-label="Svarsalternativ"></div>
+          <div class="fortsatt-kolumn">
+            <div id="nasta-rad" class="doldt"><button class="btn-nasta" id="nastaBtn" type="button">Fortsätt →</button></div>
+          </div>
+        </div>
+        <p class="besked" id="besked" role="status" aria-live="polite"></p>
+        <div class="lar doldt" id="lar"></div>
+      </div>
+
+      <div class="stat-kolumn">
+        <div class="stat-box">
+          <span class="stat-siffra" id="s-ratt">0/0</span>
+          <span class="stat-etikett">rätt</span>
+          <span class="stat-procent" id="s-procent"></span>
+        </div>
+        <div class="stat-box"><span class="stat-siffra" id="s-poang">0</span><span class="stat-etikett">snabbhetspoäng</span></div>
+        <div class="stat-progress" id="s-nr">Fråga 1 av 0</div>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:center; margin-top:1.2rem;"><button class="btn" id="avbrytBtn" type="button">Avbryt</button></div>
+  </section>
+
+  <!-- SLUT -->
+  <section class="panel doldt" id="slut-panel" aria-labelledby="slut-rubrik">
+    <h2 id="slut-rubrik" tabindex="-1">Klart!</h2>
+    <div class="stor-ruta">
+      <div class="del"><span class="siffra" id="slut-poang">0</span><span class="etikett">Snabbhetspoäng</span></div>
+      <div class="del"><span class="siffra" id="slut-procent">0%</span><span class="etikett">Rätt</span></div>
+    </div>
+    <p class="resultat-text" id="slut-text"></p>
+    <div id="slut-missade"></div>
+    <div class="btn-row doldt" id="trana-rad"><button class="btn primary" id="tranaBtn" type="button">Träna bara på de föremål du missade</button></div>
+    <p style="text-align:center;font-weight:600;color:var(--area-strong);margin:1rem 0 0.2rem">Vill du träna igen?</p>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn primary" id="igenBtn" type="button">Ja, träna igen</button>
+      <a href="./larande-spel.html" class="btn">Nej, avsluta</a>
+    </div>
+  </section>
+
+  <p class="note">Foton: Jesper Tordsson.</p>
+</main>
+
+<dialog class="dia" id="dia" aria-labelledby="dia-namn">
+  <div class="dia-inner">
+    <button type="button" class="dia-close" id="diaClose" aria-label="Stäng">✕</button>
+    <h3 id="dia-namn"></h3>
+    <p class="ocksa" id="dia-ocksa"></p>
+    <img id="dia-bild" src="" alt="" />
+    <p id="dia-anv"></p>
+    <p id="dia-fakta"></p>
+  </div>
+</dialog>
+
+<script src="/js/menu.js"></script>
+<script>
+"use strict";
+var BILD = "__BILD__";
+var DATA = null, F = [], RUNDA = [], idx = 0, ratt = 0, poang = 0, start = 0, laser = false, missade = [], lage = "foto", ljudPa = true;
+function el(i) { return document.getElementById(i); }
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function byId(id) { return F.filter(function (x) { return x.id === id; })[0]; }
+
+var ctx = null;
+function ping() {
+  if (!ljudPa) return;
+  try {
+    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+    var n = ctx.currentTime, o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(660, n); o.frequency.exponentialRampToValueAtTime(990, n + 0.09);
+    g.gain.setValueAtTime(0.0001, n); g.gain.exponentialRampToValueAtTime(0.18, n + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, n + 0.22);
+    o.connect(g); g.connect(ctx.destination); o.start(n); o.stop(n + 0.24);
+  } catch (e) {}
+}
+
+function ladda() {
+  fetch("./data/labbutrustning.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
+    DATA = d; F = d.foremal;
+    if (d.intro) el("intro-text").textContent = d.intro;
+    var h = "";
+    d.grupper.forEach(function (g) {
+      h += '<h4 class="chip-grupp">' + esc(g) + '</h4><div class="chips">';
+      F.filter(function (x) { return x.grupp === g; }).forEach(function (x) { h += '<button type="button" class="chip" data-id="' + x.id + '">' + esc(x.namn) + '</button>'; });
+      h += '</div>';
+    });
+    el("chips").innerHTML = h;
+  }).catch(function () { el("intro-text").textContent = "Spelet kunde inte laddas. Ladda om sidan."; });
+}
+
+function bygg(lista, antal) {
+  var q = shuffle(lista);
+  if (antal !== "alla") q = q.slice(0, parseInt(antal, 10));
+  RUNDA = q.map(function (f, i) {
+    var typ = lage === "mix" ? (i % 2 === 0 ? "foto" : "text") : lage;
+    return { f: f, typ: typ, bild: f.bilder[Math.floor(Math.random() * f.bilder.length)] };
+  });
+  if (lage === "mix") RUNDA = shuffle(RUNDA);
+}
+
+function starta(lista) {
+  lage = document.querySelector('input[name="lage"]:checked').value;
+  ljudPa = el("ljud").checked;
+  bygg(lista || F, lista ? "alla" : el("antal").value);
+  idx = 0; ratt = 0; poang = 0; missade = [];
+  el("start-panel").classList.add("doldt"); el("slut-panel").classList.add("doldt"); el("spel-panel").classList.remove("doldt");
+  visa();
+}
+
+function poangFor(s) { return s < 3 ? 10 : s < 6 ? 8 : s < 10 ? 6 : s < 15 ? 4 : 2; }
+
+function stat() {
+  el("s-ratt").textContent = ratt + "/" + RUNDA.length;
+  el("s-procent").textContent = RUNDA.length ? "(" + Math.round(ratt / RUNDA.length * 100) + " %)" : "";
+  el("s-poang").textContent = poang;
+  el("s-nr").textContent = "Fråga " + Math.min(idx + 1, RUNDA.length) + " av " + RUNDA.length;
+}
+
+function alternativ(f) {
+  var val = [], grupp = F.filter(function (x) { return x.id !== f.id && x.grupp === f.grupp; });
+  shuffle(f.lik).forEach(function (id) { var x = byId(id); if (x && val.length < 2 && val.indexOf(x) < 0) val.push(x); });
+  shuffle(grupp).forEach(function (x) { if (val.length < 2 && val.indexOf(x) < 0) val.push(x); });
+  shuffle(F).forEach(function (x) { if (val.length < 3 && x.id !== f.id && val.indexOf(x) < 0) val.push(x); });
+  return shuffle([f].concat(val.slice(0, 3)));
+}
+
+function visa() {
+  if (idx >= RUNDA.length) { slut(); return; }
+  laser = false; start = Date.now();
+  var q = RUNDA[idx], f = q.f, ruta = el("foto-ruta");
+  if (q.typ === "foto") {
+    ruta.innerHTML = '<img id="fbild" src="' + BILD + q.bild + '" alt="Fotografi av ett föremål i kemisalen. Vilket är det?" />';
+  } else {
+    ruta.innerHTML = '<div><span class="fraga-lbl">Vad används det till?</span><p class="fraga-text" id="fraga-text">' + esc(f.fraga) + '</p></div>';
+  }
+  el("besked").textContent = ""; el("besked").className = "besked";
+  el("lar").classList.add("doldt"); el("lar").innerHTML = "";
+  el("nasta-rad").classList.add("doldt");
+  var g = el("svar-grid"); g.innerHTML = "";
+  alternativ(f).forEach(function (a, i) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "svar-btn"; b.dataset.id = a.id;
+    b.innerHTML = '<span class="nr" aria-hidden="true">' + (i + 1) + '</span><span class="txt">' + esc(a.namn) + '</span><span class="sym" aria-hidden="true"></span>';
+    b.addEventListener("click", function () { svara(b, a, q); });
+    g.appendChild(b);
+  });
+  stat();
+}
+
+function svara(knapp, val, q) {
+  if (laser) return; laser = true;
+  var f = q.f, alla = el("svar-grid").querySelectorAll(".svar-btn");
+  alla.forEach(function (b) { b.disabled = true; });
+  var stor = val.id === f.id, msg;
+  if (stor) {
+    var s = (Date.now() - start) / 1000 - (q.typ === "text" ? 4 : 0), p = poangFor(Math.max(s, 0));
+    ratt++; poang += p; knapp.classList.add("ratt"); knapp.querySelector(".sym").textContent = "✓";
+    msg = "✓ Rätt! Det är " + f.namn + ". (+" + p + " p)"; el("besked").className = "besked ok"; ping();
+  } else {
+    missade.push(f.id); knapp.classList.add("fel"); knapp.querySelector(".sym").textContent = "✕";
+    alla.forEach(function (b) { if (b.dataset.id === f.id) { b.classList.add("ratt"); b.querySelector(".sym").textContent = "✓"; } });
+    msg = "✕ Fel. Rätt svar är " + f.namn + "."; el("besked").className = "besked nej";
+  }
+  el("besked").textContent = msg;
+  var lar = '<p><strong>' + esc(f.namn) + '</strong>' + (f.ocksa ? ' (kallas också ' + esc(f.ocksa) + ')' : '') + '. ' + esc(f.anvands) + '</p>';
+  el("lar").innerHTML = lar; el("lar").classList.remove("doldt");
+  if (q.typ === "text") {
+    el("foto-ruta").innerHTML = '<img src="' + BILD + q.bild + '" alt="Fotografi av ' + esc(f.namn) + '" />';
+  }
+  stat();
+  el("nasta-rad").classList.remove("doldt");
+  el("nastaBtn").focus();
+}
+
+function slut() {
+  el("spel-panel").classList.add("doldt"); el("slut-panel").classList.remove("doldt");
+  var tot = RUNDA.length, pro = tot ? Math.round(ratt / tot * 100) : 0;
+  el("slut-poang").textContent = poang; el("slut-procent").textContent = pro + "%";
+  el("slut-text").textContent = "Du fick " + ratt + " av " + tot + " rätt (" + pro + " %) och " + poang + " snabbhetspoäng.";
+  var unika = missade.filter(function (v, i, a) { return a.indexOf(v) === i; });
+  if (unika.length) {
+    el("slut-missade").innerHTML = '<p style="margin-top:0.8rem">Du kan öva extra på (klicka för att läsa mer):</p><div class="chips">' +
+      unika.map(function (id) { return '<button type="button" class="chip" data-id="' + id + '">' + esc(byId(id).namn) + '</button>'; }).join("") + '</div>';
+    el("trana-rad").classList.remove("doldt");
+  } else {
+    el("slut-missade").innerHTML = '<p style="margin-top:0.8rem">Alla rätt. Snyggt jobbat!</p>';
+    el("trana-rad").classList.add("doldt");
+  }
+  el("slut-rubrik").focus();
+}
+
+function dialog(id) {
+  var f = byId(id); if (!f) return;
+  el("dia-namn").textContent = f.namn;
+  el("dia-ocksa").textContent = f.ocksa ? "Kallas också: " + f.ocksa : "";
+  el("dia-ocksa").style.display = f.ocksa ? "" : "none";
+  el("dia-bild").src = BILD + f.bilder[0]; el("dia-bild").alt = "Fotografi av " + f.namn;
+  el("dia-anv").innerHTML = "<strong>Används till:</strong> " + esc(f.anvands);
+  el("dia-fakta").textContent = f.fakta;
+  el("dia").showModal();
+}
+
+el("startBtn").addEventListener("click", function () { starta(null); });
+el("igenBtn").addEventListener("click", function () { starta(null); });
+el("tranaBtn").addEventListener("click", function () {
+  var ids = missade.filter(function (v, i, a) { return a.indexOf(v) === i; });
+  starta(F.filter(function (x) { return ids.indexOf(x.id) >= 0; }));
+});
+el("nastaBtn").addEventListener("click", function () { idx++; visa(); var b = el("svar-grid").querySelector(".svar-btn"); if (b && idx < RUNDA.length) b.focus(); });
+el("avbrytBtn").addEventListener("click", function () { el("spel-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt"); el("startBtn").focus(); });
+document.addEventListener("click", function (e) { var c = e.target.closest(".chip"); if (c && c.dataset.id) dialog(c.dataset.id); });
+el("diaClose").addEventListener("click", function () { el("dia").close(); });
+el("dia").addEventListener("click", function (e) { if (e.target === el("dia")) el("dia").close(); });
+document.addEventListener("keydown", function (e) {
+  if (el("spel-panel").classList.contains("doldt") || el("dia").open) return;
+  if (e.key >= "1" && e.key <= "4" && !laser) { var b = el("svar-grid").querySelectorAll(".svar-btn")[parseInt(e.key, 10) - 1]; if (b) { e.preventDefault(); b.click(); } }
+});
+ladda();
+</script>
+</body>
+</html>
+'''
+
+if __name__ == "__main__":
+    os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
+    j = bygg_json()
+    with open(os.path.join(OUT, "data", "labbutrustning.json"), "w", encoding="utf-8") as fh:
+        json.dump(j, fh, ensure_ascii=False, indent=2)
+    with open(os.path.join(OUT, "labbutrustning-spel.html"), "w", encoding="utf-8") as fh:
+        fh.write(HTML.replace("__BILD__", BILD))
+    injicera_galleri()
+    print("skrev labbutrustning-spel.html och data/labbutrustning.json,", len(j["foremal"]), "föremål")

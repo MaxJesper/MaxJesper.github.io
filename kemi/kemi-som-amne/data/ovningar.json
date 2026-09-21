@@ -1,0 +1,1063 @@
+{
+ "sortering": [
+  {
+   "id": "amne-foremal",
+   "tier": "Grund",
+   "title": "Ämne eller föremål?",
+   "intro": "Ett föremål är en sak. Ett ämne är det den är gjord av. Sortera brickorna.",
+   "zones": [
+    {
+     "id": "a",
+     "t": "Ämne"
+    },
+    {
+     "id": "f",
+     "t": "Föremål"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "f",
+     "t": "Bägare",
+     "why": "En bägare är en sak, ett föremål. Den är gjord av glas."
+    },
+    {
+     "id": "2",
+     "zone": "a",
+     "t": "Glas",
+     "why": "Glas är ett material, alltså ett ämne."
+    },
+    {
+     "id": "3",
+     "zone": "f",
+     "t": "Kopparkabel",
+     "why": "Kabeln är en sak. Koppar är ämnet den är gjord av."
+    },
+    {
+     "id": "4",
+     "zone": "a",
+     "t": "Koppar",
+     "why": "Koppar är ett ämne."
+    },
+    {
+     "id": "5",
+     "zone": "f",
+     "t": "Provrör",
+     "why": "Ett provrör är en sak, ett föremål."
+    },
+    {
+     "id": "6",
+     "zone": "a",
+     "t": "Aluminium",
+     "why": "Aluminium är ett ämne (en metall)."
+    },
+    {
+     "id": "7",
+     "zone": "f",
+     "t": "Spatel",
+     "why": "En spatel är ett redskap, alltså ett föremål."
+    },
+    {
+     "id": "8",
+     "zone": "a",
+     "t": "Vatten",
+     "why": "Vatten är ett ämne, till skillnad från en vattenflaska."
+    },
+    {
+     "id": "9",
+     "zone": "f",
+     "t": "Magnet",
+     "why": "En magnet är ett föremål. Den kan vara gjord av järn."
+    },
+    {
+     "id": "10",
+     "zone": "a",
+     "t": "Järn",
+     "why": "Järn är ett ämne."
+    }
+   ]
+  },
+  {
+   "id": "nivaer",
+   "tier": "Grund",
+   "title": "Makronivå, partikelnivå eller symbolnivå?",
+   "intro": "Vilken nivå beskriver varje bricka? Du ser och mäter, du föreställer dig partiklar, eller du skriver med symboler.",
+   "zones": [
+    {
+     "id": "ma",
+     "t": "Makronivå (jag ser och mäter)"
+    },
+    {
+     "id": "pa",
+     "t": "Partikelnivå (jag föreställer mig)"
+    },
+    {
+     "id": "sy",
+     "t": "Symbolnivå (jag skriver)"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "ma",
+     "t": "Vattnet i bägaren har temperaturen 20 °C",
+     "why": "Du mäter med en termometer, alltså makronivå."
+    },
+    {
+     "id": "2",
+     "zone": "ma",
+     "t": "Bitarna av aluminium sjönk i vattnet",
+     "why": "Du ser det direkt, makronivå."
+    },
+    {
+     "id": "3",
+     "zone": "ma",
+     "t": "Saltet försvann när jag rörde ut det i vattnet",
+     "why": "Du ser vad som händer, utan att förklara. Det är makronivå."
+    },
+    {
+     "id": "4",
+     "zone": "pa",
+     "t": "Vattenmolekylerna rör sig snabbare när vattnet blir varmare",
+     "why": "Molekyler kan du inte se, du förklarar med en modell: partikelnivå."
+    },
+    {
+     "id": "5",
+     "zone": "pa",
+     "t": "Saltet delas i laddade partiklar, joner, i vattnet",
+     "why": "Joner är partiklar som du föreställer dig: partikelnivå."
+    },
+    {
+     "id": "6",
+     "zone": "pa",
+     "t": "Metallatomerna sitter tätt packade i ett regelbundet mönster",
+     "why": "Atomer är partikelnivå."
+    },
+    {
+     "id": "7",
+     "zone": "sy",
+     "t": "H₂O(l)",
+     "why": "En formel med tillståndsbeteckning: symbolnivå."
+    },
+    {
+     "id": "8",
+     "zone": "sy",
+     "t": "ρ = m / V",
+     "why": "Formeln för densitet är symbolnivå."
+    },
+    {
+     "id": "9",
+     "zone": "sy",
+     "t": "Fe",
+     "why": "Järnets kemiska symbol: symbolnivå."
+    }
+   ]
+  },
+  {
+   "id": "sakerhet",
+   "tier": "Grund",
+   "title": "Säkert eller osäkert?",
+   "intro": "Sortera beteendena. Tänk på vad som kan hända om du gör så.",
+   "zones": [
+    {
+     "id": "s",
+     "t": "Säkert"
+    },
+    {
+     "id": "o",
+     "t": "Osäkert"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "s",
+     "t": "Ta på skyddsglasögon innan du hämtar något",
+     "why": "Ögonen ska vara skyddade hela tiden, från första stund."
+    },
+    {
+     "id": "2",
+     "zone": "s",
+     "t": "Sätta upp långt hår",
+     "why": "Håret kan annars komma i närheten av lågan."
+    },
+    {
+     "id": "3",
+     "zone": "s",
+     "t": "Läsa hela instruktionen och etiketterna innan du börjar",
+     "why": "Då vet du vad som ska göras och vilka farorna är."
+    },
+    {
+     "id": "4",
+     "zone": "s",
+     "t": "Säga till läraren direkt när något spills",
+     "why": "Det är aldrig pinsamt. Läraren vet hur spillet ska hanteras."
+    },
+    {
+     "id": "5",
+     "zone": "s",
+     "t": "Låta en varm bägare svalna innan du tar i den",
+     "why": "Varm och kall utrustning ser likadan ut."
+    },
+    {
+     "id": "6",
+     "zone": "s",
+     "t": "Släcka lågan och stänga gaskranen när du är klar",
+     "why": "Lågan ska aldrig lämnas tänd."
+    },
+    {
+     "id": "7",
+     "zone": "o",
+     "t": "Smaka på ämnet för att se vad det är",
+     "why": "Ät, drick och smaka aldrig i kemisalen. Man kan aldrig veta att något är ofarligt."
+    },
+    {
+     "id": "8",
+     "zone": "o",
+     "t": "Rikta provröret mot en kompis när du värmer det",
+     "why": "Vätskan kan skvätta ut. Ha aldrig öppningen mot någon."
+    },
+    {
+     "id": "9",
+     "zone": "o",
+     "t": "Värma en stängd behållare",
+     "why": "Trycket kan spräcka glaset eller sprätta ut proppen."
+    },
+    {
+     "id": "10",
+     "zone": "o",
+     "t": "Blanda kemikalier på eget initiativ",
+     "why": "Du vet inte vad som kan hända. Gör bara det instruktionen säger."
+    },
+    {
+     "id": "11",
+     "zone": "o",
+     "t": "Gå ifrån en tänd låga en liten stund",
+     "why": "En tänd låga ska alltid ha någon vid sig."
+    },
+    {
+     "id": "12",
+     "zone": "o",
+     "t": "Hälla kemikalierester tillbaka i flaskan",
+     "why": "Då kan hela flaskan förorenas. Använd rätt kärl för rester."
+    }
+   ]
+  },
+  {
+   "id": "olycka",
+   "tier": "Grund",
+   "title": "Vad gör du när något händer?",
+   "intro": "I alla fall säger du direkt till läraren. Vilka olyckor ska du börja skölja på en gång, och när ska du inte röra något själv?",
+   "zones": [
+    {
+     "id": "sk",
+     "t": "Skölj direkt med vatten"
+    },
+    {
+     "id": "ro",
+     "t": "Rör inte själv, säg till läraren"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "sk",
+     "t": "Du får en kemikalie i ögat",
+     "why": "Skölj ögat i minst 15 minuter med ljummet vatten och säg till direkt."
+    },
+    {
+     "id": "2",
+     "zone": "sk",
+     "t": "Du får en kemikalie på huden",
+     "why": "Skölj direkt med svalt vatten, försiktigt och länge."
+    },
+    {
+     "id": "3",
+     "zone": "sk",
+     "t": "Du bränner dig på en het bägare",
+     "why": "Spola med svalt vatten, högst 15 minuter. Använd aldrig is."
+    },
+    {
+     "id": "4",
+     "zone": "ro",
+     "t": "Ett provrör går sönder och skärvor ligger på bänken",
+     "why": "Rör inte skärvorna med händerna. Säg till läraren."
+    },
+    {
+     "id": "5",
+     "zone": "ro",
+     "t": "En okänd vätska spills på golvet",
+     "why": "Torka inte upp okända kemikalier själv. Säg till läraren."
+    },
+    {
+     "id": "6",
+     "zone": "ro",
+     "t": "Det börjar brinna på bänken",
+     "why": "Säg till direkt och följ lärarens instruktioner. Läraren stänger gasen och använder brandfilt eller släckare."
+    },
+    {
+     "id": "7",
+     "zone": "ro",
+     "t": "Någon tror att den har fått i sig något",
+     "why": "Berätta direkt för läraren. Giftinformationscentralen kan kontaktas, och vid livshotande tillstånd ringer man 112."
+    }
+   ]
+  },
+  {
+   "id": "etikett",
+   "tier": "Grund",
+   "title": "Vilken del av etiketten?",
+   "intro": "På en etikett finns signalord, H-fraser (faroangivelser) och P-fraser (skyddsangivelser). Vad hör till vad?",
+   "zones": [
+    {
+     "id": "si",
+     "t": "Signalord"
+    },
+    {
+     "id": "h",
+     "t": "H-fras (fara)"
+    },
+    {
+     "id": "p",
+     "t": "P-fras (skydd)"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "si",
+     "t": "Fara",
+     "why": "Signalordet Fara används för de allvarligaste farorna."
+    },
+    {
+     "id": "2",
+     "zone": "si",
+     "t": "Varning",
+     "why": "Signalordet Varning används för mindre allvarliga faror."
+    },
+    {
+     "id": "3",
+     "zone": "si",
+     "t": "Ordet som visar hur allvarlig faran är",
+     "why": "Det är signalordets uppgift."
+    },
+    {
+     "id": "4",
+     "zone": "h",
+     "t": "H302: Skadligt vid förtäring",
+     "why": "H står för fara. Den beskriver hur produkten är farlig."
+    },
+    {
+     "id": "5",
+     "zone": "h",
+     "t": "H319: Orsakar allvarlig ögonirritation",
+     "why": "Det är en faroangivelse: H-fras."
+    },
+    {
+     "id": "6",
+     "zone": "h",
+     "t": "Beskriver på vilket sätt produkten är farlig",
+     "why": "Det är vad en H-fras gör."
+    },
+    {
+     "id": "7",
+     "zone": "p",
+     "t": "P102: Förvaras oåtkomligt för barn",
+     "why": "P står för skydd. Det är ett råd om säker hantering."
+    },
+    {
+     "id": "8",
+     "zone": "p",
+     "t": "Råd om säker hantering",
+     "why": "Det är vad en P-fras är."
+    },
+    {
+     "id": "9",
+     "zone": "p",
+     "t": "Skyddsangivelse",
+     "why": "Skyddsangivelse är ett annat ord för P-fras."
+    }
+   ]
+  },
+  {
+   "id": "utrustning",
+   "tier": "Grund",
+   "title": "Vilket redskap till vilken uppgift?",
+   "intro": "Sortera utrustningen efter vad den används till.",
+   "zones": [
+    {
+     "id": "va",
+     "t": "Värma"
+    },
+    {
+     "id": "ho",
+     "t": "Hålla och stödja"
+    },
+    {
+     "id": "bl",
+     "t": "Blanda och förvara"
+    },
+    {
+     "id": "ma",
+     "t": "Mäta och föra över"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "va",
+     "t": "Bunsenbrännare",
+     "why": "Gasbrännare som ger en het låga."
+    },
+    {
+     "id": "2",
+     "zone": "va",
+     "t": "Trefot",
+     "why": "Bär upp kärlet över lågan."
+    },
+    {
+     "id": "3",
+     "zone": "va",
+     "t": "Trådnät",
+     "why": "Läggs på trefoten och sprider värmen."
+    },
+    {
+     "id": "4",
+     "zone": "ho",
+     "t": "Stativ",
+     "why": "En stång på fot som håller övrig utrustning."
+    },
+    {
+     "id": "5",
+     "zone": "ho",
+     "t": "Muff",
+     "why": "En klämma som fäster en hållare vid stativet."
+    },
+    {
+     "id": "6",
+     "zone": "ho",
+     "t": "Provrörshållare",
+     "why": "Tång för att hålla ett provrör över lågan."
+    },
+    {
+     "id": "7",
+     "zone": "ho",
+     "t": "Degeltång",
+     "why": "Tång för heta föremål som en degel eller skål."
+    },
+    {
+     "id": "8",
+     "zone": "ho",
+     "t": "Provrörsställ",
+     "why": "Ställer provrör upprätt."
+    },
+    {
+     "id": "9",
+     "zone": "bl",
+     "t": "Bägare",
+     "why": "Används för att blanda, förvara och värma vätskor."
+    },
+    {
+     "id": "10",
+     "zone": "bl",
+     "t": "Ekolv (erlenmeyerkolv)",
+     "why": "Smal hals så att det inte stänker."
+    },
+    {
+     "id": "11",
+     "zone": "bl",
+     "t": "Provrör",
+     "why": "Små mängder vid prov."
+    },
+    {
+     "id": "12",
+     "zone": "bl",
+     "t": "Porslinsskål",
+     "why": "Används till exempel för indunstning."
+    },
+    {
+     "id": "13",
+     "zone": "ma",
+     "t": "Mätglas (mätcylinder)",
+     "why": "För att mäta volymer."
+    },
+    {
+     "id": "14",
+     "zone": "ma",
+     "t": "Våg",
+     "why": "För att mäta massa."
+    },
+    {
+     "id": "15",
+     "zone": "ma",
+     "t": "Termometer",
+     "why": "För att mäta temperatur."
+    },
+    {
+     "id": "16",
+     "zone": "ma",
+     "t": "Droppipett",
+     "why": "För att föra över små mängder droppvis."
+    }
+   ]
+  },
+  {
+   "id": "metodsteg",
+   "tier": "Grund",
+   "title": "När görs vad i en undersökning?",
+   "intro": "Sortera stegen efter när de görs: när du planerar, medan du genomför eller när du är klar med försöket.",
+   "zones": [
+    {
+     "id": "pl",
+     "t": "Planera (före)"
+    },
+    {
+     "id": "ge",
+     "t": "Genomföra (under)"
+    },
+    {
+     "id": "ef",
+     "t": "Efter försöket"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "pl",
+     "t": "Formulera frågeställningen",
+     "why": "Utan en frågeställning vet du inte vad du ska undersöka."
+    },
+    {
+     "id": "2",
+     "zone": "pl",
+     "t": "Skriva en hypotes med ”Om … så … eftersom …”",
+     "why": "Hypotesen skriver du före försöket, innan du vet resultatet."
+    },
+    {
+     "id": "3",
+     "zone": "pl",
+     "t": "Bestämma vad som ska hållas lika",
+     "why": "Det planerar du innan, så att jämförelsen blir rättvis."
+    },
+    {
+     "id": "4",
+     "zone": "pl",
+     "t": "Göra en riskbedömning",
+     "why": "Du tänker efter vad som kan gå fel innan du börjar."
+    },
+    {
+     "id": "5",
+     "zone": "ge",
+     "t": "Mäta och skriva ned med enhet direkt",
+     "why": "Du antecknar det du mäter och ser medan du gör försöket."
+    },
+    {
+     "id": "6",
+     "zone": "ge",
+     "t": "Upprepa försöket enligt planen",
+     "why": "Att upprepa hör till genomförandet."
+    },
+    {
+     "id": "7",
+     "zone": "ge",
+     "t": "Följa säkerhetsreglerna",
+     "why": "Säkerheten gäller hela tiden."
+    },
+    {
+     "id": "8",
+     "zone": "ef",
+     "t": "Räkna ut medelvärdet",
+     "why": "Du bearbetar resultaten när alla mätningar är gjorda."
+    },
+    {
+     "id": "9",
+     "zone": "ef",
+     "t": "Rita ett diagram",
+     "why": "Diagrammet gör mönstren lättare att se."
+    },
+    {
+     "id": "10",
+     "zone": "ef",
+     "t": "Dra en slutsats och svara på frågan",
+     "why": "Slutsatsen bygger på resultaten."
+    },
+    {
+     "id": "11",
+     "zone": "ef",
+     "t": "Fundera över felkällor",
+     "why": "Du värderar efteråt hur säkra resultaten är."
+    }
+   ]
+  },
+  {
+   "id": "variabler",
+   "tier": "Grund",
+   "title": "Oberoende, beroende eller hålls lika?",
+   "intro": "Tre undersökningar (A, B och C). Vilken sorts variabel är varje bricka?",
+   "zones": [
+    {
+     "id": "ob",
+     "t": "Oberoende (jag ändrar)"
+    },
+    {
+     "id": "be",
+     "t": "Beroende (jag mäter)"
+    },
+    {
+     "id": "ko",
+     "t": "Hålls lika"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "ob",
+     "t": "A: Sorten av papper (hushållspapper, kaffefilter, skrivarpapper)",
+     "why": "A undersöker vilket papper som suger upp mest vatten. Papperet är det du ändrar."
+    },
+    {
+     "id": "2",
+     "zone": "be",
+     "t": "A: Massan vatten som papperet tagit upp",
+     "why": "Det är vad du mäter."
+    },
+    {
+     "id": "3",
+     "zone": "ko",
+     "t": "A: Storleken på pappersbitarna och tiden i vattnet",
+     "why": "Det ska vara lika för alla papper."
+    },
+    {
+     "id": "4",
+     "zone": "ob",
+     "t": "B: Vattnets temperatur (20, 40, 60 °C)",
+     "why": "B undersöker hur snabbt socker löser sig. Temperaturen är det du ändrar."
+    },
+    {
+     "id": "5",
+     "zone": "be",
+     "t": "B: Tiden tills sockret är borta",
+     "why": "Det är vad du mäter."
+    },
+    {
+     "id": "6",
+     "zone": "ko",
+     "t": "B: Sockermängden och omrörningen",
+     "why": "Det ska vara lika i alla försök."
+    },
+    {
+     "id": "7",
+     "zone": "ob",
+     "t": "C: Mängden salt i vattnet",
+     "why": "C undersöker hur saltmängden påverkar hur fort vatten fryser. Saltmängden ändrar du."
+    },
+    {
+     "id": "8",
+     "zone": "be",
+     "t": "C: Tiden tills vattnet har frusit",
+     "why": "Det är vad du mäter."
+    },
+    {
+     "id": "9",
+     "zone": "ko",
+     "t": "C: Vattenmängd och kärl",
+     "why": "Det ska vara lika i alla försök."
+    }
+   ]
+  },
+  {
+   "id": "observation",
+   "tier": "Grund",
+   "title": "Observation eller tolkning?",
+   "intro": "En observation är vad du ser eller mäter. En tolkning är vad du tror att det betyder.",
+   "zones": [
+    {
+     "id": "ob",
+     "t": "Observation"
+    },
+    {
+     "id": "to",
+     "t": "Tolkning"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "ob",
+     "t": "Vattnet blev grumligt när jag blåste i det",
+     "why": "Du såg det, du drar ingen slutsats."
+    },
+    {
+     "id": "2",
+     "zone": "ob",
+     "t": "Bitarna av aluminium sjönk, korken flöt",
+     "why": "Du iakttog vad som hände."
+    },
+    {
+     "id": "3",
+     "zone": "ob",
+     "t": "Temperaturen steg från 21 °C till 38 °C",
+     "why": "Du mätte det."
+    },
+    {
+     "id": "4",
+     "zone": "ob",
+     "t": "Pulvret bubblade när jag tillsatte ättika",
+     "why": "Du såg bubblorna."
+    },
+    {
+     "id": "5",
+     "zone": "to",
+     "t": "Ett nytt ämne som inte löser sig bildades",
+     "why": "Du drar en slutsats av det du såg."
+    },
+    {
+     "id": "6",
+     "zone": "to",
+     "t": "Aluminium har högre densitet än vatten",
+     "why": "Du förklarar varför bitarna sjönk. Det är en tolkning."
+    },
+    {
+     "id": "7",
+     "zone": "to",
+     "t": "Kopp A är bättre isolerad än kopp B",
+     "why": "Du tolkar det du mätte."
+    },
+    {
+     "id": "8",
+     "zone": "to",
+     "t": "Pulvret måste vara bikarbonat",
+     "why": "Du drar en slutsats, det är en tolkning."
+    }
+   ]
+  },
+  {
+   "id": "flyter-sjunker",
+   "tier": "Grund",
+   "title": "Flyter eller sjunker i vatten?",
+   "intro": "Vatten har densiteten 1,00 g/cm³. Ett föremål flyter om dess densitet är lägre, och sjunker om den är högre.",
+   "zones": [
+    {
+     "id": "fl",
+     "t": "Flyter"
+    },
+    {
+     "id": "sj",
+     "t": "Sjunker"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "fl",
+     "t": "Olivolja (0,911 g/cm³)",
+     "why": "0,911 är lägre än 1,00, så olivolja flyter."
+    },
+    {
+     "id": "2",
+     "zone": "fl",
+     "t": "Ett ämne med densiteten 0,85 g/cm³",
+     "why": "0,85 är lägre än 1,00."
+    },
+    {
+     "id": "3",
+     "zone": "fl",
+     "t": "Ett ämne med densiteten 0,60 g/cm³",
+     "why": "0,60 är lägre än 1,00."
+    },
+    {
+     "id": "4",
+     "zone": "sj",
+     "t": "Aluminium (2,7 g/cm³)",
+     "why": "2,7 är högre än 1,00."
+    },
+    {
+     "id": "5",
+     "zone": "sj",
+     "t": "Koppar (8,9 g/cm³)",
+     "why": "8,9 är högre än 1,00."
+    },
+    {
+     "id": "6",
+     "zone": "sj",
+     "t": "Bly (11,3 g/cm³)",
+     "why": "11,3 är högre än 1,00."
+    },
+    {
+     "id": "7",
+     "zone": "sj",
+     "t": "Glycerin (1,26 g/cm³)",
+     "why": "1,26 är högre än 1,00, så glycerin sjunker."
+    },
+    {
+     "id": "8",
+     "zone": "sj",
+     "t": "Ett ämne med densiteten 1,05 g/cm³",
+     "why": "1,05 är högre än 1,00, även om det är nära."
+    }
+   ]
+  },
+  {
+   "id": "egenskap-typ",
+   "tier": "Lär mer",
+   "title": "Fysikalisk eller kemisk egenskap?",
+   "intro": "En fysikalisk egenskap kan du iaktta eller mäta utan att ämnet blir ett annat. En kemisk egenskap beskriver hur ämnet reagerar och bildar nya ämnen.",
+   "zones": [
+    {
+     "id": "fy",
+     "t": "Fysikalisk egenskap"
+    },
+    {
+     "id": "ke",
+     "t": "Kemisk egenskap"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "fy",
+     "t": "Guld har densiteten 19,3 g/cm³",
+     "why": "Du mäter densiteten, guldet är detsamma efteråt."
+    },
+    {
+     "id": "2",
+     "zone": "fy",
+     "t": "Koppar leder elektrisk ström",
+     "why": "Koppar är samma ämne när det leder ström."
+    },
+    {
+     "id": "3",
+     "zone": "fy",
+     "t": "Vatten kokar vid 100 °C",
+     "why": "Vattnet blir gas men är fortfarande H₂O."
+    },
+    {
+     "id": "4",
+     "zone": "fy",
+     "t": "Socker löser sig i vatten",
+     "why": "Sockret finns kvar i lösningen och kan fås tillbaka."
+    },
+    {
+     "id": "5",
+     "zone": "fy",
+     "t": "Järn dras till en magnet",
+     "why": "Järnet är detsamma."
+    },
+    {
+     "id": "6",
+     "zone": "ke",
+     "t": "Järn rostar",
+     "why": "Järnet förvandlas till rost, ett nytt ämne."
+    },
+    {
+     "id": "7",
+     "zone": "ke",
+     "t": "Ved brinner",
+     "why": "Nya ämnen bildas: koldioxid och vatten."
+    },
+    {
+     "id": "8",
+     "zone": "ke",
+     "t": "Bikarbonat bubblar när man tillsätter ättika",
+     "why": "En kemisk reaktion, en gas bildas."
+    },
+    {
+     "id": "9",
+     "zone": "ke",
+     "t": "Mjölk blir sur",
+     "why": "Bakterier bygger om sockret till mjölksyra, alltså nya ämnen."
+    }
+   ]
+  },
+  {
+   "id": "test-egenskap",
+   "tier": "Lär mer",
+   "title": "Vilken egenskap undersöker testet?",
+   "intro": "Vad ska du ta reda på om du gör så här?",
+   "zones": [
+    {
+     "id": "lo",
+     "t": "Löslighet"
+    },
+    {
+     "id": "le",
+     "t": "Ledningsförmåga"
+    },
+    {
+     "id": "ma",
+     "t": "Magnetism"
+    },
+    {
+     "id": "de",
+     "t": "Densitet"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "lo",
+     "t": "Röra ut lite i vatten och se om det försvinner",
+     "why": "Då undersöker du om ämnet löser sig i vatten."
+    },
+    {
+     "id": "2",
+     "zone": "lo",
+     "t": "Se om det blir en klar lösning eller ligger kvar på botten",
+     "why": "Det visar löslighet."
+    },
+    {
+     "id": "3",
+     "zone": "le",
+     "t": "Koppla in batteri och lampa och se om lampan lyser",
+     "why": "Lyser lampan leder ämnet ström."
+    },
+    {
+     "id": "4",
+     "zone": "le",
+     "t": "Testa om lösningen leder ström",
+     "why": "Det visar om lösta ämnen delas i laddade partiklar."
+    },
+    {
+     "id": "5",
+     "zone": "ma",
+     "t": "Hålla en magnet intill",
+     "why": "Magnetism testas med en magnet."
+    },
+    {
+     "id": "6",
+     "zone": "ma",
+     "t": "Se om ämnet dras till en magnet",
+     "why": "Järn, nickel och kobolt dras till en magnet."
+    },
+    {
+     "id": "7",
+     "zone": "de",
+     "t": "Väga och mäta volymen",
+     "why": "Massa och volym ger densiteten."
+    },
+    {
+     "id": "8",
+     "zone": "de",
+     "t": "Se om det flyter eller sjunker i vatten",
+     "why": "Det visar om densiteten är lägre eller högre än vattnets."
+    },
+    {
+     "id": "9",
+     "zone": "de",
+     "t": "Sänka ned det i vatten i en mätcylinder och läsa av nivån",
+     "why": "Så mäter man volymen hos ett oregelbundet föremål, som behövs för densiteten."
+    }
+   ]
+  },
+  {
+   "id": "historia",
+   "tier": "Grund",
+   "title": "Kemins historia i rätt ordning",
+   "intro": "När hände det? Sortera händelserna efter tidsperiod.",
+   "zones": [
+    {
+     "id": "h1",
+     "t": "Före 1700-talet"
+    },
+    {
+     "id": "h2",
+     "t": "1700-talet"
+    },
+    {
+     "id": "h3",
+     "t": "1800-talet"
+    },
+    {
+     "id": "h4",
+     "t": "1900-talet"
+    },
+    {
+     "id": "h5",
+     "t": "2000-talet"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "h1",
+     "t": "Alkemisterna försöker göra guld av oädla metaller",
+     "why": "Alkemin hör till tiden före 1700-talet."
+    },
+    {
+     "id": "2",
+     "zone": "h1",
+     "t": "Robert Boyle betonar att experiment ska kunna upprepas",
+     "why": "Boyle verkade på 1600-talet."
+    },
+    {
+     "id": "3",
+     "zone": "h2",
+     "t": "Lavoisier förklarar förbränning med syre",
+     "why": "Lavoisier verkade på 1700-talet."
+    },
+    {
+     "id": "4",
+     "zone": "h2",
+     "t": "Scheele upptäcker bland annat syre, klor och mangan",
+     "why": "Scheele verkade på 1700-talet."
+    },
+    {
+     "id": "5",
+     "zone": "h3",
+     "t": "Dalton gör atomteorin till en prövbar teori (1808)",
+     "why": "Det hände 1808."
+    },
+    {
+     "id": "6",
+     "zone": "h3",
+     "t": "Berzelius inför bokstavssymboler för grundämnena",
+     "why": "Det hände under 1800-talets början."
+    },
+    {
+     "id": "7",
+     "zone": "h3",
+     "t": "Mendelejev presenterar det första periodiska systemet (1869)",
+     "why": "Det hände 1869."
+    },
+    {
+     "id": "8",
+     "zone": "h4",
+     "t": "De första Nobelpriserna delas ut (1901)",
+     "why": "Det hände 1901."
+    },
+    {
+     "id": "9",
+     "zone": "h4",
+     "t": "Baekeland framställer bakelit, den första helsyntetiska plasten (1907)",
+     "why": "Det hände 1907."
+    },
+    {
+     "id": "10",
+     "zone": "h4",
+     "t": "De första nylonprodukterna säljs (1939)",
+     "why": "Det hände 1939."
+    },
+    {
+     "id": "11",
+     "zone": "h5",
+     "t": "Nobelpriset i kemi ges för litiumjonbatterier (2019)",
+     "why": "Det hände 2019."
+    },
+    {
+     "id": "12",
+     "zone": "h5",
+     "t": "Nobelpriset i kemi ges för genredigering med CRISPR (2020)",
+     "why": "Det hände 2020."
+    },
+    {
+     "id": "13",
+     "zone": "h5",
+     "t": "Nobelpriset i kemi ges för proteindesign och proteinstrukturer (2024)",
+     "why": "Det hände 2024."
+    }
+   ]
+  }
+ ],
+ "balansering": []
+}

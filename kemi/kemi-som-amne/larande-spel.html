@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lärande spel – Kemi som ämne – Kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-amne { --area:#4338ca; --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe; --area-hover:#e0e7ff; }
+    .page-intro { margin-bottom: 1.5rem; }
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .resource-box { background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area); border-radius: 14px; padding: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; gap: 0.8rem; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    .resource-box:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); }
+    .resource-thumb-link { display: block; text-decoration: none; }
+    .resource-thumb { width: 100%; aspect-ratio: 16 / 10; border: 1px solid var(--area-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; text-align: center; padding: 0.5rem; box-sizing: border-box; background: linear-gradient(135deg, #eef2ff, #c7d2fe); color: var(--area-strong); }
+    .resource-title-link { text-decoration: none; color: inherit; }
+    .resource-title-link h2 { margin: 0; font-size: 1.15rem; color: #1a1a2e; }
+    .resource-title-link:hover h2 { text-decoration: underline; }
+    .resource-box p { margin: 0; color: #444; line-height: 1.35; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box ul a { display: inline-block; text-decoration: none; font-weight: 600; color: var(--area-strong); }
+    .study-tips { margin-top: 1.5rem; background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips a { color: var(--area-strong); text-decoration: underline; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+  </style>
+</head>
+<body class="area-amne">
+
+  <header class="kemi-header">
+    <h1>Lärande spel</h1>
+    <p>Kemi som ämne</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+    </div>
+
+    <section class="page-intro">
+      <p>Här hittar du övningarna för Kemi som ämne: känn igen faropiktogram och laboratorieutrustning, sortera säkerhet och egenskaper, och träna begreppen med kort, bingo och korsord.</p>
+    </section>
+
+    <section class="resource-grid">
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="../faropiktogram.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Faropiktogram</div>
+        </a>
+        <a class="resource-title-link" href="../faropiktogram.html">
+          <h2>Faropiktogram</h2>
+        </a>
+        <p>Lär dig känna igen de nio faropiktogrammen. Bilderna är de officiella, och det är formen som visar vad faran är.</p>
+        <ul>
+          <li><a href="../faropiktogram.html">Öppna övningen</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./ovningsverktyg.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Dra och släpp</div>
+        </a>
+        <a class="resource-title-link" href="./ovningsverktyg.html">
+          <h2>Dra och släpp, sortera</h2>
+        </a>
+        <p>Tretton sorteringsövningar: säkerhet, olyckor, etikett, utrustning, undersökningens steg, variabler, egenskaper och kemins historia. Direkt besked med förklaring.</p>
+        <ul>
+          <li><a href="./ovningsverktyg.html">Öppna övningarna</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./labbutrustning-spel.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Labbutrustning</div>
+        </a>
+        <a class="resource-title-link" href="./labbutrustning-spel.html">
+          <h2>Labbutrustning: känn igen föremålen</h2>
+        </a>
+        <p>Se ett foto av ett föremål i kemisalen och välj rätt namn, eller läs vad det används till och gissa vad det är. Snabba svar ger poäng.</p>
+        <ul>
+          <li><a href="./labbutrustning-spel.html">Spela spelet</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./begreppskort.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Begreppskort</div>
+        </a>
+        <a class="resource-title-link" href="./begreppskort.html">
+          <h2>Begreppskort</h2>
+        </a>
+        <p>Para ihop begrepp och förklaringar i två nivåer. Nivå 2 låses upp när du klarat nivå 1.</p>
+        <ul>
+          <li><a href="./begreppskort.html">Öppna begreppskorten</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./begrepp-bingo.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Bingo</div>
+        </a>
+        <a class="resource-title-link" href="./begrepp-bingo.html">
+          <h2>Begreppsbingo</h2>
+        </a>
+        <p>Spela bingo med begreppen. Läraren läser förklaringar, du markerar begreppet på din bricka.</p>
+        <ul>
+          <li><a href="./begrepp-bingo.html">Öppna bingot</a></li>
+        </ul>
+      </article>
+
+      <article class="resource-box">
+        <a class="resource-thumb-link" href="./korsord.html" tabindex="-1" aria-hidden="true">
+          <div class="resource-thumb">Korsord</div>
+        </a>
+        <a class="resource-title-link" href="./korsord.html">
+          <h2>Korsord</h2>
+        </a>
+        <p>Lös korsordet med begrepp från Kemi som ämne. Ledtrådarna är förklaringar.</p>
+        <ul>
+          <li><a href="./korsord.html">Öppna korsordet</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="study-tips">
+      <details>
+        <summary>Tips</summary>
+        <ul>
+          <li>Börja med <a href="../faropiktogram.html">faropiktogrammen</a> och <a href="./ovningsverktyg.html#ov-sakerhet">säkerhetsövningen</a>. De är det viktigaste innan du går in i kemisalen.</li>
+          <li>Sorteringsövningarna är i två nivåer. Börja med Grund och gå vidare till Lär mer när du känner dig säker.</li>
+          <li>Kom ihåg att skilja på <em>det du ser</em> (observation) och <em>det du tror</em> (tolkning).</li>
+          <li>Vill du testa i verkligheten? Se <a href="./laborationer.html">laborationerna</a>.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>

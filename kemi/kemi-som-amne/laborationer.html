@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationer – Kemi som ämne</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-amne { --area:#4338ca; --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe; --area-hover:#e0e7ff; }
+    main { max-width: 900px; margin: 0 auto; font-size: 1.05em; }
+    .intro-card { background: var(--area-soft); border: 1px solid var(--area-border); border-left: 4px solid var(--area-strong); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.2rem; }
+    .intro-card ul { margin: 0.4rem 0 0 1.2rem; padding: 0; }
+    .intro-card li { margin: 0.25rem 0; }
+    .intro-card a { color: var(--area-strong); }
+    .lab-sheet { background: #fff; border: 1px solid #d8d8d8; border-left: 5px solid var(--area); border-radius: 12px; padding: 1.2rem 1.5rem 1.5rem; margin-bottom: 1.6rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); scroll-margin-top: 0.75rem; }
+    .lab-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .lab-tag { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; color: var(--area-strong); text-transform: uppercase; }
+    .lab-top .subject-btn { margin: 0; }
+    .meta-row { display: flex; border: 1px solid #aaa; border-radius: 4px; margin: 0.4rem 0 0.7rem; overflow: hidden; }
+    .meta-row span { flex: 1; padding: 0.35rem 0.6rem; border-right: 1px solid #aaa; font-size: 0.92rem; min-height: 1.9rem; }
+    .meta-row span:last-child { border-right: none; }
+    .lab-title { margin: 0.2rem 0 0.6rem; color: var(--area-strong); font-size: 1.35rem; }
+    .lab-body h3 { color: var(--area-strong); border-bottom: 2px solid var(--area-border); padding-bottom: 0.2rem; margin: 1.1rem 0 0.4rem; font-size: 1.05rem; }
+    .lab-body p { margin: 0.3rem 0 0.5rem; }
+    .lab-body ul.mat, .lab-body ol.steg { margin: 0.2rem 0 0.6rem 1.4rem; padding: 0; }
+    .lab-body li { margin-bottom: 0.3rem; line-height: 1.45; }
+    .steg-del { font-weight: 700; margin: 0.6rem 0 0.2rem; color: var(--area-strong); }
+    .risk-box { background: #fef2f2; border: 3px solid #b91c1c; border-radius: 8px; padding: 0.7rem 1rem; margin: 0.6rem 0 0.4rem; }
+    .risk-title { font-weight: 800; color: #991b1b; margin-bottom: 0.3rem; }
+    .risk-box ul { margin: 0 0 0 1.2rem; padding: 0; }
+    .risk-box li { margin-bottom: 0.25rem; color: #222; }
+    .resultat-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.8rem; font-size: 0.93rem; }
+    .resultat-table th { background: var(--area-strong); color: #fff; padding: 0.4rem 0.55rem; text-align: left; font-weight: 600; }
+    .resultat-table td { padding: 0.4rem 0.55rem; border: 1px solid #b5b5b5; height: 2.2rem; vertical-align: top; }
+    .resultat-table td.hoog { height: 5.5rem; }
+    .tbl-scroll { overflow-x: auto; }
+    .tbl-scroll:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    .fragor ol { margin: 0.2rem 0 0 1.4rem; padding: 0; }
+    .fragor li { margin-bottom: 0.9rem; }
+    .svarslinje { display: block; width: 100%; height: 1.7rem; border-bottom: 1px solid #999; }
+    .plan-box { margin: 0.5rem 0; }
+    .grafruta { height: 75mm; border: 1.5px dashed #6b7280; border-radius: 4px; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 5mm 5mm; }
+    .lararnotis { margin-top: 1rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.5rem 0.9rem; font-size: 0.93rem; }
+    .lararnotis summary { cursor: pointer; font-weight: 700; color: #334155; }
+
+    @page { size: A4; margin: 13mm 14mm; }
+    @media print {
+      header, nav, .hamburger, .no-print, .intro-card { display: none !important; }
+      body { background: #fff !important; font-size: 10.5pt; }
+      main { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; }
+      .lab-sheet { border: none; border-radius: 0; box-shadow: none; padding: 0; margin: 0; page-break-after: always; break-after: page; }
+      .lab-sheet:last-of-type { page-break-after: auto; break-after: auto; }
+      .lab-title { font-size: 15pt; }
+      .resultat-table th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .risk-box { border: 2.5pt solid #b91c1c; background: #fff !important; }
+      .lab-body h3 { break-after: avoid; }
+      .svarslinje { height: 1.4rem; }
+      .resultat-table td { height: 1.9rem; }
+      .resultat-table, .risk-box, .fragor li, .plan-box { break-inside: avoid; }
+      body[data-print] .lab-sheet:not(.lab-active) { display: none !important; }
+    }
+  </style>
+</head>
+<body class="area-amne">
+  <header class="kemi-header">
+    <h1>Laborationer</h1>
+    <p>Kemi som ämne</p>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button type="button" class="subject-btn print-green" id="print-all">🖨️ Skriv ut alla laborationer</button>
+    </div>
+
+    <section class="intro-card no-print">
+      <p><strong>Utskrivbara laborationsprotokoll.</strong> Varje laboration har syfte, risker, material, genomförande, resultattabell och frågor, och skrivs ut på två A4-sidor. Använd knappen i varje protokoll för att skriva ut just den laborationen. Läs riskerna innan ni börjar och använd skyddsglasögon.</p>
+      <ul><li><a href="#lab-1">Laboration 1: Bunsenbrännaren: låga och värmning</a> <span style="color:#475569">(M6, 40–50 min)</span></li><li><a href="#lab-2">Laboration 2: Känn igen okända ämnen</a> <span style="color:#475569">(M8, 50–60 min)</span></li><li><a href="#lab-3">Laboration 3: Densitet: vilket ämne är det?</a> <span style="color:#475569">(M8, 50–60 min)</span></li><li><a href="#lab-4">Laboration 4: Leder ämnet ström?</a> <span style="color:#475569">(M8, 40–50 min)</span></li><li><a href="#lab-5">Laboration 5: Rapportövning: vilket papper suger upp mest vatten?</a> <span style="color:#475569">(M7, 60–80 min)</span></li><li><a href="#lab-6">Laboration 6: Ägget i saltvatten: flyta eller sjunka?</a> <span style="color:#475569">(M8, 30–40 min)</span></li></ul>
+    </section>
+
+  <section class="lab-sheet" id="lab-1" data-lab="lab-1">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 1 · M6 · 40–50 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-1">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 1: Bunsenbrännaren: låga och värmning</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att lära dig tända och använda en bunsenbrännare säkert, och att undersöka skillnaden mellan gul och blå låga.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden. Sätt upp långt hår och ha inga lösa kläder.</li><li>Tänd tändstickan <strong>innan</strong> du öppnar gasen. Lämna aldrig en tänd låga.</li><li>Håll aldrig handen över lågan. Den blå lågan kan vara svår att se.</li><li>Bägare, trefot och trådnät blir mycket heta. Vänta med att ta i dem och använd tång.</li><li>Rör inte om med termometern och låt den inte vila mot glasbottnen.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Bunsenbrännare med gasslang, trefot och trådnät</li><li>Bägare (250 ml) med 100 ml kranvatten, mätcylinder</li><li>Termometer (som hänger fritt i vattnet)</li><li>Tändstickor eller tändare, klocka</li><li>Bägartång, skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><p class="steg-del">Del 1 – tänd och undersök lågan</p><ol class="steg" start="1"><li>Kontrollera att gasslangen sitter fast och saknar sprickor. Sätt på skyddsglasögonen.</li><li>Stäng luftringen. Tänd tändstickan och håll den vid rörets mynning. Öppna gaskranen sakta.</li><li>Beskriv den gula lågan i tabellen (färg, höjd, syns den lätt?).</li><li>Öppna luftringen tills lågan blir blå. Beskriv den blå lågan.</li><li>Stäng luftringen och gaskranen. Låt utrustningen svalna.</li></ol><p class="steg-del">Del 2 – vilken låga värmer bäst?</p><ol class="steg" start="6"><li>Ställ trefot och trådnät över brännaren. Häll 100 ml kranvatten i bägaren och ställ den på trådnätet. Häng termometern fritt i vattnet och skriv ned starttemperaturen.</li><li>Tänd brännaren med <strong>stängd</strong> luftring (gul låga). Värm i exakt 2 minuter. Avläs temperaturen och skriv ned den. Notera om det blev sot på bägaren. Släck och låt svalna.</li><li>Byt till nytt kranvatten (100 ml, samma starttemperatur). Tänd brännaren igen och öppna luftringen så att lågan blir blå. Värm i exakt 2 minuter med gaskranen lika mycket öppen som förut. Avläs temperaturen.</li><li>Släck lågan, stäng gaskranen och låt allt svalna innan du plockar undan.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Låga</th><th>Starttemp. (°C)</th><th>Sluttemp. efter 2 min (°C)</th><th>Ökning (°C)</th><th>Iakttagelse (färg, sot)</th></tr></thead><tbody><tr><td>Gul (luftring stängd)</td><td></td><td></td><td></td><td></td></tr><tr><td>Blå (luftring öppen)</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Hur skilde sig den gula och den blå lågan åt i utseende?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilken låga värmde vattnet mest? Hur stor var skillnaden?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad hölls lika för att jämförelsen skulle bli rättvis? Vad ändrade du?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad gör luftringen, och varför blir lågan blå när den öppnas?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka två felkällor kan ha påverkat resultatet, och hur skulle du minska dem?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Gör en kort demonstration av tändning först och gå igenom var gasens nödstopp finns. Temperaturökningen beror på gasflöde och bägarens läge, så resultaten varierar mellan grupper, vilket kan användas i en diskussion om tillförlitlighet. Sot på bägarens botten är lätt att torka av när den svalnat.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-2" data-lab="lab-2">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 2 · M8 · 50–60 min · nivå C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-2">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 2: Känn igen okända ämnen</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att använda ämnens egenskaper för att avgöra vilket av tre vita pulver du har, och att öva på att beskriva och dra slutsatser från observationer.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon hela tiden.</li><li><strong>Smaka aldrig</strong> på ämnena, inte heller för att de ser ut som mat.</li><li>Lukta bara om läraren säger det, och då genom att fläkta lite luft mot näsan.</li><li>Använd bara batteri för ledningstestet, aldrig nätström.</li><li>Tvätta händerna efter laborationen.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Tre märkta vita pulver A, B och C (koksalt, strösocker och bikarbonat, i okänd ordning, läraren har facit)</li><li>Tre glas eller provrör, tesked, spatel, förstoringsglas</li><li>Vatten, ättika, pipetter</li><li>Ledningsförmågemätare, eller batteri med lampa, summer eller lysdiod och två elektroder (läraren visar)</li><li>Skyddsglasögon</li></ul>
+      <h3>Din plan</h3><div class="plan-box"><strong>Vilka tester skiljer pulvren åt? Vilken egenskap tror du att varje test undersöker? Vilka tester tror du inte hjälper?</strong><span class="svarslinje"></span><span class="svarslinje"></span><span class="svarslinje"></span></div>
+      <h3>Genomförande</h3><p class="steg-del">Planera</p><ol class="steg" start="1"><li>Titta på tabellen. Vilka tester tror du kommer att skilja pulvren åt, och vilka hjälper inte? Skriv din plan i rutan ”Din plan” ovanför.</li></ol><p class="steg-del">Genomför</p><ol class="steg" start="2"><li>Titta på varje pulver med förstoringsglas och beskriv utseendet.</li><li>Rör ut en halv tesked av varje pulver i 30 ml vatten i varsitt glas. Beskriv vad du ser (löser det sig helt, blir det grumligt, ligger det kvar?).</li><li>Testa om lösningarna leder ström. Skölj elektroderna mellan varje prov.</li><li>Ta en ny liten mängd av varje pulver på en tallrik och droppa några droppar ättika på. Beskriv vad som händer.</li><li>Fyll i tabellen och avgör vilket pulver som är vilket.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Test</th><th>Pulver A</th><th>Pulver B</th><th>Pulver C</th></tr></thead><tbody><tr><td>Utseende</td><td></td><td></td><td></td></tr><tr><td>Löser sig i vatten? (ja/nej)</td><td></td><td></td><td></td></tr><tr><td>Lösningen leder ström? (ja/nej)</td><td></td><td></td><td></td></tr><tr><td>Bubblar med ättika? (ja/nej)</td><td></td><td></td><td></td></tr><tr><td>Mitt svar: pulvret är</td><td></td><td></td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vilket test skilde inte pulvren åt? Vad lär det dig om hur man väljer test?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilket test skilde ut det ena pulvret från de andra två? Vilken egenskap undersöktes?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilket av pulvren var koksalt, strösocker och bikarbonat? Motivera med dina resultat.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka observationer i tabellen var det du såg, och vilka delar av ditt svar är tolkningar?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilken egenskap som du undersökte är kemisk och vilka är fysikaliska? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Märk pulvren med bokstäver och behåll facit. Förväntat: alla tre löser sig, saltlösningen och bikarbonatlösningen leder ström medan sockerlösningen inte gör det, och bara bikarbonat bubblar med ättika. Med en vanlig glödlampa kan lysningen vara svag eller utebli i lösningarna. Prova ut uppställningen i förväg. En ledningsförmågemätare, en lysdiod med skyddsmotstånd eller en summer fungerar bättre.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-3" data-lab="lab-3">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 3 · M8 · 50–60 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-3">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 3: Densitet: vilket ämne är det?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att mäta massa och volym hos föremål av olika metaller, räkna ut densiteten och avgöra vilket ämne de består av.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon.</li><li>Låt metallföremålen glida ned i mätcylindern försiktigt så att glaset inte går sönder.</li><li>Torka upp vatten som spills så ingen halkar.</li><li>Tvätta händerna efter laborationen.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Tre till fem metallföremål av kända ämnen (till exempel aluminium, koppar och järn), både regelbundna (kloss, stav) och oregelbundna (bit, mutter)</li><li>Våg, linjal eller skjutmått</li><li>Mätcylinder med vatten, tråd</li><li>Tabellen över densiteter i studieguidens milstolpe 8</li><li>Räknare, skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Väg varje föremål och skriv ned massan (i g).</li><li>Om föremålet är regelbundet, till exempel en kloss: mät längd, bredd och höjd i cm och räkna ut volymen (l · b · h).</li><li>Om föremålet är oregelbundet: häll vatten i mätcylindern och avläs volymen. Sänk ned föremålet med en tråd (utan att stänka) och avläs på nytt. Skillnaden är föremålets volym (1 ml = 1 cm³). Avläs vid meniskens nedersta punkt.</li><li>Räkna ut densiteten: ρ = m / V. Skriv formeln, sätt in värdena med enheter och skriv svaret med enhet.</li><li>Jämför med tabellen i studieguiden och avgör vilket ämne det kan vara.</li><li>Pröva om varje föremål flyter eller sjunker i vatten, och jämför med ditt resultat.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Föremål</th><th>Massa (g)</th><th>Volym (cm³)</th><th>Densitet (g/cm³)</th><th>Ämne enligt tabell</th><th>Flyter/sjunker</th></tr></thead><tbody><tr><td>Föremål 1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Föremål 2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Föremål 3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Föremål 4</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Visa en av dina uträkningar med formel, insättning med enheter och svar.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka föremål hade lägre respektive högre densitet än vatten? Stämde det med om de flöt?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilket ämne bestod varje föremål av? Hur säker är du?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Nämn två felkällor i din mätning av volym eller massa och hur du skulle minska dem.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Kan du vara säker på vilket ämne det är bara utifrån densiteten? Motivera.<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Välj föremål av kända ämnen, och undvik bly och kvicksilver. Många metalldelar är legeringar eller ihåliga, så värdena kan avvika från tabellen. Det är en bra anledning att diskutera felkällor och att densiteten ensam inte alltid räcker. Låt gärna en grupp mäta samma föremål två gånger för att jämföra tillförlitligheten.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-4" data-lab="lab-4">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 4 · M8 · 40–50 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-4">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 4: Leder ämnet ström?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att undersöka vilka fasta ämnen och vilka lösningar som leder elektrisk ström, och att sortera dem efter resultatet.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Använd bara batteriet i uppställningen, <strong>aldrig nätström</strong>.</li><li>Bär skyddsglasögon.</li><li>Koppla ifrån batteriet mellan proven. Sladdar och metaller kan bli varma om de kortsluts.</li><li>Rör inte vid elektroderna med händerna i lösningarna på längre stunder, och smaka inte på lösningarna.</li><li>Torka upp vatten som spills.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Batteri (4,5 V eller lägre), sladdar med krokodilklämmor, lampa, summer eller lysdiod med skyddsmotstånd</li><li>Fasta prov: kopparbit, järnspik, aluminiumfolie, plastbit, glasbit, träbit, blyertsstift</li><li>Lösningar i små glas: destillerat vatten, kranvatten, saltvatten, sockervatten</li><li>Elektroder (två blyertsstift eller metallpinnar), trasa</li><li>Skyddsglasögon</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Koppla ihop batteri, lampa (eller summer) och två sladdar med fria ändar, så att kretsen är öppen. Testa att den fungerar genom att sätta ihop ändarna en kort stund.</li><li>Håll de två fria ändarna mot varsin punkt på ett fast prov. Lyser lampan? Skriv i tabellen.</li><li>Testa alla fasta prov. Torka av mellan varje.</li><li>Sätt de två elektroderna i en lösning (de får inte vidröra varandra). Lyser lampan eller hörs summern? Skriv i tabellen.</li><li>Skölj och torka elektroderna mellan varje lösning. Testa alla fyra lösningarna.</li><li>Sortera ämnena i ledare och isolatorer.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Prov</th><th>Lyser/hörs? (ja/nej)</th><th>Leder ström?</th></tr></thead><tbody><tr><td>Kopparbit</td><td></td><td></td></tr><tr><td>Järnspik</td><td></td><td></td></tr><tr><td>Aluminiumfolie</td><td></td><td></td></tr><tr><td>Plastbit</td><td></td><td></td></tr><tr><td>Glasbit</td><td></td><td></td></tr><tr><td>Träbit</td><td></td><td></td></tr><tr><td>Blyertsstift</td><td></td><td></td></tr><tr><td>Destillerat vatten</td><td></td><td></td></tr><tr><td>Kranvatten</td><td></td><td></td></tr><tr><td>Saltvatten</td><td></td><td></td></tr><tr><td>Sockervatten</td><td></td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vilka fasta ämnen ledde ström, och vad har de gemensamt?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka lösningar ledde ström? Vad skiljer saltvatten och sockervatten åt?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad tror du att det innebär att saltvatten leder ström medan sockervatten inte gör det? (Tips: studieguidens milstolpe 8.)<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Varför är metaller lämpliga i elkablar och plast lämplig runt dem?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilka felkällor kan göra att ett prov verkar leda dåligt fast det egentligen leder?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Med en vanlig glödlampa kan lysningen i saltlösningen vara svag eller utebli. Prova ut uppställningen i förväg. En summer, en lysdiod med skyddsmotstånd eller en ledningsförmågemätare fungerar bättre. Blyertsstift (grafit) leder ström, vilket ofta överraskar. Kranvatten leder ofta något på grund av lösta salter, destillerat vatten leder mycket dåligt.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-5" data-lab="lab-5">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 5 · M7 · 60–80 min · nivå E–A</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-5">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 5: Rapportövning: vilket papper suger upp mest vatten?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att planera, genomföra och redovisa en egen undersökning i en laborationsrapport, med rättvis jämförelse, upprepade försök och värdering.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon.</li><li>Torka upp vatten som spills så ingen halkar.</li><li>Tvätta händerna efter laborationen.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Hushållspapper, kaffefilter och skrivarpapper, skurna i kvadrater om 10 × 10 cm (minst tre av varje sort)</li><li>Våg (helst 0,01 g), bägare med vatten, pincett, klocka</li><li>Rapportmallen (skrivs ut från studieguiden) eller eget papper</li><li>Skyddsglasögon</li></ul>
+      <h3>Din plan</h3>
+      <div class="plan-box"><strong>Frågeställning:</strong><span class="svarslinje"></span></div>
+      <div class="plan-box"><strong>Hypotes (och varför du tror det):</strong><span class="svarslinje"></span><span class="svarslinje"></span></div>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Jag ändrar (oberoende)</th><th>Jag mäter (beroende)</th><th>Jag håller lika (konstant)</th></tr></thead>
+      <tbody><tr><td class="hoog"></td><td class="hoog"></td><td class="hoog"></td></tr></tbody></table></div>
+      <div class="plan-box"><strong>Så mäter jag:</strong><span class="svarslinje"></span></div>
+      <h3>Genomförande</h3><p class="steg-del">Planera (innan du börjar)</p><ol class="steg" start="1"><li>Skriv frågeställningen och en hypotes (”Om … så … eftersom …”).</li><li>Fyll i rutan för variabler: vad ändrar du, vad mäter du och vad håller du lika?</li><li>Bestäm hur många försök du gör per papper och hur länge papperet ska ligga i vattnet och droppa av.</li></ol><p class="steg-del">Genomför</p><ol class="steg" start="4"><li>Väg en torr kvadrat och skriv ned massan.</li><li>Håll ned kvadraten under vattenytan med pincett lika länge varje gång (till exempel 10 sekunder). Lyft upp och låt den droppa av lika länge varje gång (till exempel 5 sekunder).</li><li>Väg den våta kvadraten. Upptaget vatten = massa efter minus massa före. Skriv i tabellen.</li><li>Upprepa minst tre gånger för varje papperstyp.</li></ol><p class="steg-del">Redovisa och värdera</p><ol class="steg" start="8"><li>Räkna ut medelvärde för varje papperstyp.</li><li>Skriv en laborationsrapport med alla delar (rubrik, syfte, hypotes, material, risker, genomförande, resultat, slutsats och diskussion).</li><li>Byt rapport med en kamrat och kontrollera om den kan upprepa försöket utifrån din text.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Papperstyp</th><th>Försök 1 (g)</th><th>Försök 2 (g)</th><th>Försök 3 (g)</th><th>Medelvärde (g)</th></tr></thead><tbody><tr><td>Hushållspapper</td><td></td><td></td><td></td><td></td></tr><tr><td>Kaffefilter</td><td></td><td></td><td></td><td></td></tr><tr><td>Skrivarpapper</td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Svara på din frågeställning. Stödde resultaten din hypotes?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur mycket varierade resultaten mellan försöken med samma papper, jämfört med skillnaden mellan papperstyperna? Vad säger det om tillförlitligheten?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Nämn minst två felkällor och hur du skulle minska dem.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Förklara resultatet med hjälp av papperets uppbyggnad (fibrer och hålrum).<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vilken ny fråga väcker din undersökning?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Studieguiden har en exempelrapport med påhittade mätvärden. Eleverna får egna värden som kan skilja sig. Papper varierar mellan märken, och det gör inget. Lämpligt för bedömning av planering, variabelkontroll, redovisning och värdering. Låt elever byta rapporter och pröva varandras genomförande.</p></details>
+    </div>
+  </section>
+  <section class="lab-sheet" id="lab-6" data-lab="lab-6">
+    <div class="lab-top no-print">
+      <span class="lab-tag">Laboration 6 · M8 · 30–40 min · nivå E–C</span>
+      <button type="button" class="subject-btn print-green" data-print-lab="lab-6">🖨️ Skriv ut den här laborationen</button>
+    </div>
+    <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+    <h2 class="lab-title">Laboration 6: Ägget i saltvatten: flyta eller sjunka?</h2>
+    <div class="lab-body">
+      <h3>Syfte</h3><p>Att undersöka hur mängden salt i vatten påverkar om ett ägg flyter eller sjunker, och att förklara det med densitet.</p>
+      <div class="risk-box"><div class="risk-title">⚠️ Risker vid laborationen</div><ul><li>Bär skyddsglasögon.</li><li>Om du använder rått ägg: tvätta händerna efteråt och släng ägget. Smaka aldrig på ägget eller vattnet.</li><li>Torka upp spill så ingen halkar.</li></ul></div>
+      <h3>Material</h3><ul class="mat"><li>Ett ägg (rått eller hårdkokt, samma ägg hela tiden)</li><li>Högt glas eller mätcylinder (500 ml) med 250 ml kranvatten</li><li>Koksalt, matsked, omrörare</li><li>Skyddsglasögon, trasa</li></ul>
+      
+      <h3>Genomförande</h3><ol class="steg" start="1"><li>Häll 250 ml kranvatten i glaset. Lägg försiktigt ned ägget. Flyter eller sjunker det? Skriv i tabellen.</li><li>Lyft upp ägget. Tillsätt en matsked salt och rör tills allt salt har löst sig.</li><li>Lägg ned ägget. Flyter, sjunker eller svävar det? Skriv i tabellen.</li><li>Upprepa: en matsked salt i taget, rör noga, och lägg ned ägget varje gång, tills ägget flyter.</li><li>Fundera: hur kan du få ägget att sväva mitt i vätskan? Prova ditt förslag.</li></ol>
+      <h3>Resultat</h3>
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Tabell (rulla i sidled på smal skärm)"><table class="resultat-table"><thead><tr><th>Antal matskedar salt</th><th>Ägget sjunker, svävar eller flyter?</th></tr></thead><tbody><tr><td>0</td><td></td></tr><tr><td>1</td><td></td></tr><tr><td>2</td><td></td></tr><tr><td>3</td><td></td></tr><tr><td>4</td><td></td></tr><tr><td>5</td><td></td></tr><tr><td>6</td><td></td></tr></tbody></table></div>
+      
+      <h3>Frågor och slutsats</h3>
+      <div class="fragor"><ol><li>Vad hände med ägget när du tillsatte salt? Beskriv med det du såg.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Förklara med densitet varför ägget flöt eller sjönk i olika saltlösningar.<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Vad ändrade du, vad mätte du och vad höll du lika?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Hur fick du ägget att sväva, och vad betyder det för äggets densitet jämfört med vätskans?<span class="svarslinje"></span><span class="svarslinje"></span></li><li>Ägg av olika ålder och storlek kan bete sig olika. Hur påverkar det hur säker din slutsats är?<span class="svarslinje"></span><span class="svarslinje"></span></li></ol></div>
+      <details class="lararnotis no-print"><summary>Notering till läraren</summary><p>Saltmängden som krävs beror på äggets storlek och ålder, så prova i förväg och gör gärna fler rader i tabellen. Ett sätt att få ägget att sväva är att lägga saltvatten längst ned i glaset och försiktigt hälla färskt vatten ovanpå längs en sked, så att två lager bildas. Är resultatet oväntat är det en bra fråga om felkällor: var saltet helt löst?</p></details>
+    </div>
+  </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+    (function () {
+      function printLab(id) {
+        var sheet = document.getElementById(id);
+        if (!sheet) return;
+        document.body.setAttribute('data-print', id);
+        sheet.classList.add('lab-active');
+        function done() {
+          document.body.removeAttribute('data-print');
+          sheet.classList.remove('lab-active');
+          window.removeEventListener('afterprint', done);
+        }
+        window.addEventListener('afterprint', done);
+        window.print();
+      }
+      document.querySelectorAll('[data-print-lab]').forEach(function (b) {
+        b.addEventListener('click', function () { printLab(b.getAttribute('data-print-lab')); });
+      });
+      document.getElementById('print-all').addEventListener('click', function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>

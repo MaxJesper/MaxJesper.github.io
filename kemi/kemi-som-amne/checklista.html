@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklista – Kemi som ämne</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/checklista.css" />
+  <style>
+    body.area-amne{--area:#4338ca;--area-strong:#3730a3;--area-soft:#eef2ff;--area-border:#c7d2fe;--area-hover:#e0e7ff;}
+  </style>
+</head>
+<body class="area-amne">
+  <header class="kemi-header">
+    <h1>Checklista</h1>
+    <p>Kemi som ämne</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button class="subject-btn print-green" type="button" onclick="window.print()">🖨️ Skriv ut</button>
+    </div>
+
+    <div class="concept-lang-selector-mount no-print"></div>
+
+    <p class="checklist-intro">
+      Använd checklistan för att se vad du behöver kunna i arbetsområdet. Arbeta steg för steg
+      och markera det du känner dig säker på. Punkterna följer studieguidens milstolpar.
+    </p>
+
+    <div class="checklist-actions">
+      <button id="expand-all-btn" class="checklist-btn" type="button">Visa alla</button>
+      <button id="collapse-all-btn" class="checklist-btn" type="button">Fäll ihop alla</button>
+    </div>
+
+    <section id="checklista-container"></section>
+
+    <section class="checklist-reflection">
+      <h2>Reflektion</h2>
+      <div class="write-lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script src="/js/render-checklista.js"></script>
+  <script>
+    renderChecklist({
+      jsonPath: "./data/checklista.json",
+      mountId: "checklista-container",
+      expandAllBtnId: "expand-all-btn",
+      collapseAllBtnId: "collapse-all-btn"
+    });
+  </script>
+</body>
+</html>

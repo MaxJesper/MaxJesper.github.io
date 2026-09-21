@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Kemi som ämne</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+  <style>
+
+    body { --listen-color:#3730a3; --listen-border:#c7d2fe; --listen-hover-bg:#eef2ff; --listen-deepen-color:#7a5c00; --listen-deepen-border:#c9a640;
+           --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe;
+           --guide-accent:#3730a3; --guide-soft:#f5f7ff; --guide-border:#c7d2fe; --guide-dash:#c7d2fe; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro { background:#eef2ff; border:1px solid #c7d2fe; border-left:4px solid #3730a3; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .guide-intro p { margin:0.35rem 0; }
+    .pill-btn { background:#eef2ff; border:1px solid #a5b4fc; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#3730a3; cursor:pointer; min-height:44px; }
+    .pill-btn:hover { background:#e0e7ff; }
+    .pill-btn[aria-pressed="true"] { background:#3730a3; color:#fff; border-color:#3730a3; }
+    .pill-btn:focus-visible, .subject-btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .milestone { background:#fff; border:1px solid #d8d8d8; border-radius:12px; margin-bottom:0.9rem; box-shadow:0 2px 8px rgba(0,0,0,0.04); overflow:hidden; }
+    .milestone > summary { list-style:none; cursor:pointer; padding:1rem 1.1rem; display:flex; align-items:center; gap:0.75rem; font-weight:600; color:#1a1a2e; }
+    .milestone > summary::-webkit-details-marker { display:none; }
+    .milestone > summary::before { content:"▸"; color:#3730a3; font-size:0.95rem; transition:transform 0.15s ease; display:inline-block; }
+    .milestone[open] > summary::before { transform:rotate(90deg); }
+    .milestone > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:-3px; }
+    .milestone .m-num { font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; color:#3730a3; font-weight:700; white-space:nowrap; }
+    .milestone .m-title { font-size:1.1rem; flex:1; margin:0; font-weight:inherit; line-height:inherit; }
+    .milestone .m-body { padding:0 1.1rem 1.1rem 1.1rem; border-top:1px solid #eee; padding-top:0.9rem; }
+    .milestone .m-body p { margin:0.6rem 0; line-height:1.55; }
+    .milestone .m-body strong.term { color:#1a1a2e; }
+    .formula { font-family:"Cambria Math", Georgia, serif; white-space:nowrap; }
+
+    .fact-box { background:#eef2ff; border-left:4px solid #3730a3; border-radius:6px; padding:0.75rem 0.95rem; margin:0.9rem 0; font-size:0.98rem; }
+    .fact-box > strong:first-child { display:block; margin-bottom:0.25rem; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:#3730a3; }
+    .safety-box { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid #ea7317; border-radius:8px; padding:0.7rem 0.95rem; margin:0.9rem 0; font-size:0.96rem; }
+    .safety-box strong { color:#9a3412; }
+
+    .deepen { background:#fffbe7; border-left:4px solid #d4a017; border-radius:6px; padding:0.65rem 0.9rem; margin:0.8rem 0; font-size:0.96rem; }
+    .deepen > summary { cursor:pointer; list-style:none; font-weight:700; color:#7a5c00; font-size:0.88rem; letter-spacing:1px; text-transform:uppercase; padding:0.1rem 0; }
+    .deepen > summary::-webkit-details-marker { display:none; }
+    .deepen > summary { gap:0.4rem; flex-wrap:wrap; }
+    .deepen > summary::before { content:"★ Fördjupning:"; display:block; }
+    .deepen > summary::after { content:" ▾"; }
+    .deepen[open] > summary::after { content:" ▴"; }
+    .deepen > summary ~ * { margin-top:0.6rem; }
+    .wonder { background:#f0fdfa; border-left:4px solid #0d9488; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .wonder > summary { cursor:pointer; font-weight:600; color:#115e59; list-style:none; }
+    .wonder > summary::-webkit-details-marker { display:none; }
+    .wonder > summary::before { content:"» Fundera vidare: "; }
+    .wonder > summary::after { content:" ▾"; }
+    .wonder[open] > summary::after { content:" ▴"; }
+    .wonder > summary ~ * { margin-top:0.6rem; }
+    .wonder .frontier { font-size:0.85rem; color:#0f766e; font-style:italic; border-top:1px dashed #99f6e4; margin-top:0.5rem; padding-top:0.5rem; }
+    .check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+    .check-q > summary::-webkit-details-marker { display:none; }
+    .check-q > summary::before { content:"✓ Kontrollera dig själv: "; }
+    .check-q > summary::after { content:" (visa svar)"; font-weight:400; color:#475569; }
+    .check-q[open] > summary::after { content:" (dölj svar)"; }
+    .check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+    .deepen > summary:focus-visible, .wonder > summary:focus-visible, .check-q > summary:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+
+    .next-steps { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.6rem; margin-top:1rem; }
+    .next-steps a { display:block; padding:0.7rem 0.9rem; background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; text-decoration:none; color:#1a1a2e; font-size:0.95rem; transition:background 0.12s ease, transform 0.12s ease; }
+    .next-steps a:hover { background:#e0e7ff; transform:translateY(-1px); }
+    .next-steps a:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .next-steps a .n-label { display:block; font-size:0.72rem; letter-spacing:1.4px; text-transform:uppercase; color:#3730a3; font-weight:700; margin-bottom:0.2rem; }
+
+    .compare-table { width:100%; border-collapse:collapse; font-size:0.93rem; margin:0.9rem 0; }
+    .compare-table th, .compare-table td { border:1px solid #d8d8d8; padding:0.45rem 0.7rem; text-align:left; vertical-align:middle; }
+    .compare-table th { background:#eef2ff; color:#3730a3; font-weight:700; }
+    .compare-table tr:nth-child(even) td { background:#f5f7ff; }
+    .compare-table img { display:block; height:auto; }
+    .compare-table caption { text-align:left; font-size:0.85rem; color:#4a4a5a; padding-bottom:0.3rem; }
+
+    a.cite { font-size:0.78rem; color:#3730a3; font-weight:700; vertical-align:super; text-decoration:none; margin-left:0.05rem; }
+    a.cite:hover { text-decoration:underline; }
+    .m-body a:not(.cite):not(.mc-rotate) { color:#3730a3; text-decoration:underline; }
+    .tbl-scroll { overflow-x:auto; }
+    .tbl-scroll:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .deepen > summary .listen-btn { min-height:28px; padding:0.3rem 0.65rem; }
+    .references { margin-top:2rem; padding-top:1rem; border-top:1px solid #d8d8d8; font-size:0.9rem; line-height:1.65; }
+    .references h2 { font-size:1rem; color:#3730a3; margin:0 0 0.6rem; }
+    .references ol { margin:0 0 0 1.3rem; }
+    .references li { margin-bottom:0.4rem; }
+    .references a { color:#3730a3; text-decoration:underline; }
+    details.milestone, details.deepen, details.wonder { scroll-margin-top:0.75rem; }
+    @media (max-width:520px) { main { font-size:1.05em; } .milestone .m-title { font-size:1rem; } }
+
+    .m-body ol.steps { margin:0.6rem 0 0.6rem 1.4rem; }
+    .m-body ol.steps li { margin:0.3rem 0; line-height:1.5; }
+
+    body.area-amne { --area:#4338ca; --area-strong:#3730a3; --area-soft:#eef2ff; --area-border:#c7d2fe; --area-hover:#e0e7ff; }
+    .guide-wide .fig-wide { display:flex; flex-wrap:wrap; gap:1rem; justify-content:center; align-items:flex-start; margin:0.8rem 0; }
+    .guide-wide .fig-wide .side-fig { margin:0; }
+    .guide-wide .fig-wide .side-fig figcaption { max-width:none; text-align:center; }
+    .m-body ul { margin:0.6rem 0 0.6rem 0; padding-left:1.4rem; }
+    .m-body ul li { margin:0.3rem 0; line-height:1.5; }
+
+    main p a:not(.subject-btn):not(.listen-btn), main .m-body li a:not(.subject-btn) { text-decoration: underline; }
+
+    /* ---- Kemi som ämne: extra komponenter ---- */
+    .m-body h3 { font-size:1.05rem; margin:1.3rem 0 0.4rem; color:#3730a3; }
+    .m-body h4 { font-size:1.02rem; margin:0 0 0.2rem; color:#1a1a2e; }
+    .formula-box { background:#eef2ff; border:1px solid #c7d2fe; border-radius:8px; padding:0.7rem 1rem; margin:0.9rem 0; text-align:center; font-size:1.05rem; }
+    .formula-box .f { font-family:"Cambria Math", Georgia, serif; font-weight:600; color:#312e81; }
+    .formula-box .u { display:block; font-size:0.85rem; color:#475569; margin-top:0.3rem; }
+    .minnesregel { background:#fffbe7; border:1px solid #e5cf7a; border-left:4px solid #d4a017; border-radius:8px; padding:0.7rem 1rem; margin:0.9rem 0; font-size:0.97rem; }
+    .minnesregel > strong { display:block; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:#7a5c00; margin-bottom:0.3rem; }
+    .minnesregel .ex, .calc-box .steg { font-family:ui-monospace, Menlo, Consolas, monospace; font-size:0.93rem; }
+    .calc-box { background:#eff6ff; border:1px solid #bfdbfe; border-left:4px solid #1d4ed8; border-radius:8px; padding:0.75rem 1rem; margin:0.9rem 0; font-size:0.97rem; }
+    .calc-box > strong.calc-rubrik { display:block; font-size:0.8rem; letter-spacing:1px; text-transform:uppercase; color:#1e3a8a; margin-bottom:0.35rem; }
+    .calc-box .steg { margin:0.2rem 0; }
+
+    .pikto-table td.pikto-cell { width:78px; text-align:center; padding:0.35rem; }
+    .pikto-table td.pikto-cell img { display:block; margin:0 auto; }
+    .pikto-kod { display:block; font-weight:400; font-size:0.78rem; color:#475569; }
+    .pikto-table td { vertical-align:middle; }
+
+    .etikett-rad { display:flex; flex-wrap:wrap; gap:1.2rem; align-items:flex-start; margin:0.6rem 0 1rem; }
+    .etikett { margin:0; flex:0 1 340px; max-width:100%; background:#fff; border:3px solid #1f2937; border-radius:6px; padding:0.7rem 0.9rem; font-size:0.95rem; }
+    .etikett p { margin:0.4rem 0; line-height:1.4; }
+    .etikett-tag { font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; color:#475569; border-bottom:1px dashed #94a3b8; padding-bottom:0.3rem; margin-bottom:0.4rem; }
+    .etikett-namn { font-weight:700; font-size:1.05rem; margin:0.3rem 0; }
+    .etikett-mitt { display:flex; align-items:center; gap:1rem; margin:0.5rem 0; }
+    .etikett-symbol { position:relative; display:inline-block; }
+    .etikett-signal { font-weight:800; font-size:1.25rem; letter-spacing:0.5px; }
+    .etikett-nr { display:inline-block; min-width:1.35rem; height:1.35rem; line-height:1.35rem; text-align:center; border-radius:50%; background:#1f2937; color:#fff; font-size:0.78rem; font-weight:700; margin-right:0.3rem; vertical-align:middle; }
+    .etikett-symbol .etikett-nr { position:absolute; top:-6px; left:-8px; margin:0; }
+    .etikett figcaption { font-size:0.82rem; color:#475569; font-style:italic; margin-top:0.5rem; }
+    .etikett-lista { flex:1 1 320px; min-width:0; }
+    .etikett-lista ol { margin:0 0 0 1.2rem; padding:0; }
+    .etikett-lista li { margin:0.35rem 0; line-height:1.45; }
+
+    .exempelrapport { background:#fafafa; border:1px solid #cbd5e1; border-radius:10px; padding:0.9rem 1.1rem; margin:0.9rem 0; }
+    .exempelrapport p { margin:0.5rem 0; }
+    .exempelrapport .ex-meta { color:#475569; font-size:0.9rem; margin-top:0; }
+    .exempelrapport .ex-anm { display:block; margin-top:0.25rem; padding-left:0.7rem; border-left:3px solid #a5b4fc; color:#3730a3; font-size:0.9rem; }
+    .fig-wide .side-fig { max-width:100%; }
+    .fig-wide .side-fig > img { margin:0 auto; }
+
+/* Fotogalleri över laboratorieutrustning (M6) */
+.utrustning-galleri { margin: 1rem 0; border: 1px solid var(--area-border); border-radius: 10px; padding: 0.6rem 0.9rem; background: #fff; }
+.utrustning-galleri > summary { cursor: pointer; font-weight: 700; color: var(--area-strong); padding: 0.3rem 0; }
+.galleri-grupp { font-size: 1rem; margin: 1rem 0 0.4rem; color: var(--area-strong); }
+.foto-galleri { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.6rem; }
+.foto-galleri figure { margin: 0; text-align: center; }
+.foto-galleri img { width: 100%; height: 110px; object-fit: contain; background: #fff; border: 1px solid var(--area-border); border-radius: 8px; }
+.foto-galleri figcaption { font-size: 0.85rem; margin-top: 0.2rem; line-height: 1.25; }
+
+  </style>
+</head>
+<body class="area-amne">
+
+  <header class="kemi-header">
+    <h1>Studieguide</h1>
+    <p>Kemi som ämne</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="guide-wide">
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./checklista.html" class="subject-btn">✅ Checklistan</a>
+      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Öppna alla</button>
+    </div>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Du börjar med varför kemi är värt att läsa och hur du lär dig ämnet, går vidare till hur man arbetar säkert och naturvetenskapligt i kemisalen, och slutar med ämnens egenskaper, kemins historia och forskning i dag. Innehållet följer kursplanens del om systematiska undersökningar och kemins betydelse för människa, samhälle och miljö.<a class="cite" href="#ref-1">[1]</a></p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De gula rutorna är fördjupning, de turkosa är frågor att fundera vidare på och de blåa är snabba kontrollfrågor.</p>
+      <p>Faropiktogrammen kan du <strong>öva på</strong> i <a href="../faropiktogram.html">övningen om faropiktogram</a>. Utskrivbara papper finns också: <a href="./sakerhetsintyg.html">säkerhetsintyg</a> och <a href="./rapportmall.html">mall för laborationsrapport</a>.</p>
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+    </section>
+ <!-- M1 -->
+<details class="milestone" id="m1" open="">
+<summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Vad är kemi – och varför ska du läsa det?</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Frågan är fullt rimlig, så vi börjar med den. Svaret börjar med vad <strong class="term"><span class="concept-inline" data-concept="Kemi">kemi</span></strong> är: läran om ämnen. Kemin undersöker vad ämnen består av, vilka egenskaper de har, hur de är uppbyggda av mycket små partiklar och hur ett ämne kan förvandlas till ett annat. Kursplanen beskriver det som kemin i naturen, i samhället och i människokroppen.<a class="cite" href="#ref-1">[1]</a></p>
+<p>Allt du kan ta på är gjort av <strong class="term"><span class="concept-inline" data-concept="Materia">materia</span></strong>. Ett visst slags materia kallas ett <strong class="term"><span class="concept-inline" data-concept="Ämne">ämne</span></strong>: vatten, järn, socker, syre och koldioxid är ämnen. Skilj på ämne och <strong class="term"><span class="concept-inline" data-concept="Föremål">föremål</span></strong>. En sked är ett föremål, och stål är ämnet (materialet) den är gjord av. Många ämnen som används i vardagen kallas också <strong class="term"><span class="concept-inline" data-concept="Kemikalie">kemikalier</span></strong>. Det låter kanske farligt, men ordet betyder bara ämne. Vatten och salt är kemikalier, och det är alla ämnen i din egen kropp också.</p>
+<p>Kemi är alltså inget som bara finns i en kemisal. Titta på tabellen: den visar sex saker du säkert har mött och vad kemin bakom dem är.</p>
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Kemi i vardagen</caption>
+<thead><tr><th scope="col">Något du har mött</th><th scope="col">Kemin bakom</th></tr></thead>
+<tbody>
+<tr><th scope="row">Bröd som jäser</th><td>Jästen bryter ned socker och bildar bland annat koldioxid. Gasen blåser upp degen.</td></tr>
+<tr><th scope="row">Tvål som tar bort fett</th><td>Tvålens molekyler binder både till fett och till vatten, så att fettet kan spolas bort.</td></tr>
+<tr><th scope="row">En cykel som rostar</th><td>Järn reagerar med syre och vatten och bildar rost, ett nytt ämne med helt andra egenskaper.</td></tr>
+<tr><th scope="row">Mobilens batteri</th><td>Kemiska reaktioner i batteriet gör om kemisk energi till elektricitet, och går att vända när du laddar.</td></tr>
+<tr><th scope="row">Ved som brinner</th><td>Kolföreningar i veden reagerar med syre i luften och bildar koldioxid och vatten. Energi frigörs som värme och ljus.</td></tr>
+<tr><th scope="row">Mjölk som blir sur</th><td>Bakterier bygger om mjölkens socker till mjölksyra, och smaken förändras.</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Varför ska du läsa kemi?</h3>
+<p>Det finns fyra goda skäl, och de är inte samma sak som ”för att det står i kursplanen”.</p>
+<ul>
+<li><strong>För att förstå din egen vardag och kropp.</strong> Mat, medicin, rengöring, kläder, batterier och luften du andas har alla en kemisk förklaring. Med kunskap ser du varför saker händer i stället för att bara acceptera att de gör det.</li>
+<li><strong>För att kunna ta kloka beslut.</strong> Du kommer att välja produkter, läsa varningstexter, rösta och fundera över miljöfrågor. Då behöver du kunna skilja fakta från skrämselpropaganda och från säljargument, till exempel när något marknadsförs som ”kemikaliefritt”.</li>
+<li><strong>För att stora problem kräver kemi för att lösas.</strong> Rent vatten, mat till en växande befolkning, energi utan utsläpp, nya läkemedel och återvinning av material är alla i grunden kemiska utmaningar. Du får se exempel i milstolpe 10.</li>
+<li><strong>För att många yrken bygger på det.</strong> Vård, matlagning, bygg, teknik, miljö och forskning är exempel. Även om du blir något helt annat tränar kemin dig i att tänka noggrant, pröva idéer och värdera bevis.</li>
+</ul>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Kemi är läran om ämnen och hur de förändras. Ett ämne är ett slags materia, ett föremål är något av ämnet. Kemin finns överallt i vardagen, och du behöver den för att förstå din omvärld, fatta kloka beslut och lösa stora problem.
+          </div>
+<details class="check-q">
+<summary>Vad är skillnaden mellan ett föremål och ett ämne? Ge ett eget exempel.</summary>
+<div class="svar">Ett föremål är en sak, som en sked, en burk eller en tråd. Ett ämne är det den är gjord av, som stål, aluminium eller koppar. Ett exempel är en kopparkabel: kabeln är föremålet och koppar är ämnet.</div>
+</details>
+<details class="deepen">
+<summary>Finns det något som är ”kemikaliefritt”?</summary>
+<p>Nej. Allt som finns består av ämnen, alltså kemikalier. Vatten är en kemikalie, och det är luften, sockret och du själv också. När en produkt kallas ”kemikaliefri” menar tillverkaren oftast att den inte innehåller vissa ämnen som kunder vill undvika. Det är ett säljargument, inte en kemisk beskrivning. Ett ämne är inte farligt bara för att det har ett kemiskt namn, och det är inte ofarligt bara för att det finns i naturen. Det viktiga är vilka egenskaper ämnet har och hur mycket du utsätts för.</p>
+</details>
+<details class="wonder">
+<summary>Hade du kunnat leva ditt liv utan att förstå kemi?</summary>
+<p>Ja, det går, och de flesta människor har gjort det. Men fundera på vad du då måste lita blint på: att medicinen är rätt dosering, att varningstexten inte är överdriven, att en nyhet om ett ”giftigt ämne” stämmer. Vad skulle du behöva kunna för att själv bedöma sådant?</p>
+<p class="frontier">Forskningsfronten: många av dagens viktigaste vetenskapliga frågor är kemiska, till exempel hur vi kan lagra energi från sol och vind, ta bort koldioxid ur luften och bryta ned plast. Vilken av dem tycker du är viktigast att lösa?</p>
+</details>
+<div class="next-steps">
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m10"><span class="n-label">Läs mer</span>Nobelpris och forskning idag</a>
+<a href="#m2"><span class="n-label">Fortsätt</span>Så lär du dig kemi</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M2 -->
+<details class="milestone" id="m2">
+<summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Så lär du dig kemi</h2></summary>
+<div class="m-body">
+<div class="m-row">
+<div class="m-lead">
+<p>Kemi känns svårt för många, och det finns en förklaring. Forskaren Alex Johnstone beskrev att man i kemin hela tiden växlar mellan tre nivåer.<a class="cite" href="#ref-5">[5]</a> Om du märker vilken nivå en förklaring handlar om blir det lättare att hänga med.</p>
+<ul>
+<li>På <strong class="term"><span class="concept-inline" data-concept="Makronivå">makronivån</span></strong> ser, känner och mäter du: vattnet i bägaren, dess temperatur, massa och volym.</li>
+<li>På <strong class="term"><span class="concept-inline" data-concept="Partikelnivå">partikelnivån</span></strong> (kallas också submikroskopisk nivå) förklarar du vad som händer med hjälp av atomer, molekyler och joner. Du kan aldrig se dem direkt, du bara föreställer dig dem med hjälp av en modell.</li>
+<li>På <strong class="term"><span class="concept-inline" data-concept="Symbolnivå">symbolnivån</span></strong> skriver du med kemiska symboler, formler, reaktionsformler och matematik: H<sub>2</sub>O(l), ρ = m / V.</li>
+</ul>
+<p>En vanlig orsak till att man tappar bort sig är att en lärare eller ett facit hoppar mellan nivåerna utan att säga det. Fråga dig därför: <em>vilken nivå är jag på nu, och vilken nivå behöver jag förklara med?</em></p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="Tre rutor ovanför varandra. Överst vatten i en bägare, det man ser och mäter. I mitten vattenmolekyler ritade som cirklar med bokstäverna O och H. Nederst symbolen H2O(l) och formeln för densitet." height="366" src="/images/kemi/kemi-som-amne/tre-nivaer.svg" width="340"/>
+<figcaption><strong>Tre nivåer.</strong> Samma vatten beskrivet som något du ser (makro), något du föreställer dig (partikel) och något du skriver (symbol).</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<h3>Fyra sätt att lära sig</h3>
+<p>I kemin behöver du kunna fyra olika slags saker, och de tränas på olika sätt. Fastnar du beror det ofta på att du använder fel sätt för den sorts kunskap som krävs.</p>
+<div aria-label="Tabell 2 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Fyra sätt att lära sig kemi</caption>
+<thead><tr><th scope="col">Sätt</th><th scope="col">Vad det är</th><th scope="col">Så tränar du det</th></tr></thead>
+<tbody>
+<tr><th scope="row">1. Fakta</th><td>Saker du behöver veta utantill: namn, symboler, farosymboler, laboratorieutrustning.</td><td>Begreppskort, bingo och korsord. Testa dig själv i stället för att läsa om.</td></tr>
+<tr><th scope="row">2. Förstå samband</th><td>Varför något händer: att partiklarnas rörelse förklarar temperatur, att en egenskap beror på hur ämnet är uppbyggt.</td><td>Förklara med egna ord, gärna högt, till en kompis. Svara på ”varför”-frågorna i instuderingsfrågorna.</td></tr>
+<tr><th scope="row">3. Räkna</th><td>Använda formler och tal, till exempel densitet.</td><td>Skriv alltid formeln först, sätt in värden med enheter och skriv svaret med enhet. Öva på räkneexemplen.</td></tr>
+<tr><th scope="row">4. Få egna erfarenheter</th><td>Se, mäta, prova och göra fel i praktiken, vilket ger en känsla för hur ämnen beter sig.</td><td>Laborationerna. Anteckna vad du faktiskt ser, inte bara vad du väntar dig.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Alla fyra behövs. Fakta utan förståelse blir bara ihopplockade ord, förståelse utan övning glöms, och en laboration utan förklaring blir bara ett tidsfördriv.</p>
+<h3>Så minns du bäst</h3>
+<p>Forskare har jämfört många vanliga studietekniker. Två utmärkte sig som särskilt effektiva: att <strong>testa dig själv</strong> och att <strong>sprida ut träningen över tid</strong>.<a class="cite" href="#ref-2">[2]</a> Att läsa om texten och att stryka under nämns däremot som mindre effektivt. Det känns effektivt, men ger sämre minne.</p>
+<p>Att testa sig själv bygger på att minnet stärks när du försöker plocka fram något, och att det svårare arbetet ger bättre minne. I en känd studie fick studenter läsa en text och sedan antingen läsa om den eller skriva ned vad de mindes. En vecka senare mindes gruppen som hade testat sig mer.<a class="cite" href="#ref-3">[3]</a> Att repetera vid flera tillfällen med mellanrum ger också bättre minne än att göra allt på en gång.<a class="cite" href="#ref-4">[4]</a></p>
+<div class="fact-box">
+<strong>Så gör du</strong>
+            Dölj svaret och försök svara först. Använd kontrollfrågorna i studieguiden, instuderingsfrågorna, begreppskorten och övningsprovet. Fördela ditt pluggande över flera dagar, och gör ett kort test varje gång i stället för att bara läsa om.
+          </div>
+<details class="check-q">
+<summary>Vilka tre nivåer växlar man mellan i kemin? Ge ett exempel med vatten.</summary>
+<div class="svar">Makronivå (du ser och mäter vattnet, till exempel dess temperatur), partikelnivå (vattenmolekyler som rör sig) och symbolnivå (H<sub>2</sub>O).</div>
+</details>
+<details class="deepen">
+<summary>Varför känns det bra att läsa om, fast det fungerar sämre?</summary>
+<p>När du läser om en text du redan har läst känns allt bekant, och det är lätt att tro att bekant betyder att du kan det. Men när du sedan ska plocka fram kunskapen själv, utan texten framför dig, är det något helt annat. Att svara på en fråga utan att titta tvingar hjärnan att arbeta, och det arbetet är det som stärker minnet. Därför är det bra om det känns lite svårt när du övar.</p>
+</details>
+<details class="wonder">
+<summary>Hur ser din egen träning ut på en vanlig vecka?</summary>
+<p>Försök att beskriva hur du senast förberedde dig inför ett prov. Hur mycket av tiden testade du dig själv, och hur mycket läste du bara om? Vad skulle du kunna ändra utan att lägga mer tid?</p>
+</details>
+<div class="next-steps">
+<a href="./begreppskort.html"><span class="n-label">Träna fakta</span>Begreppskort</a>
+<a href="./instuderingsfragor.html"><span class="n-label">Träna samband</span>Instuderingsfrågor</a>
+<a href="#m3"><span class="n-label">Fortsätt</span>Att arbeta naturvetenskapligt</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M3 -->
+<details class="milestone" id="m3">
+<summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Att arbeta naturvetenskapligt</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Naturvetenskap bygger på ett särskilt sätt att ta reda på saker: man ställer en fråga som går att besvara, gör en förutsägelse, prövar den med en fair undersökning, och låter resultaten avgöra. Det kallas ofta <strong class="term"><span class="concept-inline" data-concept="Naturvetenskaplig metod">den naturvetenskapliga metoden</span></strong>. Man kan tänka sig den som en cirkel med sju steg, men i verkligheten hoppar forskare fram och tillbaka mellan stegen, och en undersökning slutar ofta i en ny fråga.</p>
+</div>
+</div>
+<div class="m-row m-row--full">
+<div class="fig-wide">
+<figure class="side-fig">
+<img alt="Sju steg i en cirkel med pilar: 1 Fråga, 2 Hypotes, 3 Planera, 4 Genomför, 5 Bearbeta, 6 Slutsats, 7 Värdera. Från Värdera går en pil tillbaka till Fråga." height="531" src="/images/kemi/kemi-som-amne/metodcykel.svg" width="720"/>
+<figcaption><strong>Naturvetenskapligt arbetssätt.</strong> Sju steg, och svaren leder ofta till nya frågor.</figcaption>
+</figure>
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<h3>De sju stegen</h3>
+<ol class="steps">
+<li><strong>Fråga.</strong> Du börjar med en iakttagelse eller något du undrar över. Din <strong class="term"><span class="concept-inline" data-concept="Frågeställning">frågeställning</span></strong> ska gå att besvara med mätningar eller observationer. ”Vilken är bäst?” är svårt att undersöka, ”Vilket papper suger upp mest vatten?” går att undersöka.</li>
+<li><strong>Hypotes.</strong> En <strong class="term"><span class="concept-inline" data-concept="Hypotes">hypotes</span></strong> är en förklarande gissning som du kan pröva. Den bygger på det du redan vet, och skrivs ofta som ”Om … så … eftersom …”. Exempel: ”Om vattnet är varmare löser sig sockret snabbare, eftersom partiklarna rör sig snabbare.”</li>
+<li><strong>Planera.</strong> Du bestämmer vad du ska ändra, vad du ska mäta och vad som ska hållas lika (mer om det nedan). Du bestämmer material och metod, hur många gånger du upprepar försöket och gör en riskbedömning (se milstolpe 4).</li>
+<li><strong>Genomför.</strong> Du gör försöket enligt planen och skriver ned det du mäter och ser direkt, med enheter.</li>
+<li><strong>Bearbeta.</strong> Du sammanställer i en tabell och räknar ut ett <strong class="term"><span class="concept-inline" data-concept="Medelvärde">medelvärde</span></strong> om du har upprepat försöket. Ett diagram gör mönster lättare att se.</li>
+<li><strong>Slutsats.</strong> Du svarar på frågan. Stödde resultaten din hypotes eller inte? Du förklarar varför, med kemins begrepp.</li>
+<li><strong>Värdera.</strong> Du funderar över <strong class="term"><span class="concept-inline" data-concept="Felkälla">felkällor</span></strong>: vad kan ha gjort resultaten mindre säkra, och hur kan det förbättras? Hur <strong class="term"><span class="concept-inline" data-concept="Tillförlitlighet">tillförlitliga</span></strong> är resultaten? Vilken ny fråga leder detta till?</li>
+</ol>
+<h3>Variabler: gör en rättvis jämförelse</h3>
+<p>En <strong class="term"><span class="concept-inline" data-concept="Variabel">variabel</span></strong> är något som kan ändras eller mätas i en undersökning. Det finns tre slags, och skillnaden är avgörande för att jämförelsen ska bli rättvis.</p>
+<ul>
+<li>Den <strong class="term"><span class="concept-inline" data-concept="Oberoende variabel">oberoende variabeln</span></strong> är det <em>enda</em> du ändrar med avsikt.</li>
+<li>Den <strong class="term"><span class="concept-inline" data-concept="Beroende variabel">beroende variabeln</span></strong> är det du mäter, och som du tror påverkas av ändringen.</li>
+<li><strong class="term"><span class="concept-inline" data-concept="Kontrollvariabel">Kontrollvariabler</span></strong> är allt annat, och det ska hållas lika i alla försök.</li>
+</ul>
+<p>Ändrar du flera saker på samma gång vet du inte vilken som orsakade skillnaden. Därför ändrar man en sak i taget.</p>
+<div aria-label="Tabell 3 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Exempel: Löser sig socker snabbare i varmt vatten?</caption>
+<thead><tr><th scope="col">Sorts variabel</th><th scope="col">I det här exemplet</th></tr></thead>
+<tbody>
+<tr><th scope="row">Oberoende (jag ändrar)</th><td>Vattnets temperatur: 20, 40, 60 och 80 °C</td></tr>
+<tr><th scope="row">Beroende (jag mäter)</th><td>Tiden tills allt socker är borta, i sekunder</td></tr>
+<tr><th scope="row">Hålls lika (kontroll)</th><td>5 g strösocker, 100 ml vatten, samma sorts glas, samma omrörning</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="m-row">
+<div class="m-lead">
+<h3>Resultat och diagram</h3>
+<p>Diagrammet till höger visar hur resultatet från exemplet skulle kunna se ut. <strong>Värdena är påhittade för att visa hur man gör, det är inte mätningar.</strong> Den oberoende variabeln (det du ändrar) sätts på x-axeln och den beroende variabeln (det du mäter) på y-axeln. Båda axlarna ska ha namn och enhet, och skalan ska vara jämn. Ett mönster som här, där tiden minskar när temperaturen ökar, kan du sedan förklara: partiklarna rör sig snabbare i varmare vatten och sockret lossnar därför snabbare.</p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="Linjediagram med temperatur i grader Celsius på x-axeln och tid i sekunder på y-axeln. Mätpunkter: 20 grader 62 sekunder, 40 grader 35 sekunder, 60 grader 19 sekunder och 80 grader 11 sekunder. Kurvan sjunker." height="259" src="/images/kemi/kemi-som-amne/exempeldiagram.svg" width="340"/>
+<figcaption><strong>Exempeldiagram.</strong> Påhittade värden. Det du ändrar på x-axeln, det du mäter på y-axeln.</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<h3>Observation eller tolkning?</h3>
+<p>En <strong class="term"><span class="concept-inline" data-concept="Observation">observation</span></strong> är det du faktiskt ser, mäter eller hör. En tolkning är vad du drar för slutsats av det. Håll isär dem: skriv det du ser i resultatdelen och det du tror i slutsatsen.</p>
+<div aria-label="Tabell 4 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Observation och tolkning</caption>
+<thead><tr><th scope="col">Observation (vad jag ser)</th><th scope="col">Tolkning (vad jag tror)</th></tr></thead>
+<tbody>
+<tr><td>Vattnet blev grumligt när jag blåste i det.</td><td>Ett nytt ämne som inte löser sig bildades.</td></tr>
+<tr><td>Bitarna av aluminium sjönk, korken flöt.</td><td>Aluminium har högre densitet än vatten, kork har lägre.</td></tr>
+<tr><td>Kaffet i kopp A svalnade 8 °C på 10 minuter, i kopp B 12 °C.</td><td>Kopp A är bättre isolerad.</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Teori, hypotes och modell</h3>
+<p>De tre orden blandas ofta ihop. En hypotes är en enskild gissning som ska prövas. En <strong class="term"><span class="concept-inline" data-concept="Teori">teori</span></strong> är en förklaring som har prövats på många olika sätt av många forskare och stått emot granskning, så det är mer än ”bara en teori” i vardagens mening. En <strong class="term"><span class="concept-inline" data-concept="Modell">modell</span></strong> är en förenklad bild som hjälper oss att tänka, som partikelmodellen där ämnen ritas som små kulor.</p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Naturvetenskapligt arbete går ut på att ställa en prövbar fråga, gissa med en hypotes, planera en rättvis undersökning där du ändrar en sak i taget, mäta, bearbeta, dra slutsats och värdera hur säkra resultaten är.
+          </div>
+<details class="check-q">
+<summary>Du undersöker om saltmängden påverkar hur snabbt vatten fryser. Vilken variabel är oberoende och vilken är beroende?</summary>
+<div class="svar">Oberoende: mängden salt (det du ändrar). Beroende: tiden det tar tills vattnet fryser (det du mäter). Vattenmängd, kärl och frystemperatur ska hållas lika.</div>
+</details>
+<details class="deepen">
+<summary>Varför skriver man ”stödjer” i stället för ”bevisar”?</summary>
+<p>Ett försök kan visa att en hypotes stämmer i just det fallet, men det bevisar inte att den alltid stämmer. Däremot kan ett enda gott försök visa att en hypotes är fel. Därför skriver forskare att resultaten stödjer eller inte stödjer en hypotes, och att en förklaring är väl underbyggd först när många oberoende försök pekar åt samma håll.</p>
+</details>
+<details class="wonder">
+<summary>Vad skulle du undersöka om du fick välja fritt?</summary>
+<p>Välj något i din vardag som du undrar över, till exempel varför en snöboll smälter fortare i handen än i fickan, vilken tvål som får mest skum eller vilket tyg som torkar fortast. Kan du formulera det som en fråga som går att mäta? Vad skulle du ändra, vad skulle du mäta och vad måste hållas lika?</p>
+<p class="frontier">Forskningsfronten: forskare försöker ofta upprepa varandras försök för att se om resultaten håller. Därför är det så viktigt att beskriva metoden noga, precis som du gör i en laborationsrapport (milstolpe 7).</p>
+</details>
+<div class="next-steps">
+<a href="/kemi/separationsprocesser/studieguide.html#m9"><span class="n-label">Fördjupa</span>Undersök systematiskt (Separationsprocesser)</a>
+<a href="./ovningsverktyg.html"><span class="n-label">Öva</span>Sorteringsövningar</a>
+<a href="#m4"><span class="n-label">Fortsätt</span>Säkerhet i kemisalen</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M4 -->
+<details class="milestone" id="m4">
+<summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Säkerhet i kemisalen</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Ämnen kan reagera kraftigt, brinna, fräta och vara giftiga. Just därför är kemi intressant, och därför behövs ordning. Reglerna är inte till för att skrämma dig. De finns för att du ska kunna arbeta självständigt, lugnt och tryggt, och för att en olycka som händer sällan ändå ska få så små följder som möjligt. Du kan skriva ut ett <a href="./sakerhetsintyg.html">säkerhetsintyg</a> att gå igenom och skriva under tillsammans med din lärare.</p>
+<h3>Före, under och efter laborationen</h3>
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Grundregler i kemisalen</caption>
+<thead><tr><th scope="col">När</th><th scope="col">Så gör du</th></tr></thead>
+<tbody>
+<tr><th scope="row">Före</th><td>Läs hela instruktionen och etiketterna på kemikalierna innan du börjar. Sätt upp håret, ta av lösa halsband och halsdukar, ha slutna skor och lägg väskor så att de inte står i vägen. Ta på <strong class="term"><span class="concept-inline" data-concept="skyddsglasögon">skyddsglasögon</span></strong> innan du hämtar något.</td></tr>
+<tr><th scope="row">Under</th><td>Ät, drick och smaka aldrig i kemisalen, inte ens på socker eller salt. Lukta bara om läraren säger det, och då genom att fläkta lite luft mot näsan med handen. Blanda inga kemikalier på eget initiativ. Håll ordning på bänken. Ha ögonen på det du gör, och gå aldrig ifrån en tänd låga.</td></tr>
+<tr><th scope="row">Om något händer</th><td>Säg till läraren direkt vid spill, skärvor, stänk, brännskada eller något du är osäker på. Det är aldrig pinsamt, och ingen blir arg för att du berättar.</td></tr>
+<tr><th scope="row">Efter</th><td>Släck lågan och stäng gaskranen. Kasta kemikalierester i rätt kärl (aldrig tillbaka i flaskan och inte i vasken om inte läraren säger det). Rengör bänken och tvätta händerna.</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Värme och glas</h3>
+<ul>
+<li>Varm och kall utrustning ser likadan ut. Vänta med att ta i något som har varit nära värmen, och kyl gärna lite först.</li>
+<li>Kontrollera att glas inte har sprickor eller skarpa kanter innan du värmer det. Trasigt glas hanteras aldrig med bara händer.</li>
+<li>Värm aldrig en stängd behållare. Trycket kan sprätta ut proppen eller spräcka glaset.</li>
+<li>Rikta aldrig ett provrör mot någon, och inte mot dig själv, när du värmer det.</li>
+<li>Ha ansiktet på avstånd från vätska som värms. Het vätska och ånga kan skålla.</li>
+</ul>
+<h3>Riskbedömning – tänk efter innan</h3>
+<p>En <strong class="term"><span class="concept-inline" data-concept="Riskbedömning">riskbedömning</span></strong> betyder att du innan du börjar funderar över tre saker: <em>Vad kan gå fel? Hur allvarligt och hur sannolikt är det? Vad gör jag för att minska risken?</em> Du gör den i planeringen av en laboration (milstolpe 3) och skriver ned den i rapporten (milstolpe 7).</p>
+<div aria-label="Tabell 2 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Exempel: Värma vatten i en bägare på trefot med brännare</caption>
+<thead><tr><th scope="col">Vad kan gå fel?</th><th scope="col">Så minskar jag risken</th></tr></thead>
+<tbody>
+<tr><td>Jag skållar mig på het vätska eller ånga.</td><td>Ha ansiktet på avstånd, rör inte bägaren utan tång eller värmetåligt skydd, låt den svalna.</td></tr>
+<tr><td>Glaset spricker.</td><td>Använd värmetåligt glas utan sprickor, ställ bägaren på ett trådnät på trefoten, värm inte torrt.</td></tr>
+<tr><td>Håret eller kläderna tar eld.</td><td>Sätt upp håret, ingen lös klädsel, gå aldrig över lågan.</td></tr>
+<tr><td>Jag tar i något som är hett men inte ser hett ut.</td><td>Håll handen en bit ovanför för att känna värmen, och vänta med att ta i.</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Om olyckan är framme</h3>
+<div class="safety-box">
+<strong>Säg alltid till läraren först, och gör det direkt.</strong> Tiden räknas, särskilt om du har fått något i ögonen. Läraren hjälper dig, men första hjälpen börjar med att du skyndar dig.
+          </div>
+<div aria-label="Tabell 3 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Första hjälpen vid vanliga olyckor</caption>
+<thead><tr><th scope="col">Vad har hänt?</th><th scope="col">Så gör du</th></tr></thead>
+<tbody>
+<tr><th scope="row">Kemikalie i ögat</th><td>Börja skölja direkt: skölj ögat i minst 15 minuter med ljummet vatten. Läraren ringer 112 och begär Giftinformationscentralen om det är ett frätande ämne. Fortsätt att skölja tills du får hjälp.<a class="cite" href="#ref-6">[6]</a></td></tr>
+<tr><th scope="row">Kemikalie på huden</th><td>Skölj direkt med svalt vatten. Spola försiktigt och länge, så att kemikalierna inte sprids till andra ställen på huden. Rör inte det som stänkte på huden.<a class="cite" href="#ref-7">[7]</a></td></tr>
+<tr><th scope="row">Brännskada från het utrustning</th><td>Spola med svalt vatten, men högst 15 minuter. Använd aldrig is eller snö.<a class="cite" href="#ref-7">[7]</a></td></tr>
+<tr><th scope="row">Någon har fått i sig något</th><td>Berätta direkt för läraren. Giftinformationscentralen har telefon 010-456 6700 (dygnet runt vid akut förgiftning). Vid livshotande tillstånd ringer man 112.<a class="cite" href="#ref-8">[8]</a></td></tr>
+<tr><th scope="row">Glas har gått sönder eller det har spillt</th><td>Rör inte skärvorna eller spillet med händerna, och torka inte upp okända kemikalier själv. Säg till läraren.</td></tr>
+<tr><th scope="row">Brand</th><td>Säg till direkt och följ lärarens instruktioner. Läraren stänger gasen och använder brandfilt eller brandsläckare vid behov.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Ta reda på var brandfilt, brandsläckare, ögonspolning och gasens nödstopp finns i din kemisal <em>innan</em> du behöver dem.</p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Skyddsglasögon på, håret uppsatt, inget ätande eller smakande. Läs instruktionen först, tänk igenom vad som kan gå fel, och säg alltid till direkt om något händer. Kemikalie i ögat: skölj i minst 15 minuter.
+          </div>
+<details class="check-q">
+<summary>Du får en stänk av en kemikalie i ögat. Vad gör du, och hur länge?</summary>
+<div class="svar">Du säger till läraren och börjar direkt skölja ögat med ljummet vatten. Fortsätt i minst 15 minuter. Läraren ringer 112 och begär Giftinformationscentralen om det är ett frätande ämne.</div>
+</details>
+<details class="deepen">
+<summary>Fara och risk är inte samma sak</summary>
+<p>En <em>fara</em> är vad ett ämne kan göra: det kan vara brandfarligt, frätande eller giftigt. En <em>risk</em> är hur troligt det är att något händer och hur illa det då blir. Risken beror både på hur farligt ämnet är och på hur mycket du hanterar, hur länge och hur. En flaska starkt frätande syra på en hylla har stor fara men liten risk. Samma flaska som hälls upp utan glasögon har stor risk. Därför handlar säkerhet både om att veta vad ämnena kan göra (milstolpe 5) och att arbeta på rätt sätt.</p>
+</details>
+<details class="wonder">
+<summary>Om det nästan aldrig händer något, varför ska man ändå följa reglerna?</summary>
+<p>Det händer sällan just för att man följer reglerna. Men det handlar också om att vissa skador inte går att ta tillbaka: en skadad hornhinna eller en svår brännskada blir inte ogjord. Många yrken där man arbetar med farliga ämnen bygger på att man alltid gör samma säkra saker, oavsett hur många gånger det har gått bra förut. Vilka sådana vanor skulle du behöva bygga in i ditt eget arbetssätt?</p>
+</details>
+<div class="next-steps">
+<a href="./sakerhetsintyg.html"><span class="n-label">Skriv ut</span>Säkerhetsintyg</a>
+<a href="./ovningsverktyg.html#ov-sakerhet"><span class="n-label">Öva</span>Säkert eller osäkert?</a>
+<a href="#m5"><span class="n-label">Fortsätt</span>Faropiktogram och etiketter</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M5 -->
+<details class="milestone" id="m5">
+<summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Faropiktogram och etiketter</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Innan du öppnar en flaska kan du redan veta mycket om den, om du kan läsa etiketten. Regler för hur farliga kemiska produkter ska märkas är gemensamma i EU (den så kallade CLP-förordningen), så samma symboler och samma varningstexter möter du i hela Europa, på kemikalieflaskor i kemisalen och på rengöringsmedel i butiken.<a class="cite" href="#ref-9">[9]</a></p>
+<h3>De nio faropiktogrammen</h3>
+<p>Ett <strong class="term"><span class="concept-inline" data-concept="Faropiktogram">faropiktogram</span></strong> är en <strong class="term"><span class="concept-inline" data-concept="romb">romb</span></strong> (en fyrkant på spetsen) med en svart symbol på vit botten och en röd kant.<a class="cite" href="#ref-10">[10]</a> Det är <em>symbolens form</em> som berättar vad faran är, så den fungerar även om du inte kan skilja på färger. Piktogrammen är officiella och ska se exakt ut som här.</p>
+<div aria-label="De nio faropiktogrammen (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table pikto-table">
+<caption>De nio faropiktogrammen</caption>
+<thead><tr><th scope="col">Symbol</th><th scope="col">Namn</th><th scope="col">Betyder</th><th scope="col">Exempel</th></tr></thead>
+<tbody>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Explosiv: en bomb som exploderar med skärvor åt alla håll." height="64" src="/images/kemi/faropiktogram/ghs01-explosiv.svg" width="64"/></td><th scope="row">Explosiv<span class="pikto-kod">GHS01</span></th><td>Produkten eller ämnet kan explodera.</td><td>fyrverkerier och krut; sprängämnen</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Brandfarlig: en svart låga." height="64" src="/images/kemi/faropiktogram/ghs02-brandfarlig.svg" width="64"/></td><th scope="row">Brandfarlig<span class="pikto-kod">GHS02</span></th><td>Produkten kan lätt börja brinna.</td><td>denaturerad sprit och aceton; sprayburkar och tändvätska; gasol</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Oxiderande: en svart låga ovanför en cirkel." height="64" src="/images/kemi/faropiktogram/ghs03-oxiderande.svg" width="64"/></td><th scope="row">Oxiderande<span class="pikto-kod">GHS03</span></th><td>Produkten kan orsaka eller förvärra en brand.</td><td>kaliumpermanganat; starkare vätesuperoxid (väteperoxid); vissa poolkemikalier</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Gas under tryck: en gasflaska." height="64" src="/images/kemi/faropiktogram/ghs04-gas-under-tryck.svg" width="64"/></td><th scope="row">Gas under tryck<span class="pikto-kod">GHS04</span></th><td>Behållaren innehåller gas under tryck.</td><td>gasolflaskor och campingbrännare; syrgas- och kolsyreflaskor; flytande kväve (djupkyld gas)</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Frätande: två provrör som droppar på en metallbit och en hand så att de fräts sönder." height="64" src="/images/kemi/faropiktogram/ghs05-fratande.svg" width="64"/></td><th scope="row">Frätande<span class="pikto-kod">GHS05</span></th><td>Produkten kan fräta sönder hud, ögon och metall.</td><td>avloppsrens (natriumhydroxid); saltsyra och andra starka syror; batterisyra</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Akut giftig: en dödskalle med två korsade ben." height="64" src="/images/kemi/faropiktogram/ghs06-akut-giftig.svg" width="64"/></td><th scope="row">Akut giftig<span class="pikto-kod">GHS06</span></th><td>Produkten är giftig och kan vara livsfarlig.</td><td>metanol (finns i vissa spolarvätskor); kvicksilver; vissa bekämpningsmedel</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Skadlig: ett svart utropstecken." height="64" src="/images/kemi/faropiktogram/ghs07-skadlig.svg" width="64"/></td><th scope="row">Skadlig<span class="pikto-kod">GHS07</span></th><td>Produkten är skadlig eller irriterande.</td><td>många rengöringsmedel; maskindiskmedel; aceton och vissa färger</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Allvarlig hälsofara: en människosiluett med en stjärnformad skada i bröstet." height="64" src="/images/kemi/faropiktogram/ghs08-allvarlig-halsofara.svg" width="64"/></td><th scope="row">Allvarlig hälsofara<span class="pikto-kod">GHS08</span></th><td>Produkten kan skada hälsan allvarligt och långvarigt.</td><td>lacknafta och bensin; tändvätska; bensen</td></tr>
+<tr><td class="pikto-cell"><img alt="Faropiktogram Miljöfarlig: ett dött träd och en död fisk vid vattnet." height="64" src="/images/kemi/faropiktogram/ghs09-miljofarlig.svg" width="64"/></td><th scope="row">Miljöfarlig<span class="pikto-kod">GHS09</span></th><td>Produkten är farlig för miljön.</td><td>bensin och diesel; vissa färger och bekämpningsmedel; vissa rengöringsmedel</td></tr>
+</tbody>
+</table>
+</div>
+<p>Du kan träna på att känna igen dem i <a href="../faropiktogram.html">övningen om faropiktogram</a>.</p>
+<h3>Så läser du en etikett</h3>
+<p>På en märkt produkt ska det normalt finnas följande uppgifter.<a class="cite" href="#ref-9">[9]</a> Titta på exemplet: siffrorna i etiketten hör ihop med siffrorna i listan.</p>
+</div>
+</div>
+<div class="m-row m-row--full">
+<div class="etikett-rad">
+<figure aria-label="Exempel på etikett för en fiktiv produkt" class="etikett">
+<div class="etikett-tag">FIKTIV PRODUKT – bara ett exempel</div>
+<div class="etikett-namn"><span class="etikett-nr">1</span> Handrengöring Exempel</div>
+<div class="etikett-mitt">
+<div class="etikett-symbol"><span class="etikett-nr">2</span><img alt="Faropiktogram Skadlig: ett utropstecken i en romb." height="72" src="/images/kemi/faropiktogram/ghs07-skadlig.svg" width="72"/></div>
+<div class="etikett-signal"><span class="etikett-nr">3</span> Varning</div>
+</div>
+<p><span class="etikett-nr">4</span> <strong>H302</strong> Skadligt vid förtäring.<br/><strong>H319</strong> Orsakar allvarlig ögonirritation.</p>
+<p><span class="etikett-nr">5</span> <strong>P102</strong> Förvaras oåtkomligt för barn.</p>
+<p><span class="etikett-nr">6</span> Exempelbolaget AB, adress och telefonnummer</p>
+<p><span class="etikett-nr">7</span> 500 ml    <span class="etikett-nr">8</span> UFI-kod</p>
+<figcaption>Etiketten är hittepå för att visa hur en märkning är uppbyggd.</figcaption>
+</figure>
+<div class="etikett-lista">
+<ol>
+<li><strong>Produktbeteckning:</strong> namnet på produkten.</li>
+<li><strong>Faropiktogram:</strong> ofta flera, som visar vilken typ av fara det handlar om.</li>
+<li><strong><strong class="term"><span class="concept-inline" data-concept="Signalord">Signalord</span></strong>:</strong> <em>Fara</em> eller <em>Varning</em>. Fara används för de allvarligaste farorna och Varning för mindre allvarliga.<a class="cite" href="#ref-12">[12]</a></li>
+<li><strong>Faroangivelser (<strong class="term"><span class="concept-inline" data-concept="H-fras">H-fraser</span></strong>):</strong> beskriver på vilket sätt produkten är farlig. H står för fara. Exempel: H302 Skadligt vid förtäring.<a class="cite" href="#ref-11">[11]</a></li>
+<li><strong>Skyddsangivelser (<strong class="term"><span class="concept-inline" data-concept="P-fras">P-fraser</span></strong>):</strong> råd om säker hantering. P står för skydd. Exempel: P102 Förvaras oåtkomligt för barn.<a class="cite" href="#ref-9">[9]</a></li>
+<li><strong>Kontaktuppgifter:</strong> namn, adress och telefonnummer till leverantören.</li>
+<li><strong>Mängd:</strong> anges på produkter som säljs till konsumenter.</li>
+<li><strong>UFI-kod:</strong> en unik kod (unik formuleringsidentifierare) som finns på många farliga blandningar.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>På äldre förpackningar kan du hitta ett annat märkningssystem med svarta symboler på orange fyrkantiga skyltar. Det får inte längre användas på nya produkter, men du kan möta dem på gamla flaskor och i gamla garage.<a class="cite" href="#ref-10">[10]</a> Piktogrammen betyder ungefär samma sak men ser annorlunda ut.</p>
+<p>Den som använder kemikalier i sitt arbete, till exempel ett företag, ska dessutom få ett <strong class="term"><span class="concept-inline" data-concept="säkerhetsdatablad">säkerhetsdatablad</span></strong> från leverantören. Det har 16 avsnitt, bland annat om farliga egenskaper, första hjälpen, hantering och personligt skydd, och innehåller mycket mer än etiketten ryms med. Privatpersoner har ingen sådan rätt, men etiketten ger dem det viktigaste.<a class="cite" href="#ref-13">[13]</a></p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Det finns nio faropiktogram i EU:s system. Symbolens form berättar vad faran är, inte färgen. På etiketten finns också signalord (Fara eller Varning), H-fraser som beskriver faran och P-fraser som ger råd om säker hantering. Läs alltid etiketten innan du använder en kemikalie.
+          </div>
+<details class="check-q">
+<summary>Vad skiljer signalorden Fara och Varning?</summary>
+<div class="svar">Fara används för de allvarligaste farorna och Varning för mindre allvarliga. En produkt har antingen det ena eller det andra.</div>
+</details>
+<details class="check-q">
+<summary>Vad betyder H302 och vad betyder P102?</summary>
+<div class="svar">H302 är en faroangivelse: ”Skadligt vid förtäring”. P102 är en skyddsangivelse: ”Förvaras oåtkomligt för barn”. H står för fara och P för skydd.</div>
+</details>
+<details class="deepen">
+<summary>Varför finns det ibland flera piktogram på samma flaska?</summary>
+<p>En produkt kan ha flera farliga egenskaper samtidigt. Aceton är till exempel brandfarlig, och den kan också irritera ögon. Då sätts flera piktogram på etiketten. Har en produkt både ett mer och ett mindre allvarligt varningsord att välja mellan används alltid det allvarligaste, och ett enda signalord står på etiketten.<a class="cite" href="#ref-12">[12]</a></p>
+</details>
+<details class="wonder">
+<summary>Varför är det bra att symbolerna är gemensamma i hela Europa?</summary>
+<p>Tänk dig en kemikalie som säljs i flera länder, med olika språk. Vad hade hänt om varje land hade haft sina egna symboler? Fundera på vilka som drar nytta av gemensamma regler: den som arbetar, den som handlar, den som tar emot ett larm på akuten och den som ska frakta varan över gränsen.</p>
+</details>
+<div class="next-steps">
+<a href="../faropiktogram.html"><span class="n-label">Öva</span>Faropiktogram (övning)</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+<a href="#m6"><span class="n-label">Fortsätt</span>Laboratorieutrustning</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M6 -->
+<details class="milestone" id="m6">
+<summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Laboratorieutrustning och att mäta</h2></summary>
+<div class="m-body">
+<div class="m-row">
+<div class="m-lead">
+<p>För att kunna arbeta säkert och få bra resultat behöver du känna igen laboratorieutrustningen och veta vad varje del är gjord för. Det finns många olika redskap, men de kan delas in efter vad de används till. Du hittar dem i tabellen, och du kan träna på att känna igen dem i sorteringsövningarna.</p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="Två bunsenbrännare. Till vänster är luftringen stängd och lågan är gul, lång och sotar. Till höger är luftringen öppen och lågan är blå, kortare och hetare. Delarna rör, luftring, gasintag och fot är utmärkta." height="332" src="/images/kemi/kemi-som-amne/bunsen.svg" width="340"/>
+<figcaption><strong>Bunsenbrännare.</strong> Gul låga med luftringen stängd, blå och hetare låga med luftringen öppen.</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<div aria-label="Tabell 4 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Vanlig laboratorieutrustning och vad den används till</caption>
+<thead><tr><th scope="col">Grupp</th><th scope="col">Utrustning och användning</th></tr></thead>
+<tbody>
+<tr><th scope="row">Värma</th><td><strong><strong class="term"><span class="concept-inline" data-concept="Bunsenbrännare">Bunsenbrännare</span></strong></strong>, gasbrännare som ger en het låga. <strong>Trefot</strong>, ställ som bär upp kärlet över lågan. <strong>Trådnät</strong>, läggs på trefoten och sprider värmen så att glaset inte träffas av lågan direkt.</td></tr>
+<tr><th scope="row">Hålla och stödja</th><td><strong>Stativ</strong>, en stång på fot som håller övrig utrustning. <strong>Muff</strong>, klämma som fäster en hållare vid stativet. <strong>Hållare</strong>, håller till exempel en kolv eller ett provrör. <strong>Provrörsställ</strong>, ställer provrör upprätt. <strong>Provrörshållare</strong>, tång för att hålla ett provrör över lågan. <strong>Degeltång</strong>, tång för heta föremål som en degel eller en skål. <strong>Porslinstriangel</strong>, stöd för en degel över lågan.</td></tr>
+<tr><th scope="row">Blanda, värma och förvara</th><td><strong>Bägare</strong>, för att blanda, förvara och värma vätskor (skalan är bara ungefärlig). <strong>Provrör</strong>, för små mängder vid prov. <strong>Ekolv</strong> (erlenmeyerkolv), med smal hals så att det inte stänker. <strong>Rundkolv</strong>, med rund botten för jämn uppvärmning, till exempel vid destillation. <strong>Porslinsskål</strong>, till exempel för indunstning. <strong>Urglas</strong>, kan täcka en bägare eller hålla en liten mängd. <strong>Glasskål</strong>. <strong>Degel med lock</strong>, för att hetta upp fasta ämnen. <strong>Smältskopa</strong> och <strong>porslinsskepp</strong>, för små mängder fast ämne som ska hettas upp.</td></tr>
+<tr><th scope="row">Mäta och föra över</th><td><strong>Mätglas</strong> (mätcylinder), för att mäta volymer. <strong>Våg</strong>, för massa. <strong>Termometer</strong>, för temperatur. <strong>Droppipett</strong> och <strong>dropprör</strong>, för att föra över små mängder droppvis. <strong>Droppflaska</strong>, för att förvara vätska som ska droppas. <strong>Sprutflaska</strong>, till exempel med destillerat vatten för att skölja.</td></tr>
+<tr><th scope="row">Övrigt</th><td><strong>Spatel</strong>, för att ta upp fasta ämnen. <strong>Tratt</strong> och <strong>filterpapper</strong>, för filtrering. <strong>Magnet</strong>, för att skilja ut magnetiska ämnen.</td></tr>
+</tbody>
+</table>
+</div>
+<!--LABBFOTO-->
+<details class="utrustning-galleri">
+<summary>Se utrustningen på foto (31 föremål)</summary>
+<h3 class="galleri-grupp">Glas och kärl</h3>
+<ul class="foto-galleri">
+<li><figure><img alt="Fotografi av bägare" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/bagare-1-t.jpg" width="302"/><figcaption>Bägare</figcaption></figure></li>
+<li><figure><img alt="Fotografi av erlenmeyerkolv" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/erlenmeyerkolv-1-t.jpg" width="270"/><figcaption>Erlenmeyerkolv (ekolv)</figcaption></figure></li>
+<li><figure><img alt="Fotografi av rundkolv" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/rundkolv-1-t.jpg" width="270"/><figcaption>Rundkolv</figcaption></figure></li>
+<li><figure><img alt="Fotografi av glasskål" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/glasskal-1-t.jpg" width="349"/><figcaption>Glasskål</figcaption></figure></li>
+<li><figure><img alt="Fotografi av urglas" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/urglas-1-t.jpg" width="360"/><figcaption>Urglas</figcaption></figure></li>
+<li><figure><img alt="Fotografi av provrör" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/provror-1-t.jpg" width="300"/><figcaption>Provrör</figcaption></figure></li>
+<li><figure><img alt="Fotografi av tratt" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/tratt-1-t.jpg" width="270"/><figcaption>Tratt</figcaption></figure></li>
+<li><figure><img alt="Fotografi av droppflaska" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/droppflaska-1-t.jpg" width="327"/><figcaption>Droppflaska</figcaption></figure></li>
+<li><figure><img alt="Fotografi av sprutflaska" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/sprutflaska-1-t.jpg" width="270"/><figcaption>Sprutflaska</figcaption></figure></li>
+</ul>
+<h3 class="galleri-grupp">Porslin och värme</h3>
+<ul class="foto-galleri">
+<li><figure><img alt="Fotografi av bunsenbrännare" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/bunsenbrannare-1-t.jpg" width="272"/><figcaption>Bunsenbrännare</figcaption></figure></li>
+<li><figure><img alt="Fotografi av trefot" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/trefot-1-t.jpg" width="284"/><figcaption>Trefot</figcaption></figure></li>
+<li><figure><img alt="Fotografi av trådnät" height="328" loading="lazy" src="/images/kemi/kemi-som-amne/labb/tradnat-1-t.jpg" width="360"/><figcaption>Trådnät</figcaption></figure></li>
+<li><figure><img alt="Fotografi av porslinstriangel" height="352" loading="lazy" src="/images/kemi/kemi-som-amne/labb/porslinstriangel-1-t.jpg" width="360"/><figcaption>Porslinstriangel</figcaption></figure></li>
+<li><figure><img alt="Fotografi av degel med lock" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/degel-1-t.jpg" width="317"/><figcaption>Degel med lock</figcaption></figure></li>
+<li><figure><img alt="Fotografi av porslinsskepp" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/porslinsskepp-1-t.jpg" width="360"/><figcaption>Porslinsskepp</figcaption></figure></li>
+<li><figure><img alt="Fotografi av smältskopa" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/smaltskopa-1-t.jpg" width="272"/><figcaption>Smältskopa</figcaption></figure></li>
+<li><figure><img alt="Fotografi av mortel med pistill" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/mortel-1-t.jpg" width="312"/><figcaption>Mortel med pistill</figcaption></figure></li>
+</ul>
+<h3 class="galleri-grupp">Hålla och stödja</h3>
+<ul class="foto-galleri">
+<li><figure><img alt="Fotografi av stativ" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/stativ-1-t.jpg" width="270"/><figcaption>Stativ</figcaption></figure></li>
+<li><figure><img alt="Fotografi av muff" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/muff-1-t.jpg" width="360"/><figcaption>Muff</figcaption></figure></li>
+<li><figure><img alt="Fotografi av klämma" height="346" loading="lazy" src="/images/kemi/kemi-som-amne/labb/klamma-1-t.jpg" width="360"/><figcaption>Klämma (hållare)</figcaption></figure></li>
+<li><figure><img alt="Fotografi av provrörsställ" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/provrorsstall-1-t.jpg" width="286"/><figcaption>Provrörsställ</figcaption></figure></li>
+<li><figure><img alt="Fotografi av provrörshållare" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/provrorshallare-1-t.jpg" width="327"/><figcaption>Provrörshållare</figcaption></figure></li>
+<li><figure><img alt="Fotografi av degeltång" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/degeltang-1-t.jpg" width="360"/><figcaption>Degeltång</figcaption></figure></li>
+</ul>
+<h3 class="galleri-grupp">Mäta och föra över</h3>
+<ul class="foto-galleri">
+<li><figure><img alt="Fotografi av mätglas" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/matglas-1-t.jpg" width="270"/><figcaption>Mätglas (mätcylinder)</figcaption></figure></li>
+<li><figure><img alt="Fotografi av spatel" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/spatel-1-t.jpg" width="270"/><figcaption>Spatel</figcaption></figure></li>
+<li><figure><img alt="Fotografi av pipett" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/pipett-1-t.jpg" width="270"/><figcaption>Pipett</figcaption></figure></li>
+</ul>
+<h3 class="galleri-grupp">Skydd och övrigt</h3>
+<ul class="foto-galleri">
+<li><figure><img alt="Fotografi av skyddsglasögon" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/skyddsglasogon-1-t.jpg" width="360"/><figcaption>Skyddsglasögon</figcaption></figure></li>
+<li><figure><img alt="Fotografi av provrörsborste" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/provrorsborste-1-t.jpg" width="270"/><figcaption>Provrörsborste</figcaption></figure></li>
+<li><figure><img alt="Fotografi av glasstav" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/glasstav-1-t.jpg" width="311"/><figcaption>Glasstav</figcaption></figure></li>
+<li><figure><img alt="Fotografi av molekylmodell" height="270" loading="lazy" src="/images/kemi/kemi-som-amne/labb/molekylmodell-1-t.jpg" width="360"/><figcaption>Molekylmodell</figcaption></figure></li>
+<li><figure><img alt="Fotografi av spänningskälla" height="360" loading="lazy" src="/images/kemi/kemi-som-amne/labb/spanningskalla-1-t.jpg" width="330"/><figcaption>Spänningskälla</figcaption></figure></li>
+</ul>
+<p class="lyft">Vill du testa dig? <a href="./labbutrustning-spel.html">Spela labbutrustningsspelet</a>. Foton: Jesper Tordsson.</p>
+</details>
+<!--/LABBFOTO-->
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<h3>Så använder du bunsenbrännaren</h3>
+<ol class="steps">
+<li>Kontrollera att gasslangen sitter fast och inte har sprickor. Sätt på skyddsglasögon och sätt upp håret.</li>
+<li>Stäng luftringen. Då blir lågan gul och lätt att se.</li>
+<li>Tänd tändstickan eller tändaren <em>först</em> och håll den vid rörets mynning.</li>
+<li>Öppna gaskranen sakta. Lågan tänds.</li>
+<li>När du ska värma öppnar du luftringen tills lågan blir blå. Den blå lågan är hetast. Den kan vara svår att se i ett ljust rum, så håll aldrig handen över den.</li>
+<li>Stäng luftringen igen när du inte värmer, så att lågan syns, och stäng gaskranen när du är klar. Låt utrustningen svalna.</li>
+</ol>
+<p>Med luftringen stängd blir lågan gul. Den sotar och är svalare. Med luftringen öppen blandas gasen med luft, och lågan blir blå, mer koncentrerad och het.</p>
+<h3>Att värma ett provrör</h3>
+<p>Fyll högst en tredjedel av provröret. Håll det med provrörshållare, lite snett, och rör det försiktigt i lågans övre del. Ha aldrig öppningen mot någon.</p>
+</div>
+</div>
+<div class="m-row">
+<div class="m-lead">
+<h3>Att mäta volym</h3>
+<p>Vätskor i smala kärl som en mätcylinder har en böjd yta, en <strong class="term"><span class="concept-inline" data-concept="meniskus">meniskus</span></strong>. Du avläser volymen vid den <em>nedersta</em> punkten av kurvan, med ögonen i höjd med vätskeytan. Tittar du snett uppifrån eller nedifrån får du ett för högt eller för lågt värde. En vanlig bägare har bara ungefärlig skala, så för noggranna mätningar använder du mätcylinder.</p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="En mätcylinder med vätska. Ett öga står i höjd med vätskeytan och en streckad linje går till den lägsta punkten av den böjda ytan. En förstoring visar att man läser av vid den nedersta punkten." height="255" src="/images/kemi/kemi-som-amne/meniskus.svg" width="340"/>
+<figcaption><strong>Avläsning.</strong> Ögonen i höjd med ytan, läs vid meniskens nedersta punkt.</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<h3>Att väga och mäta temperatur</h3>
+<p>På en våg nollställer du med det tomma kärlet på (tarera), så att du bara väger ämnet. En termometer ska hänga fritt i vätskan och inte vila mot glasbottnen, eftersom den då mäter glasets temperatur. Använd den inte som omrörare. Läs av med ögonen i höjd med skalan.</p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Utrustningen delas in efter användning: värma, hålla och stödja, blanda och förvara, mäta och föra över. Bunsenbrännaren tänds med luftringen stängd, och en blå låga är hetast. Volymen i en mätcylinder läser du av vid meniskens nedersta punkt, med ögonen i höjd med ytan.
+          </div>
+<details class="check-q">
+<summary>Var på ytan läser du av volymen i en mätcylinder, och hur ska du titta?</summary>
+<div class="svar">Du läser av vid den nedersta punkten av den böjda ytan (menisken), med ögonen i höjd med vätskeytan.</div>
+</details>
+<details class="check-q">
+<summary>Varför ska du tända tändstickan innan du öppnar gasen?</summary>
+<div class="svar">Så att gasen tänds i samma ögonblick som den kommer ut. Öppnar du gasen först kan gas hinna strömma ut utan att brinna.</div>
+</details>
+<details class="deepen">
+<summary>Varför är trådnätet på trefoten viktigt?</summary>
+<p>Lågan är mycket het på en liten yta. Träffar den glaset direkt blir temperaturen ojämn, och glaset kan spricka. Trådnätet sprider värmen över en större yta så att bägaren eller kolven värms jämnare.</p>
+</details>
+<details class="wonder">
+<summary>Hur noga behöver man mäta?</summary>
+<p>Om du mäter 50 ml i en bägare med ungefärlig skala, hur säker är du då på volymen? Hur mycket bättre blir det med en mätcylinder? Fundera på när det spelar roll och när det inte gör det: vid ett recept, vid en medicin och vid en labbrapport.</p>
+</details>
+<div class="next-steps">
+<a href="./ovningsverktyg.html#ov-utrustning"><span class="n-label">Öva</span>Vilket redskap till vilken uppgift?</a>
+<a href="./labbutrustning-spel.html"><span class="n-label">Spela</span>Labbutrustning: känn igen föremålen</a>
+<a href="./laborationer.html#lab-1"><span class="n-label">Prova</span>Laboration: Bunsenbrännaren</a>
+<a href="#m7"><span class="n-label">Fortsätt</span>Laborationsrapporten</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M7 -->
+<details class="milestone" id="m7">
+<summary><span class="m-num">Milstolpe 7</span><h2 class="m-title">Laborationsrapporten</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>En <strong class="term"><span class="concept-inline" data-concept="Laborationsrapport">laborationsrapport</span></strong> berättar vad du undersökte, hur du gjorde, vad du fick fram och vad du drar för slutsats. Den ska vara så tydlig att någon annan kan förstå den, upprepa försöket och bedöma om slutsatsen håller. På samma sätt fungerar det för forskare: en upptäckt räknas först när andra kan granska hur den gjordes.</p>
+<h3>Rapportens delar</h3>
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Så är en laborationsrapport uppbyggd</caption>
+<thead><tr><th scope="col">Del</th><th scope="col">Det här skriver du</th></tr></thead>
+<tbody>
+<tr><th scope="row">1. Rubrik</th><td>En titel som beskriver undersökningen, plus namn, klass och datum.</td></tr>
+<tr><th scope="row">2. Syfte och frågeställning</th><td>Vad vill du ta reda på? Skriv frågan så att den går att besvara med mätningar eller observationer.</td></tr>
+<tr><th scope="row">3. Hypotes</th><td>Vad tror du kommer att hända, och varför? (”Om … så … eftersom …”)</td></tr>
+<tr><th scope="row">4. Material</th><td>Utrustning och ämnen, med mängder där det är viktigt.</td></tr>
+<tr><th scope="row">5. Risker</th><td>Vad kan gå fel och hur minskar du risken? (milstolpe 4)</td></tr>
+<tr><th scope="row">6. Genomförande</th><td>Vad du gjorde, steg för steg i rätt ordning, så noga att någon annan kan upprepa det. Beskriv också vad du ändrade, vad du mätte och vad du höll lika.</td></tr>
+<tr><th scope="row">7. Resultat</th><td>Det du mätte och såg: tabeller, diagram och iakttagelser. Här skriver du <em>bara vad som hände</em>, inga förklaringar.</td></tr>
+<tr><th scope="row">8. Slutsats och diskussion</th><td>Svara på frågan. Stämde hypotesen? Förklara varför med kemins begrepp. Diskutera felkällor, hur säkra resultaten är och hur du skulle kunna förbättra försöket.</td></tr>
+<tr><th scope="row">9. Källor</th><td>Om du har hämtat fakta någonstans ifrån: skriv var.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Du kan skriva ut en <a href="./rapportmall.html">mall för laborationsrapport</a> med alla delar färdiga att fylla i.</p>
+<h3>Språk och form</h3>
+<ul>
+<li>Skriv genomförandet i <strong>dåtid</strong>, eftersom det redan är gjort: ”Vi vägde …”, ”Vattnet värmdes till …”.</li>
+<li>Skriv sakligt och exakt. Undvik ord som ”ganska”, ”typ” och ”en massa”. Skriv hellre ”2,5 g” än ”lite”.</li>
+<li>Skriv tal med enhet och med ett mellanslag: 5,0 g, 20 ml, 100 °C. Använd decimalkomma.</li>
+<li>Tabeller ska ha rubrik, kolumnnamn och enheter. Diagram ska ha namn på båda axlarna, med enhet.</li>
+<li>Använd kemins begrepp när du förklarar, till exempel densitet, löslighet och partiklar.</li>
+</ul>
+<h3>Ett exempel</h3>
+<p>Så här kan en kort rapport se ut. <strong>Alla mätvärden är påhittade</strong> för att visa hur man gör. Anmärkningarna i kursiv stil visar vad som är viktigt i varje del.</p>
+<div class="exempelrapport">
+<h4>Vilket papper suger upp mest vatten?</h4>
+<p class="ex-meta">Elin Andersson, klass 7B, 14 oktober (fiktiv rapport)</p>
+<p><strong>Syfte och frågeställning.</strong> Syftet är att undersöka hur mycket vatten olika papper kan ta upp. Frågan är: Vilket av hushållspapper, kaffefilter och skrivarpapper tar upp mest vatten? <em class="ex-anm">Frågan går att besvara genom att väga.</em></p>
+<p><strong>Hypotes.</strong> Jag tror att hushållspapper tar upp mest, eftersom det är luftigt och har många små hålrum mellan fibrerna där vattnet kan sugas in. <em class="ex-anm">Hypotesen har en förklaring.</em></p>
+<p><strong>Material.</strong> Hushållspapper, kaffefilter och vanligt skrivarpapper, skurna i kvadrater om 10 × 10 cm. Våg (noggrannhet 0,01 g), bägare med vatten, pincett, klocka och skyddsglasögon.</p>
+<p><strong>Risker.</strong> Risken är liten. Vatten som spills torkades upp direkt så att ingen kunde halka.</p>
+<p><strong>Genomförande.</strong> Jag ändrade papperstyp (oberoende variabel) och mätte hur mycket vatten papperet tog upp (beroende variabel). Kvadraternas storlek, tiden i vatten och tiden för avrinning hölls lika. 1. Jag vägde en torr kvadrat. 2. Jag höll ned kvadraten under vattenytan i 10 sekunder med pincett. 3. Jag lät den droppa av i 5 sekunder. 4. Jag vägde den våta kvadraten. 5. Jag upprepade försöket tre gånger för varje papperstyp. Upptaget vatten räknades ut som massa efter minus massa före. <em class="ex-anm">Så noggrant att någon annan kan göra om det.</em></p>
+<div aria-label="Tabell i exempelrapporten (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Tabell 1. Upptaget vatten (g) per kvadrat om 10 × 10 cm (påhittade värden)</caption>
+<thead><tr><th scope="col">Papperstyp</th><th scope="col">Försök 1</th><th scope="col">Försök 2</th><th scope="col">Försök 3</th><th scope="col">Medelvärde</th></tr></thead>
+<tbody>
+<tr><th scope="row">Hushållspapper</th><td>2,49</td><td>2,56</td><td>2,43</td><td>2,49</td></tr>
+<tr><th scope="row">Kaffefilter</th><td>1,48</td><td>1,55</td><td>1,42</td><td>1,48</td></tr>
+<tr><th scope="row">Skrivarpapper</th><td>0,71</td><td>0,66</td><td>0,74</td><td>0,70</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Resultat.</strong> Hushållspapper tog upp mest vatten, medelvärde 2,49 g. Kaffefiltret tog upp 1,48 g och skrivarpapperet 0,70 g. <em class="ex-anm">Bara vad som mättes, ingen förklaring ännu.</em></p>
+<p><strong>Slutsats och diskussion.</strong> Hushållspapper tog upp mest vatten, därefter kaffefilter och sist skrivarpapper. Min hypotes stämde. Vattnet dras in mellan fibrerna, och ju mer luftig och porös pappret är, desto mer vatten får plats. Skillnaderna mellan papperstyperna (minst 0,78 g) var mycket större än skillnaden mellan försöken med samma papper (högst 0,13 g), så jag bedömer resultatet som tillförlitligt. Möjliga felkällor är att avrinningstiden var svår att hålla exakt lika och att papperen från början vägde olika mycket. Jag skulle kunna förbättra försöket genom att använda ett tidtagarur och dela upptaget vatten med pappersmassan. En ny fråga är hur det påverkar om pappret ligger i vattnet längre än 10 sekunder. <em class="ex-anm">Här svarar hon på frågan, förklarar med begrepp, bedömer hur säkra resultaten är och föreslår förbättringar.</em></p>
+</div>
+<h3>Så blir rapporten starkare</h3>
+<div aria-label="Tabell 2 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Tre nivåer av en rapport (en vägledning, din lärare bedömer)<a class="cite" href="#ref-1">[1]</a></caption>
+<thead><tr><th scope="col">Nivå</th><th scope="col">Så ser det ut</th></tr></thead>
+<tbody>
+<tr><th scope="row">Grundläggande</th><td>Du genomför försöket enligt en plan och använder utrustningen säkert. Du redovisar resultaten i en tabell och drar en enkel slutsats som svarar på frågan.</td></tr>
+<tr><th scope="row">Utvecklad</th><td>Du formulerar själv en fråga och hjälper till att planera. Du jämför resultaten med frågan och hypotesen och förklarar slutsatsen med hjälp av kemins begrepp och modeller. Du resonerar om hur rimliga resultaten är.</td></tr>
+<tr><th scope="row">Välutvecklad</th><td>Du planerar undersökningen själv och håller nere felkällor. Du drar generella slutsatser, jämför olika sätt att undersöka och värderar hur trovärdiga resultaten är. Du föreslår hur undersökningen kan förbättras och vilka nya frågor den väcker.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            En rapport har rubrik, syfte, hypotes, material, risker, genomförande, resultat och slutsats. Resultatdelen visar vad som hände och slutsatsen visar vad du tror att det betyder. Skriv så noga att någon annan kan upprepa försöket.
+          </div>
+<details class="check-q">
+<summary>Vad skriver du i resultatdelen och vad skriver du i slutsatsen?</summary>
+<div class="svar">I resultatdelen skriver du vad du mätte och såg, med tabeller och diagram, utan förklaringar. I slutsatsen svarar du på frågan, förklarar med kemins begrepp och värderar hur säkra resultaten är.</div>
+</details>
+<details class="check-q">
+<summary>Varför skriver man genomförandet så noga?</summary>
+<div class="svar">Så att någon annan kan upprepa försöket och kontrollera om man får samma resultat. Att upprepa och granska är en viktig del av naturvetenskapen.</div>
+</details>
+<details class="deepen">
+<summary>Rapporten är bara en del av ett större sammanhang</summary>
+<p>Forskare skriver också rapporter, som kallas vetenskapliga artiklar. Andra forskare läser och granskar dem innan de publiceras, och senare kan de försöka upprepa försöken. På så sätt rättas fel och resultat som håller blir en stabil grund för ny kunskap. Din rapport gör samma nytta i liten skala: den låter någon annan pröva om din slutsats håller.</p>
+</details>
+<details class="wonder">
+<summary>Vad händer om två grupper får olika resultat i samma försök?</summary>
+<p>Det är inte ett misslyckande, utan ett tecken på att något skiljer. Vad kan det vara? Olika utrustning, olika mängder, olika sätt att mäta eller helt enkelt slump? Hur skulle ni ta reda på det?</p>
+</details>
+<div class="next-steps">
+<a href="./rapportmall.html"><span class="n-label">Skriv ut</span>Mall för laborationsrapport</a>
+<a href="./laborationer.html#lab-5"><span class="n-label">Prova</span>Laboration: Vilket papper suger mest?</a>
+<a href="#m8"><span class="n-label">Fortsätt</span>Ämnens egenskaper</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M8 -->
+<details class="milestone" id="m8">
+<summary><span class="m-num">Milstolpe 8</span><h2 class="m-title">Ämnens egenskaper – att känna igen och beskriva</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Hur vet man vilket ämne man har framför sig? Man tittar på dess <strong class="term"><span class="concept-inline" data-concept="Egenskap">egenskaper</span></strong>: sådant man kan se, mäta eller pröva. Ett rent ämne har en uppsättning egenskaper som fungerar som ett fingeravtryck, och därför kan man känna igen ämnet.</p>
+<p>Egenskaper delas ofta in i två sorter. <strong class="term"><span class="concept-inline" data-concept="Fysikalisk egenskap">Fysikaliska egenskaper</span></strong> kan du iaktta eller mäta utan att ämnet förvandlas till något annat, till exempel färg, densitet, smältpunkt och löslighet. <strong class="term"><span class="concept-inline" data-concept="Kemisk egenskap">Kemiska egenskaper</span></strong> beskriver hur ämnet <em>reagerar</em> med andra ämnen och då bildar nya, till exempel att det brinner, rostar eller bubblar när man tillsätter syra.</p>
+<h3>Att beskriva ett ämne systematiskt</h3>
+<p>Ett bra sätt att lära känna ett ämne är att gå igenom samma frågor varje gång. Titta först utan att röra och pröva sedan, en egenskap i taget. Då blir dina observationer jämförbara med andras.</p>
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Undersök egenskaper i den här ordningen</caption>
+<thead><tr><th scope="col">Egenskap</th><th scope="col">Så undersöker du</th><th scope="col">Exempel på beskrivning</th></tr></thead>
+<tbody>
+<tr><th scope="row">Utseende</th><td>Titta, gärna med förstoringsglas.</td><td>Vitt pulver med små kantiga kristaller, genomskinligt i tunna korn.</td></tr>
+<tr><th scope="row">Lukt</th><td>Bara om läraren säger det, och då genom att fläkta med handen.</td><td>Luktar inte.</td></tr>
+<tr><th scope="row">Löslighet i vatten</th><td>Rör ut lite i vatten. Löser det sig, ligger det kvar eller flyter det?</td><td>Löser sig helt i vatten och ger en klar lösning.</td></tr>
+<tr><th scope="row">Densitet</th><td>Väg och mät volymen, eller pröva om det flyter eller sjunker.</td><td>Sjunker i vatten.</td></tr>
+<tr><th scope="row">Ledningsförmåga</th><td>Kontrollera med ett enkelt batteri och en lampa om det leder ström (fast ämne eller lösning).</td><td>Lösningen leder ström.</td></tr>
+<tr><th scope="row">Magnetism</th><td>Håll en magnet intill.</td><td>Dras inte till magneten.</td></tr>
+<tr><th scope="row">Smält- och kokpunkt</th><td>Värm och avläs temperaturen med termometer.</td><td>Smälter inte i en brännarlåga.</td></tr>
+<tr><th scope="row">Reaktion</th><td>Pröva på små mängder, till exempel med ättika, om läraren tillåter.</td><td>Ingen reaktion med ättika.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Ät, drick eller smaka aldrig på ett okänt ämne.</strong> Lukta bara om läraren säger det.</p>
+</div>
+</div>
+<div class="m-row">
+<div class="m-lead">
+<h3>Densitet</h3>
+<p>Två metallbitar kan ha samma storlek men vara olika tunga: en bit bly känns tyngre än en bit aluminium. Skillnaden är att blyet har mer massa i samma volym. Det mäter man med <strong class="term"><span class="concept-inline" data-concept="Densitet">densitet</span></strong>, som är massan per volym.</p>
+<div class="formula-box">
+<span class="f">Densitet = massa / volym  (ρ = m / V)</span>
+<span class="u">Vanlig enhet: gram per kubikcentimeter (g/cm³). 1 cm³ är samma sak som 1 ml.</span>
+</div>
+<p>Ett föremål flyter i en vätska om dess densitet är lägre än vätskans, och sjunker om den är högre. Vatten har densiteten 1,00 g/cm³ (vid 4 °C).<a class="cite" href="#ref-16">[16]</a> En bit aluminium (2,7 g/cm³) sjunker därför, medan matolja (0,91 g/cm³) flyter.</p>
+</div>
+<div class="m-side">
+<figure class="side-fig">
+<img alt="En bägare med ett lager matolja ovanpå vatten. En kork flyter på oljan och en aluminiumbit ligger på botten. Densiteterna: kork lägre än 0,9, olja 0,91, vatten 1,00 och aluminium 2,7 gram per kubikcentimeter." height="280" src="/images/kemi/kemi-som-amne/densitet.svg" width="340"/>
+<figcaption><strong>Densitet.</strong> Det som har lägst densitet ligger överst.</figcaption>
+</figure>
+</div>
+<div class="m-rest">
+<div class="minnesregel">
+<strong>Minnesregel – så skriver du ett räkneexempel</strong>
+            Skriv alltid i tre steg: <strong>formeln först</strong>, sedan <strong>mätetalen med enheter</strong>, och sist <strong>svaret med enhet</strong>. Enheterna räknas med hela vägen.
+            <p class="ex" style="margin:0.45rem 0 0;">ρ = m / V = 54 g / 20 cm³ = 2,7 g/cm³</p>
+</div>
+<div class="calc-box">
+<strong class="calc-rubrik">Räkneexempel 1: vilket ämne?</strong>
+<p>En metallbit väger 54 g och har volymen 20 cm³. Vilken metall kan det vara?</p>
+<p class="steg">ρ = m / V = 54 g / 20 cm³ = 2,7 g/cm³</p>
+<p>Svar: Densiteten är 2,7 g/cm³, vilket stämmer med aluminium.<a class="cite" href="#ref-14">[14]</a></p>
+</div>
+<div class="calc-box">
+<strong class="calc-rubrik">Räkneexempel 2: massan om du vet densiteten</strong>
+<p>Hur mycket väger 10 cm³ guld?</p>
+<p class="steg">m = ρ · V = 19,3 g/cm³ · 10 cm³ = 193 g</p>
+<p>Svar: 10 cm³ guld väger 193 g.<a class="cite" href="#ref-14">[14]</a></p>
+</div>
+<p>Volymen hos ett regelbundet föremål räknar du ut (längd · bredd · höjd). Volymen hos ett oregelbundet föremål kan du mäta: sänk ned föremålet i en mätcylinder med vatten och avläs hur mycket vattennivån stiger. Ökningen är föremålets volym.</p>
+<div aria-label="Tabell 2 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Densitet och smältpunkt för några metaller<a class="cite" href="#ref-14">[14]</a><a class="cite" href="#ref-15">[15]</a></caption>
+<thead><tr><th scope="col">Metall</th><th scope="col">Densitet (g/cm³)</th><th scope="col">Smältpunkt (°C)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Aluminium</th><td>2,7</td><td>660</td></tr>
+<tr><th scope="row">Zink</th><td>7,1</td><td>419,5</td></tr>
+<tr><th scope="row">Tenn</th><td>7,3</td><td>232</td></tr>
+<tr><th scope="row">Järn (rent)</th><td>7,85</td><td>1482–1593 (smidesjärn)</td></tr>
+<tr><th scope="row">Koppar</th><td>8,9</td><td>1084</td></tr>
+<tr><th scope="row">Silver</th><td>10,5</td><td>961</td></tr>
+<tr><th scope="row">Bly</th><td>11,3</td><td>327,5</td></tr>
+<tr><th scope="row">Guld</th><td>19,3</td><td>1063</td></tr>
+<tr><th scope="row">Kvicksilver (flytande vid rumstemperatur, giftigt)</th><td>13,6</td><td>−38,9</td></tr>
+</tbody>
+</table>
+</div>
+<div aria-label="Tabell 3 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Densitet, smältpunkt och kokpunkt för några vätskor<a class="cite" href="#ref-16">[16]</a><a class="cite" href="#ref-17">[17]</a></caption>
+<thead><tr><th scope="col">Vätska</th><th scope="col">Densitet (g/cm³)</th><th scope="col">Smältpunkt (°C)</th><th scope="col">Kokpunkt (°C)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Vatten</th><td>1,00 (4 °C)</td><td>0</td><td>100</td></tr>
+<tr><th scope="row">Etanol</th><td>0,789 (20 °C)</td><td>−114</td><td>78</td></tr>
+<tr><th scope="row">Olivolja</th><td>0,911 (20 °C)</td><td colspan="2">–</td></tr>
+<tr><th scope="row">Glycerin</th><td>1,26 (25 °C)</td><td colspan="2">–</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Fler egenskaper</h3>
+<ul>
+<li><strong>Smältpunkt och kokpunkt.</strong> Ett rent ämne har en bestämd smältpunkt och kokpunkt, så att mäta dem är ett sätt att känna igen ämnet (se Separationsprocesser).</li>
+<li><strong>Ledningsförmåga.</strong> Metaller leder elektrisk ström och värme bra. Plast, glas och trä leder dåligt och kallas isolatorer. Sockervatten leder inte ström, men saltvatten gör det, eftersom lösta salter delas i laddade partiklar. Testa bara med ett vanligt batteri, aldrig med nätström.</li>
+<li><strong>Magnetism.</strong> Järn, nickel och kobolt dras till en magnet. Aluminium, koppar, guld och silver gör det inte.</li>
+<li><strong>Löslighet.</strong> Hur mycket av ett ämne som löser sig i vatten skiljer stort. Salt och socker löser sig, sand och matolja gör det inte (se Separationsprocesser).</li>
+</ul>
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<h3>Vilket ämne är det? Ett exempel</h3>
+<p>Tre ämnen på bänken är vita pulver: koksalt, strösocker och bikarbonat. Ingen etikett sitter kvar. Hur kan du ta reda på vilket som är vilket? Ta fram en egenskap i taget och se vad som skiljer dem åt.</p>
+<div aria-label="Tabell 4 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Tre vita pulver – vad skiljer?</caption>
+<thead><tr><th scope="col">Test</th><th scope="col">Koksalt</th><th scope="col">Strösocker</th><th scope="col">Bikarbonat</th></tr></thead>
+<tbody>
+<tr><th scope="row">Löser sig i vatten?</th><td>Ja</td><td>Ja</td><td>Ja</td></tr>
+<tr><th scope="row">Lösningen leder ström?</th><td>Ja</td><td>Nej</td><td>Ja</td></tr>
+<tr><th scope="row">Bubblar med ättika?</th><td>Nej</td><td>Nej</td><td>Ja</td></tr>
+</tbody>
+</table>
+</div>
+<p>Första testet skiljer inget åt, så det hjälper inte. Ledningstestet skiljer sockret från de två andra. Ättikatestet skiljer bikarbonaten från saltet. Slutsatsen är att man ofta behöver <strong>flera egenskaper</strong> för att känna igen ett ämne, och att ett test som är lika för alla misstänkta ämnen inte hjälper.</p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Ämnen känns igen på sina egenskaper: färg, densitet, smält- och kokpunkt, löslighet, ledningsförmåga, magnetism och hur de reagerar. Densitet är massan per volym, ρ = m / V. Ett ämne flyter om dess densitet är lägre än vätskans. Ofta behövs flera egenskaper för att känna igen ett ämne.
+          </div>
+<details class="check-q">
+<summary>En metallbit väger 78,5 g och har volymen 10 cm³. Vilken metall kan det vara? (Järn 7,85 g/cm³, koppar 8,9 g/cm³)</summary>
+<div class="svar">ρ = m / V = 78,5 g / 10 cm³ = 7,85 g/cm³. Svar: Det stämmer med järn.</div>
+</details>
+<details class="check-q">
+<summary>Ett ämne har densiteten 0,79 g/cm³. Flyter eller sjunker det i vatten?</summary>
+<div class="svar">Det flyter, eftersom 0,79 g/cm³ är lägre än vattnets 1,00 g/cm³. Om det blandar sig med vatten, som etanol gör, hamnar det inte i ett eget lager.</div>
+</details>
+<details class="deepen">
+<summary>Kemisk eller fysikalisk egenskap?</summary>
+<p>Att guld har hög densitet är en fysikalisk egenskap, eftersom guldet är detsamma när du mäter den. Att järn rostar är en kemisk egenskap, eftersom järnet förvandlas till ett nytt ämne. Att socker löser sig i vatten är en fysikalisk egenskap, eftersom sockret finns kvar i lösningen och kan återfås genom att vattnet dunstas bort. En fysikalisk förändring bildar inga nya ämnen (se Separationsprocesser).</p>
+</details>
+<details class="wonder">
+<summary>Hur kan ett skepp av stål flyta, när stål har högre densitet än vatten?</summary>
+<p>Densiteten som räknas är hela föremålets, inte bara materialets. Ett skepp är hålrum fyllt med luft, omgivet av ett skrov av stål. Skeppets medeldensitet, alltså hela skeppets massa delat med hela dess volym, är lägre än vattnets. Vad händer med skeppets medeldensitet om det fylls med vatten?</p>
+<p class="frontier">Forskningsfronten: forskare och ingenjörer utvecklar allt lättare material som är starka men har mycket låg densitet, till exempel för flygplan och elbilar. Varför är låg densitet ett önskemål där?</p>
+</details>
+<div class="next-steps">
+<a href="./laborationer.html#lab-3"><span class="n-label">Prova</span>Laboration: Densitet</a>
+<a href="./laborationer.html#lab-2"><span class="n-label">Prova</span>Laboration: Okända ämnen</a>
+<a href="#m9"><span class="n-label">Fortsätt</span>Kemins historia</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M9 -->
+<details class="milestone" id="m9">
+<summary><span class="m-num">Milstolpe 9</span><h2 class="m-title">Kemins historia – från alkemi till modern kemi</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Människor har använt kemi i tusentals år, långt innan ordet fanns. Man brände lera till keramik, utvann metaller ur malm, blandade koppar och tenn till brons, färgade tyg och gjorde papper. Men att förstå <em>varför</em> ämnen beter sig som de gör, det tog mycket längre tid. Här är några steg på vägen.</p>
+<h3>Alkemin</h3>
+<p><strong class="term"><span class="concept-inline" data-concept="Alkemi">Alkemin</span></strong> var en blandning av praktiskt arbete, filosofi och ibland vidskepelse. Alkemisterna försökte bland annat förvandla oädla metaller som bly och koppar till silver och guld och hitta ett medel mot sjukdom och död. De lyckades inte, men de experimenterade mycket, och ur deras arbete växte kemin fram. Alkemin ansågs inte vara slutgiltigt motbevisad förrän på 1800-talet, och även Isaac Newton ägnade sig åt den.<a class="cite" href="#ref-18">[18]</a></p>
+<h3>Från gissningar till mätningar</h3>
+<p>Under 1600-talet betonade Robert Boyle att experiment ska beskrivas noga och kunna upprepas av andra, precis det som gäller för en laborationsrapport.<a class="cite" href="#ref-19">[19]</a> Det var en viktig grund för kemin som vetenskap.</p>
+<p>Fransmannen Antoine Lavoisier gick ännu längre genom att väga före och efter. Han visade att när något brinner, tar ämnet upp syre ur luften, så att det som bildas är tyngre än det som brann. Han insåg också att massan bevaras i en kemisk reaktion, och att vatten består av väte och syre. Hans lärobok från 1789 gjorde kemin till ett ordnat system.<a class="cite" href="#ref-20">[20]</a></p>
+<p>Svensken Carl Wilhelm Scheele upptäckte under 1700-talet bland annat syre, klor och mangan, ofta oberoende av andra forskare.<a class="cite" href="#ref-21">[21]</a></p>
+<h3>Symboler, atomer och ordning</h3>
+<p>Jöns Jacob Berzelius införde de bokstavssymboler för grundämnen som vi använder än i dag, byggda på ämnenas latinska namn, till exempel Fe för järn (ferrum) och Au för guld (aurum). Han bestämde också atomvikter med stor noggrannhet och upptäckte bland annat cerium och selen.<a class="cite" href="#ref-22">[22]</a></p>
+<p>Engelsmannen John Dalton gjorde 1808 idén om atomer till en prövbar teori: varje grundämne består av sina egna atomer, och föreningar bildas när atomer förenas i bestämda förhållanden.<a class="cite" href="#ref-23">[23]</a></p>
+<p>År 1869 presenterade Dmitrij Mendelejev (6 mars) det första periodiska systemet, där grundämnena är ordnade efter egenskaper. Han lämnade luckor för ämnen som ännu inte var upptäckta och förutsade bland annat scandium, gallium och germanium. Under de följande åren upptäcktes de, med egenskaper som stämde väl med hans förutsägelser.<a class="cite" href="#ref-24">[24]</a></p>
+<h3>Nya material</h3>
+<p>Kemin gjorde det också möjligt att tillverka helt nya material. År 1907 framställde Leo Baekeland bakelit, den första plasten som var helt syntetisk, alltså tillverkad av kemikalier och inte av något naturligt material.<a class="cite" href="#ref-30">[30]</a> Wallace Carothers och hans forskargrupp på företaget DuPont utvecklade nylon: de första proverna kom i mitten av 1930-talet och de första produkterna såldes 1939.<a class="cite" href="#ref-31">[31]</a> Plasten har gjort mycket i vardagen enklare, men den ger också problem med avfall, vilket du kan läsa mer om i kapitlen om kolföreningar.</p>
+</div>
+</div>
+<div class="m-row m-row--full">
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Tidslinje: från alkemi till syntetiska material</caption>
+<thead><tr><th scope="col">Tid</th><th scope="col">Vem</th><th scope="col">Vad</th><th scope="col">Varför det spelar roll</th></tr></thead>
+<tbody>
+<tr><th scope="row">Före 1700</th><td>Alkemisterna</td><td>Försökte göra guld av oädla metaller</td><td>Ur deras experimenterande växte kemin fram.<a class="cite" href="#ref-18">[18]</a></td></tr>
+<tr><th scope="row">1600-talet</th><td>Robert Boyle</td><td>Betonade att experiment ska redovisas och kunna upprepas</td><td>Grunden för dagens sätt att arbeta med laborationer och rapporter.<a class="cite" href="#ref-19">[19]</a></td></tr>
+<tr><th scope="row">1770-talet och 1780-talet</th><td>Antoine Lavoisier</td><td>Förklarade förbränning med syre, massans bevarande, vatten som väte och syre</td><td>Kemin blev en kvantitativ vetenskap som bygger på mätningar.<a class="cite" href="#ref-20">[20]</a></td></tr>
+<tr><th scope="row">1770-talet</th><td>Carl Wilhelm Scheele</td><td>Upptäckte bland annat syre, klor och mangan</td><td>Viktiga grundämnen för både naturen och industrin.<a class="cite" href="#ref-21">[21]</a></td></tr>
+<tr><th scope="row">1808</th><td>John Dalton</td><td>Atomteorin som prövbar teori</td><td>Grunden för att förklara ämnen med partiklar.<a class="cite" href="#ref-23">[23]</a></td></tr>
+<tr><th scope="row">1800-talets början</th><td>Jöns Jacob Berzelius</td><td>Bokstavssymboler för grundämnena, noggranna atomvikter</td><td>Kemiska formler kan skrivas och läsas överallt.<a class="cite" href="#ref-22">[22]</a></td></tr>
+<tr><th scope="row">1869</th><td>Dmitrij Mendelejev</td><td>Det första periodiska systemet, med förutsägelser om okända grundämnen</td><td>Ordning i grundämnena, och förutsägelser som senare visade sig stämma.<a class="cite" href="#ref-24">[24]</a></td></tr>
+<tr><th scope="row">1907</th><td>Leo Baekeland</td><td>Bakelit, den första helsyntetiska plasten</td><td>Början på plaståldern: material som formas efter behov.<a class="cite" href="#ref-30">[30]</a></td></tr>
+<tr><th scope="row">1930-talet</th><td>Wallace Carothers (DuPont)</td><td>Nylon, en syntetisk fiber</td><td>Nya textilier och material, och ett exempel på hur forskning i laboratoriet blir en vara.<a class="cite" href="#ref-31">[31]</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Kemin växte fram ur alkemin. Nyckeln var att mäta noga och beskriva försöken så att andra kunde upprepa dem: Boyle, Lavoisier och de som kom efter. Berzelius gav oss symbolerna, Dalton atomteorin och Mendelejev det periodiska systemet.
+          </div>
+<details class="check-q">
+<summary>Vilken viktig slutsats drog Lavoisier om massan i en kemisk reaktion?</summary>
+<div class="svar">Att massan bevaras: den totala massan är lika stor före och efter reaktionen. Han kom fram till det genom att väga noga.</div>
+</details>
+<details class="deepen">
+<summary>Varför fick Mendelejev så stor betydelse?</summary>
+<p>Många hade försökt ordna grundämnena, men Mendelejev vågade göra en förutsägelse: här saknas ett ämne, och det borde ha de och de egenskaperna. När ämnena hittades stämde beskrivningarna ungefär. Det är hur en bra teori fungerar: den förklarar det man redan vet och förutsäger något nytt som kan prövas.</p>
+</details>
+<details class="wonder">
+<summary>Om flera forskare upptäcker samma sak, vem ska få äran?</summary>
+<p>Scheele och andra upptäckte syre oberoende av varandra. Ofta blir den som först publicerar sitt resultat ihågkommen, men det är inte alltid den som gjorde upptäckten först. Varför spelar det roll att forskare publicerar och delar sina resultat?</p>
+</details>
+<div class="next-steps">
+<a href="./ovningsverktyg.html#ov-historia"><span class="n-label">Öva</span>Kemins historia i rätt ordning</a>
+<a href="/kemi/periodiska-systemet/index.html"><span class="n-label">Läs mer</span>Periodiska systemet</a>
+<a href="#m10"><span class="n-label">Fortsätt</span>Nobelpris och forskning idag</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+<!-- M10 -->
+<details class="milestone" id="m10">
+<summary><span class="m-num">Milstolpe 10</span><h2 class="m-title">Nobelpris och forskning idag</h2></summary>
+<div class="m-body">
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<p>Alfred Nobel föddes i Stockholm 1833. Han var uppfinnare och företagare, och 1867 patenterade han dynamit i Sverige, ett sprängämne som användes i gruvor och vid byggen. I sitt testamente, som han skrev under i Paris den 27 november 1895, bestämde han att största delen av hans förmögenhet skulle bilda en fond vars avkastning delas ut som pris. Han dog 1896 i Sanremo, och de första priserna delades ut den 10 december 1901.<a class="cite" href="#ref-25">[25]</a> <strong class="term"><span class="concept-inline" data-concept="Nobelpris">Nobelpriset</span></strong> i kemi delas alltså ut sedan 1901, och pristagarna ger en bild av hur kemin har förändrat världen.</p>
+<p>Kunskap kan användas både till nytta och skada. Dynamit underlättade byggen och gruvdrift, men sprängämnen kan också användas som vapen. Det är ett skäl till att forskare och samhälle tillsammans behöver fundera över hur ny kunskap ska användas.</p>
+<h3>Priser som förändrat världen</h3>
+<p>Tabellen visar ett urval av Nobelpris i kemi som antingen har förklarat hur naturen fungerar eller förändrat människors levnadsvillkor. Motiveringarna är fria översättningar från engelska.</p>
+</div>
+</div>
+<div class="m-row m-row--full">
+<div aria-label="Tabell 1 (rulla i sidled på smal skärm)" class="tbl-scroll" role="region" tabindex="0">
+<table class="compare-table">
+<caption>Urval av Nobelpris i kemi</caption>
+<thead><tr><th scope="col">År</th><th scope="col">Pristagare</th><th scope="col">Priset gavs för</th><th scope="col">Vad det har betytt</th></tr></thead>
+<tbody>
+<tr><th scope="row">1903</th><td>Svante Arrhenius</td><td>hans teori om elektrolytisk dissociation</td><td>Han visade att salter delas i laddade partiklar, joner, när de löses i vatten. Det förklarar varför saltvatten leder elektrisk ström.<a class="cite" href="#ref-26">[26]</a></td></tr>
+<tr><th scope="row">1911</th><td>Marie Curie</td><td>upptäckten av grundämnena radium och polonium</td><td>Hon är den första som fått två Nobelpris: fysik 1903, tillsammans med Pierre Curie, och kemi 1911.<a class="cite" href="#ref-26">[26]</a></td></tr>
+<tr><th scope="row">1918 (utdelat 1919)</th><td>Fritz Haber</td><td>syntesen av ammoniak ur grundämnena</td><td>Ammoniak används för att tillverka konstgödsel. Växter kan bara ta upp kväve som ingår i kemiska föreningar, fast luften till största delen består av kväve. Metoden, som kallas Haber–Bosch-processen, är en orsak till att en stor del av världens befolkning i dag kan få mat.<a class="cite" href="#ref-26">[26]</a><a class="cite" href="#ref-32">[32]</a></td></tr>
+<tr><th scope="row">1926</th><td>The Svedberg</td><td>hans arbete om disperse system</td><td>Den svenske forskaren vid Uppsala universitet uppfann ultracentrifugen 1925, som snurrar blandningar så snabbt att ämnen skiljs åt efter vikt, och som gör det möjligt att beräkna molekylers massa.<a class="cite" href="#ref-26">[26]</a></td></tr>
+<tr><th scope="row">1931</th><td>Carl Bosch och Friedrich Bergius</td><td>uppfinnandet och utvecklandet av kemiska högtrycksmetoder</td><td>Högtrycksmetoder gjorde stora industriella processer möjliga, till exempel tillverkning av ammoniak i stor skala.<a class="cite" href="#ref-26">[26]</a></td></tr>
+<tr><th scope="row">1995</th><td>Paul Crutzen, Mario Molina och F. Sherwood Rowland</td><td>deras arbete inom atmosfärskemi, särskilt om ozonets bildning och nedbrytning</td><td>De visade att freoner från bland annat sprayburkar och kylskåp bryter ned ozonlagret. Det ledde till internationella beslut att begränsa sådana ämnen.<a class="cite" href="#ref-27">[27]</a></td></tr>
+<tr><th scope="row">2018</th><td>Frances Arnold, George Smith och Gregory Winter</td><td>styrd evolution av enzymer, och fagdisplay av peptider och antikroppar</td><td>Enzymer som tillverkar bränslen och läkemedel med mindre miljöpåverkan, och antikroppar som behandlar bland annat autoimmuna sjukdomar och cancer.<a class="cite" href="#ref-28">[28]</a></td></tr>
+<tr><th scope="row">2019</th><td>John Goodenough, Stanley Whittingham och Akira Yoshino</td><td>utvecklingen av litiumjonbatterier</td><td>Batterier i mobiltelefoner och datorer, i elbilar, och för att lagra energi från förnybara källor.<a class="cite" href="#ref-28">[28]</a></td></tr>
+<tr><th scope="row">2020</th><td>Emmanuelle Charpentier och Jennifer Doudna</td><td>utvecklingen av en metod för genomredigering</td><td>CRISPR/Cas9, ofta kallad gensaxen, gör att forskare kan göra precisa ändringar i DNA, för att förstå gener och utveckla behandlingar.<a class="cite" href="#ref-28">[28]</a></td></tr>
+<tr><th scope="row">2024</th><td>David Baker, Demis Hassabis och John Jumper</td><td>beräkningsbaserad proteindesign, och förutsägelse av proteiners struktur</td><td>Med datorer och AI kan man förutsäga ett proteins 3D-struktur på några minuter och designa helt nya proteiner, till exempel för nya läkemedel.<a class="cite" href="#ref-29">[29]</a></td></tr>
+<tr><th scope="row">2025</th><td>Susumu Kitagawa, Richard Robson och Omar Yaghi</td><td>utvecklingen av metallorganiska nätverk (MOF)</td><td>Material med stora hålrum som kan fånga molekyler. De har använts för att samla vatten ur ökenluft, fånga koldioxid, lagra vätgas och ta bort PFAS ur vatten.<a class="cite" href="#ref-29">[29]</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="m-row m-row--plain">
+<div class="m-lead">
+<h3>Tre sätt som kemin förändrar världen</h3>
+<ul>
+<li><strong>Mat.</strong> Ammoniak för konstgödsel (Haber och Bosch) hjälper till att föda en stor del av jordens befolkning.</li>
+<li><strong>Energi.</strong> Litiumjonbatterier gör mobiler och elbilar möjliga och kan lagra energi från sol och vind.</li>
+<li><strong>Miljö och hälsa.</strong> Ozonforskningen visade hur människors utsläpp kunde skada atmosfären och ledde till åtgärder. Nya läkemedel, som antikroppar, bygger på kemi. Här är kemin både orsaken till problem och en del av lösningen.</li>
+</ul>
+<p>Ozonhistorien är särskilt intressant: freonerna användes för att de var praktiska, och ingen förväntade sig att de skulle skada ozonlagret. Det var forskare som mätte, förklarade och varnade, och politiker som sedan handlade. Det är ett exempel på varför samhället behöver människor som förstår kemi.</p>
+<h3>Framblick: kemin idag</h3>
+<p>Kemiforskningen arbetar i dag med frågor som ligger nära dina egna: hur vi kan lagra energi utan utsläpp, hur vi kan rena vatten och fånga koldioxid, hur nya läkemedel kan utformas och hur vi kan tillverka och återvinna material på ett hållbart sätt. Priserna 2019, 2024 och 2025 i tabellen ovan pekar mot samma områden: batterier, proteiner och material som kan fånga det vi vill ha och släppa det vi inte vill ha. Alla de här områdena behöver människor som kan kemi, och som kan pröva idéer, mäta noga och granska resultat, det du tränar på i kapitlet.</p>
+<div class="fact-box">
+<strong>Sammanfattning</strong>
+            Nobelpriset instiftades genom Alfred Nobels testamente och delades ut första gången 1901. Priserna i kemi visar hur kemin har förklarat naturen och förändrat människors liv, från konstgödsel och batterier till skydd av ozonlagret och nya läkemedel. Nya upptäckter kan användas både till nytta och skada, och därför behöver många förstå dem.
+          </div>
+<details class="check-q">
+<summary>Vad bestämde Alfred Nobel i sitt testamente?</summary>
+<div class="svar">Att hans förmögenhet skulle bilda en fond vars avkastning delas ut som pris, bland annat i kemi, till dem som har gjort störst nytta för mänskligheten. De första priserna delades ut 1901.</div>
+</details>
+<details class="check-q">
+<summary>Varför är ammoniak viktig för att producera mat?</summary>
+<div class="svar">Ammoniak används för att tillverka konstgödsel. Växter kan bara använda kväve som ingår i kemiska föreningar, och ammoniak gör att kvävet i luften blir tillgängligt för dem.</div>
+</details>
+<details class="deepen">
+<summary>Metallorganiska nätverk – ett material som mest består av hålrum</summary>
+<p>Årets pris 2025 gick till forskare som skapade material med enorma inre hålrum, byggda av metalljoner och organiska molekyler. Hålrummen kan fånga och släppa molekyler. I ett sådant material kan några gram ha en inre yta lika stor som en fotbollsplan. Materialen har prövats för att samla vatten ur ökenluft, fånga koldioxid ur utsläpp, lagra vätgas och rena vatten från PFAS.<a class="cite" href="#ref-29">[29]</a></p>
+</details>
+<details class="wonder">
+<summary>Vilken kemisk upptäckt har betytt mest för dig?</summary>
+<p>Tänk på en vanlig dag: maten, kläderna, telefonen, medicinen och luften. Vilken kemisk upptäckt tycker du är viktigast för dig själv, och vilken för världen? Hur skulle vardagen se ut utan den?</p>
+<p class="frontier">Forskningsfronten: många av de största frågorna kvarstår, till exempel hur man kan tillverka bränsle av solljus, bryta ned plast eller lagra energi säkert och billigt. Vilken av dem skulle du helst vilja lösa?</p>
+</details>
+<div class="next-steps">
+<a href="./ovningsverktyg.html#ov-historia"><span class="n-label">Öva</span>Kemins historia i rätt ordning</a>
+<a href="./ovningsprov.html"><span class="n-label">Testa dig</span>Övningsprov</a>
+<a href="./checklista.html"><span class="n-label">Kontrollera</span>Checklistan</a>
+</div>
+</div>
+</div>
+</div>
+</details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Skolverket. <em>Kursplan – Kemi (Grundskolan)</em>, centralt innehåll och kunskapskrav för årskurs 7–9. <a href="https://syllabuswebb.skolverket.se/compulsorycw/jsp/subject.htm?subjectCode=GRGRKEM01&amp;tos=gr" target="_blank" rel="noopener">syllabuswebb.skolverket.se</a></li>
+        <li id="ref-2">Dunlosky, J., Rawson, K. A., Marsh, E. J., Nathan, M. J. &amp; Willingham, D. T. (2013). <em>Improving Students’ Learning With Effective Learning Techniques.</em> Psychological Science in the Public Interest 14(1), 4–58. <a href="https://journals.sagepub.com/doi/abs/10.1177/1529100612453266" target="_blank" rel="noopener">journals.sagepub.com</a></li>
+        <li id="ref-3">Roediger, H. L. &amp; Karpicke, J. D. (2006). <em>Test-enhanced learning: Taking memory tests improves long-term retention.</em> Psychological Science 17(3), 249–255. <a href="https://journals.sagepub.com/doi/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">journals.sagepub.com</a></li>
+        <li id="ref-4">Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T. &amp; Rohrer, D. (2006). <em>Distributed practice in verbal recall tasks: A review and quantitative synthesis.</em> Psychological Bulletin 132(3), 354–380. <a href="https://pubmed.ncbi.nlm.nih.gov/16719566/" target="_blank" rel="noopener">pubmed.ncbi.nlm.nih.gov</a></li>
+        <li id="ref-5">Johnstone, A. H. (1991). <em>Why is science difficult to learn? Things are seldom what they seem.</em> Journal of Computer Assisted Learning 7(2), 75–83. <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1365-2729.1991.tb00230.x" target="_blank" rel="noopener">onlinelibrary.wiley.com</a></li>
+        <li id="ref-6">1177. <em>Skräp eller frätande ämne i ögat</em> (skölj i minst 15 minuter med ljummet vatten, ring 112 och begär Giftinformationscentralen). <a href="https://www.1177.se/olyckor--skador/skador-pa-huvud-och-ogon/skrap-eller-fratande-amne-i-ogat/" target="_blank" rel="noopener">1177.se</a></li>
+        <li id="ref-7">1177. <em>Brännskador</em> (kylning med svalt vatten, högst 15 minuter; kemikalier på huden). <a href="https://www.1177.se/olyckor--skador/brannskador-och-koldskador/brannskador/" target="_blank" rel="noopener">1177.se</a></li>
+        <li id="ref-8">Giftinformationscentralen. <em>Kontakta oss</em> (010-456 6700, dygnet runt vid akut förgiftning). <a href="https://giftinformation.se/kontakta-oss/" target="_blank" rel="noopener">giftinformation.se</a></li>
+        <li id="ref-9">Kemikalieinspektionen. <em>Märkningens innehåll och utformning</em> (produktbeteckning, faropiktogram, signalord, faroangivelser, skyddsangivelser, leverantör, mängd, UFI-kod). <a href="https://www.kemi.se/lagar-och-regler/lagstiftningar-inom-kemikalieomradet/eu-gemensam-lagstiftning/clp-forordningen/markning-av-kemiska-produkter/markningens-innehall-och-utformning" target="_blank" rel="noopener">kemi.se</a></li>
+        <li id="ref-10">Kemikalieinspektionen. <em>Farosymboler</em> (Hannas hus). <a href="https://www.kemi.se/rad-till-privatpersoner/material-till-skola-och-forskola/hannas-hus/farosymboler" target="_blank" rel="noopener">kemi.se</a>; <em>Labelling and hazard symbols</em> (äldre orange symboler). <a href="https://www.kemi.se/en/chemicals-in-our-everyday-lives/advice-on-chemicals-in-your-home/labelling-and-hazard-symbols" target="_blank" rel="noopener">kemi.se</a></li>
+        <li id="ref-11">Kemikalieinspektionen. <em>Faroangivelser på svenska (ur bilaga III i CLP-förordningen)</em>. <a href="https://www.kemi.se/download/18.53bd575e1770fc5d2a22b22/1612190079455/Lista%20med%20faroangivelser_2021.pdf" target="_blank" rel="noopener">kemi.se (pdf)</a></li>
+        <li id="ref-12">ECHA. <em>Inledande vägledning om CLP-förordningen</em>, version 3.0, 2019 (signalorden Fara och Varning). <a href="https://echa.europa.eu/documents/10162/23036412/clp_introductory_sv.pdf/85737f91-b7d4-4d1a-9c2b-d58c8d805816" target="_blank" rel="noopener">echa.europa.eu (pdf)</a></li>
+        <li id="ref-13">Kemikalieinspektionen. <em>Säkerhetsdatablad</em>. <a href="https://www.kemi.se/lagar-och-regler/lagstiftningar-inom-kemikalieomradet/eu-gemensam-lagstiftning/reach-forordningen/sakerhetsdatablad" target="_blank" rel="noopener">kemi.se</a></li>
+        <li id="ref-14">Engineering ToolBox. <em>Metals and alloys – densities</em>. <a href="https://www.engineeringtoolbox.com/metal-alloys-densities-d_50.html" target="_blank" rel="noopener">engineeringtoolbox.com</a></li>
+        <li id="ref-15">Engineering ToolBox. <em>Metals and alloys – melting temperatures</em>. <a href="https://www.engineeringtoolbox.com/melting-temperature-metals-d_860.html" target="_blank" rel="noopener">engineeringtoolbox.com</a></li>
+        <li id="ref-16">Engineering ToolBox. <em>Liquid densities</em> (vatten, etanol, olivolja, glycerin). <a href="https://www.engineeringtoolbox.com/liquids-densities-d_743.html" target="_blank" rel="noopener">engineeringtoolbox.com</a></li>
+        <li id="ref-17">NIST. <em>NIST Chemistry WebBook</em> (smält- och kokpunkter för vatten och etanol). <a href="https://webbook.nist.gov/chemistry/" target="_blank" rel="noopener">webbook.nist.gov</a></li>
+        <li id="ref-18">Britannica. <em>Alchemy</em>. <a href="https://www.britannica.com/topic/alchemy" target="_blank" rel="noopener">britannica.com</a></li>
+        <li id="ref-19">Britannica. <em>Robert Boyle</em>. <a href="https://www.britannica.com/biography/Robert-Boyle" target="_blank" rel="noopener">britannica.com</a></li>
+        <li id="ref-20">Science History Institute. <em>Antoine-Laurent Lavoisier</em>. <a href="https://www.sciencehistory.org/education/scientific-biographies/antoine-laurent-lavoisier/" target="_blank" rel="noopener">sciencehistory.org</a></li>
+        <li id="ref-21">Britannica. <em>Carl Wilhelm Scheele</em>. <a href="https://www.britannica.com/biography/Carl-Wilhelm-Scheele" target="_blank" rel="noopener">britannica.com</a></li>
+        <li id="ref-22">Svenskt biografiskt lexikon. <em>Jöns Jacob Berzelius</em>. <a href="https://sok.riksarkivet.se/sbl/Presentation.aspx?id=18122" target="_blank" rel="noopener">sok.riksarkivet.se</a></li>
+        <li id="ref-23">Britannica. <em>New System of Chemical Philosophy</em> (John Dalton, 1808). <a href="https://www.britannica.com/topic/New-System-of-Chemical-Philosophy" target="_blank" rel="noopener">britannica.com</a></li>
+        <li id="ref-24">Britannica. <em>Dmitri Mendeleev</em>. <a href="https://www.britannica.com/biography/Dmitri-Mendeleev" target="_blank" rel="noopener">britannica.com</a></li>
+        <li id="ref-25">NobelPrize.org. <em>Alfred Nobel</em> (biografi, testamente och de första priserna). <a href="https://www.nobelprize.org/alfred-nobel/" target="_blank" rel="noopener">nobelprize.org</a></li>
+        <li id="ref-26">NobelPrize.org. <em>The Nobel Prize in Chemistry</em> <a href="https://www.nobelprize.org/prizes/chemistry/1903/summary/" target="_blank" rel="noopener">1903</a>, <a href="https://www.nobelprize.org/prizes/chemistry/1911/summary/" target="_blank" rel="noopener">1911</a>, <a href="https://www.nobelprize.org/prizes/chemistry/1918/summary/" target="_blank" rel="noopener">1918</a>, <a href="https://www.nobelprize.org/prizes/chemistry/1926/summary/" target="_blank" rel="noopener">1926</a>, <a href="https://www.nobelprize.org/prizes/chemistry/1931/summary/" target="_blank" rel="noopener">1931</a>; Fritz Haber: <a href="https://www.nobelprize.org/prizes/chemistry/1918/haber/facts/" target="_blank" rel="noopener">facts</a>; Svante Arrhenius: <a href="https://www.nobelprize.org/prizes/chemistry/1903/arrhenius/facts/" target="_blank" rel="noopener">facts</a>; The Svedberg: <a href="https://www.nobelprize.org/prizes/chemistry/1926/svedberg/facts/" target="_blank" rel="noopener">facts</a></li>
+        <li id="ref-27">NobelPrize.org. <em>The Nobel Prize in Chemistry 1995</em> (ozonets bildning och nedbrytning). <a href="https://www.nobelprize.org/prizes/chemistry/1995/summary/" target="_blank" rel="noopener">1995</a>; <a href="https://www.nobelprize.org/prizes/chemistry/1995/press-release/" target="_blank" rel="noopener">pressmeddelande</a></li>
+        <li id="ref-28">NobelPrize.org. <em>The Nobel Prize in Chemistry</em> <a href="https://www.nobelprize.org/prizes/chemistry/2018/popular-information/" target="_blank" rel="noopener">2018</a>, <a href="https://www.nobelprize.org/prizes/chemistry/2019/popular-information/" target="_blank" rel="noopener">2019</a>, <a href="https://www.nobelprize.org/prizes/chemistry/2020/popular-information/" target="_blank" rel="noopener">2020</a> (populärinformation).</li>
+        <li id="ref-29">NobelPrize.org. <em>The Nobel Prize in Chemistry</em> <a href="https://www.nobelprize.org/prizes/chemistry/2024/popular-information/" target="_blank" rel="noopener">2024</a>, <a href="https://www.nobelprize.org/prizes/chemistry/2025/popular-information/" target="_blank" rel="noopener">2025</a> (populärinformation).</li>
+        <li id="ref-30">Science History Institute. <em>Leo Hendrik Baekeland</em> (bakelit, den första helsyntetiska plasten). <a href="https://www.sciencehistory.org/education/scientific-biographies/leo-hendrik-baekeland/" target="_blank" rel="noopener">sciencehistory.org</a></li>
+        <li id="ref-31">Science History Institute. <em>Wallace Hume Carothers</em> (nylon). <a href="https://www.sciencehistory.org/education/scientific-biographies/wallace-hume-carothers/" target="_blank" rel="noopener">sciencehistory.org</a></li>
+        <li id="ref-32">Erisman, J. W., Sutton, M. A., Galloway, J., Klimont, Z. &amp; Winiwarter, W. (2008). <em>How a century of ammonia synthesis changed the world.</em> Nature Geoscience 1, 636–639. <a href="https://www.nature.com/articles/ngeo325" target="_blank" rel="noopener">nature.com</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#4a4a4a;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Kemiska formler och faktauppgifter är allmän faktakunskap; ingen lärobokstext har kopierats. Alla bilder är egenritade för den här sajten.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash);
+      else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.length) return;
+        window.BEGREPP = data;
+        var savedConceptLang = 'sv-SE';
+        try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+        /* Skriv inte över ett redan valt annat begrepp-språk (undviker kapplöpning mot concept-lang-selector.js). */
+        if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+      })
+      .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+  </script>
+</body>
+</html>
