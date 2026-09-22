@@ -224,9 +224,14 @@ body.larare { min-height: 100vh; display: flex; flex-direction: column; font-siz
 .bana { flex: 1; min-height: 240px; display: grid; grid-template-rows: auto; grid-auto-rows: minmax(0, 1fr); border: 3px solid var(--ink); border-radius: var(--radie); overflow: hidden; background: var(--sand); }
 .bana-rad { display: grid; grid-template-columns: clamp(9rem, 13vw, 22rem) 1fr; min-height: 0; border-top: 2px solid var(--sand-2); }
 .bana-rad:first-child { border-top: none; }
-.bana-etikett { display: flex; align-items: center; gap: 10px; padding: 0 12px; min-height: 0; overflow: hidden; line-height: 1.05; background: #fff; border-right: 3px solid var(--ink); font-weight: 800; font-size: clamp(1rem, 1.5vw, 2.2rem); }
+.bana-etikett { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 4px 12px; min-height: 0; overflow: hidden; line-height: 1.05; background: #fff; border-right: 3px solid var(--ink); font-weight: 800; font-size: clamp(1rem, 1.5vw, 2.2rem); }
 .bana-etikett .bana-steg { margin-left: auto; font-size: 1.15em; font-variant-numeric: tabular-nums; border: 2px solid var(--ink); border-radius: 8px; padding: 0 8px; background: var(--sand); }
 .bana-etikett .bana-p { font-size: 0.6em; font-weight: 700; color: var(--ink-2); }
+.bana-etikett .bana-svarstatus { flex-basis: 100%; font-size: 0.42em; font-weight: 700; color: var(--ink-2); white-space: normal; }
+
+/* Detaljerad lista per lag under fråga/avslöjande – aldrig bara färg. */
+.lagstatus-lista { list-style: none; padding: 0; margin: 6px 0 10px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.95rem; font-weight: 700; }
+.lagstatus-lista li { background: #fff; border: 2px solid var(--ink); border-radius: 8px; padding: 3px 10px; }
 .bana-spar {
   position: relative;
   background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / var(--n) - 2px), rgba(20, 32, 43, 0.38) calc(100% / var(--n) - 2px), rgba(20, 32, 43, 0.38) calc(100% / var(--n)));

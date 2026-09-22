@@ -175,15 +175,15 @@ test("Helt spel: lärare + 6 elever spelar en hel match; facit läcker inte; åt
     assert.equal(ev.match.fraga.ratt, ratt);
     assert.ok(ev.match.fraga.forklaring.includes("Facit-förklaring " + q));
     const res = larare.vy.match.resultat;
-    assert.equal(res.lag.hast.ratt, true);
-    assert.equal(res.lag.hast.rang, 1, "lag 0 svarade först och rätt");
+    assert.equal(res.lag.hast.allaRatt, true);
+    assert.equal(res.lag.hast.rang, 1, "lag 0 svarade först och rätt (ensam medlem = laget)");
     assert.equal(res.lag.hast.steg, 3);
     assert.equal(res.lag.tiger.rang, 2);
     assert.equal(res.lag.tiger.steg, 2);
     assert.equal(res.lag.kamel.rang, 3);
     assert.equal(res.lag.kamel.steg, 1);
     assert.equal(res.lag.zebra.steg, 0);
-    assert.equal(res.lag.alg.svarade, false);
+    assert.equal(res.lag.alg.alltSvarat, false);
     skickadeUnderFraga.push(q);
     if (q === 2) {
       // Återanslutning: elev 2 (tiger) kopplar ner och tillbaka med samma id
@@ -303,6 +303,6 @@ test("Alarm: frågan stängs av servern när tiden går ut (utan att någon tryc
   const dt = Date.now() - t0;
   assert.ok(dt >= 8000 && dt <= 12500, "stängdes efter ca 10 s (var " + dt + " ms)");
   assert.equal(larare.vy.match.resultat.lag.hast.steg, 3);
-  assert.equal(larare.vy.match.resultat.lag.zebra.svarade, false);
+  assert.equal(larare.vy.match.resultat.lag.zebra.alltSvarat, false);
   [larare, a, b].forEach((c) => c.stang());
 });

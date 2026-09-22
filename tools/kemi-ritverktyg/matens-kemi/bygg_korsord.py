@@ -8,8 +8,6 @@ ROOT = os.environ.get("SITE", os.path.abspath(os.path.join(os.path.dirname(os.pa
 DST = f"{ROOT}/kemi/matens-kemi"
 
 CLUES = {
-"Fotosyntes": "Processen där gröna växter bygger druvsocker av koldioxid, vatten och ljusenergi.",
-"Cellandning": "Processen där celler bryter ner druvsocker med syrgas och frigör energi. Motsatsen till fotosyntes.",
 "Kolhydrat": "Näringsämne uppbyggt av kol, väte och syre, byggt av sockerenheter.",
 "Monosackarid": "En enda sockerenhet, den minsta byggstenen i en kolhydrat.",
 "Disackarid": "Två sockerenheter bundna till varandra med en glykosidbindning.",
@@ -21,14 +19,14 @@ CLUES = {
 "Protein": "Näringsämne uppbyggt av kedjor av aminosyror, bland annat byggmaterial och enzymer.",
 "Aminosyra": "Byggstenen i protein: har en kvävehaltig grupp, en karboxylgrupp och en sidokedja.",
 "druvsocker": "Ett annat namn för glukos, den vanligaste monosackariden.",
-"fruktsocker": "Ett annat namn för fruktos, en monosackarid med samma formel som druvsocker.",
+"fruktsocker": "Vardagligt namn för en monosackarid med samma molekylformel som druvsocker, vanlig i söta bär och honung.",
 "galaktos": "En monosackarid som tillsammans med druvsocker bygger upp mjölksocker.",
-"sackaros": "Vanligt hushållssocker: en disackarid av druvsocker och fruktsocker.",
+"sackaros": "Vanligt hushållssocker: druvsocker och fruktsocker bundna till varandra.",
 "maltos": "Mältsocker: en disackarid av två druvsockerenheter, samma bindning som i stärkelse.",
 "laktos": "Mjölksocker: en disackarid av druvsocker och en annan monosackarid, finns naturligt i mjölk.",
 "glykosidbindning": "Bindningen som håller ihop sockerenheter i di- och polysackarider.",
 "esterbindning": "Bindningen mellan glycerol och en fettsyra i ett fett.",
-"aminogrupp": "Gruppen –NH2 som varje aminosyra har, tillsammans med en karboxylgrupp.",
+"aminogrupp": "Den kvävehaltiga gruppen –NH2 som varje byggsten i protein har, tillsammans med en karboxylgrupp.",
 "peptidbindning": "Bindningen som håller ihop aminosyror i ett protein.",
 "enzym": "Ett protein som påskyndar en kemisk reaktion i kroppen utan att förbrukas.",
 "denaturering": "När ett protein förlorar sin form och funktion, till exempel av hög värme.",

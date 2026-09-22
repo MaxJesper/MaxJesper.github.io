@@ -17,21 +17,7 @@ def M(title, left, right, a):
 
 
 INSTUDERING = {"groups": [
- {"title": "Milstolpe 1 – Fotosyntes och cellandning", "items": [
-  Q("Skriv ordekvationen för fotosyntesen.",
-    "Koldioxid + vatten (+ ljusenergi) → druvsocker + syrgas.", 2),
-  Q("Skriv den kemiska formelekvationen för fotosyntesen, med reaktionsvillkor.",
-    "6 CO₂ + 6 H₂O --(ljusenergi, klorofyll)--> C₆H₁₂O₆ + 6 O₂", 2),
-  Q("Skriv ordekvationen för cellandningen.",
-    "Druvsocker + syrgas → koldioxid + vatten (+ energi).", 2),
-  Q("Skriv den kemiska formelekvationen för cellandningen.",
-    "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O (+ energi)", 2),
-  Q("Vad är sambandet mellan fotosyntes och cellandning? Jämför ämnena på vänster och höger sida i de två ekvationerna.",
-    "De är varandras motsatser (omvända reaktioner). Det fotosyntesen bygger upp (druvsocker + syre av koldioxid + vatten) bryter cellandningen ner igen (till koldioxid + vatten), och energi frigörs.", 3),
-  Q("Var i en växt sker fotosyntesen, och vilka celler i kroppen utför cellandning?",
-    "Fotosyntesen sker i gröna växtdelar (bladen, i kloroplaster). Cellandning sker i i stort sett alla levande celler, både i växter, djur och människor.", 3),
- ]},
- {"title": "Milstolpe 2 – Kolhydrater", "items": [
+ {"title": "Milstolpe 1 – Kolhydrater", "items": [
   Q("Vilka tre grundämnen bygger upp kolhydrater?",
     "Kol (C), väte (H) och syre (O).", 1),
   Q("Förklara skillnaden mellan monosackarid, disackarid och polysackarid.",
@@ -47,7 +33,7 @@ INSTUDERING = {"groups": [
   Q("Var i kroppen/naturen hittar man stärkelse, cellulosa respektive glykogen, och vilken funktion har varje ämne?",
     "Stärkelse: i växter (t.ex. potatis, spannmål), energilager. Cellulosa: i växters cellväggar, stödjevävnad/struktur. Glykogen: i lever och muskler hos djur och människor, energilager.", 3),
  ]},
- {"title": "Milstolpe 3 – Fetter", "items": [
+ {"title": "Milstolpe 2 – Fetter", "items": [
   Q("Vilka två sorters byggstenar bygger upp ett fett (en triglycerid)?",
     "En glycerolmolekyl och tre fettsyror, bundna till glycerolen med esterbindningar.", 2),
   Q("En elev skriver att fettets alkohol är butanol. Är det rätt? Motivera.",
@@ -61,7 +47,7 @@ INSTUDERING = {"groups": [
   Q("Vad innebär det att härda ett fett (hydrogenering), och varför gör man det?",
     "Väte tillsätts till de omättade fettsyrornas dubbelbindningar, så att fettet blir mer mättat och stelnar vid rumstemperatur. Det gör flytande oljor till fasta fetter, till exempel vid tillverkning av margarin.", 3),
  ]},
- {"title": "Milstolpe 4 – Proteiner", "items": [
+ {"title": "Milstolpe 3 – Proteiner", "items": [
   Q("Vilka grundämnen ingår alltid i en aminosyra, och vilket grundämne finns bara i vissa aminosyror?",
     "Kol (C), väte (H), syre (O) och kväve (N) ingår alltid. Svavel (S) finns bara i vissa aminosyror, t.ex. cystein.", 2),
   Q("Beskriv en aminosyras grundstruktur.",
@@ -77,7 +63,7 @@ INSTUDERING = {"groups": [
   Q("Vad menas med att ett protein denatureras? Ge ett exempel från vardagen.",
     "Proteinets form vecklas ut/ändras (av t.ex. värme, stark syra eller bas) så att det förlorar sin funktion, och det går oftast inte att återställa. Exempel: äggvitan i ett stekt ägg stelnar och blir vit och ogenomskinlig – det är denaturerat protein.", 3),
  ]},
- {"title": "Milstolpe 5 – Sammanfattning: energilager i naturen", "items": [
+ {"title": "Milstolpe 4 – Sammanfattning: energilager i naturen", "items": [
   Q("Vilken polysackarid lagrar växter energi som, och vilken lagrar djur och människor energi som?",
     "Växter lagrar energi som stärkelse. Djur och människor lagrar energi som glykogen (i lever och muskler).", 2),
   Q("Vad har stärkelse och glykogen gemensamt, och vad skiljer dem åt?",
@@ -90,10 +76,6 @@ INSTUDERING = {"groups": [
 
 PROV = {"sections": [
  {"title": "Del I – E-nivå (grundläggande)", "questions": [
-  Q("Skriv ordekvationen för fotosyntesen.",
-    "Koldioxid + vatten (+ ljusenergi) → druvsocker + syrgas.", 2),
-  Q("Skriv formelekvationen för cellandningen.",
-    "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O (+ energi)", 2),
   M("Para ihop varje begrepp med rätt beskrivning.",
     ["Monosackarid", "Disackarid", "Polysackarid", "Glykosidbindning"],
     ["A. Bindning mellan två sockerenheter", "B. En enda sockerenhet", "C. Två sockerenheter bundna till varandra", "D. Många sockerenheter i en lång kedja"],
@@ -112,8 +94,6 @@ PROV = {"sections": [
     "Valfritt exempel på enzym, t.ex. amylas eller pepsin. Ett enzym påskyndar en kemisk reaktion i kroppen.", 2),
  ]},
  {"title": "Del II – C-nivå (förklara och tillämpa)", "questions": [
-  Q("Förklara sambandet mellan fotosyntes och cellandning genom att jämföra vad som byggs upp respektive bryts ner i de två reaktionerna.",
-    "Fotosyntesen bygger upp druvsocker och syre av koldioxid och vatten med hjälp av ljusenergi. Cellandningen är den omvända reaktionen: druvsocker och syre bryts ner till koldioxid och vatten, och energi frigörs. De är alltså varandras motsatser.", 4),
   Q("Förklara varför stärkelse och cellulosa ser och fungerar olika trots att båda är uppbyggda av glukos.",
     "Glukosenheterna är bundna på olika sätt (olika glykosidbindning/vinkel mellan enheterna). I stärkelse gör bindningen att kedjan böjer sig i en spiral, vilket gör att människans enzymer kan bryta ner den. I cellulosa gör bindningen att kedjan blir rak och utsträckt, vilket ger stabila fibrer som människans enzymer inte kan bryta ner.", 5),
   Q("Förklara på molekylnivå varför omättat fett (t.ex. olivolja) är flytande vid rumstemperatur medan mättat fett (t.ex. smör) är fast.",

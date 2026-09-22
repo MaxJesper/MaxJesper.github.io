@@ -17,12 +17,22 @@
      pall → (nasta_match) → lobby (nästa match) … efter sista matchen → slut
      slut → (ny_omgang) → lobby (lag och medlemmar består, poäng nollas)
 
-   Poäng per fråga: bland lag med RÄTT svar rangordnas ankomsttiden
-   (server-now, därefter ankomstordning): nr 1 = 3 steg + gnägg,
-   nr 2 = 2 steg + gnägg, övriga rätt = 1 steg (hovljud). Fel/inget svar = 0.
+   Poäng per fråga (regel från 22 sep 2026, se OVERLAMNING.md):
+   VARJE medlem i ett lag måste svara, och ALLA måste svara RÄTT, för att
+   laget ska räknas som "klart" på frågan. Ett lags "klar-tid" är
+   tidpunkten (server-now) för dess SISTA medlems svar. Bland de lag som
+   är klara (alla medlemmar svarade rätt) rangordnas klar-tiden: nr 1 = 3
+   steg + gnägg, nr 2 = 2 steg + gnägg, övriga klara = 1 steg (hovljud).
+   Ett lag där minst en medlem svarat fel, ELLER där inte alla medlemmar
+   hunnit svara innan tiden gick ut/läraren avslöjade svaret, får 0 steg.
+   Tie-break vid exakt samma klar-tid (millisekund): det globala
+   svarsnumret (löpnummer, tilldelat i den ordning enskilda svar faktiskt
+   togs emot av servern) för det AVGÖRANDE svaret (lagets sista) avgör –
+   lägre nummer vinner. Ett lag med bara en medlem avgörs alltså direkt av
+   den enda medlemmens svar, precis som tidigare.
    ===================================================================== */
 
-export const MOTORVERSION = 1;
+export const MOTORVERSION = 2;
 
 /* Djuren som lagen väljer mellan. id = ASCII (används i sprite-symbolen
    #hk-<id> i img/avatarer.svg). Ordningen = visningsordning. */
@@ -57,6 +67,7 @@ export const STANDARD = {
   autoFordrojning_s: 6,
   auto: false,
   visaAlternativ: false,
+  slumpLage: false, // lobbyläget "Slumpa lag": elever skriver bara namn, ingen avatarväljning
 };
 
 export const OMFANG = {
@@ -183,6 +194,20 @@ export function aktivaLag(rum) {
   return rum.lagordning.filter((id) => lagHarAktiv(rum, id));
 }
 
+/* Aktuella medlemmar (spelar-id) i ett lag, oavsett anslutningsstatus. */
+function medlemmarAvLag(rum, lagId) {
+  const l = rum.lag[lagId];
+  return l ? l.medlemmar : [];
+}
+
+/* Har ALLA nuvarande medlemmar i laget svarat på den öppna frågan?
+   Ett lag utan medlemmar räknas aldrig som klart. */
+function lagArKlart(rum, mt, lagId) {
+  const mm = medlemmarAvLag(rum, lagId);
+  if (mm.length === 0) return false;
+  return mm.every((sid) => !!mt.svar[sid]);
+}
+
 function taBortTommaLag(rum) {
   // Tomma lag rensas bara i lobbyn (mitt i en match behåller laget sin position).
   if (rum.fas !== "lobby") return;
@@ -278,7 +303,7 @@ export function validera(aktor, msg) {
           ut[k] = v;
         }
       }
-      for (const k of ["auto", "visaAlternativ"]) {
+      for (const k of ["auto", "visaAlternativ", "slumpLage"]) {
         if (msg[k] !== undefined) {
           if (typeof msg[k] !== "boolean") return fel("ogiltigt", "Ogiltigt värde.");
           ut[k] = msg[k];
@@ -474,12 +499,12 @@ function svara(rum, p, m, now) {
   if (!mt || mt.steg !== "fraga" || !mt.fraga) return fel("ingen_fraga", "Det finns ingen öppen fråga.");
   if (mt.pausad) return fel("pausad", "Spelet är pausat.");
   if (now >= mt.fraga.slut) return fel("for_sent", "Tiden är slut.");
-  if (mt.svar[p.lag]) return fel("redan_svarat", "Laget har redan svarat.");
+  if (mt.svar[p.id]) return fel("redan_svarat", "Du har redan svarat.");
   mt.svarSeq += 1;
-  mt.svar[p.lag] = { val: m.val, t: now, tidMs: Math.max(0, now - mt.fraga.start), ordning: mt.svarSeq, av: p.id };
-  // Alla aktiva lag har svarat → stäng direkt.
+  mt.svar[p.id] = { val: m.val, t: now, tidMs: Math.max(0, now - mt.fraga.start), ordning: mt.svarSeq };
+  // Alla aktiva lag är klara (alla nuvarande medlemmar har svarat) → stäng direkt.
   const akt = aktivaLag(rum);
-  if (akt.length > 0 && akt.every((id) => mt.svar[id])) avslutaFraga(rum, now);
+  if (akt.length > 0 && akt.every((id) => lagArKlart(rum, mt, id))) avslutaFraga(rum, now);
   return ok({ lag: p.lag });
 }
 
@@ -487,6 +512,7 @@ function installningar(rum, m) {
   for (const k of Object.keys(m)) {
     if (k === "t") continue;
     if (k === "banlangd" && rum.fas !== "lobby") return fel("bara_lobby", "Banans längd kan bara ändras i lobbyn.");
+    if (k === "slumpLage" && rum.fas !== "lobby") return fel("bara_lobby", "Slumpa lag kan bara användas i lobbyn.");
   }
   for (const k of Object.keys(m)) if (k !== "t") rum.inst[k] = m[k];
   return ok();
@@ -579,38 +605,60 @@ function fortsatt(rum, now) {
   return ok();
 }
 
-/* Sätter poäng och förflyttningar. Anropas när frågan stängs. */
+/* Sätter poäng och förflyttningar. Anropas när frågan stängs.
+   Ett lag är "klart och rätt" när ALLA dess nuvarande medlemmar har svarat
+   och alla svarade rätt. Lagets klar-tid = tidpunkten för dess SISTA
+   medlems svar. Rangordning bland de klara lagen: klar-tid, sedan
+   (vid exakt samma millisekund) det globala svarsnumret för det
+   avgörande svaret – se filens huvudkommentar. */
 function avslutaFraga(rum, now) {
   const mt = rum.match;
   const f = mt.fraga;
   const L = mt.banlangd;
   const res = { fragaNr: f.nr, ratt: f.ratt, forklaring: f.forklaring, kalla: f.kalla, lag: {}, rorelser: [], malNadd: null };
-  const rattaLag = [];
+  const klaraLag = []; // {id, klarTid, klarOrdning} – alla medlemmar svarade, alla rätt
   for (const id of rum.lagordning) {
-    const s = mt.svar[id];
-    const arRatt = !!s && s.val === f.ratt;
+    const mm = medlemmarAvLag(rum, id);
+    const svarslista = mm.map((sid) => mt.svar[sid]).filter(Boolean);
+    const antalSvarat = svarslista.length;
+    const alltSvarat = mm.length > 0 && antalSvarat === mm.length;
+    const antalRatt = svarslista.filter((s) => s.val === f.ratt).length;
+    const allaRatt = alltSvarat && antalRatt === mm.length;
+    let klarTid = null;
+    let klarOrdning = null;
+    if (alltSvarat) {
+      for (const s of svarslista) {
+        if (klarTid === null || s.t > klarTid || (s.t === klarTid && s.ordning > klarOrdning)) {
+          klarTid = s.t;
+          klarOrdning = s.ordning;
+        }
+      }
+    }
     res.lag[id] = {
-      svarade: !!s,
-      val: s ? s.val : null,
-      ratt: arRatt,
-      tidMs: s ? s.tidMs : null,
+      antalMedlemmar: mm.length,
+      antalSvarat,
+      antalRatt,
+      alltSvarat,
+      allaRatt,
       rang: null,
       steg: 0,
       fran: mt.pos[id],
       till: mt.pos[id],
     };
-    if (arRatt) rattaLag.push(id);
+    if (allaRatt) klaraLag.push({ id, klarTid, klarOrdning });
   }
-  // Snabbhetsordning: server-ankomsttid, därefter ankomstordning (deterministiskt vid lika ms).
-  rattaLag.sort((a, b) => mt.svar[a].t - mt.svar[b].t || mt.svar[a].ordning - mt.svar[b].ordning);
-  rattaLag.forEach((id, i) => {
-    res.lag[id].rang = i + 1;
-    res.lag[id].steg = i < STEG_PER_RANG.length ? STEG_PER_RANG[i] : 1;
+  // Snabbhetsordning bland de klara lagen: klar-tid, därefter det globala
+  // svarsnumret för det avgörande (sista) svaret (deterministisk tie-break).
+  klaraLag.sort((a, b) => a.klarTid - b.klarTid || a.klarOrdning - b.klarOrdning);
+  klaraLag.forEach((x, i) => {
+    res.lag[x.id].rang = i + 1;
+    res.lag[x.id].steg = i < STEG_PER_RANG.length ? STEG_PER_RANG[i] : 1;
   });
+  const ordnade = klaraLag.map((x) => x.id);
   const grupper = [];
-  if (rattaLag[0]) grupper.push({ grupp: 1, steg: 3, gnagg: "stor", hovar: false, lag: [rattaLag[0]] });
-  if (rattaLag[1]) grupper.push({ grupp: 2, steg: 2, gnagg: "liten", hovar: false, lag: [rattaLag[1]] });
-  if (rattaLag.length > 2) grupper.push({ grupp: 3, steg: 1, gnagg: null, hovar: true, lag: rattaLag.slice(2) });
+  if (ordnade[0]) grupper.push({ grupp: 1, steg: 3, gnagg: "stor", hovar: false, lag: [ordnade[0]] });
+  if (ordnade[1]) grupper.push({ grupp: 2, steg: 2, gnagg: "liten", hovar: false, lag: [ordnade[1]] });
+  if (ordnade.length > 2) grupper.push({ grupp: 3, steg: 1, gnagg: null, hovar: true, lag: ordnade.slice(2) });
   for (const g of grupper) {
     for (const id of g.lag) {
       const r = res.lag[id];
@@ -625,10 +673,11 @@ function avslutaFraga(rum, now) {
     }
     res.rorelser.push({ grupp: g.grupp, steg: g.steg, gnagg: g.gnagg, hovar: g.hovar, lag: g.lag.slice() });
   }
-  if (rattaLag[0]) mt.tre[rattaLag[0]] += 1;
+  if (ordnade[0]) mt.tre[ordnade[0]] += 1;
   for (const id of rum.lagordning) {
-    const r = res.lag[id];
-    mt.tid[id] += r.ratt ? r.tidMs : f.svarstidMs;
+    const klar = klaraLag.find((x) => x.id === id);
+    // Klara lag: tiden till lagets sista svar. Övriga (fel eller ofullständigt): full straff-tid, som förut.
+    mt.tid[id] += klar ? Math.max(0, klar.klarTid - f.start) : f.svarstidMs;
   }
   mt.fragaNr += 1;
   mt.resultat = res;
@@ -786,6 +835,10 @@ export function vyFor(rum, aktor, now) {
   };
   vy.lag = rum.lagordning.map((id) => {
     const l = rum.lag[id];
+    // "svarat" (har svarat på den öppna/senast avslöjade frågan – ALDRIG vad):
+    // läraren ser det för alla lag, eleven bara för sitt eget lag (så att
+    // lagkompisars svarsval aldrig avslöjas, bara om de har svarat).
+    const visaSvarat = mt && mt.fraga && (arLarare || (p && p.lag === id));
     return {
       id,
       namn: avatarNamn(id),
@@ -794,7 +847,9 @@ export function vyFor(rum, aktor, now) {
       totalSteg: rum.totalSteg[id] || 0,
       medlemmar: l.medlemmar.map((sid) => {
         const s = rum.spelare[sid];
-        return arLarare ? { id: sid, namn: s.namn, ansluten: s.ansluten } : { namn: s.namn, ansluten: s.ansluten, jag: sid === aktor.spelarId };
+        const bas = arLarare ? { id: sid, namn: s.namn, ansluten: s.ansluten } : { namn: s.namn, ansluten: s.ansluten, jag: sid === aktor.spelarId };
+        if (visaSvarat) bas.svarat = !!mt.svar[sid];
+        return bas;
       }),
     };
   });
@@ -835,16 +890,22 @@ export function vyFor(rum, aktor, now) {
         mv.fraga.kalla = mt.fraga.kalla;
       }
     }
+    if (mt.fraga) {
+      // Lagstatus (bara ANTAL, aldrig vad eller om rätt, förrän avslöjat) – säkert
+      // att visa för alla lag, till både lärare och elever, under och efter frågan.
+      mv.lagStatus = rum.lagordning.map((id) => {
+        const mm = medlemmarAvLag(rum, id);
+        const antalSvarat = mm.filter((sid) => mt.svar[sid]).length;
+        return { lag: id, antalMedlemmar: mm.length, antalSvarat, klart: mm.length > 0 && antalSvarat === mm.length };
+      });
+      // Mitt EGET svar (bara mitt, aldrig lagkompisarnas) – finns kvar under avslöjandet också.
+      if (p && mt.svar[p.id]) mv.mittSvar = { val: mt.svar[p.id].val };
+    }
     if (mt.steg === "fraga") {
       const akt = aktivaLag(rum);
       mv.antalLag = rum.lagordning.length;
       mv.antalAktiva = akt.length;
-      mv.antalSvarat = Object.keys(mt.svar).length;
-      if (p && p.lag && mt.svar[p.lag]) {
-        const s = mt.svar[p.lag];
-        const av = rum.spelare[s.av];
-        mv.mittSvar = { val: s.val, av: av ? av.namn : "", jag: s.av === p.id };
-      }
+      mv.antalSvarat = mv.lagStatus.filter((x) => x.klart).length;
     }
     if (mt.resultat) {
       const r = mt.resultat;
@@ -852,7 +913,7 @@ export function vyFor(rum, aktor, now) {
       else {
         mv.resultat = { fragaNr: r.fragaNr, ratt: r.ratt, forklaring: r.forklaring, kalla: r.kalla, rorelser: r.rorelser, malNadd: r.malNadd, lag: {} };
         if (p && p.lag && r.lag[p.lag]) mv.resultat.lag[p.lag] = r.lag[p.lag];
-        mv.resultat.antalRatta = Object.values(r.lag).filter((x) => x.ratt).length;
+        mv.resultat.antalRatta = Object.values(r.lag).filter((x) => x.allaRatt).length;
       }
     }
     vy.match = mv;

@@ -9,6 +9,7 @@ import { LokalServer } from "./lokalserver.js";
 import { startaBotar } from "./bots.js";
 import { Ljud, LJUD } from "./sound.js";
 import { laddaUppsattningar, laddaFragor, tillFragameddelande } from "./data.js";
+import { skapaSlumpadeLag } from "./slumpa-lag.js";
 import { el, tom, param, lagra, lasa, radera, elevAdress, ingenRorelse, sov, sek, meddela, statusText } from "./ui.js";
 
 const $ = (id) => document.getElementById(id);
@@ -199,9 +200,9 @@ async function startaAnimation(vy) {
   for (const id of Object.keys(res.lag)) S.visadPos[id] = res.lag[id].fran;
   rendera();
   const snabb = ingenRorelse();
-  const nagon = Object.values(res.lag).some((x) => x.ratt);
+  const nagon = Object.values(res.lag).some((x) => x.allaRatt);
   S.ljud.spela(nagon ? "ratt" : "fel");
-  meddela("live", nagon ? "Rätt svar visas. Lagen flyttas fram." : "Ingen svarade rätt. Ingen flyttas fram.");
+  meddela("live", nagon ? "Rätt svar visas. Lag där alla svarade rätt flyttas fram." : "Inget lag fick alla rätt. Ingen flyttas fram.");
   await sov(snabb ? 500 : 900);
   for (const g of res.rorelser) {
     if (token !== S.animToken) return;
@@ -359,7 +360,9 @@ function byggLobby(vy) {
   const utan = $("utanLag");
   const ul = $("utanLagLista");
   tom(ul);
-  utan.hidden = !vy.utanLag || vy.utanLag.length === 0;
+  // I "Slumpa lag"-läge visas väntande elever i den panelen istället – annars blir det
+  // förvirrande med två parallella listor (manuell "Placera i lag …" + slumpa-lag-listan).
+  utan.hidden = !vy.utanLag || vy.utanLag.length === 0 || vy.inst.slumpLage;
   for (const p of vy.utanLag || []) {
     const sel = el("select", { "aria-label": "Placera " + p.namn + " i lag" });
     sel.append(el("option", { value: "" }, "Placera i lag …"));
@@ -376,6 +379,22 @@ function byggLobby(vy) {
         el("button", { type: "button", klass: "kbtn varning", "aria-label": "Ta bort " + p.namn, onclick: () => S.transport.skicka({ t: "ta_bort_spelare", spelarId: p.id }) }, "Ta bort")
       )
     );
+  }
+  // "Slumpa lag": knappen visar på/av; panelen visar väntande elever + knapp för att slumpa.
+  const btnS = $("btnSlumpaLag");
+  btnS.setAttribute("aria-pressed", String(!!vy.inst.slumpLage));
+  btnS.textContent = "🎲 Slumpa lag: " + (vy.inst.slumpLage ? "på" : "av");
+  const panel = $("slumpaLagPanel");
+  panel.hidden = !vy.inst.slumpLage;
+  if (vy.inst.slumpLage) {
+    const vantande = vy.utanLag || [];
+    $("slumpaLagAntal").textContent = vantande.length + " elev" + (vantande.length === 1 ? "" : "er") + " väntar på lag.";
+    const vl = tom($("slumpaLagVantarLista"));
+    for (const p of vantande) vl.append(el("li", null, p.namn + (p.ansluten ? "" : " (frånkopplad)")));
+    const btnSkapa = $("btnSkapaSlumpadeLag");
+    const totalt = vantande.length + vy.lag.reduce((a, l) => a + l.medlemmar.length, 0);
+    btnSkapa.disabled = totalt < 2;
+    btnSkapa.textContent = vy.lag.length > 0 ? "Slumpa om alla lag (" + totalt + " elever)" : "Skapa slumpade lag (" + vantande.length + " elever)";
   }
   // Ställning mellan matcher
   const st = $("lobbyStallning");
@@ -419,7 +438,7 @@ function byggBana(vy) {
     S.banaNyckel = nyckel;
     tom(bana);
     bana.style.setProperty("--n", String(n));
-    bana.style.gridTemplateRows = "auto repeat(" + vy.lag.length + ", minmax(36px, 1fr))";
+    bana.style.gridTemplateRows = "auto repeat(" + vy.lag.length + ", minmax(46px, 1fr))";
     const tal = el("div", { klass: "tal", "aria-hidden": "true" });
     for (let i = 0; i < n; i++) tal.append(el("span", { klass: i === L ? "mal" : "" }, i === 0 ? "Start" : i === L ? "MÅL" : String(i)));
     bana.append(el("div", { klass: "bana-linjal" }, el("div", { klass: "hornet" }, "Lag och steg"), tal));
@@ -429,12 +448,21 @@ function byggBana(vy) {
         el(
           "div",
           { klass: "bana-rad", role: "group", "data-lag": l.id },
-          el("div", { klass: "bana-etikett" }, el("span", { klass: "bana-namn" }, l.namn), el("span", { klass: "bana-p", hidden: true }), el("span", { klass: "bana-steg" }, "0")),
+          el(
+            "div",
+            { klass: "bana-etikett" },
+            el("span", { klass: "bana-namn" }, l.namn),
+            el("span", { klass: "bana-p", hidden: true }),
+            el("span", { klass: "bana-steg" }, "0"),
+            el("span", { klass: "bana-svarstatus", hidden: true })
+          ),
           spar
         )
       );
     }
   }
+  const status = m.lagStatus ? Object.fromEntries(m.lagStatus.map((x) => [x.lag, x])) : null;
+  const resLag = m.resultat ? m.resultat.lag : null;
   for (const l of vy.lag) {
     const rad = bana.querySelector('.bana-rad[data-lag="' + l.id + '"]');
     if (!rad) continue;
@@ -451,6 +479,18 @@ function byggBana(vy) {
       b.textContent = MEDALJ[Math.min(3, bo.g)] + " +" + bo.steg;
     } else b.hidden = true;
     rad.dataset.vinnare = m.klar && m.vinnare === l.id && !S.animerar ? "ja" : "nej";
+    // Svarsstatus per lag: under frågan bara ANTAL (aldrig om rätt); efter
+    // avslöjandet visas hur många av lagets medlemmar som svarade rätt.
+    const sv = rad.querySelector(".bana-svarstatus");
+    if (m.steg === "fraga" && status && status[l.id]) {
+      const st = status[l.id];
+      sv.hidden = false;
+      sv.textContent = st.antalSvarat + " av " + st.antalMedlemmar + " har svarat" + (st.klart ? " ✓" : "");
+    } else if (m.steg === "avslojad" && resLag && resLag[l.id]) {
+      const r = resLag[l.id];
+      sv.hidden = false;
+      sv.textContent = r.antalRatt + " av " + r.antalMedlemmar + " rätt" + (r.allaRatt ? " – alla rätt!" : !r.alltSvarat ? " (inte alla svarade)" : "");
+    } else sv.hidden = true;
   }
 }
 
@@ -491,16 +531,48 @@ function byggMatch(vy) {
   }
   $("tidbox").hidden = m.steg === "vantar";
   if (arFraga) {
-    $("svaratText").textContent = m.antalSvarat + " av " + m.antalAktiva + " lag har svarat";
+    $("svaratText").textContent = m.antalSvarat + " av " + m.antalAktiva + " lag klara (alla medlemmar svarat)";
+    if (S.senastSvarat !== m.antalSvarat) {
+      S.senastSvarat = m.antalSvarat;
+      if (m.antalSvarat > 0) meddela("live", m.antalSvarat + " av " + m.antalAktiva + " lag har nu alla medlemmar svarat.");
+    }
   } else if (visaRatt) {
     const r = m.resultat;
-    const svarade = Object.values(r.lag).filter((x) => x.svarade).length;
-    const ratta = Object.values(r.lag).filter((x) => x.ratt).length;
-    $("svaratText").textContent = svarade + " lag svarade, " + ratta + " rätt";
+    const alltSvarat = Object.values(r.lag).filter((x) => x.alltSvarat).length;
+    const allaRatt = Object.values(r.lag).filter((x) => x.allaRatt).length;
+    $("svaratText").textContent = allaRatt + " av " + vy.lag.length + " lag fick alla rätt (" + alltSvarat + " lag svarade fullt ut)";
     $("tidText").textContent = "Klart";
     $("tidFyll").style.width = "0%";
   }
+  byggLagStatusLista(vy);
   tickTimer();
+}
+
+/* Detaljerad, läsbar lista per lag (visas under frågekortet): hur många
+   av lagets medlemmar som har svarat (under frågan) eller svarade rätt
+   (efter avslöjandet). Aldrig facit-läckage – bara antal, aldrig VAD. */
+function byggLagStatusLista(vy) {
+  const list = $("lagStatusLista");
+  if (!list) return;
+  const m = vy.match;
+  tom(list);
+  if (m.steg !== "fraga" && m.steg !== "avslojad") {
+    list.hidden = true;
+    return;
+  }
+  list.hidden = false;
+  const resLag = m.resultat ? m.resultat.lag : null;
+  for (const l of vy.lag) {
+    let text;
+    if (m.steg === "avslojad" && resLag && resLag[l.id]) {
+      const r = resLag[l.id];
+      text = l.namn + ": " + r.antalRatt + " av " + r.antalMedlemmar + " rätt" + (r.allaRatt ? " – går fram " + r.steg + " steg" : r.alltSvarat ? " – går inte fram" : " – inte alla svarade i tid, går inte fram");
+    } else {
+      const st = (m.lagStatus || []).find((x) => x.lag === l.id);
+      text = l.namn + ": " + (st ? st.antalSvarat + " av " + st.antalMedlemmar : "0 av 0") + " har svarat" + (st && st.klart ? " – klara, väntar på övriga lag" : "");
+    }
+    list.append(el("li", { "data-lag": l.id }, text));
+  }
 }
 
 function tickTimer() {
@@ -623,6 +695,43 @@ function nastaFraga() {
   S.transport.skicka(tillFragameddelande(f));
 }
 
+/* ---------- Slumpa lag (lobbyfunktion, se js/slumpa-lag.js) ---------- */
+function vaxlaSlumpaLag() {
+  S.transport.skicka({ t: "installningar", slumpLage: !S.vy.inst.slumpLage });
+}
+
+function skapaSlumpaLagKlick() {
+  const vy = S.vy;
+  const harBefintligaLag = vy.lag.length > 0;
+  let omslumpa = false;
+  if (harBefintligaLag) {
+    omslumpa = confirm("Slumpa om ALLA lag? De nuvarande lagen försvinner och alla elever blandas om till nya, slumpade lag.");
+    if (!omslumpa) return;
+  }
+  let alla;
+  if (omslumpa) {
+    alla = [];
+    for (const l of vy.lag) for (const m of l.medlemmar) alla.push({ id: m.id, namn: m.namn });
+    for (const p of vy.utanLag || []) alla.push({ id: p.id, namn: p.namn });
+    for (const l of vy.lag) S.transport.skicka({ t: "ta_bort_lag", lag: l.id });
+  } else {
+    alla = (vy.utanLag || []).map((p) => ({ id: p.id, namn: p.namn }));
+  }
+  if (alla.length < 1) {
+    visaTillfalligtFel("Inga elever att slumpa lag för än.");
+    return;
+  }
+  const upptagna = omslumpa ? new Set() : new Set(vy.lag.map((l) => l.id));
+  const lediga = AVATARER.map((a) => a.id).filter((id) => !upptagna.has(id));
+  if (lediga.length === 0) {
+    visaTillfalligtFel("Alla avatarer är redan upptagna av befintliga lag.");
+    return;
+  }
+  const grupper = skapaSlumpadeLag(alla, lediga);
+  for (const g of grupper) for (const m of g.medlemmar) S.transport.skicka({ t: "flytta_spelare", spelarId: m.id, lag: g.avatar });
+  meddela("live", "Skapade " + grupper.length + " slumpade lag av " + alla.length + " elever.");
+}
+
 function nyOmgang() {
   if (S.vy.fas === "slut" || confirm("Starta en ny omgång? Poängen nollställs men lagen består.")) S.transport.skicka({ t: "ny_omgang" });
 }
@@ -733,6 +842,8 @@ function bindKontroller() {
     if (confirm("Avsluta matchen nu? Laget som ligger längst fram vinner.")) S.transport.skicka({ t: "slutfor_match" });
   });
   $("btnNyOmg").addEventListener("click", nyOmgang);
+  $("btnSlumpaLag").addEventListener("click", vaxlaSlumpaLag);
+  $("btnSkapaSlumpadeLag").addEventListener("click", skapaSlumpaLagKlick);
   $("btnDolj").addEventListener("click", () => visaKontroller(false));
   $("btnVisa").addEventListener("click", () => visaKontroller(true));
   $("btnKopiera").addEventListener("click", async () => {

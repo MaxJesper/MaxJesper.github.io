@@ -27,6 +27,7 @@ const S = {
   timer: null,
   valSkickat: null,
   status: "ansluter",
+  vantadeSlump: false, // satt när vi väntat på lärarens "Slumpa lag"
 };
 window.__hkElev = S;
 
@@ -134,6 +135,7 @@ function visaKodfraga() {
 }
 
 function nyVy(vy) {
+  const forra = S.vy;
   S.vy = vy;
   S.offset = vy.nu - Date.now();
   if (vy.jag) S.harHaftJag = true;
@@ -141,6 +143,15 @@ function nyVy(vy) {
     // Återanslutning där servern inte känner igen id:t (t.ex. nytt rum): gå med igen med sparat namn
     S.autoHej = true;
     S.transport.skicka({ t: "hej", namn: S.namn });
+  }
+  if (vy.jag && !vy.jag.lag && vy.inst.slumpLage && vy.fas === "lobby") S.vantadeSlump = true;
+  // Läraren har just slumpat fram lag och placerat mig i ett – meddela det tydligt (en gång).
+  if (S.vantadeSlump && vy.jag && vy.jag.lag && (!forra || !forra.jag || !forra.jag.lag)) {
+    S.vantadeSlump = false;
+    const lag = vy.lag.find((l) => l.id === vy.jag.lag);
+    const kamrater = lag ? lag.medlemmar.filter((m) => !m.jag).map((m) => m.namn) : [];
+    const vilka = kamrater.length ? " tillsammans med " + kamrater.join(", ") : " (du är ensam i laget)";
+    meddela("live", "Ni har delats in i lag. Du är nu i laget " + avatarNamn(vy.jag.lag) + vilka + ".");
   }
   rendera();
 }
@@ -166,6 +177,7 @@ function byggLagremsa(vy) {
 function vyTyp(vy) {
   if (!vy.jag) return "gaMed";
   if (vy.fas === "slut") return "slut";
+  if (!vy.jag.lag && vy.inst.slumpLage && vy.fas === "lobby") return "vantaSlump";
   if (!vy.jag.lag || S.visaLagval) return "valjLag";
   if (vy.fas === "lobby") return "lobby";
   const m = vy.match;
@@ -178,8 +190,16 @@ function rendera() {
   if (!vy) return;
   byggLagremsa(vy);
   const typ = vyTyp(vy);
-  const medl = JSON.stringify(vy.lag.map((l) => [l.id, l.medlemmar.map((m) => m.namn + (m.jag ? "*" : "") + (m.ansluten ? "" : "-"))]));
-  const nyckel = typ + (typ === "valjLag" || typ === "lobby" || typ === "slut" || typ === "gaMed" ? "|" + medl + "|" + (vy.matchNr + "" + vy.fas) : "") + (vy.match && vy.match.pall ? "P" : "");
+  const medl = JSON.stringify(vy.lag.map((l) => [l.id, l.medlemmar.map((m) => m.namn + (m.jag ? "*" : "") + (m.ansluten ? "" : "-") + (m.svarat ? "R" : "0"))]));
+  const nyckel =
+    typ +
+    "|" +
+    medl +
+    "|" +
+    (vy.matchNr + "" + vy.fas) +
+    "|u" +
+    (vy.antalUtanLag === undefined ? "" : vy.antalUtanLag) +
+    (vy.match && vy.match.pall ? "P" : "");
   if (nyckel === S.nyckel) {
     uppdateraLatt(vy);
     return;
@@ -190,6 +210,7 @@ function rendera() {
   clearInterval(S.timer);
   S.timer = null;
   if (typ === "gaMed") byggGaMed(vy);
+  else if (typ === "vantaSlump") byggVantaSlump(vy);
   else if (typ === "valjLag") byggValjLag(vy);
   else if (typ === "lobby") byggLobby(vy);
   else if (typ === "slut") byggSlut(vy);
@@ -278,6 +299,14 @@ function valjLag(id) {
   meddela("live", "Valde laget " + avatarNamn(id));
 }
 
+/* --- väntar på "Slumpa lag" --- */
+function byggVantaSlump(vy) {
+  const inn = tom($("innehall"));
+  inn.append(el("h2", { id: "vyRubrik", tabindex: "-1" }, "Väntar på lagindelningen"));
+  inn.append(el("p", null, "Hej " + vy.jag.namn + "! Läraren delar in er i lag automatiskt (Slumpa lag). Du behöver inte välja något – vänta bara, du hamnar i ett lag om en liten stund."));
+  if (vy.antalUtanLag !== undefined) inn.append(el("p", { klass: "liten", role: "status" }, vy.antalUtanLag + " elev" + (vy.antalUtanLag === 1 ? "" : "er") + " väntar (du också inräknad)."));
+}
+
 /* --- lobby --- */
 function byggLobby(vy) {
   const inn = tom($("innehall"));
@@ -307,6 +336,18 @@ function stallningsremsa(vy) {
   return ul;
 }
 
+/* Text om lagkompisarnas svarsstatus (aldrig VAD de svarat, bara OM).
+   null om laget bara har en medlem (ingen att vänta på). */
+function lagkompisStatus(vy) {
+  const l = vy.lag.find((x) => x.id === vy.jag.lag);
+  if (!l || l.medlemmar.length <= 1) return null;
+  const andra = l.medlemmar.filter((m) => !m.jag);
+  const vantar = andra.filter((m) => !m.svarat).map((m) => m.namn);
+  const klara = andra.filter((m) => m.svarat).map((m) => m.namn);
+  if (vantar.length === 0) return "Alla i laget har svarat.";
+  return "Väntar på: " + vantar.join(", ") + (klara.length ? " (" + klara.join(", ") + " har redan svarat)" : "") + ".";
+}
+
 /* --- match --- */
 function alternativLista(vy, lage) {
   const m = vy.match;
@@ -315,21 +356,20 @@ function alternativLista(vy, lage) {
   f.alternativ.forEach((text, i) => {
     let val = "";
     let markering = "";
-    let arVald = m.mittSvar && m.mittSvar.val === i;
+    // Markeringen visar alltid bara MITT EGET svar – aldrig lagkompisarnas
+    // (laget kan ha flera svar, och det finns ingen "lagets svar" längre).
+    const arVald = m.mittSvar && m.mittSvar.val === i;
     if (lage === "avslojad") {
-      const r = m.resultat;
-      const mitt = r.lag[vy.jag.lag];
-      arVald = mitt && mitt.svarade && mitt.val === i;
       if (f.ratt === i) {
         val = "ratt";
         markering = "✓ Rätt svar";
       } else if (arVald) {
         val = "fel";
-        markering = "✗ Ert svar";
+        markering = "✗ Ditt svar";
       }
     } else if (arVald) {
       val = "vald";
-      markering = "🔒 Ert svar";
+      markering = "🔒 Ditt svar";
     }
     const b = el(
       "button",
@@ -407,34 +447,41 @@ function byggMatch(vy) {
     );
     inn.append(tidsrad(vy));
     inn.append(alternativLista(vy, m.mittSvar ? "last" : "fraga"));
+    const kompisStatus = lagkompisStatus(vy);
     if (m.mittSvar) {
       const b = BOKSTAV[m.mittSvar.val];
-      inn.append(el("p", { klass: "last", id: "lastStatus", role: "status" }, "🔒 Svar låst: " + b + (m.mittSvar.jag ? "" : " (av " + m.mittSvar.av + ")") + " – väntar på de andra …"));
+      inn.append(el("p", { klass: "last", id: "lastStatus", role: "status" }, "🔒 Ditt svar: " + b + " – " + (kompisStatus || "väntar på resultatet …")));
     } else {
-      inn.append(el("p", { klass: "liten", id: "lastStatus", role: "status" }, "Första svaret från någon i laget gäller för hela laget."));
+      inn.append(
+        el(
+          "p",
+          { klass: "liten", id: "lastStatus", role: "status" },
+          "Alla i laget måste svara rätt för att laget ska gå fram." + (kompisStatus ? " " + kompisStatus : "")
+        )
+      );
     }
     if (m.pausad) inn.append(el("p", { klass: "notis" }, "Spelet är pausat av läraren."));
     return;
   }
   if (m.steg === "avslojad") {
     const r = m.resultat;
-    const mitt = r.lag[vy.jag.lag] || { svarade: false, ratt: false, steg: 0 };
+    const mitt = r.lag[vy.jag.lag] || { antalMedlemmar: 0, antalSvarat: 0, antalRatt: 0, alltSvarat: false, allaRatt: false, steg: 0 };
     let klass, rubrik, rad;
-    if (mitt.ratt) {
+    if (mitt.allaRatt) {
       klass = "ratt";
-      rubrik = "✓ Rätt!";
+      rubrik = mitt.antalMedlemmar > 1 ? "✓ Alla i laget svarade rätt!" : "✓ Rätt!";
       rad = mitt.rang === 1 ? "Ni blev nr 1 → +3 steg 🥇" : mitt.rang === 2 ? "Ni blev nr 2 → +2 steg 🥈" : "Ni svarade rätt, men " + (mitt.rang - 1) + " lag var snabbare → +1 steg 🥉";
       try {
         if (navigator.vibrate) navigator.vibrate(80);
       } catch (e) {}
-    } else if (mitt.svarade) {
-      klass = "fel";
-      rubrik = "✗ Fel";
-      rad = "Ert svar var " + BOKSTAV[mitt.val] + ". 0 steg.";
-    } else {
+    } else if (!mitt.alltSvarat) {
       klass = "inget";
-      rubrik = "– Inget svar";
-      rad = "Ni hann inte svara. 0 steg.";
+      rubrik = mitt.antalMedlemmar > 1 ? "– Inte alla hann svara" : "– Inget svar";
+      rad = mitt.antalMedlemmar > 1 ? mitt.antalSvarat + " av " + mitt.antalMedlemmar + " i laget svarade i tid. Alla måste svara rätt. 0 steg." : "Ni hann inte svara. 0 steg.";
+    } else {
+      klass = "fel";
+      rubrik = mitt.antalMedlemmar > 1 ? "✗ Inte alla svarade rätt" : "✗ Fel";
+      rad = mitt.antalMedlemmar > 1 ? mitt.antalRatt + " av " + mitt.antalMedlemmar + " i laget svarade rätt. Alla måste ha rätt. 0 steg." : "Ert svar var fel. 0 steg.";
     }
     inn.append(el("h2", { id: "vyRubrik", tabindex: "-1", klass: "sr-only" }, "Resultat för fråga " + f.nr));
     inn.append(el("div", { klass: "fragakort" }, el("p", { klass: "fraganr" }, "Fråga " + f.nr), el("p", { klass: "fragetext", stil: "font-size:1.1rem" }, f.text)));

@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Matens kemi – studieguide.css (områdets EGNA tillägg, läses in av bygg_studieguide.py)
+   --------------------------------------------------------------------------
+   Ombyggnad efter Jespers pedagogiska feedback (22 sep 2026): fördjupningsrutor och en
+   liten tabell för de förenklade sockerformlerna. Se OVERLAMNING.md, avsnittet
+   "Ombyggnad efter Jespers feedback".
+
+   .deepen ÅTERANVÄNDER den sitewide, redan tillgänglighetstestade fördjupningskomponenten
+   (samma klass som t.ex. kol-och-kolföreningar och kemi-som-ämne använder, se css/style.css
+   för .deepen > summary .listen-btn-integrationen och js/lyssna.js som automatiskt lägger en
+   "Lyssna"-knapp på varje <details class="deepen">). Det är en MEDVETEN AVVIKELSE från uppdragets
+   instruktion att skapa en ny klass `.fordjupning` – se OVERLAMNING.md för motivering
+   (samma pedagogiska syfte: fällbar extra fördjupning MED facit/förklaring, till skillnad från
+   `.wonder` som är öppna frågor utan facit; att återanvända `.deepen` ger gratis
+   tangentbords-/skärmläsarstöd och ljuduppläsning som en helt ny klass inte skulle få).
+   ========================================================================== */
+
+.deepen {
+  background: #fffbe7; border-left: 4px solid #b45309; border-radius: 6px;
+  padding: 0.7rem 0.95rem; margin: 0.9rem 0; font-size: 0.96rem;
+}
+.deepen > summary {
+  cursor: pointer; list-style: none; font-weight: 700; color: #7a4a06;
+  font-size: 0.88rem; letter-spacing: 0.5px; padding: 0.1rem 0; gap: 0.4rem; flex-wrap: wrap;
+}
+.deepen > summary::-webkit-details-marker { display: none; }
+.deepen > summary::before { content: "🔍 Fördjupning: "; }
+.deepen > summary::after { content: " ▾"; }
+.deepen[open] > summary::after { content: " ▴"; }
+.deepen > summary ~ * { margin-top: 0.6rem; }
+.deepen > summary:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.deepen > summary .listen-btn { min-height: 28px; padding: 0.3rem 0.65rem; }
+details.deepen { scroll-margin-top: 0.75rem; }
+
+/* Tabell: förenklade formler för mono-/disackarider (M1) */
+.sugar-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 0.9rem 0; }
+.sugar-table th, .sugar-table td { border: 1px solid #d8d8d8; padding: 0.45rem 0.65rem; text-align: left; vertical-align: top; }
+.sugar-table th { background: #fff7ed; color: #9a3412; font-weight: 700; }
+.sugar-table caption { text-align: left; font-size: 0.85rem; color: #4a4a5a; padding-bottom: 0.35rem; }
+.sugar-table .sf { font-family: "Cambria Math", Georgia, serif; white-space: nowrap; }
+.sugar-table tr:nth-child(even) td { background: #fafafa; }
+
+/* Funktionslista för proteiner (M3): fyra funktionstyper med exempel, ord först */
+.fn-list { list-style: none; margin: 0.8rem 0; padding: 0; display: grid; gap: 0.6rem; }
+.fn-list li { background: #fafafa; border: 1px solid #e2e2e2; border-radius: 8px; padding: 0.55rem 0.8rem; }
+.fn-list strong.fn-typ { color: #9a3412; display: inline-block; margin-right: 0.3rem; }
+
+/* Sidokolumnen (.m-side) är smal (370px) - se till att .viktigt inte känns trång där. */
+.guide-wide .m-side .viktigt { font-size: 0.92rem; padding: 0.65rem 0.85rem; gap: 0.6rem; }

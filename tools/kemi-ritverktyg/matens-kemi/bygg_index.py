@@ -10,17 +10,16 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 OUT = os.path.join(ROOT, "kemi", "matens-kemi", "index.html")
 
 CONCEPTS = [
-    "Fotosyntes", "Cellandning", "Kolhydrat", "Monosackarid", "Disackarid",
+    "Kolhydrat", "Monosackarid", "Disackarid",
     "Polysackarid", "Stärkelse", "Cellulosa", "Glykogen", "Fettsyra",
     "Mättat fett", "Omättat fett", "Protein", "Aminosyra", "Essentiell aminosyra",
 ]
 
 MILESTONES = [
-    ("m1", "Fotosyntes och cellandning"),
-    ("m2", "Kolhydrater – druvsocker till stärkelse"),
-    ("m3", "Fetter – uppbyggnad och energi"),
-    ("m4", "Proteiner – aminosyror och enzymer"),
-    ("m5", "Sammanfattning – energilager i naturen"),
+    ("m1", "Kolhydrater – druvsocker till stärkelse"),
+    ("m2", "Fetter – uppbyggnad och energi"),
+    ("m3", "Proteiner – aminosyror och funktion"),
+    ("m4", "Sammanfattning – energilager, vitaminer och mineraler"),
 ]
 
 HTML = """<!DOCTYPE html>
@@ -163,7 +162,7 @@ HTML = """<!DOCTYPE html>
     <div class="area-right">
       <figure class="area-hero-image">
         <figcaption>
-          All mat är uppbyggd av kemiska ämnen. De tre stora <strong>makromolekylerna</strong> – kolhydrater, fetter och proteiner – byggs av små byggstenar (druvsocker, glycerol och fettsyror, aminosyror) som kopplas ihop till långa kedjor. Växter tillverkar byggstenarna genom fotosyntesen; alla celler frigör energi ur dem genom cellandning.
+          All mat är uppbyggd av kemiska ämnen. De tre stora <strong>makromolekylerna</strong> – kolhydrater, fetter och proteiner – byggs av små byggstenar (druvsocker, glycerol och fettsyror, aminosyror) som kopplas ihop till långa kedjor.
         </figcaption>
       </figure>
 
@@ -188,7 +187,6 @@ HTML = """<!DOCTYPE html>
     <details>
       <summary>Inläsningstips</summary>
       <ul>
-        <li>Lär dig ordekvationerna för fotosyntes och cellandning – de är varandras motsatser.</li>
         <li>Kunna skilja mono-, di- och polysackarider åt, och veta att både stärkelse och cellulosa är uppbyggda av <strong>glukos</strong> (inte fruktos).</li>
         <li>Kunna rita/beskriva ett fetts uppbyggnad: glycerol + tre fettsyror. Fettets alkohol är alltid glycerol, aldrig butanol.</li>
         <li>Veta att mättat/omättat fett avgörs av antalet dubbelbindningar i fettsyrans kolkedja.</li>

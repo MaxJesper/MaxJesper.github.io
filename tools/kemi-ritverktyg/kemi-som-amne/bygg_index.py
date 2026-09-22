@@ -19,17 +19,16 @@ css += "\n    .study-tips a { text-decoration: underline; }\n"
 css += r'''
     /* ---------- Kemikartan ---------- */
     .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
-    .kemikarta { margin: 0.5rem 0 1.5rem; }
-    .karta { container-type:inline-size; position:relative; width:100%; max-width:1040px; margin:0 auto; aspect-ratio:1040/820; background:var(--area-soft); border:1px solid var(--area-border); border-radius:18px; }
-    .karta svg.bana { position:absolute; inset:0; width:100%; height:100%; }
-    .karta-mitt { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:23%; aspect-ratio:1; border-radius:50%; background:var(--area-strong); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1rem; box-shadow:0 6px 20px rgba(55,48,163,.35); }
+    .kemikarta { container-type:inline-size; margin:0; min-width:0; }
+    .karta { container-type:inline-size; position:relative; width:100%; max-width:780px; margin:0 auto; aspect-ratio:780/600; background:var(--area-soft); border:1px solid var(--area-border); border-radius:18px; }
+    .karta-mitt { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:24%; aspect-ratio:1; border-radius:50%; background:var(--area-strong); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:1rem; box-shadow:0 6px 20px rgba(55,48,163,.35); }
     .karta-mitt strong { font-size:clamp(1.1rem,2.6vw,1.9rem); line-height:1.1; }
     .karta-mitt span { font-size:clamp(.72rem,1.2vw,.92rem); margin-top:.4rem; }
     .karta ol { list-style:none; margin:0; padding:0; }
-    .karta .st { position:absolute; width:max(112px, 14.4cqw); transform:translate(-50%,-50%); text-align:center; margin:0; }
+    .karta .st { position:absolute; width:max(112px, 15cqw); transform:translate(-50%,-50%); text-align:center; margin:0; }
     .karta .st a { display:block; text-decoration:none; color:#1a1a2e; border-radius:12px; }
     .karta .st a:focus-visible { outline:3px solid #1d4ed8; outline-offset:4px; }
-    .karta .disc { position:relative; display:flex; align-items:center; justify-content:center; width:clamp(76px, 10cqw, 104px); height:clamp(76px, 10cqw, 104px); margin:0 auto; border-radius:50%; background:#fff; border:4px solid var(--area); }
+    .karta .disc { position:relative; display:flex; align-items:center; justify-content:center; width:clamp(76px, 11cqw, 100px); height:clamp(76px, 11cqw, 100px); margin:0 auto; border-radius:50%; background:#fff; border:4px solid var(--area); }
     .karta .g2 .disc { border-style:double; border-width:7px; }
     .karta .g3 .disc { border-style:dashed; }
     .karta .g4 .disc { border-style:dotted; }
@@ -39,19 +38,23 @@ css += r'''
     .karta .pikto4 { display:grid; grid-template-columns:1fr 1fr; gap:1px; width:78%; }
     .karta .pikto4 img { width:100%; max-width:none; max-height:none; mix-blend-mode:normal; }
     .karta .num { position:absolute; left:-8px; top:-8px; width:clamp(26px, 3.1cqw, 32px); height:clamp(26px, 3.1cqw, 32px); border-radius:50%; background:var(--area-strong); color:#fff; font-weight:800; font-size:1rem; display:flex; align-items:center; justify-content:center; border:2px solid #fff; }
-    .karta .ttl { display:block; margin-top:.35rem; font-weight:700; font-size:clamp(.82rem, 1.6cqw, .95rem); line-height:1.2; color:var(--area-strong); }
+    .karta .ttl { display:block; margin-top:.35rem; font-weight:700; font-size:clamp(.88rem, 1.8cqw, .98rem); line-height:1.2; color:var(--area-strong); }
     .karta .hook { display:none; font-size:.9rem; color:#333a4a; }
     .karta .st a:hover .ttl { text-decoration:underline; }
     .karta .st a:hover .disc { background:var(--area-hover); }
     .karta .grp { display:none; }
     .karta-legend { font-size:.9rem; color:#333a4a; margin:.6rem 0 0; text-align:center; }
-    /* Lodrät stig på smal skärm och vid utskrift */
-    @media (max-width: 860px), print {
+    /* Kartan ligger först i DOM (samma ordning som på smal skärm); på bred skärm hamnar materialkolumnen till vänster och kartan till höger, uppe i höjd med kolumnen */
+    @media (min-width: 960px) {
+      .area-layout { grid-template-areas: "main map" "main begr"; grid-template-rows: auto 1fr; }
+      .area-layout > .kemikarta { grid-area: map; }
+      .area-layout > .area-main { grid-area: main; }
+      .area-layout > .area-right { grid-area: begr; }
+    }
+    /* Lodrät stig när kartans kolumn är smal (container query på .kemikarta) och vid utskrift */
+    @container (max-width: 759px) {
       .karta { aspect-ratio:auto; background:transparent; border:0; border-radius:0; }
-      .karta svg.bana { display:none; }
       .karta-mitt { position:static; transform:none; width:auto; aspect-ratio:auto; border-radius:16px; margin:0 0 1rem; padding:.8rem; }
-      .karta ol { position:relative; }
-      .karta ol::before { content:""; position:absolute; left:41px; top:20px; bottom:20px; border-left:3px dashed var(--area-border); }
       .karta .st { position:relative; left:auto !important; width:auto !important; top:auto !important; transform:none; width:auto; text-align:left; margin:0 0 .5rem; break-inside:avoid; }
       .karta .st a { display:flex; gap:.8rem; align-items:center; background:#fff; border:1px solid var(--area-border); border-radius:14px; padding:.5rem .7rem .5rem .5rem; position:relative; }
       .karta .disc { width:72px; height:72px; margin:0; flex:0 0 72px; border-width:4px; }
@@ -62,7 +65,21 @@ css += r'''
       .karta .hook { display:block; }
       .karta .grp { display:block; width:fit-content; position:relative; background:#fff; padding:.1rem .5rem .1rem 0; margin:1rem 0 .3rem; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:var(--area-strong); break-after:avoid; }
     }
-    @media print { .karta-mitt { background:#fff; color:#000; border:2px solid #000; box-shadow:none; } }
+    @media print {
+      .karta { aspect-ratio:auto; background:transparent; border:0; border-radius:0; }
+      .karta-mitt { position:static; transform:none; width:auto; aspect-ratio:auto; border-radius:16px; margin:0 0 1rem; padding:.8rem; }
+      .karta .st { position:relative; left:auto !important; width:auto !important; top:auto !important; transform:none; width:auto; text-align:left; margin:0 0 .5rem; break-inside:avoid; }
+      .karta .st a { display:flex; gap:.8rem; align-items:center; background:#fff; border:1px solid var(--area-border); border-radius:14px; padding:.5rem .7rem .5rem .5rem; position:relative; }
+      .karta .disc { width:72px; height:72px; margin:0; flex:0 0 72px; border-width:4px; }
+      .karta .g2 .disc { border-width:6px; }
+      .karta .num { width:28px; height:28px; font-size:.9rem; }
+      .karta .ttl { font-size:1.05rem; }
+      .karta .ttl { margin:0; font-size:1.05rem; }
+      .karta .hook { display:block; }
+      .karta .grp { display:block; width:fit-content; position:relative; background:#fff; padding:.1rem .5rem .1rem 0; margin:1rem 0 .3rem; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; font-weight:800; color:var(--area-strong); break-after:avoid; }
+    }
+    @media print { .kemikarta { display:block; }
+    .karta-mitt { background:#fff; color:#000; border:2px solid #000; box-shadow:none; } }
 '''
 assert "area-amne" in css
 
@@ -102,7 +119,7 @@ STATIONER = [
 ]
 assert len(STATIONER) == 10
 import math
-CX, CY, RX, RY, VW, VH = 520, 410, 390, 290, 1040, 820
+CX, CY, RX, RY, VW, VH = 390, 300, 298, 218, 780, 600
 kartpunkter, senaste = "", 0
 for i, (titel, del_, bild, hook) in enumerate(STATIONER, 1):
     v = math.radians(-90 + (i - 1) * 36)
@@ -136,18 +153,17 @@ body = f'''<body class="area-amne">
 
     <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
 
+
+    <section class="area-layout">
     <section class="kemikarta" aria-labelledby="karta-h">
       <h2 id="karta-h" class="sr-only">Kemikartan: tio stationer i Ämnet kemi</h2>
       <div class="karta">
-        <svg class="bana" viewBox="0 0 1040 820" aria-hidden="true" focusable="false"><ellipse cx="520" cy="410" rx="390" ry="290" fill="none" stroke="#818cf8" stroke-width="4" stroke-dasharray="4 12" stroke-linecap="round"/></svg>
-        <div class="karta-mitt"><strong>Ämnet kemi</strong><span>Börja på 1 och följ stigen medurs</span></div>
+        <div class="karta-mitt"><strong>Ämnet kemi</strong><span>Börja på 1 och följ siffrorna</span></div>
         <ol>{kartpunkter}
         </ol>
       </div>
       <p class="karta-legend">Kantlinjen visar vilken del stationen hör till: heldragen = <strong>Börja här</strong>, dubbel = <strong>Arbeta säkert</strong>, streckad = <strong>I labbet</strong>, prickad = <strong>Kemi i världen</strong>. Klicka på en station för att komma till samma milstolpe i studieguiden.</p>
     </section>
-
-    <section class="area-layout">
       <div class="area-main">
         <section class="resource-grid">
           <article class="resource-box">

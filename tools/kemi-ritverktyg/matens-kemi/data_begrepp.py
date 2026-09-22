@@ -15,41 +15,7 @@ LANGS = ['am', 'ar', 'bs', 'en', 'es', 'fa', 'pl', 'ps', 'rw', 'so', 'ur']
 # KÄRNBEGREPP: namn (svenska) -> {"m": milstolpe, "def": svensk definition, "i18n": {lang: (namn, definition)}}
 # ----------------------------------------------------------------------------------------------
 BEGREPP = {
- "Fotosyntes": {"m": "m1",
-   "def": "Processen där gröna växter bygger druvsocker (glukos) av koldioxid och vatten med hjälp av "
-          "ljusenergi. Syrgas bildas som en biprodukt. Ordekvation: koldioxid + vatten + ljusenergi → "
-          "druvsocker + syrgas.",
-   "i18n": {
-    "en": ("Photosynthesis", "The process where green plants build glucose from carbon dioxide and water using light energy, releasing oxygen gas."),
-    "es": ("Fotosíntesis", "El proceso por el que las plantas verdes fabrican glucosa a partir de dióxido de carbono y agua usando energía luminosa, liberando oxígeno."),
-    "pl": ("Fotosynteza", "Proces, w którym rośliny zielone budują glukozę z dwutlenku węgla i wody, wykorzystując energię światła, uwalniając przy tym tlen."),
-    "bs": ("Fotosinteza", "Proces u kojem zelene biljke grade glukozu od ugljik-dioksida i vode uz pomoć svjetlosne energije, pri čemu se oslobađa kisik."),
-    "ar": ("التمثيل الضوئي", "العملية التي تبني بها النباتات الخضراء الجلوكوز من ثاني أكسيد الكربون والماء باستخدام طاقة الضوء، مع إطلاق الأكسجين."),
-    "fa": ("فتوسنتز", "فرآیندی که در آن گیاهان سبز با استفاده از انرژی نور، گلوکز را از دی‌اکسید کربن و آب می‌سازند و اکسیژن آزاد می‌شود."),
-    "ur": ("فوٹو سنتھیسز", "وہ عمل جس میں سبز پودے روشنی کی توانائی سے کاربن ڈائی آکسائیڈ اور پانی سے گلوکوز بناتے ہیں اور آکسیجن خارج ہوتی ہے۔"),
-    "ps": ("رڼا لخوا جوړونه (فوتوسنتیز)", "هغه پروسه چې ژېړ ونې د رڼا انرژي په مرسته د کاربن ډای اکساید او اوبو څخه glukos جوړوي او آکسیجن خوشې کوي."),
-    "so": ("Iftiin-dhaliska", "Habka geedaha cagaaran ku dhisaan sonkorta (glucose) oo ka kooban kaarbon laba ogsaydh iyo biyo, iyagoo isticmaalaya tamarta iftiinka, oo soo saara ogsijiin."),
-    "am": ("ፎቶሲንተሲስ", "አረንጓዴ ተክሎች የፀሐይ ብርሃን ኃይል ተጠቅመው ካርቦን ዳይኦክሳይድና ውሃን ግሉኮስ የሚሠሩበት ሂደት ሲሆን ኦክስጅን ያመነጫል።"),
-    "rw": ("Fotosentezi", "Inzira ibimera bibisi byubakiramo isukari (glucose) bivuye muri gaze ya karubone n'amazi, bakoresheje imbaraga z'urumuri, bikavamo ogisijeni."),
-   }},
- "Cellandning": {"m": "m1",
-   "def": "Processen där celler bryter ner druvsocker med hjälp av syrgas för att frigöra energi som "
-          "kroppen kan använda. Koldioxid och vatten bildas. Ordekvation: druvsocker + syrgas → "
-          "koldioxid + vatten + energi. Cellandningen är alltså fotosyntesens motsats.",
-   "i18n": {
-    "en": ("Cellular respiration", "The process where cells break down glucose using oxygen to release usable energy, forming carbon dioxide and water — the reverse of photosynthesis."),
-    "es": ("Respiración celular", "El proceso por el que las células descomponen la glucosa con oxígeno para liberar energía utilizable, formando dióxido de carbono y agua; lo contrario de la fotosíntesis."),
-    "pl": ("Oddychanie komórkowe", "Proces, w którym komórki rozkładają glukozę przy użyciu tlenu, uwalniając energię oraz dwutlenek węgla i wodę – odwrotność fotosyntezy."),
-    "bs": ("Stanično disanje", "Proces u kojem stanice razgrađuju glukozu uz pomoć kisika kako bi oslobodile energiju, pri čemu nastaju ugljik-dioksid i voda – suprotno fotosintezi."),
-    "ar": ("التنفس الخلوي", "العملية التي تفكك بها الخلايا الجلوكوز باستخدام الأكسجين لإطلاق الطاقة، وينتج عنها ثاني أكسيد الكربون والماء – عكس التمثيل الضوئي."),
-    "fa": ("تنفس سلولی", "فرآیندی که در آن سلول‌ها گلوکز را با اکسیژن تجزیه می‌کنند تا انرژی آزاد شود؛ دی‌اکسید کربن و آب تولید می‌شود، برعکس فتوسنتز."),
-    "ur": ("خلوی تنفس", "وہ عمل جس میں خلیے آکسیجن کی مدد سے گلوکوز کو توڑ کر توانائی حاصل کرتے ہیں، کاربن ڈائی آکسائیڈ اور پانی بنتا ہے — فوٹو سنتھیسز کا الٹ۔"),
-    "ps": ("د حجرو تنفس", "هغه پروسه چې حجرې د اکسیجن په مرسته glukos ماتوي ترڅو انرژي خوشې کړي؛ کاربن ډای اکساید او اوبه جوړېږي، دا د فوتوسنتیز برعکس دی."),
-    "so": ("Neefsashada unugyada", "Habka unugyadu ku burburiyaan sonkorta iyagoo isticmaalaya ogsijiinta si ay u soo saaraan tamar, waxaana soo baxa kaarbon laba ogsaydh iyo biyo – ka soo horjeeda iftiin-dhaliska."),
-    "am": ("የሕዋስ ትንፋሽ", "ሕዋሳት ኦክስጅንን ተጠቅመው ግሉኮስን ሰብረው ጉልበት የሚያመነጩበት ሂደት ሲሆን ካርቦን ዳይኦክሳይድና ውሃ ይፈጠራል – የፎቶሲንተሲስ ተቃራኒ።"),
-    "rw": ("Kuboneza umwuka mu ngirabuzimafatizo", "Inzira ingirabuzimafatizo zisenyeramo isukari zikoresheje ogisijeni kugira ngo zibone imbaraga, hakavamo gaze ya karubone n'amazi – ni ikinyuranyo cya fotosentezi."),
-   }},
- "Kolhydrat": {"m": "m2",
+ "Kolhydrat": {"m": "m1",
    "def": "Ett näringsämne uppbyggt av kol, väte och syre, byggt av en eller flera sockerenheter. "
           "Kolhydrater är kroppens viktigaste energikälla och delas in i monosackarider, disackarider "
           "och polysackarider.",
@@ -66,7 +32,7 @@ BEGREPP = {
     "am": ("ካርቦሃይድሬት", "ከካርቦን፣ ሃይድሮጅንና ኦክስጅን የተሠራ ንጥረ ነገር ሲሆን ከአንድ ወይም ከበርካታ ስኳር ክፍሎች የተገነባ ነው፤ የሰውነት ዋና የኃይል ምንጭ።"),
     "rw": ("Karubohidarati", "Intungamubiri igizwe na karubone, hidrogene na ogisijeni, igizwe n'agace kamwe cyangwa menshi k'isukari; ni yo soko nyamukuru y'imbaraga mu mubiri."),
    }},
- "Monosackarid": {"m": "m2",
+ "Monosackarid": {"m": "m1",
    "def": "Den enklaste sortens kolhydrat – en enda sockerenhet som inte kan delas upp i mindre "
           "sockerdelar. Glukos, fruktos och galaktos är exempel, och alla tre har samma molekylformel "
           "C6H12O6 men olika uppbyggnad.",
@@ -83,7 +49,7 @@ BEGREPP = {
     "am": ("ሞኖሳካራይድ", "ቀላሉ የካርቦሃይድሬት ዓይነት – ወደ ትንሽ ስኳር መከፋፈል የማይችል አንድ የስኳር ክፍል፣ ለምሳሌ ግሉኮስ፣ ፍሩክቶስ እና ጋላክቶስ (ሁሉም C6H12O6 ግን የተለየ አገነባብ)።"),
     "rw": ("Monosakaridi", "Ubwoko bworoshye bw'isukari — agace kamwe k'isukari kadashobora kongera kugabanywamo; urugero glucose, fructose na galactose (byose C6H12O6, ariko byubatswe ukundi)."),
    }},
- "Disackarid": {"m": "m2",
+ "Disackarid": {"m": "m1",
    "def": "En kolhydrat uppbyggd av två monosackarider som sitter ihop. Sackaros (druvsocker + "
           "fruktsocker), maltos (druvsocker + druvsocker) och laktos (druvsocker + galaktos) är exempel, "
           "med molekylformeln C12H22O11.",
@@ -100,7 +66,7 @@ BEGREPP = {
     "am": ("ዲሳካራይድ", "ሁለት የተያያዙ ሞኖሳካራይዶች የተሠራ ካርቦሃይድሬት፣ ለምሳሌ ሳክሮስ (ግሉኮስ+ፍሩክቶስ)፣ ማልቶስ (ግሉኮስ+ግሉኮስ) እና ላክቶስ (ግሉኮስ+ጋላክቶስ)፣ ቀመር C12H22O11።"),
     "rw": ("Disakaridi", "Isukari igizwe n'utuce tubiri tw'isukari twegeranye, urugero sucrose (glucose+fructose), maltose (glucose+glucose) na lactose (glucose+galactose), formula C12H22O11."),
    }},
- "Polysackarid": {"m": "m2",
+ "Polysackarid": {"m": "m1",
    "def": "En kolhydrat uppbyggd av mycket många (hundratals till tusentals) sockerenheter som sitter "
           "ihop i en lång kedja. Stärkelse, cellulosa och glykogen är alla polysackarider byggda av "
           "glukos, men bindningarna mellan enheterna skiljer sig åt.",
@@ -117,7 +83,7 @@ BEGREPP = {
     "am": ("ፖሊሳካራይድ", "በጣም ብዙ (በመቶዎች እስከ በሺዎች) የስኳር ክፍሎች በረዥም ሰንሰለት የተያያዙበት ካርቦሃይድሬት። ስታርች፣ ሴሉሎስ እና ግላይኮጅን ሁሉም የግሉኮስ ፖሊሳካራይዶች ናቸው፤ ነገር ግን በክፍሎቹ መካከል ያለው ትስስር ይለያያል።"),
     "rw": ("Polisakaridi", "Isukari igizwe n'utuce twinshi cyane (amagana kugeza ibihumbi) tw'isukari biri ku rurenda rurerure. Ibirebana n'ubuki (stärkelse), fibre (cellulosa) na glycogène byose ni polisakaridi za glucose, ariko uburyo utuce dufatanye butandukanye."),
    }},
- "Stärkelse": {"m": "m2",
+ "Stärkelse": {"m": "m1",
    "def": "En polysackarid byggd av jättemånga glukosmolekyler länkade med alfa-1,4-bindningar. Det gör "
           "att kedjan böjer sig och gärna bildar en spiralform. Stärkelse är växters sätt att lagra "
           "energi och finns rikligt i potatis, ris, pasta och bröd.",
@@ -134,7 +100,7 @@ BEGREPP = {
     "am": ("ስታርች", "በበርካታ ግሉኮስ ሞለኪውሎች በአልፋ-1,4 ትስስር የተገነባ ፖሊሳካራይድ፣ ይህም ሰንሰለቱ እንዲታጠፍ እና ወደ ጠመዝማዛ ቅርጽ እንዲያዘነብል ያደርጋል። ተክሎች ኃይል የሚያከማቹበት መንገድ ሲሆን በድንች፣ ሩዝ፣ ፓስታ እና ዳቦ ውስጥ በብዛት ይገኛል።"),
     "rw": ("Umuti w'ibirebana", "Polisakaridi igizwe na molekile nyinshi za glucose zifatanye n'imigozi alfa-1,4, bigatuma urunyereza rugoramuka rukagira imiterere y'agahenge. Ni uburyo ibimera bibika imbaraga; iboneka cyane mu bikoro, umuceri, pasita n'umugati."),
    }},
- "Cellulosa": {"m": "m2",
+ "Cellulosa": {"m": "m1",
    "def": "En polysackarid byggd av jättemånga glukosmolekyler länkade med beta-1,4-bindningar, vilket "
           "ger raka, utsträckta kedjor som packar tätt ihop och bygger upp växters cellväggar. Människan "
           "saknar rätt enzym för att bryta ner beta-1,4-bindningen och kan därför inte ta upp energin "
@@ -152,7 +118,7 @@ BEGREPP = {
     "am": ("ሴሉሎስ", "በቤታ-1,4 ትስስር የተያያዙ የግሉኮስ ሞለኪውሎች ፖሊሳካራይድ ሲሆን ቀጥ ያሉ፣ የተዘረጉ ሰንሰለቶችን ይፈጥራል፤ እነዚህም ተጣብቀው የተክሎችን ሕዋስ ግድግዳ ይገነባሉ። የሰው አካል ቤታ-1,4 ትስስርን የሚሰብር ኢንዛይም ስለሌለው ሴሉሎስ እንደ ምግብ ፋይበር ያገለግላል።"),
     "rw": ("Herufi", "Polisakaridi igizwe na molekile za glucose zifatanye n'imigozi beta-1,4, ikaremwa uduce turerure twose, tugatuza tugafatana bigatuma ari byo bubaka uruzitiro rw'akagari k'ibimera. Umubiri w'umuntu ntufite enzyme ishobora gutandukanya umugozi beta-1,4, ku bw'ibyo herufi ikora nk'ibiyunguro fibre."),
    }},
- "Glykogen": {"m": "m5",
+ "Glykogen": {"m": "m4",
    "def": "En polysackarid byggd av glukos, uppbyggd på liknande sätt som stärkelse men ännu mer "
           "förgrenad. Glykogen är djurens (och människans) sätt att lagra energi kortsiktigt, framför "
           "allt i lever och muskler.",
@@ -169,7 +135,7 @@ BEGREPP = {
     "am": ("ግላይኮጅን", "እንደ ስታርች የተገነባ ግን የበለጠ ቅርንጫፍ ያለው የግሉኮስ ፖሊሳካራይድ። እንስሳት (እና ሰዎች) በአጭር ጊዜ ኃይል የሚያከማቹበት መንገድ ሲሆን በተለይ በጉበትና በጡንቻ ውስጥ ይገኛል።"),
     "rw": ("Glikogene", "Polisakaridi ya glucose, yubatswe nk'umuti w'ibirebana ariko ifite amashami menshi kurushaho. Ni uburyo inyamaswa (n'abantu) babikamo imbaraga mu gihe gito, cyane cyane mu mwijima no mu mikaya."),
    }},
- "Fettsyra": {"m": "m3",
+ "Fettsyra": {"m": "m2",
    "def": "Byggstenen i fett: en lång kolkedja med en syragrupp (COOH) i ena änden. Fettsyror binds med "
           "en esterbindning till glycerol och bildar tillsammans en fettmolekyl (triglycerid).",
    "i18n": {
@@ -185,7 +151,7 @@ BEGREPP = {
     "am": ("ፋቲ አሲድ", "የስብ መሠረታዊ ክፍል፣ በአንድ ጫፍ ላይ የአሲድ ቡድን (COOH) ያለው ረዥም የካርቦን ሰንሰለት። ፋቲ አሲዶች በኤስተር ትስስር ከግሊሰሮል ጋር ተያይዘው የስብ ሞለኪውል (ትራይግሊሰራይድ) ይፈጥራሉ።"),
     "rw": ("Aside y'amavuta", "Ikintu gishingiye ku mavuta: urunyereza rurerure rwa karubone rufite itsinda ry'aside (COOH) ku mpera imwe. Aside z'amavuta zifatanya na glycerol binyuze mu mugozi wa ester, bigakora molekile y'amavuta (triglyceride)."),
    }},
- "Mättat fett": {"m": "m3",
+ "Mättat fett": {"m": "m2",
    "def": "Fett vars fettsyror bara har enkelbindningar mellan kolatomerna. Fettsyrakedjan blir då helt "
           "rak. Mättat fett är oftast fast i rumstemperatur och finns rikligt i smör och feta "
           "köttprodukter.",
@@ -202,7 +168,7 @@ BEGREPP = {
     "am": ("የተመሉ ስብ", "የካርቦን አቶሞች መካከል ነጠላ ትስስር ብቻ ያላቸው ፋቲ አሲዶች ያሉት ስብ፣ ይህም ሰንሰለቱን ቀጥ ያደርገዋል። አብዛኛውን ጊዜ በክፍል ሙቀት ጠጣር ነው፤ በቅቤና በስብ ስጋ ውስጥ ይገኛል።"),
     "rw": ("Amavuta yuzuye", "Amavuta afite aside z'amavuta zifite gusa imigozi imwe hagati y'udufu twa karubone, bigatuma urunyereza rugororoka. Akenshi aba akomeye ku bushyuhe bwo mu nzu; aboneka mu buta no mu nyama zifite amavuta menshi."),
    }},
- "Omättat fett": {"m": "m3",
+ "Omättat fett": {"m": "m2",
    "def": "Fett vars fettsyror har en eller flera dubbelbindningar mellan kolatomerna. Varje "
           "dubbelbindning ger en cis-knäck i kedjan, vilket gör att omättat fett oftast är flytande i "
           "rumstemperatur. Har man flera dubbelbindningar kallas fettet fleromättat.",
@@ -219,7 +185,7 @@ BEGREPP = {
     "am": ("ያልተመሉ ስብ", "የካርቦን አቶሞች መካከል አንድ ወይም ከዚያ በላይ ድርብ ትስስር ያላቸው ፋቲ አሲዶች ያሉት ስብ። እያንዳንዱ ድርብ ትስስር ሲስ መታጠፊያ ይፈጥራል፤ ስለዚህ ያልተመሉ ስብ በክፍል ሙቀት ውስጥ ብዙውን ጊዜ ፈሳሽ ነው።"),
     "rw": ("Amavuta adakwiye kwuzura", "Amavuta afite aside z'amavuta zifite umugozi umwe cyangwa myinshi ibiri hagati y'udufu twa karubone. Buri mugozi ubiri utanga agahenge (cis), bigatuma amavuta akenshi aba amazi ku bushyuhe bwo mu nzu."),
    }},
- "Protein": {"m": "m4",
+ "Protein": {"m": "m3",
    "def": "Ett näringsämne byggt av aminosyror kopplade i kedjor. Proteiner fungerar som kroppens "
           "byggnadsmaterial (muskler, hud, hår) och som enzymer, hormoner och antikroppar. Kroppen kan "
           "inte bygga protein enbart av kolhydrater och fett – den behöver aminosyror från maten.",
@@ -236,7 +202,7 @@ BEGREPP = {
     "am": ("ፕሮቲን", "በሰንሰለት የተያያዙ አሚኖ አሲዶች የተሠራ ንጥረ ነገር። ፕሮቲኖች የሰውነት የግንባታ ቁሳቁስ (ጡንቻ፣ ቆዳ፣ ፀጉር) ሲሆኑ እንደ ኢንዛይም፣ ሆርሞንና ፀረ አካል ሆነው ያገለግላሉ።"),
     "rw": ("Poroteyine", "Intungamubiri igizwe na aside amine zifatanye ku rurenda. Poroteyine ni ibikoresho by'ubwubatsi bw'umubiri (imikaya, uruhu, umusatsi) kandi zikora nk'enzyme, imisemburo (hormone) na antibody."),
    }},
- "Aminosyra": {"m": "m4",
+ "Aminosyra": {"m": "m3",
    "def": "Byggstenen i protein: en liten molekyl med en aminogrupp, en karboxylgrupp (syragrupp) och "
           "en sidokedja (R) som skiljer sig mellan de 20 olika aminosyrorna. De flesta innehåller kol, "
           "väte, syre och kväve – ett fåtal, till exempel cystein, innehåller även svavel.",
@@ -253,7 +219,7 @@ BEGREPP = {
     "am": ("አሚኖ አሲድ", "የፕሮቲን መሠረታዊ ክፍል፦ አሚኖ ቡድን፣ ካርቦክሲል (አሲድ) ቡድን እና በ20ዎቹ አሚኖ አሲዶች መካከል የሚለያይ የጎን ሰንሰለት (R) ያለው ትንሽ ሞለኪውል። አብዛኞቹ ካርቦን፣ ሃይድሮጅን፣ ኦክስጅንና ናይትሮጅን ይይዛሉ፤ ጥቂቶቹ፣ እንደ ሲስቴይን፣ ሰልፈርንም ይይዛሉ።"),
     "rw": ("Aside amine", "Ikintu gishingiye ku poroteyine: molekile ntoya ifite itsinda rya amine, itsinda rya karuboksile (aside), n'urunyereza ruhira (R) rutandukanye hagati ya aside amine 20. Nyinshi zirimo karubone, hidrogene, ogisijeni na azote; nke, nka cysteine, zirimo na sulfure."),
    }},
- "Essentiell aminosyra": {"m": "m4",
+ "Essentiell aminosyra": {"m": "m3",
    "def": "En aminosyra som kroppen inte kan tillverka själv, utan måste få via maten. Det finns nio "
           "essentiella aminosyror hos människan.",
    "i18n": {
@@ -320,8 +286,6 @@ TERMER = {
 # ----------------------------------------------------------------------------------------------
 KORT = {
  "1": [
-  ("Fotosyntes", "Växter bygger druvsocker av koldioxid, vatten och ljusenergi. Syrgas bildas."),
-  ("Cellandning", "Celler bryter ner druvsocker med syrgas och frigör energi."),
   ("Kolhydrat", "Näringsämne av kol, väte och syre, byggt av sockerenheter."),
   ("Monosackarid", "En enda sockerenhet, t.ex. glukos, fruktos eller galaktos."),
   ("Disackarid", "Två ihopsatta sockerenheter, t.ex. sackaros eller laktos."),
@@ -353,14 +317,9 @@ CHECKLISTA = {
  "title": "Checklista – Matens kemi",
  "subject": "Kemi",
  "area": "Matens kemi",
- "intro": "Checklistan följer studieguidens fem milstolpar. Bocka av det du känner dig trygg med.",
+ "intro": "Checklistan följer studieguidens fyra milstolpar. Bocka av det du känner dig trygg med.",
  "sections": [
-  {"title": "1. Fotosyntes och cellandning (M1)", "items": [
-   "Jag kan skriva fotosyntesens ordekvation.",
-   "Jag kan skriva cellandningens ordekvation.",
-   "Jag vet att cellandningen är fotosyntesens motsats.",
-   "Jag vet att växter bygger druvsocker och stärkelse som djur sedan kan äta."]},
-  {"title": "2. Kolhydrater (M2)", "items": [
+  {"title": "1. Kolhydrater (M1)", "items": [
    "Jag kan ge tre exempel på kolhydrater.",
    "Jag vet vilka grundämnen kolhydrater byggs av.",
    "Jag kan förklara skillnaden mellan monosackarid, disackarid och polysackarid.",
@@ -369,24 +328,22 @@ CHECKLISTA = {
    "Jag kan förklara likheter och skillnader mellan stärkelse och cellulosa.",
    "Jag vet varför människan inte kan ta upp energin i cellulosa.",
    "Jag kan ge exempel på stärkelserik mat."]},
-  {"title": "3. Fetter (M3)", "items": [
+  {"title": "2. Fetter (M2)", "items": [
    "Jag kan rita/beskriva hur en fettmolekyl är uppbyggd (glycerol + tre fettsyror).",
    "Jag vet vad fett används till i kroppen.",
    "Jag vet vilken alkohol som alltid ingår i fett (glycerol).",
    "Jag kan förklara skillnaden mellan mättat och omättat fett med antal dubbelbindningar.",
    "Jag vet att fett innehåller mer än dubbelt så mycket energi per gram som kolhydrat.",
    "Jag vet vad härdat fett är."]},
-  {"title": "4. Proteiner (M4)", "items": [
-   "Jag vet vad protein används till i kroppen.",
-   "Jag kan ge exempel på proteinrik mat.",
-   "Jag vet att proteinets byggstenar heter aminosyror.",
-   "Jag vet vilka grundämnen som oftast ingår i en aminosyra.",
-   "Jag vet att kroppen inte kan bygga alla proteiner enbart av kolhydrater och fett.",
-   "Jag kan förklara vad en essentiell aminosyra är.",
+  {"title": "3. Proteiner (M3)", "items": [
+   "Jag vet vad protein är uppbyggt av (aminosyror).",
+   "Jag kan ge minst ett exempel på protein för varje funktion: byggnadsmaterial, muskelrörelse, enzym, hormon.",
    "Jag vet att enzymer är proteiner.",
-   "Jag kan förklara vad som händer när protein denatureras, t.ex. av värme.",
-   "Jag kan resonera kring hur 20 aminosyror kan ge oerhört många olika proteiner."]},
-  {"title": "5. Energilagring och sammanfattning (M5)", "items": [
+   "Jag kan beskriva (utan strukturformel) hur aminosyror i en kedja veckas till proteinets form.",
+   "Jag kan förklara vad en essentiell aminosyra är.",
+   "Jag kan förklara vad som händer när protein denatureras, t.ex. av värme."]},
+  {"title": "4. Sammanfattning, vitaminer och mineraler (M4)", "items": [
    "Jag kan förklara hur växter (stärkelse) och djur (glykogen) lagrar energi.",
+   "Jag vet ungefär vad vitaminer och mineraler används till och i vilken typ av mat man hittar dem.",
    "Jag kan förklara hur kroppen använder kolhydrater, fett och protein tillsammans."]},
  ]}

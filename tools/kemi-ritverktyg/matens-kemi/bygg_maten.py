@@ -78,6 +78,16 @@ SMILES = {
     'cystein':       'NC(CS)C(=O)O',
     # Dipeptid glycylalanin (Gly-Ala): visar peptidbindningen (amidbindningen) konkret.
     'dipeptid':      'NCC(=O)NC(C)C(=O)O',
+    # ── Fördjupning: öppen kedja/ringform, samt ribos/deoxiribos (tillagda vid ombyggnaden 22 sep 2026) ──
+    # Aldehydo-D-glukos (öppen kedja) – ChEBI CHEBI:42758 (samma stereokemi som PubChem CID 107526,
+    # verifierat mot IUPAC-namnet (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal via RDKit CIP-analys).
+    'glukos_oppen':  'C(=O)[C@H](O)[C@@H](O)[C@H](O)[C@H](O)CO',
+    # D-ribos (öppen kedja) – Chemicalbook (CAS 50-69-1). Verifierad mot RDKit CIP-analys:
+    # (2R,3R,4R)-2,3,4,5-tetrahydroxypentanal, den etablerade konfigurationen för aldehydo-D-ribos.
+    'ribos':         'OC[C@@H](O)[C@@H](O)[C@@H](O)C=O',
+    # 2-deoxi-D-ribos (öppen kedja) – Chemicalbook (CAS 533-67-5). Verifierad mot RDKit CIP-analys:
+    # (3S,4R)-3,4,5-trihydroxypentanal, den etablerade konfigurationen. Saknar OH på C2 jämfört med ribos.
+    'deoxiribos':    'OC[C@@H](O)[C@@H](O)CC=O',
 }
 
 def auto_view(atoms, bonds):
@@ -205,6 +215,29 @@ TEXTS = {
               'där karboxylgruppen på den ena är bunden till aminogruppen på den andra.',
         alt2d='Schematisk formel för dipeptiden glycylalanin: H2N–CH2–CO–NH–CH(CH3)–COOH. Bindningen '
               '–CO–NH– i mitten är peptidbindningen (amidbindningen) som håller ihop proteiner.'),
+    'glukos_oppen': dict(namn='Glukos i öppen kedja (aldehydform)', formel='C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>',
+        form='öppen sexkolskedja med en aldehydgrupp', bindning='enkelbindningar i kedjan, en dubbelbindning (C=O) på C1',
+        alt3d='Kulmodell av glukos i öppen kedja: sex svarta kolatomer i en rak kedja med röda syreatomer, '
+              'bland annat en dubbelbunden syreatom (aldehydgrupp) i ena änden.',
+        alt2d='Kondenserad formel för glukos i öppen kedja, uppifrån och ned: CHO (aldehydgrupp), sedan '
+              'fyra CHOH-grupper och sist CH2OH.',
+        note='I vattenlösning bildar nästan all glukos (över 99%) i stället en sexring genom att aldehydgruppen '
+             'reagerar med en OH-grupp längre ner i kedjan – se fördjupningen om ring/kedja-formen.'),
+    'ribos': dict(namn='Ribos', formel='C<sub>5</sub>H<sub>10</sub>O<sub>5</sub>',
+        form='öppen femkolskedja med en aldehydgrupp', bindning='enkelbindningar i kedjan, en dubbelbindning (C=O) på C1',
+        alt3d='Kulmodell av ribos: fem svarta kolatomer i en rak kedja med röda syreatomer på varje kolatom, '
+              'bland annat en dubbelbunden syreatom (aldehydgrupp) i ena änden.',
+        alt2d='Kondenserad formel för ribos, uppifrån och ned: CHO (aldehydgrupp), sedan tre CHOH-grupper '
+              'och sist CH2OH. Fem kolatomer totalt, en OH-grupp på varje kolatom utom den första.',
+        note='Ribos ingår, tillsammans med fosfat, i ryggraden av RNA-molekylen.'),
+    'deoxiribos': dict(namn='Deoxiribos', formel='C<sub>5</sub>H<sub>10</sub>O<sub>4</sub>',
+        form='öppen femkolskedja med en aldehydgrupp, saknar en OH-grupp jämfört med ribos', bindning='enkelbindningar i kedjan, en dubbelbindning (C=O) på C1',
+        alt3d='Kulmodell av deoxiribos: samma som ribos, men den andra kolatomen saknar en röd syreatom (OH-grupp) '
+              'och har bara vita väteatomer i stället.',
+        alt2d='Kondenserad formel för deoxiribos, uppifrån och ned: CHO, sedan CH2 (ingen OH-grupp – detta är '
+              '"deoxi", saknar syre här), sedan två CHOH-grupper och sist CH2OH.',
+        note='Deoxiribos ingår, tillsammans med fosfat, i ryggraden av DNA-molekylen. Namnet betyder "ribos '
+             'utan en syreatom" – jämför med ribos ovan.'),
 }
 
 def build_data():
@@ -340,6 +373,120 @@ def fatty_acid_svg(n_chain, kink_after=None):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{minx:.1f} {miny:.1f} {W:.1f} {H:.1f}" width="{W:.0f}" height="{H:.0f}">'
             f'<g stroke="{INK}" stroke-width="2.4" stroke-linecap="round">' + ''.join(lines) + '</g>' + ''.join(texts) + '</svg>')
 
+def straight_chain_sugar_svg(n, deoxy_positions=()):
+    """Kondenserad vertikal formel för en öppen-kedjesocker: C1 = CHO (aldehyd, topp), C_n = CH2OH (botten),
+    mellanliggande kol är CHOH om inte kolnumret (1-baserat) finns i deoxy_positions, då blir det CH2 (ingen OH)
+    – används för deoxiribos (saknar OH på C2)."""
+    labels = ['CHO']
+    for i in range(2, n):
+        labels.append('CH<tspan dy="6" font-size="13">2</tspan>' if i in deoxy_positions else 'CHOH')
+    labels.append('CH<tspan dy="6" font-size="13">2</tspan>OH')
+    x0, y0, step = 130, 40, 42
+    nodes = {i: (x0, y0 + i * step, labels[i]) for i in range(n)}
+    edges = [(i, i + 1, 1) for i in range(n - 1)]
+    return group_svg(nodes, edges, [], 260, y0 + (n - 1) * step + 40)
+
+
+def ring_glucose_detailed_svg():
+    """Detaljerad glukosring: samma sexring som ring_glucose_svg, men med kolatomerna numrerade (C1-C5) och
+    ALLA väteatomer på ringkolen utsatta som egna 'H'-grenar bredvid varje OH/CH2OH-gren (fördjupningsnivå,
+    Jespers krav: 'alla kolatomer, väten och OH-grupper utsatta'). OH-grupperna själva anger sin egen väteatom."""
+    cx, cy, r = 170, 165, 72
+    P = hexagon(cx, cy, r, -90)
+    v_o = P[0]
+    lines = [_line(*P[i], *P[(i + 1) % 6]) for i in range(6)]
+    texts = [_tx(*v_o, 'O', weight='700')]
+    pts = list(P)
+    subs = ['OH', 'OH', 'OH', 'OH', 'CH<tspan dy="6" font-size="13">2</tspan>OH']
+    for k, i in enumerate(range(1, 6)):
+        v = P[i]
+        theta = math.atan2(v[1] - cy, v[0] - cx)
+        for sign, label, length in ((-1, subs[k], 48), (1, 'H', 40)):
+            ang = theta + sign * math.radians(27)
+            bx, by = v[0] + length * math.cos(ang), v[1] + length * math.sin(ang)
+            lines.append(_line(v[0], v[1], bx, by))
+            texts.append(_tx(bx, by, label, size=17 if label == 'H' else FS))
+            pts.append((bx, by))
+        # Kolnumret, litet, strax innanför ringen vid varje hörn
+        nx, ny = v[0] + (cx - v[0]) * 0.24, v[1] + (cy - v[1]) * 0.24
+        texts.append(_tx(nx, ny, f'C<tspan dy="4" font-size="10">{i}</tspan>', size=12))
+    return _ring_frame((lines, texts, pts), pad=46)
+
+
+def fat_overview_svg():
+    """Schematisk översikt av en triglycerid: en tjock, färgad 'E'-form (glycerol, tre armar) med tre
+    färgade rektangulära block ihakade i armarna (fettsyror). En av fettsyrorna har en tydlig knäck (antyder
+    en omättad fettsyra) – egen, ny bild i kod, inspirerad av principen 'E-form + block', inte kopierad från
+    någon lärobok. Färgblindsäker: varje del har en textetikett, inte bara en färg."""
+    W, H = 560, 380
+    spine_x0, spine_x1 = 120, 156
+    arm_y = [70, 200, 330]
+    col_glycerol = '#5b6b8c'
+    col_sat = '#a5570c'
+    col_unsat = '#0f766e'
+    parts = [f'<rect x="{spine_x0}" y="40" width="{spine_x1-spine_x0}" height="320" rx="10" fill="{col_glycerol}"/>']
+    for y in arm_y:
+        parts.append(f'<rect x="{spine_x1-4}" y="{y-16}" width="90" height="32" fill="{col_glycerol}"/>')
+    parts.append(_tx(spine_x0 + (spine_x1 - spine_x0) / 2, 200, 'G', size=30, weight='800').replace(f'fill="{INK}"', 'fill="#fff"'))
+    block_x = spine_x1 + 86
+    labels = [('Fettsyra 1', '(mättad)'), ('Fettsyra 2', '(omättad – knäck)'), ('Fettsyra 3', '(mättad)')]
+    colors = [col_sat, col_unsat, col_sat]
+    for k, y in enumerate(arm_y):
+        if k == 1:
+            # omättad: rektangeln ritas i två segment med en vinkel emellan ("knäck")
+            parts.append(f'<path d="M {block_x} {y-22} L {block_x+150} {y-22} L {block_x+185} {y} '
+                          f'L {block_x+150} {y+22} L {block_x} {y+22} Z" fill="{colors[k]}"/>')
+        else:
+            parts.append(f'<rect x="{block_x}" y="{y-22}" width="185" height="44" rx="6" fill="{colors[k]}"/>')
+        title, sub = labels[k]
+        lab_x = block_x + (100 if k == 1 else 92)
+        parts.append(_tx(lab_x, y - 8, title, size=15, weight='700').replace(f'fill="{INK}"', 'fill="#fff"'))
+        parts.append(_tx(lab_x, y + 9, sub, size=12, weight='700').replace(f'fill="{INK}"', 'fill="#fff"'))
+    legend = (f'<g font-family="Arial, sans-serif" font-size="14" fill="{INK}">'
+              f'<rect x="20" y="{H-34}" width="16" height="16" fill="{col_glycerol}"/>'
+              f'<text x="42" y="{H-22}">Glycerol (G) – tre armar, en per fettsyra</text></g>')
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
+            f'role="img">{"".join(parts)}{legend}</svg>')
+
+
+def protein_bead_chain_svg():
+    """Schematisk bild: aminosyror som färgade kulor i en kedja (vänster) som veckas till en kompakt form
+    (höger). Medvetet abstrakt/schematisk – ingen riktig aminosyrakemi, bara principen 'kedja -> veckad form'.
+    Färgblindsäker: varje kula har både en egen färg OCH en bokstav."""
+    beads = [('A', '#b45309'), ('B', '#0f766e'), ('C', '#7c3aed'), ('D', '#be123c'),
+             ('E', '#1d4ed8'), ('F', '#15803d'), ('G', '#c026d3'), ('H', '#0369a1')]
+    r = 16
+    W, H = 820, 330
+    parts = []
+    # Vänster: rak kedja
+    x0, y0, step = 40, 90, 60
+    chain_pts = [(x0 + i * step, y0) for i in range(len(beads))]
+    for i in range(len(chain_pts) - 1):
+        parts.append(_line(*chain_pts[i], *chain_pts[i + 1]))
+    for (x, y), (lab, col) in zip(chain_pts, beads):
+        parts.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{col}" stroke="{INK}" stroke-width="1.2"/>')
+        parts.append(f'<text x="{x}" y="{y+1}" text-anchor="middle" dominant-baseline="central" '
+                      f'font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">{lab}</text>')
+    parts.append(_tx(x0 + 3.5 * step, y0 + 44, 'Kedja av aminosyror', size=15, weight='700'))
+    # Pil
+    ax0, ay = x0 + 7 * step + 30, y0
+    parts.append(f'<path d="M {ax0} {ay} l 50 0 l -13 -11 m 13 11 l -13 11" fill="none" stroke="{INK}" '
+                 f'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>')
+    # Höger: veckad/kompakt kedja (samma kulor, hopvecklade i en tät "orm"-bana utan att linjerna korsar varandra)
+    bx, by, dx, dy = ax0 + 150, y0 - 40, 56, 52
+    grid = [(0, 0), (1, 0), (1, 1), (0, 1), (0, 2), (1, 2), (1, 3), (0, 3)]
+    coil_pts = [(bx + col * dx, by + row * dy) for col, row in grid]
+    for i in range(len(coil_pts) - 1):
+        parts.append(_line(*coil_pts[i], *coil_pts[i + 1]))
+    for (x, y), (lab, col) in zip(coil_pts, beads):
+        parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" fill="{col}" stroke="{INK}" stroke-width="1.2"/>')
+        parts.append(f'<text x="{x:.1f}" y="{y+1:.1f}" text-anchor="middle" dominant-baseline="central" '
+                      f'font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">{lab}</text>')
+    parts.append(_tx(bx + dx / 2, by + 3 * dy + 44, 'Veckad till sin form', size=15, weight='700'))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img">'
+            f'<g stroke="{INK}" stroke-width="1.6" stroke-linecap="round">{"".join(parts)}</g></svg>')
+
+
 def hexagon(cx, cy, r, rot_deg):
     pts = []
     for k in range(6):
@@ -454,18 +601,43 @@ def dipeptide_svg():
     return svg.replace('<g stroke=', hl + '<g stroke=', 1)
 
 def triglyceride_svg():
-    """Schematisk formel: glycerolstomme (3 C) med tre grenar via -O-C(=O)- till kedjor."""
-    x0, y0, step = 140, 130, 60
-    nodes = {0: (x0, y0 - step, 'CH<tspan dy="6" font-size="13">2</tspan>'),
-             1: (x0, y0, 'CH'),
-             2: (x0, y0 + step, 'CH<tspan dy="6" font-size="13">2</tspan>')}
-    edges = [(0, 1, 1), (1, 2, 1)]
-    branches = [
-        (0, x0 + 190, y0 - step, 'O–CO–CH<tspan dy="6" font-size="12">2</tspan>CH<tspan dy="6" font-size="12">2</tspan>CH<tspan dy="6" font-size="12">3</tspan>', 1),
-        (1, x0 + 210, y0, 'O–CO–CH<tspan dy="6" font-size="12">2</tspan>CH=CHCH<tspan dy="6" font-size="12">2</tspan>CH<tspan dy="6" font-size="12">3</tspan>', 1),
-        (2, x0 + 210, y0 + step, 'O–CO–CH<tspan dy="6" font-size="12">2</tspan>CH=CHCH<tspan dy="6" font-size="12">2</tspan>CH<tspan dy="6" font-size="12">3</tspan>', 1),
-    ]
-    return group_svg(nodes, edges, branches, 520, y0 + step + 60)
+    """Schematisk formel: glycerolstomme (3 C, generöst mellanrum) med tre ESTERBINDNINGAR (-O-C(=O)-)
+    ritade som riktiga bindningar (inte textetiketter), där karbonylsyrets dubbelbindning alltid pekar
+    RAKT UPPÅT från kolet – samma riktning för alla tre, så esterbindningarna är lätta att jämföra och
+    ser lika ut. Glycerolstommen är lång nog (steg=170px) att syreatomerna på de tre armarna aldrig
+    hamnar nära varandra. En mättad (butanoyl) och två omättade (hex-3-enoyl, dubbelbindning=dubbel linje
+    i kedjan) fettsyror, som i molekylens SMILES/3D-modell ovan."""
+    nodes, edges, branches = {}, [], []
+    x0, y0, step = 90, 190, 170
+    gly_labels = ['CH<tspan dy="6" font-size="13">2</tspan>', 'CH', 'CH<tspan dy="6" font-size="13">2</tspan>']
+    for i in range(3):
+        nodes[f'g{i}'] = (x0, y0 + (i - 1) * step, gly_labels[i])
+    edges += [('g0', 'g1', 1), ('g1', 'g2', 1)]
+    chain_specs = ['sat', 'unsat', 'unsat']  # matchar SMILES: övre armen mättad, mitten+nedre omättade
+    for i, spec in enumerate(chain_specs):
+        gx, gy = nodes[f'g{i}'][0], nodes[f'g{i}'][1]
+        ox, oy = gx + 88, gy
+        cx_, cy_ = ox + 56, gy
+        nodes[f'o{i}'] = (ox, oy, 'O')
+        nodes[f'c{i}'] = (cx_, cy_, 'C')
+        edges.append((f'g{i}', f'o{i}', 1))
+        edges.append((f'o{i}', f'c{i}', 1))
+        branches.append((f'c{i}', cx_, cy_ - 52, 'O', 2))  # karbonylsyre: alltid rakt upp, samma för alla tre
+        if spec == 'sat':
+            seq = [('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH<tspan dy="6" font-size="13">2</tspan>', 1),
+                   ('CH<tspan dy="6" font-size="13">3</tspan>', 1)]
+        else:
+            seq = [('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH', 1), ('CH', 2),
+                   ('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH<tspan dy="6" font-size="13">3</tspan>', 1)]
+        prev, px = f'c{i}', cx_
+        for j, (lab, ordr) in enumerate(seq):
+            nid = f'{prev}_{j}'
+            px += 44
+            py = cy_ + (14 if j % 2 == 0 else -14)
+            nodes[nid] = (px, py, lab)
+            edges.append((prev, nid, ordr))
+            prev = nid
+    return group_svg(nodes, edges, branches)
 
 def struct_svg_all():
     out = {}
@@ -481,7 +653,17 @@ def struct_svg_all():
     out['cystein'] = amino_acid_svg('CH<tspan dy="6" font-size="13">2</tspan>SH')
     out['dipeptid'] = dipeptide_svg()
     out['triglycerid'] = triglyceride_svg()
+    out['glukos_oppen'] = straight_chain_sugar_svg(6)
+    out['ribos'] = straight_chain_sugar_svg(5)
+    out['deoxiribos'] = straight_chain_sugar_svg(5, deoxy_positions=(2,))
     return out
+
+# Fristående illustrationer (ingen 3D-modell, inget mol-card) – skrivs direkt till egna filer.
+FREESTANDING_SVG = {
+    'glukos-detaljerad': ring_glucose_detailed_svg,
+    'fett-oversikt': fat_overview_svg,
+    'protein-veckning': protein_bead_chain_svg,
+}
 
 # --------------------------------------------------------------------------------------------------
 # 4. Skriv allt
@@ -491,6 +673,8 @@ def write_all():
     (IMG / 'kulmodeller').mkdir(parents=True, exist_ok=True)
     for key, svg in struct_svg_all().items():
         (IMG / 'strukturformler' / f'{key}.svg').write_text(svg, encoding='utf-8')
+    for key, fn in FREESTANDING_SVG.items():
+        (IMG / 'strukturformler' / f'{key}.svg').write_text(fn(), encoding='utf-8')
     data = build_data()
     JS_OUT.parent.mkdir(parents=True, exist_ok=True)
     JS_OUT.write_text('/* Auto-genererad av tools/kemi-ritverktyg/matens-kemi/bygg_maten.py – redigera inte för hand (kör skriptet igen). */\n'
@@ -548,6 +732,32 @@ def card_html(key):
             f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
             f'<div class="mc-pair">{struct}{viewer}</div>'
             f'<p class="mc-bond">Bindning: {m["bindning"]} · Form: {m["form"]}{note}</p></div>')
+
+DETALJERAD_ALT2D = ('Detaljerad strukturformel för glukosringen: alla fem ringkolatomer (C1–C5) och '
+    'ringens syreatom är numrerade/markerade, och varje ringkolatom har både sin OH-grupp (eller CH2OH-gren på '
+    'C5) OCH sin väteatom (H) utsatta som egna korta streck – inga atomer är dolda eller underförstådda.')
+
+def detailed_glucose_card_html():
+    """Mol-card för den DETALJERADE glukosformeln (alla C, H och OH utsatta) – återanvänder samma
+    3D-kulmodell och PNG som den vanliga glukosen (samma molekyl, bara en mer detaljerad 2D-ritning)."""
+    m = TEXTS['glukos']
+    png = IMG / 'kulmodeller' / 'glukos.png'
+    pw, ph = _dims(png)
+    sw, sh = _svg_dims(IMG / 'strukturformler' / 'glukos-detaljerad.svg')
+    alt2d = html.escape(DETALJERAD_ALT2D, quote=True)
+    alt3d = html.escape(m['alt3d'], quote=True)
+    struct = (f'<div><span class="mc-lab">Strukturformel (detaljerad)</span><div class="mc-struct">'
+              f'<img src="/images/kemi/matens-kemi/strukturformler/glukos-detaljerad.svg" width="{sw}" height="{sh}" '
+              f'alt="{alt2d}" loading="lazy"></div></div>')
+    viewer = (f'<div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="glukos" role="group" tabindex="0" '
+              f'style="height:190px" aria-label="{alt3d} Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" '
+              f'src="/images/kemi/matens-kemi/kulmodeller/glukos.png" width="{pw}" height="{ph}" alt="{alt3d}"></noscript></div>'
+              f'<div class="km-hint">Dra för att rotera.</div></div>')
+    return (f'<div class="mol-card" id="km-glukos-detaljerad"><div class="mc-head mc-head--lab"><span class="mc-name">Glukos – detaljerad formel</span>'
+            f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
+            f'<div class="mc-pair">{struct}{viewer}</div>'
+            f'<p class="mc-bond">Samma molekyl som glukosringen till vänster – här är varje kolatom, väteatom och '
+            f'OH-grupp i ringen ritad ut för sig.</p></div>')
 
 if __name__ == '__main__':
     what = sys.argv[1] if len(sys.argv) > 1 else 'all'

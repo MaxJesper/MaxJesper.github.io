@@ -7,6 +7,7 @@
    ===================================================================== */
 import { LokalElevTransport } from "./transport.js";
 import { AVATARER } from "./engine.js";
+import { fordelaGruppstorlekar } from "./slumpa-lag.js";
 
 export class Bot {
   constructor(o) {
@@ -65,24 +66,44 @@ export class Bot {
   }
 }
 
-const NAMN = ["Bot Alva", "Bot Ben", "Bot Cleo", "Bot Dino", "Bot Elsa", "Bot Figge", "Bot Gunn", "Bot Hugo", "Bot Iris", "Bot Jack", "Bot Kaj", "Bot Lo"];
+const NAMN = [
+  "Bot Alva", "Bot Ben", "Bot Cleo", "Bot Dino", "Bot Elsa", "Bot Figge", "Bot Gunn", "Bot Hugo", "Bot Iris", "Bot Jack",
+  "Bot Kaj", "Bot Lo", "Bot Mira", "Bot Noel", "Bot Otto", "Bot Pia", "Bot Quinn", "Bot Rut", "Bot Siv", "Bot Theo",
+  "Bot Uno", "Bot Vera", "Bot Walle", "Bot Xen", "Bot Ylva", "Bot Zack",
+];
 
-/* Startar n botlag (djur i AVATARER-ordning). server = LokalServer i samma sida. */
+/* Startar n bot-"elever" och slår ihop dem i slumpade lag (2–3 medlemmar
+   per lag, precis som "Slumpa lag" i lobbyn – se slumpa-lag.js) i stället
+   för ett lag per bot. Det gör att den nya regeln ("alla medlemmar måste
+   svara rätt") går att öva på i Demoläget: varje medlem svarar för sig,
+   med egen träffsäkerhet och eget tempo, så lag med flera medlemmar
+   ibland missar poängen även när de flesta i laget svarade rätt.
+   server = LokalServer i samma sida. */
 export function startaBotar(server, n) {
   const orakel = () => (server.rum.match && server.rum.match.fraga ? server.rum.match.fraga.ratt : null);
+  const antalBotar = Math.max(2, n);
+  const grupper = fordelaGruppstorlekar(antalBotar).slice(0, AVATARER.length);
   const bots = [];
-  const antal = Math.max(2, Math.min(n, AVATARER.length));
-  for (let i = 0; i < antal; i++) {
-    const b = new Bot({
-      kod: server.kod,
-      namn: NAMN[i % NAMN.length],
-      avatar: AVATARER[i].id,
-      traffsakerhet: 0.92 - i * 0.08,
-      tempo: 0.55 + ((i * 37) % 10) / 10,
-      orakel,
-    });
-    b.starta();
-    bots.push(b);
-  }
+  let namnIx = 0;
+  grupper.forEach((storlek, g) => {
+    const avatar = AVATARER[g % AVATARER.length].id;
+    for (let m = 0; m < storlek; m++) {
+      const i = namnIx++;
+      const b = new Bot({
+        kod: server.kod,
+        namn: NAMN[i % NAMN.length],
+        avatar,
+        // Träffsäkerhet/tempo varierar per LAG (så lagen skiljer sig åt i banan)
+        // och lite per MEDLEM (så medlemmarna inte alltid svarar exakt samtidigt
+        // och inte alltid har exakt samma träffsäkerhet – det är det som gör att
+        // ett lag kan missa poängen fastän de flesta medlemmarna svarade rätt).
+        traffsakerhet: Math.max(0.3, 0.92 - g * 0.08 - m * 0.1),
+        tempo: 0.5 + ((g * 3 + m) % 5) / 4 + m * 0.15,
+        orakel,
+      });
+      b.starta();
+      bots.push(b);
+    }
+  });
   return bots;
 }

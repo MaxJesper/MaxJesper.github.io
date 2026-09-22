@@ -143,6 +143,78 @@ await sov(4000);
 await axe(lar, "larare: mästarpall");
 await axe(elever[0], "elev: mästarpall");
 
+// Stäng tidigare sidor (minskar resursbelastningen för den andra sviten nedan).
+for (const sida of [idx, lar, ...elever]) {
+  try {
+    await sida.close();
+  } catch (e) {}
+}
+
+// ---- Slumpa lag + flerpersonslag (nytt rum) ----
+const lar2 = await ctx.newPage();
+await lar2.goto(BAS + "/spel/hastkapplopning/larare.html?lage=lokal&u=mineraler-och-vitaminer");
+await lar2.waitForFunction(() => window.__hk && window.__hk.vy);
+const KOD2 = await lar2.evaluate(() => window.__hk.kod);
+await lar2.click("#btnSlumpaLag");
+await lar2.waitForFunction(() => window.__hk.vy.inst.slumpLage === true);
+await axe(lar2, "larare: slumpa lag på (ingen elev än)");
+
+// Öppna och ladda ALLA flikar innan någon skickar sitt namn: "Lokalt läge" delar
+// localStorage mellan flikar av samma origin i den här testkontexten (webbläsartabbar
+// i en riktig lektion är förstås separata enheter), så en flik som redan hunnit spara
+// "hk-elev-<kod>" skulle annars få nästa flik att tro att den är samma återansluten elev.
+const NAMN_SLUMP = ["Alva", "Ozzy", "Ines", "Kevin", "Mio"];
+const slumpElever = [];
+for (const namn of NAMN_SLUMP) {
+  const p = await ctx.newPage();
+  await p.setViewportSize({ width: 390, height: 844 });
+  await p.goto(BAS + "/spel/hastkapplopning/elev.html?rum=" + KOD2 + "&lage=lokal");
+  await p.waitForSelector("#namnIn");
+  slumpElever.push({ namn, sida: p });
+}
+for (const { namn, sida } of slumpElever) {
+  await sida.fill("#namnIn", namn);
+  await sida.click("button[type=submit]");
+}
+await slumpElever[0].sida.waitForFunction(() => window.__hkElev.vy && window.__hkElev.vy.jag && !window.__hkElev.vy.jag.lag && window.__hkElev.vy.inst.slumpLage);
+await axe(slumpElever[0].sida, "elev: väntar på Slumpa lag");
+await sov(300);
+await lar2.waitForFunction(() => (window.__hk.vy.utanLag || []).length === 5);
+await axe(lar2, "larare: slumpa lag (5 elever väntar)");
+await lar2.click("#btnSkapaSlumpadeLag");
+await lar2.waitForFunction(() => window.__hk.vy.lag.length > 0 && (window.__hk.vy.utanLag || []).length === 0);
+await sov(300);
+await axe(lar2, "larare: lag skapade av Slumpa lag");
+for (const e of slumpElever) await e.sida.waitForFunction(() => window.__hkElev.vy.jag && window.__hkElev.vy.jag.lag);
+await axe(slumpElever[0].sida, "elev: precis indelad i slumpat lag");
+
+// Multi-medlemslag mitt i en fråga: kontrollera lagremsan/status-UI
+await lar2.evaluate(() => window.__hk.transport.skicka({ t: "installningar", svarstid_s: 15 }));
+await lar2.click("#btnHuvud"); // starta match
+await lar2.waitForFunction(() => window.__hk.vy.fas === "match");
+await lar2.click("#btnHuvud"); // nästa fråga
+await lar2.waitForFunction(() => window.__hk.vy.match.steg === "fraga");
+for (const e of slumpElever) await e.sida.waitForSelector("button.alt");
+// bara EN medlem i det första laget svarar – de andra väntar
+const forstaLagStorlek = await lar2.evaluate(() => window.__hk.vy.lag[0].medlemmar.length);
+await slumpElever[0].sida.click('button.alt[data-i="0"]');
+await sov(300);
+await axe(lar2, "larare: fråga, flerpersonslag delvis svarat");
+if (forstaLagStorlek > 1) {
+  // hitta en elev i samma lag som ännu inte svarat och kolla att den ser "väntar på …"-text
+  const forstaLagId = await lar2.evaluate(() => window.__hk.vy.lag[0].id);
+  for (const e of slumpElever) {
+    const mittLag = await e.sida.evaluate(() => window.__hkElev.vy.jag.lag).catch(() => null);
+    if (mittLag === forstaLagId) {
+      const harMittSvar = await e.sida.evaluate(() => !!window.__hkElev.vy.match.mittSvar);
+      if (!harMittSvar) {
+        await axe(e.sida, "elev: väntar på lagkompis (flerpersonslag)");
+        break;
+      }
+    }
+  }
+}
+
 console.log("\nSammanfattning:", resultat.length, "tillstånd,", allvarliga, "serious/critical, totalt", resultat.reduce((a, r) => a + r.viol, 0), "överträdelser");
 await b.close();
 process.exit(allvarliga ? 1 : 0);

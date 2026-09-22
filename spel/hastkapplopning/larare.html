@@ -35,6 +35,18 @@
           <a class="kbtn" id="btnNyFlik" target="_blank" rel="noopener" hidden>Öppna elevvy i ny flik</a>
         </div>
         <p class="liten" id="lobbyLokalNotis" hidden></p>
+        <hr />
+        <div class="rad" style="justify-content:center">
+          <button type="button" class="kbtn" id="btnSlumpaLag" aria-pressed="false">🎲 Slumpa lag</button>
+        </div>
+        <p class="liten" style="margin-top:4px">Alternativ till att eleverna själva väljer djur: eleverna skriver bara sitt namn, du slumpar fram lag om 2–3 personer med en slumpad avatar.</p>
+        <div id="slumpaLagPanel" hidden>
+          <p class="liten" id="slumpaLagAntal" role="status" aria-live="polite"></p>
+          <ul id="slumpaLagVantarLista" style="padding:0;list-style:none;margin:4px 0"></ul>
+          <div class="rad" style="justify-content:center">
+            <button type="button" class="kbtn primar" id="btnSkapaSlumpadeLag">Skapa slumpade lag</button>
+          </div>
+        </div>
       </div>
       <div>
         <h3 id="lobbyLagRubrik">Lag</h3>
@@ -67,6 +79,7 @@
       <p class="forkl" id="forklaring"></p>
       <p class="kalla" id="kalla"></p>
     </div>
+    <ul class="lagstatus-lista" id="lagStatusLista" aria-label="Svarsstatus per lag" hidden></ul>
     <h3 class="sr-only">Kapplöpningsbanan</h3>
     <div class="bana" id="bana" role="group" aria-label="Kapplöpningsbanan"></div>
   </section>
