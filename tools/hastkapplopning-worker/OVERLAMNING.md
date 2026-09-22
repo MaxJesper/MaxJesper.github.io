@@ -134,15 +134,21 @@ ursprungliga, egna djurväljar-flödet är oförändrat och är fortfarande stan
   så att klicket råkade tolkas som "Nästa fråga" i stället för "Hoppa över animation" – en fråga för mycket skapades och stängdes
   osedd. Fixat genom att kolla och klicka atomiskt i en enda `evaluate()`-körning i webbläsaren.
 
-### Kvarstående osäkerheter/öppna frågor till Jesper
-1. Tie-break-regeln (sekvensnummer vid exakt samma millisekund) är mitt val – säg till om du vill ha en annan princip (t.ex. alltid
-   dela förstaplatsen/3 steg vid exakt likhet).
-2. Jag valde att INTE visa andra lags rätt/fel-status förrän avslöjandet (bara antal svarade) – om du vill att elever ska se
-   lagkompisars *korrekthet* (inte bara att de svarat) innan avslöjandet, säg till, men det bryter facit-sekretessen som redan
-   fanns i spelet.
-3. "Slumpa lag" grupperar bara elever som är anslutna NÄR läraren klickar "Skapa slumpade lag" – om en elev ansluter efter det
-   hamnar den i "Utan lag" och måste läggas till manuellt eller vänta på nästa omslumpning (samma begränsning gäller egentligen
-   redan för sena anslutningar i det vanliga lagvalet).
+### Jespers svar (22 sep 2026) på öppna frågor – och vad det betydde för koden
+1. **Tie-break-regeln** (sekvensnummer vid exakt samma millisekund): "spelar ingen roll om det blir rättvist, bara inte fel
+   uppstår i programmet eller att det blir uppenbart att något inte fungerar" – godkänd som den är, oförändrad.
+2. **Rätt/fel-status för lagkompisar innan avslöjandet** (bara antal svarade visas, aldrig korrekthet i förväg) och den
+   relaterade frågan om facit-sekretess när ett lag väntar på sin sista medlem: Jesper säger uttryckligen att samarbete/diskussion
+   i laget är önskvärt, inte ett problem ("de får ju inga poäng om någon svarar fel, så de måste kolla av med varandra") –
+   ingen ändring av vad skärmen visar, ingen spärr byggd. Eleverna kan redan diskutera muntligt om de vill, det är en poäng,
+   inte en läcka.
+3. **Sen anslutning** (både vanligt lagval och efter "Skapa slumpade lag"): "vore bra om det går, men strunta i det om det är
+   svårt". Visade sig redan fungera i motorn (`engine.js`: en spelare utan lag kan gå med i ett BEFINTLIGT lag när som helst
+   utom i fasen "slut", testat i `engine.test.mjs`) och elevens egen "Välj lag"-vy erbjuder redan detta under en pågående match.
+   Lärarskärmen saknade dock all indikation om väntande elever mitt i en match (bara i lobbyn) – litet tillägg: en rad under
+   lagstatuslistan visar nu "N elever utan lag (ansluter sent): NAMN" under matchen (`larare.html` + `larare.js`,
+   `byggMatch()`). Ingen ny lärarstyrd placeringsfunktion mitt i match byggdes – eleven väljer själv, precis som mellan
+   matcherna.
 
 ## Framtida önskemål (ej gjorda nu)
 QR-kod till rumslänken på lärarskärmen, lärarvalda lag (i stället för fritt djurval), fler frågeset (andra ämnesområden),

@@ -93,6 +93,9 @@ def plain(*parts):
     return '<div class="m-row m-row--plain"><div class="m-lead">' + "".join(parts) + "</div></div>"
 
 
+OLGLAS_JPG = "/images/kemi/matens-kemi/foton/olglas.jpg"
+
+
 def sugar_table():
     """Förenklad tabell över de vanligaste mono- och disackariderna (Jespers krav: 'lagom nivå',
     kondenserade formler i en tabell – detaljerad strukturformel + 3D visas i stället bredvid, bara
@@ -165,6 +168,14 @@ M1 = (
         'data-concept="glykosidbindning">glykosidbindning</span></strong> bildas en disackarid, som i exemplen i '
         'tabellen ovan.</p>',
         sidefig(MOL.detailed_glucose_card_html())
+        + illust(OLGLAS_JPG,
+                 'Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
+                 'med ett snöre och en hög lösa sädeskorn.',
+                 'Öl tillverkas av korn som får gro i 3 dagar. Därefter torkas och rostas kornen, varpå en sirap av '
+                 'maltsocker kallad vört lakas ur de krossade kornen. Vörten kokas sedan med humlekottar för att få '
+                 'smak och hållbarhet, varpå ölet får jäsa. I jäsningen omvandlar jästsvampen maltsockret till '
+                 'etanol och koldioxid.',
+                 350, 281)
     )
     + deepen(
         "Glukos kan vara både rak och ringformad",

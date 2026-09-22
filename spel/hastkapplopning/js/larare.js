@@ -545,6 +545,19 @@ function byggMatch(vy) {
     $("tidFyll").style.width = "0%";
   }
   byggLagStatusLista(vy);
+  // Elever som ansluter mitt i en match hamnar tillfälligt utan lag; de kan
+  // själva gå med i ett befintligt lag (sin egen skärm erbjuder det), men
+  // läraren bör se att någon väntar. Ingen placeringsfunktion behövs här –
+  // det är elevens eget val, precis som mellan matcherna.
+  const vantande = $("vantandeMatch");
+  if (vantande) {
+    const n = (vy.utanLag || []).length;
+    vantande.hidden = n === 0;
+    if (n > 0) {
+      const namn = vy.utanLag.map((p) => p.namn + (p.ansluten ? "" : " (frånkopplad)")).join(", ");
+      vantande.textContent = n + " elev" + (n === 1 ? "" : "er") + " utan lag (ansluter sent): " + namn + " – de väljer själva ett lag på sin egen skärm.";
+    }
+  }
   tickTimer();
 }
 

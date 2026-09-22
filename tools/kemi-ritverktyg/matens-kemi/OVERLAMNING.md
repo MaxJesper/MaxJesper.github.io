@@ -162,6 +162,16 @@ vad som ändrades.
      tillsammans med fosfat är ryggraden i RNA/DNA.
 - Stärkelse/cellulosa-jämförelsen (maltos/cellobios, byggd i natt) är OFÖRÄNDRAD i huvudtexten –
   Jesper pekade ut den som kärnan i provfrågan och redan på "lagom nivå".
+- **Tillägg 22 sep 2026 (kväll):** Jesper bad om en bild av ett ölglas i högermarginalen intill
+  maltsocker, med en given bildtext om ölbryggning (korn gror → torkas/rostas → vört lakas ur →
+  kokas med humle → jäser, jästsvampen omvandlar maltsockret till etanol och koldioxid). Bilden
+  (`Ölglas.png`, AI-genererad, Jespers Hämtade filer) beskuren och skalad till
+  `images/kemi/matens-kemi/foton/olglas.jpg` (700×561, ny undermapp `foton/` för fotorealistiska
+  bilder, jämför `strukturformler/` och `kulmodeller/`; ingen EXIF fanns i originalet, ingen i
+  kopian). Ny `illust()`-anrop i `bygg_studieguide.py` (samma helper som redan användes för
+  fett-översiktsbilden), staplad i `.m-side` direkt under glukoskortet i samma rad som
+  sockertabellen (tabellen listar just "Maltos (mältsocker)"). Alt-text beskriver bilden
+  (glas, skum, säd), figcaption är Jespers text ordagrant.
 
 ### M2 Fetter – helt ombyggd, tre steg i tur och ordning
 
