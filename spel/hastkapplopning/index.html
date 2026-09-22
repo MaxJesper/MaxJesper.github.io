@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hästkapplöpning – lagspel om mineraler och vitaminer</title>
+<link rel="stylesheet" href="/css/knappar.css" />
+<link rel="stylesheet" href="css/hk.css" />
+</head>
+<body class="hk">
+<header class="hero">
+  <div class="inre">
+    <h1>Hästkapplöpning</h1>
+    <p>Lagspel i realtid om mineraler och vitaminer. Svara snabbt och rätt – och låt ert djur galoppera först i mål!</p>
+  </div>
+</header>
+
+<main class="hk-wrap">
+  <div class="page-actions no-print">
+    <a href="../" class="subject-btn">← Tillbaka</a>
+  </div>
+
+  <div id="serverNotis" class="notis varning" hidden>
+    <strong>Servern är inte påslagen ännu.</strong> Läraren kan prova spelet i <em>Demoläge</em> eller <em>Lokalt läge</em> (i samma webbläsare). För att eleverna ska kunna delta från sina egna enheter behöver spelservern driftsättas och adressen läggas i <code>js/config.js</code>.
+  </div>
+
+  <div class="kolumner">
+    <section class="panel" aria-labelledby="hElev">
+      <h2 id="hElev">Jag är elev</h2>
+      <form id="elevForm" novalidate>
+        <label class="falt" for="rumskod">Rumskod (4 tecken)</label>
+        <div class="rad">
+          <input type="text" id="rumskod" name="rumskod" maxlength="4" size="6" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="kodHjalp" style="text-transform:uppercase;letter-spacing:0.2em;font-weight:800" />
+          <button type="submit" class="kbtn primar" id="gaMed">Gå med</button>
+        </div>
+        <p id="kodHjalp" class="liten">Koden står på lärarens skärm. Du kan också få en länk direkt av läraren.</p>
+        <p id="elevFel" class="notis varning" role="alert" hidden></p>
+      </form>
+      <details>
+        <summary>Lokalt läge (prov i samma webbläsare)</summary>
+        <p class="liten">Bara om läraren kör Lokalt läge eller Demoläge på samma dator/webbläsare.</p>
+        <label><input type="checkbox" id="lokalKryss" /> Anslut i lokalt läge</label>
+      </details>
+    </section>
+
+    <section class="panel" aria-labelledby="hLarare">
+      <h2 id="hLarare">Jag är lärare</h2>
+      <label class="falt" for="uppsattning">Frågeset</label>
+      <select id="uppsattning" aria-describedby="uppsHjalp"></select>
+      <p id="uppsHjalp" class="liten"></p>
+      <div class="rad">
+        <a class="kbtn primar" id="startaServer" href="larare.html?lage=server">Starta rum (Server)</a>
+        <a class="kbtn" id="startaLokalt" href="larare.html?lage=lokal">Starta lokalt läge</a>
+        <a class="kbtn" id="startaDemo" href="larare.html?demo=1">Demoläge (6 botlag)</a>
+      </div>
+      <p class="liten" style="margin-top:10px"><strong>Server:</strong> elevernas egna enheter ansluter via internet. <strong>Lokalt:</strong> allt körs i den här webbläsaren (elevflikar i samma webbläsare). <strong>Demoläge:</strong> lokalt läge där datorstyrda lag spelar med, så att du kan prova hela spelet själv.</p>
+      <div id="pagaende" hidden>
+        <h3>Pågående rum i den här webbläsaren</h3>
+        <ul id="pagaendeLista"></ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel mjuk" aria-labelledby="hRegler">
+    <h2 id="hRegler">Så fungerar spelet</h2>
+    <div class="regelrad"><span class="ikon" aria-hidden="true">👥</span><p><strong>Lag och djur.</strong> Ni är ett lag och väljer varsitt djur – Häst, Zebra, Tiger, Elefant, Kamel, Älg, Snigel, Kanin, Giraff eller Sköldpadda. Varje djur kan bara väljas av ett lag. Flera enheter kan vara samma lag, eller ett helt lag kan dela en dator.</p></div>
+    <div class="regelrad"><span class="ikon" aria-hidden="true">❓</span><p><strong>Frågan.</strong> Frågan visas på storbilden. Svarsalternativen (A, B, C, D) visas på era egna skärmar. Det första svaret från någon i laget gäller och låser laget.</p></div>
+    <div class="regelrad"><span class="ikon" aria-hidden="true">🥇</span><p><strong>Poäng.</strong> Snabbast <em>och</em> rätt: 3 steg och ett gnägg. Näst snabbast och rätt: 2 steg och ett gnägg. Övriga som svarar rätt: 1 steg (hovar hörs). Fel svar eller inget svar ger 0 steg.</p></div>
+    <div class="regelrad"><span class="ikon" aria-hidden="true">🏁</span><p><strong>Mål.</strong> Banan är 16 steg (läraren kan ändra). Först i mål vinner matchen. Om ingen är i mål efter åtta frågor kommer upp till fyra reservfrågor. Sedan vinner laget som ligger längst fram.</p></div>
+    <div class="regelrad"><span class="ikon" aria-hidden="true">🏆</span><p><strong>Tre matcher.</strong> Varje match har nya frågor och slutar med en prispall. Plats 1, 2 och 3 ger 3, 2 och 1 poäng. Efter match 3 utses mästarlaget.</p></div>
+    <p class="liten">Djuren:</p>
+    <ul class="avatar-rad" id="djurLista" aria-label="Alla djur"></ul>
+  </section>
+
+  <section class="panel" aria-labelledby="hInstr">
+    <h2 id="hInstr">Instruktion för läraren</h2>
+    <ol>
+      <li>Välj <strong>Starta rum (Server)</strong> (eller Lokalt läge/Demoläge för att prova). Lärarvyn öppnas med en stor rumskod.</li>
+      <li>Visa lärarvyn på projektorn (tryck <strong>F</strong> för fullskärm). Eleverna öppnar adressen på skärmen, skriver rumskoden och sitt <strong>förnamn eller smeknamn</strong> (inte fullständigt namn) och väljer ett djur.</li>
+      <li>I lobbyn kan du flytta elever mellan lag och ta bort elever eller lag. När minst två lag finns trycker du på <strong>Starta match</strong>.</li>
+      <li>Tryck <strong>Nästa fråga</strong> (mellanslag) för varje fråga, eller slå på <strong>Auto</strong> (A) så går spelet framåt av sig självt. <strong>Visa svar nu</strong> avslutar en fråga i förtid. Frågan avslutas också när alla lag svarat eller tiden är slut.</li>
+      <li>Ljudet låses upp när du klickar första gången. Prova med <strong>Ljudtest</strong> innan lektionen. Kontrollerna kan döljas med <strong>H</strong>.</li>
+      <li>Efter varje match visas en prispall. Tryck <strong>Nästa match</strong>. Lagen och deras medlemmar består, banan nollställs.</li>
+    </ol>
+  </section>
+
+  <section class="panel" aria-labelledby="hTekn">
+    <h2 id="hTekn">Tekniska noter</h2>
+    <ul>
+      <li>Serverns klocka avgör vem som var snabbast, inte elevernas enheter. Många elever på dåligt nät kan därför få några tiondels sekunders fördel eller nackdel.</li>
+      <li>Rätt svar skickas aldrig till elevernas enheter före avslöjandet.</li>
+      <li>Rummet raderas automatiskt efter åtta timmar utan aktivitet. Inga namn eller svar sparas efteråt.</li>
+      <li>Spelet fungerar utan kakor. Webbläsarens lagring används bara för att ansluta igen efter en omladdning.</li>
+    </ul>
+  </section>
+</main>
+
+<script type="module" src="js/index.js"></script>
+</body>
+</html>

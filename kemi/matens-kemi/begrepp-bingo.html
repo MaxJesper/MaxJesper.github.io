@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppsbingo – Matens kemi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-matens-kemi { --area:#c2410c; --area-strong:#9a3412; --area-soft:#fff7ed; --area-border:#fed7aa; --area-hover:#ffedd5; }
+    main { max-width: 640px; margin: 0 auto; }
+    .intro-box { background:#fff7ed; border:1px solid #fed7aa; border-left:4px solid #9a3412; border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.25rem; }
+    .intro-box p { margin:0.35rem 0; }
+    .drawbox { background:#fff; border:2px solid #fed7aa; border-radius:12px; padding:1rem 1.2rem; margin-bottom:1rem; min-height:70px; display:flex; align-items:center; }
+    .drawbox p { margin:0; font-size:1.05rem; }
+    .actions { display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+    .btn { font:inherit; font-weight:700; padding:0.6rem 1.2rem; min-height:44px; border-radius:10px; cursor:pointer; border:2px solid #9a3412; background:#9a3412; color:#fff; }
+    .btn.sek { background:#fff; color:#9a3412; }
+    .btn[disabled] { opacity:0.5; cursor:not-allowed; }
+    .btn:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .grid { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:0.4rem; }
+    .cell { aspect-ratio:1; min-width:0; overflow-wrap:break-word; border:2px solid #fdba74; border-radius:8px; background:#fff; display:flex; align-items:center; justify-content:center; text-align:center; font-size:0.82rem; font-weight:600; color:#1f2937; padding:0.3rem; cursor:pointer; }
+    .cell:focus-visible { outline:3px solid #1d4ed8; outline-offset:2px; }
+    .cell.marked { background:#9a3412; color:#fff; border-color:#9a3412; }
+    .cell.win { background:#166534; border-color:#166534; color:#fff; }
+    .status { margin-top:1rem; font-weight:700; color:#166534; min-height:1.4rem; }
+    @media (max-width: 420px) { .cell { font-size:0.72rem; } }
+  </style>
+</head>
+<body class="area-matens-kemi">
+  <header class="kemi-header">
+    <h1>Begreppsbingo</h1>
+    <p>Matens kemi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./larande-spel.html" class="subject-btn">← Tillbaka till spelen</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+    </div>
+
+    <section class="intro-box">
+      <p><strong>Så här gör du:</strong> klicka <em>Dra en förklaring</em>. Hitta begreppet på din bricka som förklaringen passar och klicka på rutan för att markera den. Få fyra i rad (vågrätt, lodrätt eller diagonalt) för att vinna! Enspelarversion – spela själv eller turas om i klassen med en gemensam skärm.</p>
+    </section>
+
+    <div class="drawbox" role="status" aria-live="polite"><p id="draw">Klicka på "Dra en förklaring" för att börja.</p></div>
+    <div class="actions">
+      <button type="button" class="btn" id="drawbtn">🎲 Dra en förklaring</button>
+      <button type="button" class="btn sek" id="newgame">Ny bricka</button>
+    </div>
+
+    <div class="grid" id="grid" role="group" aria-label="Bingobricka"></div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script>
+  (function () {
+    var ALL = [], board = [], marked = [], drawn = [], remaining = [], won = false;
+
+    function shuffle(a) {
+      a = a.slice();
+      for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+      return a;
+    }
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+    function newGame() {
+      board = shuffle(ALL).slice(0, 16);
+      marked = board.map(function () { return false; });
+      remaining = board.map(function (_, i) { return i; });
+      drawn = []; won = false;
+      document.getElementById('draw').textContent = 'Klicka på "Dra en förklaring" för att börja.';
+      document.getElementById('status').textContent = '';
+      renderGrid();
+    }
+
+    function renderGrid() {
+      var grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      board.forEach(function (item, i) {
+        var d = document.createElement('div');
+        d.className = 'cell' + (marked[i] ? ' marked' : '');
+        d.textContent = item.term;
+        d.tabIndex = 0;
+        d.setAttribute('role', 'button');
+        d.setAttribute('aria-pressed', marked[i] ? 'true' : 'false');
+        d.addEventListener('click', function () { toggle(i); });
+        d.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } });
+        grid.appendChild(d);
+      });
+    }
+
+    function toggle(i) {
+      if (won) return;
+      marked[i] = !marked[i];
+      renderGrid();
+      checkWin();
+    }
+
+    function checkWin() {
+      for (var r = 0; r < 4; r++) { if ([0, 1, 2, 3].every(function (c) { return marked[r * 4 + c]; })) return win();
+      }
+      for (var c = 0; c < 4; c++) { if ([0, 1, 2, 3].every(function (r) { return marked[r * 4 + c]; })) return win();
+      }
+      if ([0, 5, 10, 15].every(function (i) { return marked[i]; })) return win();
+      if ([3, 6, 9, 12].every(function (i) { return marked[i]; })) return win();
+    }
+
+    function win() {
+      won = true;
+      document.getElementById('status').textContent = '🎉 Bingo! Klicka "Ny bricka" för att spela igen.';
+    }
+
+    document.getElementById('drawbtn').addEventListener('click', function () {
+      if (!remaining.length) { document.getElementById('draw').textContent = 'Alla förklaringar är dragna.'; return; }
+      var pick = remaining.splice(Math.floor(Math.random() * remaining.length), 1)[0];
+      drawn.push(pick);
+      document.getElementById('draw').innerHTML = '<strong>Förklaring ' + drawn.length + ':</strong> ' + esc(board[pick].def);
+    });
+    document.getElementById('newgame').addEventListener('click', newGame);
+
+    fetch('./data/begreppskort.json').then(function (r) { return r.json(); }).then(function (d) {
+      ALL = d.levels['1'].concat(d.levels['2'] || []);
+      newGame();
+    }).catch(function () {
+      document.getElementById('grid').innerHTML = '<p>Begreppen kunde inte laddas. Ladda om sidan.</p>';
+    });
+  })();
+  </script>
+</body>
+</html>

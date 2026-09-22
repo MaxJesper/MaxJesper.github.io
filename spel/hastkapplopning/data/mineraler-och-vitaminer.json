@@ -1,0 +1,454 @@
+{
+ "id": "mineraler-och-vitaminer",
+ "titel": "Mineraler och vitaminer",
+ "beskrivning": "Tre matcher om vitaminer, mineraler och hur de används i vardagen. Varje match har 12 frågor: 8 ordinarie och 4 reserv.",
+ "matcher": [
+  {
+   "namn": "Match 1 – Vitaminer",
+   "fragor": [
+    {
+     "fraga": "Vad kännetecknar ett vitamin?",
+     "alternativ": [
+      "Det ger kroppen mycket energi (kalorier)",
+      "Det är ett grundämne som finns i berggrunden",
+      "Det byggs upp av aminosyror som proteiner",
+      "Kroppen behöver det i små mängder men kan inte själv tillverka tillräckligt av det"
+     ],
+     "ratt": 3,
+     "forklaring": "Vitaminer är organiska molekyler som behövs i små mängder för att kroppen ska fungera; de ger ingen energi.",
+     "kalla": "Livsmedelsverket; Nordic Nutrition Recommendations 2023 (pub.norden.org)"
+    },
+    {
+     "fraga": "Vilken grupp innehåller bara fettlösliga vitaminer?",
+     "alternativ": [
+      "A-, D-, E- och K-vitamin",
+      "A-, C-, D- och E-vitamin",
+      "B-, C-, D- och K-vitamin",
+      "C-, E-, K-vitamin och folat"
+     ],
+     "ratt": 0,
+     "forklaring": "De fettlösliga vitaminerna är A, D, E och K. C-vitamin och alla B-vitaminer (även folat) är vattenlösliga.",
+     "kalla": "Livsmedelsverket (Vitaminer och antioxidanter)"
+    },
+    {
+     "fraga": "Sjömän på långa resor fick förr ofta skörbjugg. Vilket vitamin saknades i deras kost?",
+     "alternativ": [
+      "D-vitamin",
+      "A-vitamin",
+      "C-vitamin",
+      "B12"
+     ],
+     "ratt": 2,
+     "forklaring": "C-vitamin behövs bland annat för att bilda kollagen. Utan det blir tandkött och blodkärl sköra. Färsk frukt, bär, grönsaker och potatis förebygger skörbjugg.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin C)"
+    },
+    {
+     "fraga": "Vad är ett tidigt tecken på att man får för lite A-vitamin?",
+     "alternativ": [
+      "Blödande tandkött",
+      "Sämre syn i mörker (nattblindhet)",
+      "Mjuka och böjda ben hos barn",
+      "Blodbrist med trötthet"
+     ],
+     "ratt": 1,
+     "forklaring": "A-vitamin ingår i ämnet som gör ögats stavar känsliga för svagt ljus, så brist ger nattblindhet.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin A)"
+    },
+    {
+     "fraga": "Vad händer med det överskott av vattenlösliga vitaminer, till exempel C-vitamin, som kroppen inte behöver?",
+     "alternativ": [
+      "Det lagras i levern i många år",
+      "Det omvandlas till kroppsfett",
+      "Det byggs in i skelettet",
+      "Det går till största delen ut med urinen"
+     ],
+     "ratt": 3,
+     "forklaring": "Vattenlösliga vitaminer lagras dåligt och lämnar kroppen med urinen, så de behöver ätas regelbundet (B12 är ett undantag som lagras i levern).",
+     "kalla": "Livsmedelsverket; Nordic Nutrition Recommendations 2023 (pub.norden.org)"
+    },
+    {
+     "fraga": "Vilket vitamin behövs för att blodet ska kunna levra sig när man har fått ett sår?",
+     "alternativ": [
+      "K-vitamin",
+      "E-vitamin",
+      "C-vitamin",
+      "A-vitamin"
+     ],
+     "ratt": 0,
+     "forklaring": "K-vitamin behövs för flera av de proteiner som får blodet att koagulera. Gröna bladgrönsaker och vissa vegetabiliska oljor är bra källor.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin K)"
+    },
+    {
+     "fraga": "Engelska sjukan (rakit) ger mjuka och krokiga ben hos barn. Brist på vilket vitamin ligger bakom?",
+     "alternativ": [
+      "A-vitamin",
+      "D-vitamin",
+      "K-vitamin",
+      "B12"
+     ],
+     "ratt": 1,
+     "forklaring": "Utan tillräckligt med D-vitamin tas för lite kalcium upp och skelettet blir dåligt mineraliserat. Hos barn ger det rakit, hos vuxna mjukbenthet (osteomalaci).",
+     "kalla": "Livsmedelsverket (D-vitamin); Nordic Nutrition Recommendations 2023 (pub.norden.org)"
+    },
+    {
+     "fraga": "Varför rekommenderas den som äter helt växtbaserat att välja B12-berikad mat eller ta tillskott?",
+     "alternativ": [
+      "B12 förstörs av all växtkost i magsäcken",
+      "B12 är fettlösligt och finns därför bara i fett kött",
+      "B12 finns naturligt bara i animaliska livsmedel",
+      "Veganer saknar tarmbakterier som kan ta upp B12"
+     ],
+     "ratt": 2,
+     "forklaring": "Vitamin B12 bildas av mikroorganismer och finns naturligt bara i kött, fisk, ägg och mejeriprodukter. Utan berikning eller tillskott blir det lätt för lite.",
+     "kalla": "1177 / Apoteket (B12-brist); Nordic Nutrition Recommendations 2023 (pub.norden.org)"
+    },
+    {
+     "fraga": "Vad är det bästa sättet att bevara de vattenlösliga vitaminerna när du lagar grönsaker?",
+     "alternativ": [
+      "Koka dem länge i mycket vatten",
+      "Ånga dem eller koka dem kort i lite vatten",
+      "Låt dem ligga i vatten över natten före tillagning",
+      "Fritera dem hårt så länge som möjligt"
+     ],
+     "ratt": 1,
+     "forklaring": "C-vitamin och folat är känsliga för värme och löses ut i kokvattnet, så kort tillagning i lite vatten (eller ångning) bevarar mest.",
+     "kalla": "Livsmedelsverket (Tillagning)"
+    },
+    {
+     "fraga": "Folat är ett B-vitamin. Vad behövs det bland annat till?",
+     "alternativ": [
+      "Att bilda nytt DNA och nya celler",
+      "Att få blodet att levra sig",
+      "Att se i mörker",
+      "Att bygga upp kollagen i bindväv"
+     ],
+     "ratt": 0,
+     "forklaring": "Folat behövs när DNA bildas och celler delar sig, vilket gör det extra viktigt tidigt i graviditeten. Gröna grönsaker och baljväxter är bra källor.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Folat)"
+    },
+    {
+     "fraga": "Vilka livsmedel är särskilt goda källor till E-vitamin?",
+     "alternativ": [
+      "Citrusfrukter och svarta vinbär",
+      "Kokt vitt ris och pasta",
+      "Vegetabiliska oljor, nötter och frön",
+      "Mager kokt fisk"
+     ],
+     "ratt": 2,
+     "forklaring": "E-vitamin är fettlösligt och finns mest i vegetabiliska oljor, nötter och frön. Det skyddar fettrika delar av cellerna mot skadliga syreföreningar.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin E)"
+    },
+    {
+     "fraga": "Morötter innehåller betakaroten. Vad kan kroppen göra av betakaroten?",
+     "alternativ": [
+      "D-vitamin",
+      "Kalcium",
+      "Hemoglobin",
+      "A-vitamin"
+     ],
+     "ratt": 3,
+     "forklaring": "Betakaroten är en förstadie till A-vitamin, och kroppen omvandlar en del av det vi äter till A-vitamin.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin A)"
+    }
+   ]
+  },
+  {
+   "namn": "Match 2 – Mineraler",
+   "fragor": [
+    {
+     "fraga": "Vilket mineral behövs främst för att bygga starka ben?",
+     "alternativ": [
+      "Järn",
+      "Kalcium",
+      "Jod",
+      "Natrium"
+     ],
+     "ratt": 1,
+     "forklaring": "Ungefär 99 % av kroppens kalcium sitter i skelett och tänder. Mjölkprodukter är den viktigaste kalciumkällan i Norden.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Calcium)"
+    },
+    {
+     "fraga": "Trötthet och blek hy kan bero på blodbrist. Vilket mineral behövs för att bygga hemoglobinet i de röda blodkropparna?",
+     "alternativ": [
+      "Jod",
+      "Natrium",
+      "Järn",
+      "Fluor"
+     ],
+     "ratt": 2,
+     "forklaring": "Järn sitter mitt i hemoglobinet och binder syre. Järnbrist är den vanligaste orsaken till blodbrist.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Iron); Livsmedelsverket"
+    },
+    {
+     "fraga": "Struma, en förstorad sköldkörtel, orsakades förr ofta av brist på vilket mineral?",
+     "alternativ": [
+      "Jod",
+      "Kalcium",
+      "Zink",
+      "Fluor"
+     ],
+     "ratt": 0,
+     "forklaring": "Sköldkörteln behöver jod för att tillverka sina hormoner. Sedan man började jodera salt i Sverige har strumat blivit ovanligt.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Iodine); Läkartidningen"
+    },
+    {
+     "fraga": "Vad kan för mycket salt (natrium) över tid bidra till?",
+     "alternativ": [
+      "Blodbrist",
+      "Struma",
+      "Nattblindhet",
+      "Högre blodtryck"
+     ],
+     "ratt": 3,
+     "forklaring": "Ett högt saltintag höjer blodtrycket hos många, och högt blodtryck ökar risken för stroke och hjärt-kärlsjukdom.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Sodium)"
+    },
+    {
+     "fraga": "Vilket mineral gör tändernas yta mer motståndskraftig mot syra och hjälper mot hål (karies)?",
+     "alternativ": [
+      "Jod",
+      "Fluor",
+      "Natrium",
+      "Zink"
+     ],
+     "ratt": 1,
+     "forklaring": "Fluor binds in i tandens yta så att den blir svårare för syror att lösa upp. Tandkräm är en viktig källa.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Fluoride)"
+    },
+    {
+     "fraga": "Vilket mineral finns det gott om i potatis, frukt och grönsaker, och behövs för nerver, muskler och vätskebalans?",
+     "alternativ": [
+      "Kalium",
+      "Jod",
+      "Fluor",
+      "Zink"
+     ],
+     "ratt": 0,
+     "forklaring": "Kalium behövs för att nerver och muskler ska fungera och för vätskebalansen. Potatis, frukt och grönsaker är viktiga källor.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Potassium)"
+    },
+    {
+     "fraga": "Vilka livsmedel är särskilt rika på magnesium?",
+     "alternativ": [
+      "Vitt ris och vit pasta",
+      "Smör och matolja",
+      "Äppelmos och päron",
+      "Fullkornsbröd, nötter och baljväxter"
+     ],
+     "ratt": 3,
+     "forklaring": "Magnesium finns mycket i fullkorn, nötter, frön, baljväxter och kakao. Raffinerade produkter innehåller mindre.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Magnesium)"
+    },
+    {
+     "fraga": "Vad är den viktigaste kemiska skillnaden mellan mineraler och vitaminer i maten?",
+     "alternativ": [
+      "Mineraler innehåller kolkedjor, vitaminer gör inte det",
+      "Mineraler tillverkas av kroppen, vitaminer gör den inte",
+      "Mineraler är oorganiska grundämnen (ofta joner), vitaminer är organiska molekyler",
+      "Mineraler är fettlösliga, vitaminer är vattenlösliga"
+     ],
+     "ratt": 2,
+     "forklaring": "Mineraler är grundämnen som kalcium, järn och jod, som inte kan brytas ner. Vitaminer är organiska molekyler som kan förstöras av till exempel värme.",
+     "kalla": "Grundläggande kemi (grundämnen och organiska ämnen); Livsmedelsverket"
+    },
+    {
+     "fraga": "Vilket mineral är en del av många enzymer och behövs bland annat för immunförsvar och sårläkning?",
+     "alternativ": [
+      "Jod",
+      "Zink",
+      "Kalium",
+      "Fluor"
+     ],
+     "ratt": 1,
+     "forklaring": "Zink har uppgifter i alla klasser av enzymer i kroppen och behövs för tillväxt, immunförsvar och sårläkning. Kött, mejeri och baljväxter är källor.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Zinc)"
+    },
+    {
+     "fraga": "Vilken uppgift har mineralet selen bland annat i kroppen?",
+     "alternativ": [
+      "Bygger upp tändernas emalj",
+      "Transporterar syre i blodet",
+      "Ingår i enzymer som skyddar cellerna mot oxidativ skada och stöder sköldkörtelns hormoner",
+      "Reglerar hur mycket salt kroppen innehåller"
+     ],
+     "ratt": 2,
+     "forklaring": "Selen ingår i selenoproteiner, till exempel antioxidantenzymer och enzymer som aktiverar sköldkörtelhormon. Jorden i Norden är fattig på selen.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Selenium)"
+    },
+    {
+     "fraga": "Kalcium bildar tillsammans med ett annat mineral det hårda i skelett och tänder. Vilket?",
+     "alternativ": [
+      "Järn",
+      "Jod",
+      "Natrium",
+      "Fosfor (som fosfat)"
+     ],
+     "ratt": 3,
+     "forklaring": "Det hårda i ben och tänder är kalciumfosfat i en form som kallas hydroxylapatit.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Calcium)"
+    },
+    {
+     "fraga": "Vilket av dessa är en god kalciumkälla för den som inte äter mejeriprodukter?",
+     "alternativ": [
+      "Kalciumberikad växtdryck",
+      "Kokt vitt ris",
+      "Sockerkaka",
+      "Rå morot"
+     ],
+     "ratt": 0,
+     "forklaring": "Kalciumberikade växtdrycker, samt bland annat grönkål och broccoli, kan ge kalcium när man inte äter mejeriprodukter.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Calcium)"
+    }
+   ]
+  },
+  {
+   "namn": "Match 3 – Blandat och tillämpning",
+   "fragor": [
+    {
+     "fraga": "Under vintern räcker solen i Sverige inte till för att huden ska bilda D-vitamin. Vilket är ett sätt att ändå få i sig D-vitamin?",
+     "alternativ": [
+      "Äta mycket morötter",
+      "Äta fet fisk som lax, sill eller makrill",
+      "Dricka mycket vatten",
+      "Äta mer fullkornsbröd"
+     ],
+     "ratt": 1,
+     "forklaring": "Fet fisk, ägg och D-berikade produkter ger D-vitamin även när solen är för svag. Vissa grupper behöver dessutom tillskott.",
+     "kalla": "Livsmedelsverket (D-vitamin); Nordic Nutrition Recommendations 2023 (pub.norden.org)"
+    },
+    {
+     "fraga": "Varför är det bra att dricka apelsinjuice till en måltid med linser?",
+     "alternativ": [
+      "C-vitamin hjälper kroppen att ta upp järnet från linserna",
+      "Juicen gör linserna lättare att tugga",
+      "Apelsinjuice innehåller mycket järn",
+      "C-vitamin ersätter järn i blodet"
+     ],
+     "ratt": 0,
+     "forklaring": "C-vitamin ökar upptaget av icke-hemjärn, alltså järn från växter, vilket är särskilt bra för den som äter lite kött.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Iron); Livsmedelsverket"
+    },
+    {
+     "fraga": "Varför behövs D-vitamin för starka ben även om man äter mycket kalcium?",
+     "alternativ": [
+      "D-vitamin bygger själv upp benvävnaden",
+      "D-vitamin är en sorts kalcium",
+      "D-vitamin hjälper tarmen att ta upp kalcium",
+      "D-vitamin gör kalciumet fettlösligt"
+     ],
+     "ratt": 2,
+     "forklaring": "Utan D-vitamin tas bara en liten del av kalciumet i maten upp. Därför hör de två ihop för skelettet.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin D, Calcium)"
+    },
+    {
+     "fraga": "Vad är huvudregeln i Livsmedelsverkets råd om vitaminer och mineraler för en frisk person?",
+     "alternativ": [
+      "Alla bör äta kosttillskott varje dag",
+      "Bara piller kan ge tillräckligt av mineraler",
+      "Kosttillskott är alltid farliga",
+      "Man får i sig det man behöver genom att äta varierad och näringsrik mat"
+     ],
+     "ratt": 3,
+     "forklaring": "Varierad mat ger det mesta. Det finns undantag, till exempel D-vitamin för vissa grupper och B12 vid helt växtbaserad kost.",
+     "kalla": "Livsmedelsverket (kostråd, kosttillskott)"
+    },
+    {
+     "fraga": "En person äter nästan bara vit pasta, vitt bröd och läsk, och får blödande tandkött. Vilket vitamin saknas troligast?",
+     "alternativ": [
+      "C-vitamin",
+      "A-vitamin",
+      "D-vitamin",
+      "B12"
+     ],
+     "ratt": 0,
+     "forklaring": "Blödande tandkött är ett tidigt tecken på för lite C-vitamin, som behövs för kollagen. Frukt, bär och grönsaker ger C-vitamin.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin C)"
+    },
+    {
+     "fraga": "Järn i kött kallas hemjärn och järn i växter icke-hemjärn. Vad gäller för upptaget?",
+     "alternativ": [
+      "Järn från växter tas upp lättare än hemjärn",
+      "Hemjärn tas upp lättare än järn från växter",
+      "Kroppen kan bara ta upp järn från växter",
+      "Det är ingen skillnad alls mellan dem"
+     ],
+     "ratt": 1,
+     "forklaring": "Hemjärn tas upp effektivt och påverkas lite av annan mat. Upptaget av växtjärn varierar, till exempel ökar C-vitamin det.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Iron)"
+    },
+    {
+     "fraga": "Någon äter varken mejeriprodukter, fisk eller ägg och använder inte jodsalt. Vilket mineral riskerar hen mest att få för lite av?",
+     "alternativ": [
+      "Natrium",
+      "Kalium",
+      "Jod",
+      "Fluor"
+     ],
+     "ratt": 2,
+     "forklaring": "Jod finns främst i mejeriprodukter, havsfisk, ägg och jodsalt. Utan dem kan man få för lite jod om man inte tar tillskott eller berikad mat.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Iodine)"
+    },
+    {
+     "fraga": "Varför tas fettlösliga vitaminer, som K-vitamin i grönsaker, upp bättre om måltiden innehåller lite fett?",
+     "alternativ": [
+      "Fett förstör bara de vattenlösliga vitaminerna",
+      "Fett gör att grönsakerna tuggas bättre",
+      "Fett omvandlar K-vitamin till C-vitamin",
+      "De löser sig i fett och följer med fettet när det tas upp i tarmen"
+     ],
+     "ratt": 3,
+     "forklaring": "Fettlösliga vitaminer (A, D, E, K) tas upp tillsammans med fett från maten, så lite olja i salladen hjälper.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin K)"
+    },
+    {
+     "fraga": "Vad är en anledning till att man är mer försiktig med höga doser av fettlösliga vitaminer än av vattenlösliga?",
+     "alternativ": [
+      "De bryts ner direkt i magsäcken",
+      "De kan lagras i kroppen och byggas upp till för höga nivåer",
+      "De tas aldrig upp av kroppen",
+      "De ger mycket energi som lagras som fett"
+     ],
+     "ratt": 1,
+     "forklaring": "Fettlösliga vitaminer, till exempel A-vitamin, ansamlas i lever och fettvävnad. Överskott av vattenlösliga går mest ut med urinen.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Vitamin A)"
+    },
+    {
+     "fraga": "Alex vill äta mindre salt. Vilket tips är effektivast med tanke på var saltet finns?",
+     "alternativ": [
+      "Välj mindre av bearbetad mat som färdigrätter, charkuteri och bröd",
+      "Byt vanligt salt mot havssalt",
+      "Sluta salta ägg men ät samma sak i övrigt",
+      "Drick mer vatten till maten"
+     ],
+     "ratt": 0,
+     "forklaring": "Det mesta saltet kommer från bearbetade livsmedel som bröd, charkuterier och färdigmat. Havssalt är också natriumklorid.",
+     "kalla": "Nordic Nutrition Recommendations 2023 (pub.norden.org) (Sodium)"
+    },
+    {
+     "fraga": "Vad gäller för både vitaminer och mineraler?",
+     "alternativ": [
+      "Båda är organiska molekyler",
+      "Båda tillverkas av levern",
+      "Båda är fettlösliga",
+      "De ger ingen energi (kalorier) men behövs för att kroppen ska fungera"
+     ],
+     "ratt": 3,
+     "forklaring": "Energi får vi från kolhydrater, fett och protein. Vitaminer och mineraler ger ingen energi men är nödvändiga för många processer.",
+     "kalla": "Livsmedelsverket (Näringsämnen)"
+    },
+    {
+     "fraga": "På en mjölkförpackning står ”berikad med D-vitamin”. Vad betyder det?",
+     "alternativ": [
+      "Mjölken har naturligt extremt mycket D-vitamin",
+      "Mjölken är ekologisk",
+      "Tillverkaren har tillsatt vitaminet",
+      "Mjölken är fettfri"
+     ],
+     "ratt": 2,
+     "forklaring": "Berikning betyder att ett näringsämne har lagts till i livsmedlet. I Sverige är till exempel mjölk och margarin ofta berikade med D-vitamin.",
+     "kalla": "Livsmedelsverket (D-vitamin)"
+    }
+   ]
+  }
+ ]
+}

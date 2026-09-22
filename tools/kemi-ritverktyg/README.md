@@ -143,3 +143,19 @@ Bygger HELA området `kemi/separationsprocesser/` (studieguide, data, standardsi
 och de 22 SVG-bilderna i `images/kemi/separationsprocesser/` från källfiler i mappen. Redigera källorna, inte de genererade filerna.
 Kör: `cd tools/kemi-ritverktyg/separationsprocesser && python3 bygg_alla.py` (kräver python3 + beautifulsoup4).
 Detaljer, regler och testlista: CLAUDE.md, avsnittet "Separationsprocesser – byggt 20 sep 2026".
+
+## matens-kemi/  (Python + RDKit, byggt natten 21–22 sep 2026)
+Bygger HELA området `kemi/matens-kemi/` (studieguide, data, standardsidor, sorteringsverktyg, laborationer, bingo, korsord, index)
+och 12 molekylmodeller (`js/molmodeller.js`, SVG + PNG i `images/kemi/matens-kemi/`) från källfiler i mappen. Redigera källorna,
+inte de genererade filerna. Kör: `cd tools/kemi-ritverktyg/matens-kemi && python3 bygg_alla.py` (kräver python3 + RDKit:
+`pip install rdkit --break-system-packages`). **Nytt här jämfört med övriga kemikapitel:** `bygg_maten.py` använder RDKit
+(`AllChem.EmbedMolecule`/MMFF) för 3D-geometrin i stället för handbyggd trigonometri (`chembuilder.py`) – molekylerna
+(sockerringar, fettsyrekedjor, dipeptider) är för stora/komplexa för det. Detaljer, pedagogiska beslut, källor och testlista:
+CLAUDE.md, avsnittet "Matens kemi – byggt natten 21–22 sep 2026", samt `OVERLAMNING.md` i den här mappen.
+
+## ../hastkapplopning-worker/  (Cloudflare Worker + Durable Object, byggt natten 21–22 sep 2026)
+Källkod för realtidsbackend till lagspelet `spel/hastkapplopning/` (ligger utanför kemi-ritverktyg, i `tools/hastkapplopning-worker/`
+eftersom det inte ritar bilder utan bygger en server). `bygg_worker.py` genererar en driftsättningsbar enfils-`worker.js` ur
+`src/worker-del.js` + spelets delade motor `spel/hastkapplopning/js/engine.js` – redigera aldrig `worker.js` för hand.
+Detaljer, driftsättning och testlista: CLAUDE.md, avsnittet "Hästkapplöpning – nytt lagspel…", samt `README.md`/`OVERLAMNING.md`
+i den mappen.

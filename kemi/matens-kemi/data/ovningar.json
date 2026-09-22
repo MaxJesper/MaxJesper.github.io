@@ -1,0 +1,246 @@
+{
+ "sortering": [
+  {
+   "id": "naringsamne",
+   "tier": "Grund",
+   "title": "Kolhydrat, fett eller protein?",
+   "intro": "Sortera varje ord eller uttryck till rätt näringsämne.",
+   "zones": [
+    {
+     "id": "k",
+     "t": "Kolhydrat"
+    },
+    {
+     "id": "f",
+     "t": "Fett"
+    },
+    {
+     "id": "p",
+     "t": "Protein"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "k",
+     "t": "Glukos (druvsocker)",
+     "why": "Glukos är en monosackarid – den enklaste sortens kolhydrat."
+    },
+    {
+     "id": "2",
+     "zone": "k",
+     "t": "Stärkelse",
+     "why": "Stärkelse är en polysackarid uppbyggd av glukosenheter."
+    },
+    {
+     "id": "3",
+     "zone": "k",
+     "t": "Cellulosa",
+     "why": "Cellulosa är en polysackarid av glukos, kostfiber i växters cellväggar."
+    },
+    {
+     "id": "4",
+     "zone": "k",
+     "t": "Sackaros (bordssocker)",
+     "why": "Sackaros är en disackarid: glukos + fruktos."
+    },
+    {
+     "id": "5",
+     "zone": "f",
+     "t": "Glycerol",
+     "why": "Glycerol är alkoholdelen i alla fetter."
+    },
+    {
+     "id": "6",
+     "zone": "f",
+     "t": "Palmitinsyra",
+     "why": "Palmitinsyra är en mättad fettsyra."
+    },
+    {
+     "id": "7",
+     "zone": "f",
+     "t": "Triglycerid",
+     "why": "En triglycerid är glycerol + tre fettsyror – ett fett."
+    },
+    {
+     "id": "8",
+     "zone": "f",
+     "t": "Omättad fettsyra",
+     "why": "En fettsyra med minst en dubbelbindning i kolkedjan."
+    },
+    {
+     "id": "9",
+     "zone": "p",
+     "t": "Aminosyra",
+     "why": "Aminosyror är byggstenarna i protein."
+    },
+    {
+     "id": "10",
+     "zone": "p",
+     "t": "Enzym",
+     "why": "Enzymer är proteiner som påskyndar kemiska reaktioner."
+    },
+    {
+     "id": "11",
+     "zone": "p",
+     "t": "Kollagen",
+     "why": "Kollagen är ett strukturprotein i till exempel hud och senor."
+    },
+    {
+     "id": "12",
+     "zone": "p",
+     "t": "Peptidbindning",
+     "why": "Peptidbindningen är bindningen mellan aminosyror i ett protein."
+    }
+   ]
+  },
+  {
+   "id": "mattat-omattat",
+   "tier": "Grund",
+   "title": "Mättat eller omättat fett?",
+   "intro": "Sortera varje beskrivning eller exempel efter om det handlar om mättat eller omättat fett.",
+   "zones": [
+    {
+     "id": "m",
+     "t": "Mättat fett"
+    },
+    {
+     "id": "o",
+     "t": "Omättat fett"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "m",
+     "t": "Fettsyran har bara enkelbindningar mellan kolatomerna",
+     "why": "Inga dubbelbindningar = mättad fettsyra."
+    },
+    {
+     "id": "2",
+     "zone": "m",
+     "t": "Fettsyrans kolkedja är helt rak",
+     "why": "Utan dubbelbindningar blir kedjan rak och packas tätt."
+    },
+    {
+     "id": "3",
+     "zone": "m",
+     "t": "Ofta fast i rumstemperatur, t.ex. smör",
+     "why": "Mättade fetter packas tätt och är oftare fasta."
+    },
+    {
+     "id": "4",
+     "zone": "m",
+     "t": "Palmitinsyra (16:0)",
+     "why": "Palmitinsyra saknar dubbelbindningar – en mättad fettsyra."
+    },
+    {
+     "id": "5",
+     "zone": "o",
+     "t": "Fettsyran har minst en dubbelbindning i kedjan",
+     "why": "En eller flera dubbelbindningar = omättad fettsyra."
+    },
+    {
+     "id": "6",
+     "zone": "o",
+     "t": "Kedjan har en tydlig knäck (cis-bindning)",
+     "why": "Dubbelbindningen böjer kedjan."
+    },
+    {
+     "id": "7",
+     "zone": "o",
+     "t": "Ofta flytande i rumstemperatur, t.ex. olivolja",
+     "why": "Omättade fetter packas glesare och är oftare flytande."
+    },
+    {
+     "id": "8",
+     "zone": "o",
+     "t": "Oljesyra (18:1)",
+     "why": "Oljesyra har en dubbelbindning – en omättad fettsyra."
+    },
+    {
+     "id": "9",
+     "zone": "o",
+     "t": "Blir mer mättad om man härdar (hydrogenerar) den",
+     "why": "Härdning tillsätter väte till dubbelbindningarna."
+    }
+   ]
+  },
+  {
+   "id": "sackarider",
+   "tier": "Lär mer",
+   "title": "Mono-, di- eller polysackarid?",
+   "intro": "Sortera sockerarterna efter hur många sockerenheter de är uppbyggda av.",
+   "zones": [
+    {
+     "id": "mono",
+     "t": "Monosackarid"
+    },
+    {
+     "id": "di",
+     "t": "Disackarid"
+    },
+    {
+     "id": "poly",
+     "t": "Polysackarid"
+    }
+   ],
+   "items": [
+    {
+     "id": "1",
+     "zone": "mono",
+     "t": "Glukos",
+     "why": "En enda sockerenhet: monosackarid."
+    },
+    {
+     "id": "2",
+     "zone": "mono",
+     "t": "Fruktos",
+     "why": "En enda sockerenhet: monosackarid."
+    },
+    {
+     "id": "3",
+     "zone": "mono",
+     "t": "Galaktos",
+     "why": "En enda sockerenhet: monosackarid."
+    },
+    {
+     "id": "4",
+     "zone": "di",
+     "t": "Sackaros (glukos + fruktos)",
+     "why": "Två sockerenheter bundna: disackarid."
+    },
+    {
+     "id": "5",
+     "zone": "di",
+     "t": "Maltos (glukos + glukos)",
+     "why": "Två sockerenheter bundna: disackarid."
+    },
+    {
+     "id": "6",
+     "zone": "di",
+     "t": "Laktos (glukos + galaktos)",
+     "why": "Två sockerenheter bundna: disackarid."
+    },
+    {
+     "id": "7",
+     "zone": "poly",
+     "t": "Stärkelse",
+     "why": "Tusentals glukosenheter i kedja: polysackarid."
+    },
+    {
+     "id": "8",
+     "zone": "poly",
+     "t": "Cellulosa",
+     "why": "Tusentals glukosenheter i kedja: polysackarid."
+    },
+    {
+     "id": "9",
+     "zone": "poly",
+     "t": "Glykogen",
+     "why": "Tusentals glukosenheter i en förgrenad kedja: polysackarid, djurens energilager."
+    }
+   ]
+  }
+ ]
+}

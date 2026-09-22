@@ -46,7 +46,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
 | kemi/kemi-som-amne (Ämnet kemi) | 15/15 (+sakerhetsintyg, rapportmall, laborationer) | 7/7 | 11 (begrepp+termer) + checklista ar/am/rw | ✓ | ✗ |
-| kemi/matens-kemi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| kemi/matens-kemi | 15/15 (+ovningsverktyg) | 7/7 | 11 (begrepp+termer), checklista bara sv | ✓ | ✗ |
 | kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/separationsprocesser | 13/13 | 5/5 | 10/10 (+rw) | ✓ | ✗ |
 | kemi/syror-och-baser | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
@@ -55,7 +55,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ### Klart
 
-- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 33 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**.
+- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 33 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**, **kemi/matens-kemi (byggt natten 21–22 sep 2026 medan Jesper sov, se CLAUDE.md: 5 milstolpar fokuserade strikt på stärkelse/cellulosa/fett/protein enligt Jespers uttryckliga önskan och hans egna provs omfattning, 12 RDKit-byggda molekylmodeller med live-3D, 15 sidor, 11 språk begrepp/termer – checklistan är ÄNNU BARA på svenska, ej ar/am/rw som övriga; Jesper bör läsa igenom studieguiden innan eleverna använder den, se OVERLAMNING.md)**.
 
 - Flerspråk (10 språk inkl. urdu) i 7 fysik/kemi-områden. Namnstandard utskrifter enhetlig.
 
@@ -77,26 +77,26 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för området · ? = okontrollerat (behöver verifieras mot faktiska filer, gissa inte)
 
-| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | Ämnet kemi (kemi-som-amne) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ |
-| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ |
-| Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Kemikartan: cirkulär innehållskarta som områdets framsida (valfritt mönster, byggt 21 sep 2026) | – | – | – | – | – | – | – | – | – | – | – | – | – | ✓ |
-| Gul "Viktigt!"-ruta för sådant som behöver betonas extra (`css/viktigt.css`, byggd 21 sep 2026; max 1–2 per milstolpe) | – | – | – | – | ✗ | ✗ | ✓ (8 rutor, bl.a. SIV) | ✗ | ✗ | ✗ | ✗ | – | – | ✗ |
-| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) | ✓ (.check-q i studieguiden + 10 kontrollfrågor i säkerhetsintyget) |
-| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ✓ (live i ämneskorten, jonkort för jonföreningar) | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – |
-| Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ | ✓ (densitet, calc-box) |
-| Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) | ✓ |
-| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ |
-| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✗ | ? | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) |
-| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | ✓ | – (ingen studieguide än) | ? | ✓ |
-| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ | ✓ (.wonder/.frontier i flera milstolpar) |
-| Live-3D i studieguiden (molviewer; korta kapitel) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – |
-| Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ (13 övningar) |
-| Formelverktyg (`formelvisare.js`: verkstad, balansera, Räknemaskinen) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – |
-| Utskrivbart formelark: stor vs nedsänkt siffra (`formelark.html`) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – |
-| Checklista översatt till arabiska, amhariska, kinyarwanda (`data/checklista.<ar\|am\|rw>.json`; visas under svenskan när språket valts i språkväljaren; AI-översatt, ej korrekturläst; STÅENDE REGEL: ny checklista → nya språkfiler + `concept-lang-selector.js`-etikett) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen checklista än) | ✓ | ✓ |
+| Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | Ämnet kemi (kemi-som-amne) | matens-kemi |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ | ✓ |
+| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ | ✓ |
+| Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Kemikartan: cirkulär innehållskarta som områdets framsida (valfritt mönster, byggt 21 sep 2026) | – | – | – | – | – | – | – | – | – | – | – | – | – | ✓ | – (vanlig index-layout, kort kapitel) |
+| Gul "Viktigt!"-ruta för sådant som behöver betonas extra (`css/viktigt.css`, byggd 21 sep 2026; max 1–2 per milstolpe) | – | – | – | – | ✗ | ✗ | ✓ (8 rutor, bl.a. SIV) | ✗ | ✗ | ✗ | ✗ | – | – | ✗ | ✓ |
+| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) | ✓ (.check-q i studieguiden + 10 kontrollfrågor i säkerhetsintyget) | ✓ |
+| Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ✓ (live i ämneskorten, jonkort för jonföreningar) | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – | ✓ (12 RDKit-byggda molekyler, live i molekylkorten) |
+| Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ | ✓ (densitet, calc-box) | ✗ (inga källbelagda beräkningsexempel hittades, avsiktligt hoppat) |
+| Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) | ✓ | ✓ (larande-spel + sorteringsverktyg) |
+| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ | ✓ (enspelarversion – ingen Worker-synk byggd) |
+| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✗ | ? | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✓ (axe, 0 nya allvarliga; samma delade nested-interactive-fel som övriga) |
+| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | ✓ | – (ingen studieguide än) | ? | ✓ | ✓ |
+| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ | ✓ (.wonder/.frontier i flera milstolpar) | ✗ (missades i natt, in vid nästa redigering) |
+| Live-3D i studieguiden (molviewer; korta kapitel) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | ✓ |
+| Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ (13 övningar) | ✓ (3 övningar i ovningsverktyg.html) |
+| Formelverktyg (`formelvisare.js`: verkstad, balansera, Räknemaskinen) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | – |
+| Utskrivbart formelark: stor vs nedsänkt siffra (`formelark.html`) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | – |
+| Checklista översatt till arabiska, amhariska, kinyarwanda (`data/checklista.<ar\|am\|rw>.json`; visas under svenskan när språket valts i språkväljaren; AI-översatt, ej korrekturläst; STÅENDE REGEL: ny checklista → nya språkfiler + `concept-lang-selector.js`-etikett) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen checklista än) | ✓ | ✓ | ✗ (bara svensk checklista byggd i natt – kvarstår) |
 | Säkerhetsintyg med interaktiva kontrollfrågor + utskrivbart intyg (`kemi/kemi-som-amne/sakerhetsintyg.html`; länkas från fysik- och biologi-hudsidorna) | – (gemensamt, ligger i kemi-som-amne) |
 | Rapportmall för laborationsrapport (utskrivbar, `rapportmall.html`; bygger på vetenskaplig metod, gäller alla NO-ämnen) | – (gemensamt, ligger i kemi-som-amne) |
 | Labbutrustnings-fotospel (`kemi/kemi-som-amne/labbutrustning-spel.html`; fågeltävlingens mönster, Jespers egna foton, två lägen: foto→namn och beskrivning→namn; symbol+text, tangentbord 1–4) | ✓ (kemi/kemi-som-amne, 33 föremål inkl. våg och termometer, byggt 21 sep 2026; fotogalleri i M6; kan utökas med fler foton) |

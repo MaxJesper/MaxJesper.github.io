@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hästkapplöpning – elev</title>
+<link rel="stylesheet" href="/css/knappar.css" />
+<link rel="stylesheet" href="css/hk.css" />
+</head>
+<body class="hk elev">
+<main class="elev-wrap" id="app">
+  <div class="elev-topp">
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+    </div>
+    <span class="status-chip" id="statusChip" data-s="ansluter"><span class="prick" aria-hidden="true"></span><span id="statusText">Ansluter …</span></span>
+  </div>
+  <h1 id="rubrik">Hästkapplöpning</h1>
+  <div id="fel" class="notis varning" role="alert" hidden></div>
+  <div id="lagremsa"></div>
+  <div id="innehall" aria-live="off"><p class="notis">Laddar …</p></div>
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+</main>
+<script type="module" src="js/elev.js"></script>
+</body>
+</html>

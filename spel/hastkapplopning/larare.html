@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hästkapplöpning – lärarvy</title>
+<link rel="stylesheet" href="/css/knappar.css" />
+<link rel="stylesheet" href="css/hk.css" />
+</head>
+<body class="hk larare">
+<main class="lar-wrap" id="app">
+  <div class="rad1">
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button type="button" class="subject-btn" id="btnFull" aria-pressed="false">⛶ Fullskärm</button>
+    </div>
+    <p class="statusrad" id="statusrad"></p>
+  </div>
+  <h1 class="sr-only">Hästkapplöpning – lärarvy</h1>
+
+  <p id="laddar" class="notis">Laddar …</p>
+  <div id="fel" class="notis varning" role="alert" hidden></div>
+
+  <!-- LOBBY -->
+  <section id="vy-lobby" hidden aria-labelledby="lobbyRubrik">
+    <h2 id="lobbyRubrik" tabindex="-1">Lobby</h2>
+    <div class="lobby">
+      <div class="panel kodbox">
+        <p class="liten" style="margin:0">Rumskod</p>
+        <p class="kod-stor" id="lobbyKod"></p>
+        <p class="adress" id="lobbyAdress"></p>
+        <p id="lobbyHur">Eleverna öppnar adressen på sin egen enhet, skriver rumskoden och sitt förnamn eller smeknamn och väljer ett djur.</p>
+        <div class="rad" style="justify-content:center">
+          <button type="button" class="kbtn" id="btnKopiera">📋 Kopiera elevlänk</button>
+          <a class="kbtn" id="btnNyFlik" target="_blank" rel="noopener" hidden>Öppna elevvy i ny flik</a>
+        </div>
+        <p class="liten" id="lobbyLokalNotis" hidden></p>
+      </div>
+      <div>
+        <h3 id="lobbyLagRubrik">Lag</h3>
+        <p id="lobbyTomt" class="tomt">Inga lag ännu – väntar på att eleverna ska ansluta.</p>
+        <ul class="lobby-lag" id="lobbyLag" aria-labelledby="lobbyLagRubrik"></ul>
+        <div class="utan-lag" id="utanLag" hidden>
+          <h3>Utan lag</h3>
+          <ul id="utanLagLista" style="padding:0;list-style:none;margin:0"></ul>
+        </div>
+        <div id="lobbyStallning" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH -->
+  <section id="vy-match" hidden aria-labelledby="matchRubrik">
+    <h2 class="sr-only" id="matchRubrik">Match</h2>
+    <div class="fragarad">
+      <p class="fraganr" id="fragaNr"></p>
+      <h3 class="fragatext" id="fragaText" style="margin:0"></h3>
+      <div class="tidbox" id="tidbox">
+        <div class="tidtext" id="tidText"></div>
+        <div class="stapel" aria-hidden="true"><span id="tidFyll"></span></div>
+        <div class="svarat" id="svaratText"></div>
+      </div>
+    </div>
+    <ol class="storalt" id="storAlt" hidden aria-label="Svarsalternativ"></ol>
+    <div class="avslojande" id="avslojande" hidden>
+      <p class="rattsvar" id="rattSvar"></p>
+      <p class="forkl" id="forklaring"></p>
+      <p class="kalla" id="kalla"></p>
+    </div>
+    <h3 class="sr-only">Kapplöpningsbanan</h3>
+    <div class="bana" id="bana" role="group" aria-label="Kapplöpningsbanan"></div>
+  </section>
+
+  <!-- PRISPALL -->
+  <section id="vy-pall" class="pall-vy" hidden aria-labelledby="pallRubrik">
+    <h2 id="pallRubrik" tabindex="-1">Prispall</h2>
+    <ol class="pall-podium" id="pallPodium"></ol>
+    <div id="pallTabell"></div>
+  </section>
+
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+  <button type="button" class="kbtn visa-kontroller no-print" id="btnVisa" hidden>Visa kontroller</button>
+</main>
+
+<section class="kontroller no-print" id="kontroller" aria-label="Lärarens kontroller" hidden>
+  <button type="button" class="kbtn primar stor" id="btnHuvud">▶ Nästa fråga</button>
+  <button type="button" class="kbtn" id="btnAuto" aria-pressed="false">Auto: av</button>
+  <button type="button" class="kbtn" id="btnPaus" aria-pressed="false" hidden>Pausa</button>
+  <button type="button" class="kbtn" id="btnAlt" aria-pressed="false">Visa alternativ</button>
+  <button type="button" class="kbtn" id="btnLjud" aria-pressed="true">🔊 Ljud på</button>
+  <button type="button" class="kbtn" id="btnInst">⚙ Inställningar</button>
+  <button type="button" class="kbtn varning" id="btnSlutfor" hidden>Slutför match</button>
+  <button type="button" class="kbtn varning" id="btnNyOmg">Ny omgång</button>
+  <button type="button" class="kbtn" id="btnDolj">Dölj kontroller</button>
+</section>
+
+<dialog class="installningar-dialog" id="instDialog" aria-labelledby="instRubrik">
+  <h2 id="instRubrik">Inställningar</h2>
+  <div class="falt-rad"><label for="instSvarstid">Svarstid per fråga (sekunder, 10–60)</label><input type="number" id="instSvarstid" min="10" max="60" step="1" /></div>
+  <div class="falt-rad"><label for="instBana">Banans längd (steg till mål, 10–30)</label><input type="number" id="instBana" min="10" max="30" step="1" /></div>
+  <div class="falt-rad"><label for="instAuto">Väntan i automatiskt läge (sekunder, 2–20)</label><input type="number" id="instAuto" min="2" max="20" step="1" /></div>
+  <div class="falt-rad"><label for="ljudVol">Volym</label><input type="range" id="ljudVol" min="0" max="100" value="90" /></div>
+  <div class="falt-rad"><span>Spela upp alla ljud en gång (för att kontrollera högtalarna)</span><button type="button" class="kbtn" id="btnLjudtest">Ljudtest</button></div>
+  <p class="liten ljudetikett" id="ljudEtikett" aria-live="polite"></p>
+  <p class="liten" id="instBanaNot">Banans längd kan bara ändras i lobbyn (mellan matcherna).</p>
+  <p class="liten">Tangentbord: <strong>mellanslag</strong> = nästa fråga/nästa steg, <strong>A</strong> = auto på/av, <strong>M</strong> = ljud på/av, <strong>P</strong> = pausa, <strong>H</strong> = dölj/visa kontroller, <strong>F</strong> = fullskärm.</p>
+  <div class="rad"><button type="button" class="kbtn primar" id="instStang">Klar</button></div>
+</dialog>
+
+<script type="module" src="js/larare.js"></script>
+</body>
+</html>

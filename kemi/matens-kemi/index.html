@@ -1,92 +1,293 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matens kemi – Kemi</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css" />
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body.area-matens-kemi {
+      --area: #c2410c;
+      --area-strong: #9a3412;
+      --area-soft: #fff7ed;
+      --area-border: #fed7aa;
+      --area-hover: #ffedd5;
     }
 
-    .resource-grid {
+    main { font-size: 1.2em; }
+
+    .area-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
     }
 
-    .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
+    @media (min-width: 960px) {
+      .area-layout { grid-template-columns: 300px 1fr; align-items: start; }
+    }
+
+    .area-main { min-width: 0; }
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image figcaption { margin: 0; font-size: 0.95rem; color: #374151; line-height: 1.6; }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1rem 1rem 1.25rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 1rem; }
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
+    .concept-list li {
+      font-size: 0.95rem; color: #1f2937; line-height: 1.35; padding: 0.22rem 0;
+      break-inside: avoid; display: flex; align-items: baseline; gap: 0.3rem;
+    }
+    .concept-list li::before { content: "→"; color: var(--area); font-size: 0.78rem; flex-shrink: 0; }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
+    .resource-box {
+      background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .resource-box h2 { margin: 0 0 0.75rem; font-size: 1.1rem; color: var(--area-strong); }
+    .resource-box p { margin: 0 0 0.5rem; color: #444; font-size: 0.95rem; }
+    .resource-box ul { list-style: none; padding: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { text-decoration: none; font-weight: 600; color: var(--area-strong); }
+    .resource-box a:hover { text-decoration: underline; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem; background: var(--area-soft); color: var(--area-strong);
+      border: 1px solid var(--area-border); border-radius: 999px; padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+      text-decoration: none; font-size: 0.93rem; font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem;
+      background: var(--area); color: #fff; border-radius: 50%; font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
     }
 
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      font-size: 1.2em;
-    }
-
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
   </style>
 </head>
-
-<body>
+<body class="area-matens-kemi">
 
 <header class="kemi-header">
   <h1>Matens kemi</h1>
 </header>
 
 <button class="hamburger" onclick="toggleMenu()">☰</button>
-
 <nav id="side-menu"></nav>
 
 <main>
   <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
-    <a href="/kemi/periodiska-systemet/" class="subject-btn">Nästa område →</a>
   </p>
-    <section class="page-intro">
-      <p>Här hittar du material om kolhydrater, proteiner, fetter, vitaminer och kemiska processer i maten.</p>
-    </section>
+  <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <p style="color:#595959; font-style:italic;">Material kommer snart.</p>
-      </article>
-    </section>
-  </main>
+  <section class="area-layout">
+    <div class="area-main">
+      <section class="resource-grid">
+        <article class="resource-box">
+          <h2>Material för elever</h2>
+          <ul>
+            <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+            <li><a href="./checklista.html">Checklista</a></li>
+            <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+            <li><a href="./ovningsprov.html">Övningsprov</a></li>
+            <li><a href="./laborationer.html">Laborationer</a></li>
+            <li><a href="./larande-spel.html">Lärande spel</a></li>
+            <li><a href="./ovningsverktyg.html">Sortera molekylerna (övningsverktyg)</a></li>
+          </ul>
+        </article>
+        <article class="resource-box">
+          <h2>Material för läraren</h2>
+          <ul>
+            <li><a href="./facit.html">Facit till övningsprovet</a></li>
+            <li><a href="./begreppslista.html">Begreppslista</a></li>
+          </ul>
+        </article>
+      </section>
+    </div>
+
+    <div class="area-right">
+      <figure class="area-hero-image">
+        <figcaption>
+          All mat är uppbyggd av kemiska ämnen. De tre stora <strong>makromolekylerna</strong> – kolhydrater, fetter och proteiner – byggs av små byggstenar (druvsocker, glycerol och fettsyror, aminosyror) som kopplas ihop till långa kedjor. Växter tillverkar byggstenarna genom fotosyntesen; alla celler frigör energi ur dem genom cellandning.
+        </figcaption>
+      </figure>
+
+      <section class="concept-section" aria-label="Viktiga begrepp">
+        <h2>Viktiga begrepp att lära sig</h2>
+        <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Fotosyntes">Fotosyntes</button></li>
+            <li><button class="concept-btn" data-concept="Cellandning">Cellandning</button></li>
+            <li><button class="concept-btn" data-concept="Kolhydrat">Kolhydrat</button></li>
+            <li><button class="concept-btn" data-concept="Monosackarid">Monosackarid</button></li>
+            <li><button class="concept-btn" data-concept="Disackarid">Disackarid</button></li>
+            <li><button class="concept-btn" data-concept="Polysackarid">Polysackarid</button></li>
+            <li><button class="concept-btn" data-concept="Stärkelse">Stärkelse</button></li>
+            <li><button class="concept-btn" data-concept="Cellulosa">Cellulosa</button></li>
+            <li><button class="concept-btn" data-concept="Glykogen">Glykogen</button></li>
+            <li><button class="concept-btn" data-concept="Fettsyra">Fettsyra</button></li>
+            <li><button class="concept-btn" data-concept="Mättat fett">Mättat fett</button></li>
+            <li><button class="concept-btn" data-concept="Omättat fett">Omättat fett</button></li>
+            <li><button class="concept-btn" data-concept="Protein">Protein</button></li>
+            <li><button class="concept-btn" data-concept="Aminosyra">Aminosyra</button></li>
+            <li><button class="concept-btn" data-concept="Essentiell aminosyra">Essentiell aminosyra</button></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+    <h2>Studieguidens milstolpar</h2>
+    <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+    <ul class="milestone-map-list">
+      <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Fotosyntes och cellandning</a></li>
+      <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Kolhydrater – druvsocker till stärkelse</a></li>
+      <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Fetter – uppbyggnad och energi</a></li>
+      <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Proteiner – aminosyror och enzymer</a></li>
+      <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Sammanfattning – energilager i naturen</a></li>
+    </ul>
+  </section>
+
+  <section class="study-tips">
+    <details>
+      <summary>Inläsningstips</summary>
+      <ul>
+        <li>Lär dig ordekvationerna för fotosyntes och cellandning – de är varandras motsatser.</li>
+        <li>Kunna skilja mono-, di- och polysackarider åt, och veta att både stärkelse och cellulosa är uppbyggda av <strong>glukos</strong> (inte fruktos).</li>
+        <li>Kunna rita/beskriva ett fetts uppbyggnad: glycerol + tre fettsyror. Fettets alkohol är alltid glycerol, aldrig butanol.</li>
+        <li>Veta att mättat/omättat fett avgörs av antalet dubbelbindningar i fettsyrans kolkedja.</li>
+        <li>Kunna beskriva en aminosyras grundstruktur och vad som gör en aminosyra essentiell.</li>
+        <li>Koppla ihop innehållet: enzymer är proteiner, stärkelse är växters energilager och glykogen är djurs/människans.</li>
+      </ul>
+    </details>
+  </section>
+</main>
 
 <script src="/js/menu.js"></script>
+  <script>
+  window.BEGREPP = [
+  {
+    "namn": "Fotosyntes",
+    "definition": "Processen där gröna växter bygger druvsocker (glukos) av koldioxid och vatten med hjälp av ljusenergi. Syrgas bildas som en biprodukt. Ordekvation: koldioxid + vatten + ljusenergi → druvsocker + syrgas.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Cellandning",
+    "definition": "Processen där celler bryter ner druvsocker med hjälp av syrgas för att frigöra energi som kroppen kan använda. Koldioxid och vatten bildas. Ordekvation: druvsocker + syrgas → koldioxid + vatten + energi. Cellandningen är alltså fotosyntesens motsats.",
+    "anchor": "./studieguide.html#m1"
+  },
+  {
+    "namn": "Kolhydrat",
+    "definition": "Ett näringsämne uppbyggt av kol, väte och syre, byggt av en eller flera sockerenheter. Kolhydrater är kroppens viktigaste energikälla och delas in i monosackarider, disackarider och polysackarider.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Monosackarid",
+    "definition": "Den enklaste sortens kolhydrat – en enda sockerenhet som inte kan delas upp i mindre sockerdelar. Glukos, fruktos och galaktos är exempel, och alla tre har samma molekylformel C6H12O6 men olika uppbyggnad.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Disackarid",
+    "definition": "En kolhydrat uppbyggd av två monosackarider som sitter ihop. Sackaros (druvsocker + fruktsocker), maltos (druvsocker + druvsocker) och laktos (druvsocker + galaktos) är exempel, med molekylformeln C12H22O11.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Polysackarid",
+    "definition": "En kolhydrat uppbyggd av mycket många (hundratals till tusentals) sockerenheter som sitter ihop i en lång kedja. Stärkelse, cellulosa och glykogen är alla polysackarider byggda av glukos, men bindningarna mellan enheterna skiljer sig åt.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Stärkelse",
+    "definition": "En polysackarid byggd av jättemånga glukosmolekyler länkade med alfa-1,4-bindningar. Det gör att kedjan böjer sig och gärna bildar en spiralform. Stärkelse är växters sätt att lagra energi och finns rikligt i potatis, ris, pasta och bröd.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Cellulosa",
+    "definition": "En polysackarid byggd av jättemånga glukosmolekyler länkade med beta-1,4-bindningar, vilket ger raka, utsträckta kedjor som packar tätt ihop och bygger upp växters cellväggar. Människan saknar rätt enzym för att bryta ner beta-1,4-bindningen och kan därför inte ta upp energin i cellulosa – den fungerar i stället som kostfiber.",
+    "anchor": "./studieguide.html#m2"
+  },
+  {
+    "namn": "Glykogen",
+    "definition": "En polysackarid byggd av glukos, uppbyggd på liknande sätt som stärkelse men ännu mer förgrenad. Glykogen är djurens (och människans) sätt att lagra energi kortsiktigt, framför allt i lever och muskler.",
+    "anchor": "./studieguide.html#m5"
+  },
+  {
+    "namn": "Fettsyra",
+    "definition": "Byggstenen i fett: en lång kolkedja med en syragrupp (COOH) i ena änden. Fettsyror binds med en esterbindning till glycerol och bildar tillsammans en fettmolekyl (triglycerid).",
+    "anchor": "./studieguide.html#m3"
+  },
+  {
+    "namn": "Mättat fett",
+    "definition": "Fett vars fettsyror bara har enkelbindningar mellan kolatomerna. Fettsyrakedjan blir då helt rak. Mättat fett är oftast fast i rumstemperatur och finns rikligt i smör och feta köttprodukter.",
+    "anchor": "./studieguide.html#m3"
+  },
+  {
+    "namn": "Omättat fett",
+    "definition": "Fett vars fettsyror har en eller flera dubbelbindningar mellan kolatomerna. Varje dubbelbindning ger en cis-knäck i kedjan, vilket gör att omättat fett oftast är flytande i rumstemperatur. Har man flera dubbelbindningar kallas fettet fleromättat.",
+    "anchor": "./studieguide.html#m3"
+  },
+  {
+    "namn": "Protein",
+    "definition": "Ett näringsämne byggt av aminosyror kopplade i kedjor. Proteiner fungerar som kroppens byggnadsmaterial (muskler, hud, hår) och som enzymer, hormoner och antikroppar. Kroppen kan inte bygga protein enbart av kolhydrater och fett – den behöver aminosyror från maten.",
+    "anchor": "./studieguide.html#m4"
+  },
+  {
+    "namn": "Aminosyra",
+    "definition": "Byggstenen i protein: en liten molekyl med en aminogrupp, en karboxylgrupp (syragrupp) och en sidokedja (R) som skiljer sig mellan de 20 olika aminosyrorna. De flesta innehåller kol, väte, syre och kväve – ett fåtal, till exempel cystein, innehåller även svavel.",
+    "anchor": "./studieguide.html#m4"
+  },
+  {
+    "namn": "Essentiell aminosyra",
+    "definition": "En aminosyra som kroppen inte kan tillverka själv, utan måste få via maten. Det finns nio essentiella aminosyror hos människan.",
+    "anchor": "./studieguide.html#m4"
+  }
+];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    /* ENDA KÄLLA: hämta begreppen från data/begrepp.json. Inbäddad window.BEGREPP är reserv. */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reserv.", e); });
+  </script>
+
 </body>
 </html>

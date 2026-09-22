@@ -1,0 +1,16 @@
+# Konfiguration för Hästkapplöpning-Workern.
+# Driftsätt (i den här mappen):  npx wrangler deploy
+name = "hastkapplopning"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+# Ett Durable Object per spelrum. Bindningen heter RUM (används som env.RUM i koden).
+[[durable_objects.bindings]]
+name = "RUM"
+class_name = "Rum"
+
+# Gratisplanen kräver SQLite-baserade Durable Objects (new_sqlite_classes).
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Rum"]

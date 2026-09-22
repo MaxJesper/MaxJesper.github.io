@@ -28,8 +28,8 @@ Tecken: ✓ täckt · ◐ delvis · ✗ saknas
 | … spridning av miljögifter | ◐ | Tungmetaller vid försurning. Ingen egen behandling (bioackumulering, persistens). |
 | Kolatomens egenskaper | ✓ | Kol och kolföreningar (M1–M9). |
 | Kolets kretslopp | ✗ | Se ovan – saknas som sammanhängande helhet (fotosyntes → kolhydrater → cellandning → CO₂ → förbränning/fossilt). |
-| Kolhydrater | ✗ | Behandlas inte. |
-| Proteiner, fetter | ◐ | Fetter (estrar av glycerol) och aminosyror/proteiner i kol M8–M9. Funktioner i kroppen (energi, byggmaterial) tunt. Matens kemi och Biologi/Matspjälkningen är tomma. |
+| Kolhydrater | ✓ | **Uppdaterat 22 sep:** Matens kemi M2 (mono-/di-/polysackarider, stärkelse vs cellulosa med 3D-modeller). |
+| Proteiner, fetter | ✓ | Fetter (estrar av glycerol) och aminosyror/proteiner i kol M8–M9. **Uppdaterat 22 sep:** funktioner i kroppen, energitäthet, härdning och proteinets uppbyggnad/denaturering nu täckt i Matens kemi M3–M4. Biologi/Matspjälkningen fortfarande tomt. |
 | Läkemedel | ✗ | Bara omnämnt. |
 | Funktionskläder / material | ◐ | Plast och polymerer i kol M4. Inga funktionsmaterial (membran, textilfibrer). |
 | Batterier | ✓ | Elektrokemi (galvaniska element, ackumulator, korrosion, ytbehandling). |
@@ -45,7 +45,7 @@ Tecken: ✓ täckt · ◐ delvis · ✗ saknas
 1. ~~**Separationsprocesser**~~ – **KLAR 20 sep 2026** (se CLAUDE.md, "Separationsprocesser – byggt"). Ursprunglig lucka: Filtrering, dekantering, indunstning, destillation, kromatografi, magnetisk separation, fällning och identifiering av ämnen. Bär också "systematiska undersökningar" (perfekt för laborationer).
 2. **Vatten och lösningar** – lösningsmedel, löslighet, koncentration, vattnets roll som transportör i mark, växter och människokropp. Kan bli eget område eller ligga i Jonföreningar (salter i vatten) tillsammans med punkt 1.
 3. **Jonföreningar – studieguide** – området har bara en laboration. Bygg studieguide (formler, egenskaper, löslighet/fällning) så att laborationen får sitt sammanhang.
-4. **Matens kemi** – kolhydrater saknas helt; fetter och proteiner finns i kol men behöver funktioner i kroppen. Bygg på kol M8–M9. Bör samordnas med Biologi/Matspjälkningen (tomt).
+4. ~~**Matens kemi**~~ – **KLAR 22 sep 2026** (se CLAUDE.md, "Matens kemi – byggt natten 21–22 sep 2026"). Ursprunglig lucka: kolhydrater saknades helt. Biologi/Matspjälkningen fortfarande tomt och osamordnat.
 5. **Kemi i miljön** (nytt) – kolets kretslopp, växthuseffekten, luft/vatten/mark, vattenrening, miljögifter, försurning (finns) länkas in. Här hör också en återkommande **debatt-/ställningstagandekomponent** (argumentation).
 6. **Produkter och material** (nytt tema) – läkemedel, funktionsmaterial/polymerer, batterier (finns) och livscykel. Knyter ihop plast (kol M4) och batterier (elektrokemi) med miljöpåverkan.
 7. **Tvärgående** (delvis KLART 21 sep 2026 i kapitlet Ämnet kemi: kemihistoria, undersökning, rapport, kemisäkerhet; kvar: atommodeller, digitala verktyg och källkritik): kemihistoria/atommodeller, "så genomför vi en undersökning" (fråga, plan, resultat, slutsats, rapport), digitala verktyg (simuleringar, diagram i kalkylark, ev. sensorer), källkritik/informationssökning.
