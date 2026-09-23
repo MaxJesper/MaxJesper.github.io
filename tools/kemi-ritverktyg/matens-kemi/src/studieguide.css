@@ -32,6 +32,26 @@
 .deepen > summary .listen-btn { min-height: 28px; padding: 0.3rem 0.65rem; }
 details.deepen { scroll-margin-top: 0.75rem; }
 
+/* .wonder – öppna, funderande frågor UTAN facit (till skillnad från .deepen ovan), se
+   css/style.css för .wonder > summary .listen-btn-integrationen. Standardfärgen för .wonder
+   (grönblå/teal, se t.ex. kol-och-kolföreningars studieguide.html) återanvänds INTE rakt av här:
+   den kolliderar för mycket med den nya .deepen-färgen (#334155) för personer med färgblindhet
+   (protanopi/deuteranopi-simulering gav bara ~14-18 i avstånd). Grönt (skogsgrönt) ligger i stället
+   långt ifrån sidans övriga färger (gult "Viktigt!", blått "check-q", cerise/lila områdesfärg, grått
+   "deepen") både normalt och simulerat färgblint (avstånd 38-40+ mot samtliga), och används inte av
+   någon annan ruta på sidan. Se _CHECKLISTA_omraden.md/CLAUDE.md för hela avvägningen kring valet. */
+.wonder { background: #f0fdf4; border-left: 4px solid #00ad0e; border-radius: 6px; padding: 0.7rem 0.95rem; margin: 0.9rem 0; }
+.wonder > summary { cursor: pointer; font-weight: 600; color: #126302; list-style: none; }
+.wonder > summary::-webkit-details-marker { display: none; }
+.wonder > summary::before { content: "» Fundera vidare: "; }
+.wonder > summary::after { content: " ▾"; }
+.wonder[open] > summary::after { content: " ▴"; }
+.wonder > summary ~ * { margin-top: 0.6rem; }
+.wonder > summary:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+.wonder > summary .listen-btn { min-height: 28px; padding: 0.3rem 0.65rem; }
+.wonder .frontier { font-size: 0.85rem; color: #107410; font-style: italic; border-top: 1px dashed #bbf7d0; margin-top: 0.5rem; padding-top: 0.5rem; }
+details.wonder { scroll-margin-top: 0.75rem; }
+
 /* Tabell: förenklade formler för mono-/disackarider (M1) */
 .sugar-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 0.9rem 0; }
 .sugar-table th, .sugar-table td { border: 1px solid #d8d8d8; padding: 0.45rem 0.65rem; text-align: left; vertical-align: top; }

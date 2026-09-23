@@ -18,44 +18,53 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 ## Statusöversikt
 
+*Regenererad 23 sep 2026 mot faktiska filer i repot (skript som kontrollerar filnärvaro per område), inte mot minnet – flera rader nedan var föråldrade/underskattade i den gamla versionen (från 23 aug 2026), se noter under tabellen.*
+
 | Område | Kärn-HTML (13) | Data (5) | Språk (10) | Korsord | Audio |
 |---|---|---|---|---|---|
 | biologi/Sex-och-relationer | 2/13 | 0/5 | 0/10 | ✗ | ✗ |
-| biologi/ekologi | 2/13 | 0/5 | 0/10 | ✗ | ✗ |
+| biologi/ekologi | 2/13 (+5 egna spel, ingen studieguide: begrepp-bingo, begrepp-bingo-lag, faglar-tavling, tavling, trad-och-blad) | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/evolution | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
-| biologi/genetik | 13/13 | 5/5 | 0/10 | ✗ | ✓ |
-| biologi/hjarta-blod-lungor | 11/13 | 4/5 | 0/10 | ✓ | ✗ |
+| biologi/genetik | 13/13 | 5/5 | **10/10** | ✗ | ✓ |
+| biologi/hjarta-blod-lungor | 11/13 (+begrepp-bingo, blodets-vag, bygg-blodet) | 4/5 | 0/10 | ✓ | ✗ |
 | biologi/immunologi | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/infektionssjukdomar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
-| biologi/liv-och-cellen | 13/13 | 5/5 | 0/10 | ✗ | ✗ |
+| biologi/liv-och-cellen | 13/13 | 5/5 | **10/10**, + toffeldjursbild klar | ✗ | ✗ |
 | biologi/matspjalkningen | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/nervsystemet | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/sinnena | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
-| fysik/arbete-energi-effekt | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| **fysik/arbete-energi-effekt** | **13/13** (+begrepp-bingo, energiformer-spel, energikedja-spel, energiovergangar-spel, storheter-spel, raknekort, for-lararen) | **5/5** | **10/10** | ✗ | ✗ |
 | fysik/atomfysik | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | fysik/elektricitet | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
 | fysik/kraft-och-rorelse | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | fysik/ljud | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | fysik/ljus | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | fysik/magnetism-induktion | 13/13 | 5/5 | 10/10 | ✓ | ✓ |
-| fysik/materia | 9/13 | 3/5 | 0/10 | ✗ | ✗ |
+| fysik/materia | 10/13 | 3/5 | 0/10 | ✗ | ✗ |
 | fysik/tryck | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | fysik/universum | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
-| kemi/atomer | 13/13 | 5/5 | 0/10 | ✗ | ✗ |
+| kemi/atomer | 13/13 | 5/5 | **10/10** | ✗ | ✗ |
 | kemi/elektrokemi | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/jonforeningar | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
-| kemi/kol-och-kolforeningar | 12/13 | 4/5 | 0/10 | ✗ | ✗ |
-| kemi/kemi-som-amne (Ämnet kemi) | 15/15 (+sakerhetsintyg, rapportmall, laborationer) | 7/7 | 11 (begrepp+termer) + checklista ar/am/rw | ✓ | ✗ |
-| kemi/matens-kemi | 15/15 (+ovningsverktyg) | 7/7 | 11 (begrepp+termer), checklista bara sv | ✓ | ✗ |
+| **kemi/kol-och-kolforeningar** | **13/13** (KLART 23 sep 2026: begreppskort.html+json byggda, se nedan; +begrepp-bingo, begrepp-bingo-lag, esterlab, alkoholdemo, vad-tror-du) | **5/5** | **10/10** | ✗ | ✗ |
+| kemi/kemi-som-amne (Ämnet kemi) | 15/15 (+sakerhetsintyg, rapportmall, laborationer, labbutrustning-spel, begrepp-bingo, korsord, ovningsverktyg) | 7/7 | 11 (begrepp+termer) + checklista ar/am/rw | ✓ | ✗ |
+| kemi/matens-kemi | 15/15 (+ovningsverktyg, laborationer, begrepp-bingo) | 7/7 | 11 (begrepp+termer), + **checklista ar/am/rw KLART 23 sep 2026** | ✓ | ✗ |
 | kemi/periodiska-systemet | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | kemi/separationsprocesser | 13/13 | 5/5 | 10/10 (+rw) | ✓ | ✗ |
 | kemi/syror-och-baser | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
+
+**Rättade/nya rader vid regenereringen (23 sep 2026), jämfört med den gamla tabellen:**
+- **fysik/arbete-energi-effekt** stod som "1/13" men är i själva verket helt KOMPLETT (13/13, 5/5, 10/10) – hade bara aldrig fått en egen rad uppdaterad sedan den byggdes. Samma sak knappast en nyhet i sig (studieguide+räknekort är sedan tidigare kända som klara, se minnesanteckningar), men tabellen visade fel.
+- **biologi/genetik, biologi/liv-och-cellen, kemi/atomer** stod som "0/10 språk" men har alla fullständiga 10-språksöversättningar (verifierat med riktigt innehåll, inte tomma filer).
+- **kemi/kol-och-kolforeningar** stod som "12/13, 4/5, 0/10" – språköversättningarna (10/10) fanns redan (ej uppdaterat i tabellen); begreppskort var den enda genuint saknade biten och är nu byggd (se "Nya grunder byggda" nedan).
+- **biologi/ekologi** fick en egen rad (saknade helt förut) – har fem egna spel men ingen studieguide/standarduppsättning, vilket är ett medvetet annat spår än de "riktiga" NO-områdena.
+- **fysik/materia**: 9/13 → korrigerat till 10/13 (litet räknefel i den gamla tabellen).
 
 ## Öppna punkter (backlog)
 
 ### Klart
 
-- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 33 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**, **kemi/matens-kemi (byggt natten 21–22 sep 2026 medan Jesper sov, ombyggt 22 sep 2026 efter Jespers pedagogiska granskning, se CLAUDE.md: nu 4 milstolpar – fotosyntes-milstolpen borttagen (bara en bryggmening kvar), tre förståelseplan (ord → översiktlig struktur → strukturformel) genomgående, ny original-grafik (`fett-oversikt.svg`, `protein-veckning.svg` m.fl., medvetet avstånd hållet från Gleerups layout; glukos-detaljerad är sedan 22 sep 2026 kväll en beskuren version av Jespers egen AI-genererade referensbild, inte en handritad SVG, se OVERLAMNING.md), fördjupningsboxar återanvänder befintlig `.deepen`-komponent (inte en ny klass) för ringform av glukos, ribos/deoxiribos, peptidbindning m.m., 12 RDKit-byggda molekylmodeller med live-3D, 15 sidor, 11 språk begrepp/termer – checklistan är ÄNNU BARA på svenska, ej ar/am/rw som övriga; Jesper bör läsa igenom studieguiden innan eleverna använder den, se OVERLAMNING.md)**.
+- Fullständiga områden: elektricitet, kraft-och-rorelse, magnetism-induktion, universum, elektrokemi, periodiska-systemet, syror-och-baser, genetik, liv-och-cellen (inkl. översättningar + toffeldjursbild, båda klara sedan tidigare men ej uppdaterat här), **fysik/arbete-energi-effekt (studieguide 9 milstolpor, räknekort, fyra egna spel – redan komplett sedan tidigare, tabellen visade felaktigt "1/13")**, **kemi/kol-och-kolforeningar (23 sep 2026: nu komplett – studieguide 9 milstolpor, 28 begrepp + 10 språk, begreppslista/checklista/instuderingsfrågor/övningsprov/facit, PLUS begrepp-bingo+lag, esterlab, alkoholdemo; sista saknade biten – begreppskort.html/json – byggd 23 sep 2026, kopierad från kemi/atomer-mallen och färganpassad till områdets egen violetta AREA-färg (#7c3aed/#6d28d9), länkad från larande-spel.html enligt standardmönstret. Playwright+axe-core verifierat, 0 överträdelser)**, **kemi/kemi-som-amne (nytt 21 sep 2026: 15 sidor inkl. säkerhetsintyg med 10 kontrollfrågor, rapportmall, 6 laborationer, 13 dra-och-släpp-övningar, bingo, korsord, 11 språk + checklista ar/am/rw – AI-översatt, ej korrekturläst; labbutrustnings-fotospel med 33 föremål klart)**, **separationsprocesser (nytt 20 sep 2026: 13 standardsidor, studieguide med 9 milstolpar, partikelsimulator, Välj metod, bingo, korsord, 7 laborationer, 11 språk – översättningarna AI-genererade, ej korrekturlästa)**, **kemi/matens-kemi (byggt natten 21–22 sep 2026 medan Jesper sov, ombyggt 22 sep 2026 efter Jespers pedagogiska granskning, se CLAUDE.md: nu 4 milstolpar – fotosyntes-milstolpen borttagen (bara en bryggmening kvar), tre förståelseplan (ord → översiktlig struktur → strukturformel) genomgående, ny original-grafik (`fett-oversikt.svg`, `protein-veckning.svg` m.fl., medvetet avstånd hållet från Gleerups layout; glukos-detaljerad är sedan 22 sep 2026 kväll en beskuren version av Jespers egen AI-genererade referensbild, inte en handritad SVG, se OVERLAMNING.md), fördjupningsboxar återanvänder befintlig `.deepen`-komponent (inte en ny klass) för ringform av glukos, ribos/deoxiribos, peptidbindning m.m., 12 RDKit-byggda molekylmodeller med live-3D, 15 sidor, 11 språk begrepp/termer, checklista nu även ar/am/rw (23 sep 2026), plus en första `.wonder`-fråga i M1 (cellulosa/tarmbakterier/bioteknik, egen grön färgpalett – se CLAUDE.md); Jesper bör läsa igenom studieguiden innan eleverna använder den, se OVERLAMNING.md)**.
 
 - **Nytt beslut 22 sep 2026 – gula rutor bara i marginalen (avsteg från standardregeln, hittills BARA i Matens kemi):** på Jespers uttryckliga önskan är `.viktigt`-rutorna i `kemi/matens-kemi/studieguide.html` nu (a) ovanligare – bara 3 st, reserverade för sådant som "inte får missas" – och (b) placerade enbart i `.m-side` (högermarginalkolumnen), inte spridda i huvudflödet. Den delade `css/viktigt.css`-komponenten och alla ANDRA kapitel är OFÖRÄNDRADE (fortfarande fullbredd-flöde enligt den vanliga regeln i CLAUDE.md) – detta är en punktändring för det här kapitlet, inte en ny sitewide-standard. Om Jesper vill ha samma stil i fler/alla kapitel behöver det beslutas separat och regeln i CLAUDE.md uppdateras.
 
@@ -67,13 +76,14 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 
 - **kemi/atomer (åk7, sep 2026):** komplett standarduppsättning (13/13 HTML, 5/5 data) + `ovningsverktyg` (11 dra-och-släpp-sorteringar, 7 balanseringar, Räknemaskinen), `bygg-molekyl` (8 uppgifter), `formelark` (utskrivbart arbetsblad med facit: stor vs nedsänkt siffra), studieguide med 6 milstolpar, bred bildkolumn och roterbar 3D i molekylkorten. Inspirerat av (aldrig kopierat från) Gleerups Titano kemi och Enkel NO. Översättningar av begreppslistan (11 språk, `data/begrepp.<prefix>.json`) och inline-översättning (`concept-inline`, termer) klara 20 sep 2026. Återstår: begreppsbingo, ev. korsord, lyssna-ljudfiler (TTS används), mp3.
 
-- **kemi/kol-och-kolforeningar (åk8):** studieguide (9 milstolpar, uppdaterad med valensregel/nanorör-grafen/metanolförgiftning), begrepp (28), index (med översiktsbilder), lärande spel, checklista, instuderingsfrågor (+print elev/lärare), övningsprov+facit (+print), begreppslista klara. Återstår: begreppskort (görs ev. via lärande-spelet istället för egen sida, se mönster i CLAUDE.md), översättningar. Källa: TEFY + Gleerups + Enkel Kemi (uppladdade PDF:er).
+- ~~kemi/kol-och-kolforeningar~~ – flyttad till "Klart" ovan (23 sep 2026).
 
-- **liv-och-cellen:** komplett struktur klar. Filmerna inlagda (komprimerade 250x + 400x i `film/`). Återstår: översättningar (`begrepp.<språk>.json`) + toffeldjursbild (`images/biologi/liv-och-cellen/toffeldjur.jpg`).
+- ~~liv-och-cellen~~ – flyttad till "Klart" ovan (översättningar + toffeldjursbild visade sig redan vara klara vid regenereringen 23 sep 2026, bara ej uppdaterat här tidigare).
 
 ### Städning kvar
 
-- `kemi/periodiska-systemet/begrepp.json` (rot-dubblett) + gammal `sprak/`-mapp. `biologi/genetik/backupfile.html`/`backupindex.html`.
+- **KLART 23 sep 2026:** `kemi/periodiska-systemet/begrepp.json` (rot-dubblett, gammal datastruktur med `id/subject/area/term{...}`, 41 poster) och `sprak/`-mappen flyttade till `kemi/periodiska-systemet/_to_delete/`. Upptäckt vid städningen: de var INTE helt döda som antaget – `trana-med-ai.html` (ett gammalt AI-övningsverktyg, länkat från INGENSTANS i sajtnavigeringen, alltså redan orphaned) hämtade data därifrån. Eftersom sidan redan var oåtkomlig för elever/lärare flyttades den med i samma `_to_delete/`-mapp istället för att lämnas trasig. Jesper kan radera mappen permanent, eller säga till om `trana-med-ai.html` faktiskt ska räddas/moderniseras till dagens `data/begrepp.json`-format.
+  `biologi/genetik/backupfile.html`/`backupindex.html` flyttade till `biologi/genetik/_to_delete/` (verifierat orefererade från någon annan fil).
 
 ### Sprid funktioner – USP/funktionsmatris (sanningskälla, sep 2026)
 
@@ -83,7 +93,7 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 | Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | Ämnet kemi (kemi-som-amne) | matens-kemi |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ | ✓ |
+| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ (10/10, bekräftat 23 sep 2026 – tabellen visade felaktigt ✗) | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ | ✓ |
 | Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ | ✓ |
 | Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Kemikartan: cirkulär innehållskarta som områdets framsida (valfritt mönster, byggt 21 sep 2026) | – | – | – | – | – | – | – | – | – | – | – | – | – | ✓ | – (vanlig index-layout, kort kapitel) |
@@ -92,10 +102,10 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 | Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ✓ (live i ämneskorten, jonkort för jonföreningar) | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – | ✓ (12 RDKit-byggda molekyler, live i molekylkorten) |
 | Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ | ✓ (densitet, calc-box) | ✗ (inga källbelagda beräkningsexempel hittades, avsiktligt hoppat) |
 | Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) | ✓ | ✓ (larande-spel + sorteringsverktyg) |
-| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✗ | ✗ | ✓ (+lag) | ✗ | ✓ | ✓ (enspelarversion – ingen Worker-synk byggd) |
+| Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✓ (+lag, bekräftat 23 sep 2026 – tabellen visade felaktigt ✗) | ✗ | ✓ (+lag) | ✗ | ✓ | ✓ (enspelarversion – ingen Worker-synk byggd) |
 | WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✗ | ? | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✓ (axe, 0 nya allvarliga; samma delade nested-interactive-fel som övriga) |
 | Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | ✓ | – (ingen studieguide än) | ? | ✓ | ✓ |
-| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ | ✓ (.wonder/.frontier i flera milstolpar) | ✗ (missades i natt, in vid nästa redigering) |
+| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ | ✓ (.wonder/.frontier i flera milstolpar) | ✓ (1 st, M1 – cellulosa/tarmbakterier/bioteknik, ny 23 sep 2026; egen grön färgpalett, se CLAUDE.md) |
 | Live-3D i studieguiden (molviewer; korta kapitel) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | ✓ |
 | Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ (13 övningar) | ✓ (3 övningar i ovningsverktyg.html) |
 | Formelverktyg (`formelvisare.js`: verkstad, balansera, Räknemaskinen) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | – |

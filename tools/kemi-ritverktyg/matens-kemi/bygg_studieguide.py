@@ -80,6 +80,17 @@ def checkq(q, a):
     return f'<details class="check-q"><summary>{q}</summary><div class="svar"><strong>Svar:</strong> {a}</div></details>'
 
 
+def wonder(summary, *parts, frontier=""):
+    """Öppen, funderande fråga UTAN facit (klass .wonder, se src/studieguide.css). Till skillnad
+    från deepen()/checkq() ovan ska denna INTE ge ett givet svar – den ska koppla till ett annat
+    NO-ämne eller till verkliga konsekvenser och avslutas med en uppmaning att fundera/ta reda på
+    svaret själv (frontier-stycket, klass .frontier)."""
+    body = "".join(parts)
+    if frontier:
+        body += f'<p class="frontier">{frontier}</p>'
+    return f'<details class="wonder"><summary>{summary}</summary>{body}</details>'
+
+
 def fact(html):
     return f'<div class="fact-box"><strong>Kom ihåg</strong>{html}</div>'
 
@@ -232,6 +243,27 @@ M1 = (
             ("./checklista.html", "Kontrollera", "Checklistan – milstolpe 1"),
             ("./instuderingsfragor.html", "Öva", "Instuderingsfrågor milstolpe 1"),
         )
+    )
+    + wonder(
+        "Kan människor någonsin lära sig bryta ner cellulosa?",
+        '<p>Kor, får och andra idisslare kan leva på gräs och hö, som till största delen är '
+        'cellulosa. Det beror inte på att djuren själva har enzym som klyver β-1,4-bindningen – '
+        'nästan inget djur har det. I stället har idisslarna en stor förmage (våmmen) full av '
+        'bakterier och andra mikroorganismer som producerar enzymet <strong>cellulas</strong>, '
+        'något varken vi människor eller våra egna tarmbakterier gör i någon större utsträckning.</p>'
+        '<p>Inom bioteknik forskar man redan i dag på besläktade idéer: cellulasenzymer '
+        'framställs i industriell skala för att bryta ner halm, majsstjälkar och annat '
+        'cellulosarikt växtavfall till sockermolekyler, som sedan kan jäsas till biodrivmedel. Det '
+        'pågår även forskning om att föra in gener för cellulasproduktion i andra organismer, '
+        'bland annat bakterier.</p>',
+        frontier=(
+            'Forskningsfronten: skulle man på liknande sätt kunna förändra bakterierna i den '
+            'mänskliga tjocktarmen så att vi kan utvinna energi ur cellulosa – och skulle det '
+            'över huvud taget vara en bra idé? Fundera på vilka fördelar och vilka problem det '
+            'skulle kunna föra med sig, till exempel för hur mycket mat som finns i världen, för '
+            'hur vi äter fiberrik mat i dag, eller för hur kroppen skulle reagera på en helt ny '
+            'sorts bakterieflora. Ta gärna reda på mer själv, eller diskutera med en kompis!'
+        ),
     )
 )
 
