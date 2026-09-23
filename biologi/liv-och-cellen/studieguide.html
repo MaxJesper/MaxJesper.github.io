@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Liv och cellen</title>
   <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+    <link rel="stylesheet" href="/css/viktigt.css" />
 
   <style>
-    body { --listen-color:#0b7a5c; --listen-border:#b6ead9; --listen-hover-bg:#eafaf4; }
+    body {
+      --listen-color:#0b7a5c; --listen-border:#b6ead9; --listen-hover-bg:#eafaf4;
+      --guide-accent:#0b7a5c; --guide-soft:#eafaf4; --guide-border:#b6ead9; --guide-dash:#b6ead9;
+    }
     main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
 
     .guide-intro {
@@ -220,6 +225,39 @@
 
     details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
 
+    /* Bildhållare: väntar på foton Jesper tar/skickar in – syns bara som en tydlig platshållare, aldrig som en trasig bild. */
+    .side-fig--placeholder {
+      aspect-ratio: 4 / 3;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 0.8rem;
+      border-radius: 8px;
+      background: repeating-linear-gradient(45deg, rgba(11,122,92,0.07), rgba(11,122,92,0.07) 10px, rgba(11,122,92,0.02) 10px, rgba(11,122,92,0.02) 20px);
+      border: 1px dashed var(--guide-border, #b6ead9);
+      color: #0b7a5c; font-weight: 600; font-size: 0.85rem; line-height: 1.35;
+    }
+    .side-fig--placeholder .ph-sub { display: block; font-weight: 400; color: #4a4a5a; font-size: 0.8rem; margin-top: 0.3rem; }
+    .fig-row .side-fig--placeholder { min-height: 150px; }
+
+    /* Organellegend: bildens siffror (1-11) förklarade som riktig text, inte inbränd bildtext – går att förstora och läsas av skärmläsare. */
+    .organelle-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.7rem;
+      margin: 0.9rem 0 0;
+    }
+    .ol-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      background: #eafaf4; border: 1px solid #b6ead9; border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+    }
+    .ol-num {
+      flex: none; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: #fff; border: 2px solid #0b7a5c; color: #0b7a5c; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .ol-text strong { display: block; color: #1a1a2e; font-size: 0.92rem; }
+    .ol-text span { font-size: 0.84rem; color: #4a4a5a; line-height: 1.35; }
+
     @media (max-width: 520px) {
       main { font-size: 1.05em; }
       .milestone .m-title { font-size: 1rem; }
@@ -236,7 +274,7 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <nav id="side-menu"></nav>
 
-  <main>
+  <main class="guide-wide">
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
       <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eafaf4; border:1px solid #b6ead9; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#0b7a5c; cursor:pointer;">Öppna alla</button>
@@ -277,7 +315,7 @@
         <span class="m-title">Cellen – livets minsta byggsten</span>
       </summary>
       <div class="m-body">
-        <p>Det första kännetecknet – att bestå av celler – är själva nyckeln. En <strong class="term"><span class="concept-inline" data-concept="Cell">cell</span></strong> är den minsta delen som lever. De flesta celler är så små att du behöver ett <strong class="term"><span class="concept-inline" data-concept="mikroskop">mikroskop</span></strong> för att se dem: delar du en millimeter i hundra bitar är du ungefär på rätt storlek.</p>
+        <p>Det första kännetecknet – att bestå av celler – är själva nyckeln. En <strong class="term"><span class="concept-inline" data-concept="Cell">cell</span></strong> är den minsta delen som lever<a href="#ref-2" class="cite">[2]</a>. De flesta celler är så små att du behöver ett <strong class="term"><span class="concept-inline" data-concept="mikroskop">mikroskop</span></strong> för att se dem: delar du en millimeter i hundra bitar är du ungefär på rätt storlek.</p>
         <p>De enklaste organismerna klarar sig med en enda cell. De kallas <strong class="term"><span class="concept-inline" data-concept="Encellig">encelliga</span></strong> – hit hör bakterier och encelliga djur som amöban. Den enda cellen måste sköta allt själv: hitta mat, försvara sig och föröka sig. En amöba förökar sig genom <strong class="term"><span class="concept-inline" data-concept="Celldelning">celldelning</span></strong> – en fullvuxen cell delar sig och blir två nya.</p>
         <p>Större varelser är <strong class="term"><span class="concept-inline" data-concept="Flercellig">flercelliga</span></strong> och byggda av många celler som samarbetar. Din kropp har över hundra tusen miljarder celler av omkring 200 olika slag – muskelceller som drar ihop sig, nervceller som skickar signaler, benceller som bygger skelettet. Att cellerna är <em>specialiserade</em> på olika uppgifter är hela styrkan med att vara flercellig.</p>
         <p>Cellerna är dessutom organiserade i nivåer. Många likadana celler med samma uppgift bildar tillsammans en <strong class="term"><span class="concept-inline" data-concept="Vävnad">vävnad</span></strong> – till exempel muskelvävnad. Flera olika vävnader bygger i sin tur upp ett <strong class="term"><span class="concept-inline" data-concept="Organ">organ</span></strong>. Hjärtat är ett organ av bland annat muskelvävnad och nervvävnad; lever, lungor och njurar är andra exempel.</p>
@@ -303,6 +341,27 @@
         <p>Ytterst har varje cell ett <strong class="term"><span class="concept-inline" data-concept="Cellmembran">cellmembran</span></strong>. Det håller ihop cellen och fungerar som en portvakt: det bestämmer vilka ämnen som får komma in och ut. Innanför membranet finns en geléartad vätska, <strong class="term"><span class="concept-inline" data-concept="Cytoplasma">cytoplasman</span></strong>, där de andra delarna ligger. Cellens kontrollcentrum är <strong class="term"><span class="concept-inline" data-concept="Cellkärna">cellkärnan</span></strong>. Den styr cellen och innehåller arvsmassan, <strong class="term"><span class="concept-inline" data-concept="DNA">DNA</span></strong>, som är ritningen för allt cellen gör.</p>
         <p>Två organeller gör vardagsjobbet. <strong class="term"><span class="concept-inline" data-concept="Mitokondrie">Mitokondrien</span></strong> är cellens kraftverk – där frigörs energin som cellen behöver för att leva. <strong class="term"><span class="concept-inline" data-concept="Ribosom">Ribosomerna</span></strong> är cellens små proteinfabriker; de bygger proteiner, de ämnen som utför det mesta i kroppen.</p>
         <p>En växtcell har allt detta – men också tre delar till som djurceller saknar. Utanpå cellmembranet ligger en styv <strong class="term"><span class="concept-inline" data-concept="Cellvägg">cellvägg</span></strong> som ger växtcellen dess fasta, kantiga form och stöd. Inuti finns gröna <strong class="term"><span class="concept-inline" data-concept="Kloroplast">kloroplaster</span></strong>, och det är i dem <strong class="term"><span class="concept-inline" data-concept="Fotosyntes">fotosyntesen</span></strong> sker: de fångar ljusenergi från solen. Djur kan inte använda ljus som energikälla. Dessutom har växtcellen ofta en stor <strong class="term"><span class="concept-inline" data-concept="Vakuol">vakuol</span></strong> – en vätskefylld blåsa som lagrar ämnen och ger cellen spänst.</p>
+
+        <div class="m-row m-row--full"><div class="m-lead">
+        <figure class="side-fig" style="max-width:100%;">
+          <img src="/images/biologi/liv-och-cellen/djur-vaxtcell-organeller.jpg" alt="Genomskuren djurcell och växtcell sida vid sida, med elva numrerade organeller markerade i varje cell." style="max-width:100%;" />
+          <figcaption>En djurcell (till vänster) och en växtcell (till höger), med organellerna numrerade. Förklaring till siffrorna nedan.</figcaption>
+        </figure>
+        <div class="organelle-legend">
+          <div class="ol-item"><span class="ol-num">1</span><div class="ol-text"><strong>Cellkärna</strong><span>Innehåller cellens DNA (kromosomer). Styr cellens aktiviteter.</span></div></div>
+          <div class="ol-item"><span class="ol-num">2</span><div class="ol-text"><strong>Cellmembran</strong><span>Reglerar vad som kommer in och ut ur cellen.</span></div></div>
+          <div class="ol-item"><span class="ol-num">3</span><div class="ol-text"><strong>Mitokondrie</strong><span>Cellens kraftverk. Här sker cellandningens sista steg som ger energirika molekyler (ATP) till cellens processer.</span></div></div>
+          <div class="ol-item"><span class="ol-num">4</span><div class="ol-text"><strong>Kloroplast (endast växtcell)</strong><span>Här sker fotosyntesen som omvandlar ljusenergi till socker.</span></div></div>
+          <div class="ol-item"><span class="ol-num">5</span><div class="ol-text"><strong>Cellvägg (endast växtcell)</strong><span>Stabil och skyddande vägg av cellulosa som ger cellen form och stadga.</span></div></div>
+          <div class="ol-item"><span class="ol-num">6</span><div class="ol-text"><strong>Endoplasmatiskt retikel (ER)</strong><span>Kan vara kornigt (med ribosomer) eller slätt. Här sker syntes och transport av proteiner och andra ämnen.</span></div></div>
+          <div class="ol-item"><span class="ol-num">7</span><div class="ol-text"><strong>Golgiapparat</strong><span>Bearbetar, sorterar och paketerar proteiner och andra ämnen i blåsor (vesikler).</span></div></div>
+          <div class="ol-item"><span class="ol-num">8</span><div class="ol-text"><strong>Ribosomer</strong><span>Små partiklar där proteiner byggs.</span></div></div>
+          <div class="ol-item"><span class="ol-num">9</span><div class="ol-text"><strong>Vakuol (stor i växtcell)</strong><span>Vätskefylld blåsa som lagrar vatten, joner, socker och andra ämnen. Stor i växtceller, men djurceller kan också ha små vakuoler.</span></div></div>
+          <div class="ol-item"><span class="ol-num">10</span><div class="ol-text"><strong>Plasmodesm (endast växtcell)</strong><span>Kanal genom cellväggen som förbinder närliggande cellers cytoplasma. Består av en membranklädd kanal (cellmembranet fortsätter) med en tunn sträng av cytoplasma (desmotubul).</span></div></div>
+          <div class="ol-item"><span class="ol-num">11</span><div class="ol-text"><strong>Lysosom (i djurceller)</strong><span>Innehåller enzymer som bryter ned utslitna celldelar och andra ämnen. Växtceller har sällan tydliga lysosomer, utan sköter motsvarande nedbrytning huvudsakligen i vakuolen.</span></div></div>
+        </div>
+        </div></div>
+
         <table class="compare-table">
           <thead>
             <tr><th>Del</th><th>Djurcell</th><th>Växtcell</th><th>Uppgift</th></tr>
@@ -341,8 +400,11 @@
         <span class="m-title">Livet i mikroskopet</span>
       </summary>
       <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
         <p>Nu blir cellerna på riktigt. Har ni mikroskop i klassen kan ni se celler som annars är helt osynliga, och till och med titta på levande encelliga djur som simmar omkring. Saknar ni mikroskop går det lika bra att studera cellerna i bilderna och filmerna längre ner – de visar samma sak på nära håll. Här är de undersökningar man kan göra med mikroskop:</p>
+        </div></div>
 
+        <div class="m-row"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 1 · Dina egna kindceller</strong>
           <p>Du skrapar försiktigt insidan av kinden med en sked eller topspinne och stryker av på ett objektglas. En droppe färg (t.ex. metylenblått) gör cellkärnan tydlig.</p>
@@ -352,13 +414,36 @@
             <li>Fundera: varför ser du ingen cellvägg och inga kloroplaster? (För att det är en <em>djurcell</em>.)</li>
           </ol>
         </div>
+        </div><div class="m-side">
+        <div class="side-fig--placeholder">
+          Foto: kindceller i mikroskop
+          <span class="ph-sub">(väntar på bild – Jesper tar foto genom mikroskopet)</span>
+        </div>
+        </div></div>
 
+        <div class="m-row m-row--plain"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 2 · Färdiga preparat och lökens rotspets</strong>
           <p>Vi tittar också på färdiga preparat i mikroskopet. Ett viktigt är en <strong class="term">rotspets av lök</strong>, där cellerna delar sig flitigt. Här kan du se växtceller med tydlig kantig form – och om du letar hittar du celler mitt i en celldelning.</p>
-          <p class="todo-note">Samma lökrotspets möter du igen i årskurs 9, när vi arbetar med genetik och celldelning (mitos). Det du ser här lägger grunden för det.</p>
+          <p class="todo-note">Samma lökrotspets möter du igen i årskurs 9, när vi arbetar med genetik och celldelning (mitos) – bilder på de olika delningsfaserna (t.ex. anafas) hör hemma där, inte här.</p>
         </div>
+        </div></div>
 
+        <div class="m-row m-row--full"><div class="m-lead">
+        <div class="lab-box">
+          <strong class="lab-rubrik">Den befruktade äggcellens första delningar</strong>
+          <p>Ett annat preparat visar något som liknar celldelningen i lökroten, men är biologiskt en helt annan sak: den första befruktade äggcellen hos ett djur, och hur den delar sig. Först finns bara <strong>en</strong> stor, odelad äggcell. Den delar sig till <strong>2</strong> celler, sedan <strong>4</strong>, sedan <strong>8</strong> – och cellerna blir mindre och mindre för varje delning, eftersom delningen går fortare än cellerna hinner bygga nytt cellmaterial.</p>
+        </div>
+        <div class="fig-row">
+          <figure class="side-fig side-fig--placeholder">1 cell<span class="ph-sub">odelad äggcell</span></figure>
+          <figure class="side-fig side-fig--placeholder">2 celler</figure>
+          <figure class="side-fig side-fig--placeholder">4 celler</figure>
+          <figure class="side-fig side-fig--placeholder">8 celler</figure>
+        </div>
+        <p style="font-size:0.85rem;color:#4a4a5a;font-style:italic;text-align:center;margin-top:0.4rem;">Bildhållare – väntar på Jespers mikroskopfoton av preparatet.</p>
+        </div></div>
+
+        <div class="m-row"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 3 · Höinfusion – en droppe full av liv</strong>
           <p>Lägg lite hö i ett glas vatten och låt det stå några dagar i rumsvärme. Snart myllrar vattnet av <strong class="term"><span class="concept-inline" data-concept="Encellig">encelliga organismer</span></strong> som lever av bakterierna som växer i höet.</p>
@@ -369,27 +454,33 @@
           </ol>
         </div>
 
-        <p>Ett toffeldjur är ett <strong class="term"><span class="concept-inline" data-concept="encelligt djur">encelligt djur</span></strong> – en enda cell som ändå jagar, äter, håller sin vattenbalans och förökar sig. Nedan ser du ett toffeldjur fotograferat genom mikroskopet i just ett sådant preparat.</p>
-        <figure>
+        <p>Ett toffeldjur är ett <strong class="term"><span class="concept-inline" data-concept="encelligt djur">encelligt djur</span></strong> – en enda cell som ändå jagar, äter, håller sin vattenbalans och förökar sig. Till höger ser du ett toffeldjur fotograferat genom mikroskopet i just ett sådant preparat.</p>
+        </div><div class="m-side">
+        <figure class="side-fig">
           <img src="/images/biologi/liv-och-cellen/toffeldjur.jpg" alt="Toffeldjur (en encellig organism) fotograferat genom mikroskop i ett höinfusionspreparat" />
           <figcaption><strong>Toffeldjur.</strong> Ett encelligt djur, format som en toffelsula, som simmar med hjälp av flimmerhår. Egen mikroskopbild från vårt höinfusionspreparat.</figcaption>
         </figure>
+        </div></div>
 
+        <div class="m-row"><div class="m-lead">
         <p>Till sist tittar vi på två filmer jag själv har spelat in genom mikroskopet, med ungefär 20 minuter emellan. I den <strong>första filmen</strong> är cellerna ännu i god form och simmar snabbt omkring. I den <strong>andra filmen</strong>, 20 minuter senare, orkar cellen inte längre simma – och just därför går det att studera den på nära håll i högre förstoring. Titta särskilt efter <strong class="term"><span class="concept-inline" data-concept="Cellmembran">cellmembranet</span></strong> och hur cellen sköter sin <strong class="term"><span class="concept-inline" data-concept="vattenbalans">vattenbalans</span></strong>.</p>
-        <figure>
+        </div><div class="m-side">
+        <figure class="side-fig">
           <video controls preload="metadata" style="width:100%;max-width:640px;">
             <source src="./film/encelligt-djur-dod-250x.mp4" type="video/mp4" />
             Din webbläsare kan inte spela upp filmen. Ladda ned den i stället: <a href="./film/encelligt-djur-dod-250x.mp4">encelligt-djur-dod-250x.mp4</a>.
           </video>
           <figcaption><strong>Film 1 – encelliga djur i god form (250×).</strong> Här är cellerna ännu pigga och simmar snabbt omkring. Cirka 20 minuter senare orkar de inte längre simma.</figcaption>
         </figure>
-        <figure>
+        <figure class="side-fig">
           <video controls preload="none" style="width:100%;max-width:640px;">
             <source src="./film/encelligt-djur-dramatiska-dod-400x.mp4" type="video/mp4" />
             Din webbläsare kan inte spela upp filmen. Ladda ned den i stället: <a href="./film/encelligt-djur-dramatiska-dod-400x.mp4">encelligt-djur-dramatiska-dod-400x.mp4</a>.
           </video>
           <figcaption><strong>Film 2 – ett encelligt djurs dramatiska död (400×).</strong> Nu är cellen så försvagad att den håller sig stilla och kan filmas i högre förstoring. Den <strong>sväller långsamt</strong> – klicka dig gärna framåt i tiden i spelaren, då syns det tydligt men det är lätt att missa i normal hastighet. Runt cellen ser du <strong>bakterier</strong> simma, och en bit in verkar cellen till och med <strong>äta en bakterie</strong>. Till slut brister cellmembranet.</figcaption>
         </figure>
+        </div></div>
+
         <details class="deepen">
           <summary>Äter cellen bakterier – och vad är alla blåsorna?</summary>
           <p>Ja, encelliga djur äter faktiskt bakterier, och lever till stor del på det. Processen kallas <strong>fagocytos</strong> ("cellätande"). Ett sådant encelligt djur viftar med sina små hår (cilier) så att bakterier förs ner i en skåra till cellens "mun". Där omsluts bakterien av cellmembranet och sväljs in i cellen.</p>
@@ -419,16 +510,27 @@
         <span class="m-title">Bakterier och virus</span>
       </summary>
       <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
         <p>En <strong class="term"><span class="concept-inline" data-concept="Bakterie">bakterie</span></strong> är en enda liten cell, mycket mindre än våra egna. Bakterier finns överallt och förökar sig genom delning – under goda förhållanden kan en bakterie bli två på så lite som 20 minuter, så antalet växer explosionsartat.</p>
-        <p>De flesta bakterier är nyttiga eller ofarliga. Många är viktiga <strong class="term"><span class="concept-inline" data-concept="Nedbrytare">nedbrytare</span></strong>: de bryter ner döda växter och djur till näring som blir ny jord. På och i din kropp lever mängder av bakterier som hjälper dig, till exempel genom att bilda vitaminer i tarmen. Bara en del bakterier gör oss sjuka, och mot sådana bakteriesjukdomar kan läkaren skriva ut <strong class="term"><span class="concept-inline" data-concept="Antibiotika">antibiotika</span></strong>, till exempel penicillin.</p>
+        </div></div>
+
+        <div class="m-row"><div class="m-lead">
+        <p>De flesta bakterier är nyttiga eller ofarliga. Många är viktiga <strong class="term"><span class="concept-inline" data-concept="Nedbrytare">nedbrytare</span></strong>: de bryter ner döda växter och djur till näring som blir ny jord. På och i din kropp lever mängder av bakterier som hjälper dig, till exempel genom att bilda vitaminer i tarmen. Bara en del bakterier gör oss sjuka, och mot sådana bakteriesjukdomar kan läkaren skriva ut <strong class="term"><span class="concept-inline" data-concept="Antibiotika">antibiotika</span></strong>, till exempel penicillin<a href="#ref-3" class="cite">[3]</a>.</p>
         <p>Ett <strong class="term"><span class="concept-inline" data-concept="Virus">virus</span></strong> är något helt annat. Ett virus består inte av celler och räknas oftast inte som levande. Det är egentligen bara ett skal med lite arvsmassa inuti, och det kan inte föröka sig på egen hand. I stället kapar viruset en levande cell och lurar den att tillverka nya viruspartiklar. Vanlig förkylning orsakas av virus – och därför hjälper inte penicillin mot en förkylning, eftersom antibiotika bara biter på bakterier.</p>
+        </div><div class="m-side">
+        <div class="viktigt" role="note">
+          <svg class="viktigt-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3 30 28H2z" fill="#7a5a00"/><path d="M16 12v8" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="24" r="1.8" fill="#fff3b0"/></svg>
+          <div class="viktigt-body"><strong class="viktigt-label">Viktigt!</strong><p>Antibiotika hjälper inte mot virussjukdomar, t.ex. förkylningar – bara mot sjukdomar orsakade av bakterier.</p></div>
+        </div>
+        </div></div>
+
         <div class="fact-box">
           <strong>Sammanfattning</strong>
           Bakterier är encelliga och förökar sig genom delning; många är nyttiga nedbrytare, en del orsakar sjukdomar som antibiotika biter på. Virus består inte av celler, räknas inte som levande och måste kapa en cell för att föröka sig.
         </div>
         <details class="deepen">
           <summary>Antibiotikaresistens – varför vi ska vara sparsamma</summary>
-          <p>Ibland förändras en bakteries arvsmassa av en slump (en <em>mutation</em>) så att den tål antibiotikan. Eftersom bakterier förökar sig så snabbt kan en enda sådan tålig bakterie på kort tid bli miljontals. Ju oftare vi använder antibiotika, desto större blir chansen att just de resistenta bakterierna gynnas. Därför ska antibiotika användas bara när det verkligen behövs.</p>
+          <p>Ibland förändras en bakteries arvsmassa av en slump (en <em>mutation</em>) så att den tål antibiotikan. Eftersom bakterier förökar sig så snabbt kan en enda sådan tålig bakterie på kort tid bli miljontals. Ju oftare vi använder antibiotika, desto större blir chansen att just de resistenta bakterierna gynnas. Därför ska antibiotika användas bara när det verkligen behövs<a href="#ref-3" class="cite">[3]</a>.</p>
         </details>
         <div class="next-steps">
           <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
@@ -444,10 +546,27 @@
         <span class="m-title">Att sortera och namnge livet</span>
       </summary>
       <div class="m-body">
+        <div class="m-row m-row--plain"><div class="m-lead">
         <p>Det finns ofattbart många sorters organismer – biologerna har hittills beskrivit över 1,5 miljoner <strong class="term"><span class="concept-inline" data-concept="Art">arter</span></strong>, och det finns troligen många miljoner kvar att upptäcka. För att hålla ordning på allt behöver man sortera och namnge.</p>
-        <p>En <strong class="term"><span class="concept-inline" data-concept="Art">art</span></strong> är en grupp organismer som kan få ungar tillsammans under naturliga förhållanden – ungar som i sin tur kan få egna ungar. En talgoxe och en blåmes ser lika ut men är olika arter, för de får inga gemensamma ungar. En häst och en åsna kan få en unge (en mula), men mulan blir aldrig själv förälder – därför räknas häst och åsna som olika arter. En blandning mellan två arter kallas en <strong class="term"><span class="concept-inline" data-concept="Hybrid">hybrid</span></strong>.</p>
-        <p>På 1700-talet skapade svensken <strong class="term">Carl von Linné</strong> ett system för att sortera och namnge arter. Han gav varje art ett vetenskapligt namn med <strong class="term">två ord</strong>: det första talar om vilket släkte arten tillhör, det andra pekar ut just den arten. Systemet används i hela världen än idag – människan heter till exempel <em>Homo sapiens</em>.</p>
+        <p>En <strong class="term"><span class="concept-inline" data-concept="Art">art</span></strong> är en grupp organismer som kan få ungar tillsammans under naturliga förhållanden – ungar som i sin tur kan få egna ungar<a href="#ref-2" class="cite">[2]</a>. En talgoxe och en blåmes ser lika ut men är olika arter, för de får inga gemensamma ungar. En häst och en åsna kan få en unge (en mula), men mulan blir aldrig själv förälder – därför räknas häst och åsna som olika arter. En blandning mellan två arter kallas en <strong class="term"><span class="concept-inline" data-concept="Hybrid">hybrid</span></strong>.</p>
+        </div></div>
+
+        <div class="m-row"><div class="m-lead">
+        <p>På 1700-talet skapade svensken <strong class="term">Carl von Linné</strong> ett system för att sortera och namnge arter. Han gav varje art ett vetenskapligt namn med <strong class="term">två ord</strong>: det första talar om vilket släkte arten tillhör, det andra pekar ut just den arten. Systemet används i hela världen än idag – människan heter till exempel <em>Homo sapiens</em><a href="#ref-4" class="cite">[4]</a>.</p>
+        </div><div class="m-side">
+        <div class="side-fig--placeholder">
+          Porträtt av Carl von Linné
+          <span class="ph-sub">(Claude letar efter en fri/licensierad bild)</span>
+        </div>
+        <div class="side-fig--placeholder">
+          Foto: Råshult, Linnés födelsehem
+          <span class="ph-sub">(väntar på Jespers eget foto)</span>
+        </div>
+        </div></div>
+
+        <div class="m-row m-row--plain"><div class="m-lead">
         <p>I den största indelningen delas allt levande numera in i tre stora huvudgrupper, så kallade <strong class="term"><span class="concept-inline" data-concept="Domän">domäner</span></strong>: vanliga bakterier, arkéer (en grupp märkliga bakterieliknande organismer som ofta lever i extrema miljöer) och en tredje domän som rymmer alla organismer med cellkärna – alltså växter, svampar och djur, oss själva inräknade.</p>
+        </div></div>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
           En art är organismer som kan få fruktsam avkomma tillsammans. Linné gav arterna vetenskapliga namn med två ord. Allt levande delas in i tre domäner, varav en rymmer alla organismer med cellkärna.
