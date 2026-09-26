@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Begreppslista – Ekologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    body.area-ekologi {
+      --area: #3f6b34;
+      --area-strong: #2f5228;
+      --area-soft: #f1f6ed;
+      --area-border: #cadcbf;
+      --area-hover: #e3eedb;
+    }
+
+    main { max-width: 860px; margin: 0 auto; font-size: 1.05em; }
+
+    .begrepp-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .begrepp-table th { background: #2f5228; color: #fff; text-align: left; padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    .begrepp-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--area-border); vertical-align: top; }
+    .begrepp-table tr:nth-child(even) td { background: var(--area-soft); }
+    .begrepp-table td:first-child { font-weight: 700; white-space: nowrap; color: var(--area-strong); width: 30%; }
+
+    @media (max-width: 600px) { .begrepp-table td:first-child { white-space: normal; width: auto; overflow-wrap: anywhere; hyphens: auto; } .begrepp-table td, .begrepp-table th { padding: 0.45rem 0.5rem; } }
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+    @media print {
+      .no-print { display: none !important; }
+      header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; }
+      main { max-width: 100%; }
+      .begrepp-table th { background: #333 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .begrepp-table tr:nth-child(even) td { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h1 { font-size: 16pt; }
+    }
+  </style>
+</head>
+<body class="area-ekologi">
+  <header class="biologi-header">
+    <h1>Begreppslista – Ekologi</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+
+    <p style="color:#555; font-size:0.95rem; margin-bottom:1.25rem;">
+      Alla viktiga begrepp i ekologi med förklaringar. Används som stöd vid genomgångar och repetition.
+    </p>
+
+    <div id="begrepp-table-wrap">
+      <p style="color:#595959; font-size:0.9rem;">Laddar begrepp…</p>
+    </div>
+  </main>
+
+  <script src="/js/menu.js" class="no-print"></script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    function renderTable(data, lang) {
+      var isSwedish = (!lang || lang === 'sv-SE');
+      var html = '<table class="begrepp-table"><thead><tr>';
+      html += '<th style="width:28%">Begrepp</th>';
+      if (!isSwedish) html += '<th style="width:28%">Begrepp (övers.)</th>';
+      html += '<th>Förklaring</th></tr></thead><tbody>';
+      data.forEach(function(item) {
+        html += '<tr><td>' + item.namn + '</td>';
+        if (!isSwedish) html += '<td>' + (item.namn_native || '') + '</td>';
+        html += '<td>' + item.definition + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('begrepp-table-wrap').innerHTML = html;
+    }
+
+    fetch('./data/begrepp.json').then(function(r){return r.json();}).then(function(d){renderTable(d,'sv-SE');});
+
+    window.addEventListener('begreppLangUpdate', function(e) {
+      renderTable(e.detail.data, e.detail.lang);
+    });
+  </script>
+</body>
+</html>

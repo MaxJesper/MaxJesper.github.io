@@ -1,0 +1,833 @@
+{
+ "sortering": [
+  {
+   "id": "nivaer",
+   "tier": "Grund",
+   "title": "Från individ till biosfär",
+   "intro": "Vilken nivå beskriver varje bricka?",
+   "zones": [
+    {
+     "id": "i",
+     "t": "Individ"
+    },
+    {
+     "id": "p",
+     "t": "Population"
+    },
+    {
+     "id": "s",
+     "t": "Samhälle"
+    },
+    {
+     "id": "e",
+     "t": "Ekosystem"
+    },
+    {
+     "id": "b",
+     "t": "Biosfär"
+    }
+   ],
+   "items": [
+    {
+     "id": "nivaer0",
+     "t": "En enda abborre",
+     "zone": "i",
+     "why": "En enda organism är en individ.",
+     "hint": "Hur många organismer är det?"
+    },
+    {
+     "id": "nivaer1",
+     "t": "Ett rådjur",
+     "zone": "i",
+     "why": "En enda organism är en individ.",
+     "hint": "Hur många organismer är det?"
+    },
+    {
+     "id": "nivaer2",
+     "t": "Alla abborrar i sjön",
+     "zone": "p",
+     "why": "Alla individer av samma art i ett område är en population.",
+     "hint": "Är det en art eller flera?"
+    },
+    {
+     "id": "nivaer3",
+     "t": "Alla blåbärsris i skogen",
+     "zone": "p",
+     "why": "En art i ett område = population.",
+     "hint": "Är det en art eller flera?"
+    },
+    {
+     "id": "nivaer4",
+     "t": "Alla växter, djur, svampar och bakterier i sjön",
+     "zone": "s",
+     "why": "Alla populationer tillsammans är samhället.",
+     "hint": "Är miljön (vattnet, bottnen) med?"
+    },
+    {
+     "id": "nivaer5",
+     "t": "Alla arter som lever på ängen",
+     "zone": "s",
+     "why": "Alla arter tillsammans är samhället.",
+     "hint": "Är miljön med?"
+    },
+    {
+     "id": "nivaer6",
+     "t": "Sjön med alla organismer, vattnet och bottnen",
+     "zone": "e",
+     "why": "Samhället + miljön = ekosystem.",
+     "hint": "Både levande och icke-levande delar."
+    },
+    {
+     "id": "nivaer7",
+     "t": "En murken stubbe med allt som lever i den",
+     "zone": "e",
+     "why": "Även ett litet område med organismer och miljö är ett ekosystem.",
+     "hint": "Både levande och icke-levande delar."
+    },
+    {
+     "id": "nivaer8",
+     "t": "Allt liv på hela jorden",
+     "zone": "b",
+     "why": "Alla ekosystem på jorden tillsammans är biosfären.",
+     "hint": "Det största."
+    }
+   ]
+  },
+  {
+   "id": "roll",
+   "tier": "Grund",
+   "title": "Producent, konsument eller nedbrytare?",
+   "intro": "Vilken roll har organismen i ekosystemet?",
+   "zones": [
+    {
+     "id": "p",
+     "t": "Producent"
+    },
+    {
+     "id": "k",
+     "t": "Konsument"
+    },
+    {
+     "id": "n",
+     "t": "Nedbrytare"
+    }
+   ],
+   "items": [
+    {
+     "id": "roll0",
+     "t": "Gran",
+     "zone": "p",
+     "why": "Granen har fotosyntes och tillverkar sin egen näring.",
+     "hint": "Kan den göra fotosyntes?"
+    },
+    {
+     "id": "roll1",
+     "t": "Växtplankton",
+     "zone": "p",
+     "why": "Växtplankton är små alger med fotosyntes – havets och sjöns producenter.",
+     "hint": "Kan den göra fotosyntes?"
+    },
+    {
+     "id": "roll2",
+     "t": "Blåstång",
+     "zone": "p",
+     "why": "Blåstång är en alg och har fotosyntes.",
+     "hint": "Kan den göra fotosyntes?"
+    },
+    {
+     "id": "roll3",
+     "t": "Blåbärsris",
+     "zone": "p",
+     "why": "En grön växt är en producent.",
+     "hint": "Kan den göra fotosyntes?"
+    },
+    {
+     "id": "roll4",
+     "t": "Hare",
+     "zone": "k",
+     "why": "Haren äter växter – en förstahandskonsument.",
+     "hint": "Äter den andra organismer?"
+    },
+    {
+     "id": "roll5",
+     "t": "Torsk",
+     "zone": "k",
+     "why": "Torsken äter andra fiskar – en konsument.",
+     "hint": "Äter den andra organismer?"
+    },
+    {
+     "id": "roll6",
+     "t": "Blåmussla",
+     "zone": "k",
+     "why": "Blåmusslan silar plankton ur vattnet och äter dem.",
+     "hint": "Äter den andra organismer?"
+    },
+    {
+     "id": "roll7",
+     "t": "Räv",
+     "zone": "k",
+     "why": "Räven äter möss, harar och bär.",
+     "hint": "Äter den andra organismer?"
+    },
+    {
+     "id": "roll8",
+     "t": "Daggmask",
+     "zone": "n",
+     "why": "Daggmasken äter döda löv och blandar dem med jorden.",
+     "hint": "Lever den på döda rester?"
+    },
+    {
+     "id": "roll9",
+     "t": "Bakterier i förnan",
+     "zone": "n",
+     "why": "Bakterierna bryter ner döda växtdelar till jord.",
+     "hint": "Lever de på döda rester?"
+    },
+    {
+     "id": "roll10",
+     "t": "Gråsugga",
+     "zone": "n",
+     "why": "Gråsuggan lever på döda växtdelar i förnan.",
+     "hint": "Lever den på döda rester?"
+    },
+    {
+     "id": "roll11",
+     "t": "Svamp som växer på en död stubbe",
+     "zone": "n",
+     "why": "Svampen bryter ner den döda veden.",
+     "hint": "Lever den på döda rester?"
+    }
+   ]
+  },
+  {
+   "id": "kedja",
+   "tier": "Grund",
+   "title": "Bygg näringskedjan i Östersjön",
+   "intro": "Placera varje organism på rätt nivå i kedjan.",
+   "zones": [
+    {
+     "id": "1",
+     "t": "1. Producent"
+    },
+    {
+     "id": "2",
+     "t": "2. Förstahands­konsument"
+    },
+    {
+     "id": "3",
+     "t": "3. Andrahands­konsument"
+    },
+    {
+     "id": "4",
+     "t": "4. Tredjehands­konsument"
+    },
+    {
+     "id": "5",
+     "t": "5. Toppkonsument"
+    }
+   ],
+   "items": [
+    {
+     "id": "kedja0",
+     "t": "Växtplankton",
+     "zone": "1",
+     "why": "Växtplankton har fotosyntes och står först.",
+     "hint": "Vem kan göra fotosyntes?"
+    },
+    {
+     "id": "kedja1",
+     "t": "Djurplankton",
+     "zone": "2",
+     "why": "Djurplankton äter växtplankton.",
+     "hint": "Vem äter växtplanktonen?"
+    },
+    {
+     "id": "kedja2",
+     "t": "Strömming",
+     "zone": "3",
+     "why": "Strömmingen äter djurplankton.",
+     "hint": "Vem äter djurplankton?"
+    },
+    {
+     "id": "kedja3",
+     "t": "Torsk",
+     "zone": "4",
+     "why": "Torsken äter strömming.",
+     "hint": "Vem äter strömmingen?"
+    },
+    {
+     "id": "kedja4",
+     "t": "Gråsäl",
+     "zone": "5",
+     "why": "Gråsälen äter torsk och äts inte av något annat djur.",
+     "hint": "Vem står sist?"
+    }
+   ],
+   "cap": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1
+   }
+  },
+  {
+   "id": "kedja-sjo",
+   "tier": "Grund",
+   "title": "Bygg näringskedjan i sjön",
+   "intro": "Placera varje organism på rätt nivå.",
+   "zones": [
+    {
+     "id": "1",
+     "t": "1. Producent"
+    },
+    {
+     "id": "2",
+     "t": "2. Förstahands­konsument"
+    },
+    {
+     "id": "3",
+     "t": "3. Andrahands­konsument"
+    },
+    {
+     "id": "4",
+     "t": "4. Tredjehands­konsument"
+    },
+    {
+     "id": "5",
+     "t": "5. Toppkonsument"
+    }
+   ],
+   "items": [
+    {
+     "id": "kedja-sjo0",
+     "t": "Växtplankton",
+     "zone": "1",
+     "why": "Växtplankton är sjöns producenter.",
+     "hint": "Vem kan göra fotosyntes?"
+    },
+    {
+     "id": "kedja-sjo1",
+     "t": "Hoppkräftor (djurplankton)",
+     "zone": "2",
+     "why": "Hoppkräftorna äter växtplankton.",
+     "hint": "Vem äter växtplanktonen?"
+    },
+    {
+     "id": "kedja-sjo2",
+     "t": "Mört",
+     "zone": "3",
+     "why": "Mörten äter djurplankton.",
+     "hint": "Vem äter djurplankton?"
+    },
+    {
+     "id": "kedja-sjo3",
+     "t": "Gädda",
+     "zone": "4",
+     "why": "Gäddan äter mindre fiskar som mört.",
+     "hint": "Vem är rovfisk?"
+    },
+    {
+     "id": "kedja-sjo4",
+     "t": "Fiskgjuse",
+     "zone": "5",
+     "why": "Fiskgjusen fångar gäddor och står sist i kedjan.",
+     "hint": "Vem står sist?"
+    }
+   ],
+   "cap": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1
+   }
+  },
+  {
+   "id": "mark",
+   "tier": "Grund",
+   "title": "Markens lager",
+   "intro": "Vilket lager i marken beskriver brickan?",
+   "zones": [
+    {
+     "id": "f",
+     "t": "Förna"
+    },
+    {
+     "id": "j",
+     "t": "Jordmån"
+    },
+    {
+     "id": "a",
+     "t": "Jordart"
+    },
+    {
+     "id": "b",
+     "t": "Berggrund"
+    }
+   ],
+   "items": [
+    {
+     "id": "mark0",
+     "t": "Nedfallna löv, barr och kvistar",
+     "zone": "f",
+     "why": "Döda växtdelar överst på marken är förna.",
+     "hint": "Är det ännu inte nedbrutet?"
+    },
+    {
+     "id": "mark1",
+     "t": "En död skalbagge som ännu inte brutits ner",
+     "zone": "f",
+     "why": "Döda djur som ligger kvar överst hör till förnan.",
+     "hint": "Är det nedbrutet eller inte?"
+    },
+    {
+     "id": "mark2",
+     "t": "Mörk jord med humus som daggmaskar blandar",
+     "zone": "j",
+     "why": "Jordmånen innehåller humus och påverkas av organismer.",
+     "hint": "Nedbrutet material blandat med jord."
+    },
+    {
+     "id": "mark3",
+     "t": "Morän med sten, grus, sand och lera",
+     "zone": "a",
+     "why": "Morän är en jordart – löst material man kan gräva i.",
+     "hint": "Kan man gräva i det?"
+    },
+    {
+     "id": "mark4",
+     "t": "Lera som vatten har sorterat",
+     "zone": "a",
+     "why": "Lera är en jordart.",
+     "hint": "Kan man gräva i det?"
+    },
+    {
+     "id": "mark5",
+     "t": "Fast granit",
+     "zone": "b",
+     "why": "Granit är en bergart i berggrunden.",
+     "hint": "Är det fast berg?"
+    },
+    {
+     "id": "mark6",
+     "t": "Kalksten på Gotland",
+     "zone": "b",
+     "why": "Kalksten är en bergart.",
+     "hint": "Är det fast berg?"
+    }
+   ]
+  },
+  {
+   "id": "skikt",
+   "tier": "Grund",
+   "title": "Skogens skikt",
+   "intro": "I vilket skikt växer växten?",
+   "zones": [
+    {
+     "id": "t",
+     "t": "Trädskikt"
+    },
+    {
+     "id": "b",
+     "t": "Buskskikt"
+    },
+    {
+     "id": "f",
+     "t": "Fältskikt"
+    },
+    {
+     "id": "o",
+     "t": "Bottenskikt"
+    }
+   ],
+   "items": [
+    {
+     "id": "skikt0",
+     "t": "Vuxen gran",
+     "zone": "t",
+     "why": "Höga träd bildar trädskiktet.",
+     "hint": "Hur hög är den?"
+    },
+    {
+     "id": "skikt1",
+     "t": "Bok",
+     "zone": "t",
+     "why": "Bokar är höga träd.",
+     "hint": "Hur hög är den?"
+    },
+    {
+     "id": "skikt2",
+     "t": "Hassel",
+     "zone": "b",
+     "why": "Hasseln är en buske med flera vedartade stammar.",
+     "hint": "Buske eller träd?"
+    },
+    {
+     "id": "skikt3",
+     "t": "Ung gran, en meter hög",
+     "zone": "b",
+     "why": "Unga träd hör till buskskiktet.",
+     "hint": "Hur hög är den nu?"
+    },
+    {
+     "id": "skikt4",
+     "t": "Blåbärsris",
+     "zone": "f",
+     "why": "Ris, gräs och blommor bildar fältskiktet.",
+     "hint": "Låg växt men inte mossa."
+    },
+    {
+     "id": "skikt5",
+     "t": "Vitsippa",
+     "zone": "f",
+     "why": "Vitsippan är en blomma i fältskiktet.",
+     "hint": "Låg växt men inte mossa."
+    },
+    {
+     "id": "skikt6",
+     "t": "Ormbunke",
+     "zone": "f",
+     "why": "Ormbunkar hör till fältskiktet.",
+     "hint": "Låg växt men inte mossa."
+    },
+    {
+     "id": "skikt7",
+     "t": "Väggmossa",
+     "zone": "o",
+     "why": "Mossor bildar bottenskiktet.",
+     "hint": "Närmast marken."
+    },
+    {
+     "id": "skikt8",
+     "t": "Renlav",
+     "zone": "o",
+     "why": "Lavar hör till bottenskiktet.",
+     "hint": "Närmast marken."
+    }
+   ]
+  },
+  {
+   "id": "lov-barr",
+   "tier": "Grund",
+   "title": "Lövskog eller barrskog?",
+   "intro": "Stämmer påståendet bäst på lövskog eller barrskog?",
+   "zones": [
+    {
+     "id": "l",
+     "t": "Lövskog"
+    },
+    {
+     "id": "b",
+     "t": "Barrskog"
+    }
+   ],
+   "items": [
+    {
+     "id": "lov-barr0",
+     "t": "Förnan bryts ner snabbt",
+     "zone": "l",
+     "why": "Löv bryts ner fort av maskar och bakterier.",
+     "hint": "Löv eller barr?"
+    },
+    {
+     "id": "lov-barr1",
+     "t": "Träden fäller bladen på hösten",
+     "zone": "l",
+     "why": "Lövträd fäller bladen för att inte torka ut på vintern.",
+     "hint": "Vilka träd tappar allt på hösten?"
+    },
+    {
+     "id": "lov-barr2",
+     "t": "Vitsippor blommar innan träden får blad",
+     "zone": "l",
+     "why": "I lövskogen är det ljust på våren.",
+     "hint": "Var når ljuset marken på våren?"
+    },
+    {
+     "id": "lov-barr3",
+     "t": "Marken är ofta bördig",
+     "zone": "l",
+     "why": "Snabb nedbrytning ger mycket närsalter.",
+     "hint": "Var bryts förnan ner fort?"
+    },
+    {
+     "id": "lov-barr4",
+     "t": "Marken är sur och näringsfattig",
+     "zone": "b",
+     "why": "Barren är sura och bryts ner långsamt.",
+     "hint": "Vilken förna bryts ner långsamt?"
+    },
+    {
+     "id": "lov-barr5",
+     "t": "Fältskiktet domineras av blåbär och lingon",
+     "zone": "b",
+     "why": "Blåbär och lingon klarar sig med lite näring.",
+     "hint": "Vilken mark är näringsfattig?"
+    },
+    {
+     "id": "lov-barr6",
+     "t": "Bladen har ett vaxlager mot uttorkning",
+     "zone": "b",
+     "why": "Barren skyddas av vax och sitter kvar på vintern.",
+     "hint": "Vilka träd har kvar sina blad på vintern?"
+    },
+    {
+     "id": "lov-barr7",
+     "t": "Svampar är de viktigaste nedbrytarna",
+     "zone": "b",
+     "why": "I den sura barrförnan trivs svampar bättre än maskar och bakterier.",
+     "hint": "Var är marken sur?"
+    }
+   ]
+  },
+  {
+   "id": "sjo",
+   "tier": "Grund",
+   "title": "Näringsfattig eller näringsrik sjö?",
+   "intro": "Vilken sorts sjö stämmer påståendet på?",
+   "zones": [
+    {
+     "id": "f",
+     "t": "Näringsfattig sjö"
+    },
+    {
+     "id": "r",
+     "t": "Näringsrik sjö"
+    }
+   ],
+   "items": [
+    {
+     "id": "sjo0",
+     "t": "Stort siktdjup och klart vatten",
+     "zone": "f",
+     "why": "Lite plankton gör vattnet klart.",
+     "hint": "Mycket eller lite plankton?"
+    },
+    {
+     "id": "sjo1",
+     "t": "Omges av barrskog på urberg",
+     "zone": "f",
+     "why": "Urberg och barrskog ger lite närsalter.",
+     "hint": "Vilken mark ger lite närsalter?"
+    },
+    {
+     "id": "sjo2",
+     "t": "pH ofta under 7",
+     "zone": "f",
+     "why": "Näringsfattiga sjöar är ofta lite sura.",
+     "hint": "Surt eller basiskt?"
+    },
+    {
+     "id": "sjo3",
+     "t": "Glest med växter på stranden",
+     "zone": "f",
+     "why": "Lite närsalter ger glesa strandväxter.",
+     "hint": "Mycket eller lite näring?"
+    },
+    {
+     "id": "sjo4",
+     "t": "Tät vass och kaveldun",
+     "zone": "r",
+     "why": "Mycket närsalter gödslar strandväxterna.",
+     "hint": "Mycket eller lite näring?"
+    },
+    {
+     "id": "sjo5",
+     "t": "Grumligt vatten med mycket växtplankton",
+     "zone": "r",
+     "why": "Närsalterna gödslar planktonen.",
+     "hint": "Mycket eller lite näring?"
+    },
+    {
+     "id": "sjo6",
+     "t": "Omges av åkrar och lövskog",
+     "zone": "r",
+     "why": "Från åkrar kommer mycket närsalter.",
+     "hint": "Var kommer gödning ifrån?"
+    },
+    {
+     "id": "sjo7",
+     "t": "En fågelsjö med många häckande fåglar",
+     "zone": "r",
+     "why": "Tät vass ger skydd och mycket mat.",
+     "hint": "Var finns skydd och mat?"
+    }
+   ]
+  },
+  {
+   "id": "ekosystem",
+   "tier": "Grund",
+   "title": "Vilket ekosystem?",
+   "intro": "Vilket av de fyra ekosystemen i studieguiden handlar brickan om?",
+   "zones": [
+    {
+     "id": "s",
+     "t": "Skogen"
+    },
+    {
+     "id": "j",
+     "t": "Sjön"
+    },
+    {
+     "id": "o",
+     "t": "Östersjön"
+    },
+    {
+     "id": "a",
+     "t": "Ängen"
+    }
+   ],
+   "items": [
+    {
+     "id": "ekosystem0",
+     "t": "Träd-, busk-, fält- och bottenskikt",
+     "zone": "s",
+     "why": "Skikten beskriver skogen.",
+     "hint": "Var finns fyra våningar av växter?"
+    },
+    {
+     "id": "ekosystem1",
+     "t": "Urskog och kulturskog",
+     "zone": "s",
+     "why": "Det är två slags skog.",
+     "hint": "Vad avverkas?"
+    },
+    {
+     "id": "ekosystem2",
+     "t": "Stranden, det fria vattnet och den djupa bottnen",
+     "zone": "j",
+     "why": "Det är sjöns tre delar.",
+     "hint": "Sötvatten."
+    },
+    {
+     "id": "ekosystem3",
+     "t": "Siktdjupet mäts med en vit skiva",
+     "zone": "j",
+     "why": "Siktdjup mäts i sjöar.",
+     "hint": "Klart eller grumligt sötvatten."
+    },
+    {
+     "id": "ekosystem4",
+     "t": "Bräckt vatten med 0,3–0,9 % salt",
+     "zone": "o",
+     "why": "Östersjön är bräckt.",
+     "hint": "Inte sött och inte riktigt salt."
+    },
+    {
+     "id": "ekosystem5",
+     "t": "Blåstång och blåmusslor, men få sjöstjärnor",
+     "zone": "o",
+     "why": "Få arter klarar det bräckta vattnet.",
+     "hint": "Vilket hav är bräckt?"
+    },
+    {
+     "id": "ekosystem6",
+     "t": "Syrebrist på bottnarna och torsken minskar",
+     "zone": "o",
+     "why": "Övergödning ger döda bottnar i Östersjön.",
+     "hint": "Var finns torsken?"
+    },
+    {
+     "id": "ekosystem7",
+     "t": "Slåtter och bete håller den öppen",
+     "zone": "a",
+     "why": "Ängen sköts med slåtter eller bete.",
+     "hint": "Var klipper man med lie?"
+    },
+    {
+     "id": "ekosystem8",
+     "t": "Upp till 60 blomväxtarter på en kvadratmeter",
+     "zone": "a",
+     "why": "Den näringsfattiga ängen är mycket artrik.",
+     "hint": "Blomrikt och öppet."
+    },
+    {
+     "id": "ekosystem9",
+     "t": "Växer igen och blir skog utan skötsel",
+     "zone": "a",
+     "why": "Ängen växer igen om den inte slås.",
+     "hint": "Vad händer utan slåtter?"
+    }
+   ]
+  },
+  {
+   "id": "kretslopp",
+   "tier": "Lär mer",
+   "title": "Vilket kretslopp?",
+   "intro": "Hör steget till närsalternas, kolets eller vattnets kretslopp?",
+   "zones": [
+    {
+     "id": "n",
+     "t": "Närsalternas kretslopp"
+    },
+    {
+     "id": "k",
+     "t": "Kolets kretslopp"
+    },
+    {
+     "id": "v",
+     "t": "Vattnets kretslopp"
+    }
+   ],
+   "items": [
+    {
+     "id": "kretslopp0",
+     "t": "Rötterna tar upp kväve och fosfor ur marken",
+     "zone": "n",
+     "why": "Kväve och fosfor är närsalter.",
+     "hint": "Vad tar rötterna upp förutom vatten?"
+    },
+    {
+     "id": "kretslopp1",
+     "t": "Nedbrytare frigör ämnen som växter behöver för att växa",
+     "zone": "n",
+     "why": "Nedbrytarna gör närsalterna tillgängliga igen.",
+     "hint": "Vad behöver växterna ur jorden?"
+    },
+    {
+     "id": "kretslopp2",
+     "t": "Berggrunden vittrar och ger nya närsalter",
+     "zone": "n",
+     "why": "Närsalterna kommer ursprungligen från berggrunden.",
+     "hint": "Vad kommer från berget?"
+    },
+    {
+     "id": "kretslopp3",
+     "t": "Växter tar upp koldioxid i fotosyntesen",
+     "zone": "k",
+     "why": "Koldioxid innehåller kol.",
+     "hint": "Vilken gas tar växterna upp?"
+    },
+    {
+     "id": "kretslopp4",
+     "t": "Djur andas ut koldioxid",
+     "zone": "k",
+     "why": "Cellandningen ger tillbaka kol till luften.",
+     "hint": "Vilken gas andas vi ut?"
+    },
+    {
+     "id": "kretslopp5",
+     "t": "Olja och kol eldas i kraftverk och bilar",
+     "zone": "k",
+     "why": "Fossila bränslen är gammalt lagrat kol.",
+     "hint": "Vad består fossila bränslen av?"
+    },
+    {
+     "id": "kretslopp6",
+     "t": "Vatten avdunstar från havet och bildar moln",
+     "zone": "v",
+     "why": "Avdunstning är ett steg i vattnets kretslopp.",
+     "hint": "Vad bildar moln?"
+    },
+    {
+     "id": "kretslopp7",
+     "t": "Regn sjunker ner och blir grundvatten",
+     "zone": "v",
+     "why": "Nederbörd och grundvatten hör till vattnets kretslopp.",
+     "hint": "Vad faller från molnen?"
+    }
+   ]
+  }
+ ]
+}

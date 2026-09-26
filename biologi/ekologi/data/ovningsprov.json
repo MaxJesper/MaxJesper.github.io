@@ -1,0 +1,45 @@
+{
+  "sections": [
+    {
+      "title": "Del I – E-nivå (grundläggande)",
+      "questions": [
+        {
+          "type": "match",
+          "title": "Para ihop varje begrepp med rätt förklaring. Skriv siffran i rutan.",
+          "left": ["Population", "Ekosystem", "Producent", "Nedbrytare", "Toppkonsument"],
+          "right": [
+            "1. Står sist i en näringskedja och äts inte av något annat djur",
+            "2. Alla individer av samma art i ett område",
+            "3. Tillverkar sin egen näring med hjälp av solljus",
+            "4. Ett område med alla organismer och deras miljö",
+            "5. Lever på döda växter och djur och bryter ner dem"
+          ],
+          "a": "Population – 2, Ekosystem – 4, Producent – 3, Nedbrytare – 5, Toppkonsument – 1"
+        },
+        { "q": "Skriv fotosyntesens formel i ord.", "a": "koldioxid + vatten + ljusenergi → glukos + syre", "lines": 2 },
+        { "q": "Rita en näringskedja med fyra led från en svensk sjö. Skriv ut vilken nivå varje led har (producent, förstahandskonsument osv.).", "a": "T.ex. växtplankton (producent) → djurplankton (förstahandskonsument) → abborre (andrahandskonsument) → gädda (tredjehandskonsument/toppkonsument). Pilarna ska peka mot den som äter.", "lines": 3, "draw": 45 },
+        { "q": "Nämn skogens fyra skikt.", "a": "Trädskikt, buskskikt, fältskikt och bottenskikt.", "lines": 2 },
+        { "q": "Vad kallas vatten som har en salthalt mellan sötvatten och saltvatten? Ge ett exempel på ett sådant hav.", "a": "Bräckt vatten. Östersjön.", "lines": 2 },
+        { "q": "Räkna upp markens lager uppifrån och ner.", "a": "Förna, jordmån, jordart, berggrund.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "Del II – C-nivå (förklara och tillämpa)",
+      "questions": [
+        { "q": "I en skog finns 50 000 kg växter. Ungefär hur mycket växtätare kan de föda, och hur mycket rovdjur kan växtätarna i sin tur föda? Förklara vilken regel du använder.", "a": "Ca 5 000 kg växtätare och ca 500 kg rovdjur. Tiondelsregeln: bara ca 10 % av näringen går vidare till nästa nivå, resten används till organismernas eget liv (rörelse, värme).", "lines": 4 },
+        { "q": "Förklara varför nedbrytarna är nödvändiga för att en skog ska kunna växa på samma plats i tusentals år.", "a": "Nedbrytarna bryter ner döda växter och djur så att närsalterna frigörs i marken och kan tas upp av nya växter. Utan dem skulle närsalterna vara bundna i döda rester och till slut ta slut för växterna.", "lines": 4 },
+        { "q": "En sjö har grumligt vatten, tät vass och många fåglar. En annan har klart vatten och glest med strandväxter. Vilken är näringsrik? Förklara sambandet mellan närsalter och siktdjup.", "a": "Den första är näringsrik. Mycket närsalter gödslar växtplankton, som förökar sig kraftigt och gör vattnet grumligt – då blir siktdjupet litet.", "lines": 4 },
+        { "q": "Förklara varför Östersjön är bräckt och varför det lever färre arter där än på Västkusten.", "a": "Älvarna fyller på med sötvatten och bara de smala sunden släpper in salt vatten från Atlanten. De flesta arter är anpassade till antingen salt eller sött vatten, så bara få arter klarar mellanläget.", "lines": 4 },
+        { "q": "Blåmes och talgoxe äter samma sorts småkryp men kan ändå leva i samma skog. Förklara med begreppet ekologisk nisch.", "a": "De har olika nischer: blåmesen söker föda längst ut på tunna kvistar, talgoxen på marken och grövre grenar. De delar på skogen och konkurrerar därför inte så mycket.", "lines": 4 }
+      ]
+    },
+    {
+      "title": "Del III – A-nivå (resonera och dra slutsatser)",
+      "questions": [
+        { "q": "Östersjön får mycket närsalter från jordbruk och avlopp. Resonera i flera steg om hur detta kan påverka torsken.", "a": "Närsalterna ger övergödning → växtplankton förökar sig kraftigt → döda plankton sjunker till bottnen → nedbrytarna förbrukar syret → syrebrist på djupt vatten. Torskens ägg svävar just på djupt vatten och dör utan syre, så det blir färre torskar. Dessutom förändras näringsväven när bottendjur dör.", "lines": 6 },
+        { "q": "En bonde slutar slå sin gamla slåtteräng och börjar i stället gödsla den. Resonera om vad som händer med antalet växtarter och med pollinerarna.", "a": "Gödslingen ger mycket närsalter. Då tar några få snabbväxande, höga arter över och skuggar ut de små ljuskrävande blommorna. Utan slåtter växer ängen dessutom igen med buskar och träd. Antalet växtarter minskar, och med färre blommor minskar också mat för bin, humlor och fjärilar – pollinerarna blir färre.", "lines": 6 },
+        { "q": "Havsörnen var nära att dö ut i Sverige på 1970-talet, trots att halterna av DDT och PCB i vattnet var låga. Förklara varför, och varför just en toppkonsument drabbades.", "a": "Gifterna bryts ner mycket långsamt och lagras i fettet. Varje djur äter många byten under sitt liv, så halten blir högre för varje steg i näringskedjan (anrikning). Havsörnen står längst upp och fick därför så höga halter att äggskalen blev tunna och sprack. När gifterna förbjöds återhämtade sig arten.", "lines": 6 }
+      ]
+    }
+  ]
+}

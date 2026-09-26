@@ -1,104 +1,432 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ekologi – Biologi</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <!-- Valfritt: favicon -->
-  <!-- <link rel="icon" href="/images/favicon.ico" type="image/x-icon"> -->
+  <link rel="stylesheet" href="/css/style.css" />
+
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body.area-ekologi {
+      --area: #3f6b34;
+      --area-strong: #2f5228;
+      --area-soft: #f1f6ed;
+      --area-border: #cadcbf;
+      --area-hover: #e3eedb;
     }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    main { font-size: 1.2em; }
 
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) {
+      .area-layout { grid-template-columns: 300px 1fr; align-items: start; }
+    }
+    .area-main { min-width: 0; }
+
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: var(--area-strong); }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
-    }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
       margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image img, .area-hero-image svg { width: 90%; max-width: 90%; height: auto; display: block; margin: 0 auto; }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
+    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 1rem; }
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
+    .concept-list li {
+      font-size: 0.95rem; color: #1f2937; line-height: 1.35; padding: 0.22rem 0;
+      break-inside: avoid; display: flex; align-items: baseline; gap: 0.3rem;
+    }
+    .concept-list li::before { content: "→"; color: var(--area); font-size: 0.78rem; flex-shrink: 0; }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem;
+      background: var(--area-soft); color: var(--area-strong); border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none;
+      font-size: 0.93rem; font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--area);
+      color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
     }
 
-    .resource-box li {
-      margin-bottom: 0.7rem;
+    .role-toggle {
+      display: flex; gap: 0.5rem; align-items: center; margin: 0 0 1rem auto; padding: 0.5rem 0.75rem;
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 999px;
+      width: fit-content; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
+    .role-toggle button {
+      background: #fff; border: 1px solid var(--area-border); border-radius: 999px;
+      padding: 0.45rem 1.1rem; color: var(--area-strong); cursor: pointer; font-size: 1rem;
+      font-weight: 600; font-family: inherit; transition: background 0.15s ease, color 0.15s ease;
     }
+    .role-toggle button:hover { background: var(--area-hover); }
+    .role-toggle button.active { background: #2f5228; color: #fff; border-color: #2f5228; }
+    .role-toggle span { align-self: center; color: var(--area-strong); font-size: 0.95rem; font-weight: 600; margin-right: 0.3rem; }
+    body[data-role="larare"] .resource-grid article:last-child { order: -1; }
 
-    main {
-      font-size: 1.2em;
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
     }
-
   </style>
 </head>
-<body>
+<body class="area-ekologi">
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
-<nav id="side-menu"></nav>
+  <header class="biologi-header">
+    <h1>Ekologi</h1>
+  </header>
 
-<header class="biologi-header">
-  <h1>Ekologi</h1>
-</header>  
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
-    <a href="/biologi/Sex-och-relationer/" class="subject-btn">Nästa område →</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om ekosystem, kretslopp, populationer, biologisk mångfald och miljöfrågor.</p>
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+      <a href="/biologi/Sex-och-relationer/" class="subject-btn">Nästa område →</a>
+    </p>
+
+    <div class="role-toggle">
+      <span>Jag är:</span>
+      <button type="button" id="role-elev" class="active">Elev</button>
+      <button type="button" id="role-larare">Lärare</button>
+    </div>
+
+    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./ovningsverktyg.html">Övningar – sortera och bygg kedjor</a></li>
+              <li><a href="./larande-spel.html">Lärande spel</a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+            </ul>
+          </article>
+
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./begreppslista.html">Begreppslista</a></li>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+              <li><a href="./trad-och-blad.html">Träd och blad – inför och efter exkursion</a></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Lär dig först <strong>trappan</strong>: individ → population → samhälle → ekosystem → biom → biosfär.</li>
+              <li>Kunna rita en <strong>näringskedja</strong> med pilarna åt rätt håll och sätta namn på varje nivå.</li>
+              <li>Förstå <strong>tiondelsregeln</strong> – den förklarar varför det finns färre rovdjur än bytesdjur.</li>
+              <li>Koppla ihop <strong>fotosyntes och cellandning</strong>: den ena är den andra baklänges.</li>
+              <li>Använd sedan begreppen på varje ekosystem: vilka är producenterna, konsumenterna och nedbrytarna i skogen, sjön, Östersjön och på ängen?</li>
+              <li>Gör övningarna tills du får alla rätt på första försöket.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <img src="/images/biologi/ekologi/naringspyramid.svg" width="340" height="250" style="display:block;margin:0 auto;max-width:100%;height:auto;" alt="Näringspyramid med fyra våningar: 10 000 kg växtplankton, 1 000 kg djurplankton, 100 kg strömming och 10 kg torsk. Mellan varje nivå går ungefär 10 procent vidare." />
+          <figcaption class="hero-caption">
+            <h3>Från solljus till toppkonsument</h3>
+            <p>Allt liv i ett ekosystem hänger ihop. Växter och alger fångar solens energi, växtätare äter dem, rovdjur äter växtätarna – och nedbrytarna gör om allt dött till ny näring.</p>
+            <p>Pyramiden visar Östersjön: bara ungefär en tiondel av näringen går vidare till nästa nivå. Därför finns det alltid mycket mer plankton än torsk.</p>
+          </figcaption>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Ekologi">Ekologi</button></li>
+            <li><button class="concept-btn" data-concept="Ekosystem">Ekosystem</button></li>
+            <li><button class="concept-btn" data-concept="Population">Population</button></li>
+            <li><button class="concept-btn" data-concept="Samhälle">Samhälle</button></li>
+            <li><button class="concept-btn" data-concept="Biosfär">Biosfär</button></li>
+            <li><button class="concept-btn" data-concept="Fotosyntes">Fotosyntes</button></li>
+            <li><button class="concept-btn" data-concept="Producent">Producent</button></li>
+            <li><button class="concept-btn" data-concept="Cellandning">Cellandning</button></li>
+            <li><button class="concept-btn" data-concept="Näringskedja">Näringskedja</button></li>
+            <li><button class="concept-btn" data-concept="Konsument">Konsument</button></li>
+            <li><button class="concept-btn" data-concept="Toppkonsument">Toppkonsument</button></li>
+            <li><button class="concept-btn" data-concept="Näringsväv">Näringsväv</button></li>
+            <li><button class="concept-btn" data-concept="Näringspyramid">Näringspyramid</button></li>
+            <li><button class="concept-btn" data-concept="Nedbrytare">Nedbrytare</button></li>
+            <li><button class="concept-btn" data-concept="Kretslopp">Kretslopp</button></li>
+            <li><button class="concept-btn" data-concept="Närsalter">Närsalter</button></li>
+            <li><button class="concept-btn" data-concept="Ekologisk nisch">Ekologisk nisch</button></li>
+            <li><button class="concept-btn" data-concept="Biologisk mångfald">Biologisk mångfald</button></li>
+            <li><button class="concept-btn" data-concept="Jordart">Jordart</button></li>
+            <li><button class="concept-btn" data-concept="Morän">Morän</button></li>
+            <li><button class="concept-btn" data-concept="Förna">Förna</button></li>
+            <li><button class="concept-btn" data-concept="Jordmån">Jordmån</button></li>
+            <li><button class="concept-btn" data-concept="Plankton">Plankton</button></li>
+            <li><button class="concept-btn" data-concept="Försurning">Försurning</button></li>
+            <li><button class="concept-btn" data-concept="Övergödning">Övergödning</button></li>
+            <li><button class="concept-btn" data-concept="Bräckt vatten">Bräckt vatten</button></li>
+            <li><button class="concept-btn" data-concept="Ekosystemtjänst">Ekosystemtjänst</button></li>
+            <li><button class="concept-btn" data-concept="Miljögift">Miljögift</button></li>
+          </ul>
+          <p class="concept-note">Förkunskaper: fotosyntes och celler från <a href="/biologi/liv-och-cellen/">Liv och cellen</a>.</p>
+        </section>
+      </div>
     </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <ul>
-          <li><a href="./larande-spel.html">Lärande spel</a></li>
-        </ul>
-        <p style="color:#595959; font-style:italic; margin-top:0.7rem;">Checklista, instuderingsfrågor och övningsprov kommer senare.</p>
-      </article>
-
-      <article class="resource-box">
-        <h2>För lektioner / läraren</h2>
-        <p>Material som kan användas i undervisningen.</p>
-        <ul>
-          <li><a href="./trad-och-blad.html">Träd och blad – inför och efter exkursion</a></li>
-        </ul>
-      </article>
+    <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+      <h2>Studieguidens milstolpar</h2>
+      <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+      <ul class="milestone-map-list">
+        <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Ekologi och ekosystem</a></li>
+        <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Energi från solen</a></li>
+        <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Näringskedjor och näringspyramid</a></li>
+        <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Nedbrytare och kretslopp</a></li>
+        <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Samspel och biologisk mångfald</a></li>
+        <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Marken</a></li>
+        <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Skogen</a></li>
+        <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Sjön</a></li>
+        <li><a href="./studieguide.html#m9"><span class="m-num-chip">9</span>Havet – Östersjön</a></li>
+        <li><a href="./studieguide.html#m10"><span class="m-num-chip">10</span>Ängen</a></li>
+        <li><a href="./studieguide.html#m11"><span class="m-num-chip">11</span>Människan och ekosystemen</a></li>
+      </ul>
     </section>
   </main>
 
-<script src="/js/menu.js"></script>
+  <script src="/js/menu.js"></script>
+  <script>
+  window.BEGREPP = [
+ {
+  "namn": "Ekologi",
+  "definition": "Läran om hur levande varelser påverkar varandra och hur de samspelar med sin miljö.",
+  "anchor": "./studieguide.html#m1"
+ },
+ {
+  "namn": "Ekosystem",
+  "definition": "Ett avgränsat område med alla sina organismer och deras livsmiljö, t.ex. en sjö, en skog eller en stubbe.",
+  "anchor": "./studieguide.html#m1"
+ },
+ {
+  "namn": "Population",
+  "definition": "Alla individer av samma art som lever inom ett visst område, t.ex. alla abborrar i en sjö.",
+  "anchor": "./studieguide.html#m1"
+ },
+ {
+  "namn": "Samhälle",
+  "definition": "Alla populationer (växter, djur, svampar och bakterier) som lever tillsammans i ett ekosystem.",
+  "anchor": "./studieguide.html#m1"
+ },
+ {
+  "namn": "Biosfär",
+  "definition": "Alla ekosystem på jorden tillsammans – den del av jordklotet där det finns liv.",
+  "anchor": "./studieguide.html#m1"
+ },
+ {
+  "namn": "Fotosyntes",
+  "definition": "Växter och alger bygger glukos av koldioxid och vatten med hjälp av ljusenergi. Syre bildas: koldioxid + vatten + ljusenergi → glukos + syre.",
+  "anchor": "./studieguide.html#m2"
+ },
+ {
+  "namn": "Producent",
+  "definition": "En organism som själv tillverkar sin näring genom fotosyntes, t.ex. växter och alger. Står först i varje näringskedja.",
+  "anchor": "./studieguide.html#m2"
+ },
+ {
+  "namn": "Cellandning",
+  "definition": "Cellerna bryter ner glukos med hjälp av syre och frigör energi: glukos + syre → koldioxid + vatten + energi. Sker i nästan alla organismer.",
+  "anchor": "./studieguide.html#m2"
+ },
+ {
+  "namn": "Näringskedja",
+  "definition": "En modell som med pilar visar vem som äter vem, från producent till toppkonsument.",
+  "anchor": "./studieguide.html#m3"
+ },
+ {
+  "namn": "Konsument",
+  "definition": "En organism som får sin näring genom att äta andra organismer. Kan vara förstahands-, andrahandskonsument osv.",
+  "anchor": "./studieguide.html#m3"
+ },
+ {
+  "namn": "Toppkonsument",
+  "definition": "Den organism som står sist i en näringskedja och inte äts av något annat djur.",
+  "anchor": "./studieguide.html#m3"
+ },
+ {
+  "namn": "Näringsväv",
+  "definition": "Många näringskedjor i ett ekosystem som hakar i varandra.",
+  "anchor": "./studieguide.html#m3"
+ },
+ {
+  "namn": "Näringspyramid",
+  "definition": "En modell som visar att det finns mest levande material längst ner (producenterna) och minst i toppen. Bara ca 10 % av näringen går vidare till nästa nivå.",
+  "anchor": "./studieguide.html#m3"
+ },
+ {
+  "namn": "Nedbrytare",
+  "definition": "Organismer som lever på döda växter och djur och bryter ner dem till jord, t.ex. svampar, bakterier och daggmaskar.",
+  "anchor": "./studieguide.html#m4"
+ },
+ {
+  "namn": "Kretslopp",
+  "definition": "När ett ämne, t.ex. kol, vatten eller närsalter, går runt i naturen och används om och om igen.",
+  "anchor": "./studieguide.html#m4"
+ },
+ {
+  "namn": "Närsalter",
+  "definition": "Ämnen som växterna tar upp ur marken med vattnet och behöver för att växa, t.ex. kväve och fosfor.",
+  "anchor": "./studieguide.html#m4"
+ },
+ {
+  "namn": "Ekologisk nisch",
+  "definition": "Artens sätt att leva i ekosystemet: vad den äter, var och när. Arter med olika nischer slipper konkurrera.",
+  "anchor": "./studieguide.html#m5"
+ },
+ {
+  "namn": "Biologisk mångfald",
+  "definition": "Att det finns många olika arter, många naturtyper och stor variation inom arterna.",
+  "anchor": "./studieguide.html#m5"
+ },
+ {
+  "namn": "Jordart",
+  "definition": "Löst material ovanpå berggrunden som man kan gräva i, t.ex. morän, sand och lera.",
+  "anchor": "./studieguide.html#m6"
+ },
+ {
+  "namn": "Morän",
+  "definition": "Sveriges vanligaste jordart. En blandning av block, sten, grus, sand och lera som inlandsisen lämnade efter sig.",
+  "anchor": "./studieguide.html#m6"
+ },
+ {
+  "namn": "Förna",
+  "definition": "Döda löv, barr, kvistar och djur som ligger överst på marken och ännu inte brutits ner.",
+  "anchor": "./studieguide.html#m6"
+ },
+ {
+  "namn": "Jordmån",
+  "definition": "Den översta delen av marken, under förnan, som påverkats av klimat och organismer. Innehåller humus.",
+  "anchor": "./studieguide.html#m6"
+ },
+ {
+  "namn": "Plankton",
+  "definition": "Små organismer som svävar fritt i vattnet. Växtplankton är producenter, djurplankton äter dem.",
+  "anchor": "./studieguide.html#m8"
+ },
+ {
+  "namn": "Försurning",
+  "definition": "När pH sjunker i mark och vatten, främst på grund av utsläpp av svavel och kväveoxider. Känsliga arter dör.",
+  "anchor": "./studieguide.html#m8"
+ },
+ {
+  "namn": "Övergödning",
+  "definition": "När mark och vatten får för mycket närsalter. Alger och växter växer kraftigt och det kan bli syrebrist.",
+  "anchor": "./studieguide.html#m8"
+ },
+ {
+  "namn": "Bräckt vatten",
+  "definition": "Vatten som är saltare än sötvatten men sötare än saltvatten, ungefär 0,05–3 % salt. Östersjön är bräckt.",
+  "anchor": "./studieguide.html#m9"
+ },
+ {
+  "namn": "Ekosystemtjänst",
+  "definition": "Det naturen ger oss gratis, t.ex. pollinering, rent vatten, syre, fisk och virke.",
+  "anchor": "./studieguide.html#m11"
+ },
+ {
+  "namn": "Miljögift",
+  "definition": "Ett giftigt ämne som bryts ner mycket långsamt och anrikas i näringskedjan, t.ex. DDT, PCB och kvicksilver.",
+  "anchor": "./studieguide.html#m11"
+ }
+];
+  </script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
+  <script>
+    (function () {
+      var STORE_KEY = "ekologi.role";
+      var btnElev = document.getElementById("role-elev");
+      var btnLarare = document.getElementById("role-larare");
+      function setRole(role) {
+        if (role === "larare") {
+          document.body.setAttribute("data-role", "larare");
+          btnElev.classList.remove("active"); btnLarare.classList.add("active");
+        } else {
+          document.body.removeAttribute("data-role");
+          btnElev.classList.add("active"); btnLarare.classList.remove("active");
+        }
+        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
+      }
+      try { if (localStorage.getItem(STORE_KEY) === "larare") setRole("larare"); } catch (e) {}
+      btnElev.addEventListener("click", function () { setRole("elev"); });
+      btnLarare.addEventListener("click", function () { setRole("larare"); });
+    })();
+  </script>
 </body>
 </html>

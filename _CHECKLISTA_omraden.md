@@ -23,7 +23,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | Område | Kärn-HTML (13) | Data (5) | Språk (10) | Korsord | Audio |
 |---|---|---|---|---|---|
 | biologi/Sex-och-relationer | 2/13 | 0/5 | 0/10 | ✗ | ✗ |
-| biologi/ekologi | 2/13 (+5 egna spel, ingen studieguide: begrepp-bingo, begrepp-bingo-lag, faglar-tavling, tavling, trad-och-blad) | 0/5 | 0/10 | ✗ | ✗ |
+| **biologi/ekologi** | **13/13** (BYGGT 25–26 sep 2026: studieguide 11 milstolpar – 6 grundbegrepp + skogen, sjön, havet/Östersjön, ängen + människan; + ovningsverktyg med 10 sorteringsövningar, begrepp-bingo(+lag), faglar-tavling, tavling, trad-och-blad; 16 bildplatshållare väntar på ChatGPT-bilder, se `_BILDLISTA_ekologi.md`) | **5/5** (+ovningar.json) | **11/11** begrepp+termer, + checklista ar/am/rw (AI-översatt, ej korrekturläst) | ✗ | ✗ (TTS) |
 | biologi/evolution | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/genetik | 13/13 | 5/5 | **10/10** | ✗ | ✓ |
 | biologi/hjarta-blod-lungor | 11/13 (+begrepp-bingo, blodets-vag, bygg-blodet) | 4/5 | 0/10 | ✓ | ✗ |
@@ -93,21 +93,22 @@ Tecken: ✓ = klart · ✗ = saknas, ska in · – = inte tillämpligt för omr�
 
 | Funktion / USP | elektricitet | kraft-o-rorelse | magnetism-ind | universum | elektrokemi | periodiska | syror-baser | genetik | liv-o-cellen | kol-o-kolfor | atomer | ekologi | arb-energi-eff | Ämnet kemi (kemi-som-amne) | matens-kemi |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ (10/10, bekräftat 23 sep 2026 – tabellen visade felaktigt ✗) | ✗ (TTS ✓, översättning ✗) | ✗ | ? | ✓ | ✓ |
-| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen studieguide än) | ✓ | ✓ | ✓ |
+| TTS-uppläsning + begreppsöversättning (begrepp.<prefix>.json, 11 språk) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ (10/10, bekräftat 23 sep 2026 – tabellen visade felaktigt ✗) | ✗ (TTS ✓, översättning ✗) | ✓ | ? | ✓ | ✓ |
+| Begreppsöversättning VID LÄSNING (klickbara ord inline, +termer-nivå, 11 språk; STÅENDE REGEL för alla nya studieguider) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Knappar: navigering + utskrift ÖVERST (`.page-actions`, `css/knappar.css`) + AA-kontrast (sajtövergripande, genomgånget 20 sep 2026) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Kemikartan: cirkulär innehållskarta som områdets framsida (valfritt mönster, byggt 21 sep 2026) | – | – | – | – | – | – | – | – | – | – | – | – | – | ✓ | – (vanlig index-layout, kort kapitel) |
-| Gul "Viktigt!"-ruta för sådant som behöver betonas extra (`css/viktigt.css`, byggd 21 sep 2026; max 1–2 per milstolpe) | – | – | – | – | ✗ | ✗ | ✓ (8 rutor, bl.a. SIV) | ✗ | ✗ | ✗ | ✗ | – | – | ✗ | ✓ |
-| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | – | ✗ (beslutad kandidat) | ✓ (.check-q i studieguiden + 10 kontrollfrågor i säkerhetsintyget) | ✓ |
+| Gul "Viktigt!"-ruta för sådant som behöver betonas extra (`css/viktigt.css`, byggd 21 sep 2026; max 1–2 per milstolpe) | – | – | – | – | ✗ | ✗ | ✓ (8 rutor, bl.a. SIV) | ✗ | ✗ | ✗ | ✗ | ✓ (1 st, M6 bergart/jordart) | – | ✗ | ✓ |
+| Kontrollfrågor klicka-för-svar (.check-q, beräkningstunga områden) | – | ✗ (beslutad kandidat) | – | – | – | – | – | – | – | – | ✓ (.check-q i alla sex milstolpar) | ✓ (11 st, alla milstolpar utom M6) | ✗ (beslutad kandidat) | ✓ (.check-q i studieguiden + 10 kontrollfrågor i säkerhetsintyget) | ✓ |
 | Interaktiva 3D-molekylmodeller (3Dmol.js) | – | – | – | – | ? | – | ✓ (live i ämneskorten, jonkort för jonföreningar) | – | – | ✓ | ✓ (live i molekylkorten) | – | – | – | ✓ (12 RDKit-byggda molekyler, live i molekylkorten) |
 | Räknekort (formel → uträkning → svar) | ✓ (Ohms lag) | ? | ✓ (transformator) | – | – | – | – | – | – | – | – | – | ✓ | ✓ (densitet, calc-box) | ✗ (inga källbelagda beräkningsexempel hittades, avsiktligt hoppat) |
 | Eget lärande-spel (minst ett) | ? | ✓ | ? | ? | ? | ? | ? | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ (storheter) | ✓ | ✓ (larande-spel + sorteringsverktyg) |
 | Begreppsbingo (+ ev. lagläge) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (+lag) | ✓ (+lag, bekräftat 23 sep 2026 – tabellen visade felaktigt ✗) | ✗ | ✓ (+lag) | ✗ | ✓ | ✓ (enspelarversion – ingen Worker-synk byggd) |
-| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✗ | ? | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✓ (axe, 0 nya allvarliga; samma delade nested-interactive-fel som övriga) |
-| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ? | ? | ? | ? | ? | ✓ | ✓ | – (ingen studieguide än) | ? | ✓ | ✓ |
-| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✗ | ✗ | ✓ (.wonder/.frontier i flera milstolpar) | ✓ (1 st, M1 – cellulosa/tarmbakterier/bioteknik, ny 23 sep 2026; egen grön färgpalett, se CLAUDE.md) |
+| WCAG 2.2 AA-granskad | ? | ? | ? | ? | ? | ? | ? | ? | ? | ✓ (pilot sep 2026) | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✓ (axe, bara de delade kända felen nested-interactive/target-size i Lyssna) | ? | ✓ (axe + kontrast sep 2026; delade fel kvar, se CLAUDE.md) | ✓ (axe, 0 nya allvarliga; samma delade nested-interactive-fel som övriga) |
+| Källförteckning i studieguiden | ? | ? | ? | ✓ (mall) | ✓ (10 länkar, klart 24 sep 2026) | ? | ? | ? | ✓ (klart 24 sep 2026) | ✓ | ✓ | ✓ (14 källor, alla länkade) | ✓ (10 länkar, klart 24 sep 2026) | ✓ | ✓ (källor finns, men INGA länkar i texten – avsiktligt hoppat pga byggskript, se CLAUDE.md) |
+| Vetenskapligt granskade bilder (bildplan + färdig bild faktakontrolleras mot källa, t.ex. NE/review-artiklar/Wikipedia – STÅENDE REGEL för komplexa bilder, 24 sep 2026, se CLAUDE.md) | – | – | – | – | – | – | – | ? | ✓ (djur-/växtcellsbilden M3, sakfel hittade och rättade före godkännande) | – | – | – (väntar på bilder; specar faktakontrollerade i _BILDLISTA_ekologi.md) | – | – | – |
+| Kreativa/kognitiva utmaningsfrågor (`.wonder`, öppna/tvärvetenskapliga, minst 1/område) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ (2 st) | ✓ (.wonder/.frontier i M1, M3, M4, M6) | ✓ (1 st, M9 Östersjön) | ✗ | ✓ (.wonder/.frontier i flera milstolpar) | ✓ (1 st, M1 – cellulosa/tarmbakterier/bioteknik, ny 23 sep 2026; egen grön färgpalett, se CLAUDE.md) |
 | Live-3D i studieguiden (molviewer; korta kapitel) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | ✓ |
-| Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ (13 övningar) | ✓ (3 övningar i ovningsverktyg.html) |
+| Dra-och-släpp-övningar (`dra-och-slapp.js`, tillgänglig; gamla HTML5-DnD-spel ska migrera) | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ (10 övningar) | ✗ | ✓ (13 övningar) | ✓ (3 övningar i ovningsverktyg.html) |
 | Formelverktyg (`formelvisare.js`: verkstad, balansera, Räknemaskinen) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | – |
 | Utskrivbart formelark: stor vs nedsänkt siffra (`formelark.html`) | – | – | – | – | – | – | – | – | – | – | ✓ | – | – | – | – |
 | Checklista översatt till arabiska, amhariska, kinyarwanda (`data/checklista.<ar\|am\|rw>.json`; visas under svenskan när språket valts i språkväljaren; AI-översatt, ej korrekturläst; STÅENDE REGEL: ny checklista → nya språkfiler + `concept-lang-selector.js`-etikett) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | – (ingen checklista än) | ✓ | ✓ | ✗ (bara svensk checklista byggd i natt – kvarstår) |

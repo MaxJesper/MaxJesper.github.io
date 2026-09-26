@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Ekologi</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
+  <link rel="stylesheet" href="/css/viktigt.css" />
+
+  <style>
+    body {
+      --listen-color:#2f5228; --listen-border:#cadcbf; --listen-hover-bg:#f1f6ed;
+      --guide-accent:#2f5228; --guide-soft:#f1f6ed; --guide-border:#cadcbf; --guide-dash:#cadcbf;
+    }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro {
+      background: #f1f6ed;
+      border: 1px solid #cadcbf;
+      border-left: 4px solid #2f5228;
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1.25rem;
+    }
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 12px;
+      margin-bottom: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+    .milestone > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+    .milestone > summary::-webkit-details-marker { display: none; }
+    .milestone > summary::before {
+      content: "▸";
+      color: #2f5228;
+      font-size: 0.95rem;
+      transition: transform 0.15s ease;
+      display: inline-block;
+    }
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+    .milestone .m-num {
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2f5228;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .milestone .m-title { font-size: 1.1rem; flex: 1; }
+    .milestone .m-body {
+      padding: 0 1.1rem 1.1rem 1.1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.9rem;
+    }
+    .milestone .m-body p { margin: 0.6rem 0; line-height: 1.55; }
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .milestone figure { margin: 0.9rem 0; text-align: left; }
+    .milestone figure img,
+    .milestone figure video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+    .milestone figcaption {
+      font-size: 1rem;
+      color: #555;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .fact-box {
+      background: #f1f6ed;
+      border-left: 4px solid #2f5228;
+      border-radius: 6px;
+      padding: 0.75rem 0.95rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+    .fact-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2f5228;
+    }
+
+    .lab-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid #ea7317;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+      margin: 0.9rem 0;
+      font-size: 0.98rem;
+    }
+    .lab-box > strong.lab-rubrik {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #b45309;
+      margin-bottom: 0.3rem;
+    }
+    .lab-box ol, .lab-box ul { margin: 0.4rem 0 0.2rem 1.2rem; }
+    .lab-box li { margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .deepen {
+      background: #fffbe7;
+      border-left: 4px solid #d4a017;
+      border-radius: 6px;
+      padding: 0.65rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.96rem;
+    }
+    .deepen > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 700;
+      color: #7a5c00;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.1rem 0;
+    }
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning:"; display: block; margin-bottom: 0.15rem; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .todo-note {
+      display: block;
+      font-size: 0.82rem;
+      color: #92400e;
+      background: #fef9c3;
+      border: 1px dashed #f0c040;
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      margin-top: 0.5rem;
+      font-style: normal;
+    }
+
+    .next-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .next-steps a {
+      display: block;
+      padding: 0.7rem 0.9rem;
+      background: #f1f6ed;
+      border: 1px solid #cadcbf;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #1a1a2e;
+      font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .next-steps a:hover { background: #e3eedb; transform: translateY(-1px); }
+    .next-steps a .n-label {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #2f5228;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.93rem;
+      margin: 0.9rem 0;
+    }
+    .compare-table th, .compare-table td {
+      border: 1px solid #d8d8d8;
+      padding: 0.45rem 0.7rem;
+      text-align: left;
+    }
+    .compare-table th { background: #f1f6ed; color: #2f5228; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #f7faf4; }
+    .compare-table td.ja { color: #2f5228; font-weight: 700; }
+    .compare-table td.nej { color: #b91c1c; }
+
+    a.cite {
+      font-size: 0.78rem;
+      color: #2f5228;
+      font-weight: 700;
+      vertical-align: super;
+      text-decoration: none;
+      margin-left: 0.05rem;
+    }
+    a.cite:hover { text-decoration: underline; }
+
+    .references {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #d8d8d8;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+    .references h2 { font-size: 1rem; color: #2f5228; margin: 0 0 0.6rem; }
+    .references ol { margin: 0 0 0 1.3rem; }
+    .references li { margin-bottom: 0.4rem; }
+    .references a { color: #2f5228; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+
+    /* Bildhållare: väntar på foton Jesper tar/skickar in – syns bara som en tydlig platshållare, aldrig som en trasig bild. */
+    .side-fig--placeholder {
+      aspect-ratio: 4 / 3;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 0.8rem;
+      border-radius: 8px;
+      background: repeating-linear-gradient(45deg, rgba(47,82,40,0.07), rgba(47,82,40,0.07) 10px, rgba(47,82,40,0.02) 10px, rgba(47,82,40,0.02) 20px);
+      border: 1px dashed var(--guide-border, #cadcbf);
+      color: #2f5228; font-weight: 600; font-size: 0.85rem; line-height: 1.35;
+    }
+    .side-fig--placeholder .ph-sub { display: block; font-weight: 400; color: #4a4a5a; font-size: 0.8rem; margin-top: 0.3rem; }
+    .fig-row .side-fig--placeholder { min-height: 150px; }
+
+    /* Organellegend: bildens siffror (1-11) förklarade som riktig text, inte inbränd bildtext – går att förstora och läsas av skärmläsare. */
+    .organelle-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.7rem;
+      margin: 0.9rem 0 0;
+    }
+    .ol-item {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      background: #eaf4fa; border: 1px solid #bfe0ef; border-radius: 8px;
+      padding: 0.55rem 0.7rem;
+    }
+    .ol-num {
+      flex: none; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+      background: #fff; border: 2px solid #1f6f96; color: #1f6f96; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .ol-text strong { display: block; color: #1a1a2e; font-size: 0.92rem; }
+    .ol-text span { font-size: 0.84rem; color: #4a4a5a; line-height: 1.35; }
+
+    @media (max-width: 520px) {
+      main { font-size: 1.05em; }
+      .milestone .m-title { font-size: 1rem; }
+    }
+  
+    .milestone .m-body ul { margin: 0.4rem 0 0.6rem 1.2rem; }
+    .milestone .m-body li { margin-bottom: 0.3rem; line-height: 1.5; }
+    .formel { font-weight: 600; color: #2f5228; background: #f7faf4; border: 1px solid #cadcbf; border-radius: 8px; padding: 0.45rem 0.8rem; display: inline-block; }
+    .compare-table th[scope="row"] { background: #f7faf4; color: #1a1a2e; font-weight: 600; }
+    .table-scroll { overflow-x: auto; }
+    .check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+    .check-q > summary::-webkit-details-marker { display:none; }
+    .check-q > summary::before { content: "✓ Kontrollera dig själv: "; }
+    .check-q > summary::after { content: " (visa svar)"; font-weight:400; color:#475569; }
+    .check-q[open] > summary::after { content: " (dölj svar)"; }
+    .check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+    .wonder { background:#f0fdfa; border-left:4px solid #0d9488; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .wonder > summary { cursor:pointer; font-weight:600; color:#115e59; list-style:none; }
+    .wonder > summary::-webkit-details-marker { display:none; }
+    .wonder > summary::before { content: "» Fundera vidare: "; }
+    .wonder > summary::after { content: " ▾"; }
+    .wonder[open] > summary::after { content: " ▴"; }
+    .wonder > summary ~ * { margin-top: 0.6rem; }
+    .wonder .frontier { font-size:0.9rem; color:#0f766e; font-style:italic; border-top:1px dashed #99f6e4; margin-top:0.5rem; padding-top:0.5rem; }
+    details.wonder, details.check-q { scroll-margin-top: 0.75rem; }
+    .side-fig > img { border-radius: 6px; }
+    a.cite { text-decoration: underline; }
+    .references a { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header class="biologi-header">
+    <h1>Studieguide</h1>
+    <p>Ekologi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main class="guide-wide">
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f1f6ed; border:1px solid #cadcbf; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2f5228; cursor:pointer;">Öppna alla</button>
+    </div>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. De sex första handlar om grundbegreppen i ekologi. Sedan använder du begreppen på fyra ekosystem: skogen, sjön, havet (med Östersjön som exempel) och ängen.</p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De blå rutorna <strong>Kontrollera dig själv</strong> har ett dolt svar – svara själv först, klicka sedan.</p>
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+    </section>
+
+    <!-- ========== MILSTOLPE 1 ========== -->
+    <details class="milestone" id="m1" open>
+      <summary>
+        <span class="m-num">Milstolpe 1</span>
+        <span class="m-title">Ekologi och ekosystem</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p><strong class="term"><span class="concept-inline" data-concept="Ekologi">Ekologi</span></strong> är läran om hur levande varelser påverkar varandra och hur de samspelar med sin miljö. Ingen organism lever ensam: en räv behöver harar och möss att äta, haren behöver växter, växterna behöver ljus, vatten och närsalter från marken. Ändras en del påverkas de andra.<a href="#ref-1" class="cite">[1]</a></p>
+        <p>För att kunna studera samspelet väljer man ut ett avgränsat område, till exempel en sjö, en skog, en äng eller bara en murken stubbe. Området med alla sina organismer <em>och</em> deras livsmiljö kallas ett <strong class="term"><span class="concept-inline" data-concept="Ekosystem">ekosystem</span></strong>. Till livsmiljön hör <strong class="term"><span class="concept-inline" data-concept="miljöfaktorer">miljöfaktorer</span></strong> som ljus, temperatur, vatten, vind och vad marken innehåller.</p>
+        <p>Inne i ekosystemet kan man ordna livet i nivåer, från det minsta till det största:</p>
+        <ul>
+          <li>En <strong class="term"><span class="concept-inline" data-concept="individ">individ</span></strong> är en enda organism – en abborre, en maskros, ett rådjur.</li>
+          <li>Alla individer av samma art i ekosystemet bildar en <strong class="term"><span class="concept-inline" data-concept="Population">population</span></strong>, till exempel alla abborrar i sjön.</li>
+          <li>Alla populationer tillsammans – växter, djur, svampar och bakterier – bildar ekosystemets <strong class="term"><span class="concept-inline" data-concept="Samhälle">samhälle</span></strong>. Man kan dela upp det i ett <strong>växtsamhälle</strong> och ett <strong>djursamhälle</strong>.</li>
+          <li>Samhället plus miljön är <em>ekosystemet</em>.</li>
+          <li>Stora ekosystem som liknar varandra över hela jorden, till exempel regnskog, öken, tundra eller barrskog, kallas ett <strong class="term"><span class="concept-inline" data-concept="biom">biom</span></strong>.</li>
+          <li>Alla ekosystem på jorden tillsammans bildar <strong class="term"><span class="concept-inline" data-concept="Biosfär">biosfären</span></strong> – den tunna del av jordklotet där det finns liv, från djuphavet upp till de högst flygande fåglarna.</li>
+        </ul>
+        <p>Den plats eller naturtyp där en viss art trivs kallas artens <strong class="term"><span class="concept-inline" data-concept="biotop">biotop</span></strong>. Gäddans biotop är grunda, växtrika vikar; blåbärets är skuggig barrskog. Den sammanlagda vikten av allt levande i ett ekosystem kallas <strong class="term"><span class="concept-inline" data-concept="biomassa">biomassa</span></strong> – oftast står växterna för den allra största delen.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B1">Bild 1: Från individ till biosfär<span class="ph-sub">En abborre → ett abborrstim → alla arter i sjön → sjön med sin miljö → barrskogsbiomet → jordklotet</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Är alla gäddor i en sjö en population eller ett samhälle?</summary>
+          <div class="svar"><strong>Svar:</strong> En population – de är alla samma art. Samhället är alla arter i sjön tillsammans.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Ekologi är läran om samspelet mellan organismer och deras miljö. Individ → population (en art) → samhälle (alla arter) → ekosystem (samhälle + miljö) → biom → biosfär.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-nivaer"><span class="n-label">Träna</span>Sortera nivåerna</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span>Instuderingsfrågor</a>
+          <a href="#m2"><span class="n-label">Fortsätt</span>Energi från solen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 2 ========== -->
+    <details class="milestone" id="m2">
+      <summary>
+        <span class="m-num">Milstolpe 2</span>
+        <span class="m-title">Energi från solen – fotosyntes och cellandning</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Allt liv behöver energi. Nästan all energi i ett ekosystem kommer från solen, och det är växterna som fångar den. I bladens gröna färgämne, <strong class="term"><span class="concept-inline" data-concept="klorofyll">klorofyll</span></strong>, tas solljusets energi upp. Energin används för att bygga socker (<strong class="term"><span class="concept-inline" data-concept="glukos">glukos</span></strong>, druvsocker) av koldioxid från luften och vatten från marken. Samtidigt bildas syrgas som släpps ut. Det kallas <strong class="term"><span class="concept-inline" data-concept="Fotosyntes">fotosyntes</span></strong>.</p>
+        <p class="formel">koldioxid + vatten + ljusenergi → glukos + syre</p>
+        <p>En organism som själv tillverkar sin näring kallas en <strong class="term"><span class="concept-inline" data-concept="Producent">producent</span></strong>. På land är det gröna växter; i sjöar och hav är det framför allt alger. Växterna bygger om glukosen till stärkelse, cellulosa, fett och proteiner – energirik näring som till slut blir mat åt djur.</p>
+        <p>För att <em>använda</em> energin i sockret måste det brytas ner igen i cellerna. Då behövs syre, och det bildas koldioxid och vatten. Det kallas <strong class="term"><span class="concept-inline" data-concept="Cellandning">cellandning</span></strong>. Nästan alla organismer har cellandning – djur, svampar, bakterier <em>och</em> växter (som gör det dygnet runt, men märks mest på natten när fotosyntesen står still).</p>
+        <p class="formel">glukos + syre → koldioxid + vatten + energi</p>
+        <p>Jämför formlerna: cellandningen är fotosyntesen baklänges. Det växterna tar upp släpper djuren ut, och tvärtom. Så hänger växternas och djurens liv ihop.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B2">Bild 2: Fotosyntes och cellandning<span class="ph-sub">Ett träd och ett rådjur; pilar med koldioxid, syre, vatten och glukos mellan dem</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Varför kan man säga att du får energi från solen när du äter en hamburgare?</summary>
+          <div class="svar"><strong>Svar:</strong> Köttet kommer från en ko som åt gräs. Gräset byggde sin näring med solens energi i fotosyntesen – energin har följt med genom kedjan.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Fotosyntes: koldioxid + vatten + ljusenergi → glukos + syre (bara producenter). Cellandning: glukos + syre → koldioxid + vatten + energi (alla organismer).
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span>Instuderingsfrågor</a>
+          <a href="#m3"><span class="n-label">Fortsätt</span>Näringskedjor</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 3 ========== -->
+    <details class="milestone" id="m3">
+      <summary>
+        <span class="m-num">Milstolpe 3</span>
+        <span class="m-title">Näringskedja, näringsväv och näringspyramid</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Biologer använder enkla <strong>ekologiska modeller</strong> för att visa vem som äter vem. Den enklaste är <strong class="term"><span class="concept-inline" data-concept="Näringskedja">näringskedjan</span></strong>, där pilar visar hur näringen och energin flyttas: pilen pekar mot den som äter.</p>
+        <p class="formel">växtplankton → djurplankton → strömming → torsk → gråsäl</p>
+        <p>Kedjan ovan kommer från Östersjön.<a href="#ref-2" class="cite">[2]</a> Den börjar alltid med en producent, eftersom bara producenter kan tillverka energirik näring. Den som äter kallas <strong class="term"><span class="concept-inline" data-concept="Konsument">konsument</span></strong>. Djuret som äter producenten är <strong class="term"><span class="concept-inline" data-concept="förstahandskonsument">förstahandskonsument</span></strong> (en <strong class="term"><span class="concept-inline" data-concept="växtätare">växtätare</span></strong>), djuret som äter det är <strong class="term"><span class="concept-inline" data-concept="andrahandskonsument">andrahandskonsument</span></strong> och så vidare. Den som står sist och inte äts av något annat djur är <strong class="term"><span class="concept-inline" data-concept="Toppkonsument">toppkonsumenten</span></strong>. Varje steg i kedjan kallas en <strong class="term"><span class="concept-inline" data-concept="trofinivå">trofinivå</span></strong>.</p>
+        <p>I verkligheten äter de flesta djur flera sorters föda, och de äts själva av flera fiender. Näringskedjorna hakar därför i varandra och bildar en <strong class="term"><span class="concept-inline" data-concept="Näringsväv">näringsväv</span></strong>. En räv äter både möss, harar, fågelägg och bär. Samma djur kan dessutom stå på olika nivåer: när räven äter bär är den förstahandskonsument, när den äter en mus är den andrahandskonsument.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B3">Bild 3: Näringskedja i Östersjön<span class="ph-sub">Växtplankton → djurplankton → strömming → torsk → gråsäl, med nivånamnen utskrivna</span><span class="ph-sub">(bild kommer)</span></figure>
+          <figure class="side-fig side-fig--placeholder" data-bild="B4">Bild 4: Näringsväv i skogen<span class="ph-sub">Växter, hare, mus, ekorre, räv, lodjur och duvhök – pilarna korsar varandra</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row"><div class="m-lead">
+        <p>En <strong class="term"><span class="concept-inline" data-concept="Näringspyramid">näringspyramid</span></strong> visar hur mycket levande material som finns på varje nivå. Den är bred längst ner och smal i toppen. Förklaringen är att varje organism gör av med det mesta av sin näring själv – till att röra sig, hålla värmen och bygga om sin kropp. Bara omkring <strong>10 %</strong> av näringen på en nivå blir kvar som mat åt nästa nivå.<a href="#ref-3" class="cite">[3]</a> Resten försvinner som värme i cellandningen eller blir aldrig uppäten.</p>
+        <p>Därför krävs det mycket växtplankton för att föda några få sälar, och därför finns det alltid färre rovdjur än bytesdjur. Det förklarar också varför näringskedjor sällan har fler än fyra eller fem led: högre upp räcker näringen helt enkelt inte till.</p>
+        </div><div class="m-side">
+          <figure class="side-fig">
+            <img src="/images/biologi/ekologi/naringspyramid.svg" width="340" height="250" loading="lazy" alt="Näringspyramid med fyra våningar: 10 000 kg växtplankton längst ner, 1 000 kg djurplankton, 100 kg strömming och 10 kg torsk i toppen." />
+            <figcaption><strong>Tiondelsregeln.</strong> Bara ungefär en tiondel av näringen går vidare till nästa nivå. Siffrorna är ett räkneexempel, inte uppmätta värden.</figcaption>
+          </figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Det finns 5 000 kg djurplankton i en vik. Ungefär hur många kg strömming kan de föda?</summary>
+          <div class="svar"><strong>Svar:</strong> Ungefär en tiondel: 5 000 kg · 0,1 = 500 kg strömming.</div>
+        </details>
+        <details class="check-q">
+          <summary>Varför kan en näringskedja inte börja med ett djur?</summary>
+          <div class="svar"><strong>Svar:</strong> Djur kan inte tillverka sin egen näring. Den energirika näringen byggs först av en producent med hjälp av solens energi.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Näringskedja: producent → förstahandskonsument → andrahandskonsument → … → toppkonsument. Många kedjor bildar en näringsväv. Näringspyramiden visar att bara ca 10 % av näringen går vidare till nästa nivå.
+        </div>
+        <details class="deepen">
+          <summary>Mat till fler människor – korta kedjor</summary>
+          <p>Människan är också en konsument. Tiondelsregeln gäller oss också: äter vi fisk direkt räcker maten till ungefär tio gånger fler människor än om samma fisk först mals till foder åt kycklingar som vi sedan äter. Varje extra led i kedjan kostar ungefär 90 % av näringen. Därför kan en kost med mer växter och kortare näringskedjor föda fler människor på samma yta.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-kedja"><span class="n-label">Träna</span>Bygg näringskedjan</a>
+          <a href="./ovningsverktyg.html#ov-roll"><span class="n-label">Träna</span>Producent, konsument eller nedbrytare?</a>
+          <a href="./larande-spel.html"><span class="n-label">Spela</span>Lärande spel</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 4 ========== -->
+    <details class="milestone" id="m4">
+      <summary>
+        <span class="m-num">Milstolpe 4</span>
+        <span class="m-title">Nedbrytare och kretslopp</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>När en växt eller ett djur dör tar <strong class="term"><span class="concept-inline" data-concept="Nedbrytare">nedbrytarna</span></strong> över. Det är främst svampar och bakterier, men också småkryp som daggmaskar och gråsuggor. De lever på döda växt- och djurdelar och bryter ner dem bit för bit tills de blivit jord. Utan nedbrytare skulle döda löv och kadaver bara bli liggande – och ämnena i dem skulle aldrig kunna användas igen.</p>
+        <p>Jordens ämnen tar inte slut, de går runt. Att ett ämne används om och om igen kallas ett <strong class="term"><span class="concept-inline" data-concept="Kretslopp">kretslopp</span></strong>. Tre kretslopp är viktigast att kunna:</p>
+        <p><strong>Närsalternas kretslopp.</strong> Växter behöver <strong class="term"><span class="concept-inline" data-concept="Närsalter">närsalter</span></strong>, till exempel kväve, fosfor och kalium. De kommer ursprungligen från berggrunden, löses i markvattnet och sugs upp av rötterna. Djuren får närsalter när de äter växter. När växter och djur dör frigör nedbrytarna närsalterna igen, så att nya växter kan ta upp dem.</p>
+        <p><strong>Kolets kretslopp.</strong> Allt levande är byggt av kolföreningar. Växterna tar in kol som koldioxid i fotosyntesen. Kolet följer med genom näringskedjan och kommer tillbaka till luften som koldioxid när organismerna har cellandning – även nedbrytarna. En del kol har under miljontals år lagrats i jorden som kol, olja och naturgas. När människan eldar dessa <strong class="term"><span class="concept-inline" data-concept="fossila bränslen">fossila bränslen</span></strong> släpps extra koldioxid ut.</p>
+        <p><strong>Vattnets kretslopp.</strong> Solen värmer hav och sjöar så att vatten avdunstar. Vattenångan bildar moln, faller som regn eller snö, rinner ner i marken som <strong class="term"><span class="concept-inline" data-concept="grundvatten">grundvatten</span></strong> eller i bäckar och älvar – och tillbaka till havet. Växterna suger upp vatten och avger det genom bladen.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B5">Bild 5: Närsalternas kretslopp<span class="ph-sub">Träd → djur → döda växter och djur → nedbrytare → närsalter i marken → rötterna</span><span class="ph-sub">(bild kommer)</span></figure>
+          <figure class="side-fig side-fig--placeholder" data-bild="B6">Bild 6: Kolets kretslopp<span class="ph-sub">Koldioxid i luften, fotosyntes, cellandning, nedbrytare, fossila bränslen och förbränning</span><span class="ph-sub">(bild kommer)</span></figure>
+          <figure class="side-fig side-fig--placeholder" data-bild="B7">Bild 7: Vattnets kretslopp<span class="ph-sub">Avdunstning, moln, nederbörd, grundvatten, vattendrag, havet</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <details class="check-q">
+          <summary>En skog har vuxit på samma plats i tusen år. Varför har inte närsalterna tagit slut?</summary>
+          <div class="svar"><strong>Svar:</strong> Nedbrytarna bryter ner döda växter och djur så att närsalterna frigörs och kan tas upp igen av nya växter – de går i ett kretslopp.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Nedbrytare (svampar, bakterier, maskar) bryter ner döda organismer. Tack vare dem går närsalter, kol och vatten runt i kretslopp och kan användas om och om igen.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-roll"><span class="n-label">Träna</span>Producent, konsument eller nedbrytare?</a>
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m5"><span class="n-label">Fortsätt</span>Samspel och populationer</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 5 ========== -->
+    <details class="milestone" id="m5">
+      <summary>
+        <span class="m-num">Milstolpe 5</span>
+        <span class="m-title">Samspel, nischer och biologisk mångfald</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Arter påverkar varandra på olika sätt. Ett rovdjur äter sitt byte. Två arter som behöver samma föda eller samma boplatser tävlar om dem – det kallas <strong class="term"><span class="concept-inline" data-concept="konkurrens">konkurrens</span></strong>. Ibland har två arter nytta av varandra, och då lever de i <strong class="term"><span class="concept-inline" data-concept="symbios">symbios</span></strong>. Bladlöss suger växtsaft och lämnar ut sött sockervatten som myror dricker; myrorna skyddar i gengäld bladlössen mot nyckelpigor.</p>
+        <p>Varje art har sitt eget sätt att leva i ekosystemet: vad den äter, var den letar föda och när. Det kallas artens <strong class="term"><span class="concept-inline" data-concept="Ekologisk nisch">ekologiska nisch</span></strong>. Blåmes och talgoxe äter ungefär samma småkryp, men blåmesen letar längst ut på tunna kvistar medan talgoxen söker på marken och på grövre grenar. De har olika nischer och slipper konkurrera.</p>
+        <p>Har två arter <em>exakt</em> samma nisch konkurrerar de tills den ena slås ut. Ett ekosystem med plats för många nischer – gamla och unga träd, döda stammar, buskar, gläntor – rymmer därför många arter.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B8">Bild 8: Två nischer i samma träd<span class="ph-sub">Blåmes längst ut på tunna kvistar, talgoxe på grova grenar och på marken</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row m-row--plain"><div class="m-lead">
+        <p>Hur stor en population blir bestäms av hur många som föds och hur många som dör. En groda kan lägga över tusen ägg, men nästan alla äts upp som ägg eller grodyngel. En sothöna lägger bara omkring tio ägg men vaktar och matar ungarna. Båda strategierna fungerar. Populationen begränsas också av hur mycket föda som finns, av rovdjur, sjukdomar och av platser att bo på.</p>
+        <p>Att det finns många olika arter, många olika naturtyper och stor variation inom varje art kallas <strong class="term"><span class="concept-inline" data-concept="Biologisk mångfald">biologisk mångfald</span></strong>. Ett artrikt ekosystem klarar störningar bättre: om en art försvinner kan andra ta över dess roll i näringsväven. Arter som riskerar att dö ut kan bli <strong class="term"><span class="concept-inline" data-concept="fridlysta">fridlysta</span></strong> – då är det förbjudet att plocka, fånga eller skada dem.</p>
+        </div></div>
+        <details class="check-q">
+          <summary>Vad kan hända om all räv i ett skogsområde försvinner?</summary>
+          <div class="svar"><strong>Svar:</strong> Möss och harar får färre fiender och kan bli fler. Då äter de mer växter, och andra rovdjur (t.ex. ugglor) får mer mat. En förändring sprider sig genom hela näringsväven.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Arter kan äta varandra, konkurrera eller leva i symbios. En ekologisk nisch är artens sätt att leva i ekosystemet. Biologisk mångfald = många arter, naturtyper och stor variation inom arterna.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="./begreppskort.html"><span class="n-label">Träna</span>Begreppskort</a>
+          <a href="#m6"><span class="n-label">Fortsätt</span>Marken</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 6 ========== -->
+    <details class="milestone" id="m6">
+      <summary>
+        <span class="m-num">Milstolpe 6</span>
+        <span class="m-title">Marken – berggrund, jordarter och klimat</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Vilka växter som kan växa på en plats beror mycket på marken. Längst ner ligger den fasta <strong class="term"><span class="concept-inline" data-concept="berggrunden">berggrunden</span></strong>. I Sverige består den mest av hårda, gamla bergarter som <strong>granit</strong> och <strong>gnejs</strong>, som ofta kallas <strong class="term"><span class="concept-inline" data-concept="urberg">urberg</span></strong>. De vittrar långsamt och ger få närsalter. På några ställen, till exempel på Gotland och Öland, är berggrunden <strong>kalksten</strong>, som har bildats av skal från havsdjur. Kalkrik mark ger fler närsalter och en rikare växtlighet.</p>
+        <p>Ovanpå berget ligger löst material som man kan gräva i, en <strong class="term"><span class="concept-inline" data-concept="Jordart">jordart</span></strong>. Under istiden gled en flera kilometer tjock inlandsis över landet. Den bröt loss och krossade berg, och när isen smälte lämnade den efter sig en blandning av block, sten, grus, sand och lera – <strong class="term"><span class="concept-inline" data-concept="Morän">morän</span></strong>. Morän är Sveriges vanligaste jordart och täcker ungefär tre fjärdedelar av landet.<a href="#ref-4" class="cite">[4]</a> Där rinnande vatten har sorterat materialet har det bildats jordarter med nästan bara sand eller bara lera. Lerjord håller kvar vatten och närsalter och är bra åkermark.</p>
+        <p>Överst i skogsmarken ligger <strong class="term"><span class="concept-inline" data-concept="Förna">förnan</span></strong>: fallna löv, barr, kvistar och döda djur som ännu inte brutits ner. Under förnan ligger <strong class="term"><span class="concept-inline" data-concept="Jordmån">jordmånen</span></strong>, den del av marken som har påverkats av klimat och organismer. Den innehåller <strong class="term"><span class="concept-inline" data-concept="humus">humus</span></strong> – nedbruten förna – blandad med sand och lera från jordarten. Daggmaskarna blandar lagren när de gräver.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B9">Bild 9: Markens lager<span class="ph-sub">Förna, jordmån med humus, jordart (morän) och berggrund</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row m-row--plain"><div class="m-lead">
+        <p>Klimatet spelar också roll. Sverige är långt, och det är både kallare och har kortare sommar i norr och högt upp på fjället. Därför delar man in landet i fem växtområden: <strong>kalfjället</strong> (inga träd), <strong>fjällbjörkskogen</strong>, <strong>norra barrskogsområdet</strong>, <strong>södra barrskogsområdet</strong> och <strong>södra lövskogsområdet</strong> längst i söder.</p>
+        </div></div>
+        <div class="viktigt" role="note">
+          <svg class="viktigt-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M16 3 30 28H2z" fill="#7a5a00"/><path d="M16 12v8" stroke="#fff3b0" stroke-width="3" stroke-linecap="round"/><circle cx="16" cy="24" r="1.8" fill="#fff3b0"/></svg>
+          <div class="viktigt-body"><strong class="viktigt-label">Viktigt!</strong><p>Håll isär <strong>bergart</strong> (fast berg, t.ex. granit) och <strong>jordart</strong> (löst material man kan gräva i, t.ex. morän). Jordmånen är den översta, levande delen av marken.</p></div>
+        </div>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Uppifrån och ner: förna → jordmån → jordart → berggrund. Morän bildades av inlandsisen. Kalkrik berggrund ger näringsrik mark, urberg (granit, gnejs) ger näringsfattig mark.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-mark"><span class="n-label">Träna</span>Markens lager</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span>Instuderingsfrågor</a>
+          <a href="#m7"><span class="n-label">Fortsätt</span>Skogen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 7 ========== -->
+    <details class="milestone" id="m7">
+      <summary>
+        <span class="m-num">Milstolpe 7</span>
+        <span class="m-title">Skogen som ekosystem</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Skog täcker ungefär två tredjedelar av Sveriges landyta.<a href="#ref-5" class="cite">[5]</a> Den ger virke och papper, men också plats för friluftsliv, bär och svamp – och för tusentals arter.</p>
+        <p>Växterna i en skog bildar fyra våningar. Högst upp finns <strong class="term"><span class="concept-inline" data-concept="trädskiktet">trädskiktet</span></strong>. Under det finns <strong class="term"><span class="concept-inline" data-concept="buskskiktet">buskskiktet</span></strong> med buskar och unga träd som har hårda, <em>vedartade</em> stammar. Närmare marken finns <strong class="term"><span class="concept-inline" data-concept="fältskiktet">fältskiktet</span></strong>: gräs, ormbunkar, blommor och ris som blåbär och lingon. Allra närmast marken ligger <strong class="term"><span class="concept-inline" data-concept="bottenskiktet">bottenskiktet</span></strong> med mossor, lavar och svampar. Varje skikt har sina djur – hackspettar i trädstammarna, sångare i buskarna, fjärilar i fältskiktets blommor, sniglar och gråsuggor i bottenskiktet. En skog med alla fyra skikten har därför plats för många fler arter än en skog där bara trädskiktet finns kvar.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B10">Bild 10: Skogens fyra skikt<span class="ph-sub">Trädskikt, buskskikt, fältskikt och bottenskikt med exempel på växter</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row"><div class="m-lead">
+        <p><strong>Lövskog.</strong> När marken är frusen kan rötterna inte suga upp vatten. Om träden hade kvar bladen skulle de torka ut, så <strong class="term"><span class="concept-inline" data-concept="lövskog">lövträden</span></strong> fäller bladen på hösten. Löven bryts ner snabbt, och förnan blir näringsrik. På våren, innan trädens blad har slagit ut, når ljuset ända ner till marken. Då hinner vårblommor som vitsippor och blåsippor blomma. På sommaren blir det skuggigt och ormbunkar och andra skuggtåliga växter tar över.</p>
+        <p><strong>Barrskog.</strong> Tall och gran behåller barren på vintern. Barren är täckta av ett vaxlager som hindrar dem från att torka ut. Ett barr kan sitta kvar i flera år, och när det väl faller bryts det ner långsamt eftersom det är surt. <strong class="term"><span class="concept-inline" data-concept="barrskog">Barrskogens</span></strong> mark blir därför näringsfattig och sur, och fältskiktet domineras av blåbär och lingon, som klarar sig med lite näring. Svampar är de viktigaste nedbrytarna här.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B11">Bild 11: Lövskog på våren och på sommaren<span class="ph-sub">Samma bokskog: vitsippsmatta i ljus före lövsprickningen, skugga och ormbunkar på sommaren</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row m-row--plain"><div class="m-lead">
+        <p><strong>Urskog och kulturskog.</strong> En skog som människan aldrig har huggit eller planterat kallas <strong class="term"><span class="concept-inline" data-concept="urskog">urskog</span></strong>. Där finns träd i alla åldrar, gamla ihåliga träd där ugglor och hackspettar bygger bo, och döda stammar som blir mat och boplats åt insekter, svampar och lavar. Nästan all svensk skog är i stället <strong class="term"><span class="concept-inline" data-concept="kulturskog">kulturskog</span></strong>: den planteras, sköts och avverkas på en gång. Kulturskogen ger mycket virke, men träden är ofta av samma sort och samma ålder, och den gamla och döda veden saknas. Därför har den färre nischer och färre arter.</p>
+        <p><strong>Marken kan försuras.</strong> Surt regn, orsakat av utsläpp av svavel och kväveoxider, gör att markvattnet får lägre pH. Då lossnar närsalterna från jordpartiklarna och sköljs bort, långt ner där rötterna inte når. Träden blir svaga och angrips lättare av insekter och svampar. Urbergsmark, som saknar kalk, är känsligast. Försurningen av mark och vatten tas upp mer i milstolpe 8.</p>
+        </div></div>
+        <details class="check-q">
+          <summary>Varför är marken ofta mer näringsrik i en lövskog än i en barrskog?</summary>
+          <div class="svar"><strong>Svar:</strong> Löven faller varje höst och bryts ner snabbt, så närsalterna kommer tillbaka till marken fort. Barren sitter kvar länge, är sura och bryts ner långsamt.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Skogens skikt: träd-, busk-, fält- och bottenskikt. Lövskog har näringsrik mark och vårblommor; barrskog har sur, näringsfattig mark med blåbär och lingon. Urskog har fler nischer och arter än kulturskog. Även marken kan försuras.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-skikt"><span class="n-label">Träna</span>Skogens skikt</a>
+          <a href="./ovningsverktyg.html#ov-lov-barr"><span class="n-label">Träna</span>Lövskog eller barrskog?</a>
+          <a href="/biologi/ekologi/trad-och-blad.html"><span class="n-label">Laborera</span>Träd och blad (exkursion)</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 8 ========== -->
+    <details class="milestone" id="m8">
+      <summary>
+        <span class="m-num">Milstolpe 8</span>
+        <span class="m-title">Sjön som ekosystem</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>I Sverige finns nästan 100 000 sjöar som är större än en hektar.<a href="#ref-6" class="cite">[6]</a> Många av dem ger oss dricksvatten. Regnvattnet samlas i bäckar som rinner till sjöarna, och därför tar en sjö emot ämnen från skogen och åkrarna runt omkring.</p>
+        <p>En sjö har tre delar. <strong>Stranden</strong> är den grunda zonen med vass, säv och näckrosor, där fiskar leker och fåglar bygger bo. Det <strong>fria vattnet</strong> ute på sjön är fullt av <strong class="term"><span class="concept-inline" data-concept="Plankton">plankton</span></strong> – små organismer som svävar i vattnet. <strong class="term"><span class="concept-inline" data-concept="växtplankton">Växtplankton</span></strong> (mikroskopiska alger) är sjöns viktigaste producenter, och <strong class="term"><span class="concept-inline" data-concept="djurplankton">djurplankton</span></strong> som hoppkräftor äter dem. Den <strong>djupa bottnen</strong> är mörk. Där lever nedbrytare som bryter ner döda växter och djur som sjunker ner och bildar ett slam, <strong class="term"><span class="concept-inline" data-concept="gyttja">gyttja</span></strong>.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B12">Bild 12: Sjöns tre delar<span class="ph-sub">Stranden (vass, näckrosor), det fria vattnet (plankton, abborre, gädda) och den djupa bottnen (gyttja, nedbrytare)</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row m-row--full"><div class="m-lead">
+        <p>Sjöar är olika beroende på marken runt dem:</p>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Jämförelse näringsfattig och näringsrik sjö"><table class="compare-table">
+          <thead><tr><th scope="col"></th><th scope="col"><strong class="term"><span class="concept-inline" data-concept="näringsfattig">Näringsfattig</span></strong> sjö</th><th scope="col"><strong class="term"><span class="concept-inline" data-concept="näringsrik">Näringsrik</span></strong> sjö</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Omgivning</th><td>Barrskog på urberg</td><td>Lövskog och åkermark, ofta på kalkrik mark</td></tr>
+            <tr><th scope="row">Närsalter</th><td>Lite</td><td>Mycket</td></tr>
+            <tr><th scope="row"><strong class="term"><span class="concept-inline" data-concept="pH">pH</span></strong></th><td>Ofta under 7 (lite sur)</td><td>Ofta över 7</td></tr>
+            <tr><th scope="row">Stranden</th><td>Glest med växter</td><td>Tät vass och kaveldun</td></tr>
+            <tr><th scope="row">Plankton</th><td>Lite</td><td>Mycket</td></tr>
+            <tr><th scope="row"><strong class="term"><span class="concept-inline" data-concept="siktdjup">Siktdjup</span></strong></th><td>Stort – klart vatten</td><td>Litet – grumligt vatten</td></tr>
+            <tr><th scope="row">Djurliv</th><td>Färre arter</td><td>Många fåglar – en "fågelsjö"</td></tr>
+          </tbody>
+        </table></div>
+        <p>Siktdjupet mäter man genom att sänka ner en vit skiva tills den försvinner. Ju mer plankton, desto kortare siktdjup.</p>
+        </div></div>
+        <div class="m-row"><div class="m-lead">
+        <p><strong>Två hot mot sjöarna.</strong> När mark och sjöar blir surare kallas det <strong class="term"><span class="concept-inline" data-concept="Försurning">försurning</span></strong>. Känsliga djur som mört, snäckor och kräftor dör först, och vattnet kan bli onaturligt klart eftersom planktonen också dör. Näringsfattiga sjöar på urberg drabbas värst. Man kan sprida kalk (<strong class="term"><span class="concept-inline" data-concept="kalkning">kalkning</span></strong>), men det hjälper bara tillfälligt. Det motsatta problemet är <strong class="term"><span class="concept-inline" data-concept="Övergödning">övergödning</span></strong>: för mycket närsalter från jordbruk och avlopp gör att alger och vass växer så mycket att sjön växer igen. Samma sak händer i Östersjön (milstolpe 9).</p>
+        </div><div class="m-side">
+          <figure class="side-fig">
+            <img src="/biologi/ekologi/bilder-faglar/hager-1.jpg" width="300" height="400" loading="lazy" alt="En gråhäger står i grunt vatten bland gräs och strån i strandkanten." />
+            <figcaption><strong>Häger i strandzonen.</strong> Hägern jagar fisk och grodor i grunt vatten och är en av sjöns toppkonsumenter. Foto: Jesper Tordsson.</figcaption>
+          </figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Varför har en näringsrik sjö ett litet siktdjup?</summary>
+          <div class="svar"><strong>Svar:</strong> Närsalterna gödslar växtplankton som förökar sig kraftigt. Vattnet blir grumligt av alla plankton, och man ser inte lika långt ner.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sjön</strong>
+          Tre delar: strand, fritt vatten, djup botten. Växtplankton är sjöns producenter. Näringsfattig sjö: klart vatten, lite liv. Näringsrik sjö: grumligt vatten, tät vass, många fåglar.
+        </div>
+        <details class="deepen">
+          <summary>Sjön och årstiderna – varför fryser inte sjön till botten?</summary>
+          <p>Vatten är tyngst vid +4 °C. På vintern lägger sig därför det kalla vattnet (0–4 °C) överst och fryser till is, medan bottnen håller +4 °C. Fiskarna överlever där nere. Isen hindrar vinden från att röra om vattnet, så inget nytt syre kommer ner till bottnen under vintern.</p>
+          <p>På våren och hösten har ytvattnet och bottenvattnet ungefär samma temperatur. Då räcker lite vind för att röra om hela sjön: syre förs ner till bottnen och närsalter från bottnen förs upp till ytan, där växtplankton kan använda dem. Det är därför det ofta blir mycket växtplankton på våren. På sommaren lägger sig ett varmt, lätt ytskikt ovanpå det kalla bottenvattnet, och de blandas inte.</p>
+        </details>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-sjo"><span class="n-label">Träna</span>Näringsfattig eller näringsrik?</a>
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m9"><span class="n-label">Fortsätt</span>Havet och Östersjön</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 9 ========== -->
+    <details class="milestone" id="m9">
+      <summary>
+        <span class="m-num">Milstolpe 9</span>
+        <span class="m-title">Havet som ekosystem – exemplet Östersjön</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Havet täcker ungefär tre fjärdedelar av jorden. Ljuset når bara ner en bit, så nästan alla havets producenter är <strong class="term"><span class="concept-inline" data-concept="alger">alger</span></strong> som lever nära ytan. Längs stränderna sitter stora alger fast på botten, som blåstång. Ute i det öppna havet är det växtplankton som står för fotosyntesen. Havets plankton producerar ungefär hälften av allt syre som bildas på jorden.<a href="#ref-7" class="cite">[7]</a></p>
+        <p>Havsvattnet är salt. Saltet har under miljontals år sköljts ut från land med älvarna och blir kvar när vattnet avdunstar. Vatten med mer än ungefär 3 % salt kallas <strong class="term"><span class="concept-inline" data-concept="saltvatten">saltvatten</span></strong>, med mindre än 0,05 % <strong class="term"><span class="concept-inline" data-concept="sötvatten">sötvatten</span></strong>. Det som ligger mellan kallas <strong class="term"><span class="concept-inline" data-concept="Bräckt vatten">bräckt vatten</span></strong>.</p>
+        <p><strong>Östersjön är ett bräckt innanhav.</strong> Hundratals älvar fyller hela tiden på med sötvatten, och bara de smala sunden vid Danmark släpper in salt vatten från Atlanten. I Bottenviken är salthalten bara omkring 0,3–0,4 %, i Egentliga Östersjön 0,6–0,9 %.<a href="#ref-8" class="cite">[8]</a></p>
+        </div><div class="m-side">
+          <figure class="side-fig">
+            <img src="/images/biologi/ekologi/salthalt.svg" width="340" height="300" loading="lazy" alt="Stapeldiagram över salthalt: Bottenviken 0,3 till 0,4 procent, Bottenhavet 0,5 till 0,6, Egentliga Östersjön 0,6 till 0,9, Västerhavet 1,5 till 3 och världshaven cirka 3,5 procent. Gränserna för sötvatten (0,05 procent) och saltvatten (3 procent) är markerade." />
+            <figcaption><strong>Salthalt runt Sverige.</strong> Ju längre norrut i Östersjön, desto sötare vatten. Källa: SMHI.</figcaption>
+          </figure>
+          <figure class="side-fig side-fig--placeholder" data-bild="B13">Bild 13: Östersjöns näringsväv<span class="ph-sub">Växtplankton, blåstång, djurplankton, blåmussla, strömming, skarpsill, torsk, gråsäl, havsörn och ejder</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row m-row--plain"><div class="m-lead">
+        <p><strong>Få arter – men många individer.</strong> De flesta havsdjur är anpassade till antingen salt eller sött vatten. Därför lever betydligt färre arter i Östersjön än på Västkusten. Blåstång och blåmusslor klarar det bräckta vattnet (musslorna blir mindre än i salt hav) och blir mycket vanliga, eftersom de har få konkurrenter. Sjöstjärnor, som äter blåmusslor, klarar inte det låga saltet i större delen av Östersjön. Östersjöns näringsväv har alltså få trådar – och det gör den sårbar: försvinner en art finns det sällan någon annan som kan ta dess plats.</p>
+        <p><strong>Syrebrist på bottnarna.</strong> Östersjön tar emot mycket närsalter från jordbruk och avlopp i länderna runt omkring. Det ger övergödning: växtplankton förökar sig explosionsartat, ibland som <strong class="term"><span class="concept-inline" data-concept="vattenblomning">vattenblomning</span></strong> av blågröna bakterier. När planktonen dör sjunker de till bottnen, där nedbrytarna förbrukar syret när de bryter ner dem. Resultatet blir <strong class="term"><span class="concept-inline" data-concept="syrebrist">syrebrist</span></strong> – stora bottnar där inget djur kan leva.<a href="#ref-9" class="cite">[9]</a> Torsken drabbas särskilt, eftersom dess ägg svävar på djupt vatten där syret saknas.</p>
+        <p><strong>Plast och olja.</strong> Plast i havet bryts ner till mikroplast som djurplankton och fiskar får i sig. Oljeutsläpp klibbar ihop fåglarnas fjädrar så att de fryser och inte kan flyga.</p>
+        </div></div>
+        <details class="check-q">
+          <summary>Varför lever det färre arter i Östersjön än utanför Västkusten?</summary>
+          <div class="svar"><strong>Svar:</strong> Östersjöns vatten är bräckt. De flesta arter är anpassade till antingen salt eller sött vatten, och bara ett fåtal klarar mellanläget.</div>
+        </details>
+        <details class="wonder">
+          <summary>Vad händer med Östersjön om det blir mer regn?</summary>
+          <p>Forskare räknar med att ett varmare klimat kan ge mer nederbörd runt Östersjön. Mer regn betyder mer sötvatten från älvarna – och ett ännu sötare innanhav. Blåstången, blåmusslan och torsken lever redan nära gränsen för hur lite salt de klarar.</p>
+          <p class="frontier">Fundera: vilka arter skulle kunna försvinna, och vilka kunde bli vanligare? Tänk på näringsväven – om blåmusslan blir ovanlig, vilka djur påverkas då? Det här är en fråga forskarna själva arbetar med just nu, och det finns inget färdigt svar.</p>
+        </details>
+        <div class="fact-box">
+          <strong>Havet och Östersjön</strong>
+          Havets producenter är alger och växtplankton. Bräckt vatten = 0,05–3 % salt. Östersjön är bräckt eftersom älvarna ger sötvatten och sunden släpper in lite saltvatten. Få arter klarar det, och övergödning ger syrebrist på bottnarna.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-kedja"><span class="n-label">Träna</span>Bygg näringskedjan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span>Instuderingsfrågor</a>
+          <a href="#m10"><span class="n-label">Fortsätt</span>Ängen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 10 ========== -->
+    <details class="milestone" id="m10">
+      <summary>
+        <span class="m-num">Milstolpe 10</span>
+        <span class="m-title">Ängen som ekosystem</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>En äng är en öppen, gräsbevuxen mark med många sorters blommor. De flesta svenska ängar har uppstått för att människan har skött dem i hundratals år. En <strong class="term"><span class="concept-inline" data-concept="slåtteräng">slåtteräng</span></strong> slås med lie på sensommaren, och höet användes förr som vinterfoder åt djuren. I en betesmark hålls växtligheten nere av betande kor, får och hästar (<strong class="term"><span class="concept-inline" data-concept="bete">bete</span></strong>).</p>
+        <p>Slåttern och betet är själva nyckeln till ängens artrikedom. När höet förs bort följer närsalter med, så marken förblir näringsfattig. På näringsfattig mark kan inte ett fåtal snabbväxande arter som hundkäx och maskros ta över och skugga ut de andra. I stället får många små, ljuskrävande växter plats – som blåklocka, kattfot och prästkrage. På en gammal slåtteräng kan det växa upp till 60 olika arter av blomväxter på en enda kvadratmeter.<a href="#ref-10" class="cite">[10]</a></p>
+        <p>Blommorna ger nektar och pollen åt bin, humlor och fjärilar. Dessa <strong class="term"><span class="concept-inline" data-concept="pollinerare">pollinerare</span></strong> flyttar i sin tur pollen mellan blommorna så att de kan bilda frön – ett samspel där båda har nytta. Insekterna är mat åt fåglar, och fåglarna åt rovfåglar och rävar. Ängen är alltså ett eget ekosystem med producenter, konsumenter och nedbrytare precis som skogen.</p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B14">Bild 14: En blomsteräng<span class="ph-sub">Slåtteräng i juli med blåklockor, prästkragar och en humla som besöker en blomma – gärna ett eget foto</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <div class="m-row"><div class="m-lead">
+        <p><strong>Ängen växer igen.</strong> Om ingen slår eller betar ängen händer något: högt gräs och buskar tar över, sedan kommer träd, och efter några decennier har ängen blivit skog. Det kallas <strong class="term"><span class="concept-inline" data-concept="igenväxning">igenväxning</span></strong>. I dag odlas djurens vinterfoder på åkrar, och bara en liten del av de ängar och betesmarker som fanns runt år 1900 finns kvar.<a href="#ref-11" class="cite">[11]</a> Med dem minskar många växter, fjärilar och bin. Därför får lantbrukare stöd för att fortsätta slå och beta de ängar som finns kvar.<a href="#ref-12" class="cite">[12]</a></p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B15">Bild 15: Igenväxning i tre steg<span class="ph-sub">Öppen äng → buskar och sly → ung skog</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Varför blir det färre arter på en äng om man gödslar den?</summary>
+          <div class="svar"><strong>Svar:</strong> Med mycket närsalter växer några få snabba och höga arter så kraftigt att de skuggar ut de små, ljuskrävande blommorna.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Ängen</strong>
+          En äng hålls öppen av slåtter eller bete. Näringsfattig mark + mycket ljus = många arter och många pollinerare. Utan skötsel växer ängen igen och blir skog.
+        </div>
+        <div class="next-steps">
+          <a href="./ovningsverktyg.html#ov-ekosystem"><span class="n-label">Träna</span>Vilket ekosystem?</a>
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Punkter i checklistan</a>
+          <a href="#m11"><span class="n-label">Fortsätt</span>Människan och ekosystemen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== MILSTOLPE 11 ========== -->
+    <details class="milestone" id="m11">
+      <summary>
+        <span class="m-num">Milstolpe 11</span>
+        <span class="m-title">Människan och ekosystemen</span>
+      </summary>
+      <div class="m-body">
+        <div class="m-row"><div class="m-lead">
+        <p>Människan är också en del av ekosystemen – ofta som toppkonsument. Vi får mycket gratis av naturen: pollinering av grödor, rent vatten, fisk, virke, syre och platser att vila i. Allt sådant kallas <strong class="term"><span class="concept-inline" data-concept="Ekosystemtjänst">ekosystemtjänster</span></strong>. Ett ekosystem med hög biologisk mångfald ger fler och säkrare tjänster än ett utarmat.</p>
+        <p>Men vi sprider också <strong class="term"><span class="concept-inline" data-concept="Miljögift">miljögifter</span></strong> – ämnen som är giftiga för levande varelser och som bryts ner mycket långsamt. Exempel är insektsgiftet <strong>DDT</strong>, industrikemikalien <strong>PCB</strong> och <strong class="term"><span class="concept-inline" data-concept="tungmetaller">tungmetaller</span></strong> som kvicksilver, bly och kadmium. Gifterna lagras i kroppen, ofta i fettet, och följer med när djur äter varandra. Eftersom varje djur äter många byten under sitt liv blir halten högre för varje steg i näringskedjan – gifterna <strong class="term"><span class="concept-inline" data-concept="anrikas">anrikas</span></strong>. Därför drabbas toppkonsumenterna värst.</p>
+        <p>Östersjön är ett tydligt exempel. På 1970-talet fick havsörnar nästan inga ungar, eftersom DDT gjorde äggskalen så tunna att de sprack. Havsörnen var nära att dö ut i Sverige.<a href="#ref-13" class="cite">[13]</a> Många gråsälshonor blev sterila av PCB.<a href="#ref-14" class="cite">[14]</a> När ämnena förbjöds återhämtade sig båda arterna, och i dag finns det över 2 500 havsörnar längs kusterna och vid insjöarna.<a href="#ref-13" class="cite">[13]</a></p>
+        </div><div class="m-side">
+          <figure class="side-fig side-fig--placeholder" data-bild="B16">Bild 16: Miljögifter anrikas<span class="ph-sub">Plankton med få giftprickar → djurplankton → strömming → torsk → havsörn med många prickar</span><span class="ph-sub">(bild kommer)</span></figure>
+        </div></div>
+        <details class="check-q">
+          <summary>Ett gift finns i mycket låg halt i vattnet. Varför kan en havsörn ändå få höga halter?</summary>
+          <div class="svar"><strong>Svar:</strong> Giftet lagras i kroppen och bryts inte ner. Varje djur äter många byten, så halten blir högre för varje steg i näringskedjan. Havsörnen står längst upp.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Ekosystemtjänster är det naturen ger oss gratis. Miljögifter (DDT, PCB, tungmetaller) bryts ner långsamt och anrikas i näringskedjan – därför drabbas toppkonsumenterna värst.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Hela checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Öva</span>Instuderingsfrågor</a>
+          <a href="./ovningsprov.html"><span class="n-label">Testa</span>Övningsprov</a>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Nationalencyklopedin. <em>Ekologi, ekosystem, näringskedja, näringspyramid, fotosyntes.</em> <a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a></li>
+        <li id="ref-2">Sveriges vattenmiljö (SLU m.fl.). <em>Miljöförändringar och fiske påverkar näringsväven</em> (Östersjöns näringsväv: djurplankton, strömming, skarpsill, torsk och gråsäl). <a href="https://www.sverigesvattenmiljo.se/artiklar/miljoforandringar-och-fiske-paverkar-naringsvaven" target="_blank" rel="noopener">sverigesvattenmiljo.se</a></li>
+        <li id="ref-3">Wikipedia. <em>Ecological efficiency</em> (tiondelsregeln, Lindeman 1942; verklig överföring varierar mellan arter och ekosystem). <a href="https://en.wikipedia.org/wiki/Ecological_efficiency" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+        <li id="ref-4">Sveriges geologiska undersökning (SGU). <em>Morän – spår av inlandsisen.</em> <a href="https://www.sgu.se/om-geologi/jord/fran-istid-till-nutid/inlandsisen/moran-spar-av-inlandsisen/" target="_blank" rel="noopener">sgu.se</a></li>
+        <li id="ref-5">Statistiska centralbyrån (SCB). <em>Marken i Sverige</em> (68 % skogsmark). <a href="https://www.scb.se/hitta-statistik/sverige-i-siffror/miljo/marken-i-sverige/" target="_blank" rel="noopener">scb.se</a></li>
+        <li id="ref-6">SMHI. <em>Sveriges sjöar</em> ("nära 100 000 sjöar som är större än en hektar"). <a href="https://www.smhi.se/kunskapsbanken/hydrologi/sveriges-sjoar" target="_blank" rel="noopener">smhi.se</a></li>
+        <li id="ref-7">NOAA National Ocean Service. <em>How much oxygen comes from the ocean?</em> <a href="https://oceanservice.noaa.gov/facts/ocean-oxygen.html" target="_blank" rel="noopener">oceanservice.noaa.gov</a></li>
+        <li id="ref-8">SMHI. <em>Salt i haven runt Sverige</em> (salthalt i Bottenviken, Bottenhavet, Egentliga Östersjön och Västerhavet). <a href="https://www.smhi.se/kunskapsbanken/oceanografi/haven-runt-sverige/salt-i-haven-runt-sverige-" target="_blank" rel="noopener">smhi.se</a></li>
+        <li id="ref-9">Naturskyddsföreningen. <em>Faktablad: Östersjön</em> (övergödning och döda bottnar). <a href="https://www.naturskyddsforeningen.se/faktablad/ostersjon/" target="_blank" rel="noopener">naturskyddsforeningen.se</a></li>
+        <li id="ref-10">Forskning &amp; Framsteg. <em>Den artrika ängen.</em> <a href="https://fof.se/artikel/den-artrika-angen/" target="_blank" rel="noopener">fof.se</a></li>
+        <li id="ref-11">Sveriges miljömål. <em>Betesmarker och slåtterängar.</em> <a href="https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/betesmarker-och-slatterangar/" target="_blank" rel="noopener">sverigesmiljomal.se</a></li>
+        <li id="ref-12">Naturvårdsverket. <em>Ängar och betesmarker.</em> <a href="https://www.naturvardsverket.se/amnesomraden/mark-och-vattenanvandning/odlingslandskapet/angar-och-betesmarker/" target="_blank" rel="noopener">naturvardsverket.se</a></li>
+        <li id="ref-13">Naturskyddsföreningen. <em>Projekt Havsörn – en framgångssaga.</em> <a href="https://www.naturskyddsforeningen.se/artiklar/projekt-havsorn-en-framgangssaga/" target="_blank" rel="noopener">naturskyddsforeningen.se</a></li>
+        <li id="ref-14">Sveriges vattenmiljö (SLU m.fl.). <em>Sälpopulationer och sälhälsa</em> (livmoderförändringar hos gråsäl kopplade till PCB och DDT). <a href="https://www.sverigesvattenmiljo.se/artiklar/salpopulationer-och-salhalsa" target="_blank" rel="noopener">sverigesvattenmiljo.se</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#595959;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Faktauppgifter bygger på allmän biologisk kunskap och ovanstående källor; ingen lärobokstext har kopierats. Siffrorna i näringspyramiden är ett räkneexempel.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/lyssna.js" data-audio-base="/biologi/ekologi/audio/"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash); else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js"></script>
+  <script src="/js/concepts-popup.js"></script>
+  <script src="/js/concept-lang-selector.js"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.length) return;
+        window.BEGREPP = data;
+        var savedConceptLang = 'sv-SE';
+        try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+        if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+      })
+      .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+  </script>
+</body>
+</html>
