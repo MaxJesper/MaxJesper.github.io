@@ -39,19 +39,19 @@
     .resource-box li.todo { color: #6b7280; font-weight: 600; }
 
     .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
-    .area-hero-image {
-      background: var(--area-soft);
-      border: 1px solid var(--area-border);
+
+    .hero-banner {
+      margin: 0 0 1.5rem;
       border-radius: 16px;
-      padding: 1rem 1rem 1.1rem;
-      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--area-border);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      background: var(--area-soft);
     }
-    .area-hero-image svg { width: 90%; max-width: 90%; height: auto; display: block; margin: 0 auto; }
-    .area-hero-image figcaption { margin-top: 0.9rem; }
-    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
-    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
-    .hero-caption p:last-child { margin-bottom: 0; }
+    .hero-banner img { display: block; width: 100%; height: auto; }
+    .hero-banner figcaption { padding: 0.9rem 1.1rem 1.1rem; }
+    .hero-banner figcaption h2 { margin: 0 0 0.4rem; color: var(--area-strong); font-size: 1.15rem; }
+    .hero-banner figcaption p { margin: 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
 
     .concept-section {
       background: var(--area-soft);
@@ -142,6 +142,14 @@
 
     <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
+    <figure class="hero-banner">
+      <img src="/images/biologi/liv-och-cellen/livets-mangfald-startsida.jpg" alt="Bildkollage som visar livets olika nivåer: DNA och molekyler, ett virus, en cell med cellkärna och mitokondrier, bakterier, en växt, en fjäril, ett bi, en svamp, en groda, ett rådjur, en fisk i sjön och en person som blickar ut över landskapet." />
+      <figcaption>
+        <h2>Livet i alla dess former</h2>
+        <p>Livet finns i alla storlekar och former – från molekyler, virus och celler till växter, djur och hela ekosystem. Cellen (i mitten) är gemensam för allt levande, oavsett hur olika organismerna sedan blir. Det här området handlar om cellen, men den är startpunkten för allt du möter i resten av biologin.</p>
+      </figcaption>
+    </figure>
+
     <section class="area-layout">
       <div class="area-main">
         <section class="resource-grid">
@@ -181,36 +189,6 @@
       </div>
 
       <div class="area-right">
-        <figure class="area-hero-image">
-          <svg viewBox="0 0 400 300" role="img" aria-label="Illustration av en djurcell med cellmembran, cellkärna, mitokondrier och ribosomer">
-            <defs>
-              <radialGradient id="cyto" cx="45%" cy="38%" r="72%">
-                <stop offset="0%" stop-color="#fdf6cf"/>
-                <stop offset="100%" stop-color="#f1de88"/>
-              </radialGradient>
-            </defs>
-            <path d="M200,26 C280,22 348,64 358,140 C366,196 344,254 292,286 C242,314 168,314 120,284 C74,254 46,194 58,140 C70,78 130,34 200,26 Z"
-                  fill="url(#cyto)" stroke="#e2bf5b" stroke-width="5"/>
-            <g transform="rotate(-20 120 214)">
-              <ellipse cx="120" cy="214" rx="40" ry="20" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
-              <path d="M88,214 q10,-12 20,0 q10,12 20,0 q10,-12 20,0" fill="none" stroke="#5aa7bf" stroke-width="2.2"/>
-            </g>
-            <g transform="rotate(16 286 196)">
-              <ellipse cx="286" cy="196" rx="38" ry="19" fill="#a9dcec" stroke="#5aa7bf" stroke-width="3"/>
-              <path d="M256,196 q9,-11 19,0 q9,11 19,0 q9,-11 19,0" fill="none" stroke="#5aa7bf" stroke-width="2.2"/>
-            </g>
-            <circle cx="256" cy="112" r="5" fill="#d9506a"/><circle cx="270" cy="126" r="5" fill="#d9506a"/>
-            <circle cx="250" cy="184" r="5" fill="#d9506a"/><circle cx="150" cy="96" r="5" fill="#d9506a"/>
-            <circle cx="184" cy="142" r="46" fill="#bfe4f0" stroke="#6badc4" stroke-width="5"/>
-            <circle cx="184" cy="142" r="14" fill="#8fc9db"/>
-          </svg>
-          <figcaption class="hero-caption">
-            <h3>En cell – livets minsta byggsten</h3>
-            <p>Allt levande är byggt av celler. Bilden visar en <strong>djurcell</strong>: ytterst cellmembranet (portvakten), i mitten den blå cellkärnan (kontrollcentrum med DNA), de bönformade mitokondrierna (kraftverk) och de små röda ribosomerna (proteinfabriker).</p>
-            <p>I studieguiden lär du dig alla delarna – och i spelet får du klicka ut dem själv i både djur- och växtceller.</p>
-          </figcaption>
-        </figure>
-
         <section class="concept-section" aria-label="Viktiga begrepp">
           <h2>Viktiga begrepp att lära sig</h2>
           <ul class="concept-list">
