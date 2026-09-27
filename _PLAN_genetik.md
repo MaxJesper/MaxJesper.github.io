@@ -86,6 +86,78 @@ Dessa låser upp specifika övningar/material. Inget av Fas A–C hänger på de
 
 ---
 
+## Underlag insamlat i förväg – kloning + framtida bilder (27 sep 2026)
+
+Bakgrund: Jesper har tagit bilder på spermier (tjur) och funderar på att ta en ny bildserie
+av en befruktad äggcells första delningar (1 cell → 2 → 4 → 8), som skulle kunna användas i
+BÅDE "Vad är liv?"-kapitlet OCH här i genetik, med olika vinklar och gärna en länk mellan
+kapitlen. Inget av detta är byggt än – det här är research/underlag inför bygget.
+
+**1. Bildserie äggcellsdelning – platshållare finns redan.** I
+`biologi/liv-och-cellen/studieguide.html` (M2) finns redan en färdig platshållare (4 bilder:
+"1 cell", "2 celler", "4 celler", "8 celler") som väntar på just dessa foton. Vinkel där: att
+allt liv börjar som en enda cell som delar sig till miljarder celler med samma DNA. Vinkel
+här i genetik (samma bilder, annat fokus): koppling till cellkärnans DNA och kloning nedan.
+
+**2. Spermier (tjur).** Finns redan i `Mikroskopbilder.pptx` ("Spermier från tjur", slide 8,
+image10.png) – går att använda direkt eller ersätta med nya foton. Passar in vid
+befruktning/gameter när vi bygger den milstolpen.
+
+**3. Kloning (Dolly/SCNT) – faktakoll klar.** Metoden kallas somatisk cellkärnöverföring
+(Somatic Cell Nuclear Transfer, SCNT):
+1. En vanlig kroppscell tas från djuret som ska klonas (hos Dolly: en cell från
+   juvret/mjölkkörteln – INTE en kindcell).
+2. En obefruktad äggcell tas från ett annat djur och äggcellens egen cellkärna avlägsnas
+   (enukleering).
+3. Cellkärnan från kroppscellen förs in i den tomma äggcellen.
+4. En elektrisk stöt får den nya cellen att börja dela sig, som om den blivit befruktad.
+5. Embryot (blastocysten) placeras i en surrogatmammas livmoder och föds fram normalt.
+
+Effektivitet: av 277 försök överlevde bara Dolly till vuxen ålder – bra kontext för eleverna
+om hur svårt/ineffektivt det fortfarande är.
+
+Viktigt att vara ärlig om i bildtexten: Dolly gjordes specifikt av en juvercell, inte en
+kindcell. Men principen stämmer – cellkärnan i praktiskt taget vilken kroppscell som helst
+(inklusive vanliga epitelceller, som kindceller) kan användas som donator. Det är bekräftat i
+senare forskning: fibroblaster, juverceller, epitelceller, gonadceller m.fl. har alla
+fungerat som donatorceller vid SCNT i olika djurarter. Alltså vetenskapligt korrekt att säga
+till eleverna: "en cellkärna från en cell som liknar er egen kindcell skulle i princip kunna
+användas på samma sätt."
+
+Källor: [Dolly (sheep) – Wikipedia](https://en.wikipedia.org/wiki/Dolly_(sheep)) ·
+[Somatic cell nuclear transfer – Britannica](https://www.britannica.com/science/somatic-cell-nuclear-transfer) ·
+[SCNT-donatorceller – ScienceDirect Topics](https://www.sciencedirect.com/topics/engineering/somatic-cell-nuclear-transfer)
+
+**4. Kindcellsbild + bildtextutkast, sparat för kloningsavsnittet.** Föreslagen bild:
+`kindcell-utan-bakterier.jpg` (redan i repot, används i M4 i "Vad är liv?") – vald för att den
+visar en tydlig, ostörd cellkärna utan bakteriefläckarna som finns på den andra kindcellsbilden.
+
+Bildtextutkast (fri att justera vid bygget):
+> Cellkärnan i en av dina egna kindceller (samma bild som i "Vad är liv?") innehåller allt
+> DNA som behövs för att bygga en hel människa. Om man tar ut kärnan ur en sådan cell och
+> sätter in den i en äggcell (utan sin egen kärna) som sedan placeras i en livmoder, går det
+> i princip att skapa en klon – en genetisk kopia. Det är just så fåret Dolly skapades 1996,
+> fast då användes en cellkärna från en juvercell, inte en kindcell.
+
+**5. Bild på Dolly (fri licens) – INTE klar, kräver manuell koll.** Jag hittade flera
+kandidater på Wikimedia Commons, men mitt webbverktyg kunde av tekniska skäl bara hämta
+vanliga Wikipedia-artiklar, inte själva Commons-filsidorna – jag kan alltså INTE bekräfta
+exakt licenstext eller fotografnamn just nu (det vore att gissa, vilket jag inte vill göra
+för en licensfråga). Kandidater att öppna och kolla manuellt när vi bygger (licensen står
+under "Licensing" på sidan, tillsammans med fotografens namn):
+- https://commons.wikimedia.org/wiki/File:Dolly_the_Sheep_National_Museum_of_Scotland.jpg
+- https://commons.wikimedia.org/wiki/File:Dolly_the_sheep,_National_Museums_of_Scotland,_Edinburgh_-_geograph.org.uk_-_1301843.jpg
+  (geograph.org.uk-bilder är i regel CC BY-SA 2.0, men bekräfta på sidan – gissa inte)
+- https://commons.wikimedia.org/wiki/File:Dolly_at_the_National_Museum_Scotland_-_geograph.org.uk_-_5051696.jpg
+- https://commons.wikimedia.org/wiki/File:Dolly_the_sheep_2016.JPG
+- Hela kategorin: https://commons.wikimedia.org/wiki/Category:Dolly_(sheep)
+
+Alla visar den uppstoppade Dolly på National Museum of Scotland i Edinburgh. Vid bygget:
+öppna länken, läs av licens + fotograf/uppladdare där, och skriv källtexten enligt vår
+vanliga källkvalitetsmall.
+
+---
+
 ## Förslag: vad vi tar härnäst
 
 **Fas A, punkt 1 – instuderingsfrågorna.** Störst effekt, inget blockerar, och den gör
