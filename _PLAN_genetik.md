@@ -139,22 +139,34 @@ Bildtextutkast (fri att justera vid bygget):
 > i princip att skapa en klon – en genetisk kopia. Det är just så fåret Dolly skapades 1996,
 > fast då användes en cellkärna från en juvercell, inte en kindcell.
 
-**5. Bild på Dolly (fri licens) – INTE klar, kräver manuell koll.** Jag hittade flera
-kandidater på Wikimedia Commons, men mitt webbverktyg kunde av tekniska skäl bara hämta
-vanliga Wikipedia-artiklar, inte själva Commons-filsidorna – jag kan alltså INTE bekräfta
-exakt licenstext eller fotografnamn just nu (det vore att gissa, vilket jag inte vill göra
-för en licensfråga). Kandidater att öppna och kolla manuellt när vi bygger (licensen står
-under "Licensing" på sidan, tillsammans med fotografens namn):
-- https://commons.wikimedia.org/wiki/File:Dolly_the_Sheep_National_Museum_of_Scotland.jpg
-- https://commons.wikimedia.org/wiki/File:Dolly_the_sheep,_National_Museums_of_Scotland,_Edinburgh_-_geograph.org.uk_-_1301843.jpg
-  (geograph.org.uk-bilder är i regel CC BY-SA 2.0, men bekräfta på sidan – gissa inte)
-- https://commons.wikimedia.org/wiki/File:Dolly_at_the_National_Museum_Scotland_-_geograph.org.uk_-_5051696.jpg
-- https://commons.wikimedia.org/wiki/File:Dolly_the_sheep_2016.JPG
-- Hela kategorin: https://commons.wikimedia.org/wiki/Category:Dolly_(sheep)
+**5. Bild på Dolly (fri licens) – KLAR, VALD av Jesper (27 sep 2026).**
 
-Alla visar den uppstoppade Dolly på National Museum of Scotland i Edinburgh. Vid bygget:
-öppna länken, läs av licens + fotograf/uppladdare där, och skriv källtexten enligt vår
-vanliga källkvalitetsmall.
+**Vald bild:** [File:Dolly the Sheep National Museum of Scotland.jpg](https://commons.wikimedia.org/wiki/File:Dolly_the_Sheep_National_Museum_of_Scotland.jpg) –
+4592×3064 px, tagen 25 april 2019 av **Sgerbic**. Licens: **Creative Commons
+Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**.
+Attributionstext (enligt vår källkvalitetsmall): *"Dolly the Sheep National Museum of
+Scotland" av Sgerbic, [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0),
+via Wikimedia Commons.*
+
+Lågupplöst förhandsversion (1280 px bred) sparad i `/tmp/dolly/dolly_1280.jpg` i den här
+sessionens molnmiljö – finns bara kvar i sessionen, inte i repot ännu. Vid bygget:
+1. hämta originalet i full upplösning från
+   `https://upload.wikimedia.org/wikipedia/commons/0/07/Dolly_the_Sheep_National_Museum_of_Scotland.jpg`
+   (använd en beskrivande User-Agent och vänta några sekunder mellan försök – originalfilen
+   gav 429 "too many requests" vid direkthämtning, en thumb-storlek gick dock bra),
+2. beskär/skala till lagom storlek för bildkolumnen,
+3. döp filen (t.ex. `dolly-klonat-far.jpg`),
+4. lägg in bildtextutkastet nedan (inkl. attributionstexten) i figcaption/källförteckningen.
+
+Bildtextutkast (fri att justera vid bygget):
+> **Fåret Dolly (1996–2003) – det första klonade däggdjuret.** Hon skapades med metoden
+> beskriven ovan (SCNT), från en cellkärna ur en juvercell. Idag finns hennes uppstoppade
+> kropp utställd på **National Museum of Scotland i Edinburgh** – dit du faktiskt kan gå för
+> att se henne på riktigt.
+> *Foto: Sgerbic, licens [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0)
+> (Creative Commons Erkännande-DelaLika 4.0), via Wikimedia Commons.*
+
+(Alternativet med Genis foto från 2016 – se historik – valdes bort till förmån för denna.)
 
 ---
 
