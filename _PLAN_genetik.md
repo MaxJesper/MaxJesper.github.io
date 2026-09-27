@@ -44,9 +44,27 @@ Detta lyfter genetik från "påbörjad" till "komplett elevdel" i statusöversik
 
 ## Fas C – Bilder jag kan rita nu ⏳
 
-6. **M6 mitos/meios** – en enkel förklarande SVG (vad de leder till) + en detaljerad fasbild,
-   inlagda i M6-texten. Den detaljerade kan sedan bli en fas-identifieringsövning.
+6. ✅ **M6 mitos/meios – KLART (27 sep 2026).** ChatGPTs bildpaket användes: en enkel
+   översiktsbild för mitos och en för meios (`mitos-oversikt.jpg`, `meios-oversikt.jpg`), plus
+   detaljerade fasbilder för båda (`mitos-faser.jpg`, `meios-faser.jpg`, med fasnamnen
+   Interfas/Profas/Metafas/Anafas/Telofas respektive samma fast i två omgångar för meios).
+   Bilderna beskars för att ta bort ChatGPTs egna (delvis avklippta) rubriktexter, som annars
+   dubblerade våra egna bildtexter. De detaljerade fasbilderna kan nu bli grunden för den
+   planerade fas-identifieringsövningen (Idé 23-liknande, men för genetik).
+   **M7 mutationer fick också bilder** samtidigt (låg inte i planen som egen punkt men var en
+   tydlig lucka): en principbild utan mutation och en med, medvetet vagt formulerade bildtexter
+   – INTE kopplade till färgblindhetsexemplet än (se ChatGPTs egen varning i
+   `bildtexter_och_placering_genetik_v1.docx`: DNA-ändringen måste först knytas till en
+   verklig, kontrollerad opsin-genvariant innan den används som konkret exempel).
 7. **Idé 17 – helhetsbild kromosom→DNA→baspar→gen** (strukturell översikt), om vi vill.
+   ⏸️ **Väntande beslut (27 sep 2026):** ChatGPT har levererat en kandidatbild för precis
+   detta (`07_kromosom_dna_baspar_gen.png` i `genetik_bildpaket_v1`), men M2 har redan en
+   nästan identisk bild (`begreppshierarki.svg`) plus separata bilder för baspar och homologa
+   kromosomer. Jesper tittar på den senare och avgör om den nya bilden ska ersätta
+   `begreppshierarki.svg` eller hoppas över. Samma väntande beslut gäller fyra bilder till
+   (`01_dna_gen.png`–`04_fardigt_protein.png`, en vertikal DNA→gen→transkription→translation→
+   protein-serie) som föreslagits till M5, vilket redan har egna SVG:er
+   (`dna-mrna-protein.svg` + `ribosom.svg`) som täcker samma innehåll.
 
 ## Fas D – Lärarlagret, skelett per milstolpe (tillväxtmotorn) ⏳/⛔
 

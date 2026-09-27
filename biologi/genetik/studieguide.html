@@ -104,6 +104,19 @@
       font-style: italic;
     }
 
+    .fig-pair {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 0.9rem 0;
+    }
+
+    .fig-pair figure {
+      flex: 1 1 220px;
+      margin: 0;
+      min-width: 200px;
+    }
+
     .fact-box {
       background: #f0eaff;
       border-left: 4px solid #15803d;
@@ -483,12 +496,34 @@
         <p>Det finns två sorters celldelning, och skillnaden mellan dem är central i genetiken.</p>
         <p>Den vanliga celldelningen kallas <strong class="term"><span class="concept-inline" data-concept="Mitos">mitos</span></strong>. Den används när kroppen växer och när slitna celler byts ut. Före delningen kopieras allt DNA, och cellen delar sig sedan i <strong class="term">två identiska dotterceller</strong> som var och en får fulla 46 kromosomer – exakt samma uppsättning som modercellen hade.</p>
         <p>Den andra sorten, <strong class="term"><span class="concept-inline" data-concept="Meios">meios</span></strong> (reduktionsdelning), sker bara i testiklar och äggstockar och bildar <strong class="term"><span class="concept-inline" data-concept="könsceller">könsceller</span></strong> – ägg och spermier. En könscell kallas <strong class="term"><span class="concept-inline" data-concept="Gamet">gamet</span></strong> och får bara <strong class="term">hälften</strong> av kromosomerna, alltså 23. Den är <strong class="term"><span class="concept-inline" data-concept="Haploïd">haploid</span></strong>. När en spermie befruktar ett ägg smälter de två haploida cellerna samman till en <strong class="term"><span class="concept-inline" data-concept="Zygot">zygot</span></strong> med fulla 46 kromosomer – den är <strong class="term"><span class="concept-inline" data-concept="Diploïd">diploid</span></strong> och blir kroppens allra första cell.</p>
+
+        <div class="fig-pair">
+          <figure>
+            <img src="/images/biologi/genetik/mitos-oversikt.jpg" alt="Mitos: en modercell delar sig till två identiska dotterceller" />
+            <figcaption><strong>Mitos.</strong> En modercell ger två identiska dotterceller med samma kromosomuppsättning som modercellen.</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/biologi/genetik/meios-oversikt.jpg" alt="Meios: en cell delar sig till fyra könsceller med halverat kromosomantal" />
+            <figcaption><strong>Meios.</strong> Bildar könsceller med halverat kromosomantal – och fyra genetiskt olika celler, tack vare crossing-over och slumpvis fördelning (se fördjupningen nedan).</figcaption>
+          </figure>
+        </div>
+
         <p>Orden avslöjar sin egen betydelse. I <strong class="term">di-ploid</strong> betyder <em>di-</em> två: cellen har en dubbel kromosomuppsättning, två av varje kromosom. I <strong class="term">ha-ploid</strong> betyder <em>haplo-</em> enkel: bara en enda uppsättning. Ändelsen <em>-ploid</em> kommer från grekiskans ord för "-faldig", som i en- eller tvåfaldig.</p>
         <p>Meiosen gör mer än att halvera antalet: den blandar också om arvet, vilket är förklaringen till att syskon liknar varandra men aldrig är exakt lika (utom enäggstvillingar).</p>
         <div class="fact-box">
           <strong>Sammanfattning</strong>
           Mitos ger två identiska celler med 46 kromosomer (tillväxt och reparation). Meios ger könsceller med 23 kromosomer. Ägg + spermie blir en zygot med 46.
         </div>
+
+        <figure>
+          <img src="/images/biologi/genetik/mitos-faser.jpg" alt="Mitosens faser: interfas, profas, metafas, anafas, telofas" />
+          <figcaption><strong>Mitosens faser.</strong> Kromosomerna kondenseras (profas), ordnas i cellens mitt (metafas), systerkromatiderna skiljs åt (anafas) och två nya cellkärnor bildas (telofas) – två identiska celler med 46 kromosomer vardera.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="/images/biologi/genetik/meios-faser.jpg" alt="Meiosens faser i två celldelningar: profas I till telofas I, sedan profas II till telofas II" />
+          <figcaption><strong>Meiosens faser.</strong> Två celldelningar efter varandra. I den första (profas I–telofas I) skiljs de homologa kromosomparen åt. I den andra (profas II–telofas II) skiljs systerkromatiderna åt, precis som i mitos. Resultatet blir fyra celler med bara 23 kromosomer var.</figcaption>
+        </figure>
 
         <details class="deepen">
           <summary>Varför blir syskon olika? Crossing-over och slumpen</summary>
@@ -509,6 +544,18 @@
       </summary>
       <div class="m-body">
         <p>En <strong class="term"><span class="concept-inline" data-concept="Mutation">mutation</span></strong> är en förändring i DNA:t. Den kan uppstå spontant när DNA kopieras inför en celldelning och kopian inte blir helt perfekt, eller orsakas av sådant som UV-ljus, radioaktiv strålning och vissa kemikalier.</p>
+
+        <div class="fig-pair">
+          <figure>
+            <img src="/images/biologi/genetik/mutation-normal-princip.jpg" alt="En DNA-sekvens transkriberas till mRNA och översätts till en aminosyrakedja, utan mutation" />
+            <figcaption><strong>Utan mutation.</strong> DNA-sekvensen ger en bestämd mRNA-sekvens, som i sin tur ger en bestämd aminosyrakedja.</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/biologi/genetik/mutation-forandrad-princip.jpg" alt="Samma DNA-sekvens med en förändring, som ger en annorlunda mRNA-sekvens och proteinkedja" />
+            <figcaption><strong>Med mutation.</strong> En förändring i DNA:t kan ge en annan mRNA-sekvens och ibland en annan aminosyrakedja – principen bakom hur en mutation kan påverka ett protein. (Principbild, inte kopplad till något specifikt exempel än.)</figcaption>
+          </figure>
+        </div>
+
         <p>Det är en vanlig missuppfattning att mutationer alltid är farliga. I själva verket är de allra flesta <strong class="term"><span class="concept-inline" data-concept="neutrala">neutrala</span></strong> och märks inte alls. Vissa är <strong class="term"><span class="concept-inline" data-concept="skadliga">skadliga</span></strong> och kan leda till sjukdom – en del cancerformer beror på mutationer i kroppens celler. Men en del mutationer är <strong class="term"><span class="concept-inline" data-concept="fördelaktiga">fördelaktiga</span></strong>, och det är faktiskt dessa som är råvaran för all evolution: utan mutationer skulle det inte finnas någon ärftlig variation att utvecklas ur.</p>
         <p>En avgörande detalj är <em>var</em> mutationen sker. En mutation i en vanlig kroppscell stannar hos individen själv. Bara om mutationen sker i en könscell kan den föras vidare till nästa generation – då finns den med i varenda cell hos det barn som bildas.</p>
         <p>Förutom förändringar i enstaka gener kan det också bli fel på hela kromosomer, till exempel att en cell får fel antal. Sådana avvikelser tittar vi på i milstolpe 10.</p>
