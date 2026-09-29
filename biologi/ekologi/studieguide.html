@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Ekologi</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <link rel="stylesheet" href="/css/viktigt.css" />
 
   <style>
+    :root { --ms-head: #2f5228; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     body {
       --listen-color:#2f5228; --listen-border:#cadcbf; --listen-hover-bg:#f1f6ed;
       --guide-accent:#2f5228; --guide-soft:#f1f6ed; --guide-border:#cadcbf; --guide-dash:#cadcbf;
@@ -302,7 +304,7 @@
   <main class="guide-wide">
     <div class="page-actions no-print">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f1f6ed; border:1px solid #cadcbf; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2f5228; cursor:pointer;">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f1f6ed; border:1px solid #cadcbf; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2f5228; cursor:pointer;">Stäng alla</button>
     </div>
 
     <section class="guide-intro">
@@ -351,7 +353,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 2 ========== -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Energi från solen – fotosyntes och cellandning</span>
@@ -384,7 +386,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 3 ========== -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Näringskedja, näringsväv och näringspyramid</span>
@@ -433,7 +435,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 4 ========== -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Nedbrytare och kretslopp</span>
@@ -467,7 +469,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 5 ========== -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Samspel, nischer och biologisk mångfald</span>
@@ -501,7 +503,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 6 ========== -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Marken – berggrund, jordarter och klimat</span>
@@ -534,7 +536,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 7 ========== -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Skogen som ekosystem</span>
@@ -573,7 +575,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 8 ========== -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Sjön som ekosystem</span>
@@ -631,7 +633,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 9 ========== -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Havet som ekosystem – exemplet Östersjön</span>
@@ -675,7 +677,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 10 ========== -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Ängen som ekosystem</span>
@@ -710,7 +712,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 11 ========== -->
-    <details class="milestone" id="m11">
+    <details class="milestone" id="m11" open>
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Människan och ekosystemen</span>

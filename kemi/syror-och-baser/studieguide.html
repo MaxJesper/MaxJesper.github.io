@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Syror och baser</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <link rel="stylesheet" href="/css/molviewer.css" />
   <link rel="stylesheet" href="/css/viktigt.css" />
 
   <style>
+    :root { --ms-head: #0f766e; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     :root {
       --guide-accent: #0f766e; --guide-soft: #f7fdfc; --guide-border: #99f6e4; --guide-dash: #99f6e4;
       --listen-color: #0f766e;
@@ -339,7 +341,7 @@
 
     <div class="guide-intro">
       <p><strong>14 milstolpar</strong> – från vardagliga syror till försurning av naturen.</p>
-      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p>Klicka på en milstolpes rubrik för att fälla ihop eller öppna den. Gå igenom dem i ordning första gången.</p>
       <p>Rutor med gul bakgrund och en varningstriangel är märkta <strong>Viktigt!</strong> – där står det du särskilt måste komma ihåg. Grå rutor med stjärna är fördjupning som du kan fälla ut.</p>
       <p>Kulmodellerna kan du <strong>rotera med musen eller fingret</strong>. Har du svårt att skilja färger kan du slå på atombokstäver på kulorna:</p>
       <p><button type="button" id="lbl-btn" class="pill-btn" aria-pressed="false">Bokstäver på kulorna i 3D-modellerna: <span id="lbl-state" aria-hidden="true">av</span></button></p>
@@ -369,7 +371,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 1 – Vad är en syra?
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m1">
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Vad är en syra?</span>
@@ -445,7 +447,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 2 – Svaga syror
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Svaga syror</span>
@@ -527,7 +529,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 3 – Starka syror: saltsyra och klor
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Starka syror – saltsyra (HCl)</span>
@@ -617,7 +619,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 4 – Svavelsyra och SIV-regeln
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Svavelsyra (H₂SO₄) och SIV-regeln</span>
@@ -701,7 +703,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 5 – Salpetersyra och nitrösa gaser
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Salpetersyra (HNO₃) och nitrösa gaser</span>
@@ -784,7 +786,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 6 – Joner i syror
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Joner i syror – H⁺, Cl⁻, SO₄²⁻ och NO₃⁻</span>
@@ -871,7 +873,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 7 – Basiska ämnen
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Basiska ämnen – baser och lut</span>
@@ -947,7 +949,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 8 – Natriumhydroxid och kaustik soda
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Natriumhydroxid (NaOH) – kaustik soda</span>
@@ -1033,7 +1035,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 9 – Fler baser: soda, ammoniak, kalciumhydroxid
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Fler baser – soda, ammoniak och kalciumhydroxid</span>
@@ -1113,7 +1115,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 10 – Neutrala lösningar och pH-skalan
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Neutrala lösningar och pH-skalan</span>
@@ -1199,7 +1201,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 11 – Indikatorer
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m11">
+    <details class="milestone" id="m11" open>
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Indikatorer – lackmus, BTB och fenolftalein</span>
@@ -1284,7 +1286,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 12 – Sura och basiska oxider
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m12">
+    <details class="milestone" id="m12" open>
       <summary>
         <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Sura och basiska oxider</span>
@@ -1373,7 +1375,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 13 – Lösningars elektriska ledningsförmåga
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m13">
+    <details class="milestone" id="m13" open>
       <summary>
         <span class="m-num">Milstolpe 13</span>
         <span class="m-title">Lösningars elektriska ledningsförmåga</span>
@@ -1445,7 +1447,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 14 – Försurning av naturen
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m14">
+    <details class="milestone" id="m14" open>
       <summary>
         <span class="m-num">Milstolpe 14</span>
         <span class="m-title">Försurning av naturen</span>

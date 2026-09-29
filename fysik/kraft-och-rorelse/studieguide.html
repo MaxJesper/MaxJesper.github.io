@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Krafter och rörelse</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
 
   <style>
+    :root { --ms-head: #2e4a8a; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     main {
       font-size: 1.1em;
       max-width: 820px;
@@ -331,7 +333,7 @@
   <main>
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f4f6fa; border:1px solid #d8e0ea; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f4f6fa; border:1px solid #d8e0ea; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Stäng alla</button>
       <label class="coach-toggle-wrap" title="Slå på coachen för vägledning längs vägen">
         <span>Coach</span>
         <span class="coach-toggle">
@@ -349,7 +351,7 @@
 
 
     <!-- ========== MILSTOLPE 1 ========== -->
-    <details class="milestone" id="m1">
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Vad är en kraft?</span>
@@ -414,7 +416,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 2 ========== -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Krafter mäts i newton</span>
@@ -474,7 +476,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 3 ========== -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Tyngdkraft och gravitation</span>
@@ -548,7 +550,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 4 ========== -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Krafter som samverkar och motverkar</span>
@@ -607,7 +609,7 @@
 
 
     <!-- ========== MILSTOLPE 5 ========== -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Tröghet och rörelse</span>
@@ -673,7 +675,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 6 ========== -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Kraft och acceleration – F = m · a</span>
@@ -733,7 +735,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 7 ========== -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Fritt fall och Galilei</span>
@@ -798,7 +800,7 @@
 
 
     <!-- ========== MILSTOLPE 8 ========== -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Friktion</span>
@@ -867,7 +869,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 9 ========== -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Tyngdpunkt och jämvikt</span>
@@ -925,7 +927,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 10 ========== -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Stabilitet och stödyta</span>
@@ -987,7 +989,7 @@
 
 
     <!-- ========== MILSTOLPE 11 ========== -->
-    <details class="milestone" id="m11">
+    <details class="milestone" id="m11" open>
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Hävstänger</span>
@@ -1047,7 +1049,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 12 ========== -->
-    <details class="milestone" id="m12">
+    <details class="milestone" id="m12" open>
       <summary>
         <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Vridmoment</span>
@@ -1121,7 +1123,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 13 ========== -->
-    <details class="milestone" id="m13">
+    <details class="milestone" id="m13" open>
       <summary>
         <span class="m-num">Milstolpe 13</span>
         <span class="m-title">Enkla maskiner</span>
@@ -1189,7 +1191,7 @@
     </div>
 
     <!-- ========== MILSTOLPE 14 ========== -->
-    <details class="milestone" id="m14">
+    <details class="milestone" id="m14" open>
       <summary>
         <span class="m-num">Milstolpe 14</span>
         <span class="m-title">Krafter och rörelse i samhället</span>

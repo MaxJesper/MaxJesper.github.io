@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Genetik</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
 
   <style>
+    :root { --ms-head: #166534; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     body { --listen-color:#15803d; --listen-border:#bbf7d0; --listen-hover-bg:#f0fdf4; }
     main {
       font-size: 1.1em;
@@ -304,7 +306,7 @@
   <main>
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#166534; cursor:pointer;">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#166534; cursor:pointer;">Stäng alla</button>
     </p>
 
     <section class="guide-intro">
@@ -321,7 +323,7 @@
     </section>
 
     <!-- ========== MILSTOLPE 1 ========== -->
-    <details class="milestone" id="m1">
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Cellen och cellkärnan</span>
@@ -342,7 +344,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 2 ========== -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Kromosomer och DNA</span>
@@ -394,7 +396,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 3 ========== -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Gener och arvsanlag</span>
@@ -417,7 +419,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 4 ========== -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Alleler, genotyp och fenotyp</span>
@@ -444,7 +446,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 5 ========== -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Proteinsyntesen</span>
@@ -487,7 +489,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 6 ========== -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Mitos och meios</span>
@@ -537,7 +539,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 7 ========== -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Mutationer</span>
@@ -571,7 +573,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 8 ========== -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Ärftlighetslära och korsningsscheman</span>
@@ -600,7 +602,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 9 ========== -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Arv och miljö</span>
@@ -626,7 +628,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 10 ========== -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Genetiska sjukdomar</span>
@@ -648,7 +650,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 11 ========== -->
-    <details class="milestone" id="m11">
+    <details class="milestone" id="m11" open>
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Genteknik och CRISPR</span>

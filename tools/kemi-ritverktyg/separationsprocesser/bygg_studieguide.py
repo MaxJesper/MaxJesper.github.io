@@ -27,7 +27,8 @@ for f in SRC:
     body += open(os.path.join(HERE, "src", f), encoding="utf-8").read() + "\n"
 body = re.sub(r"\[\[([^\]|]+)\|([^\]]+)\]\]", macro, body)
 # Milstolpe 1 öppen från början
-body = body.replace('<details class="milestone" id="m1">', '<details class="milestone" id="m1" open>', 1)
+# Alla milstolpar öppna från början (Jesper 29 sep 2026)
+body = __import__('re').sub(r'<details class="milestone" id="(m\d+)">', r'<details class="milestone" id="\1" open>', body)
 
 # ---- Figurer med liten text i smala sidokolumnen flyttas till en bred bildrad ----
 # (effektiv textstorlek i sidokolumnen skulle bli < 8 px; i bred rad visas de nära ursprungsstorlek)
@@ -123,8 +124,10 @@ head = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Separationsprocesser</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <style>
+    :root { --ms-head: #155e75; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
 %s
   </style>
 </head>
@@ -142,7 +145,7 @@ head = """<!DOCTYPE html>
     <div class="page-actions no-print">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
       <a href="./checklista.html" class="subject-btn">✅ Checklistan</a>
-      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Stäng alla</button>
     </div>
 
     <section class="guide-intro">

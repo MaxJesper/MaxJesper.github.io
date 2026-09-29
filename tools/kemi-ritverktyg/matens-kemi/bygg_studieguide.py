@@ -461,7 +461,7 @@ MILESTONES = [
 
 def milestone(num, mid, title, body):
     return f"""
-    <details class="milestone" id="{mid}">
+    <details class="milestone" id="{mid}" open>
       <summary>
         <span class="m-num">Milstolpe {num}</span>
         <span class="m-title">{title}</span>
@@ -483,11 +483,13 @@ HEAD = """<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Matens kemi</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <link rel="stylesheet" href="/css/molviewer.css" />
   <link rel="stylesheet" href="/css/viktigt.css" />
 
   <style>
+    :root { --ms-head: #86198f; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     :root {
       --guide-accent: #86198f; --guide-soft: #fdf4ff; --guide-border: #f5d0fe; --guide-dash: #f5d0fe;
       --listen-color: #86198f;
@@ -576,7 +578,7 @@ HEAD = """<!DOCTYPE html>
 
     <div class="guide-intro">
       <p><strong>4 milstolpar</strong> – matens tre stora makromolekyler: kolhydrater, fetter och protein, plus en kort sammanfattning.</p>
-      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p>Klicka på en milstolpes rubrik för att fälla ihop eller öppna den. Gå igenom dem i ordning första gången.</p>
       <p>Rutor med gul bakgrund och en varningstriangel är märkta <strong>Viktigt!</strong> – där står det du särskilt måste komma ihåg. Rutor med 🔍 är <strong>fördjupningar</strong> – extra innehåll som inte krävs, men som kan vara kul eller nyttigt att klicka upp.</p>
       <p>Kulmodellerna kan du <strong>rotera med musen eller fingret</strong>. Har du svårt att skilja färger kan du slå på atombokstäver på kulorna:</p>
       <p><button type="button" id="lbl-btn" class="pill-btn" aria-pressed="false">Bokstäver på kulorna i 3D-modellerna: <span id="lbl-state" aria-hidden="true">av</span></button></p>

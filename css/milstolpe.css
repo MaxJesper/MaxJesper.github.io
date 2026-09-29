@@ -1,0 +1,41 @@
+/* ==========================================================================
+   milstolpe.css – mörkt rubrikfält för studieguidernas milstolpar (Jesper 29 sep 2026)
+   --------------------------------------------------------------------------
+   Alla milstolpar är öppna från början. Rubrikfältet (summary) får kapitlets egen färg, mörk, med
+   vit text, så att man tydligt ser var en ny milstolpe börjar när man skrollar.
+
+   Varje studieguide sätter sin kapitelfärg i sin egen <style>:
+     :root { --ms-head: #6d28d9; }
+   (samma färg som sidan tidigare använde för "MILSTOLPE 1"-texten). Utan variabel blir fältet
+   mörkt skiffergrått. Alla färger ger minst 4.5:1 mot vit text.
+
+   Selektorerna är medvetet mer specifika (details.milestone > summary …) än sidornas egna
+   .milestone-regler, så att de vinner oavsett i vilken ordning stilarna laddas.
+   ========================================================================== */
+details.milestone > summary {
+  background: var(--ms-head, #334155);
+  color: #fff;
+}
+details.milestone > summary:hover { background: color-mix(in srgb, var(--ms-head, #334155) 88%, #000); }
+details.milestone > summary::before { color: rgba(255, 255, 255, 0.85); }
+details.milestone > summary .m-num,
+details.milestone > summary .m-title { color: #fff; }
+details.milestone > summary:focus-visible { outline: 3px solid #fbbf24; outline-offset: -3px; }
+
+/* Lyssna-knappen (js/lyssna.js) i rubrikfältet: vit knapp med kapitelfärgad text */
+details.milestone > summary .listen-btn {
+  background: #fff; color: var(--ms-head, #334155); border-color: #fff;
+}
+details.milestone > summary .listen-btn:hover { background: #f1f1f4; border-color: #fff; }
+details.milestone > summary .listen-btn.playing { background: transparent; color: #fff; border-color: #fff; }
+
+/* Utskrift: bakgrundsfärger skrivs oftast inte ut – då blir rubriken svart text med tjock linje under */
+@media print {
+  details.milestone > summary { background: #fff !important; color: #000; border-bottom: 2px solid #000; }
+  details.milestone > summary::before,
+  details.milestone > summary .m-num,
+  details.milestone > summary .m-title { color: #000; }
+}
+@media (forced-colors: active) {
+  details.milestone > summary { border-bottom: 2px solid CanvasText; }
+}

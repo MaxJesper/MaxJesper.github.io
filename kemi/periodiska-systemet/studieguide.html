@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Periodiska systemet</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
 
   <style>
+    :root { --ms-head: #166534; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     :root {
       --listen-color: #166534;
       --listen-border: #bbf7d0;
@@ -340,7 +342,7 @@
 
     <div class="guide-intro">
       <p><strong>14 milstolpar</strong> – från atomens byggnad till kemiska bindningar.</p>
-      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången.</p>
+      <p>Klicka på en milstolpes rubrik för att fälla ihop eller öppna den. Gå igenom dem i ordning första gången.</p>
       <p style="display:flex; align-items:center; gap:0.5rem; margin-top:0.6rem;">
         <label class="coach-toggle-wrap" for="coach-master">
           <span class="coach-toggle">
@@ -367,7 +369,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 1 – Atomens byggnad
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m1">
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Atomens byggnad</span>
@@ -438,7 +440,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 2 – Atomnumret
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Atomnumret</span>
@@ -501,7 +503,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 3 – Elektronskal
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Elektronskal – K, L och M</span>
@@ -566,7 +568,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 4 – Valenselektroner och ädelgasstruktur
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Valenselektroner och ädelgasstruktur</span>
@@ -638,7 +640,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 5 – Perioder och grupper
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Perioder och grupper i periodiska systemet</span>
@@ -707,7 +709,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 6 – Metaller och icke-metaller
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Metaller och icke-metaller</span>
@@ -770,7 +772,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 7 – Alkalimetaller
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Alkalimetaller – grupp 1</span>
@@ -842,7 +844,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 8 – Halogener
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Halogener – grupp 17</span>
@@ -905,7 +907,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 9 – Ädelgaser
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Ädelgaser – grupp 18</span>
@@ -970,7 +972,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 10 – Hur joner bildas
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Hur joner bildas</span>
@@ -1035,7 +1037,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 11 – Jonbindning och jonföreningar
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m11">
+    <details class="milestone" id="m11" open>
       <summary>
         <span class="m-num">Milstolpe 11</span>
         <span class="m-title">Jonbindning och jonföreningar</span>
@@ -1107,7 +1109,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 12 – Molekylbindning (kovalent)
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m12">
+    <details class="milestone" id="m12" open>
       <summary>
         <span class="m-num">Milstolpe 12</span>
         <span class="m-title">Molekylbindning – elektronparbindning</span>
@@ -1170,7 +1172,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 13 – Metallbindning
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m13">
+    <details class="milestone" id="m13" open>
       <summary>
         <span class="m-num">Milstolpe 13</span>
         <span class="m-title">Metallbindning</span>
@@ -1239,7 +1241,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 14 – Periodiska systemet i samhället
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m14">
+    <details class="milestone" id="m14" open>
       <summary>
         <span class="m-num">Milstolpe 14</span>
         <span class="m-title">Periodiska systemet i samhället</span>

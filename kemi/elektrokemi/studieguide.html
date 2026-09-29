@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Elektrokemi</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
 
   <style>
+    :root { --ms-head: #1d4ed8; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     :root {
       --listen-color: #1d4ed8;
       --listen-border: #bfdbfe;
@@ -351,7 +353,7 @@
 
     <div class="guide-intro">
       <p><strong>10 milstolpar</strong> – från jonreaktioner och galvaniska element till elektrolys och oxidation–reduktion.</p>
-      <p>Expandera en milstolpe genom att klicka på den. Gå igenom dem i ordning första gången. Innehållet följer det centrala innehållet i kursplanen i kemi för åk 7–9.<a href="#ref-6" class="cite">[6]</a></p>
+      <p>Klicka på en milstolpes rubrik för att fälla ihop eller öppna den. Gå igenom dem i ordning första gången. Innehållet följer det centrala innehållet i kursplanen i kemi för åk 7–9.<a href="#ref-6" class="cite">[6]</a></p>
       <p style="display:flex; align-items:center; gap:0.5rem; margin-top:0.6rem;">
         <label class="coach-toggle-wrap" for="coach-master">
           <span class="coach-toggle">
@@ -378,7 +380,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 1 – Atomer och joner: elektroner på vandring
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m1">
+    <details class="milestone" id="m1" open>
       <summary>
         <span class="m-num">Milstolpe 1</span>
         <span class="m-title">Atomer och joner – elektroner på vandring</span>
@@ -456,7 +458,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 2 – Spänningsserien: ädla och oädla metaller
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Spänningsserien – ädla och oädla metaller</span>
@@ -533,7 +535,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 3 – Galvaniska element: kemisk energi till el
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Galvaniska element – kemisk energi till elektrisk ström</span>
@@ -610,7 +612,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 4 – Batterier i vardagen
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Batterier – galvaniska element i vardagen</span>
@@ -674,7 +676,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 5 – Ackumulatorn: batteriet som laddas om
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Ackumulatorn – batteriet som kan laddas om</span>
@@ -744,7 +746,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 6 – Korrosion: metallernas fiende
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Korrosion – metallernas fiende</span>
@@ -814,7 +816,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 7 – Elektrolys: el omvandlar joner
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary>
         <span class="m-num">Milstolpe 7</span>
         <span class="m-title">Elektrolys – el omvandlar joner till atomer</span>
@@ -892,7 +894,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 8 – Elektrolys i praktiken
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary>
         <span class="m-num">Milstolpe 8</span>
         <span class="m-title">Elektrolys i praktiken – koppar, klor och vätgas</span>
@@ -962,7 +964,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 9 – Ytbehandling genom elektrolys
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary>
         <span class="m-num">Milstolpe 9</span>
         <span class="m-title">Ytbehandling – elektrolys ger metallföremål ny yta</span>
@@ -1033,7 +1035,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          MILSTOLPE 10 – Oxidation och reduktion
     ═══════════════════════════════════════════════════════════════ -->
-    <details class="milestone" id="m10">
+    <details class="milestone" id="m10" open>
       <summary>
         <span class="m-num">Milstolpe 10</span>
         <span class="m-title">Oxidation och reduktion – elektronernas riktning</span>

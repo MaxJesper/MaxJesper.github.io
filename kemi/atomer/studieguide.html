@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Atomer och molekyler</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
   <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
   <link rel="stylesheet" href="/css/molviewer.css" />
   <link rel="stylesheet" href="/css/formelvisare.css" />
 
   <style>
+    :root { --ms-head: #9d174d; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     body { --listen-color:#9d174d; --listen-border:#fbcfe8; --listen-hover-bg:#fdf2f8; --listen-deepen-color:#7a5c00; --listen-deepen-border:#c9a640;
            --area-strong:#9d174d; --area-soft:#fdf2f8; --area-border:#fbcfe8;
            --guide-accent:#9d174d; --guide-soft:#fffafc; --guide-border:#f5d0e2; --guide-dash:#f3c4dc; }
@@ -130,7 +132,7 @@
   <main class="guide-wide">
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" class="pill-btn" onclick="toggleAllMilestones()">Stäng alla</button>
     </p>
 
     <section class="guide-intro">
@@ -206,7 +208,7 @@
     </details>
 
     <!-- M2 -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Grundämnen och kemiska tecken</h2></summary>
       <div class="m-body">
         <div class="m-row m-row--plain"><div class="m-lead">
@@ -260,7 +262,7 @@
     </details>
 
     <!-- M3 -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">Molekyler – när atomer sitter ihop</h2></summary>
       <div class="m-body">
         <div class="m-row m-row--plain"><div class="m-lead">
@@ -315,7 +317,7 @@
     </details>
 
     <!-- M4 -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Kemiska föreningar</h2></summary>
       <div class="m-body">
         <div class="m-row m-row--plain"><div class="m-lead">
@@ -384,7 +386,7 @@
     </details>
 
     <!-- M5 -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Formler – kemins språk</h2></summary>
       <div class="m-body">
         <div class="m-row m-row--plain"><div class="m-lead">
@@ -464,7 +466,7 @@
     </details>
 
     <!-- M6 -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Kemiska reaktioner – atomerna byter partner</h2></summary>
       <div class="m-body">
         <div class="m-row m-row--plain"><div class="m-lead">

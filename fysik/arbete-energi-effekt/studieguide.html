@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Arbete, energi och effekt</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
 
   <style>
+    :root { --ms-head: #2e4a8a; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     body { --listen-color:#2e4a8a; --listen-border:#cdd9f0; --listen-hover-bg:#eef2fb; }
     main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
 
@@ -127,7 +129,7 @@
   <main>
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eef2fb; border:1px solid #cdd9f0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eef2fb; border:1px solid #cdd9f0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Stäng alla</button>
     </p>
 
     <section class="guide-intro">
@@ -171,7 +173,7 @@
     </details>
 
     <!-- M2 -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary><span class="m-num">Milstolpe 2</span><span class="m-title">Energi – förmågan att utföra arbete</span></summary>
       <div class="m-body">
         <p>För att kunna utföra ett arbete behövs alltid <strong class="term"><span class="concept-inline" data-concept="Energi">energi</span></strong>. En bensinmotor behöver energin som finns lagrad i bensinen; du själv behöver energin du får ur maten. Den enklaste förklaringen på vad energi är lyder därför: <strong class="term">energi är förmågan att utföra ett arbete</strong><a href="#ref-1" class="cite">[1]</a>. Man kan också säga att energi är <em>lagrat arbete</em> – har något energi kan det uträtta ett arbete.</p>
@@ -198,7 +200,7 @@
     </details>
 
     <!-- M3 -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary><span class="m-num">Milstolpe 3</span><span class="m-title">Lägesenergi och rörelseenergi</span></summary>
       <div class="m-body">
         <p>Två av energiformerna hänger särskilt tätt ihop, och tillsammans kallas de <strong class="term"><span class="concept-inline" data-concept="Mekanisk energi">mekanisk energi</span></strong>.</p>
@@ -221,7 +223,7 @@
     </details>
 
     <!-- M4 -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary><span class="m-num">Milstolpe 4</span><span class="m-title">Energiprincipen</span></summary>
       <div class="m-body">
         <p>Här kommer en av fysikens allra viktigaste lagar. Den lyder:</p>
@@ -243,7 +245,7 @@
     </details>
 
     <!-- M5 -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary><span class="m-num">Milstolpe 5</span><span class="m-title">Effekt – arbete på tid</span></summary>
       <div class="m-body">
         <p>Två personer kan utföra exakt samma arbete – men den som gör det på kortare tid arbetar <em>effektivare</em>. I fysiken fångar man det med begreppet <strong class="term"><span class="concept-inline" data-concept="Effekt">effekt</span></strong>: hur mycket arbete (eller energi) som uträttas per sekund<a href="#ref-1" class="cite">[1]</a>.</p>
@@ -272,7 +274,7 @@
     </details>
 
     <!-- M6 -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary><span class="m-num">Milstolpe 6</span><span class="m-title">Verkningsgrad</span></summary>
       <div class="m-body">
         <p>Ingen maskin är perfekt. En bensinmotor omvandlar den kemiska energin i bensinen, men bara en del blir till nyttig rörelseenergi – resten går till spillo som värme. Hur stor <em>andel</em> av den tillförda energin som blir nyttig kallas maskinens <strong class="term"><span class="concept-inline" data-concept="Verkningsgrad">verkningsgrad</span></strong>, och den anges oftast i procent<a href="#ref-1" class="cite">[1]</a>.</p>
@@ -299,7 +301,7 @@
     </details>
 
     <!-- M7 -->
-    <details class="milestone" id="m7">
+    <details class="milestone" id="m7" open>
       <summary><span class="m-num">Milstolpe 7</span><span class="m-title">Enkla maskiner och mekanikens gyllene regel</span></summary>
       <div class="m-body">
         <p>Långt innan det fanns motorer använde människan enkla hjälpmedel för att orka lyfta och flytta tunga saker. Sådana hjälpmedel kallas <strong class="term"><span class="concept-inline" data-concept="Enkla maskiner">enkla maskiner</span></strong> – hit hör <strong class="term"><span class="concept-inline" data-concept="hävstången">hävstången</span></strong>, det <strong class="term"><span class="concept-inline" data-concept="Lutande plan">lutande planet</span></strong> och <strong class="term"><span class="concept-inline" data-concept="blocket">blocket</span></strong> (talja). De sparar kraft, men aldrig arbete<a href="#ref-1" class="cite">[1]</a>.</p>
@@ -324,7 +326,7 @@
     </details>
 
     <!-- M8 -->
-    <details class="milestone" id="m8">
+    <details class="milestone" id="m8" open>
       <summary><span class="m-num">Milstolpe 8</span><span class="m-title">Energienheter – joule, wattimme och kilowattimme</span></summary>
       <div class="m-body">
         <p>Joule är en ganska liten enhet. För att lyfta ett pastapaket upp på en hylla går det åt ungefär 1 joule – så för att beskriva energin i ett helt hushåll eller land behövs större enheter. Därför använder man ofta en energienhet som bygger ihop <strong class="term">effekt och tid</strong>.</p>
@@ -353,7 +355,7 @@
     </details>
 
     <!-- M9 -->
-    <details class="milestone" id="m9">
+    <details class="milestone" id="m9" open>
       <summary><span class="m-num">Milstolpe 9</span><span class="m-title">Energikällor och kraftverk</span></summary>
       <div class="m-body">
         <p>Var kommer all energi vi använder ifrån? De naturresurser vi hämtar energin ur kallas <strong class="term"><span class="concept-inline" data-concept="primära energikällor">primära energikällor</span></strong>, och de delas in i två grupper<a href="#ref-1" class="cite">[1]</a>.</p>

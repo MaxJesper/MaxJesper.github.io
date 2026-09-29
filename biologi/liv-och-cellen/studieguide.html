@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Liv och cellen</title>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/milstolpe.css" />
     <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
     <link rel="stylesheet" href="/css/viktigt.css" />
+    <link rel="stylesheet" href="/css/bildzoom.css" />
 
   <style>
+    :root { --ms-head: #0b7a5c; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
     body {
       --listen-color:#0b7a5c; --listen-border:#b6ead9; --listen-hover-bg:#eafaf4;
       --guide-accent:#0b7a5c; --guide-soft:#eafaf4; --guide-border:#b6ead9; --guide-dash:#b6ead9;
@@ -24,6 +27,23 @@
       margin-bottom: 1.25rem;
     }
     .guide-intro p { margin: 0.35rem 0; }
+
+    /* Bilderna ska vara små i löptexten och gå att klicka upp i fullstorlek
+       (js/bildzoom.js) i stället för att dominera sidan – se CLAUDE.md,
+       "Bildzoom (klicka för att förstora)", beslutat 27 sep 2026. */
+    .side-fig > img,
+    .fig-row figure img {
+      max-height: 220px;
+      width: auto;
+    }
+    /* Bilder som redan har ett eget inbyggt vitt "kort" med skugga (t.ex.
+       vad-ar-liv-kannetecken.jpg) ska inte också få vår bildruta runt sig –
+       det gav dubbla ramar. Sätt class="side-fig side-fig--flush" på figuren. */
+    .side-fig--flush {
+      background: none;
+      border: none;
+      padding: 0;
+    }
 
     .milestone {
       background: #fff;
@@ -277,12 +297,13 @@
   <main class="guide-wide">
     <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
       <a href="./" class="subject-btn">← Tillbaka till området</a>
-      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eafaf4; border:1px solid #b6ead9; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#0b7a5c; cursor:pointer;">Öppna alla</button>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eafaf4; border:1px solid #b6ead9; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#0b7a5c; cursor:pointer;">Stäng alla</button>
     </p>
 
     <section class="guide-intro">
       <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe förklarar något viktigt och leder dig sedan vidare till övningar, spel eller fördjupning.</p>
       <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. De orangea rutorna är laborationer som hör till avsnittet.</p>
+      <p>Bilderna visas små för att inte ta för mycket plats – <strong>klicka på en bild</strong> för att se den i fullstorlek.</p>
       <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
     </section>
 
@@ -296,7 +317,7 @@
         <p>Ordet <strong class="term"><span class="concept-inline" data-concept="biologi">biologi</span></strong> betyder "läran om livet". Men vad är egentligen liv? Fundera först själv på de sju sakerna i bilden: solen, en robot, en bil, ett virus, ett bi, en ros och nedfallna höstlöv – vilka av dem lever?</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig" style="max-width:100%;">
+        <figure class="side-fig side-fig--flush" style="max-width:100%;">
           <img src="/images/biologi/liv-och-cellen/vad-ar-liv-kannetecken.jpg" alt="Sju exempel sida vid sida: solen, en robot, en bil, ett virus, ett bi, en ros och höstlöv." style="max-width:100%;" />
           <figcaption>Vilka av dessa sju exempel lever, och vilka gör det inte? Jämför med livets sex kännetecken nedan.</figcaption>
         </figure>
@@ -317,7 +338,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 2 ========== -->
-    <details class="milestone" id="m2">
+    <details class="milestone" id="m2" open>
       <summary>
         <span class="m-num">Milstolpe 2</span>
         <span class="m-title">Cellen – livets minsta byggsten</span>
@@ -362,7 +383,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 3 ========== -->
-    <details class="milestone" id="m3">
+    <details class="milestone" id="m3" open>
       <summary>
         <span class="m-num">Milstolpe 3</span>
         <span class="m-title">Cellens delar – organellerna</span>
@@ -430,7 +451,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 4 ========== -->
-    <details class="milestone" id="m4">
+    <details class="milestone" id="m4" open>
       <summary>
         <span class="m-num">Milstolpe 4</span>
         <span class="m-title">Livet i mikroskopet</span>
@@ -566,7 +587,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 5 ========== -->
-    <details class="milestone" id="m5">
+    <details class="milestone" id="m5" open>
       <summary>
         <span class="m-num">Milstolpe 5</span>
         <span class="m-title">Bakterier och virus</span>
@@ -602,7 +623,7 @@
     </details>
 
     <!-- ========== MILSTOLPE 6 ========== -->
-    <details class="milestone" id="m6">
+    <details class="milestone" id="m6" open>
       <summary>
         <span class="m-num">Milstolpe 6</span>
         <span class="m-title">Att sortera och namnge livet</span>
@@ -700,6 +721,7 @@
   <script src="/js/language-selector.js"></script>
   <script src="/js/concepts-popup.js"></script>
   <script src="/js/concept-lang-selector.js"></script>
+  <script src="/js/bildzoom.js"></script>
   <script>
     /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
     fetch("./data/begrepp.json", { cache: "no-store" })
