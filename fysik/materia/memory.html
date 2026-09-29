@@ -6,7 +6,7 @@
   <title>Memory: Materia, värme, atomen & densitet</title>
 
   <link rel="stylesheet" href="/css/style.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>*,*::before,*::after{box-sizing:border-box;}</style>
 
   <style>
     /* ====== Viktigt: hindra att sidomenyn blockerar klick när den är stängd ====== */
@@ -522,14 +522,14 @@
       outer.className = 'perspective card-wrap';
 
       outer.innerHTML = `
-        <div class="flip-card-inner h-full w-full"
+        <div class="flip-card-inner"
              data-id="${data.id}"
              data-type="${data.type}"
              data-match-id="${data.matchId}">
           <div class="flip-card-front">
             ${atomSVG()}
           </div>
-          <div class="flip-card-back px-2 py-1 text-center">
+          <div class="flip-card-back">
             ${data.content}
           </div>
         </div>
