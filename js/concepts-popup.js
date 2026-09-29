@@ -100,12 +100,68 @@
   var linkEl     = modal.querySelector('.cm-link');
   var prevFocus;
 
+  // ── Kemiska formler med nedsänkta siffror (29 sep 2026) ────────────────────
+  // Definitionerna i data/begrepp*.json är ren text ("C2H5OH", "CnH2n+2"). Här byggs
+  // texten om till DOM-noder där atomantalen blir <sub>. Ingen innerHTML används,
+  // så texten från JSON kan aldrig tolkas som HTML.
+  // Ett ord räknas som formel bara om det ENBART består av riktiga grundämnessymboler
+  // med siffror och har minst två grundämnen (C2H2, NH2, H2SO4 …). Ord med ett enda grundämne
+  // (t.ex. "B12", "A4", "U235") lämnas orörda, utom en kort lista vanliga molekyler (O2, N2 …).
+  var CHEM_EL = ('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn ' +
+    'Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm ' +
+    'Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu').split(' ');
+  var CHEM_SINGLE = ['O2', 'N2', 'H2', 'Cl2', 'O3', 'F2', 'Br2', 'I2', 'S8', 'C60'];
+  var CHEM_RE = /CnH2n(?:[+−-]2)?|(?:[A-Z][a-z]?\d*)+/g;
+  var CHEM_PART = /([A-Z][a-z]?)(\d*)/g;
+
+  function chemParts(tok) {
+    // Allmän formel för kolväteserier: CnH2n, CnH2n+2, CnH2n-2
+    if (tok.indexOf('CnH2n') === 0) {
+      return [['C', 'n'], ['H', tok.slice(3)]];
+    }
+    if (!/\d/.test(tok)) return null;
+    var parts = [], m;
+    CHEM_PART.lastIndex = 0;
+    while ((m = CHEM_PART.exec(tok))) {
+      if (CHEM_EL.indexOf(m[1]) === -1) return null;
+      parts.push([m[1], m[2]]);
+    }
+    if (parts.length === 1 && CHEM_SINGLE.indexOf(tok) === -1) return null;
+    return parts;
+  }
+
+  function setChemText(el, text) {
+    el.textContent = '';
+    text = text || '';
+    var last = 0, m;
+    CHEM_RE.lastIndex = 0;
+    while ((m = CHEM_RE.exec(text))) {
+      var tok = m[0], start = m.index, end = start + tok.length;
+      var before = start > 0 ? text.charAt(start - 1) : '';
+      var after = text.charAt(end);
+      if (/[A-Za-z0-9]/.test(before) || /[A-Za-z0-9]/.test(after)) continue;
+      var parts = chemParts(tok);
+      if (!parts) continue;
+      if (start > last) el.appendChild(document.createTextNode(text.slice(last, start)));
+      parts.forEach(function (p) {
+        el.appendChild(document.createTextNode(p[0]));
+        if (p[1]) {
+          var sub = document.createElement('sub');
+          sub.textContent = p[1];
+          el.appendChild(sub);
+        }
+      });
+      last = end;
+    }
+    if (last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+  }
+
   function openModal(name) {
     var item = lookup(name);
     if (!item) return;
-    titleEl.textContent    = name;
-    titleNatEl.textContent = item.namn_native || '';
-    defEl.textContent      = item.definition || '';
+    setChemText(titleEl, name);
+    setChemText(titleNatEl, item.namn_native || '');
+    setChemText(defEl, item.definition || '');
     if (item.anchor) {
       linkEl.href = item.anchor;
       linkEl.classList.remove('hidden');
