@@ -106,6 +106,20 @@ def plain(*parts):
 
 OLGLAS_JPG = "/images/kemi/matens-kemi/foton/olglas.jpg"
 
+def olglas_fig():
+    """Ölglasbilden bredvid sockertabellen i M1 (Jesper 29 sep 2026): bildens över- OCH underkant ska
+    linjera med tabellens. Bilden ligger i en egen ruta (.olglas-img) som via CSS (src/studieguide.css,
+    subgrid + contain:size) får exakt tabellradens höjd; bildtexten hamnar i raden under, bredvid
+    glukos/galaktos-korten. object-fit:cover beskär bilden lite i sidled när tabellen är hög."""
+    return (f'<figure class="side-fig olglas-fig"><div class="olglas-img"><img src="{OLGLAS_JPG}" width="350" height="281" '
+            'alt="Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
+            'med ett snöre och en hög lösa sädeskorn." loading="lazy"></div>'
+            '<figcaption>Öl tillverkas av korn som får gro i 3 dagar. Därefter torkas och rostas kornen, varpå en sirap av '
+            'maltsocker kallad vört lakas ur de krossade kornen. Vörten kokas sedan med humlekottar för att få '
+            'smak och hållbarhet, varpå ölet får jäsa. I jäsningen omvandlar jästsvampen maltsockret till '
+            'etanol och koldioxid.</figcaption></figure>')
+
+
 
 def sugar_table():
     """Förenklad tabell över de vanligaste mono- och disackariderna (Jespers krav: 'lagom nivå',
@@ -131,7 +145,7 @@ def sugar_table():
     )
     return (
         '<div class="tbl-scroll"><table class="sugar-table">'
-        '<caption>Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns under tabellen.</caption>'
+        '<caption class="sr-only">Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns under tabellen.</caption>'
         '<thead><tr><th colspan="4">Monosackarider (en sockerenhet)</th></tr>'
         '<tr><th>Namn</th><th>Formel</th><th>Form</th><th>Finns i</th></tr></thead>'
         f'<tbody>{mono_html}</tbody>'
@@ -169,24 +183,21 @@ M1 = (
         '(två sockerenheter bundna till varandra) och '
         '<strong class="term"><span class="concept-inline" data-concept="Polysackarid">polysackarider</span></strong> '
         '(många, ofta tusentals, sockerenheter i en lång kedja).</p>'
-    )
-    + row(
         '<p>Tabellen visar de vanligaste enskilda sockerarterna som förenklade formler. Lägg märke till att '
         'glukos, fruktos och galaktos alla har samma molekylformel (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) men '
         'olika uppbyggnad – de är inte samma ämne.</p>'
-        + sugar_table()
-        + '<div class="fig-row">' + sidefig(MOL.detailed_glucose_card_html(), MOL.detailed_galactose_card_html()) + '</div>'
+        # Tabellrubriken visas här (ovanför raden) i stället för som <caption>, så att tabellens
+        # överkant blir radens överkant och ölglasbilden kan linjera med den. <caption> finns kvar
+        # för skärmläsare (sr-only); den synliga kopian är aria-hidden för att inte läsas två gånger.
+        '<p class="tbl-caption" aria-hidden="true">Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns under tabellen.</p>'
+    )
+    + row(
+        sugar_table(),
+        olglas_fig(),
+        '<div class="fig-row">' + sidefig(MOL.detailed_glucose_card_html(), MOL.detailed_galactose_card_html()) + '</div>'
         + '<p>När två monosackarider binds ihop med en <strong class="term"><span class="concept-inline" '
         'data-concept="glykosidbindning">glykosidbindning</span></strong> bildas en disackarid, som i exemplen i '
-        'tabellen ovan.</p>',
-        illust(OLGLAS_JPG,
-                 'Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
-                 'med ett snöre och en hög lösa sädeskorn.',
-                 'Öl tillverkas av korn som får gro i 3 dagar. Därefter torkas och rostas kornen, varpå en sirap av '
-                 'maltsocker kallad vört lakas ur de krossade kornen. Vörten kokas sedan med humlekottar för att få '
-                 'smak och hållbarhet, varpå ölet får jäsa. I jäsningen omvandlar jästsvampen maltsockret till '
-                 'etanol och koldioxid.',
-                 350, 281)
+        'tabellen ovan.</p>'
     )
     + deepen(
         "Glukos kan vara både rak och ringformad",
