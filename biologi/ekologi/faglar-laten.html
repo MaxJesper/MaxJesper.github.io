@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fågelläten – vilken fågel sjunger? – Ekologi</title>
+<link rel="stylesheet" href="/css/style.css" />
+<style>
+  :root {
+    --gron: #3f6b34; --gron-stark: #2f5228; --gron-mjuk: #f1f6ed; --gron-kant: #cadcbf;
+    --ok: #15803d; --ok-mjuk: #dcfce7; --fel: #c2410c; --fel-mjuk: #ffedd5;
+    --nasta: #1d4ed8; --nasta-stark: #1e3a8a; --text: #212529; --gra: #595959;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body.lat-sida { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; color: var(--text); background: #fff; font-size: 17px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.2rem 1.2rem 3rem; }
+  header.top { background: var(--gron); color: #fff; padding: 1.6rem 1.2rem; }
+  header.top .inner { max-width: 900px; margin: 0 auto; }
+  header.top h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.15rem; }
+  header.top p { opacity: 0.92; font-size: 0.95rem; }
+  h2 { font-size: 1.3rem; color: var(--gron-stark); margin: 1.4rem 0 0.6rem; }
+  h3 { font-size: 1.05rem; color: var(--gron-stark); margin: 1rem 0 0.4rem; }
+  p { margin-bottom: 0.8rem; }
+  a { color: #0b5cad; }
+  .panel { background: #fff; border: 1px solid var(--gron-kant); border-radius: 14px; padding: 1.1rem 1.2rem 1.3rem; margin-bottom: 1.2rem; }
+  .panel.soft { background: var(--gron-mjuk); }
+  .doldt { display: none !important; }
+  .btn { font: inherit; font-weight: 600; padding: 0.5rem 1.05rem; border-radius: 999px; border: 1px solid var(--gron-kant); background: #fff; color: var(--gron-stark); cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn:hover { background: var(--gron-mjuk); }
+  .btn.primary { background: var(--gron); border-color: var(--gron); color: #fff; }
+  .btn.primary:hover { background: var(--gron-stark); }
+  .btn:focus-visible, .svar-btn:focus-visible, .spela:focus-visible, .art-chip:focus-visible, .btn-nasta:focus-visible { outline: 3px solid #0b3d75; outline-offset: 3px; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+  /* Val av omgång */
+  .val-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.7rem; margin-top: 0.6rem; }
+  .val-kort { font: inherit; text-align: left; padding: 0.9rem 1rem; border-radius: 12px; border: 2px solid var(--gron-kant); background: #fff; cursor: pointer; color: var(--text); }
+  .val-kort:hover { border-color: var(--gron); background: var(--gron-mjuk); }
+  .val-kort strong { display: block; color: var(--gron-stark); font-size: 1.05rem; }
+  .val-kort span { font-size: 0.88rem; color: var(--gra); }
+  .val-kort:focus-visible { outline: 3px solid #0b3d75; outline-offset: 3px; }
+
+  /* Lär dig först */
+  .art-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.6rem 0 0.2rem; }
+  .art-chip { font: inherit; font-size: 0.88rem; padding: 0.3rem 0.75rem; border-radius: 999px; border: 1px solid var(--gron-kant); background: var(--gron-mjuk); color: var(--gron-stark); cursor: pointer; }
+  .art-chip:hover { background: var(--gron); color: #fff; border-color: var(--gron); }
+  .grupp-rubrik { font-size: 0.85rem; font-weight: 700; color: var(--gron-stark); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.8rem; }
+
+  /* Spelet */
+  .status-rad { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 1rem; }
+  .status { background: var(--gron); color: #fff; border-radius: 12px; padding: 0.45rem 1rem; text-align: center; min-width: 120px; }
+  .status b { display: block; font-size: 1.4rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .status small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+  .lyssna-ruta { background: var(--gron-mjuk); border: 1px solid var(--gron-kant); border-radius: 16px; padding: 1.3rem 1rem; text-align: center; margin-bottom: 1rem; }
+  .spela { font: inherit; font-weight: 700; font-size: 1.15rem; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.95rem 1.6rem; border-radius: 999px; border: none; background: var(--gron); color: #fff; cursor: pointer; box-shadow: 0 2px 8px rgba(47,82,40,0.3); }
+  .spela:hover { background: var(--gron-stark); }
+  .spela svg { width: 1.3em; height: 1.3em; }
+  .lyssna-hjalp { font-size: 0.85rem; color: var(--gra); margin: 0.6rem 0 0; }
+  .vag { height: 34px; display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 0.7rem; }
+  .vag i { display: block; width: 5px; height: 8px; border-radius: 3px; background: var(--gron-kant); transition: height 0.12s; }
+  .spelar .vag i { background: var(--gron); animation: guppa 0.9s ease-in-out infinite; }
+  .spelar .vag i:nth-child(2n) { animation-delay: 0.15s; } .spelar .vag i:nth-child(3n) { animation-delay: 0.3s; }
+  @keyframes guppa { 0%,100% { height: 8px; } 50% { height: 30px; } }
+  @media (prefers-reduced-motion: reduce) { .spelar .vag i { animation: none; height: 20px; } }
+
+  .svar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  @media (max-width: 560px) { .svar-grid { grid-template-columns: 1fr; } }
+  .svar-btn { font: inherit; font-weight: 600; font-size: 1.05rem; padding: 0.85rem 0.6rem; border-radius: 12px; border: 2px solid var(--gron-kant); background: #fff; color: var(--gron-stark); cursor: pointer; display: flex; align-items: center; gap: 0.55rem; justify-content: center; }
+  .svar-btn .nr { font-size: 0.78rem; font-weight: 700; color: var(--gra); border: 1px solid #c8c8c8; border-radius: 6px; padding: 0 0.35rem; }
+  .svar-btn:hover:not(:disabled) { background: var(--gron-mjuk); border-color: var(--gron); }
+  .svar-btn:disabled { cursor: default; }
+  .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); border-style: solid; color: var(--gron-stark); }
+  .svar-btn.ratt::before { content: "✓"; font-weight: 800; color: var(--ok); }
+  .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); border-style: dashed; color: var(--fel); }
+  .svar-btn.fel::before { content: "✕"; font-weight: 800; }
+  .besked { min-height: 1.6em; margin-top: 0.8rem; font-weight: 700; text-align: center; }
+  .besked.ok { color: var(--ok); } .besked.nej { color: var(--fel); }
+
+  /* Facit-kort med bild och fakta */
+  .facit { display: grid; grid-template-columns: 280px 1fr; gap: 1rem; align-items: start; background: #fff; border: 1px solid var(--gron-kant); border-radius: 14px; padding: 1rem; margin-top: 0.9rem; }
+  @media (max-width: 680px) { .facit { grid-template-columns: 1fr; } }
+  .facit img { width: 100%; height: auto; border-radius: 10px; background: var(--gron-mjuk); display: block; }
+  .facit h3 { margin-top: 0; }
+  .lat, .facit .lat { background: var(--gron-mjuk); border-left: 4px solid var(--gron); border-radius: 6px; padding: 0.5rem 0.7rem; font-size: 0.95rem; }
+  .lat strong { color: var(--gron-stark); }
+  .kalla { font-size: 0.76rem; color: var(--gra); line-height: 1.4; margin: 0.45rem 0 0; }
+  .kalla a { color: var(--gra); }
+  .btn-nasta { font: inherit; font-weight: 700; font-size: 1.02rem; padding: 0.8rem 1.4rem; border-radius: 12px; border: none; background: var(--nasta); color: #fff; cursor: pointer; margin-top: 0.8rem; }
+  .btn-nasta:hover { background: var(--nasta-stark); }
+
+  .stor-ruta { display: flex; background: var(--gron); color: #fff; border-radius: 16px; overflow: hidden; margin-bottom: 1rem; }
+  .stor-ruta .del { flex: 1; text-align: center; padding: 1rem 0.5rem; }
+  .stor-ruta .del + .del { border-left: 1px solid rgba(255,255,255,0.3); }
+  .stor-ruta .siffra { display: block; font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
+  .stor-ruta .etikett { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+  .missad-lista { margin: 0.4rem 0 0.8rem 1.2rem; }
+
+  dialog.art-dialog { margin: auto; border: none; border-radius: 16px; padding: 0; max-width: 560px; width: calc(100% - 2rem); box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  dialog.art-dialog::backdrop { background: rgba(20,30,15,0.55); }
+  .art-dialog-inner { padding: 1.2rem 1.3rem 1.4rem; position: relative; }
+  .art-dialog-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 1px solid var(--gron-kant); background: #fff; color: var(--gron-stark); font-size: 1rem; cursor: pointer; }
+  .art-dialog img { width: 100%; max-height: 280px; object-fit: contain; background: var(--gron-mjuk); border-radius: 10px; margin-bottom: 0.7rem; display: block; }
+  .art-dialog audio { width: 100%; margin: 0.4rem 0 0.6rem; }
+
+  details.licenser { margin-top: 2rem; font-size: 0.82rem; color: var(--gra); }
+  details.licenser summary { cursor: pointer; font-weight: 600; color: var(--gron-stark); }
+  details.licenser ol { margin: 0.6rem 0 0 1.3rem; }
+  details.licenser li { margin-bottom: 0.35rem; }
+</style>
+</head>
+<body class="lat-sida">
+
+<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+<nav id="side-menu"></nav>
+
+<header class="top">
+  <div class="inner">
+    <h1>Fågelläten – vilken fågel sjunger?</h1>
+    <p>Ekologi · lär dig känna igen fåglar på lätet</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="page-actions no-print" style="margin:0.2rem 0 1rem;">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+    <a href="./faglar-tavling.html" class="subject-btn">Fågeltävlingen med foton</a>
+  </div>
+
+  <!-- ============ START ============ -->
+  <section id="start-panel">
+    <div class="panel">
+      <h2 style="margin-top:0;">Lyssna – gissa – se fågeln</h2>
+      <p>Du hör ett läte. Välj rätt fågel av fyra alternativ. Efter varje svar får du se fågeln och läsa hur du känner igen lätet nästa gång. Många sångare ser nästan likadana ut – därför är örat det bästa sättet att skilja dem åt.</p>
+      <p style="margin-bottom:0.3rem;"><strong>Välj omgång:</strong></p>
+      <div class="val-grid">
+        <button type="button" class="val-kort" data-omgang="vanliga"><strong>Vanliga fåglar</strong><span>21 arter – koltrast, bofink, gök, trana …</span></button>
+        <button type="button" class="val-kort" data-omgang="sangare"><strong>Sångarna</strong><span>9 arter som är svåra att se skillnad på – öron på!</span></button>
+        <button type="button" class="val-kort" data-omgang="alla"><strong>Alla 30 fåglar</strong><span>För dig som vill ha hela utmaningen</span></button>
+      </div>
+      <p class="lyssna-hjalp" style="margin-top:0.8rem;">Använd gärna hörlurar. Tangentbord: <strong>mellanslag</strong> spelar lätet, <strong>1–4</strong> väljer svar, <strong>Enter</strong> går vidare.</p>
+    </div>
+
+    <div class="panel soft">
+      <h2 style="margin-top:0;">Lär dig lätena först</h2>
+      <p style="margin-bottom:0.2rem;">Klicka på en fågel för att höra den, se en bild och läsa hur du känner igen den.</p>
+      <p class="grupp-rubrik">Sångarna</p>
+      <div class="art-chips" id="chips-sangare"></div>
+      <p class="grupp-rubrik">Vanliga fåglar</p>
+      <div class="art-chips" id="chips-vanliga"></div>
+    </div>
+  </section>
+
+  <!-- ============ SPEL ============ -->
+  <section class="doldt" id="spel-panel" aria-labelledby="spel-rubrik">
+    <h2 id="spel-rubrik" class="doldt">Frågor</h2>
+    <div class="status-rad">
+      <div class="status"><b id="s-nr">1/10</b><small>Fråga</small></div>
+      <div class="status"><b id="s-ratt">0</b><small>Rätt</small></div>
+    </div>
+
+    <div class="lyssna-ruta" id="lyssna-ruta">
+      <button type="button" class="spela" id="spelaBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        <span id="spelaText">Spela lätet</span>
+      </button>
+      <div class="vag" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="lyssna-hjalp">Du får lyssna hur många gånger du vill.</p>
+    </div>
+
+    <div class="svar-grid" id="svar-grid" role="group" aria-label="Svarsalternativ"></div>
+    <p class="besked" id="besked" role="status" aria-live="polite">&nbsp;</p>
+
+    <div id="facit" class="facit doldt"></div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:1.4rem;">
+      <button class="btn" id="avbrytBtn" type="button">Avbryt</button>
+    </div>
+  </section>
+
+  <!-- ============ SLUT ============ -->
+  <section class="panel doldt" id="slut-panel">
+    <h2 style="margin-top:0;">Klart!</h2>
+    <div class="stor-ruta">
+      <div class="del"><span class="siffra" id="slut-ratt">0</span><span class="etikett">Rätt</span></div>
+      <div class="del"><span class="siffra" id="slut-procent">0 %</span><span class="etikett">Andel rätt</span></div>
+    </div>
+    <div id="slut-missade"></div>
+    <div class="btn-row">
+      <button class="btn primary doldt" id="tranaBtn" type="button">Träna bara på de fåglar du missade</button>
+      <button class="btn primary" id="igenBtn" type="button">Samma omgång igen</button>
+      <button class="btn" id="valjBtn" type="button">Välj en annan omgång</button>
+    </div>
+  </section>
+
+  <details class="licenser">
+    <summary>Ljud, bilder och licenser</summary>
+    <p style="margin-top:0.5rem;" id="andring-text"></p>
+    <ol id="licens-lista"></ol>
+  </details>
+</div>
+
+<dialog class="art-dialog" id="artDialog" aria-labelledby="artDialogNamn">
+  <div class="art-dialog-inner">
+    <button type="button" class="art-dialog-close" id="artDialogClose" aria-label="Stäng">✕</button>
+    <img id="artDialogImg" src="" alt="" />
+    <h3 id="artDialogNamn" style="margin-top:0;"></h3>
+    <audio id="artDialogLjud" controls preload="none"></audio>
+    <p id="artDialogLat" class="lat"></p>
+    <p id="artDialogFakta"></p>
+    <p id="artDialogKalla" class="kalla"></p>
+  </div>
+</dialog>
+
+<audio id="spelare" preload="auto"></audio>
+
+<script src="/js/menu.js"></script>
+<script>
+"use strict";
+const LJUD = "./ljud-faglar/", BILD = "./bilder-latesquiz/";
+let ARTER = [], OMGANG = "vanliga", RUNDA = [], index = 0, ratt = 0, missade = [], laser = false, aktuell = null;
+const el = id => document.getElementById(id);
+const spelare = el("spelare");
+function blanda(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function kallRad(a) {
+  const k = (typ, x) => typ + ': ' + esc(x.upphov) + ', <a href="' + esc(x.kalla) + '" target="_blank" rel="noopener">' + esc(x.licens) + '</a>';
+  return k("Ljud", a.ljudkalla) + ' · ' + k("Bild", a.bildkalla) + ' · Wikimedia Commons';
+}
+
+async function ladda() {
+  const d = await (await fetch("./data/faglar-laten.json", { cache: "no-store" })).json();
+  ARTER = d.arter;
+  el("andring-text").textContent = d.andring;
+  ["sangare", "vanliga"].forEach(g => {
+    el("chips-" + g).innerHTML = ARTER.filter(a => a.grupp === g)
+      .map(a => '<button type="button" class="art-chip" data-id="' + a.id + '">' + esc(a.namn) + '</button>').join("");
+  });
+  el("licens-lista").innerHTML = ARTER.map(a => "<li><strong>" + esc(a.namn) + ".</strong> " + kallRad(a) + "</li>").join("");
+}
+
+function valjOmgang(o) {
+  OMGANG = o;
+  const urval = o === "alla" ? ARTER : ARTER.filter(a => a.grupp === o);
+  startaRunda(urval);
+}
+function startaRunda(urval) {
+  RUNDA = blanda(urval); index = 0; ratt = 0; missade = [];
+  el("start-panel").classList.add("doldt"); el("slut-panel").classList.add("doldt"); el("spel-panel").classList.remove("doldt");
+  visaFraga();
+  el("spelaBtn").focus();
+}
+
+function spela() {
+  if (!aktuell) return;
+  spelare.currentTime = 0;
+  const p = spelare.play(); if (p && p.catch) p.catch(() => {});
+}
+spelare.addEventListener("play", () => { el("lyssna-ruta").classList.add("spelar"); el("spelaText").textContent = "Spelar …"; });
+["pause", "ended"].forEach(ev => spelare.addEventListener(ev, () => { el("lyssna-ruta").classList.remove("spelar"); el("spelaText").textContent = "Spela igen"; }));
+
+function alternativ(ratta) {
+  // Felalternativ helst från samma grupp (sångare mot sångare) så att det blir en riktig övning i att lyssna
+  const sammaGrupp = ARTER.filter(a => a.id !== ratta.id && a.grupp === ratta.grupp);
+  const ovriga = ARTER.filter(a => a.id !== ratta.id && a.grupp !== ratta.grupp);
+  const fel = blanda(sammaGrupp).slice(0, 3);
+  while (fel.length < 3) fel.push(blanda(ovriga)[0]);
+  return blanda([ratta, ...fel]);
+}
+
+function visaFraga() {
+  if (index >= RUNDA.length) { visaSlut(); return; }
+  laser = false; aktuell = RUNDA[index];
+  spelare.pause(); spelare.src = LJUD + aktuell.ljud;
+  el("spelaText").textContent = "Spela lätet";
+  el("s-nr").textContent = (index + 1) + "/" + RUNDA.length;
+  el("s-ratt").textContent = ratt;
+  el("besked").textContent = " "; el("besked").className = "besked";
+  el("facit").classList.add("doldt"); el("facit").innerHTML = "";
+  el("svar-grid").innerHTML = "";
+  alternativ(aktuell).forEach((a, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "svar-btn"; b.dataset.id = a.id;
+    b.innerHTML = '<span class="nr" aria-hidden="true">' + (i + 1) + '</span><span>' + esc(a.namn) + '</span>';
+    b.addEventListener("click", () => svara(b, a));
+    el("svar-grid").appendChild(b);
+  });
+}
+
+function svara(knapp, valt) {
+  if (laser) return; laser = true;
+  const knappar = el("svar-grid").querySelectorAll(".svar-btn");
+  knappar.forEach(b => b.disabled = true);
+  const a = aktuell;
+  if (valt.id === a.id) {
+    ratt++; knapp.classList.add("ratt");
+    el("besked").textContent = "Rätt! Det är " + a.namn + ".";
+    el("besked").className = "besked ok";
+  } else {
+    missade.push(a); knapp.classList.add("fel");
+    knappar.forEach(b => { if (b.dataset.id === a.id) b.classList.add("ratt"); });
+    el("besked").textContent = "Inte riktigt – det var " + a.namn + ".";
+    el("besked").className = "besked nej";
+  }
+  el("s-ratt").textContent = ratt;
+  el("facit").innerHTML =
+    '<img src="' + BILD + a.bild + '" alt="Foto av ' + esc(a.namn.toLowerCase()) + '" />' +
+    '<div><h3>' + esc(a.namn) + '</h3>' +
+    '<p class="lat"><strong>Så känner du igen lätet:</strong> ' + esc(a.lat) + '</p>' +
+    '<p>' + esc(a.fakta) + '</p>' +
+    '<p class="kalla">' + kallRad(a) + '</p>' +
+    '<button type="button" class="btn-nasta" id="nastaBtn">' + (index + 1 < RUNDA.length ? "Nästa fågel →" : "Se resultatet →") + '</button></div>';
+  el("facit").classList.remove("doldt");
+  el("nastaBtn").addEventListener("click", nasta);
+  el("nastaBtn").focus({ preventScroll: true });
+}
+
+function nasta() { index++; visaFraga(); el("spelaBtn").focus(); }
+
+function visaSlut() {
+  spelare.pause();
+  el("spel-panel").classList.add("doldt"); el("slut-panel").classList.remove("doldt");
+  const p = RUNDA.length ? Math.round(ratt / RUNDA.length * 100) : 0;
+  el("slut-ratt").textContent = ratt + "/" + RUNDA.length;
+  el("slut-procent").textContent = p + " %";
+  const unika = [...new Map(missade.map(m => [m.id, m])).values()];
+  el("slut-missade").innerHTML = unika.length
+    ? '<p>Lyssna extra på:</p><ul class="missad-lista">' + unika.map(m => '<li><button type="button" class="art-chip" data-id="' + m.id + '">' + esc(m.namn) + '</button></li>').join("") + '</ul>'
+    : '<p>Alla rätt – du har riktigt bra öron!' + (OMGANG === "vanliga" ? ' Prova omgången med sångarna nästa gång.' : '') + '</p>';
+  el("tranaBtn").classList.toggle("doldt", !unika.length);
+  el("igenBtn").focus();
+}
+
+function visaArt(id) {
+  const a = ARTER.find(x => x.id === id); if (!a) return;
+  spelare.pause();
+  el("artDialogImg").src = BILD + a.bild; el("artDialogImg").alt = "Foto av " + a.namn.toLowerCase();
+  el("artDialogNamn").textContent = a.namn;
+  el("artDialogLjud").src = LJUD + a.ljud;
+  el("artDialogLat").innerHTML = "<strong>Så känner du igen lätet:</strong> " + esc(a.lat);
+  el("artDialogFakta").textContent = a.fakta;
+  el("artDialogKalla").innerHTML = kallRad(a);
+  el("artDialog").showModal();
+}
+function stangArt() { el("artDialogLjud").pause(); el("artDialog").close(); }
+
+document.querySelectorAll(".val-kort").forEach(b => b.addEventListener("click", () => valjOmgang(b.dataset.omgang)));
+el("spelaBtn").addEventListener("click", spela);
+el("avbrytBtn").addEventListener("click", () => { spelare.pause(); el("spel-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt"); });
+el("igenBtn").addEventListener("click", () => valjOmgang(OMGANG));
+el("valjBtn").addEventListener("click", () => { el("slut-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt"); });
+el("tranaBtn").addEventListener("click", () => startaRunda([...new Map(missade.map(m => [m.id, m])).values()]));
+document.addEventListener("click", e => { const c = e.target.closest(".art-chip"); if (c) visaArt(c.dataset.id); });
+el("artDialogClose").addEventListener("click", stangArt);
+el("artDialog").addEventListener("click", e => { if (e.target === el("artDialog")) stangArt(); });
+el("artDialog").addEventListener("close", () => el("artDialogLjud").pause());
+
+document.addEventListener("keydown", e => {
+  if (el("spel-panel").classList.contains("doldt") || el("artDialog").open) return;
+  if (e.target.closest && e.target.closest("button, a, input") && (e.key === " " || e.key === "Enter")) return;
+  if (e.key === " ") { e.preventDefault(); spela(); }
+  else if (/^[1-4]$/.test(e.key) && !laser) { const b = el("svar-grid").querySelectorAll(".svar-btn")[+e.key - 1]; if (b) b.click(); }
+  else if (e.key === "Enter" && laser) { nasta(); }
+});
+
+ladda();
+</script>
+</body>
+</html>
