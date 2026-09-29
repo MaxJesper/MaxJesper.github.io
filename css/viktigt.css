@@ -3,7 +3,10 @@
    --------------------------------------------------------------------------
    Används för det som behöver betonas extra: säkerhetsregler (t.ex. SIV) och vanliga missförstånd.
    Max en eller två per milstolpe – annars tappar rutan sin betydelse.
-   Färgblindsäker: gulbrun ram + varningstriangel + ordet "Viktigt!" bär informationen, aldrig bara färgen.
+   Jesper 29 sep 2026: varningstriangeln och rubriken "Viktigt!" visas INTE längre – den gula rutan och
+   placeringen vid sidan av huvudtexten räcker som signal. Den tjocka vänsterkanten finns kvar (syns även
+   utan färg, t.ex. vid utskrift), och ordet "Viktigt!" läses fortfarande upp av skärmläsare (visuellt dold).
+   Markupen nedan behöver alltså inte ändras i sidorna/byggskripten.
    Kontrast: text #1a1a2e på #fff3b0 ≈ 15:1, etikett #5c4300 på #fff3b0 ≈ 8:1.
 
    Markup:
@@ -20,12 +23,13 @@
   border: 2px solid #7a5a00; border-left-width: 10px; border-radius: 8px;
   font-size: 0.98rem; line-height: 1.5;
 }
-.viktigt-mark { flex: none; width: 2rem; height: 2rem; margin-top: 0.1rem; }
+.viktigt-mark { display: none; }
 .viktigt-pikto { flex: none; width: 4.4rem; height: 4.4rem; }
 .viktigt-body { flex: 1; min-width: 0; }
+/* Visuellt dold, men kvar för skärmläsare */
 .viktigt-label {
-  display: block; margin-bottom: 0.15rem;
-  font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5c4300;
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .viktigt-body p { margin: 0.3rem 0; }
 .viktigt a { color: #5c4300; text-decoration: underline; }
