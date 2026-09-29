@@ -309,8 +309,11 @@ M2 = (
                'understa fettsyran identiska, medan den i mitten skiljer sig.',
                round(_fw / 1.4), round(_fh / 1.4))
     )
-    + plain('<p>Ritad som strukturformel, med esterbindningarna (–O–C(=O)–) och glycerolstommen tydligt utsatta, ser samma molekyl ut så här:</p>')
-    + figrow("triglycerid")
+    + plain('<p>Så här ser ett riktigt fett ur fiskolja ut som strukturformel. Glycerolstommen sitter till vänster, '
+            'och varje fettsyra är kopplad till den med en esterbindning <span style="white-space:nowrap">(–O–C(=O)–)</span>. Just den här fettmolekylen har '
+            'tre olika fettsyror: en mättad (palmitinsyra), en fleromättad omega-3-fettsyra (DHA) och en enkelomättad '
+            '(oljesyra). Räkna gärna kolatomerna och dubbelbindningarna i kedjorna!</p>')
+    + '<div class="m-row m-row--full"><figure class="side-fig">' + MOL.struct_card_html("triglycerid") + '</figure></div>'
     + plain(
         '<p>En fettsyra är en lång kolkedja med en syragrupp (–COOH) i ena änden. Om det bara finns enkelbindningar '
         'mellan kolatomerna i kedjan är fettsyran <strong class="term"><span class="concept-inline" data-concept="Mättat fett">mättad</span></strong>. '

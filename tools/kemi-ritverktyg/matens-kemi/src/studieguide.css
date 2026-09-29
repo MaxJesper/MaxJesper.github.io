@@ -83,3 +83,8 @@ details.wonder { scroll-margin-top: 0.75rem; }
   .guide-wide .m-row:has(.olglas-fig) > .m-side { padding-top: 0; }
   .olglas-fig { padding-top: 0; overflow: hidden; }
 }
+
+/* Bred strukturformel (triglyceriden ur fiskolja, 29 sep 2026): på dator skalas bilden ner till kortets bredd,
+   på smal skärm behåller den en läsbar minsta bredd och kortet kan rullas i sidled. */
+.wide-struct { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.wide-struct img { display: block; width: 100%; max-width: 100%; min-width: 760px; height: auto; }

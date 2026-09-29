@@ -69,10 +69,8 @@ SMILES = {
     # Oljesyra (18:1 cis-9, enkelomättad fettsyra) – cis-dubbelbindningen ger den karakteristiska "knäcken".
     'oljesyra':      'CCCCCCCC/C=C\\CCCCCCCC(=O)O',
     'glycerol':      'OCC(O)CO',
-    # Förenklad triglycerid: glycerol + en mättad (butanoyl, 4 C) och två omättade (cis-hex-3-enoyl,
-    # 6 C) acylkedjor. Riktiga fettsyror i kroppens fetter är mycket längre (12-18 kol) - kedjorna är
-    # förkortade här för att RDKit-geometrin och 3D-rutan ska bli tydliga (se OVERLAMNING.md).
-    'triglycerid':   'CCCC(=O)OCC(OC(=O)C/C=C\\CC)COC(=O)C/C=C\\CC',
+    # Triglycerid: INGEN 3D-modell sedan 29 sep 2026 (Jesper) – bara strukturformel (triglyceride_svg).
+    # Molekylen är ett riktigt fiskoljefett, se TRIGLYCERID_SMILES nedan.
     'glycin':        'NCC(=O)O',
     'alanin':        'CC(N)C(=O)O',
     'cystein':       'NC(CS)C(=O)O',
@@ -94,6 +92,12 @@ SMILES = {
     # och CIP-analysen skiljer sig från glukos bara på C4 (S -> R). Samma anomer (beta) som glukosbilden.
     'galaktos':      'OC[C@H]1O[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O',
 }
+
+# Fiskoljetriglycerid (Jesper 29 sep 2026): sn-1 palmitinsyra (16:0), sn-2 DHA (22:6 omega-3), sn-3 oljesyra
+# (18:1 cis-9). Alla tre är vanliga fettsyror i fiskolja, och i fiskfett sitter DHA främst i mittpositionen (sn-2).
+# Summaformel C59H100O6 (kontrollerad med RDKit). Används inte för 3D – bara som dokumentation av vad bilden visar.
+TRIGLYCERID_SMILES = ('CCCCCCCCCCCCCCCC(=O)OCC(OC(=O)CC/C=C\\C/C=C\\C/C=C\\C/C=C\\C/C=C\\C/C=C\\CC)'
+                      'COC(=O)CCCCCCC/C=C\\CCCCCCCC')
 
 def auto_view(atoms, bonds):
     """Samma algoritm som i bygg_syror.py: väljer (rotX, rotY) så att inga atomer skymmer varandra."""
@@ -192,16 +196,17 @@ TEXTS = {
               'syreatom (OH-grupp), och vita väteatomer runt om.',
         alt2d='Kondenserad formel för glycerol: HOCH2–CH(OH)–CH2OH, tre kolatomer i rad med en OH-grupp '
               'på varje.'),
-    'triglycerid': dict(namn='Triglycerid (förenklad modell)', formel='glycerol + 3 fettsyror (esterbindningar)',
-        form='glycerol med tre kedjor kopplade via syre', bindning='tre esterbindningar (C(=O)–O–C), en mättad och två omättade kedjor',
-        alt3d='Kulmodell av en triglycerid: en kort glycerolstomme i mitten med tre kedjor kopplade via '
-              'syreatomer, en rak mättad kedja och två kedjor med var sin knäck (omättade).',
-        alt2d='Schematisk formel för en triglycerid: glycerolstommen (tre kolatomer) med tre grenar, var '
-              'och en kopplad via "–O–C(=O)–" till en fettsyrakedja – en rak (mättad) och två med "CH=CH" '
-              'i kedjan (omättade).',
-        note='Förenklad modell: de riktiga fettsyrorna i kroppens fetter är mycket längre (12–18 kol) – '
-             'kedjorna här är förkortade för tydlighetens skull. Esterbindningarna och blandningen '
-             'mättat/omättat stämmer.'),
+    'triglycerid': dict(namn='Ett fett ur fiskolja (triglycerid)', formel='C<sub>59</sub>H<sub>100</sub>O<sub>6</sub>',
+        form='glycerol med tre långa fettsyrakedjor', bindning='tre esterbindningar (–O–C(=O)–)',
+        alt2d='Strukturformel för en triglycerid ur fiskolja. Till vänster glycerolstommen: tre kolatomer ovanför '
+              'varandra (CH2, CH, CH2). Från var och en går en esterbindning (–O–C med dubbelbundet O uppåt) till en '
+              'lång fettsyrakedja där varje grupp är utskriven. Överst palmitinsyra, mättad, 16 kolatomer, bara '
+              'enkelbindningar. I mitten DHA, en omega-3-fettsyra med 22 kolatomer och sex dubbelbindningar '
+              '(CH=CH). Siffrorna 3, 2, 1 under kedjans slut visar att den sista dubbelbindningen börjar på det '
+              'tredje kolet räknat från änden. Underst oljesyra, enkelomättad, 18 kolatomer och en dubbelbindning i mitten.',
+        note='Siffrorna 3–2–1 under DHA-kedjans slut visar varför den kallas <strong>omega-3</strong>: räknat från '
+             'kedjans ände (omega = sista bokstaven i det grekiska alfabetet) börjar den sista dubbelbindningen på det '
+             'tredje kolet.'),
     'glycin': dict(namn='Glycin (aminosyra)', formel='C<sub>2</sub>H<sub>5</sub>NO<sub>2</sub>',
         form='kort kedja: aminogrupp – kol – karboxylgrupp', bindning='enkelbindningar, en dubbelbindning (C=O) i karboxylgruppen',
         alt3d='Kulmodell av glycin: en blå kväveatom (aminogrupp) kopplad till en svart kolatom som i sin '
@@ -587,43 +592,82 @@ def dipeptide_svg():
     return svg.replace('<g stroke=', hl + '<g stroke=', 1)
 
 def triglyceride_svg():
-    """Schematisk formel: glycerolstomme (3 C, generöst mellanrum) med tre ESTERBINDNINGAR (-O-C(=O)-)
-    ritade som riktiga bindningar (inte textetiketter), där karbonylsyrets dubbelbindning alltid pekar
-    RAKT UPPÅT från kolet – samma riktning för alla tre, så esterbindningarna är lätta att jämföra och
-    ser lika ut. Glycerolstommen är lång nog (steg=170px) att syreatomerna på de tre armarna aldrig
-    hamnar nära varandra. En mättad (butanoyl) och två omättade (hex-3-enoyl, dubbelbindning=dubbel linje
-    i kedjan) fettsyror, som i molekylens SMILES/3D-modell ovan."""
-    nodes, edges, branches = {}, [], []
-    x0, y0, step = 90, 190, 170
-    gly_labels = ['CH<tspan dy="6" font-size="13">2</tspan>', 'CH', 'CH<tspan dy="6" font-size="13">2</tspan>']
-    for i in range(3):
-        nodes[f'g{i}'] = (x0, y0 + (i - 1) * step, gly_labels[i])
-    edges += [('g0', 'g1', 1), ('g1', 'g2', 1)]
-    chain_specs = ['sat', 'unsat', 'unsat']  # matchar SMILES: övre armen mättad, mitten+nedre omättade
-    for i, spec in enumerate(chain_specs):
-        gx, gy = nodes[f'g{i}'][0], nodes[f'g{i}'][1]
-        ox, oy = gx + 88, gy
-        cx_, cy_ = ox + 56, gy
-        nodes[f'o{i}'] = (ox, oy, 'O')
-        nodes[f'c{i}'] = (cx_, cy_, 'C')
-        edges.append((f'g{i}', f'o{i}', 1))
-        edges.append((f'o{i}', f'c{i}', 1))
-        branches.append((f'c{i}', cx_, cy_ - 52, 'O', 2))  # karbonylsyre: alltid rakt upp, samma för alla tre
-        if spec == 'sat':
-            seq = [('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH<tspan dy="6" font-size="13">2</tspan>', 1),
-                   ('CH<tspan dy="6" font-size="13">3</tspan>', 1)]
+    """Strukturformel för ett RIKTIGT fett ur fiskolja (Jesper 29 sep 2026, ersätter den förkortade modellen):
+    glycerol + palmitinsyra (16:0, överst), DHA (22:6 omega-3, i mitten) och oljesyra (18:1 cis-9, underst).
+    Varje CH2/CH/CH3-grupp är utskriven så att eleverna kan räkna kolen och se dubbelbindningarna (Jesper valde
+    detta framför grupperade (CH2)n). Kedjorna ritas raka (kondenserad formel), glycerolstommen och
+    karbonylsyrets dubbelbindning har korta bindningar. Siffrorna 3-2-1 under DHA:s slut visar omega-3."""
+    FSZ, SUB = 16, 11
+    CH2 = f'CH<tspan dy="5" font-size="{SUB}">2</tspan>'
+    CH3 = f'CH<tspan dy="5" font-size="{SUB}">3</tspan>'
+    W_CHAR = {'C': 11.6, 'H': 11.6, 'O': 12.5}
+    def wid(lab):  # ungefärlig bredd (Arial 16 px) av en etikett
+        import re as _re
+        plain = _re.sub(r'<[^>]+>', '', lab.replace(f'<tspan dy="5" font-size="{SUB}">', '\x01'))
+        w = 0
+        for ch in plain:
+            w += 6.5 if ch in '23\x01' else W_CHAR.get(ch, 9)
+        return w - (6.5 if '\x01' in plain else 0)
+    def tx(x, y, lab, size=FSZ, anchor='middle', fill=INK, weight='400'):
+        return (f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}" dominant-baseline="central" '
+                f'font-family="Arial, sans-serif" font-size="{size}" font-weight="{weight}" fill="{fill}">{lab}</text>')
+    lines, texts = [], []
+    def hbond(x1, lab1, x2, lab2, y, order=1):
+        a = x1 + wid(lab1) / 2 + 2.5
+        b = x2 - wid(lab2) / 2 - 2.5
+        if order == 1:
+            lines.append(_line(a, y, b, y))
         else:
-            seq = [('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH', 1), ('CH', 2),
-                   ('CH<tspan dy="6" font-size="13">2</tspan>', 1), ('CH<tspan dy="6" font-size="13">3</tspan>', 1)]
-        prev, px = f'c{i}', cx_
-        for j, (lab, ordr) in enumerate(seq):
-            nid = f'{prev}_{j}'
-            px += 44
-            py = cy_ + (14 if j % 2 == 0 else -14)
-            nodes[nid] = (px, py, lab)
-            edges.append((prev, nid, ordr))
-            prev = nid
-    return group_svg(nodes, edges, branches)
+            lines.append(_line(a, y - 2.6, b, y - 2.6)); lines.append(_line(a, y + 2.6, b, y + 2.6))
+    GX, Y0, STEP, SP = 40, 78, 80, 44        # glycerolens x, första radens y, radavstånd, avstånd mellan grupper
+    rows = [Y0, Y0 + STEP, Y0 + 2 * STEP]
+    gly = [CH2, 'CH', CH2]
+    for k, y in enumerate(rows):
+        texts.append(tx(GX, y, gly[k]))
+        if k:
+            lines.append(_line(GX, rows[k - 1] + 11, GX, y - 11))   # kort bindning mellan glycerolens kol
+    # fettsyrorna: lista av (etikett, bindningsordning till föregående grupp)
+    def seq_sat(n):            # n kol totalt inkl. karbonylkolet
+        return [(CH2, 1)] * (n - 2) + [(CH3, 1)]
+    dha = [(CH2, 1), (CH2, 1)]
+    for r in range(6):
+        dha += [('CH', 1), ('CH', 2), (CH2, 1)]
+    dha += [(CH3, 1)]
+    olja = [(CH2, 1)] * 7 + [('CH', 1), ('CH', 2)] + [(CH2, 1)] * 7 + [(CH3, 1)]
+    chains = [
+        (seq_sat(16), 'Palmitinsyra – mättad (16 kolatomer)'),
+        (dha, 'DHA – en omega-3-fettsyra, fleromättad (22 kolatomer, 6 dubbelbindningar)'),
+        (olja, 'Oljesyra – enkelomättad (18 kolatomer, 1 dubbelbindning)'),
+    ]
+    OX, CX = GX + 46, GX + 84
+    maxx = 0
+    for k, y in enumerate(rows):
+        seq, label = chains[k]
+        texts.append(tx(OX, y, 'O'))
+        texts.append(tx(CX, y, 'C'))
+        hbond(GX, gly[k], OX, 'O', y)
+        hbond(OX, 'O', CX, 'C', y)
+        # karbonylsyre: kort dubbelbindning rakt upp
+        lines.append(_line(CX - 2.6, y - 11, CX - 2.6, y - 27)); lines.append(_line(CX + 2.6, y - 11, CX + 2.6, y - 27))
+        texts.append(tx(CX, y - 37, 'O'))
+        texts.append(tx(CX + 20, y - 36, label, size=13, anchor='start', fill='#4a4a5a'))
+        px, plab = CX, 'C'
+        xs = []
+        for lab, order in seq:
+            nx = px + SP
+            texts.append(tx(nx, y, lab))
+            hbond(px, plab, nx, lab, y, order)
+            xs.append(nx)
+            px, plab = nx, lab
+        maxx = max(maxx, px + wid(plab) / 2)
+        if k == 1:   # omega-räkning under DHA:s tre sista kol
+            for num, xx in zip(('3', '2', '1'), xs[-3:]):
+                texts.append(tx(xx, y + 22, num, size=12, fill='#4a4a5a', weight='700'))
+    pad = 14
+    minx, miny = GX - 24 - pad, Y0 - 50 - pad
+    Wc, Hc = maxx + pad - minx, rows[-1] + 30 + pad - miny
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{minx:.1f} {miny:.1f} {Wc:.1f} {Hc:.1f}" width="{Wc:.0f}" height="{Hc:.0f}" role="img">'
+            f'<g stroke="{INK}" stroke-width="1.5" stroke-linecap="round">{"".join(lines)}</g>{"".join(texts)}</svg>')
 
 def struct_svg_all():
     out = {}
@@ -717,6 +761,20 @@ def card_html(key):
             f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
             f'<div class="mc-pair">{struct}{viewer}</div>'
             f'<p class="mc-bond">Bindning: {m["bindning"]} · Form: {m["form"]}{note}</p></div>')
+
+def struct_card_html(key):
+    """Mol-card med BARA strukturformel (ingen 3D-kulmodell) – för molekyler som är för stora för en
+    meningsfull kulmodell (triglyceriden ur fiskolja). Bilden ligger i en rullbar ruta (.wide-struct)
+    så att den inte krymps till oläslighet på mobil."""
+    m = TEXTS[key]
+    sp = f'/images/kemi/matens-kemi/strukturformler/{key}.svg'
+    sw, sh = _svg_dims(IMG / 'strukturformler' / f'{key}.svg')
+    alt2d = html.escape(m['alt2d'], quote=True)
+    note = f' {m["note"]}' if 'note' in m else ''
+    return (f'<div class="mol-card" id="km-{key}"><div class="mc-head mc-head--lab"><span class="mc-name">{m["namn"]}</span>'
+            f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
+            f'<div class="wide-struct"><img src="{sp}" width="{sw}" height="{sh}" alt="{alt2d}" loading="lazy"></div>'
+            f'<p class="mc-bond">Bindning: {m["bindning"]} · Form: {m["form"]}.{note}</p></div>')
 
 DETALJERAD_ALT2D = ('Haworth-projektion av glukosringen med svart text på vit bakgrund: alla fem '
     'ringkolatomer (C1–C5) är numrerade, ringens syreatom är märkt O, och varje ringkolatom har både sin '
