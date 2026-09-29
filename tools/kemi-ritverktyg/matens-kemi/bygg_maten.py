@@ -88,6 +88,11 @@ SMILES = {
     # 2-deoxi-D-ribos (öppen kedja) – Chemicalbook (CAS 533-67-5). Verifierad mot RDKit CIP-analys:
     # (3S,4R)-3,4,5-trihydroxypentanal, den etablerade konfigurationen. Saknar OH på C2 jämfört med ribos.
     'deoxiribos':    'OC[C@@H](O)[C@@H](O)CC=O',
+    # ── Tillagd 29 sep 2026 (Jesper): galaktos bredvid glukos i M1 ──
+    # Beta-D-galaktopyranos – samma SMILES som glukos ovan med EXAKT ett stereocentrum inverterat (C4).
+    # Verifierad med RDKit: kanonisk SMILES identisk med PubChem CID 439353 (beta-D-galactopyranose),
+    # och CIP-analysen skiljer sig från glukos bara på C4 (S -> R). Samma anomer (beta) som glukosbilden.
+    'galaktos':      'OC[C@H]1O[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O',
 }
 
 def auto_view(atoms, bonds):
@@ -135,6 +140,12 @@ def build_mols():
 MOLGEOM = build_mols()
 
 TEXTS = {
+    'galaktos': dict(namn='Galaktos', formel='C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>',
+        form='sexring (pyranosring)', bindning='enkelbindningar i ringen och till OH-grupperna',
+        alt3d='Kulmodell av galaktos: en sexring byggd av fem svarta kolatomer och en röd syreatom, med en '
+              'gren av kol, syre och väte (CH2OH) och flera röda OH-grupper runt ringen – nästan likadan som '
+              'glukos, men OH-gruppen på kolatom 4 sitter på andra sidan ringen.',
+        alt2d='Haworth-projektion av galaktosringen.'),
     'glukos': dict(namn='Glukos (druvsocker)', formel='C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>',
         form='sexring (pyranosring)', bindning='enkelbindningar i ringen och till OH-grupperna',
         alt3d='Kulmodell av glukos: en sexring byggd av fem svarta kolatomer och en röd syreatom, med en '
@@ -746,6 +757,40 @@ def detailed_glucose_card_html():
             f'<div class="mc-pair">{struct}{viewer}</div>'
             f'<p class="mc-bond">Samma molekyl som glukosringen till vänster – här är varje kolatom, väteatom och '
             f'OH-grupp i ringen ritad ut för sig.</p></div>')
+
+GALAKTOS_ALT2D = ('Haworth-projektion av galaktosringen, ritad exakt som glukosbilden ovanför: alla fem '
+    'ringkolatomer (C1–C5) är numrerade, ringens syreatom är märkt O, och varje ringkolatom har sin '
+    'väteatom (H, svart) och sin OH-grupp (röd) utsatta lodrätt uppåt eller nedåt. Enda skillnaden mot '
+    'glukos är kolatom 4 (C4): här pekar OH-gruppen UPPÅT och väteatomen NEDÅT (i glukos är det tvärtom).')
+
+def detailed_galactose_card_html():
+    """Mol-card för galaktos, samma upplägg som detailed_glucose_card_html().
+
+    Bilden (galaktos-detaljerad.png) är gjord UR glukos-detaljerad.png (Jespers referensbild) 29 sep 2026:
+    bara H och OH på C4 har bytt plats (OH upp, H ned) och rubriken bytt till "Galaktos" (IBM Plex Sans
+    Bold, närmast originalets typsnitt). Allt annat är pixelidentiskt med glukosbilden, så att eleverna
+    kan jämföra bilderna och se att C4 är den enda skillnaden (samma beta-anomer som glukosbilden)."""
+    m = TEXTS['galaktos']
+    png = IMG / 'kulmodeller' / 'galaktos.png'
+    pw, ph = _dims(png)
+    from PIL import Image as _PILImage
+    _im = _PILImage.open(IMG / 'strukturformler' / 'galaktos-detaljerad.png')
+    sw, sh = round(_im.width / 2), round(_im.height / 2)
+    alt2d = html.escape(GALAKTOS_ALT2D, quote=True)
+    alt3d = html.escape(m['alt3d'], quote=True)
+    struct = (f'<div><span class="mc-lab">Strukturformel (detaljerad)</span><div class="mc-struct">'
+              f'<img src="/images/kemi/matens-kemi/strukturformler/galaktos-detaljerad.png" width="{sw}" height="{sh}" '
+              f'alt="{alt2d}" loading="lazy"></div></div>')
+    viewer = (f'<div><span class="mc-lab">Kulmodell (3D)</span><div class="km-viewerbox mc-viewer" data-mol="galaktos" role="group" tabindex="0" '
+              f'style="height:190px" aria-label="{alt3d} Piltangenter roterar, plus och minus zoomar."><noscript><img class="mc-3d" '
+              f'src="/images/kemi/matens-kemi/kulmodeller/galaktos.png" width="{pw}" height="{ph}" alt="{alt3d}"></noscript></div>'
+              f'<div class="km-hint">Dra för att rotera.</div></div>')
+    return (f'<div class="mol-card" id="km-galaktos-detaljerad"><div class="mc-head mc-head--lab"><span class="mc-name">Galaktos – detaljerad formel</span>'
+            f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
+            f'<div class="mc-pair">{struct}{viewer}</div>'
+            f'<p class="mc-bond">Jämför med glukos ovanför: allt är likadant utom på kolatom 4 (C<sub>4</sub>). '
+            f'I galaktos pekar OH-gruppen uppåt och väteatomen nedåt – i glukos är det tvärtom.</p></div>')
+
 
 if __name__ == '__main__':
     what = sys.argv[1] if len(sys.argv) > 1 else 'all'

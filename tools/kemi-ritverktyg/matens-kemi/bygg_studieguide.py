@@ -131,7 +131,7 @@ def sugar_table():
     )
     return (
         '<div class="tbl-scroll"><table class="sugar-table">'
-        '<caption>Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos finns i bildkolumnen.</caption>'
+        '<caption>Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns i bildkolumnen.</caption>'
         '<thead><tr><th colspan="4">Monosackarider (en sockerenhet)</th></tr>'
         '<tr><th>Namn</th><th>Formel</th><th>Form</th><th>Finns i</th></tr></thead>'
         f'<tbody>{mono_html}</tbody>'
@@ -179,6 +179,7 @@ M1 = (
         'data-concept="glykosidbindning">glykosidbindning</span></strong> bildas en disackarid, som i exemplen i '
         'tabellen ovan.</p>',
         sidefig(MOL.detailed_glucose_card_html())
+        + sidefig(MOL.detailed_galactose_card_html())
         + illust(OLGLAS_JPG,
                  'Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
                  'med ett snöre och en hög lösa sädeskorn.',

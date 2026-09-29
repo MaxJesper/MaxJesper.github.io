@@ -354,3 +354,9 @@ och via faktisk Tab+Enter-tangentbordsnavigering):
   motiverad ovan – flagga om Jesper ändå vill ha en helt fristående klass.
 - Ingen mänsklig granskning av den nya pedagogiska texten (proteinfunktionerna, vitamin-/mineraltexten)
   utöver mig själv och de källor som anges.
+
+### Tillägg 29 sep 2026 – galaktos bredvid glukos i M1
+- Nytt mol-card `km-galaktos-detaljerad` (`detailed_galactose_card_html()` i `bygg_maten.py`), direkt under glukoskortet i `.m-side`.
+- `galaktos-detaljerad.png` är gjord UR `glukos-detaljerad.png`: bara H och OH på C4 har bytt plats (OH upp, H ned) och rubriken bytts till "Galaktos" (IBM Plex Sans Bold). Resten är pixelidentiskt, så att eleverna kan jämföra bilderna. Samma anomer (β) som glukosbilden.
+- SMILES `galaktos` = glukos-SMILES med C4 inverterat. Verifierad med RDKit: den kanoniska SMILES är identisk med PubChem CID 439353 (β-D-galaktopyranos), och CIP skiljer sig bara på C4.
+- **OBS RDKit-version:** att köra `bygg_maten.py data` med RDKit 2026.03 (på Jespers dator) gav något andra 3D-koordinater för ALLA befintliga molekyler. Därför lades BARA `galaktos`-posterna in i den befintliga `js/molmodeller.js`, och övriga molekyler lämnades orörda. `kulmodeller/galaktos.png` renderades separat med `_server.render`.
