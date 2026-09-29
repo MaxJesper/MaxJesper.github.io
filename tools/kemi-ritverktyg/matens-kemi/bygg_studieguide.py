@@ -131,7 +131,7 @@ def sugar_table():
     )
     return (
         '<div class="tbl-scroll"><table class="sugar-table">'
-        '<caption>Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns i bildkolumnen.</caption>'
+        '<caption>Förenklad översikt – detaljerad strukturformel och 3D-modell för glukos och galaktos finns under tabellen.</caption>'
         '<thead><tr><th colspan="4">Monosackarider (en sockerenhet)</th></tr>'
         '<tr><th>Namn</th><th>Formel</th><th>Form</th><th>Finns i</th></tr></thead>'
         f'<tbody>{mono_html}</tbody>'
@@ -175,12 +175,11 @@ M1 = (
         'glukos, fruktos och galaktos alla har samma molekylformel (C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>) men '
         'olika uppbyggnad – de är inte samma ämne.</p>'
         + sugar_table()
+        + '<div class="fig-row">' + sidefig(MOL.detailed_glucose_card_html(), MOL.detailed_galactose_card_html()) + '</div>'
         + '<p>När två monosackarider binds ihop med en <strong class="term"><span class="concept-inline" '
         'data-concept="glykosidbindning">glykosidbindning</span></strong> bildas en disackarid, som i exemplen i '
         'tabellen ovan.</p>',
-        sidefig(MOL.detailed_glucose_card_html())
-        + sidefig(MOL.detailed_galactose_card_html())
-        + illust(OLGLAS_JPG,
+        illust(OLGLAS_JPG,
                  'Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
                  'med ett snöre och en hög lösa sädeskorn.',
                  'Öl tillverkas av korn som får gro i 3 dagar. Därefter torkas och rostas kornen, varpå en sirap av '

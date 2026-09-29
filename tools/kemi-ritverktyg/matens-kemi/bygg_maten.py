@@ -755,10 +755,9 @@ def detailed_glucose_card_html():
     return (f'<div class="mol-card" id="km-glukos-detaljerad"><div class="mc-head mc-head--lab"><span class="mc-name">Glukos – detaljerad formel</span>'
             f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
             f'<div class="mc-pair">{struct}{viewer}</div>'
-            f'<p class="mc-bond">Samma molekyl som glukosringen till vänster – här är varje kolatom, väteatom och '
-            f'OH-grupp i ringen ritad ut för sig.</p></div>')
+            f'<p class="mc-bond">Varje kolatom, väteatom och OH-grupp i ringen är utritad för sig.</p></div>')
 
-GALAKTOS_ALT2D = ('Haworth-projektion av galaktosringen, ritad exakt som glukosbilden ovanför: alla fem '
+GALAKTOS_ALT2D = ('Haworth-projektion av galaktosringen, ritad exakt som glukosbilden: alla fem '
     'ringkolatomer (C1–C5) är numrerade, ringens syreatom är märkt O, och varje ringkolatom har sin '
     'väteatom (H, svart) och sin OH-grupp (röd) utsatta lodrätt uppåt eller nedåt. Enda skillnaden mot '
     'glukos är kolatom 4 (C4): här pekar OH-gruppen UPPÅT och väteatomen NEDÅT (i glukos är det tvärtom).')
@@ -788,7 +787,7 @@ def detailed_galactose_card_html():
     return (f'<div class="mol-card" id="km-galaktos-detaljerad"><div class="mc-head mc-head--lab"><span class="mc-name">Galaktos – detaljerad formel</span>'
             f'<span><span class="mc-flab">Formel</span><span class="mc-formula">{m["formel"]}</span></span></div>'
             f'<div class="mc-pair">{struct}{viewer}</div>'
-            f'<p class="mc-bond">Jämför med glukos ovanför: allt är likadant utom på kolatom 4 (C<sub>4</sub>). '
+            f'<p class="mc-bond">Jämför med glukos: allt är likadant utom på kolatom 4 (C<sub>4</sub>). '
             f'I galaktos pekar OH-gruppen uppåt och väteatomen nedåt – i glukos är det tvärtom.</p></div>')
 
 

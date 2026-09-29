@@ -67,3 +67,7 @@ details.wonder { scroll-margin-top: 0.75rem; }
 
 /* Sidokolumnen (.m-side) är smal (370px) - se till att .viktigt inte känns trång där. */
 .guide-wide .m-side .viktigt { font-size: 0.92rem; padding: 0.65rem 0.85rem; gap: 0.6rem; }
+
+/* Glukos/galaktos-korten ligger bredvid varandra under sockertabellen (29 sep 2026): formeln ovanför
+   3D-modellen i stället för bredvid, så att Haworth-bilden får hela kortets bredd och C4 går att läsa. */
+#km-glukos-detaljerad .mc-pair, #km-galaktos-detaljerad .mc-pair { grid-template-columns: minmax(0, 1fr); }
