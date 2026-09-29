@@ -428,9 +428,9 @@ def fat_overview_svg():
         lab_x = block_x + (100 if k == 1 else 92)
         parts.append(_tx(lab_x, y - 8, title, size=15, weight='700').replace(f'fill="{INK}"', 'fill="#fff"'))
         parts.append(_tx(lab_x, y + 9, sub, size=12, weight='700').replace(f'fill="{INK}"', 'fill="#fff"'))
-    legend = (f'<g font-family="Arial, sans-serif" font-size="14" fill="{INK}">'
-              f'<rect x="20" y="{H-34}" width="16" height="16" fill="{col_glycerol}"/>'
-              f'<text x="42" y="{H-22}">Glycerol (G) – tre armar, en per fettsyra</text></g>')
+    # Teckenförklaringen (färgruta + 'Glycerol (G) – tre armar …') borttagen 29 sep 2026 (Jesper) –
+    # bildtexten i studieguiden förklarar G redan.
+    legend = ''
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
             f'role="img">{"".join(parts)}{legend}</svg>')
 

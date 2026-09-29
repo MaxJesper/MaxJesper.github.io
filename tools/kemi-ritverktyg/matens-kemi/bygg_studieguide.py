@@ -304,8 +304,9 @@ M2 = (
                'armar. I änden av varje arm sitter ett rektangulärt block (en fettsyra). Två block är orange och '
                'märkta "Fettsyra 1 (mättad)" och "Fettsyra 3 (mättad)". Det mittersta blocket är turkost, har en '
                'tydlig pilspets-liknande knäck i formen, och är märkt "Fettsyra 2 (omättad – knäck)".',
-               'Principskiss: glycerol (G) med tre armar, en fettsyra kopplad till varje arm. Den mittersta fettsyran '
-               'har medvetet en annan form (knäck) för att senare kunna kopplas till omättat fett.',
+               'Principskiss: glycerol (G) med tre armar. En fettsyra kopplas till varje arm. Två eller tre av fettsyrorna '
+               'kan vara lika, men alla fettsyrorna kan också vara olika fettsyror. I principskissen är den översta och '
+               'understa fettsyran identiska, medan den i mitten skiljer sig.',
                round(_fw / 1.4), round(_fh / 1.4))
     )
     + plain('<p>Ritad som strukturformel, med esterbindningarna (–O–C(=O)–) och glycerolstommen tydligt utsatta, ser samma molekyl ut så här:</p>')
