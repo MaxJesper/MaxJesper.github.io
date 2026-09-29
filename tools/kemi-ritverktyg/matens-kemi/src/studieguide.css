@@ -72,19 +72,14 @@ details.wonder { scroll-margin-top: 0.75rem; }
    3D-modellen i stället för bredvid, så att Haworth-bilden får hela kortets bredd och C4 går att läsa. */
 #km-glukos-detaljerad .mc-pair, #km-galaktos-detaljerad .mc-pair { grid-template-columns: minmax(0, 1fr); }
 
-/* Ölglasbilden bredvid sockertabellen (Jesper 29 sep 2026): bildens över- och underkant i linje med
-   tabellens. Raden = tabell (lead) + bild (side) + glukos/galaktos-korten (rest). Sidokolumnen blir ett
-   subgrid över radens två spår: bildrutan hamnar i spåret med tabellen och får exakt dess höjd
-   (contain:size = bilden påverkar inte spårets höjd), bildtexten hamnar i spåret under, bredvid korten.
-   Bara i tvåkolumnsläget; på smala skärmar (≤900 px) visas bilden som vanligt. */
+/* Ölglasbilden bredvid sockertabellen (Jesper 29 sep 2026): bildens överkant i linje med tabellens
+   överkant. Raden börjar med själva tabellen (tabellrubriken visas som .tbl-caption i raden ovanför),
+   så sidokolumnen behöver bara nollställa sin egen och ramens övre luft. Bilden visas hel, i sin
+   vanliga storlek (Jesper: underkanten behöver INTE linjera – hellre hel bild än beskuren). */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .tbl-caption { font-size: 0.85rem; color: #4a4a5a; margin: 0.9rem 0 0.35rem; }
 .guide-wide .m-row:has(.olglas-fig) .sugar-table { margin: 0; }
-.olglas-fig .olglas-img img { display: block; width: 100%; height: auto; border-radius: 6px; }
 @media (min-width: 901px) {
-  .guide-wide .m-row:has(.olglas-fig) > .m-side { grid-row: 1 / span 2; display: grid; grid-template-rows: subgrid; padding-top: 0; gap: 0; }
-  .guide-wide .m-row:has(.olglas-fig) .olglas-fig { grid-row: 1 / span 2; display: grid; grid-template-rows: subgrid; row-gap: 0; padding: 0; background: none; border: 0; }
-  .olglas-fig .olglas-img { contain: size; min-height: 0; height: 100%; }
-  .olglas-fig .olglas-img img { height: 100%; object-fit: cover; object-position: 30% 50%; }
-  .olglas-fig figcaption { margin-top: 0.6rem; }
+  .guide-wide .m-row:has(.olglas-fig) > .m-side { padding-top: 0; }
+  .olglas-fig { padding-top: 0; overflow: hidden; }
 }

@@ -107,13 +107,12 @@ def plain(*parts):
 OLGLAS_JPG = "/images/kemi/matens-kemi/foton/olglas.jpg"
 
 def olglas_fig():
-    """Ölglasbilden bredvid sockertabellen i M1 (Jesper 29 sep 2026): bildens över- OCH underkant ska
-    linjera med tabellens. Bilden ligger i en egen ruta (.olglas-img) som via CSS (src/studieguide.css,
-    subgrid + contain:size) får exakt tabellradens höjd; bildtexten hamnar i raden under, bredvid
-    glukos/galaktos-korten. object-fit:cover beskär bilden lite i sidled när tabellen är hög."""
-    return (f'<figure class="side-fig olglas-fig"><div class="olglas-img"><img src="{OLGLAS_JPG}" width="350" height="281" '
+    """Ölglasbilden bredvid sockertabellen i M1 (Jesper 29 sep 2026): hel bild i vanlig storlek, med
+    överkanten i linje med tabellens överkant (se src/studieguide.css). Underkanten linjerar inte –
+    ett försök att sträcka bilden till tabellens höjd beskar glaset och underkändes."""
+    return (f'<figure class="side-fig olglas-fig"><img src="{OLGLAS_JPG}" width="350" height="281" '
             'alt="Ett ölglas fyllt med ljust, guldgult öl med vitt skum, bredvid en knippa torkade sädesax bundna '
-            'med ett snöre och en hög lösa sädeskorn." loading="lazy"></div>'
+            'med ett snöre och en hög lösa sädeskorn." loading="lazy">'
             '<figcaption>Öl tillverkas av korn som får gro i 3 dagar. Därefter torkas och rostas kornen, varpå en sirap av '
             'maltsocker kallad vört lakas ur de krossade kornen. Vörten kokas sedan med humlekottar för att få '
             'smak och hållbarhet, varpå ölet får jäsa. I jäsningen omvandlar jästsvampen maltsockret till '
