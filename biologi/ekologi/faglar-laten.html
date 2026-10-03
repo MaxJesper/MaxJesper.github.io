@@ -54,6 +54,14 @@
   .lyssna-ruta { background: var(--gron-mjuk); border: 1px solid var(--gron-kant); border-radius: 16px; padding: 1.3rem 1rem; text-align: center; margin-bottom: 1rem; }
   .spela { font: inherit; font-weight: 700; font-size: 1.15rem; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.95rem 1.6rem; border-radius: 999px; border: none; background: var(--gron); color: #fff; cursor: pointer; box-shadow: 0 2px 8px rgba(47,82,40,0.3); }
   .spela:hover { background: var(--gron-stark); }
+  /* Spela + Nästa bredvid varandra överst (Jesper 3 okt 2026) – slipper skrolla ner till facit på mobilen */
+  .spela-rad { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; align-items: center; }
+  .spela-rad .btn-nasta { margin-top: 0; padding: 0.95rem 1.4rem; font-size: 1.1rem; border-radius: 999px; }
+  @media (max-width: 560px) {
+    .spela-rad { gap: 0.5rem; }
+    .spela-rad .spela, .spela-rad .btn-nasta { font-size: 1rem; padding: 0.8rem 0.95rem; white-space: nowrap; }
+    .spela-rad .spela { gap: 0.4rem; }
+  }
   .spela svg { width: 1.3em; height: 1.3em; }
   .lyssna-hjalp { font-size: 0.85rem; color: var(--gra); margin: 0.6rem 0 0; }
   .vag { height: 34px; display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 0.7rem; }
@@ -159,10 +167,13 @@
     </div>
 
     <div class="lyssna-ruta" id="lyssna-ruta">
+      <div class="spela-rad">
       <button type="button" class="spela" id="spelaBtn">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
         <span id="spelaText">Spela lätet</span>
       </button>
+      <button type="button" class="btn-nasta doldt" id="nastaBtn">Nästa fågel →</button>
+      </div>
       <div class="vag" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <p class="lyssna-hjalp">Du får lyssna hur många gånger du vill.</p>
     </div>
@@ -277,6 +288,7 @@ function visaFraga() {
   el("s-ratt").textContent = ratt;
   el("besked").textContent = " "; el("besked").className = "besked";
   el("facit").classList.add("doldt"); el("facit").innerHTML = "";
+  el("nastaBtn").classList.add("doldt");
   el("svar-grid").innerHTML = "";
   alternativ(aktuell).forEach((a, i) => {
     const b = document.createElement("button");
@@ -308,13 +320,14 @@ function svara(knapp, valt) {
     '<div><h3>' + esc(a.namn) + '</h3>' +
     '<p class="lat"><strong>Så känner du igen lätet:</strong> ' + esc(a.lat) + '</p>' +
     '<p>' + esc(a.fakta) + '</p>' +
-    '<p class="kalla">' + kallRad(a) + '</p>' +
-    '<button type="button" class="btn-nasta" id="nastaBtn">' + (index + 1 < RUNDA.length ? "Nästa fågel →" : "Se resultatet →") + '</button></div>';
+    '<p class="kalla">' + kallRad(a) + '</p></div>';
   el("facit").classList.remove("doldt");
-  el("nastaBtn").addEventListener("click", nasta);
+  el("nastaBtn").textContent = index + 1 < RUNDA.length ? "Nästa fågel →" : "Se resultatet →";
+  el("nastaBtn").classList.remove("doldt");
   el("nastaBtn").focus({ preventScroll: true });
 }
 
+el("nastaBtn").addEventListener("click", nasta);
 function nasta() { index++; visaFraga(); el("spelaBtn").focus(); }
 
 function visaSlut() {
