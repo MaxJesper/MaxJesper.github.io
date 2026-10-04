@@ -37,6 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="/om-plattformen.html">Om plattformen</a>
       </li>
 
+      <!-- Nationella prov (tidigare givna prov, länkar till Umeå universitet) -->
+      <li class="menu-home">
+        <a href="/nationella-prov.html">Nationella prov</a>
+      </li>
+
       <!-- Biologi -->
       <li class="menu-section">
         <button class="menu-toggle">Biologi</button>
