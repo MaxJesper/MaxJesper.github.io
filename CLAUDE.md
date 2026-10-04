@@ -1091,3 +1091,10 @@ Ursprungligt: Ska göras tillsammans med Jesper. Väntar på hans foton för pun
 - **Alla milstolpar är öppna från början** (`<details class="milestone" … open>` på ALLA, inte bara m1). Där studieguiden har en växlande knapp (`#toggle-all-btn`) ska startetiketten vara **"Stäng alla"**. Introtexten säger "Klicka på en milstolpes rubrik för att fälla ihop eller öppna den."
 - **Rubrikfältet (summary) är mörkt i kapitlets egen färg med vit text:** den gemensamma `css/milstolpe.css` läses in efter `style.css`, och varje studieguide sätter `:root { --ms-head: <kapitelfärg>; }` i sin `<style>` (samma färg som tidigare användes för "MILSTOLPE N"-texten). Kontrasten mot vitt ska vara minst 4.5:1. Lyssna-knappen blir vit med text i kapitelfärgen. Vid utskrift blir rubriken svart text med en linje under.
 - Genererade kapitel (kemi-som-amne, separationsprocesser, matens-kemi): detta finns i respektive `bygg_studieguide.py`. **Nya studieguider ska följa samma mönster.**
+
+## Länkarna i områdessidornas resursrutor (Jesper 4 okt 2026)
+- **Material för elever**, i den här ordningen: Studieguide, Checklista, Instuderingsfrågor, Övningsprov, Lärande spel, Begreppslista. Efter dem kommer övrigt material som inte är spel, till exempel laborationer, 3D-modeller, arbetsblad, exkursionsmaterial och filmer.
+- **Material för läraren:** just nu BARA "Facit till övningsprovet". Längre fram kan här finnas lektionsförslag, filmer till lektioner, NP-material, prov som eleverna inte kommer åt, grovplaneringar och lärarhandledningar. Rubriken "för läraren" signalerar "i huvudsak lektionsmaterial".
+- **Inga spel eller övningsverktyg i resursrutorna.** De nås via Lärande spel, och om ett spel saknas där läggs det till som ett kort i `larande-spel.html`.
+- De genererade kapitlen (kemi-som-amne, separationsprocesser, matens-kemi) har listorna i sina `bygg_index.py`.
+- Framtid: när sidan börjar säljas låses övningarna till betalversionen.

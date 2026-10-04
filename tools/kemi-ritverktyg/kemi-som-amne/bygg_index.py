@@ -173,22 +173,18 @@ body = f'''<body class="area-amne">
               <li><a href="./checklista.html"><strong>Checklista</strong></a></li>
               <li><a href="./instuderingsfragor.html"><strong>Instuderingsfrågor</strong></a></li>
               <li><a href="./ovningsprov.html"><strong>Övningsprov</strong></a></li>
+              <li><a href="./larande-spel.html"><strong>Lärande spel</strong></a> – begreppskort, bingo och korsord</li>
+              <li><a href="./begreppslista.html"><strong>Begreppslista</strong></a></li>
               <li><a href="/kemi/faropiktogram.html"><strong>Faropiktogram</strong></a> – lär dig känna igen de nio symbolerna</li>
-              <li><a href="./ovningsverktyg.html"><strong>Övningar</strong></a> – dra och släpp och sortera</li>
               <li><a href="./laborationer.html"><strong>Laborationer</strong></a> – {len(LABS)} laborationsinstruktioner att skriva ut</li>
               <li><a href="./sakerhetsintyg.html"><strong>Säkerhetsintyg</strong></a> – skrivs ut och undertecknas</li>
               <li><a href="./rapportmall.html"><strong>Mall för laborationsrapport</strong></a> – skrivs ut</li>
-              <li><a href="./labbutrustning-spel.html"><strong>Labbutrustning</strong></a> – känn igen föremålen på foto</li>
-              <li><a href="./larande-spel.html"><strong>Lärande spel</strong></a> – begreppskort, bingo och korsord</li>
             </ul>
           </article>
           <article class="resource-box">
             <h2>Material för läraren</h2>
             <ul>
-              <li><a href="./begreppslista.html"><strong>Begreppslista</strong></a></li>
               <li><a href="./facit.html"><strong>Facit till övningsprovet</strong></a></li>
-              <li><a href="./instuderingsfragor-print-larare.html"><strong>Instuderingsfrågor med svar</strong></a> – utskrift för läraren</li>
-              <li><a href="./laborationer.html"><strong>Laborationer med lärarnotiser</strong></a> – risker, material och tips för de {len(LABS)} laborationerna</li>
             </ul>
           </article>
         </section>
