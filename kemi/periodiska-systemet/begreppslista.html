@@ -69,14 +69,20 @@
   <script>
     function renderTable(data, lang) {
       var isSwedish = (!lang || lang === 'sv-SE');
+      // Mobil (Jesper 4 okt 2026): det översatta begreppet visas UNDER det svenska i första kolumnen
+      // (.bl-native-under), och den egna översättningskolumnen (.bl-col-native) döljs – så får
+      // Förklaring mer bredd. På dator syns tre kolumner som förut. Se css/style.css.
       var html = '<table class="begrepp-table"><thead><tr>';
-      html += '<th style="width:28%">Begrepp</th>';
-      if (!isSwedish) html += '<th style="width:28%">Begrepp (övers.)</th>';
+      html += '<th class="bl-col-begrepp">Begrepp' + (isSwedish ? '' : '<span class="bl-native-under"> / översatt</span>') + '</th>';
+      if (!isSwedish) html += '<th class="bl-col-native">Begrepp (övers.)</th>';
       html += '<th>Förklaring</th></tr></thead><tbody>';
       data.forEach(function(item) {
-        html += '<tr><td>' + item.namn + '</td>';
-        if (!isSwedish) html += '<td>' + (item.namn_native || '') + '</td>';
-        html += '<td>' + item.definition + '</td></tr>';
+        var nat = item.namn_native || '';
+        html += '<tr><td>' + item.namn;
+        if (!isSwedish && nat) html += '<span class="bl-native-under" dir="auto">' + nat + '</span>';
+        html += '</td>';
+        if (!isSwedish) html += '<td class="bl-col-native" dir="auto">' + nat + '</td>';
+        html += '<td' + (isSwedish ? '' : ' dir="auto"') + '>' + item.definition + '</td></tr>';
       });
       html += '</tbody></table>';
       document.getElementById('begrepp-table-wrap').innerHTML = html;
