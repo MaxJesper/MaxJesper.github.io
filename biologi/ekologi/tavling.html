@@ -262,9 +262,16 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.7rem;
   }
+  /* Mobil (Jesper 4 okt 2026): de fyra trädnamnen på EN rad under bilden i stället för en kolumn – mer
+     kompakt i höjdled. Mindre text och avstavning så att även långa namn (Skogskornell, Kastanj (hästkastanj)) ryms. */
   @media (max-width: 560px) {
-    .svar-grid { grid-template-columns: 1fr; }
-    .svar-rad { flex-direction: column; }
+    .svar-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+    .svar-rad { flex-direction: column; gap: 0.6rem; }
+    .svar-grid .svar-btn {
+      font-size: 0.82rem; line-height: 1.2; padding: 0.6rem 0.2rem; border-radius: 10px;
+      min-height: 3.4rem; display: flex; align-items: center; justify-content: center;
+      hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere;
+    }
   }
 
   .fortsatt-kolumn {
@@ -554,7 +561,10 @@ function visaFraga() {
     const b = document.createElement("button");
     b.className = "svar-btn";
     b.type = "button";
-    b.textContent = namn;
+    // Mjuka bindestreck vid sammansättningsgränsen, så att långa namn avstavas snyggt när de fyra knapparna
+    // ligger på en rad på mobilen. Bara visningen – svaret jämförs fortfarande med "namn".
+    b.dataset.namn = namn;
+    b.textContent = namn.replace("Skogskornell", "Skogs\u00adkornell").replace("hästkastanj", "häst\u00adkastanj");
     b.addEventListener("click", () => valSvar(b, namn, fraga));
     el("svar-grid").appendChild(b);
   });
@@ -580,7 +590,7 @@ function valSvar(knapp, namn, fraga) {
     fel++;
     missade.push(fraga.artNamn);
     knapp.classList.add("fel");
-    alla.forEach(b => { if (b.textContent === fraga.artNamn) b.classList.add("ratt"); });
+    alla.forEach(b => { if (b.dataset.namn === fraga.artNamn) b.classList.add("ratt"); });
     el("besked").textContent = "Fel. Rätt svar är " + fraga.artNamn + ".";
     el("besked").className = "besked nej";
   }
