@@ -485,3 +485,7 @@ li {
   color: #fff;
   border-color: var(--listen-deepen-color, #7a5c00);
 }
+
+/* Studieguidens milstolpar ligger i områdessidans högerkolumn under "Viktiga begrepp" (Jesper 4 okt 2026):
+   kolumnens egen gap räcker som avstånd, så rutans eget toppavstånd nollställs där. */
+.area-right .milestone-map { margin-top: 0; }

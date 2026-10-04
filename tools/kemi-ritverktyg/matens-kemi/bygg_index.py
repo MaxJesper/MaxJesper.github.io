@@ -171,15 +171,15 @@ HTML = """<!DOCTYPE html>
 {concept_items}
         </ul>
       </section>
-    </div>
-  </section>
 
-  <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
-    <h2>Studieguidens milstolpar</h2>
-    <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
-    <ul class="milestone-map-list">
+      <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+        <h2>Studieguidens milstolpar</h2>
+        <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+        <ul class="milestone-map-list">
 {milestone_items}
-    </ul>
+        </ul>
+      </section>
+    </div>
   </section>
 
   <section class="study-tips">
