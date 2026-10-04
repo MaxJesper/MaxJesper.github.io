@@ -522,3 +522,4 @@ li {
   .lang-row .lang-info { display: none; flex-basis: 100%; }
   .lang-row .lang-info.open { display: block; }
 }
+@media print { .lang-row { display: none !important; } }
