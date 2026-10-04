@@ -1098,3 +1098,4 @@ Ursprungligt: Ska göras tillsammans med Jesper. Väntar på hans foton för pun
 - **Inga spel eller övningsverktyg i resursrutorna.** De nås via Lärande spel, och om ett spel saknas där läggs det till som ett kort i `larande-spel.html`.
 - De genererade kapitlen (kemi-som-amne, separationsprocesser, matens-kemi) har listorna i sina `bygg_index.py`.
 - Framtid: när sidan börjar säljas låses övningarna till betalversionen.
+- **Princip för version 1 och gratisperioden (Jesper 4 okt 2026):** allt som eleven har nytta av ligger under "Material för elever". Vad som ska vara bara för lärare eller bara i betalversionen bestäms längre fram.
