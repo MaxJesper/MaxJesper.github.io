@@ -317,6 +317,15 @@
   .svar-btn:disabled { cursor: default; }
   .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); color: var(--gron-stark); }
   .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); color: var(--fel); }
+  /* Rätt/fel syns med symbol och kantstil, inte bara färg (Jesper 4 okt 2026, rödgrön färgblindhet) */
+  .svar-btn.ratt::before { content: "✓"; font-weight: 800; margin-right: 0.35em; }
+  .svar-btn.fel { border-style: dashed; }
+  .svar-btn.fel::before { content: "✕"; font-weight: 800; margin-right: 0.35em; }
+  @media (max-width: 560px) {
+    /* På mobilen ligger symbolen ovanför namnet så att de fyra knapparna fortfarande ryms på en rad */
+    .svar-grid .svar-btn.ratt, .svar-grid .svar-btn.fel { flex-direction: column; gap: 0.1rem; }
+    .svar-grid .svar-btn.ratt::before, .svar-grid .svar-btn.fel::before { margin-right: 0; font-size: 1rem; line-height: 1; }
+  }
 
   .besked {
     min-height: 1.6em;
