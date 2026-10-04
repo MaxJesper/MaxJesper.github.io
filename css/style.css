@@ -30,11 +30,15 @@ body {
 }
 
 .kemi-header {
+  /* chemistry.jpg omkodad (918 → ~300 KB, samma storlek 2048×1024) + WebP (~180 KB), Jesper 4 okt 2026 */
   background-image: url("/images/chemistry.jpg");
+  background-image: image-set(url("/images/chemistry.webp") type("image/webp"), url("/images/chemistry.jpg") type("image/jpeg"));
 }
 
 .fysik-header {
-  background-image: url("/images/fysik.png");
+  /* Var fysik.png (1 MB, genomskinlighet oanvänd). Nu WebP (~35 KB) med JPEG-reserv (~67 KB), samma 1536×348 px. */
+  background-image: url("/images/fysik.jpg");
+  background-image: image-set(url("/images/fysik.webp") type("image/webp"), url("/images/fysik.jpg") type("image/jpeg"));
 }
 
 /* Gemensamma regler för alla headers */
