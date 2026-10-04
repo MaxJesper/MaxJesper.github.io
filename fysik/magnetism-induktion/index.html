@@ -244,50 +244,10 @@
       margin-bottom: 0.45rem;
     }
 
-    .role-toggle {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: flex-end;
-      align-items: center;
-      margin: 0 0 1rem auto;
-      padding: 0.5rem 0.75rem;
-      background: var(--area-soft);
-      border: 1px solid var(--area-border);
-      border-radius: 999px;
-      width: fit-content;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    }
 
-    .role-toggle button {
-      background: #fff;
-      border: 1px solid var(--area-border);
-      border-radius: 999px;
-      padding: 0.45rem 1.1rem;
-      color: var(--area-strong);
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: inherit;
-      transition: background 0.15s ease, color 0.15s ease;
-    }
 
-    .role-toggle button:hover {
-      background: var(--area-hover);
-    }
 
-    .role-toggle button.active {
-      background: var(--area);
-      color: #fff;
-      border-color: var(--area);
-    }
 
-    .role-toggle span {
-      align-self: center;
-      color: var(--area-strong);
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-right: 0.3rem;
-    }
 
     /* === Milstolpe-roadmap (E) === */
     .milestone-map {
@@ -361,9 +321,6 @@
     }
 
     /* Lärare-ordning: lärarkortet överst */
-    body[data-role="larare"] .resource-grid article:last-child {
-      order: -1;
-    }
   </style>
 </head>
 <body class="area-magnetism">
@@ -382,12 +339,11 @@
     <a href="/fysik/arbete-energi-effekt/" class="subject-btn">Nästa område →</a>
   </p>
 
-    <div class="role-toggle">
-      <span>Jag är:</span>
-      <button type="button" id="role-elev" class="active">Elev</button>
-      <button type="button" id="role-larare">Lärare</button>
+    <div class="lang-row">
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+      <button type="button" class="lang-info-btn" aria-expanded="false" aria-controls="lang-info" aria-label="Vad gäller språkvalet?">i</button>
+      <p class="lang-info" id="lang-info">Olika språk kan väljas för begreppslista, checklista och markerade begreppsord i studieguiden.</p>
     </div>
-    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
 
     <section class="area-layout">
       <div class="area-main">
@@ -504,36 +460,6 @@
   ];
   </script>
   <script src="/js/concepts-popup.js"></script>
-  <script>
-    // ===== Rolltoggel: elev (standard) / lärare (sparas i localStorage) =====
-    (function () {
-      var STORE_KEY = "mj.role";
-      var btnElev = document.getElementById("role-elev");
-      var btnLarare = document.getElementById("role-larare");
-
-      function setRole(role) {
-        if (role === "larare") {
-          document.body.setAttribute("data-role", "larare");
-          btnElev.classList.remove("active");
-          btnLarare.classList.add("active");
-        } else {
-          document.body.removeAttribute("data-role");
-          btnElev.classList.add("active");
-          btnLarare.classList.remove("active");
-        }
-        try { localStorage.setItem(STORE_KEY, role); } catch (e) {}
-      }
-
-      // Ladda senaste val
-      try {
-        var saved = localStorage.getItem(STORE_KEY);
-        if (saved === "larare") setRole("larare");
-      } catch (e) {}
-
-      btnElev.addEventListener("click", function () { setRole("elev"); });
-      btnLarare.addEventListener("click", function () { setRole("larare"); });
-    })();
-  </script>
   <script src="/js/language-selector.js"></script>
   <script src="/js/concept-lang-selector.js"></script>
   <script>

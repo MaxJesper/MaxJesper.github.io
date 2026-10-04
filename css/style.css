@@ -496,3 +496,29 @@ li {
 /* Studieguidens milstolpar ligger i områdessidans högerkolumn under "Viktiga begrepp" (Jesper 4 okt 2026):
    kolumnens egen gap räcker som avstånd, så rutans eget toppavstånd nollställs där. */
 .area-right .milestone-map { margin-top: 0; }
+
+/* Språkväljaren på områdessidorna med en förklaring till höger (Jesper 4 okt 2026). Rollväljaren
+   "Jag är: Elev / Lärare" är borttagen – kan komma tillbaka när lärare och elev ska se olika saker. */
+.lang-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 1rem; margin: 0.3rem 0 0.6rem; }
+.lang-row .concept-lang-wrap { margin: 0; }
+.lang-row .lang-info { margin: 0; font-size: 0.88rem; color: #4a4a5a; line-height: 1.4; flex: 1 1 18rem; }
+/* ⓘ-knappen behövs bara på mobil (Jesper 4 okt 2026): där är väljaren en rad och texten fälls ut vid tryck */
+.lang-info-btn { display: none; }
+@media (max-width: 600px) {
+  .lang-row { gap: 0.4rem 0.5rem; flex-wrap: wrap; }
+  .lang-row .concept-lang-selector-mount { flex: 1 1 0; min-width: 0; }
+  .lang-row .concept-lang-wrap { flex-wrap: nowrap; max-width: 100%; }
+  .lang-row .concept-lang-select { min-width: 0; max-width: 100%; }
+  /* Etiketten krymps till bara jordgloben – texten "Språk / Language" finns kvar för skärmläsare */
+  .lang-row .concept-lang-label { font-size: 0; }
+  .lang-row .concept-lang-label::before { content: "🌐"; font-size: 1rem; }
+  .lang-info-btn {
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+    width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 2px solid #6b6b80; background: #fff;
+    color: #3a3a4a; font: italic 700 1rem Georgia, "Times New Roman", serif; cursor: pointer; padding: 0;
+  }
+  .lang-info-btn[aria-expanded="true"] { background: #3a3a4a; color: #fff; border-color: #3a3a4a; }
+  .lang-info-btn:focus-visible { outline: 3px solid #fbbf24; outline-offset: 2px; }
+  .lang-row .lang-info { display: none; flex-basis: 100%; }
+  .lang-row .lang-info.open { display: block; }
+}

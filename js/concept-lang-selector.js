@@ -218,6 +218,17 @@
     });
   }
 
+  // ⓘ-knappen bredvid språkväljaren på områdessidorna (syns bara på mobil, se css/style.css .lang-info-btn)
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.lang-info-btn');
+    if (!btn) return;
+    var info = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!info) return;
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    info.classList.toggle('open', open);
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', render);
   } else {

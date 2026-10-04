@@ -151,7 +151,11 @@ body = f'''<body class="area-amne">
       <a href="/kemi/atomer/index.html" class="subject-btn">Nästa område →</a>
     </div>
 
-    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+    <div class="lang-row">
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+      <button type="button" class="lang-info-btn" aria-expanded="false" aria-controls="lang-info" aria-label="Vad gäller språkvalet?">i</button>
+      <p class="lang-info" id="lang-info">Olika språk kan väljas för begreppslista, checklista och markerade begreppsord i studieguiden.</p>
+    </div>
 
 
     <section class="area-layout">

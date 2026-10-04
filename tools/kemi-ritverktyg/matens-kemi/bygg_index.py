@@ -132,7 +132,11 @@ HTML = """<!DOCTYPE html>
   <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
     <a href="/kemi/index.html" class="subject-btn">← Tillbaka till Kemi</a>
   </p>
-  <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+  <div class="lang-row">
+    <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+    <button type="button" class="lang-info-btn" aria-expanded="false" aria-controls="lang-info" aria-label="Vad gäller språkvalet?">i</button>
+    <p class="lang-info" id="lang-info">Olika språk kan väljas för begreppslista, checklista och markerade begreppsord i studieguiden.</p>
+  </div>
 
   <section class="area-layout">
     <div class="area-main">
