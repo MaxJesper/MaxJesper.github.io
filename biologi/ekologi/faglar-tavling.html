@@ -262,9 +262,16 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.7rem;
   }
+  /* Mobil (Jesper 4 okt 2026): de fyra namnen på EN rad under bilden i stället för en kolumn – mer
+     kompakt i höjdled. Mindre text och avstavning så att även långa namn ryms. */
   @media (max-width: 560px) {
-    .svar-grid { grid-template-columns: 1fr; }
-    .svar-rad { flex-direction: column; }
+    .svar-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+    .svar-rad { flex-direction: column; gap: 0.6rem; }
+    .svar-grid .svar-btn {
+      font-size: 0.82rem; line-height: 1.2; padding: 0.6rem 0.2rem; border-radius: 10px;
+      min-height: 3.4rem; display: flex; align-items: center; justify-content: center;
+      hyphens: auto; -webkit-hyphens: auto; overflow-wrap: anywhere;
+    }
   }
 
   .fortsatt-kolumn {
@@ -320,6 +327,8 @@
   }
   .besked.ok { color: var(--ok); }
   .besked.nej { color: var(--fel); }
+  /* Poängen på egen rad och aldrig delad mitt i "(+10 p)" – kolumnen bredvid knapparna är smal på dator */
+  .besked .poang { display: block; white-space: nowrap; font-weight: 700; }
 
   #nasta-rad { width: 100%; }
 
@@ -560,7 +569,9 @@ function visaFraga() {
     const b = document.createElement("button");
     b.className = "svar-btn";
     b.type = "button";
-    b.textContent = namn;
+    // Mjuka bindestreck vid sammansättningsgränsen (bara visningen) – svaret jämförs med dataset.namn.
+    b.dataset.namn = namn;
+    b.textContent = ({"Sothöna":"Sot\u00adhöna","Sånglärka":"Sång\u00adlärka","Skrattmås":"Skratt\u00admås","Kungsfågel":"Kungs\u00adfågel","Fiskmås":"Fisk\u00admås","Tofsvipa":"Tofs\u00advipa","Gräsand":"Gräs\u00adand","Gråsparv":"Grå\u00adsparv","Grönfink":"Grön\u00adfink","Koltrast":"Kol\u00adtrast","Hussvala":"Hus\u00adsvala","Gulsparv":"Gul\u00adsparv","Gråkråka":"Grå\u00adkråka","Fjällvråk":"Fjäll\u00advråk","Ringduva":"Ring\u00adduva","Hornuggla":"Horn\u00aduggla","Salskrake":"Sal\u00adskrake","Rödhake":"Röd\u00adhake","Ormvråk":"Orm\u00advråk"})[namn] || namn;
     b.addEventListener("click", () => valSvar(b, namn, fraga));
     el("svar-grid").appendChild(b);
   });
@@ -579,14 +590,16 @@ function valSvar(knapp, namn, fraga) {
     const vunna = beraknaPoang(tidSek);
     ratt++; poang += vunna;
     knapp.classList.add("ratt");
-    el("besked").textContent = "Rätt! Det är " + fraga.artNamn + ". (+" + vunna + " p)";
+    el("besked").textContent = "Rätt! Det är " + fraga.artNamn + ".";
+    const poangTag = document.createElement("span"); poangTag.className = "poang";
+    poangTag.textContent = "(+" + vunna + " p)"; el("besked").append(" ", poangTag);
     el("besked").className = "besked ok";
     playPing();
   } else {
     fel++;
     missade.push({ id: fraga.artId, namn: fraga.artNamn });
     knapp.classList.add("fel");
-    alla.forEach(b => { if (b.textContent === fraga.artNamn) b.classList.add("ratt"); });
+    alla.forEach(b => { if (b.dataset.namn === fraga.artNamn) b.classList.add("ratt"); });
     el("besked").textContent = "Fel. Rätt svar är " + fraga.artNamn + ".";
     el("besked").className = "besked nej";
   }

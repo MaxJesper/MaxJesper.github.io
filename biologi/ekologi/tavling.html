@@ -327,6 +327,8 @@
   }
   .besked.ok { color: var(--ok); }
   .besked.nej { color: var(--fel); }
+  /* Poängen på egen rad och aldrig delad mitt i "(+10 p)" – kolumnen bredvid knapparna är smal på dator */
+  .besked .poang { display: block; white-space: nowrap; font-weight: 700; }
 
   #nasta-rad { width: 100%; }
 
@@ -583,7 +585,9 @@ function valSvar(knapp, namn, fraga) {
     const vunna = beraknaPoang(tidSek);
     ratt++; poang += vunna;
     knapp.classList.add("ratt");
-    el("besked").textContent = "Rätt! Det är " + fraga.artNamn + ". (+" + vunna + " p)";
+    el("besked").textContent = "Rätt! Det är " + fraga.artNamn + ".";
+    const poangTag = document.createElement("span"); poangTag.className = "poang";
+    poangTag.textContent = "(+" + vunna + " p)"; el("besked").append(" ", poangTag);
     el("besked").className = "besked ok";
     playPing();
   } else {
