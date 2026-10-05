@@ -91,7 +91,7 @@
       currentAudio.currentTime = 0;
       currentAudio = null;
     }
-    if (synth) synth.cancel();
+    if (synth && (synth.speaking || synth.pending)) synth.cancel();
     if (currentBtn) {
       currentBtn.classList.remove('playing');
       currentBtn.innerHTML = '&#128264; Lyssna';
@@ -107,16 +107,41 @@
     if (currentBtn === btn) { currentBtn = null; currentAudio = null; }
   }
 
+  // Mobilwebbläsare (iOS Safari, Chrome på Android) klarar inte långa uppläsningar i ett stycke – de tystnar
+  // eller vägrar. Texten delas därför i meningar, grupperade till högst ~220 tecken, som köas efter varandra.
+  function splitText(text) {
+    var parts = text.match(/[^.!?…]+[.!?…]+[\])"'»”]*\s*|[^.!?…]+$/g) || [text];
+    var chunks = [], cur = '';
+    parts.forEach(function (p) {
+      p = p.trim(); if (!p) return;
+      if ((cur + ' ' + p).length > 220 && cur) { chunks.push(cur); cur = p; }
+      else cur = cur ? cur + ' ' + p : p;
+      while (cur.length > 300) {               // en extremt lång mening: dela vid kommatecken/mellanslag
+        var cut = cur.lastIndexOf(', ', 220); if (cut < 80) cut = cur.lastIndexOf(' ', 220); if (cut < 80) cut = 220;
+        chunks.push(cur.slice(0, cut + 1).trim()); cur = cur.slice(cut + 1).trim();
+      }
+    });
+    if (cur) chunks.push(cur);
+    return chunks;
+  }
+
   function playWithTTS(text, btn) {
     if (!synth) { onDone(btn); return; }
     var lang = getPreferredLang();
-    var utt = new SpeechSynthesisUtterance(text);
-    utt.lang = lang;
-    utt.rate = 0.92;
     var voice = getVoiceForLang(lang);
-    if (voice) utt.voice = voice;
-    utt.onend = function () { onDone(btn); };
-    synth.speak(utt);
+    var chunks = splitText(text);
+    if (!chunks.length) { onDone(btn); return; }
+    // speak() måste anropas direkt i klicket (iOS) – alla bitar köas på en gång.
+    chunks.forEach(function (chunk, i) {
+      var utt = new SpeechSynthesisUtterance(chunk);
+      utt.lang = lang;
+      utt.rate = 0.92;
+      if (voice) utt.voice = voice;
+      if (i === chunks.length - 1) utt.onend = function () { onDone(btn); };
+      utt.onerror = function (e) { if (e && e.error !== 'interrupted' && e.error !== 'canceled') onDone(btn); };
+      synth.speak(utt);
+    });
+    if (synth.paused) synth.resume();
   }
 
   function startPlayback(path, getText, btn) {
@@ -124,8 +149,9 @@
     btn.innerHTML = '&#9646;&#9646; Stoppa';
     currentBtn = btn;
 
-    if (!path) {
-      // Ingen mp3-bas konfigurerad – gå direkt till TTS
+    if (!path || AUDIO_OK[path] !== true) {
+      // Ingen ljudfil (eller ännu okänt) – läs upp med talsyntes DIREKT i klicket. Förut provades mp3 först och
+      // talsyntesen startades i efterhand när filen saknades, vilket mobilwebbläsare blockerar (inget "användarklick").
       playWithTTS(getText(), btn);
       return;
     }
@@ -183,12 +209,26 @@
     });
   }
 
-  // Röster kan laddas asynkront i vissa webbläsare
-  if (synth && synth.getVoices().length === 0) {
-    synth.addEventListener('voiceschanged', addListenButtons);
-  } else {
-    addListenButtons();
+  // Vilka mp3-filer finns? Kontrolleras i förväg så att klicket kan välja ljudfil eller talsyntes direkt.
+  var AUDIO_OK = {};
+  function checkAudioFiles() {
+    if (!AUDIO_BASE || !window.fetch) return;
+    var paths = {};
+    document.querySelectorAll('details.milestone').forEach(function (m) { var p = audioPath(m, false); if (p) paths[p] = 1; });
+    document.querySelectorAll('details.deepen').forEach(function (d) { var p = audioPath(d, true); if (p) paths[p] = 1; });
+    Object.keys(paths).forEach(function (p) {
+      fetch(p, { method: 'HEAD' }).then(function (r) {
+        var t = r.headers.get('content-type') || '';
+        AUDIO_OK[p] = r.ok && t.indexOf('html') === -1;
+      }).catch(function () { AUDIO_OK[p] = false; });
+    });
   }
+
+  // Knapparna skapas direkt. Rösterna hämtas först när man trycker (förut väntade skriptet på
+  // 'voiceschanged', som aldrig kommer på vissa telefoner – och som kan komma flera gånger och ge dubbla knappar).
+  if (!document.querySelector('.listen-btn')) addListenButtons();
+  checkAudioFiles();
+  if (synth && synth.getVoices) synth.getVoices();
 
   window.addEventListener('beforeunload', stopAll);
 })();
