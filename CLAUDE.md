@@ -1099,3 +1099,8 @@ Ursprungligt: Ska göras tillsammans med Jesper. Väntar på hans foton för pun
 - De genererade kapitlen (kemi-som-amne, separationsprocesser, matens-kemi) har listorna i sina `bygg_index.py`.
 - Framtid: när sidan börjar säljas låses övningarna till betalversionen.
 - **Princip för version 1 och gratisperioden (Jesper 4 okt 2026):** allt som eleven har nytta av ligger under "Material för elever". Vad som ska vara bara för lärare eller bara i betalversionen bestäms längre fram.
+
+## Versionsnummer på css/js-länkar (cache-busting, Jesper 5 okt 2026)
+- Alla länkar till sajtens egna .css/.js har `?v=<hash>`, där hashen räknas ur filens innehåll. Annars kan telefoner (Safari) använda en gammal sparad kopia i upp till ~20 min efter en push.
+- **Kör `python3 tools/underhall/uppdatera_versioner.py` efter varje ändring i en gemensam css/js-fil och efter varje ombyggnad med bygg_*.py.** Byggskripten skriver länkar utan versionsnummer. Skriptet är idempotent och rör bara html-filer där något ändrats.
+- Ta med de html-filer skriptet ändrat i git-kommandot (enklast: `git add -A`, eller de berörda mapparna).

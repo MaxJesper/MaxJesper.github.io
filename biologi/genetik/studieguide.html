@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Genetik</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/milstolpe.css" />
+  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <link rel="stylesheet" href="/css/milstolpe.css?v=f491bea5" />
 
   <style>
     :root { --ms-head: #166534; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
@@ -476,7 +476,7 @@
           <p>Hela "facit" för översättningen kallas <strong class="term"><span class="concept-inline" data-concept="Den genetiska koden">den genetiska koden</span></strong>. Tabellen nedan visar vilken aminosyra varje mRNA-kodon ger. Läs den genom att kombinera första basen (raden till vänster), andra basen (kolumnen) och tredje basen (raden till höger). Klicka på knapparna för att växla mellan fullständigt svenskt namn, trebokstavs- och enbokstavsbeteckning.</p>
 
           <div class="kodontabell-mount"></div>
-          <script src="/js/kodontabell.js"></script>
+          <script src="/js/kodontabell.js?v=aada6436"></script>
 
           <p>Det märkliga – och djupt betydelsefulla – är att <strong class="term">den genetiska koden är i stort sett identisk hos allt liv på jorden</strong>. Bakterier, svampar, växter, djur och människor använder samma kodon för samma aminosyror. Ett AUG betyder metionin i en tarmbakterie likaväl som i en björk eller i dina egna celler.</p>
           <p>Det finns ett fåtal små undantag. I mitokondriernas eget DNA, och hos vissa encelliga organismer, kan enstaka kodon läsas av lite annorlunda – ibland betyder ett kodon som annars är "stopp" i stället en aminosyra. Men dessa avvikelser är få och rör bara ett par kodon.</p>
@@ -699,8 +699,8 @@
 
   </main>
 
-  <script src="/js/menu.js"></script>
-  <script src="/js/lyssna.js" data-audio-base="/biologi/genetik/audio/"></script>
+  <script src="/js/menu.js?v=0fc3b4a7"></script>
+  <script src="/js/lyssna.js?v=d8e963dc" data-audio-base="/biologi/genetik/audio/"></script>
   <script>
     function toggleAllMilestones() {
       var milestones = document.querySelectorAll('details.milestone');
@@ -731,9 +731,9 @@
       window.addEventListener("hashchange", openFromHash);
     })();
   </script>
-  <script src="/js/language-selector.js"></script>
-  <script src="/js/concepts-popup.js"></script>
-  <script src="/js/concept-lang-selector.js"></script>
+  <script src="/js/language-selector.js?v=a532040f"></script>
+  <script src="/js/concepts-popup.js?v=7b88673c"></script>
+  <script src="/js/concept-lang-selector.js?v=186531ac"></script>
   <script>
     /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
     fetch("./data/begrepp.json", { cache: "no-store" })
@@ -748,6 +748,6 @@
       })
       .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
   </script>
-  <script src="/js/tankekarta.js"></script>
+  <script src="/js/tankekarta.js?v=d5919337"></script>
 </body>
 </html>

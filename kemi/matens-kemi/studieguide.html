@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Matens kemi</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="stylesheet" href="/css/milstolpe.css" />
-  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css" />
-  <link rel="stylesheet" href="/css/molviewer.css" />
-  <link rel="stylesheet" href="/css/viktigt.css" />
+  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <link rel="stylesheet" href="/css/milstolpe.css?v=f491bea5" />
+  <link rel="stylesheet" href="/css/studieguide-bildkolumn.css?v=3faf68c0" />
+  <link rel="stylesheet" href="/css/molviewer.css?v=1d551789" />
+  <link rel="stylesheet" href="/css/viktigt.css?v=dac92048" />
 
   <style>
     :root { --ms-head: #86198f; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
@@ -262,8 +262,8 @@ details.wonder { scroll-margin-top: 0.75rem; }
 
   </main>
 
-  <script src="/js/menu.js"></script>
-  <script src="/js/lyssna.js" data-audio-base="/kemi/matens-kemi/audio/"></script>
+  <script src="/js/menu.js?v=0fc3b4a7"></script>
+  <script src="/js/lyssna.js?v=d8e963dc" data-audio-base="/kemi/matens-kemi/audio/"></script>
   <script>
     function toggleAllMilestones(open) {
       document.querySelectorAll('details.milestone').forEach(function(d) { d.open = open; });
@@ -294,12 +294,12 @@ details.wonder { scroll-margin-top: 0.75rem; }
       });
     })();
   </script>
-  <script src="/js/3Dmol-min.js"></script>
-  <script src="/kemi/matens-kemi/js/molmodeller.js"></script>
-  <script src="/js/molviewer.js"></script>
-  <script src="/js/language-selector.js"></script>
-  <script src="/js/concepts-popup.js"></script>
-  <script src="/js/concept-lang-selector.js"></script>
+  <script src="/js/3Dmol-min.js?v=37e6030e"></script>
+  <script src="/kemi/matens-kemi/js/molmodeller.js?v=47e237ae"></script>
+  <script src="/js/molviewer.js?v=2d738f50"></script>
+  <script src="/js/language-selector.js?v=a532040f"></script>
+  <script src="/js/concepts-popup.js?v=7b88673c"></script>
+  <script src="/js/concept-lang-selector.js?v=186531ac"></script>
   <script>
     fetch("./data/begrepp.json", { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : null; })
