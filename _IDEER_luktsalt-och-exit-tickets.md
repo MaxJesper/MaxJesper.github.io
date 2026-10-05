@@ -22,3 +22,15 @@
   - Frågorna kan byggas av befintligt material (instuderingsfrågor, checklistan) per milstolpe.
   - En enkel version utan Worker är möjlig först: eleven visar "Klar ✓" på skärmen för läraren.
   - Hör ihop med framtida tankar om lärarinloggning och vad som bara läraren ska komma åt.
+
+## 3. "Utmaningen" – korta tävlingsquiz mellan elever
+*Antecknat 6 okt 2026.*
+- **Idé:** en elev utmanar en eller flera klasskamrater i ett kort quiz. Det kan också gå lag mot lag, och lagen kan slumpas.
+- **Vinnare:** till exempel den som först har **tre rätta svar**. Reglerna bestäms senare.
+- **Uppgifterna kan variera:** frågor, eller att bli först med att lösa ett **minikorsord** m.m.
+- **Kan användas som exit ticket.**
+- **Tankar inför bygget:**
+  - Mycket finns redan i lagspelet `spel/hastkapplopning/`: rum med kod, realtid via Cloudflare Worker, "Slumpa lag" och en delad spelmotor. Utmaningen kan byggas som ett nytt spelläge på samma grund.
+  - **Gissningsspärr:** när "först till tre rätt" vinner lönar det sig att gissa snabbt. Ett fel svar bör därför ge en kort paus (t.ex. 3 s) eller minuspoäng.
+  - **Tävling och exit ticket mäter olika saker.** En exit ticket ska visa att *varje* elev förstått, medan en tävling belönar den snabbaste. Förslag: Utmaningen är ett eget läge, och som exit ticket gäller "klara tre rätt", inte "först till tre".
+  - Samma integritetsprincip som för exit tickets: inga konton, förnamn eller smeknamn, inget sparas efter spelet.
