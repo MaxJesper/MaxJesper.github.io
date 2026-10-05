@@ -28,9 +28,10 @@
 - **Idé:** en elev utmanar en eller flera klasskamrater i ett kort quiz. Det kan också gå lag mot lag, och lagen kan slumpas.
 - **Vinnare:** till exempel den som först har **tre rätta svar**. Reglerna bestäms senare.
 - **Uppgifterna kan variera:** frågor, eller att bli först med att lösa ett **minikorsord** m.m.
-- **Kan användas som exit ticket.**
+- **Beslut 6 okt 2026: Utmaningen är INTE en exit ticket.** Den kan i stället vara en **turnering/cup** med flera omgångar och en vinnare på slutet.
+  - Att tänka på vid utslagning: den som åker ut tidigt får sitta still resten av tiden. Alternativ: en tröstcup för de utslagna, eller en "alla möter flera"-variant där alla spelar lika många matcher och poängen räknas ihop.
 - **Tankar inför bygget:**
   - Mycket finns redan i lagspelet `spel/hastkapplopning/`: rum med kod, realtid via Cloudflare Worker, "Slumpa lag" och en delad spelmotor. Utmaningen kan byggas som ett nytt spelläge på samma grund.
   - **Gissningsspärr:** när "först till tre rätt" vinner lönar det sig att gissa snabbt. Ett fel svar bör därför ge en kort paus (t.ex. 3 s) eller minuspoäng.
-  - **Tävling och exit ticket mäter olika saker.** En exit ticket ska visa att *varje* elev förstått, medan en tävling belönar den snabbaste. Förslag: Utmaningen är ett eget läge, och som exit ticket gäller "klara tre rätt", inte "först till tre".
+  - Tävling och exit ticket mäter olika saker (en exit ticket ska visa att *varje* elev förstått, en tävling belönar den snabbaste), därför hålls de isär.
   - Samma integritetsprincip som för exit tickets: inga konton, förnamn eller smeknamn, inget sparas efter spelet.
