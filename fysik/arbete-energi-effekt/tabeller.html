@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storheter, enheter och formler – Arbete, energi och effekt</title>
+  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <style>
+    body.area-fysik-aee {
+      --area: #b45309;
+      --area-strong: #92400e;
+      --area-soft: #fffbeb;
+      --area-border: #f0e2c4;
+    }
+    main { max-width: 900px; margin: 0 auto; font-size: 1.05em; }
+    .print-bar { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; }
+    .intro { color: #4a4a5a; font-size: 0.95rem; margin: 0 0 1.2rem; }
+
+    h2.tab-rubrik { font-size: 1.15rem; color: var(--area-strong); margin: 1.6rem 0 0.2rem; }
+    p.tab-under { margin: 0 0 0.6rem; color: #4a4a5a; font-size: 0.95rem; }
+
+    .tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.fys { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    table.fys th { background: var(--area); color: #fff; text-align: left; padding: 0.55rem 0.7rem; font-size: 0.88rem; vertical-align: bottom; }
+    table.fys td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--area-border); vertical-align: top; line-height: 1.45; }
+    table.fys tbody tr:nth-child(even) td { background: var(--area-soft); }
+    table.fys td.storhet { font-weight: 700; color: var(--area-strong); }
+    table.fys td.storhet .eng { display: block; font-weight: 400; color: #4a4a5a; font-size: 0.85em; }
+    table.fys td.storhet .eng b { color: #1a1a2e; }
+    .f { font-family: "Cambria Math", Georgia, serif; white-space: nowrap; font-size: 1.05em; }
+    table.fys td .f { display: block; }
+    table.fys td .f + .f { margin-top: 0.15rem; }
+    .liten { font-size: 0.85em; color: #4a4a5a; }
+
+    .obs { background: var(--area-soft); border-left: 4px solid var(--area); border-radius: 6px; padding: 0.6rem 0.8rem; margin: 0.8rem 0 0; font-size: 0.92rem; }
+    .kalla { font-size: 0.8rem; color: #595959; margin-top: 1.4rem; }
+
+    @media (max-width: 600px) {
+      table.fys { font-size: 0.88rem; min-width: 560px; }
+      .tbl-scroll::after { content: "← Svep i sidled för att se hela tabellen →"; display: block; font-size: 0.78rem; color: #595959; margin-top: 0.3rem; }
+    }
+
+    @media print {
+      @page { size: A4; margin: 14mm 12mm; }
+      .no-print, header, nav, .hamburger { display: none !important; }
+      body { font-size: 10pt; background: #fff; }
+      main { max-width: 100%; }
+      h1.print-rubrik { display: block !important; font-size: 15pt; margin: 0 0 0.3rem; }
+      table.fys { min-width: 0; font-size: 9.5pt; }
+      table.fys th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      table.fys tbody tr:nth-child(even) td { background: #f2f2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      table.fys tr { break-inside: avoid; }
+      .intro { display: none; }
+      section.tabell + section.tabell { break-before: page; }
+      .tbl-scroll { overflow: visible; }
+      .tbl-scroll::after { display: none; }
+      .obs { border: 1px solid #999; background: #fff !important; }
+    }
+    h1.print-rubrik { display: none; }
+  </style>
+</head>
+<body class="area-fysik-aee">
+  <header class="fysik-header">
+    <h1>Storheter, enheter och formler</h1>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="print-bar no-print">
+      <a href="./" class="subject-btn">← Tillbaka</a>
+      <button onclick="window.print()" class="subject-btn" style="cursor:pointer;">🖨️ Skriv ut / Spara som PDF</button>
+    </div>
+
+    <h1 class="print-rubrik">Arbete, energi och effekt – storheter, enheter och formler</h1>
+    <p class="intro">Två tabeller att ha bredvid sig när du räknar. Tabell 1 visar vad storheterna heter, vilken bokstav de har och vilken enhet de mäts i. Tabell 2 visar formlerna och hur du gör om du söker en annan storhet än den som står först. Vid utskrift hamnar varje tabell på en egen sida.</p>
+
+    <section class="tabell" aria-labelledby="t1">
+      <h2 class="tab-rubrik" id="t1">Tabell 1. Storheter och enheter</h2>
+      <p class="tab-under">Storheten är <em>det man pratar om</em>, enheten är <em>det man mäter i</em>.</p>
+      <div class="tbl-scroll">
+        <table class="fys">
+          <thead><tr><th scope="col">Storhet</th><th scope="col">Beteckning</th><th scope="col">Enhet</th><th scope="col">Enhetens förkortning</th></tr></thead>
+          <tbody>
+            <tr><td class="storhet">Massa</td><td class="f">m</td><td>kilogram</td><td class="f">kg</td></tr>
+            <tr><td class="storhet">Sträcka<span class="eng">höjd, när sträckan är uppåt</span></td><td class="f">s<br>h</td><td>meter</td><td class="f">m</td></tr>
+            <tr><td class="storhet">Tid</td><td class="f">t</td><td>sekund</td><td class="f">s</td></tr>
+            <tr><td class="storhet">Hastighet<span class="eng">engelska <b>v</b>elocity</span></td><td class="f">v</td><td>meter per sekund</td><td class="f">m/s</td></tr>
+            <tr><td class="storhet">Acceleration</td><td class="f">a</td><td>meter per sekundkvadrat</td><td class="f">m/s<sup>2</sup></td></tr>
+            <tr><td class="storhet">Tyngdacceleration</td><td class="f">g</td><td>newton per kilogram<br><span class="liten">(samma sak som meter per sekundkvadrat)</span></td><td class="f">N/kg<br><span class="liten">= m/s<sup>2</sup></span></td></tr>
+            <tr><td class="storhet">Kraft, tyngdkraft<span class="eng">engelska <b>F</b>orce</span></td><td class="f">F</td><td>newton</td><td class="f">N</td></tr>
+            <tr><td class="storhet">Arbete<span class="eng">engelska <b>W</b>ork</span></td><td class="f">W</td><td>joule<br><span class="liten">(samma sak som newtonmeter)</span></td><td class="f">J<br><span class="liten">= Nm</span></td></tr>
+            <tr><td class="storhet">Effekt<span class="eng">engelska <b>P</b>ower</span></td><td class="f">P</td><td>watt<br><span class="liten">(samma sak som joule per sekund)</span></td><td class="f">W<br><span class="liten">= J/s = Nm/s</span></td></tr>
+            <tr><td class="storhet">Energi<span class="eng">engelska <b>E</b>nergy</span></td><td class="f">E</td><td>joule</td><td class="f">J</td></tr>
+            <tr><td class="storhet">Lägesenergi<span class="eng">potentiell energi, engelska <b>p</b>otential</span></td><td class="f">E<sub>p</sub></td><td>joule</td><td class="f">J</td></tr>
+            <tr><td class="storhet">Rörelseenergi<span class="eng">kinetisk energi, engelska <b>k</b>inetic</span></td><td class="f">E<sub>k</sub></td><td>joule</td><td class="f">J</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="obs"><strong>Se upp med W:</strong> bokstaven W betyder två olika saker. Som <em>storhet</em> är W arbete (mäts i joule). Som <em>enhet</em> är W watt (för effekt). Titta på var bokstaven står: i en formel är det arbete, efter en siffra är det watt (t.ex. 60 W).<br>
+      <strong>Tyngdaccelerationen</strong> på jorden är g ≈ 9,8 N/kg. I räkneexempel avrundas den ofta till 10 N/kg.</p>
+    </section>
+
+    <section class="tabell" aria-labelledby="t2">
+      <h2 class="tab-rubrik" id="t2">Tabell 2. Formler – samband mellan storheterna</h2>
+      <p class="tab-under">Känner du till alla storheter i en formel utom en kan du räkna ut den som fattas. Kolumnen längst till höger visar hur.</p>
+      <div class="tbl-scroll">
+        <table class="fys">
+          <thead><tr><th scope="col">Storhet</th><th scope="col">Formel</th><th scope="col">Förklaring</th><th scope="col">Söker du en annan storhet</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="storhet">Kraft</td>
+              <td><span class="f">F = m · g</span><span class="f">F = m · a</span></td>
+              <td><strong>Tyngdkraften</strong> är massan gånger tyngdaccelerationen.<br>Kraften som ger en massa en viss <strong>acceleration</strong> är massan gånger accelerationen.</td>
+              <td><span class="f">m = F / g</span><span class="f">a = F / m</span></td>
+            </tr>
+            <tr>
+              <td class="storhet">Arbete</td>
+              <td><span class="f">W = F · s</span><span class="f">vid lyft: W = m · g · h</span></td>
+              <td>Kraften gånger sträckan som föremålet flyttas i kraftens riktning. Vid ett lyft är kraften tyngdkraften (m · g) och sträckan höjden h.</td>
+              <td><span class="f">F = W / s</span><span class="f">s = W / F</span></td>
+            </tr>
+            <tr>
+              <td class="storhet">Effekt</td>
+              <td><span class="f">P = W / t</span><span class="f">vid lyft: P = m · g · h / t</span></td>
+              <td>Arbetet delat med tiden det tar. Samma arbete på kortare tid betyder högre effekt.</td>
+              <td><span class="f">W = P · t</span><span class="f">t = W / P</span></td>
+            </tr>
+            <tr>
+              <td class="storhet">Lägesenergi</td>
+              <td><span class="f">E<sub>p</sub> = m · g · h</span></td>
+              <td>Energin ett föremål har för att det har lyfts upp till höjden h. Den är lika stor som arbetet det tog att lyfta det.</td>
+              <td><span class="f">h = E<sub>p</sub> / (m · g)</span><span class="f">m = E<sub>p</sub> / (g · h)</span></td>
+            </tr>
+            <tr>
+              <td class="storhet">Rörelseenergi</td>
+              <td><span class="f">E<sub>k</sub> = m · v<sup>2</sup> / 2</span></td>
+              <td>Energin ett föremål har för att det rör sig. Dubbelt så hög hastighet ger fyra gånger så mycket rörelseenergi.<br><strong>Fritt fall:</strong> när ett föremål som lyfts upp till höjden h faller tillbaka har all lägesenergi blivit rörelseenergi precis innan det slår i marken: <span class="f" style="display:inline">E<sub>k</sub> = E<sub>p</sub> = m · g · h</span>. Det gäller om man bortser från luftmotståndet. I vakuum faller en fjäder lika fort som ett bowlingklot, men i luft bromsas fjädern.</td>
+              <td><span class="f">m = 2 · E<sub>k</sub> / v<sup>2</sup></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="kalla no-print">Bygger på Jesper Tordssons tabeller för området, omarbetade 5 okt 2026. Formlerna är standardformler i fysik för högstadiet.</p>
+  </main>
+
+  <script src="/js/menu.js?v=0fc3b4a7"></script>
+</body>
+</html>
