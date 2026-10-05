@@ -1104,3 +1104,6 @@ Ursprungligt: Ska göras tillsammans med Jesper. Väntar på hans foton för pun
 - Alla länkar till sajtens egna .css/.js har `?v=<hash>`, där hashen räknas ur filens innehåll. Annars kan telefoner (Safari) använda en gammal sparad kopia i upp till ~20 min efter en push.
 - **Kör `python3 tools/underhall/uppdatera_versioner.py` efter varje ändring i en gemensam css/js-fil och efter varje ombyggnad med bygg_*.py.** Byggskripten skriver länkar utan versionsnummer. Skriptet är idempotent och rör bara html-filer där något ändrats.
 - Ta med de html-filer skriptet ändrat i git-kommandot (enklast: `git add -A`, eller de berörda mapparna).
+
+## Planerat: "Luktsalt" och Exit tickets (antecknat 5 okt 2026)
+Två saker Jesper vill ha för alla områden så småningom (inte byggt): en intresseväckare när ett nytt område startar ("luktsalt": artefakt + fråga, något historiskt eller en kluring), och exit tickets (en kort quiz eller uppgift innan eleven går, flera per område som läraren låser upp, gärna med lärarvy via Cloudflare Worker). Se `_IDEER_luktsalt-och-exit-tickets.md`.
