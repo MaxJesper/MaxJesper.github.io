@@ -182,7 +182,7 @@ __CARDS__
           <li>Börja med <a href="./ovningsverktyg.html">Sortera molekylerna</a> för att repetera grunderna.</li>
           <li>Begreppskorten är i två nivåer. Börja med nivå 1 och gå vidare till nivå 2.</li>
           <li>Vill du testa i verkligheten? Se <a href="./laborationer.html">laborationerna</a>.</li>
-          <li>Vill du lära dig mer om vitaminer och mineraler? Testa <a href="/spel/hastkapplopning/">Hästkapplöpning</a>.</li>
+          <li>Börja med <a href="./vitaminer-mineraler.html">Vitaminer och mineraler</a> för att lära dig ämnena, och tävla sedan i lag i <a href="/spel/hastkapplopning/">Hästkapplöpning</a>.</li>
         </ul>
       </details>
     </section>
@@ -200,6 +200,9 @@ def cards():
         ("./begreppskort.html", "Begreppskort", "Begreppskort", "Para ihop begrepp och förklaringar i två nivåer. Nivå 2 låses upp när du klarat nivå 1.", "Öppna begreppskorten"),
         ("./begrepp-bingo.html", "Bingo", "Begreppsbingo", "Spela bingo med begreppen. Klicka Dra för att slumpa fram en förklaring, markera rätt begrepp på din bricka.", "Öppna bingot"),
         ("./korsord.html", "Korsord", "Korsord", "Lös korsordet med matens kemis begrepp. Ledtrådarna är förklaringar.", "Öppna korsordet"),
+        # Tillagda 6 okt 2026 (Jesper): eget spel om vitaminer/mineraler + lagspelet som tidigare bara låg under Tips
+        ("./vitaminer-mineraler.html", "Vitaminer", "Vitaminer och mineraler", "Läs om sju vitaminer och sju mineraler – var de finns, vad kroppen behöver dem till och vad brist ger – och testa dig själv med ledtrådar.", "Öppna spelet"),
+        ("/spel/hastkapplopning/", "Lagspel", "Hästkapplöpning – lagspel", "Tävla i lag om vitaminer och mineraler i maten. Läraren startar spelet, eleverna svarar i sina lag.", "Öppna hästkapplöpningen"),
     ]
 
 

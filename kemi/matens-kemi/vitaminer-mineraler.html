@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vitaminer och mineraler – vad gör de? – Matens kemi</title>
+<link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+<style>
+  :root {
+    --f: #86198f; --f-stark: #701a75; --f-mjuk: #fdf4ff; --f-kant: #f0c6f5;
+    --ok: #15803d; --ok-mjuk: #dcfce7; --fel: #c2410c; --fel-mjuk: #ffedd5;
+    --nasta: #1d4ed8; --nasta-stark: #1e3a8a; --text: #212529; --gra: #595959;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body.vm-sida { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; color: var(--text); background: #fff; font-size: 17px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.2rem 1.2rem 3rem; }
+  header.top { background: var(--f); color: #fff; padding: 1.6rem 1.2rem; }
+  header.top .inner { max-width: 900px; margin: 0 auto; }
+  header.top h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.15rem; }
+  header.top p { opacity: 0.92; font-size: 0.95rem; }
+  @media (max-width: 700px) { header.top .inner { padding-right: 6.5rem; } header.top h1 { font-size: 1.45rem; } }
+  h2 { font-size: 1.3rem; color: var(--f-stark); margin: 1.4rem 0 0.6rem; }
+  h3 { font-size: 1.05rem; color: var(--f-stark); margin: 1rem 0 0.4rem; }
+  p { margin-bottom: 0.8rem; }
+  a { color: #0b5cad; }
+  .panel { background: #fff; border: 1px solid var(--f-kant); border-radius: 14px; padding: 1.1rem 1.2rem 1.3rem; margin-bottom: 1.2rem; }
+  .panel.soft { background: var(--f-mjuk); }
+  .doldt { display: none !important; }
+  .btn { font: inherit; font-weight: 600; padding: 0.5rem 1.05rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn:hover { background: var(--f-mjuk); }
+  .btn.primary { background: var(--f); border-color: var(--f); color: #fff; }
+  .btn.primary:hover { background: var(--f-stark); }
+  .btn:focus-visible, .svar-btn:focus-visible, .chip:focus-visible, .btn-nasta:focus-visible, .val-kort:focus-visible { outline: 3px solid #0b3d75; outline-offset: 3px; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+  /* Informationstext */
+  .fakta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem; margin: 0.6rem 0 0.4rem; }
+  .fakta-ruta { background: #fff; border: 1px solid var(--f-kant); border-left: 4px solid var(--f); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 0.95rem; }
+  .fakta-ruta strong { color: var(--f-stark); }
+  .fakta-ruta p:last-child { margin-bottom: 0; }
+
+  /* Val av omgång */
+  .val-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.7rem; margin-top: 0.6rem; }
+  .val-kort { font: inherit; text-align: left; padding: 0.9rem 1rem; border-radius: 12px; border: 2px solid var(--f-kant); background: #fff; cursor: pointer; color: var(--text); }
+  .val-kort:hover { border-color: var(--f); background: var(--f-mjuk); }
+  .val-kort strong { display: block; color: var(--f-stark); font-size: 1.05rem; }
+  .val-kort span { font-size: 0.88rem; color: var(--gra); }
+
+  /* Lär dig först */
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0 0.2rem; }
+  .chip { font: inherit; font-size: 0.9rem; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; }
+  .chip:hover { background: var(--f); color: #fff; border-color: var(--f); }
+  .chip .em { margin-right: 0.3rem; }
+  .grupp-rubrik { font-size: 0.85rem; font-weight: 700; color: var(--f-stark); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.8rem; }
+
+  /* Spelet */
+  .status-rad { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 1rem; }
+  .status { background: var(--f); color: #fff; border-radius: 12px; padding: 0.45rem 1rem; text-align: center; min-width: 120px; }
+  .status b { display: block; font-size: 1.4rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .status small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+  .ledtrad-ruta { background: var(--f-mjuk); border: 1px solid var(--f-kant); border-radius: 16px; padding: 1.1rem 1rem; text-align: center; margin-bottom: 1rem; }
+  .ledtrad-typ { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--f-stark); }
+  .ledtrad-text { font-size: 1.2rem; font-weight: 600; margin: 0.3rem 0 0.2rem; line-height: 1.4; }
+  .ledtrad-fraga { font-size: 0.95rem; color: var(--gra); margin: 0; }
+  .ledtrad-ruta .btn-nasta { margin-top: 0.8rem; }
+
+  .svar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  .svar-btn { font: inherit; font-weight: 600; font-size: 1.05rem; padding: 0.85rem 0.6rem; border-radius: 12px; border: 2px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; justify-content: center; }
+  .svar-btn .nr { font-size: 0.78rem; font-weight: 700; color: var(--gra); border: 1px solid #c8c8c8; border-radius: 6px; padding: 0 0.35rem; }
+  .svar-btn:hover:not(:disabled) { background: var(--f-mjuk); border-color: var(--f); }
+  .svar-btn:disabled { cursor: default; }
+  .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); border-style: solid; color: #14532d; }
+  .svar-btn.ratt::before { content: "✓"; font-weight: 800; color: var(--ok); }
+  .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); border-style: dashed; color: var(--fel); }
+  .svar-btn.fel::before { content: "✕"; font-weight: 800; }
+  .besked { min-height: 1.6em; margin-top: 0.8rem; font-weight: 700; text-align: center; }
+  .besked.ok { color: var(--ok); } .besked.nej { color: var(--fel); }
+  .btn-nasta { font: inherit; font-weight: 700; font-size: 1.05rem; padding: 0.8rem 1.4rem; border-radius: 999px; border: none; background: var(--nasta); color: #fff; cursor: pointer; }
+  .btn-nasta:hover { background: var(--nasta-stark); }
+
+  /* Faktakort (efter svar och i "lär dig först") */
+  .kort { background: #fff; border: 1px solid var(--f-kant); border-radius: 14px; padding: 1rem 1.1rem; margin-top: 0.9rem; }
+  .kort-topp { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+  .kort-em { font-size: 1.9rem; line-height: 1; }
+  .kort h3 { margin: 0; font-size: 1.2rem; }
+  .tagg { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--f-kant); background: var(--f-mjuk); color: var(--f-stark); }
+  .kort dl { margin: 0.6rem 0 0; }
+  .kort dt { font-weight: 700; color: var(--f-stark); font-size: 0.92rem; margin-top: 0.5rem; }
+  .kort dd { margin: 0.05rem 0 0; }
+  .kort .kul { background: var(--f-mjuk); border-left: 4px solid var(--f); border-radius: 6px; padding: 0.5rem 0.7rem; margin-top: 0.7rem; font-size: 0.95rem; }
+  .kalla { font-size: 0.76rem; color: var(--gra); line-height: 1.4; margin: 0.5rem 0 0; }
+
+  .stor-ruta { display: flex; background: var(--f); color: #fff; border-radius: 16px; overflow: hidden; margin-bottom: 1rem; }
+  .stor-ruta .del { flex: 1; text-align: center; padding: 1rem 0.5rem; }
+  .stor-ruta .del + .del { border-left: 1px solid rgba(255,255,255,0.3); }
+  .stor-ruta .siffra { display: block; font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
+  .stor-ruta .etikett { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+
+  dialog.vm-dialog { margin: auto; border: none; border-radius: 16px; padding: 0; max-width: 560px; width: calc(100% - 2rem); box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  dialog.vm-dialog::backdrop { background: rgba(40,10,45,0.55); }
+  .vm-dialog-inner { padding: 1.2rem 1.3rem 1.4rem; position: relative; }
+  .vm-dialog .kort { border: none; padding: 0; margin: 0; }
+  .vm-dialog-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); font-size: 1rem; cursor: pointer; z-index: 1; }
+
+  details.kallor { margin-top: 2rem; font-size: 0.85rem; color: var(--gra); }
+  details.kallor summary { cursor: pointer; font-weight: 600; color: var(--f-stark); }
+  details.kallor ul { margin: 0.5rem 0 0 1.2rem; }
+</style>
+</head>
+<body class="vm-sida">
+
+<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+<nav id="side-menu"></nav>
+
+<header class="top">
+  <div class="inner">
+    <h1>Vitaminer och mineraler – vad gör de?</h1>
+    <p>Matens kemi · lär dig var de finns och vad kroppen behöver dem till</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="page-actions no-print" style="margin:0.2rem 0 1rem;">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+  </div>
+
+  <!-- ============ START ============ -->
+  <section id="start-panel">
+    <div class="panel soft">
+      <h2 style="margin-top:0;">Vad är vitaminer och mineraler?</h2>
+      <p>Utöver kolhydrater, fett och protein behöver kroppen små mängder av ämnen som den inte kan tillverka själv – eller inte tillräckligt av. De ger ingen energi, men utan dem fungerar inte kroppen.</p>
+      <div class="fakta-grid">
+        <div class="fakta-ruta">
+          <p><strong>Vitaminer</strong> är <em>organiska</em> molekyler, alltså byggda kring kol. De bildas av växter, djur och bakterier.</p>
+          <p><strong>Fettlösliga</strong> (A, D, E och K) lagras i kroppen, bland annat i levern och fettvävnaden.<br><strong>Vattenlösliga</strong> (C och B-vitaminerna, t.ex. B12 och folat) lagras dåligt. Överskottet går ut med urinen, så de behöver ätas ofta.</p>
+        </div>
+        <div class="fakta-ruta">
+          <p><strong>Mineraler</strong> är <em>grundämnen</em>, till exempel kalcium, järn och jod. De kommer ursprungligen från berggrunden och jorden och tas upp av växterna.</p>
+          <p>Vissa behövs i större mängd (t.ex. kalcium i skelettet). Andra, som järn, jod och zink, behövs bara i mycket små mängder men är lika livsviktiga.</p>
+        </div>
+      </div>
+      <p style="margin:0.6rem 0 0;">En <strong>varierad kost</strong> med frukt, grönsaker, fullkorn, baljväxter, mejeriprodukter eller berikade växtdrycker, fisk, kött eller andra proteinkällor ger de flesta allt de behöver.</p>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0;">Lär dig först</h2>
+      <p style="margin-bottom:0.2rem;">Klicka på ett vitamin eller mineral och läs var det finns, vad kroppen behöver det till och vad som händer vid brist.</p>
+      <p class="grupp-rubrik">Fettlösliga vitaminer</p>
+      <div class="chips" id="chips-fett"></div>
+      <p class="grupp-rubrik">Vattenlösliga vitaminer</p>
+      <div class="chips" id="chips-vatten"></div>
+      <p class="grupp-rubrik">Mineraler</p>
+      <div class="chips" id="chips-mineral"></div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0;">Testa dig själv</h2>
+      <p>Du får en ledtråd – var ämnet finns, vad det gör i kroppen eller vad som händer vid brist. Välj rätt av fyra alternativ. Efter varje svar får du läsa mer om ämnet.</p>
+      <p style="margin-bottom:0.3rem;"><strong>Välj omgång:</strong></p>
+      <div class="val-grid">
+        <button type="button" class="val-kort" data-omgang="vitamin"><strong>Vitaminer</strong><span id="antal-vitamin"></span></button>
+        <button type="button" class="val-kort" data-omgang="mineral"><strong>Mineraler</strong><span id="antal-mineral"></span></button>
+        <button type="button" class="val-kort" data-omgang="alla"><strong>Alla</strong><span id="antal-alla"></span></button>
+      </div>
+      <p style="margin-top:0.8rem; font-size:0.85rem; color:var(--gra);">Tangentbord: <strong>1–4</strong> väljer svar, <strong>Enter</strong> går vidare.</p>
+    </div>
+  </section>
+
+  <!-- ============ SPEL ============ -->
+  <section class="doldt" id="spel-panel" aria-labelledby="spel-rubrik">
+    <h2 id="spel-rubrik" class="doldt">Frågor</h2>
+    <div class="status-rad">
+      <div class="status"><b id="s-nr">1/7</b><small>Fråga</small></div>
+      <div class="status"><b id="s-ratt">0</b><small>Rätt</small></div>
+    </div>
+
+    <div class="ledtrad-ruta">
+      <div class="ledtrad-typ" id="ledtrad-typ"></div>
+      <p class="ledtrad-text" id="ledtrad-text"></p>
+      <p class="ledtrad-fraga" id="ledtrad-fraga"></p>
+      <button type="button" class="btn-nasta doldt" id="nastaBtn">Nästa fråga →</button>
+    </div>
+
+    <div class="svar-grid" id="svar-grid" role="group" aria-label="Svarsalternativ"></div>
+    <p class="besked" id="besked" role="status" aria-live="polite">&nbsp;</p>
+
+    <div id="facit" class="doldt"></div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:1.4rem;">
+      <button class="btn" id="avbrytBtn" type="button">Avbryt</button>
+    </div>
+  </section>
+
+  <!-- ============ SLUT ============ -->
+  <section class="panel doldt" id="slut-panel">
+    <h2 style="margin-top:0;">Klart!</h2>
+    <div class="stor-ruta">
+      <div class="del"><span class="siffra" id="slut-ratt">0</span><span class="etikett">Rätt</span></div>
+      <div class="del"><span class="siffra" id="slut-procent">0 %</span><span class="etikett">Andel rätt</span></div>
+    </div>
+    <div id="slut-missade"></div>
+    <div class="btn-row">
+      <button class="btn primary doldt" id="tranaBtn" type="button">Träna bara på dem du missade</button>
+      <button class="btn primary" id="igenBtn" type="button">Samma omgång igen</button>
+      <button class="btn" id="valjBtn" type="button">Tillbaka till start</button>
+    </div>
+  </section>
+
+  <details class="kallor">
+    <summary>Källor</summary>
+    <ul>
+      <li>Livsmedelsverket – vitaminer, mineraler och salt (<a href="https://www.livsmedelsverket.se" target="_blank" rel="noopener">livsmedelsverket.se</a>)</li>
+      <li>Nordic Nutrition Recommendations 2023, Nordiska ministerrådet (<a href="https://pub.norden.org" target="_blank" rel="noopener">pub.norden.org</a>)</li>
+    </ul>
+    <p style="margin-top:0.5rem;">Texterna är förenklade för högstadiet. Livsmedlen är exempel på bra källor, inte fullständiga listor.</p>
+  </details>
+</div>
+
+<dialog class="vm-dialog" id="vmDialog" aria-label="Fakta">
+  <div class="vm-dialog-inner">
+    <button type="button" class="vm-dialog-close" id="vmDialogClose" aria-label="Stäng">✕</button>
+    <div id="vmDialogInnehall"></div>
+  </div>
+</dialog>
+
+<script src="/js/menu.js?v=0fc3b4a7"></script>
+<script>
+"use strict";
+/* Vitaminer och mineraler – lärande spel (Jesper 6 okt 2026), samma upplägg som fågelspelen i ekologi.
+   Källor: Livsmedelsverket; Nordic Nutrition Recommendations 2023. Ledtrådarna (led) är formulerade så att
+   bara ETT ämne i samma grupp passar – felalternativen tas alltid ur samma grupp (vitamin/mineral). */
+const AMNEN = [
+  { id: "a", namn: "A-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🥕",
+    finns: "Lever, morötter, sötpotatis och spenat. I morötter finns det som betakaroten, som kroppen gör om till A-vitamin.",
+    behovs: "Synen i svagt ljus, frisk hud och slemhinnor samt immunförsvaret.",
+    brist: "Nattblindhet – man ser dåligt i mörker. Svår brist kan ge blindhet och är fortfarande ett problem i fattiga länder.",
+    kul: "A-vitamin lagras i levern, och för mycket kan vara skadligt. Därför avråds gravida från att äta lever.",
+    led: [["Finns i", "morötter (som betakaroten) och i lever"], ["Behövs för", "att du ska kunna se i svagt ljus"], ["Brist ger", "nattblindhet"]] },
+  { id: "d", namn: "D-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "☀️",
+    finns: "Fet fisk (t.ex. lax, sill och makrill), berikade mjölkprodukter och matfett samt ägg. Bildas också i huden när solen skiner på den.",
+    behovs: "Att kroppen ska kunna ta upp kalcium från maten – och därmed ett starkt skelett. Viktigt också för musklerna och immunförsvaret.",
+    brist: "Hos barn engelska sjukan (rakit), med mjuka och krokiga ben. Hos vuxna ett mjukt och skört skelett.",
+    kul: "I Sverige står solen för lågt under vinterhalvåret för att huden ska bilda D-vitamin. Därför berikas mjölk och matfett.",
+    led: [["Bildas", "i huden när solen skiner på den"], ["Behövs för", "att kroppen ska kunna ta upp kalcium till skelettet"], ["Brist ger", "engelska sjukan (rakit) hos barn – mjuka, krokiga ben"]] },
+  { id: "e", namn: "E-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🌻",
+    finns: "Vegetabiliska oljor (t.ex. raps- och solrosolja), nötter, frön och fullkorn.",
+    behovs: "Fungerar som antioxidant och skyddar cellernas membran från att skadas.",
+    brist: "Mycket ovanlig hos friska människor.",
+    kul: "Solrosfrön och mandlar är några av de rikaste källorna.",
+    led: [["Finns i", "solrosfrön, nötter och vegetabiliska oljor"], ["Behövs för", "att som antioxidant skydda cellernas membran"]] },
+  { id: "k", namn: "K-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🥬",
+    finns: "Gröna bladgrönsaker som grönkål och spenat, broccoli och vissa oljor. Bakterierna i tarmen bildar också K-vitamin.",
+    behovs: "Blodets levring – att blodet stelnar så att ett sår slutar blöda.",
+    brist: "Blödningar som har svårt att sluta.",
+    kul: "Nyfödda barn har lite K-vitamin och får därför en spruta med K-vitamin på BB.",
+    led: [["Bildas också", "av bakterierna i din tarm"], ["Behövs för", "att blodet ska levra sig när du fått ett sår"], ["Visste du?", "Nyfödda barn får en spruta med det här vitaminet på BB"]] },
+  { id: "c", namn: "C-vitamin", grupp: "vitamin", typ: "Vattenlösligt vitamin", em: "🫑",
+    finns: "Paprika, kiwi, citrusfrukter, bär, broccoli, kål och potatis.",
+    behovs: "Att bilda kollagen, som håller ihop hud, blodkärl och tandkött och behövs när sår läker. Hjälper också kroppen att ta upp järn från växter.",
+    brist: "Skörbjugg – blödande tandkött, sår som inte läker och trötthet. Förr drabbades sjömän på långa resor.",
+    kul: "Röd paprika innehåller mer C-vitamin än apelsin. C-vitamin förstörs delvis vid lång kokning.",
+    led: [["Finns i", "paprika, kiwi och citrusfrukter"], ["Behövs för", "att bilda kollagen, som håller ihop hud och blodkärl"], ["Brist ger", "skörbjugg – som sjömän förr fick på långa resor"]] },
+  { id: "b12", namn: "B12", grupp: "vitamin", typ: "Vattenlösligt vitamin (B-vitamin)", em: "🥚",
+    finns: "Naturligt bara i mat från djur: kött, fisk, mjölk, ost och ägg. Finns också i berikade växtdrycker och tillskott.",
+    behovs: "Att bilda röda blodkroppar och hålla nervsystemet friskt.",
+    brist: "Blodbrist och nervskador, t.ex. domningar och stickningar i händer och fötter.",
+    kul: "Den som äter helt växtbaserat behöver B12-berikad mat eller tillskott. B12 är det enda B-vitaminet som lagras länge i levern.",
+    led: [["Finns", "naturligt bara i mat från djur – veganer behöver tillskott"], ["Brist kan ge", "nervskador med domningar och stickningar"]] },
+  { id: "folat", namn: "Folat", grupp: "vitamin", typ: "Vattenlösligt vitamin (B-vitamin)", em: "🫘",
+    finns: "Gröna bladgrönsaker, baljväxter (bönor, linser och kikärtor), fullkorn och apelsin.",
+    behovs: "Celldelning och att bilda blodkroppar. Extra viktigt i början av en graviditet, när fostrets nervsystem bildas.",
+    brist: "Blodbrist med trötthet. Hos gravida ökar risken för fosterskador i ryggmärgen.",
+    kul: "Namnet kommer från latinets folium, som betyder blad – folat hittades först i spenatblad.",
+    led: [["Namnet", "kommer från latinets ord för blad"], ["Extra viktigt", "i början av en graviditet, när fostrets nervsystem bildas"]] },
+
+  { id: "kalcium", namn: "Kalcium", grupp: "mineral", typ: "Mineral", em: "🥛",
+    finns: "Mjölk, ost, yoghurt, berikade växtdrycker, grönkål och mandel.",
+    behovs: "Skelettet och tänderna – ungefär 99 procent av kroppens kalcium finns där. Behövs också för att muskler och nerver ska fungera.",
+    brist: "Ett svagare skelett. Lite kalcium under uppväxten ökar risken för benskörhet senare i livet.",
+    kul: "Kroppen bygger upp mest skelett i tonåren – då läggs grunden för starka ben resten av livet.",
+    led: [["Finns", "nästan allt i kroppen i skelettet och tänderna"], ["Finns i", "mjölk, ost och yoghurt"]] },
+  { id: "jarn", namn: "Järn", grupp: "mineral", typ: "Mineral", em: "🥩",
+    finns: "Kött, blodmat (t.ex. blodpudding), fisk, baljväxter, fullkorn och gröna bladgrönsaker.",
+    behovs: "Hemoglobinet i de röda blodkropparna – det som transporterar syre från lungorna ut i kroppen.",
+    brist: "Järnbrist och blodbrist, som gör en trött och orkeslös. Vanligt hos tonårstjejer, eftersom järn förloras med mensblodet.",
+    kul: "Järn från växter tas upp sämre än järn från kött – men C-vitamin i samma måltid ökar upptaget.",
+    led: [["Ingår i", "hemoglobinet, som transporterar syre i blodet"], ["Finns i", "blodpudding, kött och baljväxter"], ["Brist", "är vanligt hos tonårstjejer, eftersom det förloras med mensblodet"]] },
+  { id: "jod", namn: "Jod", grupp: "mineral", typ: "Mineral", em: "🧂",
+    finns: "Jodberikat bordssalt, fisk och skaldjur, mjölk och ägg.",
+    behovs: "Sköldkörtelns hormoner, som styr ämnesomsättningen och är viktiga för hjärnans utveckling.",
+    brist: "Struma – en förstorad sköldkörtel som syns som en svullnad på halsen.",
+    kul: "I Sverige har bordssalt berikats med jod sedan 1936. Många specialsalter, som flingsalt och havssalt, är inte jodberikade.",
+    led: [["Tillsätts", "i bordssalt i Sverige sedan 1936"], ["Behövs för", "sköldkörtelns hormoner"], ["Brist ger", "struma – en förstorad sköldkörtel"]] },
+  { id: "natrium", namn: "Natrium", grupp: "mineral", typ: "Mineral", em: "🥨",
+    finns: "Koksalt (natriumklorid). Det mesta kommer från salt i färdigmat, bröd, ost, korv och chips.",
+    behovs: "Kroppens vätskebalans och att nerverna kan skicka signaler.",
+    brist: "Ovanlig – de flesta får i sig för mycket.",
+    kul: "För mycket salt kan höja blodtrycket. Livsmedelsverket rekommenderar högst 6 gram salt per dag för vuxna.",
+    led: [["Bildar", "tillsammans med klor vanligt koksalt"], ["De flesta", "får i sig för mycket – det kan höja blodtrycket"]] },
+  { id: "kalium", namn: "Kalium", grupp: "mineral", typ: "Mineral", em: "🍌",
+    finns: "Potatis, banan, grönsaker, frukt, baljväxter och nötter.",
+    behovs: "Att nerver och muskler – även hjärtmuskeln – ska fungera, och kroppens vätskebalans.",
+    brist: "Ovanlig vid vanlig kost. Kan ge muskelsvaghet.",
+    kul: "Kalium och natrium samarbetar i nerverna. Mycket kalium från frukt och grönt motverkar en del av saltets effekt på blodtrycket.",
+    led: [["Finns mycket i", "potatis och banan"], ["Motverkar", "en del av saltets effekt på blodtrycket"]] },
+  { id: "magnesium", namn: "Magnesium", grupp: "mineral", typ: "Mineral", em: "🌾",
+    finns: "Fullkorn, nötter, frön, baljväxter, gröna bladgrönsaker och mörk choklad.",
+    behovs: "Hundratals enzymer i kroppen, muskler och nerver samt skelettet.",
+    brist: "Ovanlig. Kan ge muskelkramper och trötthet.",
+    kul: "Magnesium sitter i mitten av klorofyllet, det gröna ämnet i växter. Därför är gröna grönsaker bra källor.",
+    led: [["Sitter", "i mitten av klorofyllmolekylen i gröna växter"], ["Finns i", "fullkorn, nötter och mörk choklad"]] },
+  { id: "zink", namn: "Zink", grupp: "mineral", typ: "Mineral", em: "🦪",
+    finns: "Kött, fisk och skaldjur (särskilt ostron), ost, fullkorn och baljväxter.",
+    behovs: "Immunförsvaret, tillväxten, sårläkning och många enzymer.",
+    brist: "Sämre immunförsvar, långsam sårläkning och sämre smak- och luktsinne.",
+    kul: "Ostron är den zinkrikaste maten av alla.",
+    led: [["Rikaste källan", "är ostron"], ["Brist kan ge", "sämre smak- och luktsinne"]] }
+];
+
+let OMGANG = "vitamin", RUNDA = [], index = 0, ratt = 0, missade = [], laser = false, aktuell = null;
+const el = id => document.getElementById(id);
+function blanda(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function kortHtml(a) {
+  return '<div class="kort-topp"><span class="kort-em" aria-hidden="true">' + a.em + '</span><h3>' + esc(a.namn) + '</h3><span class="tagg">' + esc(a.typ) + '</span></div>' +
+    '<dl><dt>Finns i</dt><dd>' + esc(a.finns) + '</dd><dt>Behövs för</dt><dd>' + esc(a.behovs) + '</dd><dt>Vid brist</dt><dd>' + esc(a.brist) + '</dd></dl>' +
+    '<p class="kul"><strong>Visste du?</strong> ' + esc(a.kul) + '</p>';
+}
+
+// ── Lär dig först ──
+function byggChips() {
+  const grupper = { "chips-fett": a => a.typ.indexOf("Fett") === 0, "chips-vatten": a => a.typ.indexOf("Vatten") === 0, "chips-mineral": a => a.grupp === "mineral" };
+  Object.keys(grupper).forEach(id => {
+    AMNEN.filter(grupper[id]).forEach(a => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip";
+      b.innerHTML = '<span class="em" aria-hidden="true">' + a.em + '</span>' + esc(a.namn);
+      b.addEventListener("click", () => visaDialog(a));
+      el(id).appendChild(b);
+    });
+  });
+  const nv = AMNEN.filter(a => a.grupp === "vitamin").length, nm = AMNEN.filter(a => a.grupp === "mineral").length;
+  el("antal-vitamin").textContent = nv + " frågor – A, D, E, K, C, B12 och folat";
+  el("antal-mineral").textContent = nm + " frågor – kalcium, järn, jod, natrium …";
+  el("antal-alla").textContent = (nv + nm) + " frågor – hela utmaningen";
+}
+function visaDialog(a) {
+  el("vmDialogInnehall").innerHTML = '<div class="kort">' + kortHtml(a) + '</div>';
+  const d = el("vmDialog");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+el("vmDialogClose").addEventListener("click", () => el("vmDialog").close());
+el("vmDialog").addEventListener("click", e => { if (e.target === el("vmDialog")) el("vmDialog").close(); });
+
+// ── Spelet ──
+function valjOmgang(o) { OMGANG = o; startaRunda(o === "alla" ? AMNEN : AMNEN.filter(a => a.grupp === o)); }
+function startaRunda(urval) {
+  RUNDA = blanda(urval).map(a => ({ amne: a, led: a.led[Math.floor(Math.random() * a.led.length)] }));
+  index = 0; ratt = 0; missade = [];
+  el("start-panel").classList.add("doldt"); el("slut-panel").classList.add("doldt"); el("spel-panel").classList.remove("doldt");
+  window.scrollTo(0, 0);
+  visaFraga();
+}
+function alternativ(r) {
+  const fel = blanda(AMNEN.filter(a => a.id !== r.id && a.grupp === r.grupp)).slice(0, 3);
+  return blanda([r, ...fel]);
+}
+function visaFraga() {
+  if (index >= RUNDA.length) { visaSlut(); return; }
+  laser = false; aktuell = RUNDA[index].amne;
+  const led = RUNDA[index].led;
+  el("s-nr").textContent = (index + 1) + "/" + RUNDA.length;
+  el("s-ratt").textContent = ratt;
+  el("ledtrad-typ").textContent = led[0];
+  el("ledtrad-text").textContent = "… " + led[1] + ".";
+  el("ledtrad-fraga").textContent = aktuell.grupp === "vitamin" ? "Vilket vitamin är det?" : "Vilket mineral är det?";
+  el("besked").textContent = " "; el("besked").className = "besked";
+  el("facit").classList.add("doldt"); el("facit").innerHTML = "";
+  el("nastaBtn").classList.add("doldt");
+  el("svar-grid").innerHTML = "";
+  alternativ(aktuell).forEach((a, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "svar-btn"; b.dataset.id = a.id;
+    b.innerHTML = '<span class="nr" aria-hidden="true">' + (i + 1) + '</span><span>' + esc(a.namn) + '</span>';
+    b.addEventListener("click", () => svara(b, a));
+    el("svar-grid").appendChild(b);
+  });
+}
+function svara(knapp, valt) {
+  if (laser) return; laser = true;
+  const knappar = el("svar-grid").querySelectorAll(".svar-btn");
+  knappar.forEach(b => b.disabled = true);
+  const a = aktuell;
+  if (valt.id === a.id) {
+    ratt++; knapp.classList.add("ratt");
+    el("besked").textContent = "Rätt! Det är " + a.namn + ".";
+    el("besked").className = "besked ok";
+  } else {
+    missade.push(a); knapp.classList.add("fel");
+    knappar.forEach(b => { if (b.dataset.id === a.id) b.classList.add("ratt"); });
+    el("besked").textContent = "Inte riktigt – det är " + a.namn + ".";
+    el("besked").className = "besked nej";
+  }
+  el("s-ratt").textContent = ratt;
+  el("facit").innerHTML = '<div class="kort">' + kortHtml(a) + '</div>';
+  el("facit").classList.remove("doldt");
+  el("nastaBtn").textContent = index + 1 < RUNDA.length ? "Nästa fråga →" : "Se resultatet →";
+  el("nastaBtn").classList.remove("doldt");
+  el("nastaBtn").focus({ preventScroll: true });
+}
+function nasta() { index++; visaFraga(); }
+el("nastaBtn").addEventListener("click", nasta);
+
+function visaSlut() {
+  el("spel-panel").classList.add("doldt"); el("slut-panel").classList.remove("doldt");
+  const p = RUNDA.length ? Math.round(ratt / RUNDA.length * 100) : 0;
+  el("slut-ratt").textContent = ratt + "/" + RUNDA.length;
+  el("slut-procent").textContent = p + " %";
+  const unika = [...new Map(missade.map(m => [m.id, m])).values()];
+  el("slut-missade").innerHTML = unika.length
+    ? '<p>Läs igen om:</p><div class="chips">' + unika.map(m => '<button type="button" class="chip" data-id="' + m.id + '"><span class="em" aria-hidden="true">' + m.em + '</span>' + esc(m.namn) + '</button>').join("") + '</div>'
+    : '<p>Alla rätt – snyggt!' + (OMGANG !== "alla" ? ' Prova omgången med alla ämnen nästa gång.' : '') + '</p>';
+  el("slut-missade").querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => visaDialog(AMNEN.find(a => a.id === b.dataset.id))));
+  el("tranaBtn").classList.toggle("doldt", !unika.length);
+  el("slut-panel").scrollIntoView({ block: "start" });
+}
+
+document.querySelectorAll(".val-kort").forEach(b => b.addEventListener("click", () => valjOmgang(b.dataset.omgang)));
+el("igenBtn").addEventListener("click", () => valjOmgang(OMGANG));
+el("tranaBtn").addEventListener("click", () => startaRunda([...new Map(missade.map(m => [m.id, m])).values()]));
+el("valjBtn").addEventListener("click", () => { el("slut-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt"); window.scrollTo(0, 0); });
+el("avbrytBtn").addEventListener("click", () => { el("spel-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt"); window.scrollTo(0, 0); });
+
+document.addEventListener("keydown", e => {
+  if (el("spel-panel").classList.contains("doldt") || el("vmDialog").open) return;
+  if (e.target.closest && e.target.closest("button, a, input") && (e.key === " " || e.key === "Enter")) return;
+  if (/^[1-4]$/.test(e.key) && !laser) { const b = el("svar-grid").querySelectorAll(".svar-btn")[+e.key - 1]; if (b) b.click(); }
+  else if (e.key === "Enter" && laser) { nasta(); }
+});
+
+byggChips();
+</script>
+</body>
+</html>
