@@ -529,24 +529,36 @@ function teckenforklaring(lista) {
 // ── Uppläsning (svenska, Web Speech API) ──
 const synth = window.speechSynthesis || null;
 function svRost() { if (!synth) return null; const v = synth.getVoices(); return v.find(x => x.lang === "sv-SE") || v.find(x => (x.lang || "").toLowerCase().indexOf("sv") === 0) || null; }
-function las() {
-  if (!synth) return;
-  synth.cancel();
+// Egen inläsning: audio/luftvagar/steg01.mp3 … steg11.mp3 (Jesper spelar in). Saknas filen används automatrösten.
+const LJUD_BAS = "./audio/luftvagar/steg";
+let ljud = null, lasId = 0;
+function tystaAllt() { lasId++; if (ljud) { ljud.pause(); ljud = null; } if (synth) synth.cancel(); }
+function lasTTS(id) {
+  if (!synth || id !== lasId) return;
   const S = STEG[steg];
   const text = S.rubrik + ". " + (S.lasText || S.text.join(" ")).replace(/O₂/g, "syre").replace(/CO₂/g, "koldioxid").replace(/m²/g, "kvadratmeter").replace(/–/g, ",");
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "sv-SE"; const r = svRost(); if (r) u.voice = r; u.rate = 0.95;
-  u.onend = () => { if (autospela && lasUpp) nastaAuto(); };
+  u.onend = () => { if (id === lasId && autospela && lasUpp) nastaAuto(); };
   synth.speak(u);
+}
+function las() {
+  tystaAllt();
+  const id = lasId;
+  const a = new Audio(LJUD_BAS + String(steg + 1).padStart(2, "0") + ".mp3");
+  ljud = a;
+  a.onended = () => { if (id === lasId && autospela && lasUpp) nastaAuto(); };
+  a.onerror = () => { if (id === lasId) { ljud = null; lasTTS(id); } };
+  const p = a.play();
+  if (p && p.catch) p.catch(err => { if (id === lasId && err && err.name !== "AbortError") { ljud = null; lasTTS(id); } });
 }
 el("lasBtn").addEventListener("click", () => {
   lasUpp = !lasUpp;
   el("lasBtn").setAttribute("aria-pressed", lasUpp ? "true" : "false");
   el("lasBtn").textContent = lasUpp ? "🔊 Läser upp" : "🔈 Läs upp";
-  if (lasUpp) las(); else if (synth) synth.cancel();
+  if (lasUpp) las(); else tystaAllt();
   planeraAuto();
 });
-if (!synth) el("lasBtn").style.display = "none";
 
 // ── Automatisk uppspelning ──
 function nastaAuto() { if (steg < STEG.length - 1) visa(steg + 1); else stoppaAuto(); }
