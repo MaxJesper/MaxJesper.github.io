@@ -2,7 +2,12 @@ function renderProv({ jsonPath, mountId, mode = "exam" }) {
   const mount = document.getElementById(mountId);
   if (!mount) return;
 
-  const storageKeyBase = `examAnswers::${jsonPath}`;
+  // Nyckeln bygger på JSON-filens FULLSTÄNDIGA sökväg (t.ex. /kemi/matens-kemi/data/...).
+  // Tidigare användes jsonPath som den stod ("./data/...json"), som är likadan i alla områden –
+  // då delade alla områden samma sparade svar (Jesper 6 okt 2026). Gamla nycklar läses inte längre.
+  let fullPath = jsonPath;
+  try { fullPath = new URL(jsonPath, location.href).pathname; } catch (e) {}
+  const storageKeyBase = `examAnswers::v2::${fullPath}`;
 
   mount.innerHTML = `<p>Laddar…</p>`;
 
