@@ -29,11 +29,12 @@
   .etikett.syns { opacity: 1; }
   .etikett.pil { background: var(--f-stark); color: #fff; border-color: var(--f-stark); }
   .etikett .nr { display: inline-block; min-width: 1.35em; height: 1.35em; line-height: 1.35em; text-align: center; border-radius: 999px; background: var(--f-stark); color: #fff; margin-right: 0.3rem; font-size: 0.85em; }
-  @media (max-width: 700px) { .etikett { font-size: 0.68rem; padding: 0.08rem 0.32rem; border-width: 1px; } }
+  @media (max-width: 700px) { .etikett { font-size: 0.78rem; padding: 0.08rem 0.32rem; border-width: 1px; } }
 
   /* Infälld tvärsnittsbild (steg 6) */
   .infalld { position: absolute; right: 2%; top: 3%; width: 30%; background: rgba(255,255,255,0.96); border: 1.5px solid var(--f-stark); border-radius: 12px; padding: 0.4rem; opacity: 0; transition: opacity 0.35s ease; pointer-events: none; }
   .infalld.syns { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .scen svg.bild, .etiketter, .etikett, .infalld { transition: none; } }
   .infalld svg { width: 100%; height: auto; display: block; }
   .infalld p { margin: 0.1rem 0 0; font-size: 0.78rem; font-weight: 700; text-align: center; color: #0f2f3a; }
   @media (max-width: 700px) { .infalld { width: 38%; padding: 0.2rem; } .infalld p { font-size: 0.6rem; } }
@@ -152,7 +153,8 @@
   <details class="kallor">
     <summary>Källor och bilder</summary>
     <ul>
-      <li>1177 – Lungor och luftvägar, hur de fungerar (<a href="https://www.1177.se" target="_blank" rel="noopener">1177.se</a>)</li>
+      <li>1177 – <a href="https://www.1177.se/liv--halsa/sa-fungerar-kroppen/luftvagar-och-lungor/" target="_blank" rel="noopener">Så fungerar luftvägar och lungor</a></li>
+      <li>OpenStax, Anatomy and Physiology 2e – <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/22-1-organs-and-structures-of-the-respiratory-system" target="_blank" rel="noopener">22.1 Organs and Structures of the Respiratory System</a> (öppen lärobok, CC BY)</li>
       <li>Hjärt-Lungfonden – Så fungerar lungorna (<a href="https://www.hjart-lungfonden.se" target="_blank" rel="noopener">hjart-lungfonden.se</a>)</li>
       <li>Nationalencyklopedin – luftvägar, struphuvud, lungblåsor och mellangärde (<a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a>)</li>
     </ul>
@@ -222,12 +224,12 @@ const P = {
 // vy: [x, y, bredd, höjd] (bredd/höjd = 3/2). etiketter: {t: text, at: [x,y] (textens läge), mal: [[x,y],...] (pekar på)}
 const STEG = [
   { rubrik: "Inandningen börjar", bild: 1, vy: [0, 0, 1536, 1024],
-    text: ["Mellangärdet – en kupolformad muskel under lungorna – drar ihop sig och blir plattare. Samtidigt lyfter musklerna mellan revbenen bröstkorgen uppåt och utåt.",
-           "Brösthålan blir större, trycket i lungorna sjunker och luft sugs in genom näsan, hela vägen ner i lungorna."],
+    text: ["Mellangärdet, som även kallas diafragma, är en kupolformad muskelplatta under lungorna. Vid inandning drar det ihop sig och blir plattare. Samtidigt lyfter musklerna mellan revbenen bröstkorgen uppåt och utåt.",
+           "Brösthålan blir större, trycket i lungorna sjunker och luft strömmar in genom näsan och vidare ner i lungorna."],
     floden: [{ p: "in1", n: 7, dur: 7, typ: "luft" }, { p: "in1b", n: 7, dur: 7, typ: "luft" }, { p: "in1c", n: 4, dur: 7, typ: "luft" }],
     pilar: [{ fran: [340, 845], till: [340, 905], puls: true }, { fran: [700, 862], till: [700, 922], puls: true },
             { fran: [205, 640], till: [150, 640], puls: true }, { fran: [790, 640], till: [845, 640], puls: true }],
-    etiketter: [{ t: "Luften sugs in", at: [95, 70], mal: [[172, 150]] },
+    etiketter: [{ t: "Luften strömmar in", at: [95, 70], mal: [[172, 150]] },
                 { t: "Mellangärdet sänks", at: [1130, 880], mal: [[760, 890]] },
                 { t: "Bröstkorgen vidgas", at: [1130, 640], mal: [[860, 640]] },
                 { t: "Lungor", at: [1130, 420], mal: [[700, 470]] }] },
@@ -284,7 +286,7 @@ const STEG = [
 
   { rubrik: "Flimmerhår och slem – luftvägarnas städhjälp", bild: 4, vy: [0, 0, 1536, 1024],
     text: ["Här är vi inne i väggen på luftstrupen, kraftigt förstorat. Bägarcellerna tillverkar slem som ligger som ett klibbigt lager överst. Damm, pollen och bakterier som tagit sig förbi näsan fastnar i slemmet.",
-           "Under slemmet slår flimmerhåren i takt, hela tiden åt samma håll. De för slemmet uppåt mot svalget, där det sväljs eller hostas upp. Tobaksrök skadar flimmerhåren – därför får rökare rökhosta."],
+           "Under slemmet slår flimmerhåren i takt, hela tiden åt samma håll. De för slemmet uppåt mot svalget, där det sväljs eller hostas upp. Tobaksrök skadar flimmerhåren och ökar slemproduktionen. Det försämrar luftvägarnas rening och bidrar till rökhosta."],
     teckenforkl: ["damm", "slem"],
     vagor: true,
     floden: [{ p: "st1", n: 2, dur: 16, typ: "damm" }, { p: "st2", n: 2, dur: 14, typ: "damm" }, { p: "st3", n: 2, dur: 12, typ: "damm" }, { p: "st4", n: 2, dur: 15, typ: "damm" },
@@ -309,8 +311,8 @@ const STEG = [
                 { t: "Mellangärdet", at: [1230, 880], mal: [[820, 830]] }] },
 
   { rubrik: "Gasutbytet i lungblåsorna", bild: 6, vy: [0, 0, 1536, 1024],
-    text: ["Längst ut kommer luften fram till lungblåsorna. Deras väggar är tunnare än en tusendels millimeter, och inuti väggarna går kapillärer där de röda blodkropparna passerar nästan en och en.",
-           "Syre (O₂) går från luften i lungblåsan in i blodet. Koldioxid (CO₂) går från blodet ut i lungblåsan och andas ut. Alla lungblåsor tillsammans har en yta på ungefär 70–80 m² – som golvet i en stor lägenhet."],
+    text: ["Längst ut kommer luften fram till lungblåsorna. Barriären mellan luften i lungblåsan och blodet är extremt tunn – på de tunnaste ställena mindre än en tusendels millimeter. I väggarna mellan lungblåsorna går kapillärer där de röda blodkropparna ofta passerar nästan en och en.",
+           "Syre (O₂) går från luften i lungblåsan in i blodet. Koldioxid (CO₂) går från blodet ut i lungblåsan och andas ut. Hos en vuxen har lungblåsorna tillsammans en yta på ungefär 70–80 m² – som golvet i en stor lägenhet."],
     teckenforkl: ["o2", "co2", "luft"],
     floden: [{ p: "br6", n: 6, dur: 6, typ: "luft" },
              ...["o2a", "o2b", "o2c", "o2d", "o2e"].map((p, i) => ({ p, n: 1, dur: 5 + i * 0.4, typ: "o2" })),
@@ -353,6 +355,7 @@ const SVGNS = "http://www.w3.org/2000/svg";
 const el = id => document.getElementById(id);
 const svg = el("svg"), scen = el("scen");
 const lugn = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (lugn) document.querySelectorAll("#infalld animate").forEach(x => x.remove());
 let steg = 0, vy = STEG[0].vy.slice(), aktivaFloden = [], startTid = 0, rafId = null, autospela = false, autoTimer = null, lasUpp = false, sistaBild = 0;
 const banCache = {};
 
@@ -425,7 +428,7 @@ function ritaSteg() {
   });
   // Partikelflöden
   (S.floden || []).forEach(f => {
-    const b = bana(f.p), n = lugn ? Math.max(1, Math.ceil(f.n / 2)) : f.n;
+    const b = bana(f.p), n = f.n;
     for (let i = 0; i < n; i++) {
       aktivaFloden.push({ b, typ: f.typ, dur: f.dur * (lugn ? 1.6 : 1), fas: (i / n) + (f.fas || 0), stopp: f.stopp, bak: f.bak, g: partikelElement(f.typ, s) });
     }
@@ -453,10 +456,12 @@ function ritaSteg() {
   });
   if (S.infalld) el("infalld").classList.add("syns");
   startTid = performance.now();
+  if (lugn) uppdatera(startTid);
 }
 
 function uppdatera(nu) {
-  const t = (nu - startTid) / 1000;
+  // Minskad rörelse: partiklarna står stilla, utspridda längs sin bana (visar vägen utan att röra sig)
+  const t = lugn ? 0 : (nu - startTid) / 1000;
   for (const a of aktivaFloden) {
     let p = (t / a.dur + a.fas) % 1;
     if (a.stopp !== undefined) p = Math.min(p * 1.35, a.stopp);          // damm som fastnar och ligger kvar en stund
@@ -465,10 +470,10 @@ function uppdatera(nu) {
     a.g.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
     // in- och uttoning i banans ändar
     const kant = Math.min(p, 1 - p);
-    a.g.setAttribute("opacity", a.stopp !== undefined ? 1 : Math.min(1, kant * 12).toFixed(2));
+    a.g.setAttribute("opacity", (a.stopp !== undefined || lugn) ? 1 : Math.min(1, kant * 12).toFixed(2));
     if (a.typ === "varm" && a.g._c) a.g._c.setAttribute("fill", p > 0.5 ? "#0369a1" : "#ffffff");
   }
-  rafId = requestAnimationFrame(uppdatera);
+  if (!lugn) rafId = requestAnimationFrame(uppdatera);
 }
 
 // ── Navigering ──
