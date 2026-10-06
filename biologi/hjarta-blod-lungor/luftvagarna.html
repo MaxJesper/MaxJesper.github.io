@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Luftvägarna – från näsa till lungblåsa – Hjärta, blod och lungor</title>
+<link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+<style>
+  :root {
+    --f: #0e7490; --f-stark: #155e75; --f-mjuk: #ecfeff; --f-kant: #a5e3ee;
+    --ok: #15803d; --ok-mjuk: #dcfce7; --fel: #c2410c; --fel-mjuk: #ffedd5;
+    --nasta: #1d4ed8; --nasta-stark: #1e3a8a; --text: #212529; --gra: #595959;
+    --tid: #7c3aed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body.lv-sida { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; color: var(--text); background: #fff; font-size: 17px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1.2rem 1.2rem 3rem; }
+  header.top { background: var(--f); color: #fff; padding: 1.6rem 1.2rem; }
+  header.top .inner { max-width: 900px; margin: 0 auto; }
+  header.top h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 0.15rem; }
+  header.top p { opacity: 0.92; font-size: 0.95rem; }
+  @media (max-width: 700px) { header.top .inner { padding-right: 6.5rem; } header.top h1 { font-size: 1.45rem; } }
+  h2 { font-size: 1.3rem; color: var(--f-stark); margin: 1.4rem 0 0.6rem; }
+  h3 { font-size: 1.05rem; color: var(--f-stark); margin: 1rem 0 0.4rem; }
+  p { margin-bottom: 0.8rem; }
+  a { color: #0b5cad; }
+  .panel { background: #fff; border: 1px solid var(--f-kant); border-radius: 14px; padding: 1.1rem 1.2rem 1.3rem; margin-bottom: 1.2rem; }
+  .panel.soft { background: var(--f-mjuk); }
+  .doldt { display: none !important; }
+  .btn { font: inherit; font-weight: 600; padding: 0.5rem 1.05rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn:hover { background: var(--f-mjuk); }
+  .btn.primary { background: var(--f); border-color: var(--f); color: #fff; }
+  .btn.primary:hover { background: var(--f-stark); }
+  .btn:focus-visible, .svar-btn:focus-visible, .chip:focus-visible, .btn-nasta:focus-visible, .val-kort:focus-visible { outline: 3px solid #0b3d75; outline-offset: 3px; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.9rem; }
+
+  /* Informationstext */
+  .fakta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem; margin: 0.6rem 0 0.4rem; }
+  .fakta-ruta { background: #fff; border: 1px solid var(--f-kant); border-left: 4px solid var(--f); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 0.95rem; }
+  .fakta-ruta strong { color: var(--f-stark); }
+  .fakta-ruta p:last-child { margin-bottom: 0; }
+  ol.vag { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.2rem; margin: 0.5rem 0 0.8rem; padding: 0; counter-reset: steg; }
+  ol.vag li { counter-increment: steg; background: #fff; border: 1px solid var(--f-kant); border-radius: 999px; padding: 0.2rem 0.7rem; font-size: 0.92rem; font-weight: 600; color: var(--f-stark); }
+  ol.vag li::before { content: counter(steg) ". "; color: var(--gra); font-weight: 700; }
+  ol.vag li + li { position: relative; margin-left: 1.1rem; }
+  ol.vag li + li::after { content: "→"; position: absolute; left: -1.05rem; top: 0.15rem; color: var(--gra); font-weight: 700; }
+
+  /* Val av omgång */
+  .niva-rubrik { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .niva-tagg { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 999px; padding: 0.1rem 0.6rem; border: 2px solid currentColor; }
+  .val-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.7rem; margin-top: 0.6rem; }
+  .val-kort { font: inherit; text-align: left; padding: 0.9rem 1rem; border-radius: 12px; border: 2px solid var(--f-kant); background: #fff; cursor: pointer; color: var(--text); }
+  .val-kort:hover { border-color: var(--f); background: var(--f-mjuk); }
+  .val-kort strong { display: block; color: var(--f-stark); font-size: 1.05rem; }
+  .val-kort span { font-size: 0.88rem; color: var(--gra); }
+  .panel.tid { border-color: #d8c6fb; }
+  .panel.tid h2, .panel.tid .niva-tagg { color: var(--tid); }
+  .val-kort.tid { border-color: #d8c6fb; }
+  .val-kort.tid strong { color: var(--tid); }
+  .val-kort.tid:hover { border-color: var(--tid); background: #f5f3ff; }
+  .regler { margin: 0.3rem 0 0.6rem 1.2rem; font-size: 0.95rem; }
+  .regler li { margin-bottom: 0.2rem; }
+  .rekord-rad { font-size: 0.92rem; color: var(--gra); margin: 0.5rem 0 0; }
+
+  /* Lär dig först */
+  .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0 0.2rem; }
+  .chip { font: inherit; font-size: 0.9rem; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; }
+  .chip:hover { background: var(--f); color: #fff; border-color: var(--f); }
+  .chip .em { margin-right: 0.3rem; }
+  .grupp-rubrik { font-size: 0.85rem; font-weight: 700; color: var(--f-stark); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.8rem; }
+
+  /* Spelet */
+  .status-rad { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 1rem; }
+  .status { background: var(--f); color: #fff; border-radius: 12px; padding: 0.45rem 1rem; text-align: center; min-width: 110px; }
+  .status b { display: block; font-size: 1.4rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .status small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+  body.tidslage .status { background: var(--tid); }
+  @media (max-width: 520px) { body.tidslage .status-rad { flex-wrap: nowrap; gap: 0.4rem; } body.tidslage .status { min-width: 0; flex: 1 1 0; padding: 0.4rem 0.2rem; } body.tidslage .status b { font-size: 1.2rem; } body.tidslage .status small { font-size: 0.68rem; } }
+  .tidsrad { display: flex; align-items: center; gap: 0.6rem; margin: -0.3rem 0 0.9rem; }
+  .tidsbar { flex: 1; height: 14px; border-radius: 999px; background: #ede9fe; border: 1px solid #d8c6fb; overflow: hidden; }
+  .tidsbar span { display: block; height: 100%; width: 100%; background: var(--tid); }
+  .tidsrad.bradskande .tidsbar span { background: repeating-linear-gradient(45deg, var(--tid) 0 8px, #a78bfa 8px 16px); }
+  .tidstal { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 4.2rem; text-align: right; color: var(--tid); }
+  .ledtrad-ruta { background: var(--f-mjuk); border: 1px solid var(--f-kant); border-radius: 16px; padding: 1.1rem 1rem; text-align: center; margin-bottom: 1rem; }
+  .ledtrad-typ { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--f-stark); }
+  .ledtrad-text { font-size: 1.2rem; font-weight: 600; margin: 0.3rem 0 0.2rem; line-height: 1.4; }
+  .ledtrad-fraga { font-size: 0.95rem; color: var(--gra); margin: 0; }
+  .ledtrad-ruta .btn-nasta { margin-top: 0.8rem; }
+
+  .svar-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+  .svar-btn { font: inherit; font-weight: 600; font-size: 1.05rem; padding: 0.85rem 0.6rem; border-radius: 12px; border: 2px solid var(--f-kant); background: #fff; color: var(--f-stark); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; justify-content: center; }
+  .svar-btn .nr { font-size: 0.78rem; font-weight: 700; color: var(--gra); border: 1px solid #c8c8c8; border-radius: 6px; padding: 0 0.35rem; }
+  .svar-btn:hover:not(:disabled) { background: var(--f-mjuk); border-color: var(--f); }
+  .svar-btn:disabled { cursor: default; }
+  .svar-btn.ratt { background: var(--ok-mjuk); border-color: var(--ok); border-style: solid; color: #14532d; }
+  .svar-btn.ratt::before { content: "✓"; font-weight: 800; color: var(--ok); }
+  .svar-btn.fel { background: var(--fel-mjuk); border-color: var(--fel); border-style: dashed; color: var(--fel); }
+  .svar-btn.fel::before { content: "✕"; font-weight: 800; }
+  .besked { min-height: 1.6em; margin-top: 0.8rem; font-weight: 700; text-align: center; }
+  .besked.ok { color: var(--ok); } .besked.nej { color: var(--fel); }
+  .btn-nasta { font: inherit; font-weight: 700; font-size: 1.05rem; padding: 0.8rem 1.4rem; border-radius: 999px; border: none; background: var(--nasta); color: #fff; cursor: pointer; }
+  .btn-nasta:hover { background: var(--nasta-stark); }
+
+  /* Faktakort */
+  .kort { background: #fff; border: 1px solid var(--f-kant); border-radius: 14px; padding: 1rem 1.1rem; margin-top: 0.9rem; }
+  .kort-topp { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+  .kort-em { font-size: 1.9rem; line-height: 1; }
+  .kort h3 { margin: 0; font-size: 1.2rem; }
+  .tagg { display: inline-block; font-size: 0.78rem; font-weight: 700; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--f-kant); background: var(--f-mjuk); color: var(--f-stark); }
+  .tagg.inte { border-style: dashed; background: #fff; color: #7c2d12; border-color: #c2410c; }
+  .kort .aka { font-size: 0.9rem; color: var(--gra); margin: 0.2rem 0 0; }
+  .kort dl { margin: 0.6rem 0 0; }
+  .kort dt { font-weight: 700; color: var(--f-stark); font-size: 0.92rem; margin-top: 0.5rem; }
+  .kort dd { margin: 0.05rem 0 0; }
+  .kort .kul { background: var(--f-mjuk); border-left: 4px solid var(--f); border-radius: 6px; padding: 0.5rem 0.7rem; margin-top: 0.7rem; font-size: 0.95rem; }
+
+  .stor-ruta { display: flex; background: var(--f); color: #fff; border-radius: 16px; overflow: hidden; margin-bottom: 1rem; }
+  body.tidslage .stor-ruta { background: var(--tid); }
+  .stor-ruta .del { flex: 1; text-align: center; padding: 1rem 0.5rem; }
+  .stor-ruta .del + .del { border-left: 1px solid rgba(255,255,255,0.3); }
+  .stor-ruta .siffra { display: block; font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
+  .stor-ruta .etikett { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; opacity: 0.92; }
+  .rekord-besked { font-weight: 700; color: var(--tid); }
+
+  dialog.lv-dialog { margin: auto; border: none; border-radius: 16px; padding: 0; max-width: 560px; width: calc(100% - 2rem); box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+  dialog.lv-dialog::backdrop { background: rgba(8,40,50,0.55); }
+  .lv-dialog-inner { padding: 1.2rem 1.3rem 1.4rem; position: relative; }
+  .lv-dialog .kort { border: none; padding: 0; margin: 0; }
+  .lv-dialog-close { position: absolute; top: 0.6rem; right: 0.6rem; width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 1px solid var(--f-kant); background: #fff; color: var(--f-stark); font-size: 1rem; cursor: pointer; z-index: 1; }
+
+  details.kallor { margin-top: 2rem; font-size: 0.85rem; color: var(--gra); }
+  details.kallor summary { cursor: pointer; font-weight: 600; color: var(--f-stark); }
+  details.kallor ul { margin: 0.5rem 0 0 1.2rem; }
+  @media (prefers-reduced-motion: no-preference) { .tidsbar span { transition: width 0.1s linear; } }
+</style>
+</head>
+<body class="lv-sida">
+
+<button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+<nav id="side-menu"></nav>
+
+<header class="top">
+  <div class="inner">
+    <h1>Luftvägarna – från näsa till lungblåsa</h1>
+    <p>Hjärta, blod och lungor · lär dig delarna och vad de gör</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="page-actions no-print" style="margin:0.2rem 0 1rem;">
+    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+  </div>
+
+  <!-- ============ START ============ -->
+  <section id="start-panel">
+    <div class="panel soft">
+      <h2 style="margin-top:0;">Luftens väg in i kroppen</h2>
+      <p>Varje cell i kroppen behöver syre till cellandningen och måste bli av med koldioxid. Luftvägarna är rören som leder luften fram och tillbaka mellan omvärlden och lungblåsorna, där gasutbytet med blodet sker.</p>
+      <ol class="vag" aria-label="Luftens väg vid inandning">
+        <li>Näsa eller mun</li><li>Näshåla</li><li>Svalg</li><li>Struphuvud</li><li>Luftstrupe</li><li>Luftrör (bronker)</li><li>Bronkioler</li><li>Lungblåsor</li>
+      </ol>
+      <div class="fakta-grid">
+        <div class="fakta-ruta">
+          <p><strong>Luften förbereds på vägen.</strong> I näsan och näshålan värms, fuktas och renas luften. Lungorna tål inte kall, torr och smutsig luft särskilt bra – därför är det bättre att andas genom näsan än genom munnen.</p>
+        </div>
+        <div class="fakta-ruta">
+          <p><strong>Rören grenar sig som ett träd.</strong> Luftstrupen delar sig i två luftrör (bronker), som grenar sig i allt finare rör ända ut till miljontals små lungblåsor (alveoler). Runt varje lungblåsa finns ett nät av kapillärer.</p>
+        </div>
+        <div class="fakta-ruta">
+          <p><strong>Lungorna har inga egna muskler.</strong> Det är mellangärdet (diafragman) och musklerna mellan revbenen som gör bröstkorgen större vid inandning. Då sugs luft in. Hjärnan styr andningen automatiskt.</p>
+        </div>
+      </div>
+      <p style="margin:0.6rem 0 0;">Luftvägarna brukar delas in i <strong>övre luftvägarna</strong> (näsa, bihålor, mun, svalg och struphuvud) och <strong>nedre luftvägarna</strong> (luftstrupe, luftrör och bronkioler).</p>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-top:0;">Lär dig först</h2>
+      <p style="margin-bottom:0.2rem;">Klicka på en del och läs var den finns och vad den gör.</p>
+      <div id="chip-grupper"></div>
+    </div>
+
+    <div class="panel">
+      <h2 class="niva-rubrik" style="margin-top:0;"><span class="niva-tagg">Nivå 1</span> Öva i lugn och ro</h2>
+      <p>Du får en ledtråd – var delen finns eller vad den gör. Välj rätt av fyra alternativ. Ingen tid räknas, och efter varje svar får du läsa mer.</p>
+      <p style="margin-bottom:0.3rem;"><strong>Välj omgång:</strong></p>
+      <div class="val-grid" id="val-niva1"></div>
+    </div>
+
+    <div class="panel tid">
+      <h2 class="niva-rubrik" style="margin-top:0;"><span class="niva-tagg">Nivå 2</span> ⏱ Tidsutmaningen</h2>
+      <p style="margin-bottom:0.3rem;">När du kan delarna: hur många poäng får du?</p>
+      <ul class="regler">
+        <li><strong id="regel-antal">20</strong> frågor blandat från alla delar.</li>
+        <li><strong id="regel-sek">10</strong> sekunder per fråga. Tiden stannar medan du läser svaret.</li>
+        <li>Rätt svar: <strong>10 poäng</strong> + <strong>1 poäng per sekund</strong> som är kvar.</li>
+        <li>Tre rätt i rad eller fler: <strong>+5 poäng</strong> extra för varje rätt svar i svit.</li>
+      </ul>
+      <div class="val-grid">
+        <button type="button" class="val-kort tid" id="startTidBtn"><strong>Starta tidsutmaningen</strong><span>Alla delar · 10 s per fråga</span></button>
+      </div>
+      <p class="rekord-rad" id="rekord-rad"></p>
+    </div>
+    <p style="font-size:0.85rem; color:var(--gra);">Tangentbord: <strong>1–4</strong> väljer svar, <strong>Enter</strong> går vidare.</p>
+  </section>
+
+  <!-- ============ SPEL ============ -->
+  <section class="doldt" id="spel-panel" aria-labelledby="spel-rubrik">
+    <h2 id="spel-rubrik" class="doldt">Frågor</h2>
+    <div class="status-rad">
+      <div class="status"><b id="s-nr">1/6</b><small>Fråga</small></div>
+      <div class="status"><b id="s-ratt">0</b><small>Rätt</small></div>
+      <div class="status doldt" id="s-poang-box"><b id="s-poang">0</b><small>Poäng</small></div>
+      <div class="status doldt" id="s-svit-box"><b id="s-svit">0</b><small>I rad</small></div>
+    </div>
+    <div class="tidsrad doldt" id="tidsrad">
+      <div class="tidsbar" role="progressbar" aria-label="Tid kvar" aria-valuemin="0" aria-valuemax="10" id="tidsbar"><span id="tidsfyll"></span></div>
+      <span class="tidstal" id="tidstal">10 s</span>
+    </div>
+
+    <div class="ledtrad-ruta">
+      <div class="ledtrad-typ" id="ledtrad-typ"></div>
+      <p class="ledtrad-text" id="ledtrad-text"></p>
+      <p class="ledtrad-fraga" id="ledtrad-fraga"></p>
+      <button type="button" class="btn-nasta doldt" id="nastaBtn">Nästa fråga →</button>
+    </div>
+
+    <div class="svar-grid" id="svar-grid" role="group" aria-label="Svarsalternativ"></div>
+    <p class="besked" id="besked" role="status" aria-live="polite">&nbsp;</p>
+
+    <div id="facit" class="doldt"></div>
+
+    <div class="btn-row" style="justify-content:center; margin-top:1.4rem;">
+      <button class="btn" id="avbrytBtn" type="button">Avbryt</button>
+    </div>
+  </section>
+
+  <!-- ============ SLUT ============ -->
+  <section class="panel doldt" id="slut-panel">
+    <h2 style="margin-top:0;">Klart!</h2>
+    <div class="stor-ruta">
+      <div class="del"><span class="siffra" id="slut-ratt">0</span><span class="etikett">Rätt</span></div>
+      <div class="del" id="slut-tredje"><span class="siffra" id="slut-procent">0 %</span><span class="etikett" id="slut-tredje-etikett">Andel rätt</span></div>
+    </div>
+    <p class="rekord-besked doldt" id="slut-rekord"></p>
+    <div id="slut-missade"></div>
+    <div class="btn-row">
+      <button class="btn primary doldt" id="tranaBtn" type="button">Träna bara på dem du missade</button>
+      <button class="btn primary" id="igenBtn" type="button">Samma omgång igen</button>
+      <button class="btn" id="valjBtn" type="button">Tillbaka till start</button>
+    </div>
+  </section>
+
+  <details class="kallor">
+    <summary>Källor</summary>
+    <ul>
+      <li>1177 – Lungor och luftvägar, hur de fungerar (<a href="https://www.1177.se" target="_blank" rel="noopener">1177.se</a>)</li>
+      <li>Hjärt-Lungfonden – Så fungerar lungorna (<a href="https://www.hjart-lungfonden.se" target="_blank" rel="noopener">hjart-lungfonden.se</a>)</li>
+      <li>Nationalencyklopedin – uppslagsorden luftvägar, struphuvud och lungblåsor (<a href="https://www.ne.se" target="_blank" rel="noopener">ne.se</a>)</li>
+    </ul>
+    <p style="margin-top:0.5rem;">Texterna är förenklade för högstadiet. Siffror som lungblåsornas antal och yta varierar mellan människor och mellan källor och är ungefärliga.</p>
+  </details>
+</div>
+
+<dialog class="lv-dialog" id="lvDialog" aria-label="Fakta">
+  <div class="lv-dialog-inner">
+    <button type="button" class="lv-dialog-close" id="lvDialogClose" aria-label="Stäng">✕</button>
+    <div id="lvDialogInnehall"></div>
+  </div>
+</dialog>
+
+<script src="/js/menu.js?v=0fc3b4a7"></script>
+<script>
+"use strict";
+/* Luftvägarna – lärande spel (Jesper 6 okt 2026), samma upplägg som Vitaminer och mineraler i kemi/matens-kemi.
+   Nivå 1: lugnt, per grupp. Nivå 2: på tid med poäng (10 + sekunder kvar, +5 i svit från 3 rätt i rad).
+   Ledtrådarna (led) är formulerade så att bara EN del i samma grupp passar – felalternativen tas ur samma grupp.
+   Begreppen följer områdets övriga material (lungblåsor/alveoler, mellangärdet/diafragma, luftrör/bronker). */
+const GRUPPER = [
+  { id: "nasa", namn: "Näsa, mun och svalg" },
+  { id: "strupe", namn: "Struphuvud och luftstrupe" },
+  { id: "lunga", namn: "Luftrör och lungor" },
+  { id: "skydd", namn: "Skydd och andning" }
+];
+const DELAR = [
+  /* ── Näsa, mun och svalg ── */
+  { id: "nashar", namn: "Näshår", grupp: "nasa", em: "🧹",
+    plats: "Precis innanför näsborrarna.",
+    uppgift: "Fungerar som ett grovt filter. Större partiklar som damm, sand och små insekter fastnar i håren innan de kommer längre in.",
+    kul: "Näshåren fångar bara de större partiklarna. De minsta fastnar i stället i slemmet längre in i luftvägarna.",
+    led: [["Var?", "precis innanför näsborrarna"], ["Gör", "att större partiklar som damm och sand fastnar redan vid näsborrarna"]] },
+  { id: "nashala", namn: "Näshåla", grupp: "nasa", em: "👃",
+    plats: "Hålrummet bakom näsan, delat i en höger och en vänster halva av nässkiljeväggen.",
+    uppgift: "Värmer, fuktar och renar inandningsluften. Slemhinnan är rik på blodkärl som värmer luften. Högst upp finns luktslemhinnan, där vi känner lukter.",
+    kul: "När du är förkyld svullnar slemhinnan i näshålan – därför blir du täppt i näsan och känner sämre lukt och smak.",
+    led: [["Delas", "i en höger och en vänster halva av nässkiljeväggen"], ["Här finns", "luktslemhinnan, där vi känner lukter"]] },
+  { id: "nasmussla", namn: "Näsmussla", grupp: "nasa", em: "🌀",
+    plats: "Tre benlister på varje sida inne i näshålan, klädda med slemhinna.",
+    uppgift: "Gör slemhinnans yta större och får luften att virvla. Då hinner luften värmas och fuktas, och partiklar slungas mot slemmet och fastnar.",
+    kul: "Näsmusslorna heter så för att de är tunna, böjda och krusiga – lite som snäckskal.",
+    led: [["Ser ut", "som tre böjda benlister på varje sida i näshålan"], ["Gör", "att luften virvlar runt i näshålan så att den hinner värmas"]] },
+  { id: "bihalor", namn: "Bihålor", grupp: "nasa", em: "🕳️",
+    plats: "Luftfyllda hålrum i skallbenen runt näsan – i pannan, i kindbenen och bakom näsroten. De har förbindelse med näshålan.",
+    uppgift: "Gör skallen lättare och påverkar hur rösten låter. De är klädda med slemhinna som för slem ut till näshålan.",
+    kul: "Om öppningarna till näshålan blir igensvullna kan slem samlas där. Det kallas bihåleinflammation och kan göra ont i pannan och kinderna.",
+    led: [["Var?", "som luftfyllda hålrum i skallbenen i pannan och kinderna"], ["Kan bli", "inflammerade så att det gör ont i pannan och kinderna"]] },
+  { id: "mun", namn: "Mun", grupp: "nasa", em: "👄",
+    plats: "Munhålan, med läppar, tänder, tunga och gom.",
+    uppgift: "En reservväg för luften. Genom munnen kan man snabbt få in mycket luft, men luften värms, fuktas och renas sämre än genom näsan.",
+    kul: "När du springer fort andas du ofta genom munnen eftersom det går att få in mer luft snabbare. Tungan och läpparna formar också ljuden från stämbanden till ord.",
+    led: [["Är", "en reservväg för luften när man behöver mycket luft snabbt"], ["Nackdel", "luften som går in här värms och renas sämre än i näsan"]] },
+  { id: "svalg", namn: "Svalg", grupp: "nasa", em: "🔀",
+    plats: "Bakom näshålan och munhålan, ner mot struphuvudet och matstrupen.",
+    uppgift: "Ett gemensamt utrymme där både luft och mat passerar. Här korsas luftens och matens vägar.",
+    kul: "I svalget sitter halsmandlarna, som är en del av immunförsvaret och fångar upp bakterier och virus.",
+    led: [["Är", "det gemensamma utrymmet där både luft och mat passerar"], ["Här sitter", "halsmandlarna"]] },
+
+  /* ── Struphuvud och luftstrupe ── */
+  { id: "struphuvud", namn: "Struphuvud", grupp: "strupe", em: "🎤",
+    plats: "Högst upp på luftstrupen, framtill på halsen.",
+    uppgift: "Ett rör av brosk som leder luften vidare ner i luftstrupen. Inuti finns stämbanden, så struphuvudet är vårt röstorgan.",
+    kul: "Adamsäpplet är en del av struphuvudet. Det växer i puberteten, mest hos killar, och då blir rösten mörkare – målbrott.",
+    led: [["Syns utanpå", "som adamsäpplet på halsen"], ["Är", "vårt röstorgan – ett rör av brosk med stämbanden inuti"]] },
+  { id: "struplock", namn: "Struplock", grupp: "strupe", em: "🚪",
+    plats: "Överst vid ingången till struphuvudet, bakom tungroten.",
+    uppgift: "Ett lock av brosk som fälls ner över struphuvudet när du sväljer. Då går maten ner i matstrupen och inte i luftvägarna.",
+    kul: "När man ”sätter i halsen” har lite mat eller dryck hamnat förbi struplocket. Då hostar man för att få upp det igen.",
+    led: [["Fälls ner", "över ingången till luftvägarna när du sväljer"], ["Om det inte stänger i tid", "sätter man i halsen och börjar hosta"]] },
+  { id: "stamband", namn: "Stämband", grupp: "strupe", em: "🎵",
+    plats: "Två veck av muskler och slemhinna inne i struphuvudet.",
+    uppgift: "Vibrerar när luft pressas ut mellan dem och skapar ljud. Ju mer de spänns, desto högre ton. Tunga och läppar formar sedan ljudet till ord.",
+    kul: "När du viskar vibrerar inte stämbanden – då är det bara luftens brus du hör. Längre och tjockare stämband ger mörkare röst.",
+    led: [["Vibrerar", "när luft pressas ut mellan dem – så bildas ljud"], ["Ger", "högre ton ju mer de spänns"]] },
+  { id: "luftstrupe", namn: "Luftstrupe", grupp: "strupe", em: "🌬️",
+    plats: "Från struphuvudet ner i bröstkorgen, framför matstrupen. Ungefär 10–12 cm lång.",
+    uppgift: "Leder luften mellan struphuvudet och lungorna. Längst ner delar den sig i två luftrör, ett till varje lunga.",
+    kul: "Insidan är klädd med slemhinna och flimmerhår som hela tiden för upp smuts mot svalget.",
+    led: [["Delar sig", "längst ner i två luftrör – ett till varje lunga"], ["Var?", "från struphuvudet ner i bröstkorgen, framför matstrupen"]] },
+  { id: "broskringar", namn: "Broskringar", grupp: "strupe", em: "⭕",
+    plats: "I väggen på luftstrupen och de större luftrören.",
+    uppgift: "Håller luftrören öppna, så att de inte faller ihop när du andas in. Ringarna är C-formade och öppna bakåt.",
+    kul: "Öppningen bakåt gör att matstrupen, som ligger bakom, kan vidgas när en tugga mat passerar. Du kan känna ringarna om du försiktigt känner på halsen under adamsäpplet.",
+    led: [["Formade", "som bokstaven C och öppna bakåt"], ["Gör", "att luftstrupen hålls öppen och inte faller ihop"]] },
+  { id: "matstrupe", namn: "Matstrupe", grupp: "strupe", em: "🍽️", inte: true,
+    plats: "Bakom luftstrupen, från svalget ner till magsäcken.",
+    uppgift: "Är inte en luftväg – den leder maten. Ett muskelrör som med vågformiga rörelser trycker maten ner till magsäcken.",
+    kul: "Matstrupen trycker maten framåt med muskler, inte med tyngdkraften. Därför kan man svälja även när man står på händerna.",
+    led: [["Är inte en luftväg", "utan ett muskelrör som leder maten till magsäcken"], ["Var?", "bakom luftstrupen, från svalget ner till magsäcken"]] },
+
+  /* ── Luftrör och lungor ── */
+  { id: "bronker", namn: "Bronker", aka: "luftrör", grupp: "lunga", em: "🌳",
+    plats: "Där luftstrupen delar sig – ett huvudluftrör går in i varje lunga och grenar sig sedan.",
+    uppgift: "Leder luften in i lungorna. De större bronkerna har brosk i väggen och är klädda med slem och flimmerhår.",
+    kul: "Det högra huvudluftröret är kortare, bredare och brantare än det vänstra. Därför hamnar saker som barn råkar andas in oftast i höger lunga.",
+    led: [["Är", "de två luftrören som luftstrupen delar sig i – ett till varje lunga"], ["Det högra", "är bredare och brantare, så inandade föremål hamnar oftast där"]] },
+  { id: "bronkioler", namn: "Bronkioler", grupp: "lunga", em: "🌿",
+    plats: "Längst ut i luftvägsträdet, inne i lungorna. De är tunnare än en millimeter.",
+    uppgift: "De allra finaste luftrören, som leder luften den sista biten fram till lungblåsorna. De saknar brosk men har glatt muskulatur i väggen.",
+    kul: "Vid astma drar musklerna i bronkiolerna ihop sig och slemhinnan svullnar. Då blir det svårt att andas – särskilt att andas ut.",
+    led: [["Är", "de allra finaste luftrören, utan brosk, som leder fram till lungblåsorna"], ["Drar ihop sig", "vid astma så att det blir svårt att andas"]] },
+  { id: "lungblasor", namn: "Lungblåsor", aka: "alveoler", grupp: "lunga", em: "🍇",
+    plats: "Längst ut på bronkiolerna, i klasar som påminner om vindruvor. Det finns hundratals miljoner.",
+    uppgift: "Här sker gasutbytet. Syre går från luften i lungblåsan in i blodet, och koldioxid går från blodet ut i lungblåsan.",
+    kul: "Alla lungblåsor tillsammans har en yta på ungefär 70–80 m² – som golvet i en stor lägenhet. Väggen är tunnare än en tusendels millimeter.",
+    led: [["Här sker", "gasutbytet – syre in i blodet, koldioxid ut"], ["Sitter", "i klasar som liknar vindruvor längst ut på de finaste luftrören"]] },
+  { id: "kapillarnat", namn: "Kapillärnät", grupp: "lunga", em: "🩸",
+    plats: "Ett tätt nät av de tunnaste blodkärlen runt varje lungblåsa.",
+    uppgift: "Blodet i kapillärerna tar upp syre från lungblåsorna och lämnar koldioxid. De röda blodkropparna passerar nästan en och en.",
+    kul: "Syrefattigt blod kommer hit från hjärtats högra kammare och lämnar lungorna syrerikt – det är lilla kretsloppet.",
+    led: [["Är", "de tunna blodkärlen som omger varje lungblåsa"], ["Här", "tar blodet upp syre och lämnar koldioxid – en röd blodkropp i taget"]] },
+  { id: "lungor", namn: "Lungor", grupp: "lunga", em: "🫁",
+    plats: "I brösthålan, en på varje sida om hjärtat, skyddade av revbenen.",
+    uppgift: "Organet där luftvägarna slutar och gasutbytet sker. De är svampiga och mjuka eftersom de mest består av luftfyllda lungblåsor.",
+    kul: "Höger lunga har tre lober och vänster bara två – vänster lunga är mindre för att ge plats åt hjärtat.",
+    led: [["Har", "tre lober på höger sida men bara två på vänster sida"], ["Är svampiga", "eftersom de mest består av luftfyllda blåsor"]] },
+  { id: "lungsack", namn: "Lungsäck", grupp: "lunga", em: "💧",
+    plats: "En dubbel hinna runt varje lunga. Den ena hinnan sitter på lungan, den andra på insidan av bröstkorgen.",
+    uppgift: "Mellan hinnorna finns en tunn vätskefilm som gör att lungan ”klistras” fast vid bröstkorgen men ändå kan glida. När bröstkorgen vidgas följer lungan med.",
+    kul: "Om luft kommer in mellan hinnorna släpper lungan från bröstkorgen och faller ihop. Det kallas lungkollaps (pneumothorax).",
+    led: [["Är", "en dubbel hinna med en tunn vätskefilm emellan"], ["Om luft kommer in här", "släpper lungan och faller ihop – lungkollaps"]] },
+
+  /* ── Skydd och andning ── */
+  { id: "flimmerhar", namn: "Flimmerhår", grupp: "skydd", em: "🌾",
+    plats: "Pyttesmå hår på cellerna som klär insidan av luftstrupen och luftrören.",
+    uppgift: "Slår hela tiden i samma riktning och för slemmet med smuts och bakterier uppåt mot svalget, där det sväljs eller hostas upp.",
+    kul: "Tobaksrök skadar flimmerhåren så att de slutar fungera. Då måste slemmet hostas upp i stället – rökhosta.",
+    led: [["Slår", "hela tiden i samma riktning och för slemmet uppåt mot svalget"], ["Skadas", "av tobaksrök – då uppstår rökhosta"]] },
+  { id: "slem", namn: "Slem", grupp: "skydd", em: "🍯",
+    plats: "Ett tunt lager på slemhinnorna i näsan och hela vägen ner i luftrören. Det bildas av celler i slemhinnan.",
+    uppgift: "Är klibbigt så att damm, pollen, bakterier och virus fastnar. Det håller också slemhinnan fuktig.",
+    kul: "Det mesta slemmet från luftvägarna sväljer du utan att märka det – magsyran tar sedan hand om bakterierna.",
+    led: [["Är", "klibbigt så att damm, pollen och bakterier fastnar i det"], ["Sväljs", "oftast utan att du märker det – magsyran tar hand om bakterierna"]] },
+  { id: "hosta", namn: "Hosta", grupp: "skydd", em: "🤧",
+    plats: "En reflex som startar när något retar slemhinnan i struphuvudet, luftstrupen eller luftrören.",
+    uppgift: "Du andas in djupt, stämbanden stänger, trycket ökar – och sedan släpps luften ut med mycket hög fart. Slem och främmande föremål blåses ut.",
+    kul: "Hosta är en skyddsreflex. Den smittar dock också – dropparna kan sprida virus till andra. Hosta därför i armvecket.",
+    led: [["Är", "en reflex som blåser ut slem och främmande föremål med hög fart"], ["Börjar", "med ett djupt andetag, sedan stängs stämbanden och trycket ökar"]] },
+  { id: "mellangardet", namn: "Mellangärdet", aka: "diafragma", grupp: "skydd", em: "⛺",
+    plats: "En kupolformad muskel som skiljer brösthålan från bukhålan.",
+    uppgift: "Den viktigaste andningsmuskeln. Vid inandning drar den ihop sig och sänks, så att brösthålan blir större och luft sugs in. Vid utandning slappnar den av och höjs. Det kallas bukandning.",
+    kul: "Hicka är små plötsliga ryck i mellangärdet. Det ”hick”-ljud du hör är stämbanden som smäller igen.",
+    led: [["Skiljer", "brösthålan från bukhålan"], ["Sänks", "vid inandning så att brösthålan blir större – bukandning"], ["Rycker till", "när du har hicka"]] },
+  { id: "revbensmuskler", namn: "Revbensmuskler", grupp: "skydd", em: "💪",
+    plats: "Mellan revbenen.",
+    uppgift: "Lyfter revbenen uppåt och utåt vid inandning, så att bröstkorgen vidgas. Det kallas bröstandning.",
+    kul: "När du anstränger dig hjälps mellangärdet och revbensmusklerna åt, och även musklerna i halsen och axlarna kan hjälpa till.",
+    led: [["Sitter", "mellan revbenen"], ["Lyfter", "bröstkorgen uppåt och utåt vid bröstandning"]] },
+  { id: "andningscentrum", namn: "Andningscentrum", grupp: "skydd", em: "🧠",
+    plats: "I hjärnstammen, längst ner i hjärnan.",
+    uppgift: "Styr andningen automatiskt, även när du sover. Det känner av hur mycket koldioxid det finns i blodet. Mer koldioxid ger snabbare och djupare andning.",
+    kul: "Du kan hålla andan en stund med viljan, men till slut tvingar hjärnan dig att andas igen. Det är koldioxiden, inte syrebristen, som gör att du får andnöd.",
+    led: [["Sitter", "i hjärnstammen och styr andningen även när du sover"], ["Känner av", "koldioxidhalten i blodet och ökar andningen när den stiger"]] }
+];
+
+const TID_ANTAL = 20, TID_SEK = 10, REKORD_NYCKEL = "luftvagarna-rekord-niva2";
+let LAGE = "niva1", OMGANG = "alla", RUNDA = [], index = 0, ratt = 0, missade = [], laser = false, aktuell = null;
+let poang = 0, svit = 0, tidKvar = TID_SEK, timer = null, tidStart = 0;
+const el = id => document.getElementById(id);
+function blanda(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function gruppNamn(id) { return GRUPPER.find(g => g.id === id).namn; }
+function visNamn(a) { return a.namn + (a.aka ? " (" + a.aka + ")" : ""); }
+function lasRekord() { try { return parseInt(localStorage.getItem(REKORD_NYCKEL), 10) || 0; } catch (e) { return 0; } }
+function sparaRekord(p) { try { localStorage.setItem(REKORD_NYCKEL, String(p)); } catch (e) {} }
+
+function kortHtml(a) {
+  const tagg = a.inte ? '<span class="tagg inte">✕ Inte en luftväg</span>' : '<span class="tagg">' + esc(gruppNamn(a.grupp)) + '</span>';
+  return '<div class="kort-topp"><span class="kort-em" aria-hidden="true">' + a.em + '</span><h3>' + esc(a.namn) + '</h3>' + tagg + '</div>' +
+    (a.aka ? '<p class="aka">Kallas också ' + esc(a.aka) + '.</p>' : '') +
+    '<dl><dt>Var finns den?</dt><dd>' + esc(a.plats) + '</dd><dt>Vad gör den?</dt><dd>' + esc(a.uppgift) + '</dd></dl>' +
+    '<p class="kul"><strong>Visste du?</strong> ' + esc(a.kul) + '</p>';
+}
+
+// ── Lär dig först + val av omgång ──
+function byggStart() {
+  GRUPPER.forEach(g => {
+    const rub = document.createElement("p"); rub.className = "grupp-rubrik"; rub.textContent = g.namn;
+    const wrap = document.createElement("div"); wrap.className = "chips";
+    DELAR.filter(a => a.grupp === g.id).forEach(a => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip";
+      b.innerHTML = '<span class="em" aria-hidden="true">' + a.em + '</span>' + esc(visNamn(a));
+      b.addEventListener("click", () => visaDialog(a));
+      wrap.appendChild(b);
+    });
+    el("chip-grupper").append(rub, wrap);
+
+    const k = document.createElement("button");
+    k.type = "button"; k.className = "val-kort"; k.dataset.omgang = g.id;
+    const delar = DELAR.filter(a => a.grupp === g.id);
+    k.innerHTML = '<strong>' + esc(g.namn) + '</strong><span>' + delar.length + ' frågor</span>';
+    el("val-niva1").appendChild(k);
+  });
+  const alla = document.createElement("button");
+  alla.type = "button"; alla.className = "val-kort"; alla.dataset.omgang = "alla";
+  alla.innerHTML = '<strong>Alla delar</strong><span>' + DELAR.length + ' frågor – från näsa till lungblåsa</span>';
+  el("val-niva1").appendChild(alla);
+  el("val-niva1").querySelectorAll(".val-kort").forEach(b => b.addEventListener("click", () => valjOmgang(b.dataset.omgang)));
+  el("regel-antal").textContent = TID_ANTAL; el("regel-sek").textContent = TID_SEK;
+  visaRekord();
+}
+function visaRekord() {
+  const r = lasRekord();
+  el("rekord-rad").textContent = r ? "🏆 Ditt rekord på den här enheten: " + r + " poäng" : "";
+}
+function visaDialog(a) {
+  el("lvDialogInnehall").innerHTML = '<div class="kort">' + kortHtml(a) + '</div>';
+  const d = el("lvDialog");
+  if (d.showModal) d.showModal(); else d.setAttribute("open", "");
+}
+el("lvDialogClose").addEventListener("click", () => el("lvDialog").close());
+el("lvDialog").addEventListener("click", e => { if (e.target === el("lvDialog")) el("lvDialog").close(); });
+
+// ── Spelet ──
+function valjOmgang(o) { LAGE = "niva1"; OMGANG = o; startaRunda(o === "alla" ? DELAR : DELAR.filter(a => a.grupp === o)); }
+function startaTid() { LAGE = "niva2"; OMGANG = "tid"; startaRunda(blanda(DELAR).slice(0, TID_ANTAL)); }
+function startaRunda(urval) {
+  RUNDA = blanda(urval).map(a => ({ del: a, led: a.led[Math.floor(Math.random() * a.led.length)] }));
+  index = 0; ratt = 0; missade = []; poang = 0; svit = 0;
+  const tid = LAGE === "niva2";
+  document.body.classList.toggle("tidslage", tid);
+  ["s-poang-box", "s-svit-box", "tidsrad"].forEach(id => el(id).classList.toggle("doldt", !tid));
+  el("start-panel").classList.add("doldt"); el("slut-panel").classList.add("doldt"); el("spel-panel").classList.remove("doldt");
+  window.scrollTo(0, 0);
+  visaFraga();
+}
+function alternativ(r) {
+  const fel = blanda(DELAR.filter(a => a.id !== r.id && a.grupp === r.grupp)).slice(0, 3);
+  return blanda([r, ...fel]);
+}
+function visaFraga() {
+  if (index >= RUNDA.length) { visaSlut(); return; }
+  laser = false; aktuell = RUNDA[index].del;
+  const led = RUNDA[index].led;
+  el("s-nr").textContent = (index + 1) + "/" + RUNDA.length;
+  el("s-ratt").textContent = ratt;
+  el("s-poang").textContent = poang; el("s-svit").textContent = svit;
+  el("ledtrad-typ").textContent = led[0];
+  el("ledtrad-text").textContent = "… " + led[1] + ".";
+  el("ledtrad-fraga").textContent = "Vilken del är det?";
+  el("besked").textContent = " "; el("besked").className = "besked";
+  el("facit").classList.add("doldt"); el("facit").innerHTML = "";
+  el("nastaBtn").classList.add("doldt");
+  el("svar-grid").innerHTML = "";
+  alternativ(aktuell).forEach((a, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "svar-btn"; b.dataset.id = a.id;
+    b.innerHTML = '<span class="nr" aria-hidden="true">' + (i + 1) + '</span><span>' + esc(a.namn) + '</span>';
+    b.addEventListener("click", () => svara(b, a));
+    el("svar-grid").appendChild(b);
+  });
+  if (LAGE === "niva2") startaTimer();
+}
+
+// ── Timer (nivå 2) ──
+function ritaTid() {
+  const sek = Math.max(0, tidKvar);
+  el("tidsfyll").style.width = (sek / TID_SEK * 100) + "%";
+  el("tidstal").textContent = Math.ceil(sek) + " s";
+  el("tidsbar").setAttribute("aria-valuenow", Math.ceil(sek));
+  el("tidsrad").classList.toggle("bradskande", sek <= 3);
+}
+function startaTimer() {
+  stoppaTimer();
+  tidKvar = TID_SEK; tidStart = performance.now(); ritaTid();
+  timer = setInterval(() => {
+    tidKvar = TID_SEK - (performance.now() - tidStart) / 1000;
+    ritaTid();
+    if (tidKvar <= 0) { stoppaTimer(); svara(null, null); }
+  }, 100);
+}
+function stoppaTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+function svara(knapp, valt) {
+  if (laser) return; laser = true;
+  stoppaTimer();
+  const knappar = el("svar-grid").querySelectorAll(".svar-btn");
+  knappar.forEach(b => b.disabled = true);
+  const a = aktuell;
+  if (valt && valt.id === a.id) {
+    ratt++; knapp.classList.add("ratt");
+    let text = "Rätt! Det är " + visNamn(a) + ".";
+    if (LAGE === "niva2") {
+      svit++;
+      const bonusTid = Math.max(0, Math.ceil(tidKvar));
+      const bonusSvit = svit >= 3 ? 5 : 0;
+      const p = 10 + bonusTid + bonusSvit;
+      poang += p;
+      text = "Rätt! +" + p + " poäng (10 + " + bonusTid + " för tiden" + (bonusSvit ? " + 5 för " + svit + " i rad" : "") + ").";
+    }
+    el("besked").textContent = text;
+    el("besked").className = "besked ok";
+  } else {
+    missade.push(a); svit = 0;
+    if (knapp) knapp.classList.add("fel");
+    knappar.forEach(b => { if (b.dataset.id === a.id) b.classList.add("ratt"); });
+    el("besked").textContent = (valt ? "Inte riktigt" : "⏱ Tiden tog slut") + " – det är " + visNamn(a) + ".";
+    el("besked").className = "besked nej";
+  }
+  el("s-ratt").textContent = ratt; el("s-poang").textContent = poang; el("s-svit").textContent = svit;
+  el("facit").innerHTML = '<div class="kort">' + kortHtml(a) + '</div>';
+  el("facit").classList.remove("doldt");
+  el("nastaBtn").textContent = index + 1 < RUNDA.length ? "Nästa fråga →" : "Se resultatet →";
+  el("nastaBtn").classList.remove("doldt");
+  el("nastaBtn").focus({ preventScroll: true });
+}
+function nasta() { index++; visaFraga(); }
+el("nastaBtn").addEventListener("click", nasta);
+
+function visaSlut() {
+  stoppaTimer();
+  el("spel-panel").classList.add("doldt"); el("slut-panel").classList.remove("doldt");
+  el("slut-ratt").textContent = ratt + "/" + RUNDA.length;
+  el("slut-rekord").classList.add("doldt");
+  if (LAGE === "niva2") {
+    el("slut-procent").textContent = poang;
+    el("slut-tredje-etikett").textContent = "Poäng";
+    const gammalt = lasRekord();
+    if (poang > gammalt) {
+      sparaRekord(poang);
+      el("slut-rekord").textContent = gammalt ? "🏆 Nytt rekord! Förra rekordet var " + gammalt + " poäng." : "🏆 Ditt första rekord – försök slå det!";
+    } else {
+      el("slut-rekord").textContent = "Ditt rekord: " + gammalt + " poäng.";
+    }
+    el("slut-rekord").classList.remove("doldt");
+    visaRekord();
+  } else {
+    const p = RUNDA.length ? Math.round(ratt / RUNDA.length * 100) : 0;
+    el("slut-procent").textContent = p + " %";
+    el("slut-tredje-etikett").textContent = "Andel rätt";
+  }
+  const unika = [...new Map(missade.map(m => [m.id, m])).values()];
+  el("slut-missade").innerHTML = unika.length
+    ? '<p>Läs igen om:</p><div class="chips">' + unika.map(m => '<button type="button" class="chip" data-id="' + m.id + '"><span class="em" aria-hidden="true">' + m.em + '</span>' + esc(m.namn) + '</button>').join("") + '</div>'
+    : '<p>Alla rätt – snyggt!' + (LAGE === "niva1" ? (OMGANG !== "alla" ? ' Prova omgången med alla delar nästa gång.' : ' Testa tidsutmaningen på nivå 2!') : '') + '</p>';
+  el("slut-missade").querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => visaDialog(DELAR.find(a => a.id === b.dataset.id))));
+  el("tranaBtn").classList.toggle("doldt", !unika.length);
+  el("igenBtn").textContent = LAGE === "niva2" ? "Ny tidsutmaning" : "Samma omgång igen";
+  el("slut-panel").scrollIntoView({ block: "start" });
+}
+
+function tillStart() {
+  stoppaTimer();
+  document.body.classList.remove("tidslage");
+  el("spel-panel").classList.add("doldt"); el("slut-panel").classList.add("doldt"); el("start-panel").classList.remove("doldt");
+  window.scrollTo(0, 0);
+}
+el("startTidBtn").addEventListener("click", startaTid);
+el("igenBtn").addEventListener("click", () => LAGE === "niva2" ? startaTid() : valjOmgang(OMGANG));
+// Träna på missade sker alltid i lugnt läge (nivå 1)
+el("tranaBtn").addEventListener("click", () => { LAGE = "niva1"; startaRunda([...new Map(missade.map(m => [m.id, m])).values()]); });
+el("valjBtn").addEventListener("click", tillStart);
+el("avbrytBtn").addEventListener("click", tillStart);
+
+document.addEventListener("keydown", e => {
+  if (el("spel-panel").classList.contains("doldt") || el("lvDialog").open) return;
+  if (e.target.closest && e.target.closest("button, a, input") && (e.key === " " || e.key === "Enter")) return;
+  if (/^[1-4]$/.test(e.key) && !laser) { const b = el("svar-grid").querySelectorAll(".svar-btn")[+e.key - 1]; if (b) b.click(); }
+  else if (e.key === "Enter" && laser) { nasta(); }
+});
+
+byggStart();
+</script>
+</body>
+</html>
