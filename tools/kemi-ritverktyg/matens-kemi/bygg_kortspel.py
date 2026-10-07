@@ -191,54 +191,28 @@ def fsize(t):  # textstorlek i cqw efter textlängd (korta texter = stor text, s
     n = len(t)
     return 7.4 if n <= 50 else 6.6 if n <= 75 else 6.0 if n <= 100 else 5.5
 
-FRAME = '''<svg class="frame" viewBox="0 0 900 540" preserveAspectRatio="none" aria-hidden="true" focusable="false"><use href="#ram"/></svg>'''
-FRAME_TERM = FRAME.replace('#ram"', '#ramTerm"')
+FRAME = '''<svg class="frame" viewBox="0 0 900 540" preserveAspectRatio="none" aria-hidden="true" focusable="false"><use href="#ramDef"/></svg>'''
+FRAME_TERM = FRAME.replace('#ramDef"', '#ramTerm"')
 
 def term_card(k, name):
     ic = ICON[k]
-    pic = ic if ic.startswith('<img') else ic
     big = ' big' if k in ('glukos', 'fruktos') else ''
-    return (f'<div class="card term{big}"><div class="cin">{FRAME_TERM}<div class="pic">{pic}</div>'
+    return (f'<div class="card term{big}"><div class="cin">{FRAME_TERM}<div class="pic">{ic}</div>'
             f'<div class="word">{html.escape(name)}</div></div></div>')
 
 def def_card(text):
     return (f'<div class="card def"><div class="cin">{FRAME}<div class="dtext" style="font-size:{fsize(text)}cqw">{html.escape(text)}</div></div></div>')
 
+# Enkel, modern kortstil (Jesper/ChatGPT-feedback 7 okt 2026): en tunn lila ram, inget guld eller ornament.
+# Begreppskortet har ett lila namnband nedtill (syns även utan färgseende) – förklaringskortet är bara text.
+# Ramarna är SVG (inte CSS-bakgrund) så att de alltid skrivs ut, även med "bakgrundsgrafik" avstängt.
 FRAME_DEFS = f'''<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<g id="hornprydnad">
-  <path d="M0,0 C30,0 44,14 44,44 C34,30 22,26 0,26 Z" fill="{AREA}"/>
-  <path d="M0,0 C0,30 14,44 44,44 C30,34 26,22 26,0 Z" fill="{AREA}"/>
-  <circle cx="30" cy="30" r="9" fill="{GOLD}" stroke="{AREA}" stroke-width="3"/>
-  <path d="M52,8 c10,0 16,6 16,14 c-6,-6 -12,-6 -16,-2 z" fill="{GOLD}"/>
-  <path d="M8,52 c0,10 6,16 14,16 c-6,-6 -6,-12 -2,-16 z" fill="{GOLD}"/>
-</g>
-<radialGradient id="lavendel" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#f7f2fd"/><stop offset="0.65" stop-color="#ebe1f8"/><stop offset="1" stop-color="#d9c8f0"/></radialGradient>
-<radialGradient id="pergament" cx="50%" cy="45%" r="75%"><stop offset="0" stop-color="#fdf6e3"/><stop offset="0.65" stop-color="#f6e9c8"/><stop offset="1" stop-color="#ead6a4"/></radialGradient>
-<g id="ram">
-  <rect x="14" y="14" width="872" height="512" rx="34" fill="url(#pergament)" stroke="{AREA}" stroke-width="10"/>
-  <rect x="34" y="34" width="832" height="472" rx="20" fill="none" stroke="{GOLD}" stroke-width="3"/>
-  <rect x="44" y="44" width="812" height="452" rx="14" fill="none" stroke="{AREA}" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>
-  <use href="#hornprydnad" transform="translate(22,22)"/>
-  <use href="#hornprydnad" transform="translate(878,22) scale(-1,1)"/>
-  <use href="#hornprydnad" transform="translate(22,518) scale(1,-1)"/>
-  <use href="#hornprydnad" transform="translate(878,518) scale(-1,-1)"/>
-  <path d="M430,14 l20,-0 l0,0 M410,24 q40,-22 80,0" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round"/>
-  <path d="M440,20 l10,-10 l10,10 l-10,10 z" fill="{GOLD}" stroke="{AREA}" stroke-width="2"/>
-  <path d="M410,516 q40,22 80,0" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round"/>
-  <path d="M440,520 l10,-10 l10,10 l-10,10 z" fill="{GOLD}" stroke="{AREA}" stroke-width="2"/>
+<g id="ramDef">
+  <rect x="6" y="6" width="888" height="528" rx="36" fill="#fffdf8" stroke="{AREA}" stroke-width="6"/>
 </g>
 <g id="ramTerm">
-  <rect x="14" y="14" width="872" height="512" rx="34" fill="url(#lavendel)" stroke="{AREA}" stroke-width="10"/>
-  <rect x="34" y="34" width="832" height="472" rx="20" fill="none" stroke="{GOLD}" stroke-width="3"/>
-  <rect x="44" y="44" width="812" height="452" rx="14" fill="none" stroke="{AREA}" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>
-  <use href="#hornprydnad" transform="translate(22,22)"/>
-  <use href="#hornprydnad" transform="translate(878,22) scale(-1,1)"/>
-  <use href="#hornprydnad" transform="translate(22,518) scale(1,-1)"/>
-  <use href="#hornprydnad" transform="translate(878,518) scale(-1,-1)"/>
-  <path d="M430,14 l20,-0 l0,0 M410,24 q40,-22 80,0" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round"/>
-  <path d="M440,20 l10,-10 l10,10 l-10,10 z" fill="{GOLD}" stroke="{AREA}" stroke-width="2"/>
-  <path d="M410,516 q40,22 80,0" fill="none" stroke="{GOLD}" stroke-width="5" stroke-linecap="round"/>
-  <path d="M440,520 l10,-10 l10,10 l-10,10 z" fill="{GOLD}" stroke="{AREA}" stroke-width="2"/>
+  <rect x="6" y="6" width="888" height="528" rx="36" fill="#f6eefa" stroke="{AREA}" stroke-width="6"/>
+  <path d="M6,404 H894 V498 a36,36 0 0 1 -36,36 H42 a36,36 0 0 1 -36,-36 Z" fill="{AREA}"/>
 </g>
 </defs></svg>'''
 
@@ -247,32 +221,24 @@ CW, CH = 90, 54          # kortets storlek i mm
 GX, GY = (210 - 2 * CW) / 2, (297 - 5 * CH) / 2
 
 def back_sheet():
-    pat = f'''<pattern id="ruta" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <rect width="12" height="12" fill="#f3e8ff"/><path d="M0,0 H12 M0,0 V12" stroke="#e9d5ff" stroke-width="1.6"/>
-      <circle cx="6" cy="6" r="1.1" fill="#d8b4fe"/></pattern>'''
+    # Diskret mönster av sexringar (molekylmotiv) + per kort: tunn ram, glycin i en vit cirkel och "MATENS KEMI".
+    hx = ' '.join(f'{4 + 2.6 * math.sin(math.radians(60 * k)):.2f},{4.5 - 2.6 * math.cos(math.radians(60 * k)):.2f}' for k in range(6))
+    pat = f'''<pattern id="sexring" width="8" height="9" patternUnits="userSpaceOnUse">
+      <rect width="8" height="9" fill="#f6effa"/><polygon points="{hx}" fill="none" stroke="#e2d1ee" stroke-width="0.35"/></pattern>'''
     cards = []
     for r in range(5):
         for c in range(2):
             x, y = GX + c * CW, GY + r * CH
             cards.append(f'''<g transform="translate({x},{y})">
-              <ellipse cx="{CW/2}" cy="{CH/2 - 2}" rx="27" ry="19" fill="#f8eccd" stroke="{AREA}" stroke-width="1.1"/>
-              <ellipse cx="{CW/2}" cy="{CH/2 - 2}" rx="24.5" ry="16.8" fill="none" stroke="{GOLD}" stroke-width="0.5"/>
-              <image href="{KM}glycin.png" x="{CW/2 - 13.5}" y="{CH/2 - 16}" width="27" height="23.3"/>
-              <rect x="{CW/2 - 25}" y="{CH - 15}" width="50" height="8.4" rx="4.2" fill="{AREA}"/>
-              <text x="{CW/2}" y="{CH - 9.1}" font-size="5.1" text-anchor="middle" fill="#fff" font-family="Georgia, 'Times New Roman', serif" font-weight="700" letter-spacing="0.5">MATENS KEMI</text>
-              <svg x="1.5" y="1.5" width="{CW-3}" height="{CH-3}" viewBox="0 0 900 540" preserveAspectRatio="none"><use href="#ramBak"/></svg>
+              <rect x="2" y="2" width="{CW-4}" height="{CH-4}" rx="3.5" fill="none" stroke="{AREA}" stroke-width="0.6"/>
+              <circle cx="{CW/2}" cy="{CH/2 - 4}" r="14.5" fill="#fff" stroke="{AREA}" stroke-width="0.6"/>
+              <image href="{KM}glycin.png" x="{CW/2 - 11.5}" y="{CH/2 - 14}" width="23" height="19.8"/>
+              <text x="{CW/2}" y="{CH - 7.5}" font-size="4.6" text-anchor="middle" fill="{AREA}" font-family="-apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800" letter-spacing="1.2">MATENS KEMI</text>
             </g>''')
     return f'''<svg class="backsvg" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>{pat}</defs><rect width="210" height="297" fill="url(#ruta)"/>{''.join(cards)}</svg>'''
+      <defs>{pat}</defs><rect width="210" height="297" fill="url(#sexring)"/>{''.join(cards)}</svg>'''
 
-BACK_FRAME_DEF = f'''<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><g id="ramBak">
-  <rect x="14" y="14" width="872" height="512" rx="34" fill="none" stroke="{AREA}" stroke-width="10"/>
-  <rect x="34" y="34" width="832" height="472" rx="20" fill="none" stroke="{GOLD}" stroke-width="3"/>
-  <use href="#hornprydnad" transform="translate(22,22)"/>
-  <use href="#hornprydnad" transform="translate(878,22) scale(-1,1)"/>
-  <use href="#hornprydnad" transform="translate(22,518) scale(1,-1)"/>
-  <use href="#hornprydnad" transform="translate(878,518) scale(-1,-1)"/>
-</g></defs></svg>'''
+BACK_FRAME_DEF = ''
 
 # ---------------------------------------------------------------- sidan
 screen_pairs = '\n'.join(f'<div class="pair">{term_card(k, n)}{def_card(t)}</div>' for k, n, t in PAIRS)
@@ -310,14 +276,12 @@ PAGE = f'''<!DOCTYPE html>
     .card {{ container-type: inline-size; aspect-ratio: 90 / 54; position: relative; }}
     .cin {{ position: absolute; inset: 0; }}
     .frame {{ position: absolute; inset: 0; width: 100%; height: 100%; }}
-    .pic {{ position: absolute; left: 11%; right: 11%; top: 10%; height: 56%; display: flex; align-items: center; justify-content: center; }}
+    .pic {{ position: absolute; left: 10%; right: 10%; top: 8%; height: 62%; display: flex; align-items: center; justify-content: center; }}
     .pic svg {{ width: 100%; height: 100%; }}
     .pic img.km {{ width: 100%; height: 100%; object-fit: contain; display: block; }}
-    .term.big .pic {{ top: 8.5%; height: 66%; }}
-    .term.big .word {{ bottom: 8%; font-size: 7cqw; }}
-    .word {{ position: absolute; left: 6%; right: 6%; bottom: 10%; text-align: center; font-weight: 700; font-size: 8.2cqw; color: #2a0a33; line-height: 1.05; }}
-    .term .word {{ font-family: Georgia, 'Times New Roman', serif; }}
-    .dtext {{ position: absolute; inset: 13% 10% 13% 10%; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.22; color: #1f1f2e; font-weight: 600; }}
+    .term.big .pic {{ top: 4.5%; height: 69%; }}
+    .word {{ position: absolute; left: 4%; right: 4%; top: 75%; bottom: 1.5%; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: 700; font-size: 7.6cqw; color: #fff; line-height: 1.05; letter-spacing: 0.01em; }}
+    .dtext {{ position: absolute; inset: 13% 10% 13% 10%; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; color: #1f1f2e; font-weight: 500; }}
 
     .pairs {{ display: grid; gap: 14px; }}
     .pair {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 760px; }}
@@ -362,7 +326,7 @@ PAGE = f'''<!DOCTYPE html>
       <p><strong>24 kortpar: ett begreppskort och ett förklaringskort.</strong> Alla kort sprids ut med texten uppåt. Lagen letar par, och ett lag får bara ta ett par om alla andra lag godkänner det. Laget med flest par vinner. Spelet hör till station 2 i <a href="./lektion-stationer.html">stationslektionen</a>.</p>
       <p><strong>Så skriver du ut:</strong></p>
       <ol>
-        <li>Välj <strong>dubbelsidig utskrift, vänd längs långsidan</strong>. Baksidorna (mönster, glycinmolekyl och ”Matens kemi”) hamnar då bakom korten. Alla baksidor är likadana, så det gör inget om de hamnar någon millimeter fel.</li>
+        <li>Välj <strong>dubbelsidig utskrift, vänd längs långsidan</strong>. Baksidorna (sexringsmönster, glycinmolekyl och ”Matens kemi”) hamnar då bakom korten. Alla baksidor är likadana, så det gör inget om de hamnar någon millimeter fel.</li>
         <li>Saknar skrivaren dubbelsidig utskrift: skriv ut <strong>bara framsidor</strong>. Spelet fungerar lika bra, eftersom korten ligger med texten uppåt.</li>
         <li>Välj skala 100 % (inte ”anpassa till sidan”) och slå på ”bakgrundsgrafik” om webbläsaren frågar.</li>
         <li>Klipp längs de streckade linjerna. Laminera gärna arken före klippningen, så håller korten i många år.</li>
