@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bygg molekyler med kulmodeller – Matens kemi</title>
+  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <style>
+    body.area-matens-kemi { --area:#a21caf; --area-strong:#86198f; --area-soft:#fdf4ff; --area-border:#f5d0fe; --area-hover:#fae8ff; }
+    main { max-width: 900px; margin: 0 auto; font-size: 1.05em; }
+    .intro-card { background: var(--area-soft); border: 1px solid var(--area-border); border-left: 4px solid var(--area-strong); border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.2rem; }
+    .sheet { background: #fff; border: 1px solid #d8d8d8; border-left: 5px solid var(--area); border-radius: 12px; padding: 1.2rem 1.5rem 1.4rem; margin-bottom: 1.6rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .sheet h2 { margin: 0.2rem 0 0.5rem; color: var(--area-strong); font-size: 1.3rem; }
+    .sheet h2 .formel { color: #475569; font-weight: 600; font-size: 1.05rem; margin-left: 0.5rem; }
+    .sheet h3 { color: var(--area-strong); border-bottom: 2px solid var(--area-border); padding-bottom: 0.2rem; margin: 0.9rem 0 0.4rem; font-size: 1.05rem; }
+    .sheet p { margin: 0.3rem 0 0.5rem; line-height: 1.5; }
+    .sheet ol { margin: 0.2rem 0 0.6rem 1.4rem; padding: 0; }
+    .sheet li { margin-bottom: 0.25rem; line-height: 1.45; }
+    .doc-title { margin: 0 0 0.1rem; color: var(--area-strong); font-size: 1.6rem; }
+    .doc-sub { margin: 0 0 0.6rem; color: #475569; }
+    .atom-table { width: 100%; border-collapse: collapse; margin: 0.4rem 0 0.3rem; font-size: 0.95rem; }
+    .atom-table th { background: var(--area-strong); color: #fff; padding: 0.35rem 0.55rem; text-align: left; font-weight: 600; }
+    .atom-table td { padding: 0.35rem 0.55rem; border: 1px solid #b5b5b5; }
+    .small-note { font-size: 0.85em; color: #595959; font-style: italic; margin: 0.2rem 0 0.4rem; }
+    .need { background: #eef2f7; border: 1px solid #b8c0cc; border-radius: 6px; padding: 0.45rem 0.75rem; margin: 0.5rem 0; }
+    .fett-info { background: #fbf7ee; border: 1px solid #e3d6b5; border-radius: 6px; padding: 0.55rem 0.8rem; margin: 0.5rem 0; font-size: 0.93em; }
+    .fett-info .src { font-size: 0.85em; color: #595959; font-style: italic; margin: 0.2rem 0 0; }
+    .pair { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: center; align-items: center; margin: 0.4rem 0; }
+    .pair.stack { flex-direction: column; gap: 0.4rem; }
+    .pair figure { margin: 0; text-align: center; }
+    .pair figcaption { font-size: 0.72em; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #475569; margin-bottom: 0.3rem; }
+    .pair img { max-width: 100%; height: auto; }
+    .done { font-weight: 700; margin: 0.7rem 0 0; }
+    .molecule + .molecule { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1; }
+
+    @page { size: A4; margin: 13mm 14mm; }
+    @media print {
+      header, nav, .hamburger, .no-print { display: none !important; }
+      body { background: #fff !important; font-size: 10.5pt; }
+      main { max-width: none; margin: 0; padding: 0; font-size: 10.5pt; }
+      .sheet { border: none; border-radius: 0; box-shadow: none; padding: 0; margin: 0; break-after: page; page-break-after: always; }
+      .sheet:last-of-type { break-after: auto; page-break-after: auto; }
+      .atom-table th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .need, .fett-info { -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
+      .pair { break-inside: avoid; }
+      .molecule + .molecule { border-top: 1px dashed #999; }
+    }
+  </style>
+</head>
+<body class="area-matens-kemi">
+  <header class="kemi-header">
+    <h1>Bygg molekyler med kulmodeller</h1>
+    <p>Matens kemi</p>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <a href="./studieguide.html" class="subject-btn">📖 Studieguiden</a>
+      <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
+    </div>
+
+    <section class="intro-card no-print">
+      <p><strong>Till läraren:</strong> en byggövning med kulmodeller i fyra steg – glycin, alanin, glukos och ett litet fett (tributyrin). Eleverna bygger efter de helt utskrivna strukturformlerna och jämför med kulmodellen. Utskriften blir tre A4-sidor. Fettet (47 kulor) passar bra att bygga i grupp.</p>
+      <p style="margin-bottom:0">Facit till extrauppgiften om fettet: av de bortplockade atomerna bildas <strong>tre vattenmolekyler</strong> (H<sub>2</sub>O) – en för varje esterbindning.</p>
+    </section>
+
+    <!-- Sida 1 -->
+    <section class="sheet">
+      <h1 class="doc-title">Bygg molekyler med kulmodeller</h1>
+      <p class="doc-sub">Matens kemi – aminosyror, kolhydrater och fett</p>
+
+      <h3>Så här gör du</h3>
+      <ol>
+        <li>Räkna atomerna i strukturformeln och hämta rätt antal kulor (rutan <strong>Du behöver</strong> hjälper dig).</li>
+        <li>Bygg efter strukturformeln. Varje streck är en bindning, alltså en pinne.</li>
+        <li>Ett dubbelt streck (=) är en <strong>dubbelbindning</strong>. Använd två böjliga pinnar mellan atomerna.</li>
+        <li>Kontrollera att varje atom har rätt antal bindningar (se tabellen). Jämför sedan med bilden av kulmodellen.</li>
+      </ol>
+      <table class="atom-table">
+        <thead><tr><th scope="col">Atom</th><th scope="col">Färg på kulan</th><th scope="col">Antal bindningar (pinnar)</th></tr></thead>
+        <tbody>
+          <tr><td>Kol (C)</td><td>svart</td><td>4</td></tr>
+          <tr><td>Väte (H)</td><td>vit</td><td>1</td></tr>
+          <tr><td>Syre (O)</td><td>röd</td><td>2</td></tr>
+          <tr><td>Kväve (N)</td><td>blå</td><td>3</td></tr>
+        </tbody>
+      </table>
+      <p class="small-note">Färgerna kan skilja sig lite mellan olika byggsatser. På bilderna är kolatomerna mörkgrå.</p>
+
+      <div class="molecule">
+        <h2>1. Glycin – den minsta aminosyran <span class="formel">C<sub>2</sub>H<sub>5</sub>NO<sub>2</sub></span></h2>
+        <p>Aminosyror är byggstenarna i proteiner. Alla aminosyror har en aminogrupp (–NH<sub>2</sub>) i ena änden och en syragrupp (–COOH) i den andra. Glycin är den enklaste aminosyran.</p>
+        <p class="need"><strong>Du behöver:</strong> 2 kol, 5 väte, 1 kväve, 2 syre (10 kulor)</p>
+        <div class="pair">
+          <figure><figcaption>Strukturformel – bygg efter den här</figcaption>
+            <img src="/images/kemi/matens-kemi/strukturformler/glycin-utskriven.svg" width="287" height="139" alt="Strukturformel för glycin där varje atom är utskriven: N med två H, bundet till ett C med två H, bundet till ett C som har en dubbelbindning till O och en enkelbindning till O, som i sin tur är bundet till H."></figure>
+          <figure><figcaption>Så här ser kulmodellen ut</figcaption>
+            <img src="/images/kemi/matens-kemi/kulmodeller/glycin.png" width="167" height="144" alt="Kulmodell av glycin: en blå kväveatom med två vita väten, två grå kolatomer och två röda syreatomer, varav en är dubbelbunden."></figure>
+        </div>
+        <p class="done">☐ Klart – visa för läraren</p>
+      </div>
+    </section>
+
+    <!-- Sida 2 -->
+    <section class="sheet">
+      <div class="molecule">
+        <h2>2. Alanin <span class="formel">C<sub>3</sub>H<sub>7</sub>NO<sub>2</sub></span></h2>
+        <p>Alanin ser ut nästan som glycin. Skillnaden är att ett av vätena på mittenkolet är utbytt mot en metylgrupp (–CH<sub>3</sub>).</p>
+        <p class="need"><strong>Du behöver:</strong> 3 kol, 7 väte, 1 kväve, 2 syre (13 kulor)</p>
+        <div class="pair">
+          <figure><figcaption>Strukturformel – bygg efter den här</figcaption>
+            <img src="/images/kemi/matens-kemi/strukturformler/alanin-utskriven.svg" width="287" height="189" alt="Strukturformel för alanin där varje atom är utskriven: som glycin, men mittenkolet har ett H och en CH3-grupp (ett C med tre H) i stället för två H."></figure>
+          <figure><figcaption>Så här ser kulmodellen ut</figcaption>
+            <img src="/images/kemi/matens-kemi/kulmodeller/alanin.png" width="163" height="186" alt="Kulmodell av alanin: en blå kväveatom, ett grått mittenkol med en metylgrupp nedåt, och en syragrupp med två röda syreatomer."></figure>
+        </div>
+        <p><strong>Tips:</strong> Bygg om din glycin till alanin! Vilken atom tar du bort, och vad sätter du dit i stället?</p>
+        <p class="done">☐ Klart – visa för läraren</p>
+      </div>
+
+      <div class="molecule">
+        <h2>3. Glukos (druvsocker) <span class="formel">C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></span></h2>
+        <p>Glukos är byggstenen i stärkelse och cellulosa. I kroppen och i vatten finns glukos nästan alltid som en ring av fem kolatomer och en syreatom. Ni bygger D-glukos i ringform – den vanligaste formen.</p>
+        <p><strong>Så läser du bilden:</strong> Tänk dig att ringen ligger som en platta på bänken. De tjocka strecken är närmast dig. Det som sitter ovanför ett hörn pekar uppåt, det som sitter under pekar nedåt. Bygg ringen först (5 kol + 1 syre), sätt sedan på grupperna – uppåt eller nedåt, precis som i bilden.</p>
+        <p class="need"><strong>Du behöver:</strong> 6 kol, 12 väte, 6 syre (24 kulor)</p>
+        <div class="pair">
+          <figure><figcaption>Strukturformel – bygg efter den här</figcaption>
+            <img src="/images/kemi/matens-kemi/strukturformler/glukos-utskriven.svg" width="326" height="299" alt="Haworth-formel för D-glukos (betaform) där varje atom är utskriven: en sexring av fem C och ett O. Från ringen pekar grupper uppåt eller nedåt: överst till vänster CH2OH uppåt, och OH-grupper och H omväxlande uppåt och nedåt runt ringen."></figure>
+          <figure><figcaption>Så här ser kulmodellen ut</figcaption>
+            <img src="/images/kemi/matens-kemi/kulmodeller/glukos.png" width="228" height="163" alt="Kulmodell av glukos: en sexring av fem grå kolatomer och en röd syreatom, med en CH2OH-gren och flera röda OH-grupper runt ringen."></figure>
+        </div>
+        <p class="done">☐ Klart – visa för läraren</p>
+      </div>
+    </section>
+
+    <!-- Sida 3 -->
+    <section class="sheet">
+      <div class="molecule">
+        <h2>4. Ett fett: tributyrin <span class="formel">C<sub>15</sub>H<sub>26</sub>O<sub>6</sub></span></h2>
+        <p>Ett fett (en triglycerid) är uppbyggt av <strong>glycerol</strong> och <strong>tre fettsyror</strong>. Varje fettsyra sitter fast på glycerol med en <strong>esterbindning</strong> (–O–C(=O)–).</p>
+        <p>Fetterna i maten har långa fettsyror med 16–22 kolatomer, och de är för stora att bygga. Därför bygger ni ett litet, riktigt fett: tributyrin. Det har tre korta fettsyror (butansyra, även kallad smörsyra) och finns i små mängder i smör.</p>
+        <p class="need"><strong>Du behöver:</strong> 15 kol, 26 väte, 6 syre (47 kulor)</p>
+        <p><strong>Tips:</strong> Bygg i grupp. En bygger glycerol-delen (de tre kolatomerna till vänster), och tre bygger varsin butansyra-del. Koppla sedan ihop delarna via syreatomerna.</p>
+        <div class="fett-info">
+          <p style="margin:0 0 0.2rem"><strong>Vad är tributyrin för fett?</strong></p>
+          <p style="margin:0">I tarmen klipper enzymer (lipaser) isär tributyrin till glycerol och tre butansyror. Butansyra är en viktig energikälla för cellerna i tjocktarmens vägg, och tarmbakterierna gör också själva butansyra när de bryter ner fibrer från maten. Därför säljs tributyrin som kosttillskott i hälsokostbutiker. Försök på möss tyder på att tributyrin kan hjälpa tarmen och tarmbakterierna att återhämta sig efter en antibiotikakur – men det är ännu inte visat på människor.</p>
+          <p class="src">Källa: Yang m.fl. (2023), PLOS ONE 18(7): e0289364.</p>
+        </div>
+        <div class="pair">
+          <figure><figcaption>Strukturformel – bygg efter den här</figcaption>
+            <img src="/images/kemi/matens-kemi/strukturformler/tributyrin-utskriven.svg" width="297" height="334" alt="Strukturformel för tributyrin där varje atom är utskriven: till vänster glycerolens tre kolatomer ovanför varandra, med sina väten. Från varje kol går en esterbindning (O, sedan C med dubbelbundet O) till en butansyrakedja med tre kolatomer till och deras väten."></figure>
+          <figure><figcaption>Så här ser kulmodellen ut</figcaption>
+            <img src="/images/kemi/matens-kemi/kulmodeller/tributyrin.png" width="288" height="255" alt="Kulmodell av tributyrin: en kort glycerolkedja i mitten med tre armar. Varje arm börjar med en röd syreatom och fortsätter med ett kol som har ett dubbelbundet rött syre och en kort kolkedja med vita väten."></figure>
+        </div>
+        <p><strong>Extra utmaning:</strong> Bygg först en glycerol (C<sub>3</sub>H<sub>8</sub>O<sub>3</sub>) och tre butansyror (C<sub>4</sub>H<sub>8</sub>O<sub>2</sub>). Gör sedan fettet: ta bort OH från varje butansyra och H från varje OH-grupp på glycerol, och koppla ihop. Vad bildas av atomerna du tog bort, och hur många blir det?</p>
+        <p class="done">☐ Klart – visa för läraren</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js?v=0fc3b4a7"></script>
+</body>
+</html>
