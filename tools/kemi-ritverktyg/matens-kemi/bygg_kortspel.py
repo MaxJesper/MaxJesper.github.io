@@ -217,8 +217,8 @@ FRAME_DEFS = f'''<svg width="0" height="0" style="position:absolute" aria-hidden
 </defs></svg>'''
 
 # ---------------------------------------------------------------- baksida (helark-SVG, 210 x 297 mm)
-CW, CH = 90, 54          # kortets storlek i mm
-GX, GY = (210 - 2 * CW) / 2, (297 - 5 * CH) / 2
+CW, CH = 90, 52          # kortets storlek i mm (arket 180 x 260 mm ryms inom alla webbläsares utskriftsmarginaler)
+GW, GH = 2 * CW, 5 * CH
 
 def back_sheet():
     # Diskret mönster av sexringar (molekylmotiv) + per kort: tunn ram, glycin i en vit cirkel och "MATENS KEMI".
@@ -228,15 +228,14 @@ def back_sheet():
     cards = []
     for r in range(5):
         for c in range(2):
-            x, y = GX + c * CW, GY + r * CH
+            x, y = c * CW, r * CH
             cards.append(f'''<g transform="translate({x},{y})">
-              <rect x="2" y="2" width="{CW-4}" height="{CH-4}" rx="3.5" fill="none" stroke="{AREA}" stroke-width="0.6"/>
               <circle cx="{CW/2}" cy="{CH/2 - 4}" r="14.5" fill="#fff" stroke="{AREA}" stroke-width="0.6"/>
               <image href="{KM}glycin.png" x="{CW/2 - 11.5}" y="{CH/2 - 14}" width="23" height="19.8"/>
               <text x="{CW/2}" y="{CH - 7.5}" font-size="4.6" text-anchor="middle" fill="{AREA}" font-family="-apple-system, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800" letter-spacing="1.2">MATENS KEMI</text>
             </g>''')
-    return f'''<svg class="backsvg" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>{pat}</defs><rect width="210" height="297" fill="url(#sexring)"/>{''.join(cards)}</svg>'''
+    return f'''<svg class="backsvg" viewBox="0 0 {GW} {GH}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>{pat}</defs><rect width="{GW}" height="{GH}" fill="url(#sexring)"/>{''.join(cards)}</svg>'''
 
 BACK_FRAME_DEF = ''
 
@@ -273,7 +272,7 @@ PAGE = f'''<!DOCTYPE html>
     h2.facit-h {{ color: var(--area-strong); font-size: 1.2rem; margin: 1.2rem 0 0.6rem; }}
 
     /* ---- korten (skalar med kortets bredd via container-enheter) ---- */
-    .card {{ container-type: inline-size; aspect-ratio: 90 / 54; position: relative; }}
+    .card {{ container-type: inline-size; aspect-ratio: 90 / 52; position: relative; }}
     .cin {{ position: absolute; inset: 0; }}
     .frame {{ position: absolute; inset: 0; width: 100%; height: 100%; }}
     .pic {{ position: absolute; left: 10%; right: 10%; top: 8%; height: 62%; display: flex; align-items: center; justify-content: center; }}
@@ -288,18 +287,18 @@ PAGE = f'''<!DOCTYPE html>
     @media (max-width: 560px) {{ .pair {{ grid-template-columns: 1fr; max-width: 340px; margin: 0 auto 10px; }} }}
 
     .sheets {{ display: none; }}
-    @page {{ size: A4; margin: 0; }}
+    @page {{ size: A4; margin: 12mm 15mm; }}
     @media print {{
       header, nav, .hamburger, .no-print, .site-footer {{ display: none !important; }}
       body {{ background: #fff !important; margin: 0; padding: 0; }}
       main {{ max-width: none; margin: 0; padding: 0; }}
       .sheets {{ display: block; }}
-      .sheet {{ width: 210mm; height: 297mm; position: relative; overflow: hidden; break-after: page; page-break-after: always; }}
+      .sheet {{ width: {GW}mm; height: {GH}mm; margin: 0 auto; position: relative; overflow: hidden; break-after: page; page-break-after: always; break-inside: avoid; }}
       .sheet:last-child {{ break-after: auto; page-break-after: auto; }}
-      .grid {{ position: absolute; left: {GX}mm; top: {GY}mm; width: {2*CW}mm; display: grid; grid-template-columns: {CW}mm {CW}mm; grid-auto-rows: {CH}mm; }}
+      .grid {{ position: absolute; left: 0; top: 0; width: {GW}mm; display: grid; grid-template-columns: {CW}mm {CW}mm; grid-auto-rows: {CH}mm; }}
       .grid .card {{ width: {CW}mm; height: {CH}mm; aspect-ratio: auto; outline: 0.2mm dashed #9ca3af; outline-offset: -0.1mm; }}
       .grid .card .cin {{ inset: 1.5mm; }}
-      .backsvg {{ position: absolute; inset: 0; width: 210mm; height: 297mm; }}
+      .backsvg {{ position: absolute; inset: 0; width: {GW}mm; height: {GH}mm; display: block; }}
       body.only-front .sheet.back {{ display: none !important; }}
       * {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
     }}
