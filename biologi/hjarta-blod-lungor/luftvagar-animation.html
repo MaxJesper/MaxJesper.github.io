@@ -588,10 +588,14 @@ function las() {
     if (id !== lasId) return;
     if (i >= forsok.length) { ljud = null; lasTTS(id); return; }
     const a = new Audio(namn + forsok[i]);
+    a.loop = false;
     ljud = a;
+    // klar = true så fort ljudet har börjat spela: ett sent "error" (t.ex. i Safari efter att spåret
+    // spelats klart) får då aldrig starta nästa filformat eller automatrösten – inläsningen hörs bara en gång.
     let klar = false;
     const nasta = () => { if (!klar && id === lasId) { klar = true; spela(i + 1); } };
-    a.onended = () => { if (id === lasId && autospela && lasUpp) nastaAuto(); };
+    a.addEventListener("playing", () => { klar = true; });
+    a.onended = () => { klar = true; if (ljud === a) ljud = null; if (id === lasId && autospela && lasUpp) nastaAuto(); };
     a.onerror = nasta;
     const p = a.play();
     if (p && p.catch) p.catch(err => { if (err && err.name !== "AbortError") nasta(); });
