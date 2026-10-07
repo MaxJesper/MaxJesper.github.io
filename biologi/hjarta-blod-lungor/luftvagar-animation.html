@@ -12,12 +12,25 @@
   }
   * { box-sizing: border-box; }
   body.anim-sida { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; color: var(--text); background: #fff; font-size: 17px; }
-  header.top { background: var(--f); color: #fff; padding: 1.6rem 1.2rem; }
-  header.top .inner { max-width: 1000px; margin: 0 auto; }
-  header.top h1 { font-size: 1.7rem; font-weight: 700; margin: 0 0 0.15rem; }
-  header.top p { opacity: 0.92; font-size: 0.95rem; margin: 0; }
-  @media (max-width: 700px) { header.top .inner { padding-right: 6.5rem; } header.top h1 { font-size: 1.45rem; } }
-  .wrap { max-width: 1000px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+  /* Layout: rubrik och knappar i en spalt till vänster om animationen (Jesper 8 okt 2026) –
+     då får bilden och texten under den mer plats. På smal skärm hamnar spalten ovanför. */
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 4.2rem 1rem 3rem; }
+  .layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+  .sido { position: sticky; top: 1rem; background: var(--f); color: #fff; border-radius: 14px; padding: 1.1rem 1rem 1.2rem; }
+  .sido h1 { font-size: 1.45rem; line-height: 1.2; font-weight: 700; margin: 0 0 0.5rem; }
+  .sido p { font-size: 0.92rem; opacity: 0.95; margin: 0 0 1rem; }
+  .sido .page-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+  .sido .subject-btn { text-align: center; }
+  /* Bilden får aldrig bli så hög att texten under hamnar utanför skärmen */
+  @media (min-width: 901px) { .layout { grid-template-columns: 230px minmax(0, max(560px, calc(62vh * 1.5))); justify-content: center; } }
+  @media (max-width: 900px) {
+    .wrap { padding-top: 1rem; }
+    .layout { grid-template-columns: 1fr; gap: 0.8rem; }
+    .sido { position: static; padding: 0.8rem 1rem 0.9rem; }
+    .sido h1 { font-size: 1.25rem; padding-right: 6.5rem; margin-bottom: 0.25rem; }
+    .sido p { margin-bottom: 0.6rem; font-size: 0.85rem; }
+    .sido .page-actions { flex-direction: row; flex-wrap: wrap; }
+  }
   a { color: #0b5cad; }
 
   /* Scenen */
@@ -43,8 +56,10 @@
   .panel { margin-top: 0.9rem; background: var(--f-mjuk); border: 1px solid var(--f-kant); border-radius: 14px; padding: 1rem 1.2rem 1.1rem; }
   .steg-rad { display: flex; align-items: baseline; justify-content: space-between; gap: 0.6rem; flex-wrap: wrap; }
   .steg-nr { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--f-stark); }
-  .panel h2 { font-size: 1.3rem; color: var(--f-stark); margin: 0.1rem 0 0.4rem; }
-  .panel p { margin: 0 0 0.6rem; }
+  .panel h2 { font-size: 1.45rem; color: var(--f-stark); margin: 0.1rem 0 0.45rem; }
+  .panel p { margin: 0 0 0.6rem; font-size: 1.15rem; line-height: 1.6; }
+  .panel ol.sammanf { font-size: 1.12rem; }
+  @media (max-width: 600px) { .panel p { font-size: 1.05rem; } .panel h2 { font-size: 1.3rem; } }
   .panel p:last-child { margin-bottom: 0; }
   .teckenforklaring { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.88rem; color: #334; margin-top: 0.4rem; }
   .teckenforklaring span { display: inline-flex; align-items: center; gap: 0.35rem; }
@@ -74,18 +89,17 @@
 <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
 <nav id="side-menu"></nav>
 
-<header class="top">
-  <div class="inner">
+<div class="wrap">
+<div class="layout">
+  <aside class="sido">
     <h1>Luftens väg – från näsa till lungblåsa</h1>
     <p>Hjärta, blod och lungor · animation i 12 steg</p>
-  </div>
-</header>
-
-<div class="wrap">
-  <div class="page-actions no-print" style="margin:0.2rem 0 1rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
-    <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
-    <a href="./luftvagarna.html" class="subject-btn">Testa dig själv: Luftvägarna-spelet</a>
-  </div>
+    <div class="page-actions no-print">
+      <a href="./larande-spel.html" class="subject-btn">← Tillbaka till lärande spel</a>
+      <a href="./luftvagarna.html" class="subject-btn">Testa dig själv: Luftvägarna-spelet</a>
+    </div>
+  </aside>
+  <div class="huvud">
 
   <div class="scen" id="scen" role="img" aria-label="Animerad bild av luftvägarna">
     <svg class="bild" id="svg" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
@@ -149,6 +163,8 @@
   </div>
   <div class="prickar" id="prickar" role="group" aria-label="Välj steg"></div>
   <p class="tips">Tangentbord: ← och → byter steg.</p>
+  </div>
+</div>
 
   <details class="kallor">
     <summary>Källor och bilder</summary>
