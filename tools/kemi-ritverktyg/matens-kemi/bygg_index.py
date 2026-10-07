@@ -159,6 +159,7 @@ HTML = """<!DOCTYPE html>
             <li><a href="./facit.html">Facit till övningsprovet</a></li>
             <li><a href="./lektion-stationer.html">Lektionsförslag: Stationslektion</a> – bygga molekyler, matcha begrepp och smaka på socker</li>
             <li><a href="./kulmodeller.html">Bygg molekyler med kulmodeller</a> – utskrivbar byggövning: glycin, alanin, glukos och ett fett</li>
+            <li><a href="./kortspel.html">Kortspel: begrepp och förklaringar</a> – 24 utskrivbara kortpar att klippa och laminera</li>
           </ul>
         </article>
       </section>
