@@ -581,12 +581,21 @@ function lasTTS(id) {
 function las() {
   tystaAllt();
   const id = lasId;
-  const a = new Audio(LJUD_BAS + String(steg + 1).padStart(2, "0") + ".mp3");
-  ljud = a;
-  a.onended = () => { if (id === lasId && autospela && lasUpp) nastaAuto(); };
-  a.onerror = () => { if (id === lasId) { ljud = null; lasTTS(id); } };
-  const p = a.play();
-  if (p && p.catch) p.catch(err => { if (id === lasId && err && err.name !== "AbortError") { ljud = null; lasTTS(id); } });
+  // Provar steg01.mp3 först, sedan steg01.m4a (Röstmemon på Mac/iPhone sparar m4a), sist automatrösten
+  const namn = LJUD_BAS + String(steg + 1).padStart(2, "0");
+  const forsok = [".mp3", ".m4a"];
+  (function spela(i) {
+    if (id !== lasId) return;
+    if (i >= forsok.length) { ljud = null; lasTTS(id); return; }
+    const a = new Audio(namn + forsok[i]);
+    ljud = a;
+    let klar = false;
+    const nasta = () => { if (!klar && id === lasId) { klar = true; spela(i + 1); } };
+    a.onended = () => { if (id === lasId && autospela && lasUpp) nastaAuto(); };
+    a.onerror = nasta;
+    const p = a.play();
+    if (p && p.catch) p.catch(err => { if (err && err.name !== "AbortError") nasta(); });
+  })(0);
 }
 el("lasBtn").addEventListener("click", () => {
   lasUpp = !lasUpp;
