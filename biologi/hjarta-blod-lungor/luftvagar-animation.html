@@ -77,7 +77,7 @@
 <header class="top">
   <div class="inner">
     <h1>Luftens väg – från näsa till lungblåsa</h1>
-    <p>Hjärta, blod och lungor · animation i 11 steg</p>
+    <p>Hjärta, blod och lungor · animation i 12 steg</p>
   </div>
 </header>
 
@@ -135,7 +135,7 @@
 
   <section class="panel" aria-live="polite">
     <div class="steg-rad">
-      <span class="steg-nr" id="steg-nr">Steg 1 av 11</span>
+      <span class="steg-nr" id="steg-nr">Steg 1 av 12</span>
     </div>
     <h2 id="steg-rubrik"></h2>
     <div id="steg-text"></div>
@@ -169,8 +169,7 @@
    Bakgrundsbilder: images/biologi/blod/luftvagar/lv-01 … lv-06 (1536×1024). Alla koordinater nedan är i bildens pixlar.
    Etiketter är HTML (läsbar storlek på mobil), linjer/partiklar är SVG. Färg bär aldrig ensam information:
    O₂ och CO₂ har text i partikeln, luft/mat skiljs med heldragen/streckad linje + text. */
-const BILD = n => "/images/biologi/blod/luftvagar/lv-0" + n;
-const BILDNAMN = { 1: "oversikt", 2: "nasa", 3: "struphuvud", 4: "flimmerhar", 5: "lungor", 6: "alveoler" };
+const BILDFIL = { 1: "lv-01-oversikt", 2: "lv-02-nasa", 3: "lv-03-struphuvud", 4: "lv-04-flimmerhar", 5: "lv-05-lungor", 6: "lv-06-alveoler", 7: "lv-03b-svalja" };
 
 // ── Luftvägar (SVG-banor) ──
 const P = {
@@ -187,8 +186,9 @@ const P = {
   n2b: "M160,568 L164,564 L171,559 L178,552 L185,545 L191,536 L198,525 L204,515 L212,505 L221,497 L230,489 L240,482 L250,475 L258,469 L265,463 L276,459 L295,455 L329,453 L374,452 L418,452 L450,452 L464,453 L467,455 L465,457 L466,459 L470,460 L474,461 L478,461 L482,462 L486,463 L490,464 L494,466 L498,467 L502,468 L506,469 L510,470 L514,471 L518,472 L522,473 L526,473 L530,474 L534,475 L538,476 L542,476 L546,477 L550,477 L554,478 L558,478 L562,478 L566,478 L570,478 L574,478 L578,478 L582,478 L586,478 L590,478 L594,478 L598,478 L602,478 L606,478 L610,478 L614,478 L618,478 L622,478 L626,478 L630,478 L634,478 L638,478 L642,478 L646,478 L650,478 L654,478 L658,478 L662,478 L666,478 L670,478 L674,478 L678,478 L682,478 L686,478 L690,479 L694,480 L698,482 L702,483 L706,485 L709,487 L712,489 L715,491 L718,493 L721,495 L724,498 L727,500 L730,502 L734,504 L738,506 L742,508 L746,509 L748,509 L750,508 L753,508 L760,510 L774,516 L792,524 L812,534 L830,545 L846,559 L861,575 L875,591 L888,605 L899,616 L909,625 L917,633 L922,640 L924,646 L923,650 L920,654 L919,658 L919,662 L919,667 L919,671 L920,676 L921,682 L922,688 L924,694 L925,700 L927,706 L928,712 L930,718 L931,724 L932,730 L932,736 L933,742 L933,748 L933,754 L933,760 L933,766 L933,772 L933,778 L933,784 L933,790 L933,796 L933,802 L934,808 L934,814 L934,820 L934,826 L934,832 L934,838 L934,844 L934,850 L934,856 L934,862 L934,868 L935,874 L936,880 L937,886 L938,892 L939,898 L941,904 L943,910 L945,916 L947,922 L950,928 L952,934 L955,940 L957,946 L960,952 L962,958 L964,964 L966,970 L968,976 L969,982 L971,988 L973,995 L974,1002 L975,1008 L976,1012",
   n2c: "M160,568 L164,564 L171,559 L178,552 L185,545 L192,537 L198,527 L205,517 L212,505 L219,491 L227,475 L234,459 L240,448 L244,442 L247,440 L249,439 L252,438 L255,435 L258,432 L261,430 L264,427 L267,424 L270,422 L273,420 L276,417 L279,414 L282,412 L285,409 L288,406 L291,403 L294,401 L297,398 L300,396 L303,394 L306,391 L309,389 L312,387 L315,385 L318,382 L321,380 L324,378 L327,376 L330,374 L333,371 L336,369 L339,367 L342,365 L345,362 L348,360 L352,358 L356,355 L360,352 L364,350 L367,348 L370,346 L373,344 L376,342 L379,340 L382,338 L385,336 L388,334 L392,332 L396,331 L400,330 L404,329 L408,329 L412,330 L416,332 L420,333 L424,334 L428,335 L432,335 L436,336 L440,336 L444,336 L448,336 L452,336 L456,336 L460,336 L464,336 L468,336 L472,336 L476,336 L480,336 L484,336 L488,336 L492,336 L496,336 L500,336 L504,337 L508,338 L512,339 L516,340 L519,342 L522,344 L525,346 L528,348 L532,350 L536,353 L540,355 L544,357 L548,359 L552,360 L556,362 L560,363 L564,364 L568,365 L572,366 L576,367 L580,368 L584,369 L588,369 L592,370 L596,370 L600,370 L604,371 L608,371 L612,372 L616,372 L620,373 L624,374 L628,375 L632,376 L636,377 L640,378 L644,379 L648,381 L652,382 L656,383 L660,384 L664,384 L668,385 L672,385 L676,386 L680,386 L684,386 L688,387 L692,388 L696,388 L700,389 L704,389 L708,389 L712,390 L716,390 L720,390 L724,390 L728,390 L732,390 L736,390 L740,390 L744,390 L748,390 L752,390 L755,389 L757,387 L761,386 L768,390 L781,398 L797,409 L814,424 L830,440 L844,460 L857,483 L869,508 L880,530 L890,551 L898,571 L906,589 L912,605 L916,617 L919,626 L921,633 L922,640 L922,646 L921,650 L920,654 L919,658 L919,662 L919,667 L919,671 L920,676 L921,682 L922,688 L924,694 L925,700 L927,706 L928,712 L930,718 L931,724 L932,730 L932,736 L933,742 L933,748 L933,754 L933,760 L933,766 L933,772 L933,778 L933,784 L933,790 L933,796 L933,802 L934,808 L934,814 L934,820 L934,826 L934,832 L934,838 L934,844 L934,850 L934,856 L934,862 L934,868 L935,874 L936,880 L937,886 L938,892 L939,898 L941,904 L943,910 L945,916 L947,922 L950,928 L952,934 L955,940 L957,946 L960,952 L962,958 L964,964 L966,970 L968,976 L969,982 L971,988 L973,995 L974,1002 L975,1008 L976,1012",
   // Svalg/struphuvud (lv-03)
-  luft3: "M60,242 L67,241 L77,239 L89,237 L103,235 L118,234 L135,233 L154,233 L174,232 L194,232 L214,231 L233,230 L252,228 L272,226 L291,225 L310,224 L330,223 L349,223 L369,223 L388,224 L406,224 L422,224 L438,225 L452,226 L466,227 L480,228 L493,229 L506,231 L518,233 L530,236 L540,240 L550,246 L559,254 L567,262 L574,271 L580,280 L585,289 L588,299 L591,310 L593,320 L595,330 L597,340 L600,350 L602,361 L603,371 L603,380 L602,389 L600,397 L598,404 L595,412 L592,420 L588,428 L584,436 L580,444 L576,452 L572,460 L569,468 L566,476 L564,484 L562,492 L562,500 L563,509 L565,518 L568,527 L571,536 L573,545 L574,554 L574,563 L573,572 L573,581 L572,590 L571,598 L570,606 L568,614 L568,622 L568,630 L570,638 L572,646 L575,654 L579,662 L582,670 L585,677 L588,684 L592,691 L595,698 L598,705 L601,712 L603,719 L605,726 L608,733 L610,740 L612,747 L615,753 L617,760 L620,767 L622,775 L624,784 L626,794 L628,804 L630,815 L632,825 L634,835 L635,845 L637,855 L638,865 L640,875 L641,884 L643,893 L644,902 L646,911 L647,920 L649,929 L650,939 L652,949 L653,958 L655,968 L657,978 L658,989 L660,1000 L661,1009 L662,1015",
-  mat3: "M548,348 L553,352 L560,357 L569,363 L577,369 L585,375 L592,380 L599,385 L606,390 L612,395 L618,400 L623,405 L627,410 L631,416 L634,422 L636,430 L638,440 L639,452 L639,465 L639,478 L640,490 L641,502 L642,514 L643,526 L644,538 L645,550 L647,562 L648,574 L650,587 L652,599 L655,610 L658,620 L661,630 L665,639 L668,649 L672,660 L676,673 L679,687 L683,701 L687,716 L690,730 L693,744 L696,758 L699,772 L702,786 L705,800 L707,814 L710,828 L712,842 L714,856 L716,870 L718,884 L720,898 L722,912 L724,926 L726,940 L728,956 L730,973 L732,990 L734,1005 L735,1015",
+  luft3: "M62,228 L74,227 L90,226 L109,224 L130,223 L150,222 L170,221 L192,221 L214,221 L237,220 L260,220 L284,220 L309,219 L334,219 L358,218 L380,218 L400,218 L420,218 L438,218 L454,218 L470,220 L484,223 L497,226 L509,230 L519,234 L530,240 L540,247 L550,254 L559,262 L568,271 L575,280 L581,289 L587,299 L591,309 L595,319 L598,330 L601,342 L603,354 L604,366 L605,378 L605,390 L605,401 L604,411 L603,420 L602,430 L600,440 L598,450 L595,460 L591,470 L588,480 L585,490 L582,499 L579,509 L575,518 L572,526 L570,535 L568,543 L567,551 L566,559 L565,567 L565,575 L566,583 L567,591 L568,599 L570,607 L572,615 L574,623 L577,632 L580,641 L582,650 L585,660 L588,671 L590,682 L593,695 L595,707 L598,720 L601,733 L604,747 L606,762 L609,776 L612,790 L615,804 L618,818 L620,832 L623,846 L626,860 L629,874 L632,887 L635,901 L639,915 L642,930 L646,947 L650,967 L654,986 L658,1003 L660,1015",
+  mat3: "M548,350 L553,355 L560,361 L569,369 L577,377 L585,385 L591,392 L597,399 L603,406 L609,413 L615,420 L622,426 L630,432 L638,437 L645,443 L650,450 L653,458 L656,467 L657,476 L657,485 L658,495 L658,505 L657,515 L657,525 L656,535 L656,545 L657,555 L658,565 L660,575 L662,585 L664,595 L666,605 L669,615 L672,625 L675,635 L677,645 L679,655 L680,665 L681,675 L682,685 L684,695 L687,706 L690,717 L693,728 L697,739 L700,750 L703,760 L706,770 L708,780 L711,790 L713,800 L715,810 L717,820 L719,830 L720,840 L722,850 L723,860 L725,870 L726,879 L727,889 L729,900 L731,911 L734,924 L736,936 L738,948 L740,960 L741,972 L742,985 L742,997 L742,1008 L742,1015",
+  mat3b: "M596,262 L599,264 L604,268 L609,271 L614,276 L618,280 L621,284 L623,289 L625,294 L627,299 L628,305 L629,312 L630,320 L630,328 L631,336 L632,345 L634,354 L635,363 L637,372 L640,381 L642,390 L645,398 L648,406 L652,414 L655,422 L658,430 L660,439 L663,448 L665,457 L666,466 L668,475 L669,484 L671,493 L672,502 L673,511 L674,520 L675,529 L676,538 L677,547 L679,556 L680,565 L681,574 L683,583 L684,592 L686,601 L688,610 L691,620 L694,630 L697,640 L700,650 L702,660 L704,670 L705,680 L705,690 L706,700 L707,710 L708,720 L709,730 L710,740 L711,750 L712,760 L713,770 L714,780 L715,790 L717,800 L718,810 L720,820 L722,830 L724,840 L726,850 L728,860 L729,870 L730,880 L731,890 L733,900 L734,910 L736,920 L738,930 L741,940 L743,950 L745,960 L747,972 L748,984 L750,997 L751,1007 L752,1015",
   // Flimmerhår (lv-04)
   st1: "M1350,0 L1335,352 C1150,360 950,368 750,366 C550,362 300,342 0,330",
   st2: "M980,0 L965,362 C800,366 600,364 400,350 C250,342 120,334 0,330",
@@ -257,32 +257,42 @@ const STEG = [
 
   { rubrik: "Svalget – där luft och mat korsar varandra", bild: 3, vy: [300, 100, 900, 600],
     text: ["Luften från näsan kommer ner i svalget. Svalget är gemensamt för luft och mat, och här korsar deras vägar varandra.",
-           "Längst ner delar sig vägen: luften fortsätter framåt ner i struphuvudet och luftstrupen. Maten fortsätter bakåt ner i matstrupen."],
+           "Längst ner delar sig vägen: luften fortsätter framåt ner i struphuvudet och luftstrupen. Maten ska bakåt ner i matstrupen, som ligger bakom luftstrupen. Hur maten hamnar rätt visar nästa steg."],
     teckenforkl: ["luftlinje", "matlinje"],
     linjer: [{ p: "luft3", typ: "luft" }, { p: "mat3", typ: "mat" }],
-    floden: [{ p: "luft3", n: 9, dur: 7, typ: "luft" }, { p: "mat3", n: 2, dur: 7, typ: "mat" }],
-    etiketter: [{ t: "Svalg", at: [1000, 230], mal: [[605, 300]] },
-                { t: "Luft → struphuvud", at: [1000, 480], mal: [[575, 540]] },
-                { t: "Mat → matstrupe", at: [1000, 620], mal: [[668, 650]] },
-                { t: "Från munnen", at: [380, 470], mal: [[548, 350]] }] },
+    floden: [{ p: "luft3", n: 9, dur: 7, typ: "luft" }],
+    etiketter: [{ t: "Svalg", at: [1000, 230], mal: [[600, 330]] },
+                { t: "Luft → struphuvud", at: [1000, 480], mal: [[566, 545]] },
+                { t: "Mat → matstrupe", at: [1000, 640], mal: [[684, 690]] }] },
+
+  { rubrik: "När du sväljer", bild: 7, vy: [300, 100, 900, 600],
+    text: ["När du sväljer händer flera saker på en gång – utan att du behöver tänka på det. Den mjuka gommen lyfts och stänger vägen upp till näsan. Struphuvudet lyfts och struplocket fälls ner över ingången till luftstrupen. Andningen gör en kort paus, så ingen luft går ner samtidigt.",
+           "Tungan pressar tuggan bakåt, förbi struplocket och ner i matstrupen. Där trycker musklerna i matstrupens vägg tuggan vidare nedåt med en våg av sammandragningar. Det kallas peristaltik – därför kan man svälja även när man står på händerna."],
+    teckenforkl: ["tugga"],
+    floden: [{ p: "mat3b", n: 1, dur: 5.5, typ: "tugga" }],
+    etiketter: [{ t: "Mjuka gommen stänger mot näsan", at: [1000, 170], mal: [[600, 215]] },
+                { t: "Struplocket är nedfällt", at: [1000, 330], mal: [[632, 440]] },
+                { t: "Tuggan → matstrupen", at: [1000, 560], mal: [[690, 640]] },
+                { t: "Ingen luft passerar", at: [420, 640], mal: [[572, 505]] }] },
 
   { rubrik: "Struplocket och stämbanden", bild: 3, vy: [380, 290, 600, 400],
     text: ["Överst vid ingången till struphuvudet sitter struplocket. När du andas står det upp och luften kan passera. När du sväljer fälls det ner över ingången, så att maten leds bakåt till matstrupen i stället.",
            "Inne i struphuvudet sitter stämbanden. När luft pressas ut mellan dem vibrerar de – så bildas din röst. Ju mer de spänns, desto ljusare ton."],
     floden: [{ p: "luft3", n: 9, dur: 6.5, typ: "luft" }],
-    etiketter: [{ t: "Struplock", at: [905, 350], mal: [[560, 400]] },
-                { t: "Stämband", at: [905, 470], mal: [[590, 540]] },
-                { t: "Struphuvud", at: [905, 590], mal: [[625, 600]] },
-                { t: "Matstrupe", at: [905, 660], mal: [[668, 655]] }] },
+    etiketter: [{ t: "Struplock", at: [905, 350], mal: [[566, 400]] },
+                { t: "Stämband", at: [905, 470], mal: [[566, 545]] },
+                { t: "Struphuvud", at: [905, 590], mal: [[612, 600]] },
+                { t: "Matstrupe", at: [905, 660], mal: [[680, 660]] }] },
 
   { rubrik: "Luftstrupen och broskringarna", bild: 3, vy: [380, 540, 600, 400],
     text: ["Luftstrupen är ett rör, ungefär 10–12 cm långt, som leder luften ner mot lungorna. I väggen sitter broskringar som håller röret öppet, så att det inte faller ihop när du andas in.",
            "Ringarna är C-formade och öppna bakåt mot matstrupen (se tvärsnittet). Där är väggen en mjuk muskelvägg – då kan matstrupen vidgas när en tugga passerar."],
     infalld: true,
     floden: [{ p: "luft3", n: 9, dur: 6.5, typ: "luft" }],
-    etiketter: [{ t: "Luftstrupe", at: [455, 640], mal: [[600, 700]] },
-                { t: "Broskringar", at: [455, 800], mal: [[612, 790]] },
-                { t: "Matstrupe", at: [880, 880], mal: [[700, 820]] }] },
+    etiketter: [{ t: "Luftstrupe", at: [455, 640], mal: [[600, 715]] },
+                { t: "Broskringar", at: [455, 800], mal: [[622, 785]] },
+                { t: "Mjuk vägg utan brosk", at: [470, 920], mal: [[668, 800]] },
+                { t: "Matstrupe", at: [880, 880], mal: [[714, 830]] }] },
 
   { rubrik: "Flimmerhår och slem – luftvägarnas städhjälp", bild: 4, vy: [0, 0, 1536, 1024],
     text: ["Här är vi inne i väggen på luftstrupen, kraftigt förstorat. Bägarcellerna tillverkar slem som ligger som ett klibbigt lager överst. Damm, pollen och bakterier som tagit sig förbi näsan fastnar i slemmet.",
@@ -379,10 +389,10 @@ function satViewBox(v) { vy = v.slice(); svg.setAttribute("viewBox", v.join(" ")
 // Bilder: webp med jpg som reserv
 const bildlager = el("bildlager");
 const stodWebp = (() => { try { return document.createElement("canvas").toDataURL("image/webp").indexOf("data:image/webp") === 0; } catch (e) { return false; } })();
-function bildUrl(n) { return BILD(n) + "-" + BILDNAMN[n] + (stodWebp ? ".webp" : ".jpg"); }
+function bildUrl(n) { return "/images/biologi/blod/luftvagar/" + BILDFIL[n] + (stodWebp ? ".webp" : ".jpg"); }
 // Förladda alla
 const forladdade = {};
-for (let n = 1; n <= 6; n++) { const im = new Image(); im.src = bildUrl(n); forladdade[n] = im; }
+for (let n = 1; n <= 7; n++) { const im = new Image(); im.src = bildUrl(n); forladdade[n] = im; }
 
 // ── Ritning av ett steg ──
 function rensa() {
@@ -397,6 +407,10 @@ function partikelElement(typ, s) {
   else if (typ === "varm") { g._c = nytt("circle", { r: 5 * s, fill: "#ffffff", stroke: "#0369a1", "stroke-width": 1.8 * s }, g); }
   else if (typ === "damm") { nytt("path", { d: `M${-5*s},${-2*s} L${-1*s},${-6*s} L${5*s},${-3*s} L${6*s},${3*s} L${0},${6*s} L${-6*s},${3*s} z`, fill: "#57534e", stroke: "#fff", "stroke-width": 1.2 * s }, g); }
   else if (typ === "slem") nytt("circle", { r: 7 * s, fill: "#fef3c7", stroke: "#a16207", "stroke-width": 1.4 * s, opacity: 0.95 }, g);
+  else if (typ === "tugga") {
+    g._v = nytt("ellipse", { rx: 20 * s, ry: 15 * s, fill: "#f9a8a8", "fill-opacity": 0.55, stroke: "#9f1239", "stroke-width": 1.6 * s, "stroke-dasharray": (4 * s) + " " + (3 * s) }, g);
+    nytt("ellipse", { rx: 11 * s, ry: 8 * s, fill: "#c2410c", stroke: "#fff", "stroke-width": 1.6 * s }, g);
+  }
   else if (typ === "mat") nytt("ellipse", { rx: 9 * s, ry: 6 * s, fill: "#c2410c", stroke: "#fff", "stroke-width": 1.5 * s }, g);
   else if (typ === "blod") nytt("ellipse", { rx: 6 * s, ry: 3.5 * s, fill: "#7f1d1d", stroke: "#fecaca", "stroke-width": 1 * s }, g);
   else if (typ === "o2") {
@@ -467,7 +481,12 @@ function uppdatera(nu) {
     if (a.stopp !== undefined) p = Math.min(p * 1.35, a.stopp);          // damm som fastnar och ligger kvar en stund
     const q = a.bak ? 1 - p : p;
     const pt = a.b.el.getPointAtLength(q * a.b.L);
-    a.g.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
+    let rot = "";
+    if (a.typ === "tugga") {   // vrid tuggan och vågen längs matstrupen
+      const p2 = a.b.el.getPointAtLength(Math.min(a.b.L, q * a.b.L + 2));
+      rot = ` rotate(${(Math.atan2(p2.y - pt.y, p2.x - pt.x) * 180 / Math.PI).toFixed(1)})`;
+    }
+    a.g.setAttribute("transform", `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})${rot}`);
     // in- och uttoning i banans ändar
     const kant = Math.min(p, 1 - p);
     a.g.setAttribute("opacity", (a.stopp !== undefined || lugn) ? 1 : Math.min(1, kant * 12).toFixed(2));
@@ -520,6 +539,7 @@ function teckenforklaring(lista) {
     slem: ['<circle cx="15" cy="11" r="7" fill="#fef3c7" stroke="#a16207" stroke-width="1.4"/>', "nytt slem från bägarcell"],
     o2: ['<circle cx="15" cy="11" r="10" fill="#fff" stroke="#1d4ed8" stroke-width="2"/><text x="15" y="11" text-anchor="middle" dominant-baseline="central" font-size="8.5" font-weight="800" fill="#1d4ed8" font-family="Arial">O₂</text>', "syre – in i blodet"],
     co2: ['<rect x="2" y="2" width="26" height="18" rx="4" fill="#1f2937"/><text x="15" y="11" text-anchor="middle" dominant-baseline="central" font-size="8.5" font-weight="800" fill="#fff" font-family="Arial">CO₂</text>', "koldioxid – ut ur blodet"],
+    tugga: ['<ellipse cx="15" cy="11" rx="13" ry="9" fill="#f9a8a8" fill-opacity="0.55" stroke="#9f1239" stroke-width="1.3" stroke-dasharray="3 2"/><ellipse cx="15" cy="11" rx="7" ry="5" fill="#c2410c"/>', "tugga med muskelvåg (peristaltik)"],
     luftlinje: ['<line x1="2" y1="11" x2="28" y2="11" stroke="#0369a1" stroke-width="3"/>', "heldragen linje = luftens väg"],
     matlinje: ['<line x1="2" y1="11" x2="28" y2="11" stroke="#9a3412" stroke-width="3" stroke-dasharray="6 4"/>', "streckad linje = matens väg"]
   };
@@ -594,7 +614,7 @@ let resizeT = null;
 window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(ritaSteg, 200); });
 
 bildlager.addEventListener("error", () => { const h = bildlager.getAttribute("href"); if (h && h.endsWith(".webp")) bildlager.setAttribute("href", h.replace(".webp", ".jpg")); });
-// Startsteg kan anges i adressen, t.ex. luftvagar-animation.html#steg9 (används av kortet "Animation Gasutbyte")
+// Startsteg kan anges i adressen, t.ex. luftvagar-animation.html#steg10 (används av kortet "Animation Gasutbyte")
 const startMatch = (location.hash || "").match(/^#steg(\d+)$/);
 visa(startMatch ? Math.min(STEG.length, Math.max(1, +startMatch[1])) - 1 : 0, true);
 rafId = requestAnimationFrame(uppdatera);
