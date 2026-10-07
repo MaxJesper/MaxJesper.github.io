@@ -157,6 +157,7 @@ HTML = """<!DOCTYPE html>
           <h2>Material för läraren</h2>
           <ul>
             <li><a href="./facit.html">Facit till övningsprovet</a></li>
+            <li>Bygg molekyler med kulmodeller – utskrivbar uppgift: glycin, alanin, glukos och ett fett (<a href="./material/bygg-molekyler-kulmodeller.pdf" target="_blank" rel="noopener">PDF</a> | <a href="./material/bygg-molekyler-kulmodeller.docx" download>Word</a>)</li>
           </ul>
         </article>
       </section>
