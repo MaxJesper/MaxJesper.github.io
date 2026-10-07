@@ -72,10 +72,13 @@ SMILES = {
     # Triglycerid: INGEN 3D-modell sedan 29 sep 2026 (Jesper) – bara strukturformel (triglyceride_svg).
     # Molekylen är ett riktigt fiskoljefett, se TRIGLYCERID_SMILES nedan.
     'glycin':        'NCC(=O)O',
-    'alanin':        'CC(N)C(=O)O',
-    'cystein':       'NC(CS)C(=O)O',
-    # Dipeptid glycylalanin (Gly-Ala): visar peptidbindningen (amidbindningen) konkret.
-    'dipeptid':      'NCC(=O)NC(C)C(=O)O',
+    # Aminosyrorna i proteiner är L-formen. Stereocentrumet MÅSTE anges i SMILES – utan @/@@ väljer RDKit
+    # spegelbilden slumpmässigt (alanin blev D-alanin, rättat 7 okt 2026). Verifierat med RDKit CIP-analys:
+    # L-alanin = (S), L-cystein = (R) (svavlet ändrar CIP-prioriteten, det är fortfarande L), Gly-L-Ala: Ala-kolet (S).
+    'alanin':        'C[C@H](N)C(=O)O',
+    'cystein':       'N[C@@H](CS)C(=O)O',
+    # Dipeptid glycylalanin (Gly-L-Ala): visar peptidbindningen (amidbindningen) konkret.
+    'dipeptid':      'NCC(=O)N[C@@H](C)C(=O)O',
     # ── Fördjupning: öppen kedja/ringform, samt ribos/deoxiribos (tillagda vid ombyggnaden 22 sep 2026) ──
     # Aldehydo-D-glukos (öppen kedja) – ChEBI CHEBI:42758 (samma stereokemi som PubChem CID 107526,
     # verifierat mot IUPAC-namnet (2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal via RDKit CIP-analys).
