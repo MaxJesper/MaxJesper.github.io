@@ -33,7 +33,7 @@
     .done { font-weight: 700; margin: 0.7rem 0 0; }
     .molecule + .molecule { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1; }
 
-    @page { size: A4; margin: 13mm 14mm; }
+    @page { size: A4; margin: 12mm 14mm; }
     @media print {
       header, nav, .hamburger, .no-print { display: none !important; }
       body { background: #fff !important; font-size: 10.5pt; }
@@ -43,7 +43,21 @@
       .atom-table th { background: #333 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .need, .fett-info { -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
       .pair { break-inside: avoid; }
-      .molecule + .molecule { border-top: 1px dashed #999; }
+      .molecule + .molecule { border-top: 1px dashed #999; margin-top: 4mm; padding-top: 3mm; }
+      /* Fasta bildhöjder i utskrift: varje sida får god marginal (max ca 235 mm av 271 mm), så att
+         glycin / alanin + glukos / fettet alltid hamnar på varsin sida även med webbläsarens sidhuvud/sidfot. */
+      .pair { gap: 4mm 12mm; margin: 2mm 0; }
+      .pair img { width: auto !important; }
+      .pair img[src*="glycin-utskriven"]  { height: 34mm; }
+      .pair img[src*="kulmodeller/glycin"] { height: 34mm; }
+      .pair img[src*="alanin-utskriven"]  { height: 40mm; }
+      .pair img[src*="kulmodeller/alanin"] { height: 40mm; }
+      .pair img[src*="glukos-utskriven"]  { height: 60mm; }
+      .pair img[src*="kulmodeller/glukos"] { height: 40mm; }
+      .pair img[src*="tributyrin-utskriven"] { height: 72mm; }
+      .pair img[src*="kulmodeller/tributyrin"] { height: 58mm; }
+      .sheet h2 { margin-top: 0; }
+      .sheet p { margin: 1mm 0 1.6mm; }
     }
   </style>
 </head>
