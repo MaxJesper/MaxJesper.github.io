@@ -168,7 +168,7 @@ Idébanken är ett minne, inte ett löfte. Skriv in sidoidéer kort; granska ban
 | Exit tickets och "Utmaningen" | Avstämning och tävlingsquiz | Se `_IDEER_luktsalt-och-exit-tickets.md` | Sparad |
 | Lektion: Varför andas vi? | Mätning kopplad till cellandning | Mätaktivitet + stöttat efterarbete (§6) | Sparad – möjlig pilot |
 | Jespers kortfilmer | Engagerande förklaringar | Manus 2–4 min + kort quiz | Sparad |
-| Halvanimerad förklaringsfilm | Visa ett förlopp | En kort sekvens | Delvis prövad (Luftens väg, interaktiv) |
+| Kortfilmer: halvanimerade miniföredrag (1–3 min, ett avgränsat ämne) | Effektiv förklaring som elever och lärare kan se om | Pilot: en film (t.ex. artärer, vener och kapillärer eller halveringstid) – ChatGPT manus + bilder, Jesper läser in, Claude bygger filmen | **Vald riktning 2026-10-08** – ersätter stegvisa interaktiva animationer som huvudformat |
 | Fler spel som tränar samband | Utöver begreppsigenkänning | En uppgift där elever förutsäger/förklarar | Sparad |
 | Exkursion med observationsuppdrag | NO utanför klassrummet | Lokal runda med elevfrågor + efterarbete | Sparad |
 
@@ -180,6 +180,7 @@ Idébanken är ett minne, inte ett löfte. Skriv in sidoidéer kort; granska ban
 | 2026-10-08 | Enhetlig bas först; därefter praktiska, kreativa och intresseväckande inslag. |
 | 2026-10-08 | Gleerups, Enkel NO och TEFY som inspiration; självständigt innehåll. |
 | 2026-10-08 | Praktiska undersökningar får stöttat efterarbete. |
+| 2026-10-08 | Förklarande media görs främst som korta halvanimerade filmer (miniföredrag med bilder och tal, 1–3 min, ett ämne per film, hellre fler och kortare). Stegvisa interaktiva animationer som Luftens väg var för arbetsamma i förhållande till nyttan i klassrummet och görs inte som standard. Varje film får textning och en kort text/quiz under, så att innehållet inte bara finns i ljudet. |
 | 2026-10-08 | Samla korrigeringar, minska Jespers beslut, spara sidoidéer i idébanken. |
 | 2026-10-08 | Större avvikelser synliggörs; planen uppdateras när riktningen ändras. |
 | 2026-10-08 | Områden prioriteras efter läsårsplanen: mest arbete strax före och medan eleverna läser området (då kan Jesper testa). |
