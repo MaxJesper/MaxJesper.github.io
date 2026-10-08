@@ -1,5 +1,7 @@
 # Projektregler – Studieguide-webbplatsen
 
+> **Läs först `_PROJEKTPLAN.md`** (mål, prioriteringar mot version 1, arbetsfördelning Jesper/ChatGPT/Claude, lägesbild med högst tre aktiva uppgifter, idébank) före arbete som påverkar prioriteringar eller riktning. Denna fil (CLAUDE.md) behåller teknik och arbetsflöde. Vid motsägelse: lyft den till Jesper. *(Infört 8 okt 2026.)*
+
 ## Git och deployment
 
 Pushes görs alltid av användaren via deras egen terminal. Efter varje avslutad förändring avslutar Claude alltid med att ge push-kommandona:
