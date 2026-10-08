@@ -22,7 +22,7 @@ def start_server(port):
 
 def open_page(playwright, port, scale=3):
     b = playwright.chromium.launch(args=['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
-    pg = b.new_page(viewport={'width': 560, 'height': 460}, device_scale_factor=scale)
+    pg = b.new_page(viewport={'width': 940, 'height': 800}, device_scale_factor=scale)
     pg.goto(f'http://127.0.0.1:{port}{HARNESS}'); pg.wait_for_function('typeof $3Dmol !== "undefined"')
     return b, pg
 

@@ -1,3 +1,27 @@
+// --- Färska datafiler (Jesper 8 okt 2026) ---
+// Sajtens egna .json-filer (begrepp, övningar, frågor …) hämtas med cache:"no-cache": webbläsaren frågar
+// servern om filen ändrats (snabbt, ett litet 304-svar om inte). Annars kan en telefon visa en gammal
+// version i upp till ~10 min efter en push. Gäller bara GET mot samma webbplats där sidan inte själv
+// har valt en cache-inställning. Css/js får i stället ?v=-nummer (tools/underhall/uppdatera_versioner.py).
+(function () {
+  if (!window.fetch || window.__farskJson) return;
+  window.__farskJson = true;
+  var orig = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    try {
+      var url = typeof input === "string" ? input : (input instanceof URL ? input.href : null);
+      var metod = (init && init.method ? String(init.method) : "GET").toUpperCase();
+      if (url && metod === "GET" && !(init && init.cache)) {
+        var u = new URL(url, location.href);
+        if (u.origin === location.origin && /\.json$/i.test(u.pathname)) {
+          init = Object.assign({}, init || {}, { cache: "no-cache" });
+        }
+      }
+    } catch (e) {}
+    return orig(input, init);
+  };
+})();
+
 // --- STEALTH: håll sidan utanför sökmotorer medan den byggs. ---
 // Ta bort detta block (eller sätt STEALTH = false) för full publik synlighet.
 (function () {

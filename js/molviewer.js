@@ -5,7 +5,7 @@
  * (Kol-kapitlet har sin egen, äldre inbäddade kopia av samma kod och rörs inte.)
  *
  * Användning
- *   1. <script src="/js/3Dmol-min.js"></script>                       (delad fil, ~540 kB)
+ *   1. <script src="/js/3Dmol-min.js?v=37e6030e"></script>                       (delad fil, ~540 kB)
  *   2. <script src="/kemi/<område>/js/molmodeller.js"></script>       (window.MOLDATA – byggs av
  *                                                                     tools/kemi-ritverktyg/<område>/bygg_*.py)
  *   3. <script src="/js/molviewer.js"></script>

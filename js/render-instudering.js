@@ -154,7 +154,7 @@ function enableKemiInput(root) {
   const run = () => root.querySelectorAll(".study-youranswer-input").forEach(el => window.KemiInput.enhance(el));
   if (window.KemiInput) { run(); return; }
   const sc = document.createElement("script");
-  sc.src = "/js/kemi-inmatning.js";
+  sc.src = "/js/kemi-inmatning.js?v=2cc92ae4";
   sc.onload = run;
   document.head.appendChild(sc);
 }

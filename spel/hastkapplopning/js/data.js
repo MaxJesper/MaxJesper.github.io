@@ -1,13 +1,13 @@
 /* data.js – laddar frågeset och blandar svarsalternativen (Fisher–Yates) */
 
 export async function laddaUppsattningar(bas) {
-  const r = await fetch(new URL("../data/uppsattningar.json", bas || import.meta.url));
+  const r = await fetch(new URL("../data/uppsattningar.json", bas || import.meta.url), { cache: "no-cache" });
   if (!r.ok) throw new Error("Kunde inte läsa uppsattningar.json");
   return (await r.json()).uppsattningar;
 }
 
 export async function laddaFragor(fil) {
-  const r = await fetch(new URL("../data/" + fil, import.meta.url));
+  const r = await fetch(new URL("../data/" + fil, import.meta.url), { cache: "no-cache" });
   if (!r.ok) throw new Error("Kunde inte läsa frågeset " + fil);
   const d = await r.json();
   if (!d.matcher || !d.matcher.length) throw new Error("Frågesetet saknar matcher");

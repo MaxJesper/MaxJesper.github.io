@@ -52,8 +52,33 @@ def update_css_imports():
     _hash_cache.clear()
     return n
 
+JSREF = re.compile(r'''(["'])(/js/[A-Za-z0-9_\-./]+\.js)(\?v=[0-9a-f]+)?(["'])''')
+
+def update_js_refs():
+    """Skript som laddas dynamiskt från ett annat skript (t.ex. render-instudering.js laddar
+    "/js/kemi-inmatning.js") får också versionsnummer. Körs FÖRE html-filerna, så att det anropande
+    skriptets egen hash följer med när det laddade skriptet ändras. (Jesper 8 okt 2026)"""
+    n = 0
+    for root, dirs, files in os.walk(os.path.join(REPO, 'js')):
+        for name in files:
+            if not name.endswith('.js'):
+                continue
+            path = os.path.join(root, name)
+            text = open(path, encoding='utf-8').read()
+            def sub(m):
+                target = resolve(path, m.group(2))
+                if not target or os.path.abspath(target) == os.path.abspath(path):
+                    return m.group(0)
+                return f'{m.group(1)}{m.group(2)}?v={file_hash(target)}{m.group(4)}'
+            out = JSREF.sub(sub, text)
+            if out != text:
+                open(path, 'w', encoding='utf-8').write(out); n += 1
+    _hash_cache.clear()
+    return n
+
 def main():
     print(f'css-filer med uppdaterade @import: {update_css_imports()}')
+    print(f'js-filer med uppdaterade skriptreferenser: {update_js_refs()}')
     changed_files, changed_refs = 0, 0
     for root, dirs, files in os.walk(REPO):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
