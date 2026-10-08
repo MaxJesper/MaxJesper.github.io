@@ -98,13 +98,62 @@ Syfte, tid och förkunskaper · material och förberedelse · nyfikenhetsväckan
 
 ## 11. Lägesbild – högst tre aktiva uppgifter
 
-Status bygger på granskade filer, inte minnet av tidigare samtal. Detaljerad status per område finns i `_CHECKLISTA_omraden.md` (statustabell, regenererad mot filerna) – där används markeringarna **Ej granskat / Saknas / Behöver rättas / Klart för V1** per basdel. En publicerad sida är inte automatiskt granskad eller färdig.
+**Prioriteringsprincip (Jesper 2026-10-08):** vi arbetar mest intensivt med ett område *strax före och medan* eleverna läser det – det är bara då Jesper kan testa materialet i klassrummet. Ordningen styrs alltså av läsårsplanen nedan, inte av en alfabetisk eller ämnesvis genomgång. Ett område inventeras ca 4–6 veckor innan det startar. Provdatumen är preliminära – den säkra källan är Jespers provkalender (Google Kalkylark, öppnas av Jesper).
+
+Status bygger på granskade filer, inte minnet av tidigare samtal. Detaljerad status per område finns i `_CHECKLISTA_omraden.md` (markeringar **Ej granskat / Saknas / Behöver rättas / Klart för V1** per basdel). En publicerad sida är inte automatiskt granskad eller färdig.
+
+### Aktiva uppgifter (läge v41, 2026-10-08)
 
 | Aktiv uppgift | Nästa konkreta steg | Färdig när |
 |---|---|---|
-| 1. Förankra projektplanen | ✓ Klar 2026-10-08 (jämförd med CLAUDE.md, ändringar införda) | – |
-| 2. Inventera basen | Claude regenererar statustabellen i `_CHECKLISTA_omraden.md` mot filerna med V1-markeringarna; Jesper bestämmer V1-områdeslistan utifrån den | Kort prioriterad arbetslista finns |
-| 3. Färdigställ första prioriterade området | Väljs efter inventeringen | Området uppfyller kriterierna i §3 |
+| 1. **Hjärta, blod, lungor** (åk 7, pågår nu, prov v47 tors: "Hjärta, blod, andning") | Studieguide byggd 8 okt (7 milstolpar efter Gleerups 6.9–6.12, egna texter, källförteckning); checklista, instuderingsfrågor och övningsprov synkade och faktarättade. **Immunförsvaret är utbrutet** till eget område (`biologi/immunologi`, tomt) enligt Jesper 8 okt – ingår inte i provet v47 enligt läsårsplanen. Kvar: Jesper läser igenom, bilder till hjärtat och blodkropparna (platshållare), översättningar av checklistan (am/ar/rw) är inaktuella | Studieguide + basdelar täcker provets innehåll före v46 |
+| 2. **Atomfysik** (åk 9, start v45 efter höstlovet) | Området är tomt (bara index). Bygg basen: studieguide, begreppslista, instuderingsfrågor, checklista, övningsprov + facit | Basen klar till v45 |
+| 3. **Matens kemi – laborationer + Matspjälkningen** (åk 8: labbprov v46, matspjälkning start v47) | Laborationerna klara 8 okt (lab 3: Jespers fyra test med kontroller inkl. biuret och Trommers prov; lab 4: amylas i vaniljkräm, Claudes utkast – Jesper granskar). Nästa: Matspjälkningen (tomt område, prov/skrivuppgift v51) | Matspjälkningens bas före v47 |
+
+Nästa i tur (inventeras när en aktiv uppgift blir klar): Kemins grunder för åk 7 (v47: `kemi-som-amne`, `atomer`, `separationsprocesser` – finns, granskas), Nervsystemet + sinnena (åk 8, v2), Genetik (åk 9, period 2 – finns), Evolution (åk 9 – tomt).
+
+### Läsårsplan 2026/27 (Jesper undervisar åk 7, 8 och 9 parallellt, två grupper per årskurs)
+
+*Källa: Jespers planeringar `Läsårsplan_åk7.pdf`, `Läsårsplan_åk8.pdf`, `Läsårsplan_åk9.pdf` (inlämnade 8 okt 2026). Tabellerna nedan är en avskrift av dem – för ChatGPT och Claude är detta avsnitt den gällande läsårsplanen. Veckor utan uttryckligt datum i PDF:erna (t.ex. när ett område slutar) är uppskattade. Provdatum är preliminära; provkalendern gäller.*
+
+Plattformens mappar inom parentes; **fet = saknar studieguide (läge 2026-10-08)**.
+
+**Åk 7**
+| När | Område | Prov (prel.) |
+|---|---|---|
+| v34–40 | Liv, cellen/artbegreppet, enkel systematik (`biologi/liv-och-cellen`); Ekologi 1 (`biologi/ekologi`) | v40 ons |
+| v42 tors–v43 | Projekt Tonårsliv – kropp, hälsa, relationer (**`biologi/Sex-och-relationer`**) | – |
+| v41–47 | Blod, hjärta, lungor (`biologi/hjarta-blod-lungor`, studieguide byggd 8 okt). Immunförsvaret (**`biologi/immunologi`**) är ett eget område och ingår inte i provet | v47 tors: "Hjärta, blod, andning" |
+| v47–51 | Kemins grunder: atomer, grundämnen, molekyler (`kemi/kemi-som-amne`, `kemi/atomer`); lösningar, fällningar, separationsmetoder (`kemi/separationsprocesser`) | läxförhör v51 tis |
+| v2–6 | Syror och baser (`kemi/syror-och-baser`); ev. laborationsrapport, källkritik | v6 ons |
+| v7–13 | Materia, volym, densitet, fasövergångar, temperatur (**`fysik/materia`**) | v13 ons |
+| v14–15 | Universum – grupparbeten (`fysik/universum`) | redovisning |
+| v15–19 | Krafter och rörelse (`fysik/kraft-och-rorelse`) | v19 ons |
+| v20–24 | Tryck (**`fysik/tryck`**) | – |
+
+**Åk 8**
+| När | Område | Prov (prel.) |
+|---|---|---|
+| v34–39 | Kol och kolföreningar, kemiska processer (`kemi/kol-och-kolforeningar`) | v39 |
+| v42 tors–v43 | Projekt | – |
+| v40–46 | Matens kemi (`kemi/matens-kemi`) – övningslaborationer och labbprov: Trommers prov, biurettest, jodtest, amylas i stärkelse | v46 + labbrapport |
+| v47–51 | Matspjälkningen (**`biologi/matspjalkningen`**) – prao v48–49 | v51 |
+| v2–7 | Nervsystemet, sinnesorganen, hjärnan (**`biologi/nervsystemet`**, **`biologi/sinnena`**) | v5 |
+| v6–15 | Ljud och ljus (**`fysik/ljud`**, **`fysik/ljus`**) – stationslaborationer v6; utbyte v10–11 | v15 |
+| v16–21 | El och magnetism (`fysik/elektricitet`, `fysik/magnetism-induktion`) | v21 |
+| v22–23 | Sexualitet, samtycke och relationer (**`biologi/Sex-och-relationer`**) | – |
+
+**Åk 9**
+| När | Område | Prov (prel.) |
+|---|---|---|
+| v34–38 | Arbete, energi, effekt; storheter, enheter, beräkningar (`fysik/arbete-energi-effekt`) | v38 ons |
+| v39–43 | Hållbar utveckling, miljö, ekologi – projekt v42 tors–v43 (ingen egen mapp; `biologi/ekologi` närmast) | projekt |
+| v45– | Atomfysik, partikelstrålning, elektromagnetisk strålning (**`fysik/atomfysik`**) | enl. provkalender |
+| period 2 | Genetik och genteknik (`biologi/genetik`); Evolution (**`biologi/evolution`**) | enl. provkalender |
+| period 3 | Periodiska systemet, jonföreningar, kemisk bindning (`kemi/periodiska-systemet`, **`kemi/jonforeningar`**); Elektrokemi (`kemi/elektrokemi`) | enl. provkalender |
+| våren | 2–3 veckors repetition i det ämne (Bi/Ke/Fy) som nationella provet gäller – besked under våren | NP |
+
+Lov: höstlov v44, jullov v52–1, sportlov v8, påsklov v12 + mån v13, sommarlov från v25.
 
 När en uppgift är klar uppdateras tabellen med nästa konkreta steg.
 
@@ -133,4 +182,5 @@ Idébanken är ett minne, inte ett löfte. Skriv in sidoidéer kort; granska ban
 | 2026-10-08 | Praktiska undersökningar får stöttat efterarbete. |
 | 2026-10-08 | Samla korrigeringar, minska Jespers beslut, spara sidoidéer i idébanken. |
 | 2026-10-08 | Större avvikelser synliggörs; planen uppdateras när riktningen ändras. |
+| 2026-10-08 | Områden prioriteras efter läsårsplanen: mest arbete strax före och medan eleverna läser området (då kan Jesper testa). |
 | 2026-10-08 | (Claudes ändringar, godkända av Jesper) Sakfel rättas utan omgångsgräns; AI-bilder/filmer godkänns av Jesper som faktisk fil; ChatGPT levererar innehåll och färdiga mediepaket med manus, inte kod; Claude skriver slutversionen av plattformstexten; överlämning som `chatgpt_`-fil i Hämtade filer; inventeringen bygger på `_CHECKLISTA_omraden.md`; en enda idébank; plattformens egna namn på basdelarna; filen heter `_PROJEKTPLAN.md` (understreck = publiceras inte på webbplatsen). |

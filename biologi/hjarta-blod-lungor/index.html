@@ -5,99 +5,284 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hjärta, blod och lungor – Biologi</title>
   <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <link rel="stylesheet" href="/css/bildzoom.css?v=0ebf54ff" />
+
   <style>
-    main {
-      font-size: 1.2em;
+    body.area-hjarta-blod-lungor {
+      --area: #be123c;
+      --area-strong: #9f1239;
+      --area-soft: #fff1f2;
+      --area-border: #fecdd3;
+      --area-hover: #ffe4e6;
     }
 
+    main { font-size: 1.2em; }
 
-    .page-intro { margin-bottom: 1.5rem; }
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) {
+      .area-layout { grid-template-columns: 300px 1fr; align-items: start; }
     }
+    .area-main { min-width: 0; }
+
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
     .resource-box {
       background: #fff;
       border: 1px solid #d8d8d8;
+      border-left: 4px solid var(--area);
       border-radius: 12px;
       padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
-    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; }
-    .resource-box p { margin-top: 0; color: #444; }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: var(--area-strong); }
     .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
     .resource-box li { margin-bottom: 0.7rem; }
     .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
-    .study-tips {
-      margin-top: 1.5rem;
-      background: #f8f9fb;
-      border: 1px solid #d8e0ea;
-      border-radius: 12px;
-      padding: 1rem;
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
+
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+
+    /* Standardmönstret för en hero-bild i sidokolumnen (samma som övriga kapitel,
+       t.ex. genetik) – bilden ligger BREDVID vänsterlistan, inte över den.
+       Se CLAUDE.md, "Bildzoom (klicka för att förstora)", 27 sep 2026. */
+    .area-hero-image {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 16px;
+      padding: 1rem 1rem 1.1rem;
+      margin: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
+    .area-hero-image img {
+      width: auto;
+      max-width: 100%;
+      max-height: 260px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .area-hero-image figcaption h3 { margin: 0 0 0.4rem; color: var(--area-strong); font-size: 1.05rem; }
+    .area-hero-image figcaption p { margin: 0 0 0.5rem; font-size: 0.92rem; color: #1f2937; line-height: 1.5; }
+    .area-hero-image figcaption p:last-child { margin-bottom: 0; }
+
+    .concept-section {
+      background: var(--area-soft);
+      border: 1px solid var(--area-border);
+      border-radius: 12px;
+      padding: 1rem 1rem 1.25rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 1rem; }
+    @media (min-width: 600px) { .concept-list { columns: 3; } }
+    @media (min-width: 900px) { .concept-list { columns: 4; } }
+    .concept-list li {
+      font-size: 0.95rem; color: #1f2937; line-height: 1.35; padding: 0.22rem 0;
+      break-inside: avoid; display: flex; align-items: baseline; gap: 0.3rem;
+    }
+    .concept-list li::before { content: "→"; color: var(--area); font-size: 0.78rem; flex-shrink: 0; }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
     .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
     .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
     .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem;
+      background: var(--area-soft); color: var(--area-strong); border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none;
+      font-size: 0.93rem; font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--area);
+      color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+
+
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
+    }
   </style>
 </head>
-<body>
+<body class="area-hjarta-blod-lungor">
 
-<header class="biologi-header">
-  <h1>Hjärta, blod och lungor</h1>
-  <p>Jesper Tordsson</p>
-</header>
+  <header class="biologi-header">
+    <h1>Hjärta, blod och lungor</h1>
+  </header>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
-<nav id="side-menu"></nav>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
 
-<main>
-  <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
-    <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
-    <a href="/biologi/immunologi/" class="subject-btn">Nästa område →</a>
-  </p>
-  <section class="page-intro">
-    <p>
-      Här hittar du material om hjärtats uppbyggnad, blodcirkulationen,
-      blodet och dess beståndsdelar samt lungornas funktion och gasutbytet.
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/biologi/index.html" class="subject-btn">← Tillbaka till Biologi</a>
+      <a href="/biologi/immunologi/" class="subject-btn">Nästa område: Immunförsvaret →</a>
     </p>
-  </section>
 
-  <section class="resource-grid">
-    <article class="resource-box">
-      <h2>För elever</h2>
-      <p>Material för att träna inför prov och bygga förståelse.</p>
-      <ul>
-        <li><a href="./checklista.html">Checklista</a></li>
-        <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
-        <li><a href="./ovningsprov.html">Övningsprov</a></li>
-        <li><a href="./larande-spel.html">Lärande spel</a></li>
-      </ul>
-    </article>
-    <article class="resource-box">
-      <h2>För lektioner / läraren</h2>
-      <p>Övrigt material som kan användas i undervisningen.</p>
-      <ul>
-        <li><a href="./facit.html">Facit till övningsprovet</a></li>
-      </ul>
-    </article>
-  </section>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a></li>
+              <li><a href="./checklista.html">Checklista</a></li>
+              <li><a href="./instuderingsfragor.html">Instuderingsfrågor</a></li>
+              <li><a href="./ovningsprov.html">Övningsprov</a></li>
+              <li><a href="./larande-spel.html">Lärande spel och animationer</a></li>
+            </ul>
+          </article>
 
-  <section class="study-tips">
-    <details>
-      <summary>Inläsningstips</summary>
-      <ul>
-        <li>Börja med att lära dig hjärtats uppbyggnad – de fyra hjärtats rum och hjärtklaffarna.</li>
-        <li>Förstå skillnaden mellan det lilla kretsloppet (hjärta–lungor) och det stora kretsloppet (hjärta–kroppen).</li>
-        <li>Lär dig skillnaden mellan artärer, vener och kapillärer.</li>
-        <li>Träna på blodets fyra beståndsdelar och vad varje del gör.</li>
-        <li>Koppla andningen till gasutbytet – syrgas in, koldioxid ut.</li>
-      </ul>
-    </details>
-  </section>
-</main>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./facit.html">Facit till övningsprovet</a></li>
+            </ul>
+          </article>
+        </section>
 
-<script src="/js/menu.js?v=d9464f7b"></script>
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Följ <strong>luftens väg</strong> från näsan till lungblåsorna – titta gärna på animationen Luftens väg.</li>
+              <li>Förstå <strong>gasutbytet</strong>: syre in i blodet, koldioxid ut, i lungblåsorna.</li>
+              <li>Håll isär <strong>lilla kretsloppet</strong> (hjärta–lungor) och <strong>stora kretsloppet</strong> (hjärta–kroppen).</li>
+              <li>Artärer leder blod <em>från</em> hjärtat, vener <em>till</em> hjärtat – kapillärerna däremellan.</li>
+              <li>Lär dig hjärtats fyra rum i den ordning blodet passerar dem.</li>
+              <li>Blodets fyra delar: plasma, röda blodkroppar, vita blodkroppar och blodplättar – och vad varje del gör.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <img src="/images/biologi/blod/studieguide/lv-05-lungor.jpg" width="900" height="737" alt="Bröstkorgen framifrån med luftstrupen, luftrören som förgrenar sig, höger lunga i tre lober, vänster lunga i två lober, hjärtat mellan lungorna och mellangärdet under dem." />
+          <figcaption>
+            <h3>Lungor och hjärta arbetar ihop</h3>
+            <p>Lungorna tar in syre och gör sig av med koldioxid. Hjärtat, som ligger mellan lungorna, pumpar blodet som transporterar gaserna till och från kroppens alla celler.</p>
+            <p style="font-size:0.85rem; color:#555; font-style:italic;">Klicka på bilden för att se den i fullstorlek.</p>
+          </figcaption>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Luftstrupe">Luftstrupe</button></li>
+            <li><button class="concept-btn" data-concept="Struplock">Struplock</button></li>
+            <li><button class="concept-btn" data-concept="Flimmerhår">Flimmerhår</button></li>
+            <li><button class="concept-btn" data-concept="Lungblåsor">Lungblåsor</button></li>
+            <li><button class="concept-btn" data-concept="Gasutbyte">Gasutbyte</button></li>
+            <li><button class="concept-btn" data-concept="Cellandning">Cellandning</button></li>
+            <li><button class="concept-btn" data-concept="Mellangärdet">Mellangärdet</button></li>
+            <li><button class="concept-btn" data-concept="Artär">Artär</button></li>
+            <li><button class="concept-btn" data-concept="Ven">Ven</button></li>
+            <li><button class="concept-btn" data-concept="Kapillär">Kapillär</button></li>
+            <li><button class="concept-btn" data-concept="Lilla kretsloppet">Lilla kretsloppet</button></li>
+            <li><button class="concept-btn" data-concept="Stora kretsloppet">Stora kretsloppet</button></li>
+            <li><button class="concept-btn" data-concept="Förmak">Förmak</button></li>
+            <li><button class="concept-btn" data-concept="Kammare">Kammare</button></li>
+            <li><button class="concept-btn" data-concept="Hjärtklaffar">Hjärtklaffar</button></li>
+            <li><button class="concept-btn" data-concept="Aorta">Aorta</button></li>
+            <li><button class="concept-btn" data-concept="Kranskärl">Kranskärl</button></li>
+            <li><button class="concept-btn" data-concept="Blodtryck">Blodtryck</button></li>
+            <li><button class="concept-btn" data-concept="Blodplasma">Blodplasma</button></li>
+            <li><button class="concept-btn" data-concept="Röda blodkroppar">Röda blodkroppar</button></li>
+            <li><button class="concept-btn" data-concept="Hemoglobin">Hemoglobin</button></li>
+            <li><button class="concept-btn" data-concept="Vita blodkroppar">Vita blodkroppar</button></li>
+            <li><button class="concept-btn" data-concept="Blodplättar">Blodplättar</button></li>
+            <li><button class="concept-btn" data-concept="Blodgrupper">Blodgrupper</button></li>
+            <li><button class="concept-btn" data-concept="Lymfa">Lymfa</button></li>
+            <li><button class="concept-btn" data-concept="Njurar">Njurar</button></li>
+            <li><button class="concept-btn" data-concept="Levern">Levern</button></li>
+          </ul>
+          <p class="concept-note">Immunförsvaret (vita blodkroppar, antikroppar, vaccin, allergi) har ett eget område: <a href="/biologi/immunologi/">Immunförsvaret</a>.</p>
+        </section>
+
+        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+          <h2>Studieguidens milstolpar</h2>
+          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+          <ul class="milestone-map-list">
+            <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Luftvägarna – luftens väg till lungorna</a></li>
+            <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Lungorna och gasutbytet</a></li>
+            <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>Hur vi andas – och när luftvägarna blir sjuka</a></li>
+            <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Blodomloppet – det dubbla kretsloppet och blodkärlen</a></li>
+            <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Hjärtat – en pump med fyra rum</a></li>
+            <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Blodets innehåll</a></li>
+            <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Kroppens blodrenare – lymfan, levern och njurarna</a></li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js?v=d9464f7b"></script>
+  <script>
+  window.BEGREPP = [
+    {"namn": "Luftstrupe", "definition": "Röret som leder luften från struphuvudet ner mot lungorna. Broskringar håller det öppet.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Struplock", "definition": "Ett lock av brosk som lägger sig över struphuvudet när du sväljer, så att maten hamnar i matstrupen och inte i luftstrupen.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Stämband", "definition": "Två veck i struphuvudet. När luft pressas förbi dem vibrerar de och ger ljud – rösten.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Flimmerhår", "definition": "Mikroskopiska hår på cellerna i luftvägarnas slemhinna. De rör sig och för upp slem med damm och bakterier mot svalget.", "anchor": "./studieguide.html#m1"},
+    {"namn": "Lungblåsor", "definition": "Små luftfyllda blåsor (alveoler) längst ut i luftrören. Varje lunga har hundratals miljoner. Här sker gasutbytet.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Gasutbyte", "definition": "Syre går från lungblåsorna in i blodet och koldioxid går från blodet ut i lungblåsorna. Ämnena sprider sig från där det finns mycket till där det finns lite.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Cellandning", "definition": "Cellernas sätt att frigöra energi: glukos och syre blir koldioxid och vatten. Därför behöver vi andas.", "anchor": "./studieguide.html#m2"},
+    {"namn": "Mellangärdet", "definition": "En kupolformad muskelplatta (diafragman) under lungorna. När den drar ihop sig sänks den och luft sugs in i lungorna.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Astma", "definition": "En sjukdom där luftrören lätt blir svullna och trånga, så att det blir svårt att andas.", "anchor": "./studieguide.html#m3"},
+    {"namn": "Artär", "definition": "Blodkärl som leder blod från hjärtat. Har tjocka, elastiska väggar som tål högt tryck.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Ven", "definition": "Blodkärl som leder blod tillbaka till hjärtat. Har tunnare väggar och ofta klaffar som hindrar blodet att rinna bakåt.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Kapillär", "definition": "De tunnaste blodkärlen, mellan artärer och vener. Genom deras tunna väggar byts syre, näring, koldioxid och avfall.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Lilla kretsloppet", "definition": "Blodets väg från hjärtat till lungorna och tillbaka till hjärtat. Blodet tar upp syre och lämnar koldioxid.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Stora kretsloppet", "definition": "Blodets väg från hjärtat ut till kroppens alla delar och tillbaka till hjärtat.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Puls", "definition": "Tryckvågen i artärerna varje gång hjärtat slår. Kan kännas på handleden eller halsen.", "anchor": "./studieguide.html#m4"},
+    {"namn": "Förmak", "definition": "Hjärtats två övre rum. De tar emot blod som kommer till hjärtat.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Kammare", "definition": "Hjärtats två nedre rum. De pumpar ut blodet ur hjärtat. Vänster kammare har tjockast vägg.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Hjärtklaffar", "definition": "Ventiler i hjärtat (segelklaffar och fickklaffar) som bara öppnas åt ett håll. När de stängs hörs hjärtljuden.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Aorta", "definition": "Stora kroppspulsådern – kroppens största artär. Leder syrerikt blod från vänster kammare.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Kranskärl", "definition": "Blodkärl som går runt hjärtat och förser hjärtmuskeln med syre och näring.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Blodtryck", "definition": "Trycket blodet har mot kärlväggarna i artärerna. Anges med två värden, t.ex. 120/80: övertryck när hjärtat drar ihop sig och undertryck när det vilar.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Hjärtinfarkt", "definition": "En del av hjärtmuskeln får syrebrist och skadas, oftast för att en blodpropp täpper till ett kranskärl.", "anchor": "./studieguide.html#m5"},
+    {"namn": "Blodplasma", "definition": "Blodets vätska – ungefär hälften av blodet. Mest vatten med lösta ämnen som näring, salter, hormoner, proteiner och koldioxid.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Röda blodkroppar", "definition": "Celler utan cellkärna som transporterar syre med hjälp av hemoglobin. Bildas i den röda benmärgen.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Hemoglobin", "definition": "Ett rött protein med järn i de röda blodkropparna. Det binder syre i lungorna och lämnar det i kroppens vävnader.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Anemi", "definition": "Blodbrist: för lite hemoglobin eller för få röda blodkroppar. Vanligaste orsaken är järnbrist.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Vita blodkroppar", "definition": "Celler i blodet som försvarar kroppen mot bakterier, virus och andra främmande ämnen. Mer om dem i området Immunförsvaret.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Blodplättar", "definition": "Små cellbitar i blodet (trombocyter) som hjälper blodet att levra sig när ett kärl skadas.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Blodgrupper", "definition": "Ett sätt att dela in blod efter vilka ämnen som sitter på de röda blodkropparnas yta. Vanligast är AB0-systemet och Rh-systemet.", "anchor": "./studieguide.html#m6"},
+    {"namn": "Lymfa", "definition": "Vätska som läckt ut från blodet ut bland cellerna och samlas upp i lymfkärlen. Den filtreras i lymfknutorna och förs sedan tillbaka till blodet.", "anchor": "./studieguide.html#m7"},
+    {"namn": "Njurar", "definition": "Två organ som filtrerar blodet och bildar urin av överskottsvatten, salter och avfallsämnen som urinämne.", "anchor": "./studieguide.html#m7"},
+    {"namn": "Levern", "definition": "Kroppens största inre organ. Den tar hand om gifter som alkohol, gör om ammoniak till urinämne och bildar galla.", "anchor": "./studieguide.html#m7"}
+  ];
+  </script>
+  <script src="/js/concepts-popup.js?v=7b88673c"></script>
+  <script src="/js/language-selector.js?v=a532040f"></script>
+  <script src="/js/concept-lang-selector.js?v=186531ac"></script>
+  <script src="/js/bildzoom.js?v=a81bf066"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
 </body>
 </html>
