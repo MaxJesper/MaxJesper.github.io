@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Vitaminer och mineraler – vad gör de? – Matens kemi</title>
-<link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+<link rel="stylesheet" href="/css/style.css?v=3258155f" />
 <style>
   :root {
     --f: #86198f; --f-stark: #701a75; --f-mjuk: #fdf4ff; --f-kant: #f0c6f5;
@@ -223,11 +223,11 @@
   </div>
 </dialog>
 
-<script src="/js/menu.js?v=d9464f7b"></script>
+<script src="/js/menu.js?v=a57ce429"></script>
 <script>
 "use strict";
 /* Vitaminer och mineraler – lärande spel (Jesper 6 okt 2026), samma upplägg som fågelspelen i ekologi.
-   Källor: Livsmedelsverket; Nordic Nutrition Recommendations 2023. Ledtrådarna (led) är formulerade så att
+   Källor: Livsmedelsverket; Nordic Nutrition Recommendations 2023. Ledtrådarna (led) är [kategori, hel mening] och formulerade så att
    bara ETT ämne i samma grupp passar – felalternativen tas alltid ur samma grupp (vitamin/mineral). */
 const AMNEN = [
   { id: "a", namn: "A-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🥕",
@@ -235,86 +235,86 @@ const AMNEN = [
     behovs: "Synen i svagt ljus, frisk hud och slemhinnor samt immunförsvaret.",
     brist: "Nattblindhet – man ser dåligt i mörker. Svår brist kan ge blindhet och är fortfarande ett problem i fattiga länder.",
     kul: "A-vitamin lagras i levern, och för mycket kan vara skadligt. Därför avråds gravida från att äta lever.",
-    led: [["Finns i", "morötter (som betakaroten) och i lever"], ["Behövs för", "att du ska kunna se i svagt ljus"], ["Brist ger", "nattblindhet"]] },
+    led: [["Var det finns", "Det här vitaminet får du från lever, men också från morötter – där finns det som betakaroten, som kroppen gör om till vitaminet."], ["Vad det gör", "Det här vitaminet behövs för att ögat ska kunna se i svagt ljus."], ["Vid brist", "Brist på det här vitaminet ger nattblindhet – man ser dåligt i mörker."]] },
   { id: "d", namn: "D-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "☀️",
     finns: "Fet fisk (t.ex. lax, sill och makrill), berikade mjölkprodukter och matfett samt ägg. Bildas också i huden när solen skiner på den.",
     behovs: "Att kroppen ska kunna ta upp kalcium från maten – och därmed ett starkt skelett. Viktigt också för musklerna och immunförsvaret.",
     brist: "Hos barn engelska sjukan (rakit), med mjuka och krokiga ben. Hos vuxna ett mjukt och skört skelett.",
     kul: "I Sverige står solen för lågt under vinterhalvåret för att huden ska bilda D-vitamin. Därför berikas mjölk och matfett.",
-    led: [["Bildas", "i huden när solen skiner på den"], ["Behövs för", "att kroppen ska kunna ta upp kalcium till skelettet"], ["Brist ger", "engelska sjukan (rakit) hos barn – mjuka, krokiga ben"]] },
+    led: [["Var det bildas", "Det här vitaminet kan bildas i din hud när solen skiner på den."], ["Vad det gör", "Det här vitaminet behövs för att kroppen ska kunna ta upp kalcium från maten och bygga ett starkt skelett."], ["Vid brist", "Brist på det här vitaminet ger engelska sjukan (rakit) hos barn – benen blir mjuka och krokiga."]] },
   { id: "e", namn: "E-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🌻",
     finns: "Vegetabiliska oljor (t.ex. raps- och solrosolja), nötter, frön och fullkorn.",
     behovs: "Fungerar som antioxidant och skyddar cellernas membran från att skadas.",
     brist: "Mycket ovanlig hos friska människor.",
     kul: "Solrosfrön och mandlar är några av de rikaste källorna.",
-    led: [["Finns i", "solrosfrön, nötter och vegetabiliska oljor"], ["Behövs för", "att som antioxidant skydda cellernas membran"]] },
+    led: [["Var det finns", "Det här vitaminet finns rikligt i solrosfrön, mandlar och vegetabiliska oljor."], ["Vad det gör", "Det här vitaminet är en antioxidant som skyddar cellernas membran mot skador."]] },
   { id: "k", namn: "K-vitamin", grupp: "vitamin", typ: "Fettlösligt vitamin", em: "🥬",
     finns: "Gröna bladgrönsaker som grönkål och spenat, broccoli och vissa oljor. Bakterierna i tarmen bildar också K-vitamin.",
     behovs: "Blodets levring – att blodet stelnar så att ett sår slutar blöda.",
     brist: "Blödningar som har svårt att sluta.",
     kul: "Nyfödda barn har lite K-vitamin och får därför en spruta med K-vitamin på BB.",
-    led: [["Bildas också", "av bakterierna i din tarm"], ["Behövs för", "att blodet ska levra sig när du fått ett sår"], ["Visste du?", "Nyfödda barn får en spruta med det här vitaminet på BB"]] },
+    led: [["Var det bildas", "Det här vitaminet finns i gröna bladgrönsaker, men bildas också av bakterierna i din tarm."], ["Vad det gör", "Det här vitaminet behövs för att blodet ska levra sig, så att ett sår slutar blöda."], ["Visste du?", "Nyfödda barn får en spruta med det här vitaminet på BB."]] },
   { id: "c", namn: "C-vitamin", grupp: "vitamin", typ: "Vattenlösligt vitamin", em: "🫑",
     finns: "Paprika, kiwi, citrusfrukter, bär, broccoli, kål och potatis.",
     behovs: "Att bilda kollagen, som håller ihop hud, blodkärl och tandkött och behövs när sår läker. Hjälper också kroppen att ta upp järn från växter.",
     brist: "Skörbjugg – blödande tandkött, sår som inte läker och trötthet. Förr drabbades sjömän på långa resor.",
     kul: "Röd paprika innehåller mer C-vitamin än apelsin. C-vitamin förstörs delvis vid lång kokning.",
-    led: [["Finns i", "paprika, kiwi och citrusfrukter"], ["Behövs för", "att bilda kollagen, som håller ihop hud och blodkärl"], ["Brist ger", "skörbjugg – som sjömän förr fick på långa resor"]] },
+    led: [["Var det finns", "Det här vitaminet finns rikligt i paprika, kiwi och citrusfrukter."], ["Vad det gör", "Det här vitaminet behövs för att bilda kollagen, som håller ihop hud, blodkärl och tandkött."], ["Vid brist", "Brist på det här vitaminet ger skörbjugg – en sjukdom som sjömän förr drabbades av på långa resor."]] },
   { id: "b12", namn: "B12", grupp: "vitamin", typ: "Vattenlösligt vitamin (B-vitamin)", em: "🥚",
     finns: "Naturligt bara i mat från djur: kött, fisk, mjölk, ost och ägg. Finns också i berikade växtdrycker och tillskott.",
     behovs: "Att bilda röda blodkroppar och hålla nervsystemet friskt.",
     brist: "Blodbrist och nervskador, t.ex. domningar och stickningar i händer och fötter.",
     kul: "Den som äter helt växtbaserat behöver B12-berikad mat eller tillskott. B12 är det enda B-vitaminet som lagras länge i levern.",
-    led: [["Finns", "naturligt bara i mat från djur – veganer behöver tillskott"], ["Brist kan ge", "nervskador med domningar och stickningar"]] },
+    led: [["Var det finns", "Det här vitaminet finns naturligt bara i mat från djur. Den som äter helt växtbaserat behöver berikad mat eller tillskott."], ["Vid brist", "Brist på det här vitaminet kan ge blodbrist och nervskador, med domningar och stickningar i händer och fötter."]] },
   { id: "folat", namn: "Folat", grupp: "vitamin", typ: "Vattenlösligt vitamin (B-vitamin)", em: "🫘",
     finns: "Gröna bladgrönsaker, baljväxter (bönor, linser och kikärtor), fullkorn och apelsin.",
     behovs: "Celldelning och att bilda blodkroppar. Extra viktigt i början av en graviditet, när fostrets nervsystem bildas.",
     brist: "Blodbrist med trötthet. Hos gravida ökar risken för fosterskador i ryggmärgen.",
     kul: "Namnet kommer från latinets folium, som betyder blad – folat hittades först i spenatblad.",
-    led: [["Namnet", "kommer från latinets ord för blad"], ["Extra viktigt", "i början av en graviditet, när fostrets nervsystem bildas"]] },
+    led: [["Namnet", "Det här vitaminets namn kommer från latinets folium, som betyder blad."], ["Vad det gör", "Det här vitaminet är extra viktigt i början av en graviditet, när fostrets nervsystem bildas."]] },
 
   { id: "kalcium", namn: "Kalcium", grupp: "mineral", typ: "Mineral", em: "🥛",
     finns: "Mjölk, ost, yoghurt, berikade växtdrycker, grönkål och mandel.",
     behovs: "Skelettet och tänderna – ungefär 99 procent av kroppens kalcium finns där. Behövs också för att muskler och nerver ska fungera.",
     brist: "Ett svagare skelett. Lite kalcium under uppväxten ökar risken för benskörhet senare i livet.",
     kul: "Kroppen bygger upp mest skelett i tonåren – då läggs grunden för starka ben resten av livet.",
-    led: [["Finns", "nästan allt i kroppen i skelettet och tänderna"], ["Finns i", "mjölk, ost och yoghurt"]] },
+    led: [["I kroppen", "Ungefär 99 procent av kroppens förråd av det här mineralet finns i skelettet och tänderna."], ["Var det finns", "Mjölk, ost och yoghurt är viktiga källor till det här mineralet, som bygger upp skelettet."]] },
   { id: "jarn", namn: "Järn", grupp: "mineral", typ: "Mineral", em: "🥩",
     finns: "Kött, blodmat (t.ex. blodpudding), fisk, baljväxter, fullkorn och gröna bladgrönsaker.",
     behovs: "Hemoglobinet i de röda blodkropparna – det som transporterar syre från lungorna ut i kroppen.",
-    brist: "Järnbrist och blodbrist, som gör en trött och orkeslös. Vanligt hos tonårstjejer, eftersom järn förloras med mensblodet.",
+    brist: "Järnbrist, som kan leda till blodbrist och göra en trött och orkeslös. Risken är större för den som har mens, eftersom järnet sitter i blodets hemoglobin och går förlorat med mensblodet.",
     kul: "Järn från växter tas upp sämre än järn från kött – men C-vitamin i samma måltid ökar upptaget.",
-    led: [["Ingår i", "hemoglobinet, som transporterar syre i blodet"], ["Finns i", "blodpudding, kött och baljväxter"], ["Brist", "är vanligt hos tonårstjejer, eftersom det förloras med mensblodet"]] },
+    led: [["Vad det gör", "Det här mineralet ingår i hemoglobinet, som transporterar syre i blodet."], ["Var det finns", "Det här mineralet finns rikligt i blodpudding och kött, men också i baljväxter."], ["Vid brist", "Den som har mens löper större risk för brist på det här mineralet. Det sitter i blodets hemoglobin, och följer därför med när blod går förlorat vid mensen."]] },
   { id: "jod", namn: "Jod", grupp: "mineral", typ: "Mineral", em: "🧂",
     finns: "Jodberikat bordssalt, fisk och skaldjur, mjölk och ägg.",
     behovs: "Sköldkörtelns hormoner, som styr ämnesomsättningen och är viktiga för hjärnans utveckling.",
     brist: "Struma – en förstorad sköldkörtel som syns som en svullnad på halsen.",
     kul: "I Sverige har bordssalt berikats med jod sedan 1936. Många specialsalter, som flingsalt och havssalt, är inte jodberikade.",
-    led: [["Tillsätts", "i bordssalt i Sverige sedan 1936"], ["Behövs för", "sköldkörtelns hormoner"], ["Brist ger", "struma – en förstorad sköldkörtel"]] },
+    led: [["Visste du?", "Det här mineralet har tillsatts i bordssalt i Sverige sedan 1936."], ["Vad det gör", "Det här mineralet behövs för att sköldkörteln ska kunna bilda sina hormoner."], ["Vid brist", "Brist på det här mineralet ger struma – en förstorad sköldkörtel som syns som en svullnad på halsen."]] },
   { id: "natrium", namn: "Natrium", grupp: "mineral", typ: "Mineral", em: "🥨",
     finns: "Koksalt (natriumklorid). Det mesta kommer från salt i färdigmat, bröd, ost, korv och chips.",
     behovs: "Kroppens vätskebalans och att nerverna kan skicka signaler.",
     brist: "Ovanlig – de flesta får i sig för mycket.",
     kul: "För mycket salt kan höja blodtrycket. Livsmedelsverket rekommenderar högst 6 gram salt per dag för vuxna.",
-    led: [["Bildar", "tillsammans med klor vanligt koksalt"], ["De flesta", "får i sig för mycket – det kan höja blodtrycket"]] },
+    led: [["Kemi", "Det här mineralet är den ena delen av vanligt koksalt – den andra är klorid."], ["Visste du?", "De flesta får i sig för mycket av det här mineralet, vilket kan höja blodtrycket."]] },
   { id: "kalium", namn: "Kalium", grupp: "mineral", typ: "Mineral", em: "🍌",
     finns: "Potatis, banan, grönsaker, frukt, baljväxter och nötter.",
     behovs: "Att nerver och muskler – även hjärtmuskeln – ska fungera, och kroppens vätskebalans.",
     brist: "Ovanlig vid vanlig kost. Kan ge muskelsvaghet.",
     kul: "Kalium och natrium samarbetar i nerverna. Mycket kalium från frukt och grönt motverkar en del av saltets effekt på blodtrycket.",
-    led: [["Finns mycket i", "potatis och banan"], ["Motverkar", "en del av saltets effekt på blodtrycket"]] },
+    led: [["Var det finns", "Det här mineralet finns det mycket av i potatis och banan."], ["Vad det gör", "Mycket av det här mineralet från frukt och grönt motverkar en del av saltets effekt på blodtrycket."]] },
   { id: "magnesium", namn: "Magnesium", grupp: "mineral", typ: "Mineral", em: "🌾",
     finns: "Fullkorn, nötter, frön, baljväxter, gröna bladgrönsaker och mörk choklad.",
     behovs: "Hundratals enzymer i kroppen, muskler och nerver samt skelettet.",
     brist: "Ovanlig. Kan ge muskelkramper och trötthet.",
     kul: "Magnesium sitter i mitten av klorofyllet, det gröna ämnet i växter. Därför är gröna grönsaker bra källor.",
-    led: [["Sitter", "i mitten av klorofyllmolekylen i gröna växter"], ["Finns i", "fullkorn, nötter och mörk choklad"]] },
+    led: [["Visste du?", "Det här mineralet sitter i mitten av klorofyllmolekylen, det gröna ämnet i växter."]] },
   { id: "zink", namn: "Zink", grupp: "mineral", typ: "Mineral", em: "🦪",
     finns: "Kött, fisk och skaldjur (särskilt ostron), ost, fullkorn och baljväxter.",
     behovs: "Immunförsvaret, tillväxten, sårläkning och många enzymer.",
     brist: "Sämre immunförsvar, långsam sårläkning och sämre smak- och luktsinne.",
-    kul: "Ostron är den zinkrikaste maten av alla.",
-    led: [["Rikaste källan", "är ostron"], ["Brist kan ge", "sämre smak- och luktsinne"]] }
+    kul: "Ostron hör till de zinkrikaste livsmedel som finns.",
+    led: [["Var det finns", "Ostron är en av de allra rikaste källorna till det här mineralet."], ["Vid brist", "Brist på det här mineralet kan ge sämre immunförsvar, långsam sårläkning och sämre smak- och luktsinne."]] }
 ];
 
 let OMGANG = "vitamin", RUNDA = [], index = 0, ratt = 0, missade = [], laser = false, aktuell = null;
@@ -373,7 +373,7 @@ function visaFraga() {
   el("s-nr").textContent = (index + 1) + "/" + RUNDA.length;
   el("s-ratt").textContent = ratt;
   el("ledtrad-typ").textContent = led[0];
-  el("ledtrad-text").textContent = "… " + led[1] + ".";
+  el("ledtrad-text").textContent = led[1];
   el("ledtrad-fraga").textContent = aktuell.grupp === "vitamin" ? "Vilket vitamin är det?" : "Vilket mineral är det?";
   el("besked").textContent = " "; el("besked").className = "besked";
   el("facit").classList.add("doldt"); el("facit").innerHTML = "";
