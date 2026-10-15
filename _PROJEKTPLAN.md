@@ -168,7 +168,7 @@ Idébanken är ett minne, inte ett löfte. Skriv in sidoidéer kort; granska ban
 | Exit tickets och "Utmaningen" | Avstämning och tävlingsquiz | Se `_IDEER_luktsalt-och-exit-tickets.md` | Sparad |
 | Lektion: Varför andas vi? | Mätning kopplad till cellandning | Mätaktivitet + stöttat efterarbete (§6) | Sparad – möjlig pilot |
 | Jespers kortfilmer | Engagerande förklaringar | Manus 2–4 min + kort quiz | Sparad |
-| Kortfilmer: halvanimerade miniföredrag (1–3 min, ett avgränsat ämne) | Effektiv förklaring som elever och lärare kan se om | Pilot: en film (t.ex. artärer, vener och kapillärer eller halveringstid) – ChatGPT manus + bilder, Jesper läser in, Claude bygger filmen | **Vald riktning 2026-10-08** – ersätter stegvisa interaktiva animationer som huvudformat |
+| Kortfilmer: halvanimerade miniföredrag (1–3 min, ett avgränsat ämne) | Effektiv förklaring som elever och lärare kan se om | Pilot klar 8 okt: "Artärer, vener och kapillärer" (2 min 15 s) i hjärta-blod-lungor M5 – ChatGPT manus + bilder, Jesper läser in, Claude bygger filmen | **Vald riktning 2026-10-08** – ersätter stegvisa interaktiva animationer som huvudformat |
 | Fler spel som tränar samband | Utöver begreppsigenkänning | En uppgift där elever förutsäger/förklarar | Sparad |
 | Exkursion med observationsuppdrag | NO utanför klassrummet | Lokal runda med elevfrågor + efterarbete | Sparad |
 
@@ -181,7 +181,8 @@ Idébanken är ett minne, inte ett löfte. Skriv in sidoidéer kort; granska ban
 | 2026-10-08 | Gleerups, Enkel NO och TEFY som inspiration; självständigt innehåll. |
 | 2026-10-08 | Praktiska undersökningar får stöttat efterarbete. |
 | 2026-10-08 | Förklarande media görs främst som korta halvanimerade filmer (miniföredrag med bilder och tal, 1–3 min, ett ämne per film, hellre fler och kortare). Stegvisa interaktiva animationer som Luftens väg var för arbetsamma i förhållande till nyttan i klassrummet och görs inte som standard. Varje film får textning och en kort text/quiz under, så att innehållet inte bara finns i ljudet. |
-| 2026-10-08 | Filmerna läggs **olistade på YouTube** och bäddas in i studieguiden i integritetsläge (youtube-nocookie). Inga mp4-filer i repot. Källmaterial (manus, bilder, Jespers ljudfiler) sparas i en opublicerad mapp så att en film kan göras om; en rättad film laddas upp på nytt och länken byts på plattformen. Jesper laddar upp; Claude levererar mp4 + textningsfil (.srt). |
+| 2026-10-08 | Filmerna läggs **direkt på plattformen** (mp4 i `filmer/<ämne>/`, inbäddad med `<video>` + svensk textning i .vtt), inte på YouTube – YouTube kan visa reklam före filmen, vilket förstör korta filmer. En film på ca 2 min ≈ 5 MB. Källmaterial (manus, bilder, Jespers ljud, bygg-skript) sparas i opublicerade `_media/filmer/`. Undvik många omgjorda versioner, eftersom varje mp4-version ligger kvar i git-historiken. *(Ersätter beslutet om olistad YouTube samma dag.)* |
+| 2026-10-09 | Gemensam **mall för laborationsrapport** och **bedömningsmatris (E/C/A)** för Bi/Ke/Fy i `gemensamt/` (menysektionen **Gemensamt för NO**, med rubrikerna För elever och För lärare; även läsårsplanering utan provdatum och resurslista). Utskrivbar A4: eleven kryssar fyrkant, läraren cirkel, båda skriver under. Matrisens rader följer mallens rubriker. Inspirerad av en gymnasiematris men med egna formuleringar för åk 7–9. |
 | 2026-10-08 | Samla korrigeringar, minska Jespers beslut, spara sidoidéer i idébanken. |
 | 2026-10-08 | Större avvikelser synliggörs; planen uppdateras när riktningen ändras. |
 | 2026-10-08 | Områden prioriteras efter läsårsplanen: mest arbete strax före och medan eleverna läser området (då kan Jesper testa). |

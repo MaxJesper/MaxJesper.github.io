@@ -171,6 +171,15 @@ li {
   text-decoration: none;
 }
 
+.submenu li.submenu-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4b5563;
+  margin: 10px 0 2px;
+}
+
 .submenu li a:hover {
   text-decoration: underline;
 }

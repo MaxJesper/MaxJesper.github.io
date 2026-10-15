@@ -119,6 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
         </ul>
       </li>
 
+      <!-- Gemensamt för NO (gäller alla tre ämnena) -->
+      <li class="menu-section">
+        <button class="menu-toggle">Gemensamt för NO</button>
+        <ul class="submenu">
+          <li><a href="/gemensamt/">Översikt</a></li>
+          <li class="submenu-label">För elever</li>
+          <li><a href="/gemensamt/rapportmall.html">Mall för laborationsrapport</a></li>
+          <li><a href="/gemensamt/bedomningsmatris.html">Bedömningsmatris</a></li>
+          <li class="submenu-label">För lärare</li>
+          <li><a href="/gemensamt/lasarsplanering.html">Läsårsplanering åk 7–9</a></li>
+          <li><a href="/gemensamt/resurser.html">Bra resurser på nätet</a></li>
+        </ul>
+      </li>
+
     </ul>
   `;
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemensamt för NO</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+  <style>
+    main { max-width: 960px; margin: 0 auto; font-size: 1.05em; }
+    .intro-card { background: #eef2ff; border: 1px solid #c7d2fe; border-left: 4px solid #3730a3; border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .box { background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid #3730a3; border-radius: 12px; padding: 1rem 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .box h2 { margin: 0 0 0.6rem; font-size: 1.2rem; color: #1e1b4b; }
+    .box ul { list-style: none; margin: 0; padding: 0; }
+    .box li { margin: 0 0 0.75rem; }
+    .box li a { font-weight: 600; }
+    .box li span { display: block; font-size: 0.9rem; color: #444; }
+    .kommer { color: #6b7280; font-weight: 600; }
+    .kommer em { font-weight: 400; font-size: 0.85rem; }
+    table.plan { width: 100%; border-collapse: collapse; margin: 0.4rem 0 1.4rem; font-size: 0.95rem; }
+    table.plan th, table.plan td { border: 1px solid #c7c7c7; padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+    table.plan thead th { background: #1e1b4b; color: #fff; }
+    table.plan td:first-child { white-space: nowrap; width: 7.5rem; }
+    .tbl-scroll { overflow-x: auto; }
+    h2.ak { color: #1e1b4b; margin: 1.2rem 0 0.3rem; }
+    .res h3 { color: #1e1b4b; margin: 1.3rem 0 0.4rem; font-size: 1.1rem; }
+    .res ul { margin: 0 0 0 1.2rem; padding: 0; }
+    .res li { margin-bottom: 0.55rem; line-height: 1.45; }
+  </style>
+</head>
+<body>
+  <header class="start-header">
+    <h1>Gemensamt för NO</h1>
+    <p>Material som gäller biologi, kemi och fysik</p>
+  </header>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+  <main>
+    <div class="page-actions"><a href="/" class="subject-btn">← Startsidan</a></div>
+    <section class="intro-card"><p>Här finns material som gäller alla tre NO-ämnena: mallar och bedömning för laborationsrapporter, planering och tips på bra resurser.</p></section>
+    <section class="grid">
+      <article class="box">
+        <h2>För elever</h2>
+        <ul>
+          <li><a href="./rapportmall.html">Mall för laborationsrapport</a><span>Skriv ut och fyll i när du gör en laboration.</span></li>
+          <li><a href="./bedomningsmatris.html">Bedömningsmatris för laborationsrapport</a><span>Vad som krävs för E, C och A under varje rubrik. Kryssa själv innan du lämnar in.</span></li>
+        </ul>
+      </article>
+      <article class="box">
+        <h2>För lärare</h2>
+        <ul>
+          <li><a href="./lasarsplanering.html">Läsårsplanering åk 7–9</a><span>Vilka områden som läses när, med länkar till områdena.</span></li>
+          <li><a href="./resurser.html">Bra resurser på nätet</a><span>Fria resurser för NO-undervisning.</span></li>
+          <li><a href="/kemi/matens-kemi/lektion-stationer.html">Lektionsförslag: Stationslektion – Matens kemi</a><span>Exempel på lektionsplanering. Fler lektionsplaneringar samlas här efter hand.</span></li>
+        </ul>
+      </article>
+    </section>
+  </main>
+  <script src="/js/menu.js?v=a57ce429"></script>
+</body>
+</html>

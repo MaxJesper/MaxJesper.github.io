@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bra resurser på nätet – NO</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+  <style>
+    main { max-width: 960px; margin: 0 auto; font-size: 1.05em; }
+    .intro-card { background: #eef2ff; border: 1px solid #c7d2fe; border-left: 4px solid #3730a3; border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.2rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .box { background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid #3730a3; border-radius: 12px; padding: 1rem 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .box h2 { margin: 0 0 0.6rem; font-size: 1.2rem; color: #1e1b4b; }
+    .box ul { list-style: none; margin: 0; padding: 0; }
+    .box li { margin: 0 0 0.75rem; }
+    .box li a { font-weight: 600; }
+    .box li span { display: block; font-size: 0.9rem; color: #444; }
+    .kommer { color: #6b7280; font-weight: 600; }
+    .kommer em { font-weight: 400; font-size: 0.85rem; }
+    table.plan { width: 100%; border-collapse: collapse; margin: 0.4rem 0 1.4rem; font-size: 0.95rem; }
+    table.plan th, table.plan td { border: 1px solid #c7c7c7; padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+    table.plan thead th { background: #1e1b4b; color: #fff; }
+    table.plan td:first-child { white-space: nowrap; width: 7.5rem; }
+    .tbl-scroll { overflow-x: auto; }
+    h2.ak { color: #1e1b4b; margin: 1.2rem 0 0.3rem; }
+    .res h3 { color: #1e1b4b; margin: 1.3rem 0 0.4rem; font-size: 1.1rem; }
+    .res ul { margin: 0 0 0 1.2rem; padding: 0; }
+    .res li { margin-bottom: 0.55rem; line-height: 1.45; }
+  </style>
+</head>
+<body>
+  <header class="start-header">
+    <h1>Bra resurser på nätet</h1>
+    <p>Fria resurser för NO-undervisning</p>
+  </header>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
+  <main>
+    <div class="page-actions"><a href="./" class="subject-btn">← Gemensamt för NO</a></div>
+    <section class="intro-card"><p>Ett urval av fria, pålitliga resurser för undervisning i biologi, kemi och fysik. Listan fylls på efter hand.</p></section>
+    <section class="res">
+      <h3>Kursplaner och bedömning</h3>
+      <ul>
+        <li><a href="https://www.skolverket.se/undervisning/grundskolan/laroplan-lgr22-for-grundskolan-samt-for-forskoleklassen-och-fritidshemmet" target="_blank" rel="noopener">Skolverket – Lgr22</a> – kursplaner, centralt innehåll och betygskriterier för biologi, kemi och fysik.</li>
+        <li><a href="/nationella-prov.html">Tidigare nationella prov</a> – samlade länkar här på plattformen.</li>
+      </ul>
+      <h3>Laborationer och säkerhet</h3>
+      <ul>
+        <li><a href="https://bioresurs.uu.se/" target="_blank" rel="noopener">Bioresurs</a> (Uppsala universitet) – nationellt resurscentrum för biologi och bioteknik: laborationer, tips och fortbildning.</li>
+        <li><a href="https://www.su.se/enheter/kemilararnas-resurscentrum/" target="_blank" rel="noopener">Kemilärarnas resurscentrum, KRC</a> (Stockholms universitet) – laborationer, kemikaliehantering och <a href="https://www.su.se/enheter/kemilararnas-resurscentrum/kemisakerhet" target="_blank" rel="noopener">kemisäkerhet</a>.</li>
+      </ul>
+      <h3>Simuleringar</h3>
+      <ul>
+        <li><a href="https://phet.colorado.edu/sv/" target="_blank" rel="noopener">PhET</a> (University of Colorado) – gratis interaktiva simuleringar i fysik, kemi och biologi, många på svenska.</li>
+      </ul>
+      <h3>Fakta att lita på</h3>
+      <ul>
+        <li><a href="https://www.1177.se/liv--halsa/sa-fungerar-kroppen/" target="_blank" rel="noopener">1177 – Så fungerar kroppen</a> – människokroppen, tydligt och korrekt.</li>
+        <li><a href="https://www.stralsakerhetsmyndigheten.se/om-stralning/" target="_blank" rel="noopener">Strålsäkerhetsmyndigheten – Om strålning</a> – joniserande och icke-joniserande strålning.</li>
+        <li><a href="https://openstax.org/subjects/science" target="_blank" rel="noopener">OpenStax</a> – fria läroböcker (engelska, högskolenivå) med CC BY-licens, bra för lärarens egen faktakontroll.</li>
+      </ul>
+    </section>
+  </main>
+  <script src="/js/menu.js?v=a57ce429"></script>
+</body>
+</html>

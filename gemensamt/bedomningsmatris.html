@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bedömningsmatris för laborationsrapport – NO</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+  <style>
+    main { max-width: 1000px; margin: 0 auto; font-size: 1.02em; }
+    .intro-card { background: #eef2ff; border: 1px solid #c7d2fe; border-left: 4px solid #3730a3; border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.2rem; }
+    .intro-card ol { margin: 0.4rem 0 0 1.3rem; padding: 0; }
+    .intro-card li { margin: 0.2rem 0; }
+    .sheet { background: #fff; border: 1px solid #d8d8d8; border-radius: 12px; padding: 1.1rem 1.3rem 1.3rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .sheet h2 { margin: 0 0 0.2rem; font-size: 1.35rem; color: #1e1b4b; }
+    .lead { margin: 0 0 0.6rem; font-size: 0.92rem; color: #333; }
+    .meta-row { display: grid; grid-template-columns: 1.4fr 0.6fr 0.7fr; border: 1px solid #888; border-radius: 4px; margin: 0.4rem 0; }
+    .meta-row span { padding: 0.35rem 0.6rem; border-right: 1px solid #888; font-size: 0.9rem; min-height: 1.9rem; }
+    .meta-row span:last-child { border-right: none; }
+    .meta-row.one { grid-template-columns: 1fr; }
+    .tbl-scroll { overflow-x: auto; margin-top: 0.6rem; }
+    table.matris { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 680px; }
+    table.matris th, table.matris td { border: 1px solid #555; padding: 0.35rem 0.45rem; vertical-align: top; line-height: 1.32; }
+    table.matris thead th { background: #1e1b4b; color: #fff; text-align: center; font-size: 0.95rem; }
+    table.matris thead th.del { text-align: left; width: 17%; }
+    table.matris tbody th { text-align: left; background: #eef2ff; width: 17%; font-size: 0.88rem; }
+    table.matris tbody th small { display: block; font-weight: 400; color: #444; font-size: 0.78rem; margin-top: 0.15rem; }
+    .krav { display: block; min-height: 2.6em; }
+    .rutor { display: flex; gap: 0.7rem; margin-top: 0.3rem; font-size: 0.74rem; color: #333; }
+    .rutor span { display: inline-flex; align-items: center; gap: 0.25rem; }
+    .ruta { display: inline-block; width: 0.95rem; height: 0.95rem; border: 1.5px solid #222; border-radius: 2px; background: #fff; }
+    .rutor .larare .ruta { border-radius: 50%; }
+    .forklaring { font-size: 0.8rem; color: #333; margin: 0.4rem 0 0; }
+    .kommentarer { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.8rem; }
+    .kommentarer h3 { font-size: 0.92rem; margin: 0 0 0.2rem; color: #1e1b4b; }
+    .linje { display: block; height: 1.55rem; border-bottom: 1px solid #888; }
+    .signatur { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.9rem; }
+    .signatur div { border-top: 1.5px solid #222; padding-top: 0.2rem; font-size: 0.82rem; margin-top: 1.6rem; }
+    .lararnotis { margin-top: 1rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.5rem 0.9rem; font-size: 0.93rem; }
+    .lararnotis summary { cursor: pointer; font-weight: 700; color: #334155; }
+    @page { size: A4 portrait; margin: 9mm 10mm; }
+    @media print {
+      header, nav, .hamburger, .no-print { display: none !important; }
+      body { background: #fff !important; }
+      main { max-width: none; margin: 0; padding: 0; font-size: 9pt; }
+      .sheet { border: none; box-shadow: none; padding: 0; border-radius: 0; }
+      .sheet h2 { font-size: 14pt; }
+      .lead { font-size: 8.5pt; margin-bottom: 1.5mm; }
+      .tbl-scroll { overflow: visible; margin-top: 2mm; }
+      table.matris { min-width: 0; font-size: 7.9pt; }
+      table.matris th, table.matris td { padding: 1.2mm 1.5mm; }
+      table.matris thead th { background: #1e1b4b !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      table.matris tbody th { background: #eef2ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .krav { min-height: 0; }
+      .rutor { font-size: 6.8pt; margin-top: 1mm; }
+      .ruta { width: 3.2mm; height: 3.2mm; }
+      .linje { height: 5.5mm; }
+      .kommentarer { margin-top: 2.5mm; gap: 4mm; }
+      .signatur div { margin-top: 7mm; }
+      table.matris tr { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header class="start-header">
+    <h1>Bedömningsmatris</h1>
+    <p>Laborationsrapport i NO</p>
+  </header>
+
+  <button class="hamburger no-print" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu" class="no-print"></nav>
+
+  <main>
+    <div class="page-actions no-print">
+      <a href="./" class="subject-btn">← Gemensamt för NO</a>
+      <a href="./rapportmall.html" class="subject-btn">📝 Mall för laborationsrapport</a>
+      <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut matrisen</button>
+    </div>
+
+    <section class="intro-card no-print">
+      <p><strong>Så använder du matrisen</strong></p>
+      <ol>
+        <li>Skriv din rapport med hjälp av <a href="./rapportmall.html">mallen för laborationsrapport</a>. Matrisens rader följer mallens rubriker.</li>
+        <li>Läs varje rad och kryssa i <strong>fyrkanten (Elev)</strong> för det du tycker att du har gjort. Skriv under och lämna in matrisen tillsammans med rapporten.</li>
+        <li>Läraren kryssar i <strong>cirkeln (Lärare)</strong>. Ibland går ni igenom matrisen tillsammans.</li>
+        <li>Spara matrisen. Jämför med nästa rapport – har du utvecklats?</li>
+      </ol>
+    </section>
+
+    <section class="sheet">
+      <h2>Bedömningsmatris för laborationsrapport</h2>
+      <p class="lead">Läs från vänster till höger. För att nå C eller A på en rad behöver kraven till vänster på samma rad också vara uppfyllda. Matrisen gäller rapporten – hur du arbetade under laborationen bedöms för sig.</p>
+      <div class="meta-row"><span>Namn:</span><span>Klass:</span><span>Datum:</span></div>
+      <div class="meta-row one"><span>Laborationens titel:</span></div>
+
+      <div class="tbl-scroll" tabindex="0" role="region" aria-label="Bedömningsmatris">
+        <table class="matris">
+          <thead>
+            <tr><th class="del" scope="col">Del i rapporten</th><th scope="col">E</th><th scope="col">C</th><th scope="col">A</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Syfte och frågeställning</th>
+              <td><span class="krav">Jag har skrivit vad jag vill ta reda på.</span></td>
+              <td><span class="krav">Min frågeställning går att besvara med mätningar eller observationer.</span></td>
+              <td><span class="krav">Min frågeställning är tydligt avgränsad och hänger ihop med syftet.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Hypotes</th>
+              <td><span class="krav">Jag har skrivit vad jag tror kommer att hända.</span></td>
+              <td><span class="krav">Jag motiverar min hypotes (”… eftersom …”).</span></td>
+              <td><span class="krav">Jag motiverar hypotesen med naturvetenskapliga begrepp eller samband.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Material och risker</th>
+              <td><span class="krav">Jag har listat materialet och skrivit minst en risk.</span></td>
+              <td><span class="krav">Jag använder rätt namn på utrustningen och skriver hur riskerna minskas.</span></td>
+              <td><span class="krav">Jag har bedömt riskerna i alla moment och förklarar varför skyddsåtgärderna behövs.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Genomförande</th>
+              <td><span class="krav">Jag beskriver vad jag gjorde så att en läsare förstår.</span></td>
+              <td><span class="krav">Jag beskriver så noga att någon annan kan upprepa undersökningen, och skriver vad jag ändrade, mätte och höll lika.</span></td>
+              <td><span class="krav">Jag förklarar varför jag gjorde som jag gjorde, t.ex. varför jag upprepade mätningar eller höll något lika.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Resultat<small>även beräkningar</small></th>
+              <td><span class="krav">Jag redovisar mina observationer och mätvärden så att de går att förstå.</span></td>
+              <td><span class="krav">Jag använder tabell eller diagram med rubrik, storheter och enheter. Resultatdelen innehåller bara det jag mätte och såg.</span></td>
+              <td><span class="krav">Jag väljer den redovisning som visar resultatet tydligast, och mina beräkningar går att följa steg för steg med enheter.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Slutsats</th>
+              <td><span class="krav">Jag svarar på frågeställningen.</span></td>
+              <td><span class="krav">Jag jämför med min hypotes och förklarar resultatet med naturvetenskapliga begrepp.</span></td>
+              <td><span class="krav">Jag förklarar resultatet utförligt med teorin och drar bara slutsatser som mitt resultat stöder.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Diskussion<small>felkällor och rimlighet</small></th>
+              <td><span class="krav">Jag nämner minst en felkälla.</span></td>
+              <td><span class="krav">Jag förklarar hur felkällorna kan ha påverkat resultatet och om resultatet är rimligt.</span></td>
+              <td><span class="krav">Jag bedömer hur säkert resultatet är och föreslår förbättringar eller nya frågor att undersöka.</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Språk, form och källor</th>
+              <td><span class="krav">Jag följer mallens rubriker och lämnar in i tid. Jag anger källor om jag har använt några.</span></td>
+              <td><span class="krav">Jag skriver sakligt i dåtid och använder naturvetenskapliga begrepp på rätt sätt.</span></td>
+              <td><span class="krav">Rapporten är lätt att följa från början till slut, och källorna går att hitta.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="forklaring">I varje ruta: <span class="ruta" aria-hidden="true"></span> fyrkant = eleven kryssar, <span class="ruta" aria-hidden="true" style="border-radius:50%"></span> cirkel = läraren kryssar.</p>
+
+      <div class="kommentarer">
+        <div><h3>Det här gjorde jag bra (elev)</h3><span class="linje"></span><span class="linje"></span></div>
+        <div><h3>Det här ska jag utveckla nästa gång (elev)</h3><span class="linje"></span><span class="linje"></span></div>
+      </div>
+      <div class="kommentarer" style="grid-template-columns:1fr">
+        <div><h3>Lärarens kommentar</h3><span class="linje"></span><span class="linje"></span></div>
+      </div>
+      <div class="signatur">
+        <div>Elevens underskrift och datum</div>
+        <div>Lärarens underskrift och datum</div>
+      </div>
+    </section>
+
+    <details class="lararnotis no-print">
+      <summary>Notering till läraren</summary>
+      <p>Matrisen är inspirerad av en kunskapsmatris från gymnasiet (Naturhumanistiska gymnasiet, Helsingborg), men formuleringarna är egna och anpassade till åk 7–9. Raderna följer exakt rubrikerna i plattformens rapportmall, så att varje krav hör hemma under en rubrik – i originalet hamnade flera krav under fel rubrik (t.ex. illustrationer under utformning i stället för resultat). Nivåerna E–C–A speglar progressionen i Lgr22:s betygskriterier för systematiska undersökningar (enkla – utvecklade – välutvecklade resonemang, rimlighet, förbättringsförslag och nya frågeställningar). Kraven beskriver vad som syns i rapporten; själva laborationsarbetet (säkerhet, samarbete, noggrannhet) bedöms separat.</p>
+    </details>
+  </main>
+
+  <script src="/js/menu.js?v=a57ce429"></script>
+  <script>
+    /* Fyll i rutorna (fyrkant = elev, cirkel = lärare) i varje kravcell. */
+    document.querySelectorAll('table.matris tbody td').forEach(function (td) {
+      var r = document.createElement('span');
+      r.className = 'rutor';
+      r.innerHTML = '<span class="elev"><span class="ruta" aria-hidden="true"></span>Elev</span><span class="larare"><span class="ruta" aria-hidden="true"></span>Lärare</span>';
+      td.appendChild(r);
+    });
+  </script>
+</body>
+</html>
