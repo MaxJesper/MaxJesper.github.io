@@ -107,8 +107,9 @@
     }
 
     /* Mitosens faser i lökens rotspets – fem små foton i rad, bildtext under varje (15 okt 2026) */
-    .fig-faser { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.6rem 0 0.2rem; }
-    .fig-faser figure { flex: 1 1 130px; max-width: 170px; margin: 0; }
+    .fig-faser { display: flex; flex-wrap: nowrap; gap: 0.6rem; margin: 0.6rem 0 0.2rem; }
+    .fig-faser figure { flex: 1 1 0; min-width: 0; max-width: 170px; margin: 0; }
+    @media (max-width: 560px) { .fig-faser { flex-wrap: wrap; } .fig-faser figure { flex: 1 1 100px; } }
     .fig-faser figure img { width: 100%; }
     .fig-faser figcaption { font-size: 0.88rem; line-height: 1.35; }
     .fig-faser-not { font-size: 0.88rem; color: #555; margin-top: 0.3rem; }
@@ -524,40 +525,44 @@
           Mitos ger två identiska celler med 46 kromosomer (tillväxt och reparation). Meios ger könsceller med 23 kromosomer. Ägg + spermie blir en zygot med 46.
         </div>
 
-        <figure>
-          <img src="/images/biologi/genetik/mitos-faser.jpg" alt="Mitosens faser: interfas, profas, metafas, anafas, telofas" />
-          <figcaption><strong>Mitosens faser.</strong> Kromosomerna kondenseras (profas), ordnas i cellens mitt (metafas), systerkromatiderna skiljs åt (anafas) och två nya cellkärnor bildas (telofas) – två identiska celler med 46 kromosomer vardera.</figcaption>
-        </figure>
+        <details class="deepen">
+          <summary>Celldelningens faser i detalj</summary>
+          <p>Både mitos och meios brukar delas in i faser efter vad kromosomerna gör. Faserna går i varandra – cellen gör inga pauser mellan dem – men namnen gör det lättare att beskriva vad som händer.</p>
+          <figure>
+            <img src="/images/biologi/genetik/mitos-faser.jpg" alt="Mitosens faser: interfas, profas, metafas, anafas, telofas" />
+            <figcaption><strong>Mitosens faser.</strong> Kromosomerna kondenseras (profas), ordnas i cellens mitt (metafas), systerkromatiderna skiljs åt (anafas) och två nya cellkärnor bildas (telofas) – två identiska celler med 46 kromosomer vardera.</figcaption>
+          </figure>
 
-        <p><strong>Så ser mitosen ut på riktigt.</strong> I spetsen av en lökrot delar sig cellerna hela tiden, så där kan man i mikroskop hitta celler i alla mitosens faser samtidigt. Preparatet är färgat så att kromosomerna syns. En lökcell har 16 kromosomer, inte 46 som våra celler – men delningen går till på samma sätt.</p>
-        <div class="fig-faser">
-          <figure>
-            <img src="/images/biologi/genetik/lok-rotspets-interfas.jpg" alt="Lökcell i interfas: en rund cellkärna med kornigt innehåll och en mörk prick, kärnkroppen." />
-            <figcaption><strong>Interfas.</strong> Cellen delar sig inte just nu. DNA:t ligger utspritt i cellkärnan.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/biologi/genetik/lok-rotspets-profas.jpg" alt="Lökcell i profas: tunna, trådlika kromosomer syns inne i den runda cellkärnan." />
-            <figcaption><strong>Profas.</strong> Kromosomerna packas ihop och syns som trådar.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/biologi/genetik/lok-rotspets-metafas.jpg" alt="Lökcell i metafas: kromosomerna ligger samlade i ett band tvärs över cellens mitt." />
-            <figcaption><strong>Metafas.</strong> Kromosomerna ordnar sig i cellens mitt.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/biologi/genetik/lok-rotspets-anafas.jpg" alt="Lökcell i anafas: två grupper av kromosomer dras isär mot var sin ände av cellen." />
-            <figcaption><strong>Anafas.</strong> Systerkromatiderna dras isär mot var sin ände av cellen.</figcaption>
-          </figure>
-          <figure>
-            <img src="/images/biologi/genetik/lok-rotspets-telofas.jpg" alt="Lökcell i sen telofas: två nya cellkärnor ligger ovanför varandra i cellen." />
-            <figcaption><strong>Telofas.</strong> Två nya cellkärnor bildas, och en ny cellvägg växer fram mellan dem.</figcaption>
-          </figure>
-        </div>
-        <p class="fig-faser-not">Egna mikroskopbilder av ett färgat preparat av lökens rotspets.</p>
+          <p><strong>Så ser det ut på riktigt.</strong> I spetsen av en lökrot delar sig cellerna hela tiden, så där kan man i mikroskop hitta celler i alla mitosens faser samtidigt. Preparatet är färgat så att kromosomerna syns. En lökcell har 16 kromosomer, inte 46 som våra celler – men delningen går till på samma sätt.</p>
+          <div class="fig-faser">
+            <figure>
+              <img src="/images/biologi/genetik/lok-rotspets-interfas.jpg" alt="Lökcell i interfas: en rund cellkärna med kornigt innehåll och en mörk prick, kärnkroppen." />
+              <figcaption><strong>Interfas.</strong> Cellen delar sig inte just nu. DNA:t ligger utspritt i cellkärnan.</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/biologi/genetik/lok-rotspets-profas.jpg" alt="Lökcell i profas: tunna, trådlika kromosomer syns inne i den runda cellkärnan." />
+              <figcaption><strong>Profas.</strong> Kromosomerna packas ihop och syns som trådar.</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/biologi/genetik/lok-rotspets-metafas.jpg" alt="Lökcell i metafas: kromosomerna ligger samlade i ett band tvärs över cellens mitt." />
+              <figcaption><strong>Metafas.</strong> Kromosomerna ordnar sig i cellens mitt.</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/biologi/genetik/lok-rotspets-anafas.jpg" alt="Lökcell i anafas: två grupper av kromosomer dras isär mot var sin ände av cellen." />
+              <figcaption><strong>Anafas.</strong> Systerkromatiderna dras isär mot var sin ände av cellen.</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/biologi/genetik/lok-rotspets-telofas.jpg" alt="Lökcell i sen telofas: två nya cellkärnor ligger ovanför varandra i cellen." />
+              <figcaption><strong>Telofas.</strong> Två nya cellkärnor bildas, och en ny cellvägg växer fram mellan dem.</figcaption>
+            </figure>
+          </div>
+          <p class="fig-faser-not">Egna mikroskopbilder av ett färgat preparat av lökens rotspets.</p>
 
-        <figure>
-          <img src="/images/biologi/genetik/meios-faser.jpg" alt="Meiosens faser i två celldelningar: profas I till telofas I, sedan profas II till telofas II" />
-          <figcaption><strong>Meiosens faser.</strong> Två celldelningar efter varandra. I den första (profas I–telofas I) skiljs de homologa kromosomparen åt. I den andra (profas II–telofas II) skiljs systerkromatiderna åt, precis som i mitos. Resultatet blir fyra celler med bara 23 kromosomer var.</figcaption>
-        </figure>
+          <figure>
+            <img src="/images/biologi/genetik/meios-faser.jpg" alt="Meiosens faser i två celldelningar: profas I till telofas I, sedan profas II till telofas II" />
+            <figcaption><strong>Meiosens faser.</strong> Två celldelningar efter varandra. I den första (profas I–telofas I) skiljs de homologa kromosomparen åt. I den andra (profas II–telofas II) skiljs systerkromatiderna åt, precis som i mitos. Resultatet blir fyra celler med bara 23 kromosomer var.</figcaption>
+          </figure>
+        </details>
 
         <details class="deepen">
           <summary>Varför blir syskon olika? Crossing-over och slumpen</summary>
