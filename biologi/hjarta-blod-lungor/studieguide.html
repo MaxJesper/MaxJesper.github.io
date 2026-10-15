@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Hjärta, blod och lungor</title>
-  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
   <link rel="stylesheet" href="/css/milstolpe.css?v=f491bea5" />
     <link rel="stylesheet" href="/css/studieguide-bildkolumn.css?v=3faf68c0" />
     <link rel="stylesheet" href="/css/viktigt.css?v=dac92048" />
@@ -287,6 +287,12 @@
     .toggle-all { background:#fff1f2; border:1px solid #fecdd3; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#9f1239; cursor:pointer; }
     .milestone .m-body ul { margin: 0.4rem 0 0.7rem 1.4rem; padding: 0; }
     .milestone .m-body li { margin-bottom: 0.35rem; line-height: 1.5; }
+    .film { margin: 1rem 0 0.4rem; }
+    .film video { display: block; width: 100%; height: auto; border-radius: 10px; background: #0f172a; }
+    .film figcaption { font-style: normal; color: #333; font-size: 0.95rem; }
+    .film-text { background: #fff7f8; border: 1px solid #fecdd3; border-radius: 8px; padding: 0.5rem 0.9rem; margin: 0.5rem 0; }
+    .film-text > summary { cursor: pointer; font-weight: 700; color: #9f1239; }
+    .film-text details > summary { cursor: pointer; color: #9f1239; font-size: 0.92rem; }
     .ref-note { font-size:0.82rem; color:#595959; font-style:italic; margin-top:0.6rem; }
     .compare-table { display: table; }
     @media (max-width: 640px) { .compare-table { display: block; overflow-x: auto; } }
@@ -534,6 +540,25 @@
               <tr><td><strong class="term"><span class="concept-inline" data-concept="Ven">Vener</span></strong> (blodådror)</td><td>till hjärtat</td><td>Tunnare väggar och lägre tryck. Många vener, särskilt i benen, har klaffar som hindrar blodet att rinna bakåt.</td></tr>
             </tbody>
           </table>
+          <figure class="film">
+            <video controls preload="metadata" playsinline width="1920" height="1080" poster="/filmer/biologi/artarer-vener-kapillarer-poster.jpg">
+              <source src="/filmer/biologi/artarer-vener-kapillarer.mp4" type="video/mp4" />
+              <track kind="captions" src="/filmer/biologi/artarer-vener-kapillarer.sv.vtt" srclang="sv" label="Svenska" default />
+            </video>
+            <figcaption><strong>Film (2 min): Artärer, vener och kapillärer.</strong> Textning finns – slå av eller på med CC-knappen i spelaren.</figcaption>
+          </figure>
+          <details class="film-text">
+            <summary>Läs filmens text</summary>
+            <p>Vad är skillnaden mellan en artär och en ven? Många tänker: artärer har syre och vener har inte syre. Men namnen handlar om något annat: åt vilket håll blodet går i förhållande till hjärtat.</p><p>Artärer leder blod från hjärtat. Vener leder blod till hjärtat. Det gäller också mellan hjärtat och lungorna. Lungartärerna leder syrefattigt blod till lungorna, medan lungvenerna för syrerikt blod tillbaka. Syrefattigt betyder mindre syre, inte helt utan syre. Och blodet är alltid rött, även i vener.</p><p>Byggnaden passar uppgiften. Artärerna har tjocka, elastiska och muskulösa väggar som klarar högre tryck. Venerna har tunnare väggar och lägre tryck. Många vener i armar och ben har klaffar. Musklernas rörelser hjälper blodet tillbaka, och klaffarna hindrar bakåtflöde.</p><p>Mellan artärerna och venerna finns kapillärerna. Här är väggen mycket tunn, bara ett enda lager celler. I kroppens vävnader lämnar syre blodet och går till cellerna, medan koldioxid går åt andra hållet. Även näringsämnen och avfallsämnen byts mellan blodet och vävnaden. De röda blodkropparna stannar normalt i kärlet.</p><p>Kom ihåg tre uppgifter: artärer leder från hjärtat, vener leder till hjärtat och kapillärer möjliggör utbyte med vävnaderna. Tänk nu på lungartären. Är den en artär för att blodet är syrerikt, eller för att det lämnar hjärtat?</p>
+          </details>
+          <details class="film-text">
+            <summary>Testa dig själv – tre frågor om filmen</summary>
+            <ol>
+              <li>Varför heter lungartären en artär, fast blodet i den är syrefattigt?<details><summary>Visa svar</summary><p>För att den leder blod <em>från</em> hjärtat. Artär och ven bestäms av riktningen, inte av hur mycket syre blodet har.</p></details></li>
+              <li>Var sker utbytet av syre, koldioxid, näring och avfall mellan blodet och kroppens celler?<details><summary>Visa svar</summary><p>I kapillärerna. Deras vägg är bara ett enda lager celler. De röda blodkropparna stannar i kärlet.</p></details></li>
+              <li>Vad gör venklaffarna?<details><summary>Visa svar</summary><p>De hindrar blodet från att rinna bakåt. När musklerna rör sig klämmer de på venerna, och klaffarna gör att blodet bara kan tryckas mot hjärtat.</p></details></li>
+            </ol>
+          </details>
           <p><strong>Artärerna</strong> förgrenar sig i allt mindre kärl och övergår till sist i kapillärer. Kapillärerna är så tunna att de röda blodkropparna får tränga sig fram en och en, och de finns nära i stort sett varje cell i kroppen. Varje gång hjärtat slår skickas en tryckvåg genom artärerna. Den kan du känna som <strong class="term"><span class="concept-inline" data-concept="Puls">pulsen</span></strong> på handleden eller på halsen.</p>
           <p>I <strong>venerna</strong> är trycket lågt, och från benen ska blodet tillbaka uppåt mot hjärtat. Där hjälper musklerna till: när benmusklerna spänns klämmer de på venerna, och <strong class="term">venklaffarna</strong> gör att blodet bara kan tryckas mot hjärtat. Därför kan man bli yr om man står helt still länge – blodet samlas i benen.</p>
           <p>Syrerikt blod är ljust klarrött och syrefattigt blod är mörkare rött. Att venerna ser blå ut genom huden beror på hur ljuset sprids i huden, inte på att blodet är blått.</p>
@@ -567,9 +592,9 @@
           <p><strong>Blodplasman</strong> är mest vatten. I den är många ämnen lösta som ska transporteras: näringsämnen som glukos, salter, hormoner, proteiner, avfallsämnen och det mesta av koldioxiden. Plasman sprider också värme i kroppen.</p>
         </div>
         <div class="m-side">
-          <figure class="side-fig side-fig--placeholder" aria-label="Plats för bild: blodkroppar i mikroskop">
-            Bild kommer: blod i mikroskop
-            <span class="ph-sub">röda blodkroppar, en vit blodkropp och blodplättar</span>
+          <figure class="side-fig">
+            <img src="/images/biologi/blod/studieguide/blod-mikroskop.jpg" width="1100" height="773" alt="Färgat blodutstryk i mikroskop: många rosa röda blodkroppar utan cellkärna, två större vita blodkroppar med mörk, flikig cellkärna och några små lila blodplättar." />
+            <figcaption><strong>Blod i mikroskop.</strong> De många rosa cellerna är röda blodkroppar. De saknar cellkärna och är ofta ljusare i mitten, eftersom de är tunnare där. De två större cellerna med mörk, flikig cellkärna är vita blodkroppar. De små lila klumparna är blodplättar. Blodet är färgat för att cellerna ska synas – färgerna är alltså inte blodets egna. Egen mikroskopbild.</figcaption>
           </figure>
         </div></div>
 
@@ -665,7 +690,7 @@
     </section>
   </main>
 
-  <script src="/js/menu.js?v=d9464f7b"></script>
+  <script src="/js/menu.js?v=a57ce429"></script>
   <script src="/js/lyssna.js?v=d8e963dc" data-audio-base="/biologi/hjarta-blod-lungor/audio/"></script>
   <script>
     function toggleAllMilestones() {
