@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studieguide – Liv och cellen</title>
-  <link rel="stylesheet" href="/css/style.css?v=43b4cdef" />
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
   <link rel="stylesheet" href="/css/milstolpe.css?v=f491bea5" />
     <link rel="stylesheet" href="/css/studieguide-bildkolumn.css?v=3faf68c0" />
     <link rel="stylesheet" href="/css/viktigt.css?v=dac92048" />
@@ -257,6 +257,9 @@
     }
     .side-fig--placeholder .ph-sub { display: block; font-weight: 400; color: #4a4a5a; font-size: 0.8rem; margin-top: 0.3rem; }
     .fig-row .side-fig--placeholder { min-height: 150px; }
+    /* Små mikroskopfoton med begränsad skärpa (t.ex. sjöborreäggen) – visas medvetet små, sida vid sida. */
+    .fig-row--sma figure { flex: 0 1 170px; min-width: 120px; }
+    .fig-row--sma figure img { width: 100%; max-width: 170px; }
 
     /* Organellegend: bildens siffror (1-11) förklarade som riktig text, inte inbränd bildtext – går att förstora och läsas av skärmläsare. */
     .organelle-legend {
@@ -511,15 +514,23 @@
         <div class="m-row m-row--full"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Den befruktade äggcellens första delningar</strong>
-          <p>Ett annat preparat visar något som liknar celldelningen i lökroten, men är biologiskt en helt annan sak: den första befruktade äggcellen hos ett djur, och hur den delar sig. Först finns bara <strong>en</strong> stor, odelad äggcell. Den delar sig till <strong>2</strong> celler, sedan <strong>4</strong>, sedan <strong>8</strong> – och cellerna blir mindre och mindre för varje delning, eftersom delningen går fortare än cellerna hinner bygga nytt cellmaterial.</p>
+          <p>Ett annat preparat visar något som liknar celldelningen i lökroten, men är biologiskt en helt annan sak: den första befruktade äggcellen hos ett djur, och hur den delar sig. Först finns bara <strong>en</strong> stor, odelad äggcell. Den delar sig till <strong>2</strong> celler, sedan <strong>4</strong>, sedan <strong>8</strong> och så vidare, tills det bildats en liten boll av celler. Embryot växer inte under de här första delningarna – äggcellens innehåll delas bara upp på fler och fler celler, som därför blir mindre och mindre.</p>
         </div>
-        <div class="fig-row">
-          <figure class="side-fig side-fig--placeholder">1 cell<span class="ph-sub">odelad äggcell</span></figure>
-          <figure class="side-fig side-fig--placeholder">2 celler</figure>
-          <figure class="side-fig side-fig--placeholder">4 celler</figure>
-          <figure class="side-fig side-fig--placeholder">8 celler</figure>
+        <div class="fig-row fig-row--sma">
+          <figure class="side-fig">
+            <img src="/images/biologi/liv-och-cellen/sjoborre-1-cell.jpg" alt="En enda rund, mörkröd befruktad äggcell från sjöborre i mikroskop." />
+            <figcaption><strong>1 cell.</strong> Befruktad, ännu odelad äggcell.</figcaption>
+          </figure>
+          <figure class="side-fig">
+            <img src="/images/biologi/liv-och-cellen/sjoborre-4-celler.jpg" alt="Fyra runda celler som ligger tätt intill varandra i en ring, efter två delningar." />
+            <figcaption><strong>4 celler.</strong> Äggcellen har delat sig två gånger.</figcaption>
+          </figure>
+          <figure class="side-fig">
+            <img src="/images/biologi/liv-och-cellen/sjoborre-manga-celler.jpg" alt="En liten klump av många små celler, ungefär lika stor som den odelade äggcellen." />
+            <figcaption><strong>Många celler.</strong> En boll av små celler – men inte större än äggcellen var från början.</figcaption>
+          </figure>
         </div>
-        <p style="font-size:0.85rem;color:#4a4a5a;font-style:italic;text-align:center;margin-top:0.4rem;">Bildhållare – väntar på Jespers mikroskopfoton av preparatet.</p>
+        <p class="fig-note" style="font-size:0.9rem;color:#4a4a5a;margin-top:0.5rem;">Mikroskopfotona visar äggceller från en <strong>sjöborre</strong>, ett havsdjur, fotograferade med samma förstoring. Sjöborrens ägg används ofta i undervisning och forskning eftersom de är lätta att befrukta och se i mikroskop. Men principen är densamma hos människan: det befruktade ägget delar sig till 2, 4, 8 celler och vidare till en liten boll av celler, och cellerna blir mindre för varje delning. Hos människan går delningarna långsammare – ungefär en per dygn – medan embryot vandrar genom äggledaren mot livmodern.</p>
         </div></div>
 
         <div class="m-row"><div class="m-lead">
@@ -686,7 +697,7 @@
 
   </main>
 
-  <script src="/js/menu.js?v=d9464f7b"></script>
+  <script src="/js/menu.js?v=a57ce429"></script>
   <script src="/js/lyssna.js?v=d8e963dc" data-audio-base="/biologi/liv-och-cellen/audio/"></script>
   <script>
     function toggleAllMilestones() {
