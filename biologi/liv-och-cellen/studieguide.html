@@ -257,6 +257,32 @@
     }
     .side-fig--placeholder .ph-sub { display: block; font-weight: 400; color: #4a4a5a; font-size: 0.8rem; margin-top: 0.3rem; }
     .fig-row .side-fig--placeholder { min-height: 150px; }
+    /* Bildtexter utanför bildramen (Jesper 15 okt 2026): ramen sitter runt själva bilden,
+       bildtexten står fritt under (flera bilder i rad) eller bredvid (en bild med ledig yta). */
+    .milestone .side-fig:not(.side-fig--flush):not(.side-fig--placeholder) { background: none; border: none; padding: 0; }
+    .milestone .side-fig:not(.side-fig--flush):not(.side-fig--placeholder) > img {
+      background: var(--guide-soft, #eafaf4); border: 1px solid var(--guide-border, #b6ead9);
+      border-radius: 10px; padding: 0.5rem; box-sizing: border-box;
+    }
+    .milestone .fig-row figure img { margin: 0; }
+    .milestone .side-fig > video { display: block; width: 100%; border-radius: 10px; }
+    .milestone .fig-row figcaption { text-align: left; max-width: none; }
+    /* En bild med bildtexten bredvid */
+    /* Inga bilder i högerfältet längre – rader utan sidokolumn tar hela bredden, inga hålrum. */
+    .guide-wide .m-row--plain { display: block; }
+    .fig-beside { display: flex; align-items: flex-start; gap: 1.2rem; margin: 0.9rem 0 0.2rem; }
+    .fig-beside > img { flex: none; max-width: 55%; }
+    .fig-beside figcaption { margin-top: 0; flex: 1; font-size: 0.95rem; }
+    /* Liten bildrad + förklarande text bredvid */
+    .fig-group { display: flex; align-items: flex-start; gap: 1.4rem; margin: 0.9rem 0 0.2rem; }
+    .fig-group > .fig-row { flex: none; margin: 0; flex-wrap: nowrap; }
+    .fig-group-text { flex: 1; margin: 0; font-size: 0.95rem; color: #4a4a5a; }
+    .fig-row--film figure { min-width: 260px; }
+    @media (max-width: 760px) {
+      .fig-beside, .fig-group { flex-direction: column; }
+      .fig-beside > img { max-width: 100%; }
+      .fig-group > .fig-row { flex-wrap: wrap; }
+    }
     /* Små mikroskopfoton med begränsad skärpa (t.ex. sjöborreäggen) – visas medvetet små, sida vid sida. */
     .fig-row--sma figure { flex: 0 1 170px; min-width: 120px; }
     .fig-row--sma figure img { width: 100%; max-width: 170px; }
@@ -320,8 +346,8 @@
         <p>Ordet <strong class="term"><span class="concept-inline" data-concept="biologi">biologi</span></strong> betyder "läran om livet". Men vad är egentligen liv? Fundera först själv på de sju sakerna i bilden: solen, en robot, en bil, ett virus, ett bi, en ros och nedfallna höstlöv – vilka av dem lever?</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig side-fig--flush" style="max-width:100%;">
-          <img src="/images/biologi/liv-och-cellen/vad-ar-liv-kannetecken.jpg" alt="Sju exempel sida vid sida: solen, en robot, en bil, ett virus, ett bi, en ros och höstlöv." style="max-width:100%;" />
+        <figure class="side-fig side-fig--flush fig-beside">
+          <img src="/images/biologi/liv-och-cellen/vad-ar-liv-kannetecken.jpg" alt="Sju exempel sida vid sida: solen, en robot, en bil, ett virus, ett bi, en ros och höstlöv." />
           <figcaption>Vilka av dessa sju exempel lever, och vilka gör det inte? Jämför med livets sex kännetecken nedan.</figcaption>
         </figure>
         </div></div>
@@ -350,8 +376,8 @@
         <p>Det första kännetecknet – att bestå av celler – är själva nyckeln. En <strong class="term"><span class="concept-inline" data-concept="Cell">cell</span></strong> är den minsta delen som lever<a href="#ref-2" class="cite">[2]</a>. De flesta celler är så små att du behöver ett <strong class="term"><span class="concept-inline" data-concept="mikroskop">mikroskop</span></strong> för att se dem: delar du en millimeter i hundra bitar är du ungefär på rätt storlek.</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig" style="max-width:100%;">
-          <img src="/images/biologi/liv-och-cellen/storlek-virus-bakterie-cell.jpg" alt="Storleksjämförelse mellan ett virus, en bakterie och en djurcell, från minst till störst." style="max-width:100%;" />
+        <figure class="side-fig fig-beside">
+          <img src="/images/biologi/liv-och-cellen/storlek-virus-bakterie-cell.jpg" alt="Storleksjämförelse mellan ett virus, en bakterie och en djurcell, från minst till störst." />
           <figcaption>Ett coronavirus är ungefär 0,1 µm i diameter. Många bakterier är omkring 1–5 µm stora, medan många djurceller är ungefär 10–100 µm<a href="#ref-10" class="cite">[10]</a>. Storleken varierar mycket inom alla grupper, så skalan visar typiska storleksordningar – de avbildade objekten är förstorade modeller och inte ritade skalenligt i förhållande till varandra.</figcaption>
         </figure>
         </div></div>
@@ -360,8 +386,8 @@
         <p>Större varelser är <strong class="term"><span class="concept-inline" data-concept="Flercellig">flercelliga</span></strong> och byggda av många celler som samarbetar. Din kropp har över hundra tusen miljarder celler av omkring 200 olika slag – muskelceller som drar ihop sig, nervceller som skickar signaler, benceller som bygger skelettet. Att cellerna är <em>specialiserade</em> på olika uppgifter är hela styrkan med att vara flercellig.</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig" style="max-width:100%;">
-          <img src="/images/biologi/liv-och-cellen/encellig-flercellig.jpg" alt="Förenklade illustrationer av fyra encelliga organismer (Paramecium, Euglena, Amoeba, Chlorella) jämfört med flercelliga organismer som ett träd, en elefant, en svamp, ett bi och en fisk." style="max-width:100%;" />
+        <figure class="side-fig fig-beside">
+          <img src="/images/biologi/liv-och-cellen/encellig-flercellig.jpg" alt="Förenklade illustrationer av fyra encelliga organismer (Paramecium, Euglena, Amoeba, Chlorella) jämfört med flercelliga organismer som ett träd, en elefant, en svamp, ett bi och en fisk." />
           <figcaption>Encelliga organismer består av en enda cell som sköter alla livsfunktioner. Till vänster syns förenklade bilder av encelliga organismer: toffeldjuret <em>Paramecium</em>, ögondjuret <em>Euglena</em>, amöban och den encelliga grönalgen <em>Chlorella</em>. Flercelliga organismer, som växter, djur och svampar, består i stället av många celler som ofta är specialiserade för olika uppgifter. Organismerna är inte avbildade i samma skala.</figcaption>
         </figure>
         </div></div>
@@ -369,8 +395,8 @@
         <p>Cellerna är dessutom organiserade i nivåer. Många likadana celler med samma uppgift bildar tillsammans en <strong class="term"><span class="concept-inline" data-concept="Vävnad">vävnad</span></strong> – till exempel muskelvävnad. Flera olika vävnader bygger i sin tur upp ett <strong class="term"><span class="concept-inline" data-concept="Organ">organ</span></strong>. Hjärtat är ett organ av bland annat muskelvävnad och nervvävnad; lever, lungor och njurar är andra exempel.</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig" style="max-width:100%;">
-          <img src="/images/biologi/liv-och-cellen/cell-vavnad-organ.jpg" alt="Principen cell, vävnad och organ illustrerad med magsäcken som exempel." style="max-width:100%;" />
+        <figure class="side-fig fig-beside">
+          <img src="/images/biologi/liv-och-cellen/cell-vavnad-organ.jpg" alt="Principen cell, vävnad och organ illustrerad med magsäcken som exempel." />
           <figcaption>I en flercellig organism samarbetar specialiserade celler. Många liknande celler kan bilda en vävnad, och flera olika vävnader bygger tillsammans upp ett organ. Bilden visar principen cell → vävnad → organ med magsäcken som exempel. Delarna är inte ritade i samma skala.</figcaption>
         </figure>
         </div></div>
@@ -398,8 +424,8 @@
         <p>En växtcell har allt detta – men också tre delar till som djurceller saknar. Utanpå cellmembranet ligger en styv <strong class="term"><span class="concept-inline" data-concept="Cellvägg">cellvägg</span></strong> som ger växtcellen dess fasta, kantiga form och stöd. Inuti finns gröna <strong class="term"><span class="concept-inline" data-concept="Kloroplast">kloroplaster</span></strong>, och det är i dem <strong class="term"><span class="concept-inline" data-concept="Fotosyntes">fotosyntesen</span></strong> sker: de fångar ljusenergi från solen. Djur kan inte använda ljus som energikälla. Dessutom har växtcellen ofta en stor <strong class="term"><span class="concept-inline" data-concept="Vakuol">vakuol</span></strong> – en vätskefylld blåsa som lagrar ämnen och ger cellen spänst.</p>
 
         <div class="m-row m-row--full"><div class="m-lead">
-        <figure class="side-fig" style="max-width:100%;">
-          <img src="/images/biologi/liv-och-cellen/djur-vaxtcell-organeller.jpg" alt="Genomskuren djurcell och växtcell sida vid sida, med elva numrerade organeller markerade i varje cell." style="max-width:100%;" />
+        <figure class="side-fig fig-beside">
+          <img src="/images/biologi/liv-och-cellen/djur-vaxtcell-organeller.jpg" alt="Genomskuren djurcell och växtcell sida vid sida, med elva numrerade organeller markerade i varje cell." />
           <figcaption>En djurcell (till vänster) och en växtcell (till höger), med organellerna numrerade. Förklaring till siffrorna nedan.</figcaption>
         </figure>
         <div class="organelle-legend">
@@ -460,11 +486,11 @@
         <span class="m-title">Livet i mikroskopet</span>
       </summary>
       <div class="m-body">
-        <div class="m-row m-row--plain"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <p>Nu blir cellerna på riktigt. Har ni mikroskop i klassen kan ni se celler som annars är helt osynliga, och till och med titta på levande encelliga djur som simmar omkring. Saknar ni mikroskop går det lika bra att studera cellerna i bilderna och filmerna längre ner – de visar samma sak på nära håll. Här är de undersökningar man kan göra med mikroskop:</p>
         </div></div>
 
-        <div class="m-row m-row--plain"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 1 · Dina egna kindceller</strong>
           <p>Du skrapar försiktigt insidan av kinden med en sked eller topspinne och stryker av på ett objektglas. En droppe färg (t.ex. metylenblått) gör cellkärnan tydlig.</p>
@@ -474,9 +500,6 @@
             <li>Fundera: varför ser du ingen cellvägg och inga kloroplaster? (För att det är en <em>djurcell</em>.)</li>
           </ol>
         </div>
-        </div></div>
-
-        <div class="m-row m-row--full"><div class="m-lead">
         <div class="fig-row">
           <figure class="side-fig">
             <img src="/images/biologi/liv-och-cellen/kindcell-utan-bakterier.jpg" alt="Två egna kindceller i mikroskop, färgade med metylenblått, med tydlig cellkärna i varje cell." />
@@ -489,16 +512,13 @@
         </div>
         </div></div>
 
-        <div class="m-row m-row--plain"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 2 · Färdiga preparat och lökens rotspets</strong>
           <p>Vi tittar också på färdiga preparat i mikroskopet. Ett viktigt är en <strong class="term">rotspets av lök</strong>, där cellerna delar sig flitigt. Här kan du se växtceller med tydlig kantig form – och om du letar hittar du celler mitt i en celldelning.</p>
           <p class="todo-note">Samma lökrotspets möter du igen i årskurs 9, när vi arbetar med genetik och celldelning (mitos) – bilder på de olika delningsfaserna (t.ex. anafas) hör hemma där, inte här.</p>
         </div>
         <p>Två andra växtcellsexempel (från andra prover, inte rotspetsen) visar tydligt de växtcellsdrag du ska leta efter:</p>
-        </div></div>
-
-        <div class="m-row m-row--full"><div class="m-lead">
         <div class="fig-row">
           <figure class="side-fig">
             <img src="/images/biologi/liv-och-cellen/bladceller-kloroplaster.jpg" alt="Växtceller i ett blad, med många runda gröna kloroplaster synliga i varje cell." />
@@ -516,7 +536,8 @@
           <strong class="lab-rubrik">Den befruktade äggcellens första delningar</strong>
           <p>Ett annat preparat visar något som liknar celldelningen i lökroten, men är biologiskt en helt annan sak: den första befruktade äggcellen hos ett djur, och hur den delar sig. Först finns bara <strong>en</strong> stor, odelad äggcell. Den delar sig till <strong>2</strong> celler, sedan <strong>4</strong>, sedan <strong>8</strong> och så vidare, tills det bildats en liten boll av celler. Embryot växer inte under de här första delningarna – äggcellens innehåll delas bara upp på fler och fler celler, som därför blir mindre och mindre.</p>
         </div>
-        <div class="fig-row fig-row--sma">
+        <div class="fig-group">
+          <div class="fig-row fig-row--sma">
           <figure class="side-fig">
             <img src="/images/biologi/liv-och-cellen/sjoborre-1-cell.jpg" alt="En enda rund, mörkröd befruktad äggcell från sjöborre i mikroskop." />
             <figcaption><strong>1 cell.</strong> Befruktad, ännu odelad äggcell.</figcaption>
@@ -529,11 +550,12 @@
             <img src="/images/biologi/liv-och-cellen/sjoborre-manga-celler.jpg" alt="En liten klump av många små celler, ungefär lika stor som den odelade äggcellen." />
             <figcaption><strong>Många celler.</strong> En boll av små celler – men inte större än äggcellen var från början.</figcaption>
           </figure>
+          </div>
+          <p class="fig-group-text">Mikroskopfotona visar äggceller från en <strong>sjöborre</strong>, ett havsdjur, fotograferade med samma förstoring. Sjöborrens ägg används ofta i undervisning och forskning eftersom de är lätta att befrukta och se i mikroskop. Men principen är densamma hos människan: det befruktade ägget delar sig till 2, 4, 8 celler och vidare till en liten boll av celler, och cellerna blir mindre för varje delning. Hos människan går delningarna långsammare – ungefär en per dygn – medan embryot vandrar genom äggledaren mot livmodern.</p>
         </div>
-        <p class="fig-note" style="font-size:0.9rem;color:#4a4a5a;margin-top:0.5rem;">Mikroskopfotona visar äggceller från en <strong>sjöborre</strong>, ett havsdjur, fotograferade med samma förstoring. Sjöborrens ägg används ofta i undervisning och forskning eftersom de är lätta att befrukta och se i mikroskop. Men principen är densamma hos människan: det befruktade ägget delar sig till 2, 4, 8 celler och vidare till en liten boll av celler, och cellerna blir mindre för varje delning. Hos människan går delningarna långsammare – ungefär en per dygn – medan embryot vandrar genom äggledaren mot livmodern.</p>
         </div></div>
 
-        <div class="m-row"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <div class="lab-box">
           <strong class="lab-rubrik">Laboration 3 · Höinfusion – en droppe full av liv</strong>
           <p>Lägg lite hö i ett glas vatten och låt det stå några dagar i rumsvärme. Snart myllrar vattnet av <strong class="term"><span class="concept-inline" data-concept="Encellig">encelliga organismer</span></strong> som lever av bakterierna som växer i höet.</p>
@@ -543,36 +565,31 @@
             <li>Se om du känner igen ett <em>toffeldjur</em>: det är avlångt som en tofflans sula och simmar genom att vifta med tusentals små flimmerhår.</li>
           </ol>
         </div>
-
-        <p>Ett toffeldjur är ett <strong class="term"><span class="concept-inline" data-concept="encelligt djur">encelligt djur</span></strong> – en enda cell som ändå jagar, äter, håller sin vattenbalans och förökar sig. Till höger ser du ett toffeldjur fotograferat genom mikroskopet i just ett sådant preparat.</p>
-        </div><div class="m-side">
-        <figure class="side-fig">
-          <img src="/images/biologi/liv-och-cellen/toffeldjur.jpg" alt="Toffeldjur (en encellig organism) fotograferat genom mikroskop i ett höinfusionspreparat" />
-          <figcaption><strong>Toffeldjur.</strong> Ett encelligt djur, format som en toffelsula, som simmar med hjälp av flimmerhår. Egen mikroskopbild från vårt höinfusionspreparat.</figcaption>
-        </figure>
-        <figure class="side-fig">
-          <img src="/images/biologi/liv-och-cellen/toffeldjur-kontraktil-vakuol.jpg" alt="Ett toffeldjur i mikroskop, sett från sidan, med cellkärnan och en kontraktil vakuol tydligt synliga." />
-          <figcaption><strong>Toffeldjur, ett annat exemplar.</strong> Här syns den kontraktila vakuolen extra tydligt som en ljus, rund blåsa i cellen – den pumpar ut överflödigt vatten ur cellen (mer om vattenbalans i filmerna nedan).</figcaption>
+        <p>Ett toffeldjur är ett <strong class="term"><span class="concept-inline" data-concept="encelligt djur">encelligt djur</span></strong> – en enda cell som ändå jagar, äter, håller sin vattenbalans och förökar sig.</p>
+        <figure class="side-fig fig-beside">
+          <img src="/images/biologi/liv-och-cellen/toffeldjur-kontraktil-vakuol.jpg" alt="Ett färgat toffeldjur i mikroskop, avlångt som en toffelsula, med en mörkare cellkärna i mitten." />
+          <figcaption><strong>Toffeldjur i ett färdigt preparat.</strong> Det här toffeldjuret är inte levande – det kommer från ett köpt, färgat preparat. Färgen gör cellen tydlig: den mörkare fläcken mitt i cellen är cellkärnan. I en höinfusion simmar toffeldjuren omkring levande och ofärgade, och då ser de mest genomskinliga ut.</figcaption>
         </figure>
         </div></div>
 
-        <div class="m-row"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <p>Till sist tittar vi på två filmer jag själv har spelat in genom mikroskopet, med ungefär 20 minuter emellan. I den <strong>första filmen</strong> är cellerna ännu i god form och simmar snabbt omkring. I den <strong>andra filmen</strong>, 20 minuter senare, orkar cellen inte längre simma – och just därför går det att studera den på nära håll i högre förstoring. Titta särskilt efter <strong class="term"><span class="concept-inline" data-concept="Cellmembran">cellmembranet</span></strong> och hur cellen sköter sin <strong class="term"><span class="concept-inline" data-concept="vattenbalans">vattenbalans</span></strong>.</p>
-        </div><div class="m-side">
-        <figure class="side-fig">
+        <div class="fig-row fig-row--film">
+          <figure class="side-fig">
           <video controls preload="metadata" style="width:100%;max-width:640px;">
             <source src="./film/encelligt-djur-dod-250x.mp4" type="video/mp4" />
             Din webbläsare kan inte spela upp filmen. Ladda ned den i stället: <a href="./film/encelligt-djur-dod-250x.mp4">encelligt-djur-dod-250x.mp4</a>.
           </video>
           <figcaption><strong>Film 1 – encelliga djur i god form (250×).</strong> Här är cellerna ännu pigga och simmar snabbt omkring. Cirka 20 minuter senare orkar de inte längre simma.</figcaption>
         </figure>
-        <figure class="side-fig">
+          <figure class="side-fig">
           <video controls preload="none" style="width:100%;max-width:640px;">
             <source src="./film/encelligt-djur-dramatiska-dod-400x.mp4" type="video/mp4" />
             Din webbläsare kan inte spela upp filmen. Ladda ned den i stället: <a href="./film/encelligt-djur-dramatiska-dod-400x.mp4">encelligt-djur-dramatiska-dod-400x.mp4</a>.
           </video>
           <figcaption><strong>Film 2 – ett encelligt djurs dramatiska död (400×).</strong> Nu är cellen så försvagad att den håller sig stilla och kan filmas i högre förstoring. Den <strong>sväller långsamt</strong> – klicka dig gärna framåt i tiden i spelaren, då syns det tydligt men det är lätt att missa i normal hastighet. Runt cellen ser du <strong>bakterier</strong> simma, och en bit in verkar cellen till och med <strong>äta en bakterie</strong>. Till slut brister cellmembranet.</figcaption>
         </figure>
+        </div>
         </div></div>
 
         <details class="deepen">
@@ -650,16 +667,11 @@
           <p>Nästan alltid – men inte helt undantagslöst, och undantagen visar att artbegreppet är en användbar tumregel snarare än en absolut naturlag. Hos hybrider mellan djurarter är det nästan alltid <em>hanarna</em> som är sterila, medan honorna ibland kan få ungar. Mönstret upptäcktes redan 1922 och kallas <strong class="term">Haldanes regel</strong><a href="#ref-8" class="cite">[8]</a>. Han-mulor är alltid sterila, men ett litet antal fertila mulston har fötts och själva fått föl<a href="#ref-7" class="cite">[7]</a>. Samma mönster syns hos stora kattdjur: hanligrar (korsning mellan lejon och tiger) är alltid sterila, men enstaka fertila honligrar har fötts och själva fått ungar<a href="#ref-9" class="cite">[9]</a>.</p>
         </details>
 
-        <div class="m-row"><div class="m-lead">
+        <div class="m-row m-row--full"><div class="m-lead">
         <p>På 1700-talet skapade svensken <strong class="term">Carl von Linné</strong> ett system för att sortera och namnge arter. Han gav varje art ett vetenskapligt namn med <strong class="term">två ord</strong>: det första talar om vilket släkte arten tillhör, det andra pekar ut just den arten. Systemet används i hela världen än idag – människan heter till exempel <em>Homo sapiens</em><a href="#ref-4" class="cite">[4]</a>.</p>
-        </div><div class="m-side">
-        <div class="side-fig--placeholder">
-          Porträtt av Carl von Linné
-          <span class="ph-sub">(Claude letar efter en fri/licensierad bild)</span>
-        </div>
-        <div class="side-fig--placeholder">
-          Foto: Råshult, Linnés födelsehem
-          <span class="ph-sub">(väntar på Jespers eget foto)</span>
+        <div class="fig-row">
+          <figure class="side-fig side-fig--placeholder">Porträtt av Carl von Linné<span class="ph-sub">(Claude letar efter en fri/licensierad bild)</span></figure>
+          <figure class="side-fig side-fig--placeholder">Foto: Råshult, Linnés födelsehem<span class="ph-sub">(väntar på Jespers eget foto)</span></figure>
         </div>
         </div></div>
 

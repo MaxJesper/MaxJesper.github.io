@@ -1111,3 +1111,14 @@ Ursprungligt: Ska göras tillsammans med Jesper. Väntar på hans foton för pun
 
 ## Planerat: "Luktsalt" och Exit tickets (antecknat 5 okt 2026)
 Två saker Jesper vill ha för alla områden så småningom (inte byggt): en intresseväckare när ett nytt område startar ("luktsalt": artefakt + fråga, något historiskt eller en kluring), och exit tickets (en kort quiz eller uppgift innan eleven går, flera per område som läraren låser upp, gärna med lärarvy via Cloudflare Worker). Dessutom "Utmaningen" (6 okt 2026): korta tävlingsquiz där elever utmanar varandra eller lag mot lag, t.ex. först till tre rätt eller först klar med ett minikorsord. Utmaningen är INTE en exit ticket, utan kan bli en turnering/cup. Se `_IDEER_luktsalt-och-exit-tickets.md`.
+
+### Bildplacering och bildtexter i studieguider (Jesper 15 okt 2026, pilot: biologi/liv-och-cellen)
+
+- **Bilder ligger normalt i textflödet**, i samma position genom hela studieguiden. Rader utan sidokolumn tar hela bredden (`.guide-wide .m-row--plain { display:block }` på sidan), så att inga hålrum uppstår.
+- **Högerfältet (`m-side`) används för:** gula Viktigt!-rutor (ska alltid ligga där), samt mindre, ensamma bilder när de annars skulle bryta textflödet för mycket (som strukturformler och 3D-modeller i kolkapitlet). Undvik att högerfältet blir längre än texten bredvid, så att det inte uppstår hålrum.
+- **Bildtexten ligger utanför bildramen**, inte i samma ram: ramen (mintgrön bakgrund + kant) sitter på `<img>`, inte på `<figure>`.
+- **Flera bilder bredvid varandra** (`.fig-row`): bildtexten under respektive bild, vänsterjusterad.
+- **En bild med ledig yta bredvid** (`.fig-beside`): bildtexten placeras bredvid bilden i stället för under. Liten bildrad + förklarande text bredvid: `.fig-group` (används för sjöborreäggen).
+- Små bilder med begränsad skärpa visas medvetet små (`.fig-row--sma`, max ca 170 px).
+- På smala skärmar (< 760 px) staplas bild och text.
+- CSS ligger än så länge sidlokalt i liv-och-cellen/studieguide.html. Ska spridas till övriga studieguider när Jesper godkänt piloten.
