@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationshandledning – Spektrum från olika ljuskällor</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+
+  <style>
+    body { padding-top: 3.5rem; }
+    main { font-size: 1.05em; max-width: 780px; margin: 0 auto; }
+
+    .lab-head { border-bottom: 2px solid #2e4a8a; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+    .lab-head .lab-cat { font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: #2e4a8a; font-weight: 700; }
+    .lab-head h1 { font-size: 1.5rem; margin: 0.15rem 0 0.1rem; color: #1a1a2e; }
+    .lab-head .lab-sub { font-size: 0.88rem; color: #666; }
+
+    main h2 { font-size: 0.85rem; letter-spacing: 1.2px; text-transform: uppercase; color: #2e4a8a; margin: 1.1rem 0 0.4rem; }
+    main p { line-height: 1.55; margin: 0.4rem 0; }
+    main ul, main ol { padding-left: 1.4rem; line-height: 1.55; margin: 0.3rem 0; }
+    main li { margin-bottom: 0.25rem; }
+
+    .fact-box {
+      background: #eef2fb; border-left: 4px solid #2e4a8a; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.5rem 0; font-size: 0.92rem;
+    }
+
+    .risk-box {
+      background: #fdecee; border: 1px solid #f3b8c0; border-left: 4px solid #c0152a;
+      border-radius: 8px; padding: 0.7rem 0.95rem; margin: 0.4rem 0;
+    }
+    .risk-box h2 { color: #c0152a; margin: 0 0 0.4rem; }
+    .risk-box ul { margin: 0; padding-left: 1.3rem; }
+    .risk-box li { font-size: 0.9rem; color: #6e1420; margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.35rem 0.6rem; text-align: left; }
+    .compare-table th { background: #eef2fb; color: #2e4a8a; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #f7f9fd; }
+    .compare-table.fillin td { height: 1.4em; }
+
+    .foot-note { font-size: 0.78rem; color: #595959; font-style: italic; margin: 0.3rem 0 0.8rem; }
+    .source-line { font-size: 0.78rem; color: #595959; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
+
+    .print-fab {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000; display: flex; gap: 0.5rem;
+    }
+    .print-fab .subject-btn { margin: 0; }
+
+    @page { size: A4; margin: 16mm 16mm 14mm; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; padding-top: 0; }
+      main { max-width: none; font-size: 0.88em; }
+      main h2 { margin: 0.7rem 0 0.3rem; }
+      main p, main ul, main ol { margin: 0.25rem 0; }
+      main li { margin-bottom: 0.12rem; }
+      .fact-box, .risk-box { margin: 0.3rem 0; padding: 0.5rem 0.8rem; break-inside: avoid; }
+      .risk-box li { margin-bottom: 0.12rem; }
+      .compare-table th, .compare-table td { padding: 0.22rem 0.5rem; }
+      .lab-head { margin-bottom: 0.6rem; padding-bottom: 0.4rem; }
+      .foot-note { margin: 0.15rem 0 0.4rem; }
+      .source-line { margin-top: 0.6rem; padding-top: 0.4rem; }
+    }
+  
+    .spec-box { margin: 0.35rem 0 0.9rem; break-inside: avoid; }
+    .spec-box .spec-label { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .spec-field { height: 2.6rem; border: 1.5px solid #333; border-radius: 3px;
+      background-image: repeating-linear-gradient(90deg, transparent 0 9.9%, #c9c9c9 9.9% 10%); }
+    .spec-axis { display: flex; justify-content: space-between; font-size: 0.78rem; color: #333; margin-top: 0.15rem; }
+    .lines { border-bottom: 1px solid #999; height: 1.6rem; }
+  </style>
+</head>
+<body>
+
+<div class="print-fab no-print">
+  <a href="./studieguide.html#m2" class="subject-btn">← Tillbaka</a>
+  <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
+</div>
+
+<main>
+  <div class="lab-head">
+    <div class="lab-cat">Atomfysik · Ljus från atomen</div>
+    <h1>Laboration: Spektrum från olika ljuskällor</h1>
+    <div class="lab-sub">Namn: ______________________________ &nbsp; Klass: ________ &nbsp; Datum: ____________</div>
+  </div>
+
+  <h2>Syfte</h2>
+  <p>Att undersöka hur ljuset från olika ljuskällor ser ut när det delas upp i ett spektrum, och att förklara skillnaden mellan kontinuerligt spektrum och linjespektrum med hjälp av atommodellen.</p>
+
+  <h2>Bakgrund</h2>
+  <p>Ett spektroskop delar upp ljus i dess färger. Ljus från något glödande fast, till exempel glödtråden i en glödlampa, innehåller alla färger. Ljus från en gas som fått energi innehåller bara vissa färger, eftersom elektronerna i gasens atomer bara kan falla mellan bestämda skal. Varje grundämne ger därför sitt eget mönster av linjer. Läs milstolpe 2 i <a href="./studieguide.html#m2">studieguiden</a> före laborationen.</p>
+
+  <h2>Material</h2>
+  <ul>
+    <li>Spektroskop (spektrumkikare)</li>
+    <li>Glödlampa</li>
+    <li>Lysrör eller lågenergilampa (taklampan i salen fungerar)</li>
+    <li>Lampor med gaser eller metallångor som ger bestämda våglängder (läraren visar vilka som finns)</li>
+  </ul>
+  <div class="foot-note">Salen mörkläggs. Lamporna med gaser kopplas in och hanteras endast av läraren.</div>
+
+  <h2>Genomförande</h2>
+  <ol>
+    <li>Rikta spektroskopet mot glödlampan. Se till att den smala springan i spektroskopets ände pekar mot lampan. Rita det du ser i ruta 1.</li>
+    <li>Rikta spektroskopet mot lysröret. Rita de tydligaste linjerna i ruta 2.</li>
+    <li>Läraren tänder en i taget av lamporna med gas. Skriv lampans namn och rita linjerna i ruta 3, 4 och 5. Rita varje linje där du ser den i förhållande till kanterna, och skriv färgen bredvid om du kan.</li>
+    <li>Har spektroskopet en skala med våglängder i nanometer (nm): skriv även ungefärlig våglängd för de tydligaste linjerna.</li>
+  </ol>
+  <div class="fact-box">Är du osäker på färgerna, till exempel om du är färgblind, så räcker det att rita linjernas läge noga. Läget avslöjar våglängden och därmed färgen – det är så forskare jobbar med spektrum.</div>
+
+  <div class="risk-box">
+    <h2>Risker vid laborationen</h2>
+    <ul>
+      <li>Lampor med gaser kan drivas med hög spänning. Endast läraren kopplar in och byter dem – rör inte lampor, sladdar eller hållare.</li>
+      <li>Glödlampor och gaslampor blir mycket varma. Rör inte lampan.</li>
+      <li>Titta aldrig rakt in i solen med spektroskopet. Det kan ge bestående ögonskador.</li>
+      <li>Vissa gaslampor (till exempel kvicksilverlampor) ger även UV-strålning. Titta inte länge rakt in i lampan på nära håll.</li>
+      <li>Rör dig försiktigt i den mörka salen.</li>
+    </ul>
+  </div>
+
+  <h2>Resultat</h2>
+  <div class="spec-box">
+    <div class="spec-label">1. Glödlampa</div>
+    <div class="spec-field" role="img" aria-label="Tom ruta att rita spektrumet i"></div>
+    <div class="spec-axis"><span>← violett (kort våglängd)</span><span>röd (lång våglängd) →</span></div>
+  </div>
+  <div class="spec-box">
+    <div class="spec-label">2. Lysrör</div>
+    <div class="spec-field" role="img" aria-label="Tom ruta att rita spektrumet i"></div>
+    <div class="spec-axis"><span>← violett (kort våglängd)</span><span>röd (lång våglängd) →</span></div>
+  </div>
+  <div class="spec-box">
+    <div class="spec-label">3. Lampa: ______________________</div>
+    <div class="spec-field" role="img" aria-label="Tom ruta att rita spektrumet i"></div>
+    <div class="spec-axis"><span>← violett (kort våglängd)</span><span>röd (lång våglängd) →</span></div>
+  </div>
+  <div class="spec-box">
+    <div class="spec-label">4. Lampa: ______________________</div>
+    <div class="spec-field" role="img" aria-label="Tom ruta att rita spektrumet i"></div>
+    <div class="spec-axis"><span>← violett (kort våglängd)</span><span>röd (lång våglängd) →</span></div>
+  </div>
+  <div class="spec-box">
+    <div class="spec-label">5. Lampa: ______________________</div>
+    <div class="spec-field" role="img" aria-label="Tom ruta att rita spektrumet i"></div>
+    <div class="spec-axis"><span>← violett (kort våglängd)</span><span>röd (lång våglängd) →</span></div>
+  </div>
+
+  <h2>Frågor</h2>
+  <ol>
+    <li>Vilken sorts spektrum fick du från glödlampan? Vilken sorts spektrum fick du från gaslamporna?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Gav alla gaslampor samma linjer? Vad tror du skillnaden beror på?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Förklara med atommodellen varför en gas bara sänder ut vissa färger.
+      <div class="lines"></div><div class="lines"></div><div class="lines"></div></li>
+    <li>Linjer längre åt det violetta hållet har högre energi per foton än linjer åt det röda hållet. Vilken av dina linjer motsvarar alltså det största elektronhoppet?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Hur kan astronomer använda spektroskop för att ta reda på vad stjärnor består av?
+      <div class="lines"></div><div class="lines"></div></li>
+  </ol>
+
+  <div class="source-line">Källor: egen riskbedömning, <a href="./studieguide.html#m2">studieguiden</a> (milstolpe 2).</div>
+</main>
+
+</body>
+</html>

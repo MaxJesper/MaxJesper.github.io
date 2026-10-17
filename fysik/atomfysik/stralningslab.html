@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laborationshandledning – Alfa, beta och gamma med GM-rör</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+
+  <style>
+    body { padding-top: 3.5rem; }
+    main { font-size: 1.05em; max-width: 780px; margin: 0 auto; }
+
+    .lab-head { border-bottom: 2px solid #2e4a8a; padding-bottom: 0.6rem; margin-bottom: 1rem; }
+    .lab-head .lab-cat { font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: #2e4a8a; font-weight: 700; }
+    .lab-head h1 { font-size: 1.5rem; margin: 0.15rem 0 0.1rem; color: #1a1a2e; }
+    .lab-head .lab-sub { font-size: 0.88rem; color: #666; }
+
+    main h2 { font-size: 0.85rem; letter-spacing: 1.2px; text-transform: uppercase; color: #2e4a8a; margin: 1.1rem 0 0.4rem; }
+    main p { line-height: 1.55; margin: 0.4rem 0; }
+    main ul, main ol { padding-left: 1.4rem; line-height: 1.55; margin: 0.3rem 0; }
+    main li { margin-bottom: 0.25rem; }
+
+    .fact-box {
+      background: #eef2fb; border-left: 4px solid #2e4a8a; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.5rem 0; font-size: 0.92rem;
+    }
+
+    .risk-box {
+      background: #fdecee; border: 1px solid #f3b8c0; border-left: 4px solid #c0152a;
+      border-radius: 8px; padding: 0.7rem 0.95rem; margin: 0.4rem 0;
+    }
+    .risk-box h2 { color: #c0152a; margin: 0 0 0.4rem; }
+    .risk-box ul { margin: 0; padding-left: 1.3rem; }
+    .risk-box li { font-size: 0.9rem; color: #6e1420; margin-bottom: 0.3rem; line-height: 1.5; }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.5rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.35rem 0.6rem; text-align: left; }
+    .compare-table th { background: #eef2fb; color: #2e4a8a; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #f7f9fd; }
+    .compare-table.fillin td { height: 1.4em; }
+
+    .foot-note { font-size: 0.78rem; color: #595959; font-style: italic; margin: 0.3rem 0 0.8rem; }
+    .source-line { font-size: 0.78rem; color: #595959; font-style: italic; margin-top: 1.2rem; padding-top: 0.6rem; border-top: 1px solid #ddd; }
+
+    .print-fab {
+      position: fixed; top: 1rem; left: 1rem; z-index: 1000; display: flex; gap: 0.5rem;
+    }
+    .print-fab .subject-btn { margin: 0; }
+
+    @page { size: A4; margin: 16mm 16mm 14mm; }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { background: #fff; padding-top: 0; }
+      main { max-width: none; font-size: 0.88em; }
+      main h2 { margin: 0.7rem 0 0.3rem; }
+      main p, main ul, main ol { margin: 0.25rem 0; }
+      main li { margin-bottom: 0.12rem; }
+      .fact-box, .risk-box { margin: 0.3rem 0; padding: 0.5rem 0.8rem; break-inside: avoid; }
+      .risk-box li { margin-bottom: 0.12rem; }
+      .compare-table th, .compare-table td { padding: 0.22rem 0.5rem; }
+      .lab-head { margin-bottom: 0.6rem; padding-bottom: 0.4rem; }
+      .foot-note { margin: 0.15rem 0 0.4rem; }
+      .source-line { margin-top: 0.6rem; padding-top: 0.4rem; }
+    }
+  
+    .spec-box { margin: 0.35rem 0 0.9rem; break-inside: avoid; }
+    .spec-box .spec-label { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
+    .spec-field { height: 2.6rem; border: 1.5px solid #333; border-radius: 3px;
+      background-image: repeating-linear-gradient(90deg, transparent 0 9.9%, #c9c9c9 9.9% 10%); }
+    .spec-axis { display: flex; justify-content: space-between; font-size: 0.78rem; color: #333; margin-top: 0.15rem; }
+    .lines { border-bottom: 1px solid #999; height: 1.6rem; }
+      .compare-table.fillin td { height: 1.7em; }
+    .compare-table td.sub { color:#595959; font-size:0.82rem; }
+  </style>
+</head>
+<body>
+
+<div class="print-fab no-print">
+  <a href="./studieguide.html#m4" class="subject-btn">← Tillbaka</a>
+  <button type="button" class="subject-btn print-green" onclick="window.print()">🖨️ Skriv ut</button>
+</div>
+
+<main>
+  <div class="lab-head">
+    <div class="lab-cat">Atomfysik · Lärardemonstration</div>
+    <h1>Demonstration: Alfa, beta och gamma med GM-rör</h1>
+    <div class="lab-sub">Namn: ______________________________ &nbsp; Klass: ________ &nbsp; Datum: ____________</div>
+  </div>
+
+  <h2>Syfte</h2>
+  <p>Att undersöka hur långt alfa-, beta- och gammastrålning når igenom olika material, och att se att det alltid finns en bakgrundsstrålning omkring oss.</p>
+
+  <h2>Bakgrund</h2>
+  <p>Ett GM-rör (Geiger–Müller-rör) innehåller en gas. När strålning tränger in i röret joniseras gasen och det blir en liten strömpuls, som räknas eller hörs som ett knäpp. Läs milstolpe 4 och 6 i <a href="./studieguide.html#m4">studieguiden</a> före demonstrationen.</p>
+  <table class="compare-table">
+    <thead><tr><th>Strålkälla</th><th>Strålning vi undersöker</th><th>Halveringstid</th></tr></thead>
+    <tbody>
+      <tr><td>Americium-241</td><td>Alfa (ger också lite svag gammastrålning)</td><td>432 år</td></tr>
+      <tr><td>Strontium-90/yttrium-90</td><td>Beta</td><td>29 år</td></tr>
+      <tr><td>Cesium-137</td><td>Gamma (ger också beta, som stoppas med aluminium)</td><td>30 år</td></tr>
+    </tbody>
+  </table>
+  <div class="foot-note">Betakällan kan vara märkt bara yttrium-90. Yttrium-90 har en halveringstid på bara cirka 64 timmar, men det bildas hela tiden nytt när strontium-90 i källan sönderfaller. Därför håller källan i många år.</div>
+
+  <h2>Material</h2>
+  <ul>
+    <li>GM-rör med räknare (med tunt fönster i änden, så att alfastrålning kan ta sig in)</li>
+    <li>Strålkällor: americium-241, strontium-90/yttrium-90 och cesium-137</li>
+    <li>Pappersark, aluminiumplåtar och blyplåtar i olika tjocklek</li>
+    <li>Linjal eller hållare så att avståndet blir detsamma varje gång</li>
+    <li>Tidtagarur</li>
+  </ul>
+
+  <div class="risk-box">
+    <h2>Risker vid demonstrationen</h2>
+    <ul>
+      <li>Strålkällorna hanteras endast av läraren. Eleverna rör aldrig källorna.</li>
+      <li>Källorna hålls med tång eller i sin hållare, aldrig med fingrarna, och pekas inte mot någon.</li>
+      <li>Strålskydd: kort tid, stort avstånd, skärm. Källorna tas fram bara när de används och läggs sedan genast tillbaka i sin behållare.</li>
+      <li>Rör inte källornas yta eller fönster – de får inte skadas eller repas.</li>
+      <li>Ingen mat eller dryck i salen. Läraren tvättar händerna efter demonstrationen.</li>
+      <li>Källorna förvaras inlåsta och märkta med varningssymbolen för strålning.</li>
+      <li>Rör inte GM-rörets tunna fönster – det går lätt sönder.</li>
+    </ul>
+  </div>
+
+  <h2>Genomförande</h2>
+  <ol>
+    <li><strong>Bakgrundsstrålning.</strong> Utan någon källa i närheten: räkna antalet pulser under 1 minut. Gör gärna två mätningar och ta medelvärdet.</li>
+    <li><strong>Alfa.</strong> Placera americiumkällan ungefär 1 cm från GM-rörets fönster och räkna pulser under 1 minut. Gör om mätningen med ett pappersark emellan. Flytta sedan källan till ungefär 5 cm avstånd utan papper och mät igen.</li>
+    <li><strong>Beta.</strong> Placera strontium-/yttriumkällan på samma avstånd, till exempel 3 cm, och räkna pulser. Gör om med papper emellan och sedan med aluminiumplåtar i ökande tjocklek.</li>
+    <li><strong>Gamma.</strong> Placera cesiumkällan på samma avstånd med en aluminiumplåt emellan, så att betastrålningen stoppas. Räkna pulser. Lägg sedan till blyplåtar i ökande tjocklek och mät igen.</li>
+    <li><strong>Avstånd (om tid finns).</strong> Mät cesiumkällan på till exempel 5, 10 och 20 cm avstånd.</li>
+    <li>Dra bort bakgrundsstrålningen från varje mätning, så får du det som verkligen kommer från källan.</li>
+  </ol>
+
+  <h2>Resultat</h2>
+  <p>Bakgrundsstrålning: ________ pulser/min</p>
+  <table class="compare-table fillin">
+    <thead><tr><th>Källa</th><th>Material emellan / avstånd</th><th>Pulser/min</th><th>Minus bakgrund</th></tr></thead>
+    <tbody>
+      <tr><td>Americium-241</td><td>Inget, 1 cm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Americium-241</td><td>Papper, 1 cm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Americium-241</td><td>Inget, 5 cm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Sr-90/Y-90</td><td>Inget</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Sr-90/Y-90</td><td>Papper</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Sr-90/Y-90</td><td>Aluminium: ___ mm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Sr-90/Y-90</td><td>Aluminium: ___ mm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Cesium-137</td><td>Aluminium</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Cesium-137</td><td>Aluminium + bly: ___ mm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Cesium-137</td><td>Aluminium + bly: ___ mm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><td>Cesium-137</td><td>Avstånd 5 / 10 / 20 cm</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Frågor</h2>
+  <ol>
+    <li>Varför knäpper GM-röret även när ingen strålkälla finns i närheten? Ge två exempel på var den strålningen kommer ifrån.
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Vad hände med alfastrålningen när papperet sattes emellan, och när avståndet ökade till 5 cm? Vad säger det om alfastrålningens räckvidd?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Vilket material behövdes för att stoppa betastrålningen?
+      <div class="lines"></div></li>
+    <li>Stoppades gammastrålningen helt av blyet? Förklara.
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Varför sattes en aluminiumplåt emellan när vi undersökte gammastrålningen från cesium-137?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Alfastrålning stoppas av ett papper. Varför är den ändå farligast om ett alfastrålande ämne kommer in i kroppen?
+      <div class="lines"></div><div class="lines"></div></li>
+    <li>Vad visar avståndsmätningen om reglerna för strålskydd?
+      <div class="lines"></div><div class="lines"></div></li>
+  </ol>
+
+  <div class="source-line">Källor: egen riskbedömning, <a href="./studieguide.html#m4">studieguiden</a> (milstolpe 4 och 6), Strålsäkerhetsmyndigheten: Olika typer av joniserande strålning.</div>
+</main>
+
+</body>
+</html>

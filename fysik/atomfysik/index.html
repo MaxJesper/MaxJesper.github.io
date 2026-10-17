@@ -1,91 +1,283 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Atomfysik – Fysik</title>
-  <link rel="stylesheet" href="/css/style.css?v=3258155f">
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+
   <style>
-    .page-intro {
-      margin-bottom: 1.5rem;
+    body.area-atomfysik {
+      --area: #2e4a8a;
+      --area-strong: #1e356b;
+      --area-soft: #eef2fb;
+      --area-border: #cdd9f0;
+      --area-hover: #dde7f7;
     }
+    main { font-size: 1.2em; }
 
-    .resource-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    .area-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+    @media (min-width: 960px) { .area-layout { grid-template-columns: 300px 1fr; align-items: start; } }
+    .area-main { min-width: 0; }
 
+    .resource-grid { display: flex; flex-direction: column; gap: 1rem; margin-top: 0; }
     .resource-box {
-      background: #fff;
-      border: 1px solid #d8d8d8;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .resource-box h2 { margin-top: 0; margin-bottom: 0.75rem; font-size: 1.2rem; color: #1a1a2e; }
+    .resource-box ul { list-style: none; padding-left: 0; margin: 0; }
+    .resource-box li { margin-bottom: 0.7rem; }
+    .resource-box a { display: inline-block; text-decoration: none; font-weight: 600; }
+    .resource-box li.todo { color: #6b7280; font-weight: 600; }
+
+    .area-right { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+    .area-hero-image {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 16px;
+      padding: 1rem 1rem 1.1rem; margin: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .area-hero-image svg { width: 80%; max-width: 80%; height: auto; display: block; margin: 0 auto; }
+    .area-hero-image figcaption { margin-top: 0.9rem; }
+    .hero-caption h3 { margin: 0 0 0.5rem; color: var(--area-strong); font-size: 1.1rem; }
+    .hero-caption p { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+    .hero-caption p:last-child { margin-bottom: 0; }
+
+    .overview-intro { margin: 0 0 1rem 0; font-size: 1.35rem; font-weight: 600; color: var(--area-strong); text-align: center; }
+    .overview-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+    .overview-card {
+      background: #fff; border: 1px solid var(--area-border); border-radius: 10px;
+      padding: 0.55rem 0.6rem 0.65rem; width: 156px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .overview-card--wide { width: 306px; }
+    .overview-kat { font-size: 0.82rem; font-weight: 700; color: var(--area-strong); text-transform: uppercase; letter-spacing: .02em; }
+    .overview-stage { min-height: 74px; display: flex; align-items: center; justify-content: center; }
+    .overview-stage svg { max-width: 140px; max-height: 82px; }
+    .overview-card--wide .overview-stage svg { max-width: 290px; }
+    .overview-namn { font-size: 0.95rem; color: #1f2937; margin-top: 0.15rem; }
+
+    .overview-stage img { display:block; max-width:140px; max-height:82px; width:auto; height:auto; }
+    .overview-formler { font-size: 0.92rem; color:#1f2937; margin-top:0.1rem; }
+    .overview-formler .st { font-size:1.05rem; letter-spacing:0.04em; }
+    .overview-card--pad { width: calc((100% - 1.4rem) / 3); min-width: 150px; }
+    .resource-box li .note { font-weight:400; color:#374151; }
+    .resource-box a:focus-visible, .milestone-map-list a:focus-visible, .concept-btn:focus-visible, .subject-btn:focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    .concept-section {
+      background: var(--area-soft); border: 1px solid var(--area-border); border-radius: 12px;
+      padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .concept-section h2 { margin: 0 0 0.75rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .concept-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem;
+    }
+    .concept-list li { margin: 0; }
+    .concept-list .concept-btn {
+      display: inline-block; background: #fff; border: 1px solid var(--area-border);
+      border-radius: 999px; padding: 0.3rem 0.8rem; line-height: 1.3;
+      color: #1f2937; cursor: pointer; font: inherit; font-size: 1.05rem;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .concept-list .concept-btn:hover {
+      background: var(--area-hover); border-color: var(--area);
+      color: var(--area-strong); text-decoration: none;
+    }
+    .concept-note { margin: 0.8rem 0 0 0; font-size: 0.82rem; color: #555; font-style: italic; }
+    .concept-note a { color: var(--area-strong); font-weight: 600; }
+
+    .study-tips { margin-top: 1.5rem; background: #f8f9fb; border: 1px solid #d8e0ea; border-radius: 12px; padding: 1rem; }
+    .study-tips summary { cursor: pointer; font-weight: 700; margin-bottom: 0.5rem; }
+    .study-tips ul { margin: 0.75rem 0 0 1.2rem; }
+    .study-tips li { margin-bottom: 0.45rem; }
+
+    .milestone-map {
+      margin-top: 1.5rem; background: #fff; border: 1px solid #d8d8d8; border-left: 4px solid var(--area);
+      border-radius: 12px; padding: 1rem 1rem 1.25rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .milestone-map h2 { margin: 0 0 0.25rem 0; font-size: 1.1rem; color: var(--area-strong); }
+    .milestone-map p.map-intro { margin: 0 0 0.9rem 0; font-size: 0.95rem; color: #555; }
+    .milestone-map-list { display: flex; flex-wrap: wrap; gap: 0.6rem; list-style: none; padding: 0; margin: 0; }
+    .milestone-map-list li { margin: 0; }
+    .milestone-map-list a {
+      display: flex; align-items: center; gap: 0.55rem; background: var(--area-soft);
+      color: var(--area-strong); border: 1px solid var(--area-border); border-radius: 999px;
+      padding: 0.4rem 0.9rem 0.4rem 0.45rem; text-decoration: none; font-size: 0.93rem;
+      font-weight: 500; transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .milestone-map-list a:hover { background: var(--area-hover); transform: translateY(-1px); }
+    .milestone-map-list .m-num-chip {
+      display: inline-flex; align-items: center; justify-content: center; width: 1.7rem; height: 1.7rem;
+      border-radius: 50%; background: var(--area); color: #fff; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
     }
 
-    .resource-box h2 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-      font-size: 1.35rem;
+    .under-konstruktion {
+      display: inline-block; font-size: 0.75rem; font-weight: 600; background: #fef9c3; color: #854d0e;
+      border: 1px solid #fde047; border-radius: 999px; padding: 0.15rem 0.6rem; margin-left: 0.4rem; vertical-align: middle;
     }
-
-    .resource-box p {
-      margin-top: 0;
-      color: #444;
-    }
-
-    .resource-box ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    .resource-box li {
-      margin-bottom: 0.7rem;
-    }
-
-    .resource-box a {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    main {
-      font-size: 1.2em;
-    }
-
+      .overview-sym { font-size: 2rem; font-weight: 700; color: var(--area-strong); line-height: 1.2; font-family: "Cambria Math", Georgia, serif; }
   </style>
 </head>
+<body class="area-atomfysik">
 
-<body>
+  <header class="fysik-header">
+    <h1>Atomfysik</h1>
+  </header>
 
-<header class="fysik-header">
-  <h1>Atomfysik</h1>
-</header>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Öppna menyn">☰</button>
+  <nav id="side-menu"></nav>
 
-<button class="hamburger" onclick="toggleMenu()">☰</button>
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
+    </p>
 
-<nav id="side-menu"></nav>
+    <div class="lang-row">
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp"></div>
+      <button type="button" class="lang-info-btn" aria-expanded="false" aria-controls="lang-info" aria-label="Vad gäller språkvalet?">i</button>
+      <p class="lang-info" id="lang-info">Olika språk kan väljas för begreppslista, checklista och markerade begreppsord i studieguiden.</p>
+    </div>
 
-<main>
-  <p style="margin-bottom:1rem;">
-    <a href="/fysik/index.html" class="subject-btn">← Tillbaka till Fysik</a>
-  </p>
-    <section class="page-intro">
-      <p>Här hittar du material om atomkärnan, radioaktivitet, strålning, halveringstid och kärnreaktioner.</p>
-    </section>
+    <section class="area-layout">
+      <div class="area-main">
+        <section class="resource-grid">
+          <article class="resource-box">
+            <h2>Material för elever</h2>
+            <ul>
+              <li><a href="./studieguide.html"><strong>Studieguide</strong></a> – atomkärnan, strålning och kärnenergi i åtta milstolpar</li>
+              <li><a href="./checklista.html"><strong>Checklista</strong></a></li>
+              <li><a href="./instuderingsfragor.html"><strong>Instuderingsfrågor</strong></a></li>
+              <li><a href="./ovningsprov.html"><strong>Övningsprov</strong></a></li>
+              <li><a href="./larande-spel.html"><strong>Lärande spel</strong></a> – begreppskort och begreppsbingo</li>
+              <li><a href="./begreppslista.html"><strong>Begreppslista</strong></a></li>
+            </ul>
+          </article>
+          <article class="resource-box">
+            <h2>Material för läraren</h2>
+            <ul>
+              <li><a href="./facit.html"><strong>Facit till övningsprovet</strong></a></li>
+              <li><a href="./spektrumlab.html"><strong>Laboration: Spektrum från olika ljuskällor</strong></a> – utskrivbart protokoll</li>
+              <li><a href="./stralningslab.html"><strong>Demonstration: Alfa, beta och gamma med GM-rör</strong></a> – utskrivbart protokoll</li>
+            </ul>
+          </article>
+        </section>
 
-    <section class="resource-grid">
-      <article class="resource-box">
-        <h2>För elever</h2>
-        <p>Material för att träna inför prov och bygga förståelse.</p>
-        <p style="color:#595959; font-style:italic;">Material kommer snart.</p>
-      </article>
+        <section class="study-tips">
+          <details>
+            <summary>Inläsningstips</summary>
+            <ul>
+              <li>Lär dig <strong>atomnummer</strong> (antal protoner) och <strong>masstal</strong> (protoner + neutroner) först – resten av området bygger på dem.</li>
+              <li>Skilj på <strong>jonisering</strong> (elektronerna ändras) och <strong>radioaktivt sönderfall</strong> (kärnan ändras).</li>
+              <li>Kom ihåg vad som händer med kärnan: alfa ger −2 protoner och −4 i masstal, beta ger +1 proton och samma masstal, gamma ändrar inget.</li>
+              <li>Halveringstid: det är <strong>hälften av det som är kvar</strong> som försvinner varje gång – inte samma antal.</li>
+              <li>Becquerel säger hur mycket ett ämne strålar, sievert hur mycket strålning en människa tagit emot.</li>
+              <li>Fission klyver tunga kärnor, fusion slår ihop lätta. I båda blir lite massa till mycket energi.</li>
+            </ul>
+          </details>
+        </section>
+      </div>
+
+      <div class="area-right">
+        <figure class="area-hero-image">
+          <p class="overview-intro">Det här kommer du att lära dig om i området!</p>
+          <div class="overview-grid">
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Alfa</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">α</span></div>
+              <div class="overview-namn">heliumkärna</div>
+              <div class="overview-formler">2 protoner + 2 neutroner</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Beta</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">β</span></div>
+              <div class="overview-namn">elektron</div>
+              <div class="overview-formler">bildas när en neutron blir en proton</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Gamma</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">γ</span></div>
+              <div class="overview-namn">energi</div>
+              <div class="overview-formler">elektromagnetisk strålning</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Halveringstid</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">½</span></div>
+              <div class="overview-namn">hälften kvar</div>
+              <div class="overview-formler">100 % → 50 % → 25 % …</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Fission</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">U-235</span></div>
+              <div class="overview-namn">kärnklyvning</div>
+              <div class="overview-formler">kärnkraftverk</div>
+            </div>
+            <div class="overview-card overview-card--pad">
+              <div class="overview-kat">Fusion</div>
+              <div class="overview-stage"><span class="overview-sym" aria-hidden="true">H → He</span></div>
+              <div class="overview-namn">sammanslagning</div>
+              <div class="overview-formler">solens energikälla</div>
+            </div>
+          </div>
+        </figure>
+
+        <section class="concept-section" aria-label="Viktiga begrepp">
+          <h2>Viktiga begrepp att lära sig</h2>
+          <ul class="concept-list">
+            <li><button class="concept-btn" data-concept="Atomnummer">Atomnummer</button></li>
+            <li><button class="concept-btn" data-concept="Masstal">Masstal</button></li>
+            <li><button class="concept-btn" data-concept="Isotop">Isotop</button></li>
+            <li><button class="concept-btn" data-concept="Foton">Foton</button></li>
+            <li><button class="concept-btn" data-concept="Elektromagnetisk strålning">Elektromagnetisk strålning</button></li>
+            <li><button class="concept-btn" data-concept="Joniserande strålning">Joniserande strålning</button></li>
+            <li><button class="concept-btn" data-concept="Radioaktivitet">Radioaktivitet</button></li>
+            <li><button class="concept-btn" data-concept="Alfastrålning">Alfastrålning</button></li>
+            <li><button class="concept-btn" data-concept="Betastrålning">Betastrålning</button></li>
+            <li><button class="concept-btn" data-concept="Gammastrålning">Gammastrålning</button></li>
+            <li><button class="concept-btn" data-concept="Sönderfallsserie">Sönderfallsserie</button></li>
+            <li><button class="concept-btn" data-concept="Halveringstid">Halveringstid</button></li>
+            <li><button class="concept-btn" data-concept="Aktivitet">Aktivitet</button></li>
+            <li><button class="concept-btn" data-concept="Stråldos">Stråldos</button></li>
+            <li><button class="concept-btn" data-concept="Fission">Fission</button></li>
+            <li><button class="concept-btn" data-concept="Kedjereaktion">Kedjereaktion</button></li>
+            <li><button class="concept-btn" data-concept="Fusion">Fusion</button></li>
+          </ul>
+          <p class="concept-note">Protoner, neutroner, elektroner och elektronskal repeteras från <a href="/kemi/atomer/">Atomer och molekyler</a> i kemin.</p>
+        </section>
+
+        <section class="milestone-map" aria-label="Snabbnavigation till studieguidens milstolpar">
+          <h2>Studieguidens milstolpar</h2>
+          <p class="map-intro">Hoppa direkt till en milstolpe i studieguiden:</p>
+          <ul class="milestone-map-list">
+            <li><a href="./studieguide.html#m1"><span class="m-num-chip">1</span>Vad håller ihop atomkärnan?</a></li>
+            <li><a href="./studieguide.html#m2"><span class="m-num-chip">2</span>Ljus från atomen och det elektromagnetiska spektrumet</a></li>
+            <li><a href="./studieguide.html#m3"><span class="m-num-chip">3</span>När strålning slår loss elektroner</a></li>
+            <li><a href="./studieguide.html#m4"><span class="m-num-chip">4</span>Instabila kärnor: alfa, beta och gamma</a></li>
+            <li><a href="./studieguide.html#m5"><span class="m-num-chip">5</span>Halveringstid – mönster i slumpen</a></li>
+            <li><a href="./studieguide.html#m6"><span class="m-num-chip">6</span>Strålning omkring oss – mäta, använda och skydda sig</a></li>
+            <li><a href="./studieguide.html#m7"><span class="m-num-chip">7</span>Kärnklyvning, kärnkraft och kärnvapen</a></li>
+            <li><a href="./studieguide.html#m8"><span class="m-num-chip">8</span>Fusion – solens energikälla</a></li>
+          </ul>
+        </section>
+      </div>
     </section>
   </main>
 
-<script src="/js/menu.js?v=a57ce429"></script>
+  <script src="/js/menu.js?v=a57ce429"></script>
+  <script>
+  window.BEGREPP = [{"namn": "Atomnummer", "definition": "Antalet protoner i en atomkärna. Atomnumret bestämmer vilket grundämne atomen är – alla atomer med 6 protoner är kol.", "anchor": "./studieguide.html#m1"}, {"namn": "Masstal", "definition": "Det sammanlagda antalet protoner och neutroner i en atomkärna. Antalet neutroner fås som masstal minus atomnummer.", "anchor": "./studieguide.html#m1"}, {"namn": "Isotop", "definition": "En variant av ett grundämne. Isotoper av samma grundämne har lika många protoner men olika många neutroner, till exempel kol-12 och kol-14.", "anchor": "./studieguide.html#m1"}, {"namn": "Foton", "definition": "En liten 'portion' elektromagnetisk strålning. En atom sänder ut en foton när en elektron faller till ett skal närmare kärnan. Fotonens energi bestämmer ljusets färg.", "anchor": "./studieguide.html#m2"}, {"namn": "Elektromagnetisk strålning", "definition": "Strålning som radiovågor, infraröd strålning, synligt ljus, UV, röntgen och gamma. All sorts färdas med ljusets hastighet i tomrum; kortare våglängd ger mer energi per foton.", "anchor": "./studieguide.html#m2"}, {"namn": "Joniserande strålning", "definition": "Strålning med så hög energi att den kan slå loss elektroner från atomer och molekyler så att joner bildas. Den kan skada DNA i kroppens celler. Exempel: alfa, beta, gamma och röntgen.", "anchor": "./studieguide.html#m3"}, {"namn": "Radioaktivitet", "definition": "När instabila atomkärnor av sig själva sönderfaller och sänder ut strålning. Ett ämne med sådana kärnor kallas radioaktivt.", "anchor": "./studieguide.html#m4"}, {"namn": "Alfastrålning", "definition": "Partikelstrålning av heliumkärnor (2 protoner och 2 neutroner) som skjuts ut från instabila kärnor. Stoppas av ett pappersark, men är mycket skadlig inne i kroppen.", "anchor": "./studieguide.html#m4"}, {"namn": "Betastrålning", "definition": "Elektroner som skjuts ut från kärnan när en neutron omvandlas till en proton. Atomnumret ökar med ett. Stoppas av några millimeter aluminium.", "anchor": "./studieguide.html#m4"}, {"namn": "Gammastrålning", "definition": "Elektromagnetisk strålning med mycket hög energi som sänds ut från atomkärnor. Ändrar inte kärnans antal protoner eller neutroner. Försvagas av tjockt bly eller betong.", "anchor": "./studieguide.html#m4"}, {"namn": "Sönderfallsserie", "definition": "En kedja av radioaktiva sönderfall där varje ny kärna också är instabil, tills en stabil kärna bildas. I uranserien bildas bland annat radon, och serien slutar med bly.", "anchor": "./studieguide.html#m4"}, {"namn": "Halveringstid", "definition": "Den tid det tar för hälften av de radioaktiva kärnorna av en isotop att sönderfalla. Efter varje halveringstid finns hälften av det som var kvar.", "anchor": "./studieguide.html#m5"}, {"namn": "Aktivitet", "definition": "Hur många radioaktiva sönderfall som sker per sekund i ett ämne. Mäts i becquerel (Bq): 1 Bq är ett sönderfall per sekund.", "anchor": "./studieguide.html#m5"}, {"namn": "Stråldos", "definition": "Ett mått på hur mycket joniserande strålning en människa har tagit emot och hur skadlig den är. Mäts i sievert (Sv), oftast millisievert (mSv).", "anchor": "./studieguide.html#m6"}, {"namn": "Fission", "definition": "Kärnklyvning: en tung atomkärna, till exempel uran-235, klyvs i två mindre när den träffas av en neutron. Energi och nya neutroner frigörs.", "anchor": "./studieguide.html#m7"}, {"namn": "Kedjereaktion", "definition": "När neutroner från en kärnklyvning klyver nya kärnor, som i sin tur ger fler neutroner. I ett kärnkraftverk hålls den under kontroll, i en atombomb sker den okontrollerat.", "anchor": "./studieguide.html#m7"}, {"namn": "Fusion", "definition": "När lätta atomkärnor slås ihop till en tyngre, till exempel väte till helium. Energi frigörs. Det är fusion som ger solen dess energi.", "anchor": "./studieguide.html#m8"}];
+  </script>
+  <script src="/js/concepts-popup.js?v=7b88673c"></script>
+  <script src="/js/language-selector.js?v=a532040f"></script>
+  <script src="/js/concept-lang-selector.js?v=186531ac"></script>
+  <script>
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && data.length) {
+          window.BEGREPP = data;
+          if (window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+          window.dispatchEvent(new CustomEvent("begreppLangUpdate", { detail: { data: data, lang: "sv-SE" } }));
+        }
+      })
+      .catch(function (e) { console.warn("Kunde inte hämta begrepp.json – använder inbäddad reservlista.", e); });
+  </script>
 </body>
 </html>

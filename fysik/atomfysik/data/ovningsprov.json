@@ -1,0 +1,48 @@
+{
+  "sections": [
+    {
+      "title": "Del I – E-nivå (grundläggande)",
+      "questions": [
+        {
+          "type": "match",
+          "title": "Para ihop varje begrepp med rätt förklaring. Skriv siffran i rutan.",
+          "left": ["Isotop", "Halveringstid", "Fission", "Fusion", "Becquerel"],
+          "right": [
+            "1. Lätta kärnor slås ihop till en tyngre",
+            "2. Atomer av samma grundämne med olika antal neutroner",
+            "3. Ett sönderfall per sekund",
+            "4. En tung kärna klyvs i två mindre",
+            "5. Tiden tills hälften av de radioaktiva kärnorna sönderfallit"
+          ],
+          "a": "Isotop – 2, Halveringstid – 5, Fission – 4, Fusion – 1, Becquerel – 3"
+        },
+        { "q": "En kärna av natrium-23 har atomnummer 11. Hur många protoner och hur många neutroner har kärnan?", "a": "11 protoner och 23 − 11 = 12 neutroner.", "lines": 2 },
+        { "q": "Skriv tre sorters elektromagnetisk strålning och ge ett exempel på användning för var och en.", "a": "T.ex. radiovågor – mobiltelefon; infraröd strålning – värmekamera; röntgen – bilder av skelettet. (Även synligt ljus, UV och gamma godtas.)", "lines": 4 },
+        { "q": "Vad består (a) alfastrålning och (b) betastrålning av?", "a": "(a) Heliumkärnor, två protoner och två neutroner. (b) Elektroner som skjuts ut från kärnan.", "lines": 3 },
+        { "q": "Vad behövs för att stoppa alfastrålning?", "a": "Ett pappersark (eller några centimeter luft).", "lines": 1 },
+        { "q": "Ett radioaktivt ämne har halveringstiden 2 timmar. Från början finns 400 kärnor. Hur många finns kvar efter 6 timmar?", "a": "6 h / 2 h = 3 halveringstider. 400 → 200 → 100 → 50. Det finns 50 kvar.", "lines": 3 },
+        { "q": "Nämn två källor till den bakgrundsstrålning vi utsätts för.", "a": "T.ex. marken/berggrunden, rymden, radon, maten och kroppen, sjukvården.", "lines": 2 },
+        { "q": "Var får solen sin energi ifrån?", "a": "Från fusion – vätekärnor slås ihop till heliumkärnor i solens inre.", "lines": 2 }
+      ]
+    },
+    {
+      "title": "Del II – C-nivå (förklara och tillämpa)",
+      "questions": [
+        { "q": "Förklara varför en upphettad gas ger ett linjespektrum och inte alla färger.", "a": "Elektronerna kan bara finnas i vissa bestämda skal. När de faller mellan skalen sänds fotoner med bestämda energier ut, alltså bara vissa färger. Varje grundämne har sina egna skal och därmed sitt eget linjemönster.", "lines": 4 },
+        { "q": "Förklara vad joniserande strålning är och varför den kan orsaka cancer.", "a": "Strålning med så hög energi att den slår loss elektroner och bildar joner. Den kan skada DNA i cellerna, och om skadan inte repareras rätt kan cellen börja dela sig okontrollerat.", "lines": 4 },
+        { "q": "Uran-238 (atomnummer 92) sönderfaller med alfastrålning. Den nya kärnan sönderfaller sedan med betastrålning. Ange masstal och atomnummer efter varje steg.", "a": "Efter alfa: masstal 234, atomnummer 90 (torium-234). Efter beta: masstal 234, atomnummer 91 (protaktinium-234).", "lines": 3 },
+        { "q": "Förklara hur radon bildas och varför det är en hälsorisk i en del svenska hus.", "a": "Radon bildas i uranserien när radium sönderfaller, i marken och i vissa byggnadsmaterial som blåbetong. Det är en gas som kan läcka in i huset. Radondöttrarna fastnar i lungorna och sänder ut alfastrålning, vilket ökar risken för lungcancer.", "lines": 4 },
+        { "q": "Beskriv vad som händer i ett kärnkraftverk från kärnklyvning till el. Förklara också vad styrstavarna är till för.", "a": "Uran-235 klyvs i en kedjereaktion och ger värme. Värmen kokar vatten till ånga som driver en turbin, och turbinen driver en generator som ger el. Styrstavarna fångar upp neutroner så att kedjereaktionen hålls under kontroll eller stoppas.", "lines": 5 }
+      ]
+    },
+    {
+      "title": "Del III – A-nivå (resonera och dra slutsatser)",
+      "questions": [
+        { "q": "En arkeolog hittar en träbit som innehåller en åttondel så mycket kol-14 som färskt trä. Kol-14 har halveringstiden 5730 år. Hur gammal är träbiten? Förklara hur du tänker, och varför metoden inte fungerar på en stenyxa.", "a": "En åttondel kvar = 3 halveringstider: 3 · 5730 år ≈ 17 000 år. Metoden bygger på att levande organismer tar upp kol och slutar när de dör. En stenyxa har aldrig levt och innehåller inget kol från luften, så den kan inte dateras så.", "lines": 5 },
+        { "q": "En kompis säger: ”Gammastrålning är alltid farligast eftersom den tränger längst.” Resonera om påståendet.", "a": "Delvis fel. Gamma är svårast att skärma av, så den är besvärligast från en källa utanför kroppen. Men alfastrålning är mest joniserande och lämnar all energi på kort sträcka. Kommer ett alfastrålande ämne in i kroppen, t.ex. radondöttrar i lungorna, är alfa farligast. Det beror alltså på var källan finns.", "lines": 6 },
+        { "q": "Jämför kärnkraft och fusionskraft som framtida energikällor. Ta upp hur energin frigörs, för- och nackdelar och hur långt utvecklingen har kommit.", "a": "Båda frigör energi genom att lite massa blir energi (E = mc²). Kärnkraft (fission) finns i dag, ger jämn el med låga koldioxidutsläpp, men ger långlivat avfall och risk för olyckor. Fusion har riklig bränsletillgång (deuterium i vatten) och inget långlivat bränsleavfall, men kräver omkring 150 miljoner grader och finns ännu bara i försöksanläggningar som ITER. Ett resonerande svar väger fördelar mot nackdelar.", "lines": 7 },
+        { "q": "Efter Tjernobylolyckan fick en del svenskar rådet att inte äta vissa svampar och vilt. Förklara varför, med hjälp av begreppen halveringstid och skillnaden mellan bestrålning och radioaktiva ämnen i kroppen.", "a": "Radioaktivt cesium-137 föll ner med regnet och togs upp av svamp och djur. Äter man dem kommer de radioaktiva ämnena in i kroppen och strålar där, vilket skärm och avstånd inte skyddar mot. Cesium-137 har halveringstiden 30 år, så det sönderfaller långsamt och finns kvar i naturen i många år.", "lines": 6 }
+      ]
+    }
+  ]
+}

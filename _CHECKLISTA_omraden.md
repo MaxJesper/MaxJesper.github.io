@@ -34,7 +34,7 @@ Först bygga ut alla ~29 områden, sedan strömlinjeforma. Ny funktion → in i 
 | biologi/nervsystemet | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | biologi/sinnena | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
 | **fysik/arbete-energi-effekt** | **13/13** (+begrepp-bingo, energiformer-spel, energikedja-spel, energiovergangar-spel, storheter-spel, raknekort, for-lararen) | **5/5** | **10/10** | ✗ | ✗ |
-| fysik/atomfysik | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
+| **fysik/atomfysik** | **13/13** (BYGGT 17 okt 2026: studieguide 8 milstolpar utan bilder ännu, + begrepp-bingo; underlag TEFY + ChatGPT-förarbete + rubrikjämförelse Gleerups/Capensis; checklistöversättning ar/am/rw saknas; spektrumlab.html klar, stralningslab.html (GM-demonstration: Am-241, Sr-90/Y-90, Cs-137) klar) | **5/5** (+ begreppsbingo.json) | **11/11** begrepp + termer | ✗ | ✗ |
 | fysik/elektricitet | 13/13 | 5/5 | 10/10 | ✗ | ✗ |
 | fysik/kraft-och-rorelse | 13/13 | 5/5 | 10/10 | ✓ | ✗ |
 | fysik/ljud | 1/13 | 0/5 | 0/10 | ✗ | ✗ |
