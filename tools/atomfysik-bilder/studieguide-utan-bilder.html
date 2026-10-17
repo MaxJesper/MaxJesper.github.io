@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studieguide – Atomfysik</title>
+  <link rel="stylesheet" href="/css/style.css?v=3258155f" />
+  <link rel="stylesheet" href="/css/milstolpe.css?v=f491bea5" />
+
+  <style>
+    :root { --ms-head: #2e4a8a; } /* milstolparnas rubrikfält, se /css/milstolpe.css */
+    body { --listen-color:#2e4a8a; --listen-border:#cdd9f0; --listen-hover-bg:#eef2fb; }
+    main { font-size: 1.1em; max-width: 820px; margin: 0 auto; }
+
+    .guide-intro {
+      background: #eef2fb; border: 1px solid #cdd9f0; border-left: 4px solid #2e4a8a;
+      border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1.25rem;
+    }
+    .guide-intro p { margin: 0.35rem 0; }
+
+    .milestone {
+      background: #fff; border: 1px solid #d8d8d8; border-radius: 12px;
+      margin-bottom: 0.9rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden;
+    }
+    .milestone > summary {
+      list-style: none; cursor: pointer; padding: 1rem 1.1rem; display: flex;
+      align-items: center; gap: 0.75rem; font-weight: 600; color: #1a1a2e;
+    }
+    .milestone > summary::-webkit-details-marker { display: none; }
+    .milestone > summary::before {
+      content: "▸"; color: #2e4a8a; font-size: 0.95rem; transition: transform 0.15s ease; display: inline-block;
+    }
+    .milestone[open] > summary::before { transform: rotate(90deg); }
+    .milestone .m-num {
+      font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: #2e4a8a; font-weight: 700; white-space: nowrap;
+    }
+    .milestone .m-title { font-size: 1.1rem; flex: 1; }
+    .milestone .m-body { padding: 0 1.1rem 1.1rem 1.1rem; border-top: 1px solid #eee; padding-top: 0.9rem; }
+    .milestone .m-body p { margin: 0.6rem 0; line-height: 1.55; }
+    .milestone .m-body strong.term { color: #1a1a2e; }
+
+    .formula-box {
+      background: #eef2fb; border: 1px solid #cdd9f0; border-radius: 8px;
+      padding: 0.7rem 1rem; margin: 0.9rem 0; text-align: center; font-size: 1.05rem;
+    }
+    .formula-box .f { font-family: "Cambria Math", Georgia, serif; font-weight: 600; color: #1e356b; }
+    .formula-box .u { display: block; font-size: 0.85rem; color: #555; margin-top: 0.3rem; }
+
+    .calc-box {
+      background: #f2f7f2; border: 1px solid #cfe3cf; border-left: 4px solid #2e7d4f;
+      border-radius: 8px; padding: 0.75rem 1rem; margin: 0.9rem 0; font-size: 0.97rem;
+    }
+    .calc-box > strong.calc-rubrik {
+      display: block; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase;
+      color: #256b41; margin-bottom: 0.35rem;
+    }
+    .calc-box .steg { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.95rem; margin: 0.2rem 0; }
+
+    .minnesregel {
+      background: #fff8e6; border: 1px solid #f0d68a; border-left: 4px solid #d4a017;
+      border-radius: 8px; padding: 0.7rem 1rem; margin: 0.9rem 0; font-size: 0.97rem;
+    }
+    .minnesregel > strong { display: block; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: #8a6d1a; margin-bottom: 0.3rem; }
+    .minnesregel .ex { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.93rem; }
+
+    .fact-box {
+      background: #eef2fb; border-left: 4px solid #2e4a8a; border-radius: 6px;
+      padding: 0.75rem 0.95rem; margin: 0.9rem 0; font-size: 0.98rem;
+    }
+    .fact-box strong {
+      display: block; margin-bottom: 0.25rem; font-size: 0.8rem; letter-spacing: 1px;
+      text-transform: uppercase; color: #2e4a8a;
+    }
+
+    .deepen {
+      background: #fffbe7; border-left: 4px solid #d4a017; border-radius: 6px;
+      padding: 0.65rem 0.9rem; margin: 0.8rem 0; font-size: 0.96rem;
+    }
+    .deepen > summary {
+      cursor: pointer; list-style: none; font-weight: 700; color: #7a5c00;
+      font-size: 0.88rem; letter-spacing: 1px; text-transform: uppercase; padding: 0.1rem 0;
+    }
+    .deepen > summary::-webkit-details-marker { display: none; }
+    .deepen > summary::before { content: "★ Fördjupning:"; display: block; margin-bottom: 0.15rem; }
+    .deepen > summary::after { content: " ▾"; }
+    .deepen[open] > summary::after { content: " ▴"; }
+    .deepen > summary ~ * { margin-top: 0.6rem; }
+
+    .next-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.6rem; margin-top: 1rem; }
+    .next-steps a {
+      display: block; padding: 0.7rem 0.9rem; background: #eef2fb; border: 1px solid #cdd9f0;
+      border-radius: 8px; text-decoration: none; color: #1a1a2e; font-size: 0.95rem;
+      transition: background 0.12s ease, transform 0.12s ease;
+    }
+    .next-steps a:hover { background: #dde7f7; transform: translateY(-1px); }
+    .next-steps a .n-label {
+      display: block; font-size: 0.72rem; letter-spacing: 1.4px; text-transform: uppercase;
+      color: #2e4a8a; font-weight: 700; margin-bottom: 0.2rem;
+    }
+
+    .compare-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 0.9rem 0; }
+    .compare-table th, .compare-table td { border: 1px solid #d8d8d8; padding: 0.45rem 0.7rem; text-align: left; }
+    .compare-table th { background: #eef2fb; color: #2e4a8a; font-weight: 700; }
+    .compare-table tr:nth-child(even) td { background: #f7f9fd; }
+
+    a.cite { font-size: 0.78rem; color: #2e4a8a; font-weight: 700; vertical-align: super; text-decoration: none; margin-left: 0.05rem; }
+    a.cite:hover { text-decoration: underline; }
+    .references { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #d8d8d8; font-size: 0.9rem; line-height: 1.65; }
+    .references h2 { font-size: 1rem; color: #2e4a8a; margin: 0 0 0.6rem; }
+    .references ol { margin: 0 0 0 1.3rem; }
+    .references li { margin-bottom: 0.4rem; }
+    .references a { color: #2e4a8a; }
+
+    details.milestone, details.deepen { scroll-margin-top: 0.75rem; }
+    @media (max-width: 520px) { main { font-size: 1.05em; } .milestone .m-title { font-size: 1rem; } }
+
+    .milestone > summary h2.m-title { margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a1a2e; }
+    .milestone .m-body h3 { font-size: 1.02rem; color: #2e4a8a; margin: 1.2rem 0 0.4rem; }
+    .milestone .m-body h3:first-child { margin-top: 0.2rem; }
+    .nuk { white-space: nowrap; font-family: "Cambria Math", Georgia, serif; }
+    .nuk-n { display: inline-flex; flex-direction: column; vertical-align: middle; line-height: 1; font-size: 0.72em; text-align: right; margin-right: 0.08em; }
+    .nuk-n sup, .nuk-n sub { position: static; font-size: 1em; }
+    ol.serie { margin: 0.5rem 0 0.8rem 1.4rem; line-height: 1.6; }
+    .check-q { background:#eff6ff; border-left:4px solid #2563eb; border-radius:6px; padding:0.7rem 0.95rem; margin:0.9rem 0; }
+    .check-q > summary { cursor:pointer; font-weight:600; color:#1e3a8a; list-style:none; }
+    .check-q > summary::-webkit-details-marker { display:none; }
+    .check-q > summary::before { content: "✓ Kontrollera dig själv: "; }
+    .check-q > summary::after { content: " (visa svar)"; font-weight:400; color:#475569; }
+    .check-q[open] > summary::after { content: " (dölj svar)"; }
+    .check-q .svar { margin-top:0.5rem; padding-top:0.5rem; border-top:1px dashed #bfdbfe; }
+  </style>
+</head>
+<body>
+
+  <header class="fysik-header">
+    <h1>Studieguide</h1>
+    <p>Atomfysik – atomkärnan, strålning och kärnenergi</p>
+  </header>
+
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <nav id="side-menu"></nav>
+
+  <main>
+    <p style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <a href="./" class="subject-btn">← Tillbaka till området</a>
+      <button type="button" id="toggle-all-btn" onclick="toggleAllMilestones()" style="background:#eef2fb; border:1px solid #cdd9f0; border-radius:999px; padding:0.4rem 1rem; font-size:0.95rem; font-weight:600; color:#2e4a8a; cursor:pointer;">Stäng alla</button>
+    </p>
+
+    <section class="guide-intro">
+      <p><strong>Så här använder du studieguiden:</strong> arbeta dig igenom milstolparna i ordning. Varje milstolpe slutar med en kort sammanfattning – den ska du kunna förklara med egna ord.</p>
+      <p><em>Nyckelord</em> står i fetstil och återkommer i checklistan och begreppslistan. Blå rutor med ✓ är kontrollfrågor där du kan visa svaret. Gula rutor är fördjupning för den som vill komma längre.</p>
+      <p>Grunderna om atomen (protoner, neutroner, elektroner och elektronskal) läste du i kemin i åk 7. Vill du repetera finns de i <a href="/kemi/atomer/studieguide.html">studieguiden Atomer</a>. Innehållet följer kursplanen i fysik för åk 7–9<a href="#ref-14" class="cite">[14]</a>.</p>
+      <div class="concept-lang-selector-mount" data-begrepp-base="./data/begrepp" data-termer-base="./data/termer"></div>
+    </section>
+
+    <!-- M1 -->
+    <details class="milestone" id="m1" open>
+      <summary><span class="m-num">Milstolpe 1</span><h2 class="m-title">Vad håller ihop atomkärnan?</h2></summary>
+      <div class="m-body">
+        <p>All materia består av atomer. En atom har en liten, tung <strong class="term"><span class="concept-inline" data-concept="atomkärna">atomkärna</span></strong> i mitten och lätta <strong class="term"><span class="concept-inline" data-concept="elektron">elektroner</span></strong> runt omkring. Kärnan är byggd av två sorters partiklar: positivt laddade <strong class="term"><span class="concept-inline" data-concept="proton">protoner</span></strong> och oladdade <strong class="term"><span class="concept-inline" data-concept="neutron">neutroner</span></strong>. Elektronerna är negativt laddade. En vanlig atom har lika många elektroner som protoner, och då tar laddningarna ut varandra – atomen är neutral.</p>
+        <p>Nästan hela atomens massa sitter i kärnan. En proton och en neutron väger ungefär lika mycket, medan en elektron väger nästan 2000 gånger mindre. Samtidigt är kärnan pyttesmå jämfört med hela atomen. Om en atom förstorades till en fotbollsarena skulle kärnan inte vara större än ett knappnålshuvud på mittcirkeln – resten är nästan tomt.</p>
+
+        <h3>Hur vet vi att kärnan finns?</h3>
+        <p>År 1909 lät forskare i Ernest Rutherfords laboratorium skjuta små positivt laddade partiklar (alfapartiklar, se milstolpe 4) mot en mycket tunn guldfolie. Man trodde att atomen var en jämnt utspridd boll av laddning, och att partiklarna därför skulle gå rakt igenom. De flesta gjorde det – men några få studsade tillbaka, nästan som om de träffat en vägg. Rutherford drog 1911 slutsatsen att nästan all atomens massa och positiva laddning måste vara samlad i en liten, kompakt kärna. Så föddes modellen med atomkärnan, och den danske fysikern Niels Bohr byggde sedan vidare med elektroner i bestämda skal runt kärnan (mer i milstolpe 2).</p>
+        <p>Det är ett bra exempel på hur naturvetenskap fungerar: en modell används så länge den stämmer med försöken, och ändras när ett nytt försök visar något modellen inte kan förklara. Skalmodellen är fortfarande användbar, men den är en förenkling – elektroner rör sig inte som små planeter i bestämda banor.</p>
+
+        <h3>Atomnummer, masstal och isotoper</h3>
+        <p>Antalet protoner i kärnan kallas <strong class="term"><span class="concept-inline" data-concept="Atomnummer">atomnummer</span></strong>. Det är atomnumret som bestämmer vilket grundämne det är: alla atomer med 6 protoner är kol, alla med 92 protoner är uran. Antalet protoner och neutroner tillsammans kallas <strong class="term"><span class="concept-inline" data-concept="Masstal">masstal</span></strong>.</p>
+        <p>Man skriver ofta en kärna med masstalet uppe och atomnumret nere framför kemiska tecknet, till exempel <span class="nuk"><span class="nuk-n"><sup>12</sup><sub>6</sub></span>C</span>. Ofta skriver man bara namnet och masstalet: kol-12.</p>
+        <div class="minnesregel">
+          <strong>Minnesregel</strong>
+          Atomnummer = antal protoner. &nbsp; Masstal = protoner + neutroner. &nbsp; Antal neutroner = masstal − atomnummer.
+        </div>
+        <p>Atomer av samma grundämne har alltid samma antal protoner, men antalet neutroner kan skilja. Varianterna kallas <strong class="term"><span class="concept-inline" data-concept="Isotop">isotoper</span></strong>. Kol-12 har 6 protoner och 6 neutroner, medan kol-14 har 6 protoner och 8 neutroner. Båda är kol och beter sig likadant kemiskt. Väte har tre isotoper: vanligt väte (bara en proton), <strong class="term"><span class="concept-inline" data-concept="deuterium">deuterium</span></strong> (en proton och en neutron) och <strong class="term"><span class="concept-inline" data-concept="tritium">tritium</span></strong> (en proton och två neutroner).</p>
+        <details class="check-q">
+          <summary>Uran-235 har atomnummer 92. Hur många neutroner har kärnan?</summary>
+          <div class="svar"><strong>Svar:</strong> 235 − 92 = 143 neutroner.</div>
+        </details>
+
+        <h3>Varför flyger inte kärnan isär?</h3>
+        <p>Protonerna i kärnan är alla positivt laddade, och lika laddningar stöter bort varandra. Att kärnan ändå håller ihop beror på en annan kraft, <strong class="term"><span class="concept-inline" data-concept="stark kärnkraft">den starka kärnkraften</span></strong>. Den verkar mellan protoner och neutroner och är mycket starkare än den elektriska bortstötningen – men bara på extremt korta avstånd, ungefär lika långt som en kärna är bred. Neutronerna hjälper alltså till att "limma" ihop kärnan utan att själva bidra med någon bortstötning.</p>
+        <p>I en stor kärna med många protoner blir balansen svårare att hålla. Vissa kärnor har därför för många eller för få neutroner i förhållande till protonerna för att vara stabila. Sådana kärnor förändras förr eller senare av sig själva – det är grunden för radioaktivitet, som du möter i milstolpe 4.</p>
+        <details class="deepen">
+          <summary>Naturens fyra grundläggande krafter</summary>
+          <p>Fysiker räknar med fyra grundläggande krafter i naturen. <strong>Gravitationen</strong> drar alla massor mot varandra och styr planeter och galaxer, men är mycket svag mellan små partiklar. <strong>Den elektromagnetiska kraften</strong> verkar mellan laddningar och håller ihop atomer och molekyler. <strong>Den starka kärnkraften</strong> håller ihop atomkärnan. <strong>Den svaga kärnkraften</strong> är den som ligger bakom betasönderfall, när en neutron omvandlas till en proton (milstolpe 4). De två kärnkrafterna märker vi aldrig av direkt, eftersom de bara når över avstånd inuti kärnan.</p>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Atomkärnan består av protoner och neutroner; elektronerna finns runt kärnan. Atomnumret är antalet protoner och avgör grundämnet. Masstalet är protoner + neutroner. Isotoper är atomer av samma grundämne med olika antal neutroner. Den starka kärnkraften håller ihop kärnan trots att protonerna stöter bort varandra.
+        </div>
+        <div class="next-steps">
+          <a href="/kemi/atomer/studieguide.html"><span class="n-label">Repetera</span>Atomer (kemi åk 7)</a>
+          <a href="#m2"><span class="n-label">Fortsätt</span>Ljus från atomen</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M2 -->
+    <details class="milestone" id="m2" open>
+      <summary><span class="m-num">Milstolpe 2</span><h2 class="m-title">Ljus från atomen och det elektromagnetiska spektrumet</h2></summary>
+      <div class="m-body">
+        <h3>Elektroner som hoppar</h3>
+        <p>I Bohrs atommodell kan en elektron bara finnas i vissa bestämda skal runt kärnan. Det innersta skalet har lägst energi. När atomen inte har fått någon extra energi sitter elektronerna så nära kärnan som möjligt – atomen är i sitt <strong class="term"><span class="concept-inline" data-concept="grundtillstånd">grundtillstånd</span></strong>.</p>
+        <p>Om atomen får energi, till exempel genom att en gas värms upp eller genom att elektrisk ström leds genom den, kan en elektron hoppa ut till ett skal längre från kärnan. Där stannar den bara ett ögonblick. När den faller tillbaka inåt lämnar atomen ifrån sig den extra energin som en liten ljusblixt – en <strong class="term"><span class="concept-inline" data-concept="Foton">foton</span></strong>. Hur mycket energi fotonen har beror på hur långt elektronen faller, och fotonens energi bestämmer ljusets färg. Blått ljus har mer energi per foton än rött.</p>
+        <p>Det är just detta som händer i en neonskylt: strömmen ger gasatomerna energi, och när elektronerna faller tillbaka lyser gasen. Neon lyser rött, andra gaser i andra färger. Samma sak syns när man håller ett metallsalt i en låga: natrium ger gult ljus, koppar grönblått – fyrverkeriernas färger kommer härifrån.</p>
+
+        <h3>Spektrum – atomernas fingeravtryck</h3>
+        <p>Om man låter ljus gå genom ett prisma delas det upp i sina färger, ett <strong class="term"><span class="concept-inline" data-concept="spektrum">spektrum</span></strong>. Ljus från något glödande fast, som solen eller en glödlampa, ger alla regnbågens färger utan glapp – ett kontinuerligt spektrum. Ljus från en upphettad gas ger i stället bara några skarpa färgade streck, ett <strong class="term"><span class="concept-inline" data-concept="linjespektrum">linjespektrum</span></strong>. Eftersom elektronerna i varje grundämne har sina egna bestämda skal ger varje grundämne sitt eget mönster av linjer, som ett fingeravtryck.</p>
+        <p>Om vitt ljus i stället får passera genom en kall gas suger gasen upp precis de färger den själv skulle ha sänt ut, och det blir svarta linjer i spektrumet. Genom att studera sådana linjer i ljuset från solen och stjärnorna kan astronomer ta reda på vilka grundämnen de består av, trots att de ligger ofattbart långt bort. Metoden kallas spektralanalys.</p>
+
+        <h3>Ljus är bara en liten bit</h3>
+        <p>Synligt ljus är en sorts <strong class="term"><span class="concept-inline" data-concept="Elektromagnetisk strålning">elektromagnetisk strålning</span></strong>. Den kan beskrivas som en våg, och avståndet mellan två vågtoppar kallas <strong class="term"><span class="concept-inline" data-concept="våglängd">våglängd</span></strong>. Antalet vågor som passerar per sekund kallas <strong class="term"><span class="concept-inline" data-concept="frekvens">frekvens</span></strong>. Ju kortare våglängd, desto högre frekvens – och desto mer energi har varje foton<a href="#ref-3" class="cite">[3]</a>.</p>
+        <p>Ögat kan bara uppfatta ett smalt band av våglängder: från rött (längst våglängd) till violett (kortast). Men samma sorts strålning finns med både mycket längre och mycket kortare våglängder. Hela familjen kallas det elektromagnetiska spektrumet. Ordnade från längst till kortast våglängd:</p>
+        <table class="compare-table">
+          <thead><tr><th>Sort</th><th>Exempel på användning</th></tr></thead>
+          <tbody>
+            <tr><td>Radiovågor (inklusive mikrovågor)</td><td>Radio, tv, mobiltelefoner, wifi, mikrovågsugn</td></tr>
+            <tr><td><span class="concept-inline" data-concept="infraröd strålning">Infraröd strålning</span> (värmestrålning)</td><td>Värmekamera, fjärrkontroll, värmen från en kamin</td></tr>
+            <tr><td>Synligt ljus</td><td>Allt vi ser – rött, orange, gult, grönt, blått, violett</td></tr>
+            <tr><td><span class="concept-inline" data-concept="ultraviolett strålning">Ultraviolett strålning</span> (UV)</td><td>Gör oss solbrända; används för att döda bakterier</td></tr>
+            <tr><td><span class="concept-inline" data-concept="röntgenstrålning">Röntgenstrålning</span></td><td>Röntgenbilder av skelett och tänder, kontroll av svetsfogar</td></tr>
+            <tr><td>Gammastrålning</td><td>Uppstår i atomkärnor (milstolpe 4); används i strålbehandling</td></tr>
+          </tbody>
+        </table>
+        <p>Alla dessa färdas med samma hastighet i tomrum, ljusets hastighet, ungefär 300 000 km per sekund. Det är alltså inte farten som skiljer dem åt, utan våglängden och därmed energin per foton.</p>
+        <p>Röntgenstrålningen upptäcktes av den tyske fysikern Wilhelm Röntgen år 1895. Den tränger lätt igenom mjuk vävnad men stoppas mer av skelettet, och därför syns benen som ljusa partier på en röntgenbild. En röntgenapparat innehåller inget radioaktivt ämne – strålningen skapas elektriskt och försvinner så fort apparaten stängs av.</p>
+        <details class="check-q">
+          <summary>Färdas gammastrålning snabbare än radiovågor?</summary>
+          <div class="svar"><strong>Svar:</strong> Nej. All elektromagnetisk strålning har samma hastighet i tomrum. Gammastrålning har kortare våglängd, högre frekvens och mer energi per foton.</div>
+        </details>
+        <details class="deepen">
+          <summary>MAX IV och ESS – jätteinstrument i Lund</summary>
+          <p>I nordöstra Lund ligger två av Europas största forskningsanläggningar. <strong>MAX IV</strong> invigdes 2016 och är en synkrotron: elektroner skickas runt i en ring med nästan ljusets hastighet, och när deras bana böjs av magneter sänder de ut extremt intensiv röntgenstrålning. Med den kan forskare se hur atomer sitter i allt från nya batterimaterial till proteiner i virus.</p>
+          <p>Granne med MAX IV byggs <strong>ESS</strong> (European Spallation Source). Där accelereras protoner till nästan ljusets hastighet och skjuts mot en roterande skiva av volfram. När protonerna träffar volframkärnorna slås neutroner loss, och de används för att undersöka material inifrån. Neutronerna är oladdade och kan tränga djupt in i material där röntgenstrålning inte når. De första neutronerna planeras till början av 2027<a href="#ref-10" class="cite">[10]</a>.</p>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          När en elektron faller från ett yttre till ett inre skal sänder atomen ut en foton. Varje grundämne ger ett eget linjespektrum. Synligt ljus är en liten del av det elektromagnetiska spektrumet: radiovågor, infraröd strålning, synligt ljus, UV, röntgen och gamma. Kortare våglängd betyder högre frekvens och mer energi per foton, men samma hastighet.
+        </div>
+        <div class="next-steps">
+          <a href="./spektrumlab.html"><span class="n-label">Laboration</span>Spektrum från olika ljuskällor</a>
+          <a href="#m3"><span class="n-label">Fortsätt</span>Joniserande strålning</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M3 -->
+    <details class="milestone" id="m3" open>
+      <summary><span class="m-num">Milstolpe 3</span><h2 class="m-title">När strålning slår loss elektroner</h2></summary>
+      <div class="m-body">
+        <p>Om en atom förlorar eller får en elektron blir den laddad, och kallas då en <strong class="term"><span class="concept-inline" data-concept="jon">jon</span></strong>. Strålning med så mycket energi att den kan slå loss elektroner ur atomer och molekyler kallas <strong class="term"><span class="concept-inline" data-concept="Joniserande strålning">joniserande strålning</span></strong><a href="#ref-1" class="cite">[1]</a>. Det är den här sortens strålning som kan vara farlig på ett särskilt sätt, eftersom den kan slå sönder molekyler i kroppens celler – bland annat DNA. Om skadan inte repareras rätt kan cellen dö eller i värsta fall börja dela sig okontrollerat, vilket kan leda till cancer långt senare.</p>
+        <p>Joniserande strålning finns av två slag:</p>
+        <ul>
+          <li><strong>Elektromagnetisk strålning med hög energi:</strong> röntgen- och gammastrålning.</li>
+          <li><strong>Partikelstrålning:</strong> små partiklar som skjuts ut i hög fart, till exempel alfa- och betastrålning från radioaktiva ämnen (milstolpe 4).</li>
+        </ul>
+        <p>Radiovågor, mikrovågor, infraröd strålning och synligt ljus har för lite energi per foton för att jonisera. De kallas icke-joniserande. Det betyder inte att de alltid är ofarliga – en mikrovågsugn kan bränna dig genom att värma – men de kan inte slå sönder molekyler på samma sätt.</p>
+        <p>UV-strålning ligger på gränsen. Solens UV-strålning räknas oftast som icke-joniserande, men den har tillräckligt med energi för att skada huden och ögonen, ge solbränna och på sikt hudcancer<a href="#ref-4" class="cite">[4]</a>. Den allra mest kortvågiga UV-strålningen kan jonisera. Därför är det fel att säga att "icke-joniserande" är samma sak som "ofarlig".</p>
+        <details class="check-q">
+          <summary>Är all strålning radioaktiv?</summary>
+          <div class="svar"><strong>Svar:</strong> Nej. Strålning är ett brett ord. Ljus, radiovågor och röntgen från en röntgenapparat har inget med radioaktivitet att göra. Radioaktivitet handlar om instabila atomkärnor som sönderfaller (nästa milstolpe).</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Joniserande strålning har så hög energi att den kan slå loss elektroner och bilda joner. Den kan skada DNA i celler. Röntgen och gamma (elektromagnetisk strålning) samt alfa och beta (partikelstrålning) är joniserande. Radiovågor, infraröd strålning och synligt ljus är icke-joniserande. UV räknas oftast som icke-joniserande men kan ändå skada hud och ögon.
+        </div>
+        <div class="next-steps">
+          <a href="#m4"><span class="n-label">Fortsätt</span>Radioaktivitet</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M4 -->
+    <details class="milestone" id="m4" open>
+      <summary><span class="m-num">Milstolpe 4</span><h2 class="m-title">Instabila kärnor: alfa, beta och gamma</h2></summary>
+      <div class="m-body">
+        <p>År 1896 upptäckte fransmannen Henri Becquerel att uranmineral sänder ut en osynlig strålning som svärtar fotografisk film. Kort därefter hittade Marie och Pierre Curie nya grundämnen, bland annat radium, som strålade ännu mycket kraftigare. Marie Curie kallade fenomenet radioaktivitet.</p>
+        <p>I dag vet vi förklaringen. De flesta atomkärnor är stabila och förblir likadana för alltid. Men vissa isotoper har kärnor med fel balans mellan protoner och neutroner. Sådana instabila kärnor ändrar sig förr eller senare av sig själva och skickar då ut strålning. Det kallas <strong class="term"><span class="concept-inline" data-concept="Radioaktivitet">radioaktivitet</span></strong>, och själva förändringen kallas ett <strong class="term"><span class="concept-inline" data-concept="radioaktivt sönderfall">radioaktivt sönderfall</span></strong><a href="#ref-1" class="cite">[1]</a>. Ett ämne med sådana kärnor kallas radioaktivt. Lägg märke till skillnaden mot jonisering: vid jonisering ändras elektronerna, men vid radioaktivt sönderfall ändras själva kärnan.</p>
+        <p>Det finns tre vanliga sorters strålning från radioaktiva kärnor.</p>
+
+        <h3>Alfastrålning</h3>
+        <p>Vid ett alfasönderfall skjuter kärnan ut en klump av två protoner och två neutroner – samma sak som en heliumkärna. Den kallas en alfapartikel, och en ström av sådana kallas <strong class="term"><span class="concept-inline" data-concept="Alfastrålning">alfastrålning</span></strong>. Kärnan som blir kvar har förlorat två protoner, och då är den ett helt annat grundämne. Exempel: uran-238 (92 protoner) sönderfaller till torium-234 (90 protoner).</p>
+        <div class="formula-box">
+          <span class="f">uran-238 → torium-234 + alfapartikel</span>
+          <span class="u">Masstal: 238 = 234 + 4 &nbsp;·&nbsp; Protoner: 92 = 90 + 2</span>
+        </div>
+
+        <h3>Betastrålning</h3>
+        <p>Vid det vanligaste betasönderfallet omvandlas en av kärnans neutroner till en proton och en elektron. Protonen stannar kvar i kärnan, men elektronen skjuts ut i mycket hög fart. Utskjutna elektroner från kärnor kallas <strong class="term"><span class="concept-inline" data-concept="Betastrålning">betastrålning</span></strong>. Det kan verka konstigt att en kärna sänder ut elektroner när den inte innehåller några – men elektronen skapas just i omvandlingen och kommer inte från elektronskalen runt kärnan.</p>
+        <p>Kärnan har nu en proton mer och en neutron mindre. Masstalet är detsamma, men atomnumret har ökat med ett – det har bildats ett nytt grundämne. Exempel: kol-14 (6 protoner, 8 neutroner) sönderfaller till kväve-14 (7 protoner, 7 neutroner).</p>
+        <div class="formula-box">
+          <span class="f">kol-14 → kväve-14 + elektron</span>
+          <span class="u">Masstal: oförändrat 14 &nbsp;·&nbsp; Protoner: 6 → 7</span>
+        </div>
+        <details class="deepen">
+          <summary>Det lilla extra i betasönderfallet</summary>
+          <p>Bilden ovan är förenklad. Vid betasönderfall skickas också en nästan masslös, oladdad partikel ut, en <em>antineutrino</em>. Den reagerar så sällan med annan materia att den går rakt igenom hela jordklotet. Den förutsades av fysikern Wolfgang Pauli 1930 för att energin i betasönderfallet inte gick ihop, men den påvisades först 1956.</p>
+          <p>Det finns också ett omvänt betasönderfall, där en proton omvandlas till en neutron och en <em>positron</em> skjuts ut. En positron är som en elektron fast med positiv laddning – den är elektronens antipartikel. Positroner används på sjukhus i PET-kameror som visar ämnesomsättningen i kroppen.</p>
+        </details>
+
+        <h3>Gammastrålning</h3>
+        <p>Efter ett alfa- eller betasönderfall har den nya kärnan ofta lite överskottsenergi kvar. Den lämnar den ifrån sig som <strong class="term"><span class="concept-inline" data-concept="Gammastrålning">gammastrålning</span></strong> – elektromagnetisk strålning med mycket kort våglängd, samma sort som röntgenstrålning fast med ursprung i kärnan. Vid gammastrålning ändras varken antalet protoner eller neutroner, så inget nytt grundämne bildas.</p>
+
+        <h3>Hur långt når strålningen?</h3>
+        <p>De tre strålsorterna är olika genomträngande<a href="#ref-1" class="cite">[1]</a>:</p>
+        <table class="compare-table">
+          <thead><tr><th>Strålning</th><th>Vad är det?</th><th>Stoppas av</th></tr></thead>
+          <tbody>
+            <tr><td>Alfa</td><td>Heliumkärnor (2 protoner + 2 neutroner)</td><td>Ett pappersark, eller några centimeter luft. Klarar inte ens hudens yttersta döda lager.</td></tr>
+            <tr><td>Beta</td><td>Elektroner som skjuts ut från kärnan</td><td>Några millimeter aluminium eller någon centimeter plast eller trä</td></tr>
+            <tr><td>Gamma</td><td>Elektromagnetisk strålning</td><td>Stoppas aldrig helt, men försvagas mycket av tjockt bly eller betong</td></tr>
+          </tbody>
+        </table>
+        <p>Det betyder inte att gamma alltid är farligast. Alfastrålning är kraftigt joniserande – den lämnar ifrån sig all sin energi på en mycket kort sträcka. Utanför kroppen gör den nästan ingen skada, men om ett alfastrålande ämne kommer in i kroppen, genom att man andas in eller äter det, bestrålas de celler som ligger alldeles intill. Då är alfa den farligaste strålningen. Det är precis det som händer med radon (milstolpe 6).</p>
+
+        <h3>Sönderfallsserier – från uran till bly</h3>
+        <p>När en instabil kärna sönderfaller blir det ofta en ny kärna som också är instabil. Den sönderfaller i sin tur, och så vidare, tills det till sist bildas en stabil kärna. En sådan kedja kallas en <strong class="term"><span class="concept-inline" data-concept="Sönderfallsserie">sönderfallsserie</span></strong>.</p>
+        <p>Den viktigaste för oss är uranserien. Uran-238 finns naturligt i berggrund och jord, och genom en lång rad alfa- och betasönderfall blir det till sist stabilt bly-206. Några steg på vägen:</p>
+        <ol class="serie">
+          <li><strong>uran-238</strong> → alfa → torium-234</li>
+          <li>… några beta- och alfasönderfall …</li>
+          <li><strong>radium-226</strong> → alfa → <strong>radon-222</strong></li>
+          <li><strong>radon-222</strong> → alfa → polonium-218</li>
+          <li>… fler sönderfall via bly, vismut och polonium …</li>
+          <li><strong>bly-206</strong> – stabil, serien slutar</li>
+        </ol>
+        <p>Radon har en särställning i kedjan: det är det enda ämnet i serien som är en gas. Det betyder att det kan sippra ut ur marken och byggnadsmaterial och följa med luften in i våra hus och lungor. Mer om varför det är ett problem i milstolpe 6.</p>
+        <details class="check-q">
+          <summary>Radium-226 har 88 protoner och sönderfaller med alfastrålning. Vilket masstal och atomnummer får kärnan som bildas?</summary>
+          <div class="svar"><strong>Svar:</strong> Masstal 226 − 4 = 222 och atomnummer 88 − 2 = 86. Det är radon-222.</div>
+        </details>
+        <details class="check-q">
+          <summary>Torium-234 (90 protoner) sönderfaller med betastrålning. Vad händer med masstalet och atomnumret?</summary>
+          <div class="svar"><strong>Svar:</strong> Masstalet är oförändrat, 234. Atomnumret ökar med ett till 91 – det har bildats protaktinium-234.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Radioaktiva ämnen har instabila kärnor som sönderfaller av sig själva och sänder ut strålning. Alfastrålning är heliumkärnor: atomnumret minskar med 2 och masstalet med 4. Betastrålning är elektroner som bildas när en neutron blir en proton: atomnumret ökar med 1, masstalet är oförändrat. Gammastrålning är elektromagnetisk strålning som inte ändrar kärnans sammansättning. Alfa stoppas av papper, beta av några millimeter metall och gamma försvagas av bly och betong. Instabila kärnor kan sönderfalla i flera steg i en sönderfallsserie, som uranserien där radon bildas.
+        </div>
+        <div class="next-steps">
+          <a href="./stralningslab.html"><span class="n-label">Demonstration</span>Alfa, beta och gamma med GM-rör</a>
+          <a href="#m5"><span class="n-label">Fortsätt</span>Halveringstid</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M5 -->
+    <details class="milestone" id="m5" open>
+      <summary><span class="m-num">Milstolpe 5</span><h2 class="m-title">Halveringstid – mönster i slumpen</h2></summary>
+      <div class="m-body">
+        <p>Det går inte att förutsäga när en enskild radioaktiv kärna kommer att sönderfalla. Det kan hända om en sekund eller om tusen år – det är helt slumpmässigt. Men om man har väldigt många kärnor av samma isotop blir det ett tydligt mönster: efter en viss tid har ungefär hälften av kärnorna sönderfallit. Den tiden kallas isotopens <strong class="term"><span class="concept-inline" data-concept="Halveringstid">halveringstid</span></strong><a href="#ref-2" class="cite">[2]</a>.</p>
+        <p>Det viktiga är att det är <em>hälften av det som är kvar</em> som sönderfaller under varje halveringstid – inte samma antal varje gång. Börjar man med 800 kärnor finns 400 kvar efter en halveringstid, 200 efter två, 100 efter tre och så vidare. Allt är alltså inte borta efter två halveringstider!</p>
+        <table class="compare-table">
+          <thead><tr><th>Antal halveringstider</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+          <tbody>
+            <tr><td>Andel kvar</td><td>100 %</td><td>50 %</td><td>25 %</td><td>12,5 %</td><td>6,25 %</td></tr>
+            <tr><td>Kvar av 800 kärnor</td><td>800</td><td>400</td><td>200</td><td>100</td><td>50</td></tr>
+          </tbody>
+        </table>
+        <p>Halveringstiden är olika för olika isotoper och kan vara allt från en bråkdel av en sekund till miljarder år:</p>
+        <table class="compare-table">
+          <thead><tr><th>Isotop</th><th>Halveringstid</th></tr></thead>
+          <tbody>
+            <tr><td>Radon-222</td><td>3,8 dygn</td></tr>
+            <tr><td>Jod-131</td><td>8 dygn</td></tr>
+            <tr><td>Cesium-137</td><td>30 år</td></tr>
+            <tr><td>Kol-14</td><td>5730 år</td></tr>
+            <tr><td>Uran-238</td><td>4,5 miljarder år (ungefär jordens ålder)</td></tr>
+          </tbody>
+        </table>
+        <p>Att något har sönderfallit betyder inte att det försvunnit. Sönderfallet ger nya kärnor av ett annat ämne, och de finns kvar i provet.</p>
+
+        <h3>Aktivitet – hur mycket strålar ämnet?</h3>
+        <p>Hur många kärnor som sönderfaller per sekund kallas ämnets <strong class="term"><span class="concept-inline" data-concept="Aktivitet">aktivitet</span></strong>. Den mäts i enheten <strong class="term"><span class="concept-inline" data-concept="becquerel">becquerel (Bq)</span></strong>, där 1 Bq betyder ett sönderfall per sekund<a href="#ref-2" class="cite">[2]</a>. När antalet radioaktiva kärnor halveras, halveras också aktiviteten. Ett ämne med kort halveringstid har därför hög aktivitet men "tar slut" snabbt, medan ett ämne med lång halveringstid strålar svagt men under mycket lång tid.</p>
+        <div class="calc-box">
+          <strong class="calc-rubrik">Räkneexempel</strong>
+          <p>Ett prov med jod-131 har aktiviteten 4000 Bq. Halveringstiden är 8 dygn. Vilken aktivitet har provet efter 24 dygn?</p>
+          <p class="steg">Antal halveringstider = 24 dygn / 8 dygn = 3</p>
+          <p class="steg">4000 Bq → 2000 Bq → 1000 Bq → 500 Bq</p>
+          <p>Svar: Aktiviteten är 500 Bq.</p>
+        </div>
+        <details class="check-q">
+          <summary>Cesium-137 har halveringstiden 30 år. Hur stor andel av cesiumet finns kvar efter 90 år?</summary>
+          <div class="svar"><strong>Svar:</strong> 90 år / 30 år = 3 halveringstider. 100 % → 50 % → 25 % → 12,5 %. En åttondel finns kvar.</div>
+        </details>
+
+        <h3>Kol-14-metoden – hur gammalt är det?</h3>
+        <p>Halveringstid används för att bestämma åldern på gamla föremål. Kol-14 bildas hela tiden högt upp i atmosfären när strålning från rymden träffar kväveatomer. Det blandas med vanligt kol i luftens koldioxid, och växter tar upp det i fotosyntesen. Djur och människor får det genom maten. Så länge något lever har det därför samma lilla andel kol-14 som luften.</p>
+        <p>När en organism dör slutar den ta upp nytt kol. Kol-14 som redan finns sönderfaller då långsamt, med halveringstiden 5730 år, medan vanligt kol-12 finns kvar<a href="#ref-12" class="cite">[12]</a>. Genom att mäta hur mycket kol-14 ett gammalt träföremål eller ben har kvar, jämfört med levande material, kan man räkna ut hur länge sedan det dog. Har hälften av kol-14 sönderfallit är föremålet ungefär 5700 år gammalt. Metoden fungerar för föremål upp till cirka 50 000 år; efter det finns för lite kol-14 kvar att mäta.</p>
+        <details class="check-q">
+          <summary>En bit trä från en gammal båt har en fjärdedel så mycket kol-14 som färskt trä. Ungefär hur gammal är båten?</summary>
+          <div class="svar"><strong>Svar:</strong> En fjärdedel kvar betyder två halveringstider: 2 · 5730 år ≈ 11 500 år.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Halveringstiden är den tid det tar för hälften av de radioaktiva kärnorna att sönderfalla. Varje halveringstid halveras det som är kvar: 1/2, 1/4, 1/8 … Enskilda sönderfall är slumpmässiga, men för många kärnor blir mönstret förutsägbart. Aktivitet mäts i becquerel (Bq), sönderfall per sekund. Med kol-14-metoden kan man bestämma åldern på gamla organiska föremål.
+        </div>
+        <div class="next-steps">
+          <a href="#m6"><span class="n-label">Fortsätt</span>Strålning omkring oss</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M6 -->
+    <details class="milestone" id="m6" open>
+      <summary><span class="m-num">Milstolpe 6</span><h2 class="m-title">Strålning omkring oss – mäta, använda och skydda sig</h2></summary>
+      <div class="m-body">
+        <h3>Vi strålas hela tiden</h3>
+        <p>Joniserande strålning är en naturlig del av vår miljö. Den strålning vi utsätts för från omgivningen kallas <strong class="term"><span class="concept-inline" data-concept="bakgrundsstrålning">bakgrundsstrålning</span></strong>. Den kommer från flera håll:</p>
+        <ul>
+          <li><strong>Marken och berggrunden</strong>, som innehåller uran, torium och andra radioaktiva ämnen. Halten varierar mycket mellan olika delar av landet.</li>
+          <li><strong>Rymden</strong> – kosmisk strålning. Den är starkare högre upp, så den som flyger mycket får en extra dos.</li>
+          <li><strong>Vår egen kropp och maten</strong>, som innehåller små mängder radioaktiva isotoper, bland annat av kalium och kol.</li>
+          <li><strong>Radon</strong> i inomhusluften (se nedan).</li>
+          <li><strong>Sjukvården</strong>, när vi röntgas eller undersöks på annat sätt.</li>
+        </ul>
+        <p>Hur stor skada strålningen kan göra i kroppen beskrivs med <strong class="term"><span class="concept-inline" data-concept="Stråldos">stråldos</span></strong>, som mäts i <strong class="term"><span class="concept-inline" data-concept="sievert">sievert (Sv)</span></strong>. Stråldosen tar hänsyn till både hur mycket energi kroppen tar upp och vilken sorts strålning det är<a href="#ref-2" class="cite">[2]</a>. En sievert är mycket, så man brukar räkna i millisievert (mSv), tusendels sievert. En genomsnittlig person i Sverige får omkring 2–3 mSv per år från alla källor tillsammans<a href="#ref-13" class="cite">[13]</a>.</p>
+        <p>Lägg märke till skillnaden mellan becquerel och sievert: becquerel säger hur mycket ett ämne strålar, sievert säger hur mycket strålning en människa faktiskt har tagit emot. En stark källa långt bort kan ge en liten dos, och en svag källa inne i kroppen en större.</p>
+
+        <h3>Radon – den osynliga gasen i husen</h3>
+        <p>Radon-222 bildas i uranserien (milstolpe 4) när radium sönderfaller. Eftersom radon är en gas kan det läcka in i hus från marken under huset. Det kan också komma från byggnadsmaterial: i Sverige tillverkades mellan 1929 och 1975 en lättbetong av alunskiffer, så kallad <strong class="term"><span class="concept-inline" data-concept="blåbetong">blåbetong</span></strong>, som innehåller förhöjda halter av uran och radium. Radon kan även finnas i vatten från borrade brunnar.</p>
+        <p>Radonet självt andas vi mest in och ut igen. Problemet är dess dotterkärnor, radondöttrarna: radioaktiva metallatomer som bildas när radonet sönderfaller. De fastnar i luftvägarna och sänder ut alfastrålning direkt mot cellerna i lungorna. Radon är därför den näst vanligaste orsaken till lungcancer, efter rökning. Strålsäkerhetsmyndigheten bedömer att radon orsakar omkring 500 fall av lungcancer per år i Sverige, och de flesta som drabbas är rökare – kombinationen är särskilt farlig<a href="#ref-5" class="cite">[5]</a>.</p>
+        <p>Radon varken syns, luktar eller känns. Det enda sättet att veta om man har för mycket hemma är att mäta. Mätningen görs under vinterhalvåret, oftast med små dosor som får stå i bostaden i minst två månader. Om årsmedelvärdet ligger över 200 becquerel per kubikmeter luft bör man åtgärda det, till exempel med bättre ventilation eller genom att täta mot marken<a href="#ref-5" class="cite">[5]</a>.</p>
+
+        <h3>Hur mäter man strålning?</h3>
+        <p>Vi har inget sinne för joniserande strålning, så den måste mätas med instrument. Det vanligaste är <strong class="term"><span class="concept-inline" data-concept="GM-rör">GM-röret</span></strong> (Geiger–Müller-rör), ett rör med gas och två elektroder. När strålning tränger in joniseras gasen, och det ger en liten strömpuls som räknas eller hörs som ett knäpp i en högtalare. Ett GM-rör knäpper även när ingen strålkälla finns i närheten – det är bakgrundsstrålningen. Personal som arbetar med strålning bär en <strong class="term"><span class="concept-inline" data-concept="dosimeter">dosimeter</span></strong> som mäter hur stor stråldos de har fått. I en <strong class="term"><span class="concept-inline" data-concept="dimkammare">dimkammare</span></strong> kan man se spåren efter strålningen som tunna dimstrimmor, lite som kondensstrimmor efter ett flygplan.</p>
+
+        <h3>Nyttig strålning</h3>
+        <p>Samma egenskaper som gör joniserande strålning farlig gör den också användbar:</p>
+        <ul>
+          <li><strong>Röntgen och datortomografi</strong> visar skelett och inre organ.</li>
+          <li><strong>Strålbehandling</strong> används mot cancer: strålningen riktas noga mot tumören så att cancercellerna skadas, medan frisk vävnad skyddas så mycket som möjligt.</li>
+          <li><strong>Spårämnen:</strong> en patient kan få en liten mängd av en radioaktiv isotop, till exempel jod som samlas i sköldkörteln. Genom att mäta strålningen utifrån ser läkaren hur organet fungerar.</li>
+          <li><strong>Sterilisering:</strong> sprutor, förband och vissa livsmedel kan bestrålas med gamma för att döda bakterier. Föremålen blir inte radioaktiva av det.</li>
+          <li><strong>Industri:</strong> strålning kan mäta tjockleken på papper och plåt i fabriker, och avslöja sprickor i svetsfogar.</li>
+          <li><strong>Datering:</strong> kol-14-metoden (milstolpe 5).</li>
+        </ul>
+
+        <h3>Strålskydd</h3>
+        <p>Allt arbete med strålning i Sverige övervakas av Strålsäkerhetsmyndigheten, som ger tillstånd och sätter gränser för hur stora stråldoser man får utsättas för. Radioaktiva ämnen ska vara märkta med varningssymbolen för strålning. För att minska stråldosen från en strålkälla utanför kroppen finns tre enkla regler, <strong class="term"><span class="concept-inline" data-concept="strålskydd">strålskydd</span></strong> i vardagen:</p>
+        <ul>
+          <li><strong>Tid:</strong> var nära strålkällan så kort tid som möjligt.</li>
+          <li><strong>Avstånd:</strong> håll avståndet – strålningen avtar snabbt längre bort.</li>
+          <li><strong>Skärm:</strong> sätt något emellan, till exempel blyförkläde vid röntgen.</li>
+        </ul>
+        <p>Det är också viktigt att skilja mellan att <em>bestrålas</em> och att få radioaktiva ämnen <em>i eller på sig</em>. Den som röntgas blir inte radioaktiv – strålningen försvinner när apparaten stängs av. Men om radioaktiva ämnen sprids, som efter en kärnkraftsolycka, kan de komma in i kroppen via luft, mat och vatten och fortsätta stråla där. Då hjälper inte avstånd och skärm, utan man måste förhindra spridningen.</p>
+        <details class="check-q">
+          <summary>Varför skyddar inte ett pappersark mot ett alfastrålande ämne som man har andats in?</summary>
+          <div class="svar"><strong>Svar:</strong> Ämnet finns redan inne i kroppen och strålar direkt mot cellerna intill. En skärm hjälper bara mot strålkällor utanför kroppen.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Bakgrundsstrålning kommer från mark, rymd, kropp och mat, radon och sjukvård. Stråldos mäts i sievert (oftast millisievert) och visar hur mycket strålning en människa har tagit emot. Radon är en radioaktiv gas från uranserien; radondöttrarna sänder ut alfastrålning i lungorna och orsakar omkring 500 lungcancerfall per år i Sverige. Strålning mäts med GM-rör och dosimetrar. Den används inom sjukvård, industri och forskning. Strålskydd: kort tid, långt avstånd och skärm.
+        </div>
+        <div class="next-steps">
+          <a href="#m7"><span class="n-label">Fortsätt</span>Kärnklyvning</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M7 -->
+    <details class="milestone" id="m7" open>
+      <summary><span class="m-num">Milstolpe 7</span><h2 class="m-title">Kärnklyvning, kärnkraft och kärnvapen</h2></summary>
+      <div class="m-body">
+        <h3>Upptäckten – med en svensk koppling</h3>
+        <p>I slutet av 1938 fick kemisten Otto Hahn i Berlin ett resultat han inte kunde förklara. När han bestrålade uran med neutroner bildades barium – ett ämne med ungefär halva urans massa. Hahn skrev om saken till sin tidigare kollega Lise Meitner. Hon var judisk och hade samma år tvingats fly från Nazityskland till Stockholm. Under julen 1938 i Kungälv kom Meitner och hennes brorson Otto Frisch fram till förklaringen: urankärnan hade klyvts i två delar<a href="#ref-11" class="cite">[11]</a>. Hahn fick ensam Nobelpriset i kemi för upptäckten, något som i efterhand ofta setts som orättvist mot Meitner.</p>
+
+        <h3>Fission och kedjereaktion</h3>
+        <p>När en långsam neutron träffar en kärna av uran-235 kan kärnan klyvas i två mindre kärnor. Det kallas <strong class="term"><span class="concept-inline" data-concept="Fission">fission</span></strong> eller kärnklyvning. Samtidigt frigörs en stor mängd energi och två eller tre nya neutroner. Om de nya neutronerna träffar andra urankärnor klyvs också de, och så vidare. Det kallas en <strong class="term"><span class="concept-inline" data-concept="Kedjereaktion">kedjereaktion</span></strong><a href="#ref-6" class="cite">[6]</a>.</p>
+        <p>Varifrån kommer energin? Om man väger allt som finns efter klyvningen visar det sig att det väger en aning mindre än urankärnan och neutronen gjorde innan. Den lilla massan har blivit energi. Albert Einstein visade redan 1905 att massa och energi hänger ihop, med den berömda formeln</p>
+        <div class="formula-box">
+          <span class="f">E = m · c²</span>
+          <span class="u">E = energi, m = massa, c = ljusets hastighet (300 000 000 m/s)</span>
+        </div>
+        <p>Eftersom ljusets hastighet är ett enormt tal, och dessutom ska upphöjas till två, motsvarar även en pytteliten massa en jättemängd energi. Om alla kärnor i ett kilo uran-235 klyvs frigörs ungefär lika mycket energi som när man eldar flera miljoner kilo kol.</p>
+
+        <h3>Från kärna till el – kärnkraftverket</h3>
+        <p>I ett kärnkraftverk hålls kedjereaktionen under kontroll så att varje klyvning i genomsnitt leder till precis en ny. Bränslet är uran där andelen uran-235 har höjts till några procent. Vatten runt bränslet fungerar som <strong class="term"><span class="concept-inline" data-concept="moderator">moderator</span></strong>: det bromsar neutronerna, eftersom långsamma neutroner lättare klyver uran-235. <strong class="term"><span class="concept-inline" data-concept="styrstav">Styrstavar</span></strong> av ett material som fångar upp neutroner kan skjutas in mellan bränslet för att bromsa reaktionen eller stoppa den helt.</p>
+        <p>Själva kärnenergin kan inte göras om till el direkt. Den blir värme som kokar vatten till ånga. Ångan driver en turbin, och turbinen driver en generator som ger el. Det är samma princip som i andra värmekraftverk – det är bara värmekällan som skiljer:</p>
+        <div class="formula-box">
+          <span class="f">kärnenergi → värme → ånga → turbin (rörelseenergi) → generator → elektrisk energi</span>
+        </div>
+        <p>I Sverige finns sex kärnreaktorer i drift, i Forsmark, Ringhals och Oskarshamn. De står för ungefär 30 procent av landets elproduktion<a href="#ref-9" class="cite">[9]</a>.</p>
+
+        <h3>Avfallet och slutförvaret i Forsmark</h3>
+        <p>Använt kärnbränsle är mycket radioaktivt och måste hållas isolerat från människor och natur i omkring 100 000 år innan strålningen klingat av till ungefär samma nivå som i naturligt uran. I dag mellanlagras det svenska bränslet i vattenbassänger i Oskarshamn. Lösningen på lång sikt är ett <strong class="term"><span class="concept-inline" data-concept="slutförvar">slutförvar</span></strong> i Forsmark: bränslet kapslas in i kopparkapslar som placeras omkring 500 meter ner i urberget och omges av lera som sväller och tätar. Bygget inleddes i januari 2025<a href="#ref-8" class="cite">[8]</a>.</p>
+
+        <h3>Olyckorna i Tjernobyl och Fukushima</h3>
+        <p>Den 26 april 1986 exploderade en reaktor i kärnkraftverket i Tjernobyl i dåvarande Sovjetunionen (nu Ukraina) under ett misslyckat test. Reaktorn brann i över en vecka, och radioaktiva ämnen spreds med vindarna över stora delar av Europa. När det regnade över Sverige föll en del ner, särskilt kring Gävle. Cesium-137 med halveringstiden 30 år finns fortfarande kvar i mätbara halter i en del svamp och vilt i de drabbade områdena.</p>
+        <p>Den 11 mars 2011 drabbades kärnkraftverket i Fukushima i Japan av en kraftig jordbävning och en tsunami. Reaktorerna stängdes av, men vågen slog ut kylningen, och bränslet i tre reaktorer smälte. Radioaktiva ämnen läckte ut, och över hundratusen människor fick lämna sina hem.</p>
+
+        <h3>För- och nackdelar</h3>
+        <p>Kärnkraft är en omdebatterad energikälla. Fördelar är att den ger mycket el jämnt och oberoende av väder, och att utsläppen av koldioxid är låga sett över hela livscykeln. Nackdelar är det radioaktiva avfallet som måste tas om hand i mycket lång tid, risken för olyckor, att uranbrytning påverkar miljön där den sker, och att nya kärnkraftverk är dyra och tar lång tid att bygga. Hur man väger detta mot andra energikällor är en politisk fråga.</p>
+
+        <h3>Kärnvapen</h3>
+        <p>Om en tillräckligt stor mängd rent klyvbart material samlas på ett ställe – den <strong class="term"><span class="concept-inline" data-concept="kritisk massa">kritiska massan</span></strong> – kan kedjereaktionen växa okontrollerat och nästan all energi frigöras på en bråkdel av en sekund. Det är principen bakom atombomben. I augusti 1945 fällde USA atombomber över de japanska städerna Hiroshima och Nagasaki. Mer än hundratusen människor dog, många direkt och många senare av skador och strålsjukdom. Det är de enda gånger kärnvapen har använts i krig.</p>
+        <p>Senare utvecklades vätebomben, som använder fusion (nästa milstolpe) och kan vara tusentals gånger kraftigare. Under kalla kriget byggde stormakterna upp tiotusentals kärnvapen. Genom icke-spridningsavtalet från 1968 har de flesta av världens länder lovat att inte skaffa kärnvapen. Även Sverige planerade egna kärnvapen på 1950- och 60-talet, men avstod till slut.</p>
+        <details class="check-q">
+          <summary>Varför behövs en turbin och en generator i ett kärnkraftverk om kärnklyvningen redan frigör energi?</summary>
+          <div class="svar"><strong>Svar:</strong> Kärnklyvningen ger värme, inte el. Värmen gör ånga som driver turbinen, och generatorn omvandlar turbinens rörelseenergi till elektrisk energi.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Vid fission klyvs en tung kärna, till exempel uran-235, när den träffas av en neutron. Det frigör energi och nya neutroner som kan klyva fler kärnor i en kedjereaktion. Energin kommer från att lite massa omvandlas till energi (E = mc²). I ett kärnkraftverk styrs kedjereaktionen med moderator och styrstavar, och värmen blir el via ånga, turbin och generator. Avfallet måste isoleras i omkring 100 000 år; i Sverige byggs ett slutförvar i Forsmark. I en atombomb sker kedjereaktionen okontrollerat.
+        </div>
+        <div class="next-steps">
+          <a href="/fysik/arbete-energi-effekt/studieguide.html#m9"><span class="n-label">Repetera</span>Energikällor</a>
+          <a href="#m8"><span class="n-label">Fortsätt</span>Fusion</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- M8 -->
+    <details class="milestone" id="m8" open>
+      <summary><span class="m-num">Milstolpe 8</span><h2 class="m-title">Fusion – solens energikälla</h2></summary>
+      <div class="m-body">
+        <p>Energi kan också frigöras på motsatt sätt: när lätta kärnor slås ihop till en tyngre. Det kallas <strong class="term"><span class="concept-inline" data-concept="Fusion">fusion</span></strong>. Även här väger produkterna lite mindre än det man började med, och massskillnaden blir energi enligt E = mc²<a href="#ref-7" class="cite">[7]</a>.</p>
+        <p>Det är fusion som får solen och alla andra stjärnor att lysa. I solens inre, där temperaturen är omkring 15 miljoner grader, slås vätekärnor ihop i flera steg till heliumkärnor. Solen förvandlar på så sätt drygt fyra miljoner ton massa till energi varje sekund. Den energin når oss som ljus och värme genom rymdens tomrum. Solen brinner alltså inte som en eld – det finns inget syre där, och det är kärnor som reagerar, inte molekyler.</p>
+
+        <h3>Fusion på jorden</h3>
+        <p>Att få fusion att fungera på jorden är mycket svårt. Kärnorna är positivt laddade och stöter bort varandra, så de måste krocka med enorm fart för att den starka kärnkraften ska hinna ta över. Det kräver temperaturer på omkring 150 miljoner grader, tio gånger varmare än i solens inre<a href="#ref-15" class="cite">[15]</a>. Vid sådana temperaturer är bränslet ett <strong class="term"><span class="concept-inline" data-concept="plasma">plasma</span></strong>, en gas av fria kärnor och elektroner, och det finns inget material som tål att röra vid det. I försöksanläggningar hålls plasmat därför svävande i ett starkt magnetfält inuti en ringformad kammare.</p>
+        <p>Bränslet är väteisotoperna deuterium och tritium. När de smälter samman bildas en heliumkärna och en fri neutron, och mycket energi frigörs. Deuterium finns i allt vatten, så bränslet skulle räcka i miljontals år. I Frankrike bygger ett stort internationellt samarbete försöksreaktorn ITER, som ska visa att man kan få ut mer energi än man stoppar in. Ännu finns inget fusionskraftverk som levererar el, och det kommer att dröja länge innan det finns.</p>
+
+        <h3>Fission och fusion jämförda</h3>
+        <table class="compare-table">
+          <thead><tr><th></th><th>Fission</th><th>Fusion</th></tr></thead>
+          <tbody>
+            <tr><td>Vad händer?</td><td>En tung kärna klyvs i två mindre</td><td>Lätta kärnor slås ihop till en tyngre</td></tr>
+            <tr><td>Bränsle</td><td>Uran-235 (och plutonium)</td><td>Väteisotoper (deuterium, tritium)</td></tr>
+            <tr><td>Var sker det?</td><td>Kärnkraftverk, atombomber</td><td>Solen och stjärnorna, vätebomber, försöksanläggningar</td></tr>
+            <tr><td>Avfall</td><td>Långlivat radioaktivt avfall</td><td>Inget långlivat bränsleavfall, men reaktorns väggar blir radioaktiva av neutronerna</td></tr>
+            <tr><td>Gemensamt</td><td colspan="2">En liten del av massan omvandlas till mycket stor energi (E = mc²)</td></tr>
+          </tbody>
+        </table>
+        <details class="check-q">
+          <summary>Hur kan energin från solen nå jorden när rymden är nästan tom?</summary>
+          <div class="svar"><strong>Svar:</strong> Fusionen i solen frigör energi som skickas ut som elektromagnetisk strålning (ljus, infraröd strålning m.m.). Elektromagnetisk strålning kan färdas genom tomrum.</div>
+        </details>
+        <div class="fact-box">
+          <strong>Sammanfattning</strong>
+          Vid fusion slås lätta kärnor ihop till tyngre, och lite massa blir energi. Solen får sin energi genom fusion av väte till helium. På jorden krävs omkring 150 miljoner grader och magnetfält för att hålla plasmat, och fusionskraft finns ännu bara i försöksanläggningar. Både fission och fusion frigör energi genom att en liten massa omvandlas till energi.
+        </div>
+        <div class="next-steps">
+          <a href="./checklista.html"><span class="n-label">Kontrollera</span>Checklistan</a>
+          <a href="./instuderingsfragor.html"><span class="n-label">Träna</span>Instuderingsfrågor</a>
+          <a href="./ovningsprov.html"><span class="n-label">Testa</span>Övningsprov</a>
+        </div>
+      </div>
+    </details>
+
+    <section class="references" id="kallor">
+      <h2>Källor</h2>
+      <ol>
+        <li id="ref-1">Strålsäkerhetsmyndigheten. (2025). <em>Olika typer av joniserande strålning</em>. <a href="https://www.stralsakerhetsmyndigheten.se/om-stralning/om-joniserande-stralning/olika-typer-av-joniserande-stralning/" target="_blank" rel="noopener">stralsakerhetsmyndigheten.se</a></li>
+        <li id="ref-2">Strålsäkerhetsmyndigheten. (2025). <em>Stråldosbegrepp</em>. <a href="https://www.stralsakerhetsmyndigheten.se/om-stralning/om-joniserande-stralning/straldosbegrepp/" target="_blank" rel="noopener">stralsakerhetsmyndigheten.se</a></li>
+        <li id="ref-3">NASA Science. <em>Introduction to the Electromagnetic Spectrum</em>. <a href="https://science.nasa.gov/ems/01_intro/" target="_blank" rel="noopener">science.nasa.gov</a></li>
+        <li id="ref-4">Strålsäkerhetsmyndigheten. <em>Om icke-joniserande strålning</em>. <a href="https://www.stralsakerhetsmyndigheten.se/om-stralning/om-icke-joniserande-stralning/" target="_blank" rel="noopener">stralsakerhetsmyndigheten.se</a></li>
+        <li id="ref-5">Boverket. <em>Hur farligt är radon?</em> <a href="https://www.boverket.se/sv/byggande/halsa-och-inomhusmiljo/radon/hur-farligt-ar-radon/" target="_blank" rel="noopener">boverket.se</a></li>
+        <li id="ref-6">IAEA. <em>What is Nuclear Energy? The Science of Nuclear Power</em>. <a href="https://www.iaea.org/newscenter/news/what-is-nuclear-energy-the-science-of-nuclear-power" target="_blank" rel="noopener">iaea.org</a></li>
+        <li id="ref-7">IAEA. <em>What is Nuclear Fusion?</em> <a href="https://www.iaea.org/newscenter/news/what-is-nuclear-fusion" target="_blank" rel="noopener">iaea.org</a></li>
+        <li id="ref-8">Östhammars kommun. (2025). <em>Första spadtaget för Kärnbränsleförvaret</em>. <a href="https://www.osthammar.se/sv/nyheter/2025/forsta-spadtaget-for-karnbransleforvaret/" target="_blank" rel="noopener">osthammar.se</a></li>
+        <li id="ref-9">Regeringskansliet. <em>Frågor och svar om kärnkraft</em>. <a href="https://regeringen.se/regeringens-politik/energi/fragor-och-svar-om-karnkraft/" target="_blank" rel="noopener">regeringen.se</a></li>
+        <li id="ref-10">European Spallation Source. (2026). <em>ESS completes Beam on Dump 2, advancing toward first neutrons</em>. <a href="https://ess.eu/article/2026/07/07/ess-completes-beam-dump-2-advancing-toward-first-neutrons" target="_blank" rel="noopener">ess.eu</a></li>
+        <li id="ref-11">Wikipedia. <em>Lise Meitner</em>. <a href="https://en.wikipedia.org/wiki/Lise_Meitner" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+        <li id="ref-12">Wikipedia. <em>Radiocarbon dating</em>. <a href="https://en.wikipedia.org/wiki/Radiocarbon_dating" target="_blank" rel="noopener">en.wikipedia.org</a></li>
+        <li id="ref-13">Statens strålskyddsinstitut (nu Strålsäkerhetsmyndigheten). (2007). <em>Radiation environment in Sweden – summary</em>. <a href="https://www.stralsakerhetsmyndigheten.se/contentassets/27621960d345484694bcd4f0e734b4bb/200702e-radiation-environment-in-sweden-summary" target="_blank" rel="noopener">stralsakerhetsmyndigheten.se</a></li>
+        <li id="ref-14">Skolverket. <em>Kursplan i fysik, grundskolan (Lgr22)</em>. <a href="https://www.skolverket.se/undervisning/grundskolan/laroplan-lgr22-for-grundskolan-samt-for-forskoleklassen-och-fritidshemmet" target="_blank" rel="noopener">skolverket.se</a></li>
+        <li id="ref-15">CORDIS, Europeiska kommissionen. <em>The continuing quest to use nuclear fusion for the world's energy demand</em>. <a href="https://cordis.europa.eu/news/rcn/131620/en" target="_blank" rel="noopener">cordis.europa.eu</a></li>
+      </ol>
+      <p style="font-size:0.82rem;color:#595959;font-style:italic;margin-top:0.6rem;">Texten i studieguiden är självständigt formulerad. Formler och faktauppgifter är allmän faktakunskap.</p>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js?v=a57ce429"></script>
+  <script src="/js/lyssna.js?v=d8e963dc" data-audio-base="/fysik/atomfysik/audio/"></script>
+  <script>
+    function toggleAllMilestones() {
+      var milestones = document.querySelectorAll('details.milestone');
+      var btn = document.getElementById('toggle-all-btn');
+      var anyOpen = Array.from(milestones).some(function(m) { return m.open; });
+      milestones.forEach(function(m) { m.open = !anyOpen; });
+      btn.textContent = anyOpen ? 'Öppna alla' : 'Stäng alla';
+    }
+  </script>
+  <script>
+    (function () {
+      function openFromHash() {
+        var match = window.location.hash.match(/^#m([0-9]+)$/);
+        if (!match) return;
+        var target = document.getElementById("m" + match[1]);
+        if (!target) return;
+        if (!target.open) target.open = true;
+        setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", openFromHash);
+      else openFromHash();
+      window.addEventListener("hashchange", openFromHash);
+    })();
+  </script>
+  <script src="/js/language-selector.js?v=a532040f"></script>
+  <script src="/js/concepts-popup.js?v=7b88673c"></script>
+  <script src="/js/concept-lang-selector.js?v=186531ac"></script>
+  <script>
+    /* Bas: hämta svenska begrepp för begreppspopupen i löptexten (klickbara ord). */
+    fetch("./data/begrepp.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data.length) return;
+        window.BEGREPP = data;
+        var savedConceptLang = 'sv-SE';
+        try { savedConceptLang = localStorage.getItem('site.concept-lang') || 'sv-SE'; } catch (e) {}
+        /* Skriv inte över ett redan valt annat begrepp-språk (undviker kapplöpning mot concept-lang-selector.js). */
+        if (savedConceptLang === 'sv-SE' && window.BEGREPPPopup) window.BEGREPPPopup.update(data);
+      })
+      .catch(function (e) { console.warn('Kunde inte hämta begrepp.json', e); });
+  </script>
+</body>
+</html>
